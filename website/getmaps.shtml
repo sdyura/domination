@@ -145,6 +145,13 @@
 <div class='thumbnail'><a href="maps/simpsons.zip">	<img src="images/maps/simpsons.jpg" border="1" width="150" height="94"><br>	106. Simpsons House</a><br>				by Laurent Terrier				</div>
 <div class='thumbnail'><a href="maps/germany2.zip">	<img src="images/maps/germany2.jpg" border="1" width="150" height="94"><br>	107. Germany 2 Map</a><br>				by Florian Boy					</div>
 
+<br clear="both"/>
+
+<g:comments
+    href="http://domination.sourceforge.net/getmaps.shtml"
+    first_party_property="BLOGGER"
+    view_type="FILTERED_POSTMOD">
+</g:comments>
 
 <!--#include file="nav.txt" -->
 

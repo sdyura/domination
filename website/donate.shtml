@@ -345,7 +345,12 @@ function validateAmount(amount){
 </div>
 -->
 
+<br clear="both"/>
 
-
+<g:comments
+    href="http://domination.sourceforge.net/donate.shtml"
+    first_party_property="BLOGGER"
+    view_type="FILTERED_POSTMOD">
+</g:comments>
 
 <!--#include file="nav.txt" -->

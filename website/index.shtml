@@ -213,8 +213,11 @@ if u downloaded it in the first day then please redownload, sorry
 
         <p>Thanks you: Mike Chaten, Christian, Naeem, Mubarak, Adrian for your help with this project.</p>
 
-
-
+<g:comments
+    href="http://domination.sourceforge.net"
+    first_party_property="BLOGGER"
+    view_type="FILTERED_POSTMOD">
+</g:comments>
 
 <!--#include file="nav.txt" -->
 
