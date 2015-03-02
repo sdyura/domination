@@ -35,11 +35,11 @@
 <a href="http://www.amazon.com/gp/product/B008HQRC6O/ref=domination_sf_net"><img src="images/Amazon_APP_Store_Badge.png" alt="Android App on Amazon AppStore" width="143" height="48"></a>
 </p>
 
-
+<!--
 <p>
 <a href="http://appworld.blackberry.com/webstore/content/20485828/"><img src="images/BBWorld_Get It_small.png" alt="Get it at BlackBerry World" width="136" height="48"></a>
 </p>
-
+-->
 
 
 <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://domination.sourceforge.net/"></a>
