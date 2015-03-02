@@ -30,6 +30,10 @@ To find out the rest of the changes please check out the ChangeLog.
 Now, go check it out! The ChangeLog is lonely. Go visit it, too. 
 -->
 
+    <p>02.03.2015 - Blackberry AppWorld version of Domination has been taken down as Blackberry can't maintain there build tools, but <a href="http://us.blackberry.com/apps/amazon-appstore.html">Amazon AppStore is now available for Blackberry</a>, so you can <a href="http://www.amazon.com/gp/product/B008HQRC6O/ref=domination_sf_net">download Domination from there</a> for your Blackberry.</p>
+
+    <p>02.03.2015 - I have had to remove donation options from the site as Google has shut down <a href="https://support.google.com/wallet/business/answer/6107573">Google Wallet for digital goods</a>.</p>
+
     <p>17.01.2014 - Domination for Android v54 is out, Now you can create private games with the friends you have in your Google+ circles. This feature was implemented using <a href="https://developers.google.com/games/services/android/multiplayer">Google Play Game Services Real-time Multiplayer</a> for starting the game, and the games run on <a href="http://lobby.sf.net/">Lobby</a>. Thanks to Jerome Abela for helping make this happen!</p>
 
     <p>31.10.2013 - New version (51) of <a href="https://play.google.com/store/apps/details?id=net.yura.domination">Domination for Android</a> comes with <a href="https://developers.google.com/games/services/">Google Play Game Services</a>. In this first version only <a href="https://developers.google.com/games/services/common/concepts/achievements">achievements</a> are supported, but more features will follow. This feature was done at the London <a href="http://uk.droidcon.com/">Droidcon</a> 2013 <a href="http://uk.droidcon.com/2013/hackathon/">hackathon</a>.</p>
