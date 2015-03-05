@@ -87,7 +87,7 @@
 	<code>
 	svn co https://svn.code.sf.net/p/domination/code/Domination<br>
 	</code>
-	<p>please use <a href="https://netbeans.org/downloads/">Netbeans</a>/<a href="http://ant.apache.org/">ant</a> to build the project</p>
+	<p>please use <a href="https://netbeans.org/downloads/">Netbeans</a>/<a href="http://ant.apache.org/">Ant</a> to build the project</p>
 
 <!--
         <p>run compile.cmd to compile Risk and the other cmd
@@ -105,7 +105,7 @@
 	svn co https://svn.code.sf.net/p/swingme/code/AndroidME<br>
 	</code>
 
-	<p>please use <a href="http://developer.android.com/sdk/installing/studio-build.html">Android Studio/Gradle</a> to build the project</p>
+	<p>please use <a href="http://developer.android.com/sdk/index.html">Android Studio</a>/<a href="http://developer.android.com/sdk/installing/studio-build.html">Gradle</a> to build the project</p>
 
 <h3>Other projects used by Domination</h3>
 
