@@ -82,36 +82,50 @@
         <p>Run the following commands in a directory that you
         have write access to (such as your home directory): </p>
 
+<h3>Desktop (J2SE) Domination</h3>
+
 	<code>
-	svn co http://svn.code.sf.net/p/domination/code/Domination<br>
+	svn co https://svn.code.sf.net/p/domination/code/Domination<br>
 	</code>
-	
-	<p>please use <a href="http://ant.apache.org/">ant</a> to build the project</p>
+	<p>please use <a href="https://netbeans.org/downloads/">Netbeans</a>/<a href="http://ant.apache.org/">ant</a> to build the project</p>
+
 <!--
         <p>run compile.cmd to compile Risk and the other cmd
         files to run the GUIs</p>
 -->
-	<br>
-	<a href="http://sf.net/p/domination/code/">Browse Subversion Repository</a>
-	<br><br>
+	<a href="http://sf.net/p/domination/code/">Browse Subversion Repository</a><br>
 
-	<h3><a id="lobby">The Lobby Project</a></h3>
+<h3><a id="android">Android Domination</a></h3>
+
+	<code>
+	svn co https://svn.code.sf.net/p/domination/code/Domination<br>
+	svn co https://svn.code.sf.net/p/domination/code/BaseGameUtils<br>
+	svn co https://svn.code.sf.net/p/swingme/code/UtilME<br>
+	svn co https://svn.code.sf.net/p/swingme/code/SwingME<br>
+	svn co https://svn.code.sf.net/p/swingme/code/AndroidME<br>
+	</code>
+
+	<p>please use <a href="http://developer.android.com/sdk/installing/studio-build.html">Android Studio/Gradle</a> to build the project</p>
+
+<h3>Other projects used by Domination</h3>
+
+	<h4><a id="lobby">The Lobby Project</a></h4>
 	<code>
 	svn co http://svn.code.sf.net/p/lobby/code/trunk Lobby
 	</code>
 	<br><br>
 	<a href="http://sf.net/p/lobby/code/">Browse Subversion Repository</a><br>
-	<br><br>
+	<br>
 
-	<h3>Translation Tool</h3>
+	<h4>Translation Tool</h4>
 	<code>
 	svn co http://svn.code.sf.net/p/cunninglinguist/code/TranslationTool
 	</code>
 	<br><br>
 	<a href="http://sf.net/p/cunninglinguist/code/">Browse Subversion Repository</a><br>
-	<br><br>
+	<br>
 
-	<h3>Grasshopper</h3>
+	<h4>Grasshopper</h4>
 	<code>
 	svn co http://svn.code.sf.net/p/jrisk/code/Grasshopper/
 	</code>
