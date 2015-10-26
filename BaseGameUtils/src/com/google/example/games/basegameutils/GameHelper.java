@@ -19,6 +19,7 @@ package com.google.example.games.basegameutils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,7 +31,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 
 import com.google.android.gms.appstate.AppStateClient;
@@ -139,6 +139,8 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
     // Print debug logs?
     boolean mDebugLog = false;
     String mDebugTag = "GameHelper";
+
+    private static final Logger log = Logger.getLogger(GameHelper.class.getName());
 
     /*
      * If we got an invitation id when we connected to the games client, it's
@@ -995,16 +997,19 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
 
     void debugLog(String message) {
         if (mDebugLog) {
-            Log.d(mDebugTag, "GameHelper: " + message);
+            log.info("GameHelper: " + message);
+            //Log.d(mDebugTag, "GameHelper: " + message);
         }
     }
 
     void logWarn(String message) {
-        Log.w(mDebugTag, "!!! GameHelper WARNING: " + message);
+        log.warning("!!! GameHelper WARNING: " + message);
+        //Log.w(mDebugTag, "!!! GameHelper WARNING: " + message);
     }
 
     void logError(String message) {
-        Log.e(mDebugTag, "*** GameHelper ERROR: " + message);
+        log.severe("*** GameHelper ERROR: " + message);
+        //Log.e(mDebugTag, "*** GameHelper ERROR: " + message);
     }
 
     static String errorCodeToString(int errorCode) {
