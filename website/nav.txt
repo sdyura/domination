@@ -30,10 +30,10 @@
 </p>
 
 
-
 <p>
 <a href="http://www.amazon.com/gp/product/B008HQRC6O/ref=domination_sf_net"><img src="images/Amazon_APP_Store_Badge.png" alt="Android App on Amazon AppStore" width="143" height="48"></a>
 </p>
+
 
 <!--
 <p>
@@ -42,23 +42,32 @@
 -->
 
 
+<p>
+<a href="https://www.patreon.com/bePatron?u=11130257" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+</p>
+
+
+<p>
 <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://domination.sourceforge.net/"></a>
 <noscript><a href="http://flattr.com/thing/844816/Domination-Game" target="_blank">
 <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
+</p>
 
 
-
-<p><g:plusone href="http://domination.sourceforge.net/"></g:plusone></p>
-
-
-
-<p><div class="fb-like" data-href="http://www.facebook.com/BubbleandSpice" data-send="false" data-layout="button_count" data-width="150" data-show-faces="true"></div></p>
+<p>
+<g:plusone href="http://domination.sourceforge.net/"></g:plusone>
+</p>
 
 
+<p>
+<div class="fb-like" data-href="http://www.facebook.com/BubbleandSpice" data-send="false" data-layout="button_count" data-width="150" data-show-faces="true"></div>
+</p>
 
+
+<p>
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-
+</p>
 
 
 <p>
@@ -118,7 +127,7 @@
 
 
 
-        <p>copyright 2003-2014 <a href="http://yura.net/">yura.net</a></p>
+        <p>copyright 2003-2018 <a href="http://yura.net/">yura.net</a></p>
 
 <!--
 <div id="google_translate_element"></div><script type="text/javascript">
