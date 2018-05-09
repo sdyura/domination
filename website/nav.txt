@@ -15,8 +15,10 @@
 
 	<p>
 	<a href="applet/ChangeLog.txt">Change Log</a> <a href="http://sf.net/p/domination/code/HEAD/tree/Domination/ChangeLog.txt">svn</a><br>
+<!--
 	<br>
 	<a href="donate.shtml">VOTE/DONATE FOR NEXT FEATURE</a><br>
+-->
 	<br>
 	<a href="index.shtml">News</a><br>
 	<a href="ss.shtml">Screen Shots</a><br>
@@ -51,6 +53,11 @@
 <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://domination.sourceforge.net/"></a>
 <noscript><a href="http://flattr.com/thing/844816/Domination-Game" target="_blank">
 <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
+</p>
+
+
+<p>
+<a href="https://freedomsponsors.org/project/170/Domination">FreedomSponsors</a>
 </p>
 
 
