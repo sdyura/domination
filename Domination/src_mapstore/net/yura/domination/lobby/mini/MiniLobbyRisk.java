@@ -6,6 +6,7 @@ import java.util.Observer;
 import java.util.WeakHashMap;
 import java.util.logging.Logger;
 import net.yura.domination.engine.OnlineRisk;
+import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
@@ -52,7 +53,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
 
     @Override
     public void prepareAndOpenGame(final Game game) {
-        final String mapUID = RiskUtil.getMapNameFromLobbyStartGameOption(game.getOptions());
+        final String mapUID = OnlineUtil.getMapNameFromLobbyStartGameOption(game.getOptions());
 
         // TODO check if we are already in the process of downloading this map
 
@@ -135,7 +136,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     WeakHashMap mapping = new WeakHashMap();
 
     public Icon getIconForGame(Game game) {
-        String mapUID = RiskUtil.getMapNameFromLobbyStartGameOption(game.getOptions());
+        String mapUID = OnlineUtil.getMapNameFromLobbyStartGameOption(game.getOptions());
         mapping.put(game, mapUID); // keep a strong ref to the mapUID as long as we have a strong ref to the game
 
         // there are 3 layers of WeakHashMap
@@ -197,7 +198,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     }
 
     public String getGameDescription(Game game) {
-        return RiskUtil.getGameDescriptionFromLobbyStartGameOption( game.getOptions() );
+        return OnlineUtil.getGameDescriptionFromLobbyStartGameOption( game.getOptions() );
     }
 
 

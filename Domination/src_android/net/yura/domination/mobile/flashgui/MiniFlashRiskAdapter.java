@@ -19,6 +19,7 @@ import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.logging.Logger;
 import net.yura.mobile.util.Url;
 import java.util.List;
+import net.yura.domination.engine.OnlineUtil;
 
 public class MiniFlashRiskAdapter implements RiskListener {
 
@@ -51,7 +52,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
                 for (int c = 0; c < names.length; c++) {
                     names[c] = Url.decode(split[c]);
                 }
-                gameSetup.openNewGame(false, names, "Cadet Game");
+                gameSetup.openNewGame(false, names, OnlineUtil.getDefaultOnlineGameName(lobby.whoAmI()));
             }
             @Override
             public String getAppName() {

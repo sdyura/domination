@@ -26,6 +26,7 @@ import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import net.yura.domination.engine.OnlineRisk;
+import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskUIUtil;
@@ -109,20 +110,20 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
                 gsp = new GameSetupPanel();
             }
 
-            return gsp.showDialog(parent, serveroptions, myname);
+            return gsp.showDialog(parent, serveroptions, OnlineUtil.getDefaultOnlineGameName(myname));
 	}
 
         Map<String, String> optionsToMapUID = new WeakHashMap();
 
         public Icon getIcon(String options, Component comp) {
-            String mapUID = RiskUtil.getMapNameFromLobbyStartGameOption(options);
+            String mapUID = OnlineUtil.getMapNameFromLobbyStartGameOption(options);
             // keep a strong ref to the mapUID while we have a string ref to the options
             optionsToMapUID.put(options, mapUID);
             return RiskMap.getMapIcon(mapUID).getIcon(32, 20, comp);
 	}
 
         public String getGameDescription(String string) {
-            return RiskUtil.getGameDescriptionFromLobbyStartGameOption(string);
+            return OnlineUtil.getGameDescriptionFromLobbyStartGameOption(string);
         }
 
 	//##################################################################################

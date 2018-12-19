@@ -74,7 +74,7 @@ public class SwingMEWrapper {
                 if (gsp==null) {
                     gsp = new net.yura.domination.lobby.client.GameSetupPanel();
                 }
-                Game result = gsp.showDialog( window , gameType.getOptions(), lobby.whoAmI() );
+                Game result = gsp.showDialog( window , gameType.getOptions(), OnlineUtil.getDefaultOnlineGameName(lobby.whoAmI()) );
                 if (result!=null) {
                     lobby.createNewGame(result);
                 }

@@ -45,6 +45,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.swing.GraphicsUtil;
@@ -436,9 +437,9 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
         private String newGameOptions;
         
-        public Game showDialog(Window parent,String serveroptions, String myname) {
+        public Game showDialog(Window parent,String serveroptions, String defaultGameName) {
             
-                gamename.setText( myname+"'s "+RiskUtil.GAME_NAME+" Game" );
+                gamename.setText(defaultGameName);
             
                 if (dialog == null) {
 
@@ -616,7 +617,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                 else if (fixed.isSelected()) cardsMode = RiskGame.CARD_FIXED_SET;
                                 else cardsMode = RiskGame.CARD_ITALIANLIKE_SET; // if (italian.isSelected())
 
-				options = RiskUtil.createGameString(b, c, d, gameMode, cardsMode, AutoPlaceAll.isSelected(), recycle.isSelected(), riskmap.getID());
+				options = OnlineUtil.createGameString(b, c, d, gameMode, cardsMode, AutoPlaceAll.isSelected(), recycle.isSelected(), riskmap.getID());
 
 				dialog.setVisible(false);
 			}

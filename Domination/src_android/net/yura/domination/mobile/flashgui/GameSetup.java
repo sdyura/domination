@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
@@ -119,7 +120,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
                             int hardAI = getNoPlayers(Player.PLAYER_AI_HARD);
                             controller.createLobbyGame(
                                     name,
-                                    RiskUtil.createGameString(
+                                    OnlineUtil.createGameString(
                                             easyAI,
                                             averageAI,
                                             hardAI,
