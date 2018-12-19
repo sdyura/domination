@@ -60,7 +60,9 @@ public class RiskMap {
                                         if (isLocalMap()) {
                                             //PicturePanel.getImage(RiskGame) can also get a icon, but MapChooser caches the small preview
                                             map = MapChooser.createMap(mapUID);
-                                            setImage(MapChooser.getLocalIconForMap(map).getImage()._image);
+                                            net.yura.mobile.gui.Icon icon = MapChooser.getLocalIconForMap(map);
+                                            javax.microedition.lcdui.Image img = icon.getImage();
+                                            setImage(img._image);
                                         }
                                         else {
                                             map = MapUpdateService.getOnlineMap(mapUID);

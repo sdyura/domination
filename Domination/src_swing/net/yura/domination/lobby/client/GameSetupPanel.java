@@ -8,6 +8,9 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -43,6 +46,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.yura.domination.engine.OnlineUtil;
@@ -145,7 +149,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		mapsMissions.setLayout(new javax.swing.BoxLayout(mapsMissions, javax.swing.BoxLayout.Y_AXIS));
 
 		final JScrollPane sp2 = new JScrollPane(mapsMissions);
-		GraphicsUtil.setBounds(sp2, 340, 51, 309, 210); // this will allow 6 players, 30 pixels per player
+		GraphicsUtil.setBounds(sp2, 340, 51, 309, 200); // this will allow 6 players, 30 pixels per player
 		sp2.setBorder(null);
 
 		sp2.setOpaque(false);
@@ -271,23 +275,46 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 dontStretch(aieasy);
                 dontStretch(aihard);
 
-		JComponent playernum = Box.createHorizontalBox();
-		GraphicsUtil.setBounds(playernum, 300, 290, 400, 60);
+		JComponent playernum = new JPanel(new GridBagLayout());
+		GraphicsUtil.setBounds(playernum, 320, 280, 350, 60);
 		playernum.setOpaque(false);
 		add(playernum);
-
-		playernum.add(new JLabel( resb.getString("newgame.player.type.human") ));
-		playernum.add(human);
-
-		playernum.add(new JLabel( resb.getString("newgame.player.type.easyai") ));
-		playernum.add(aieasy);
-
-                JLabel aialabel = new JLabel( resb.getString("newgame.player.type.averageai") );
-		playernum.add(aialabel);
-		playernum.add(aiaverage);
-
-                playernum.add(new JLabel( resb.getString("newgame.player.type.hardai") ));
-		playernum.add(aihard);
+                
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.fill = GridBagConstraints.BOTH;
+                
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.insets = new Insets(0,0,0,5);
+		playernum.add(newShrinkJLabel( resb.getString("newgame.player.type.human") ), gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.insets = new Insets(0,0,0,0);
+		playernum.add(human, gbc);
+                gbc.gridx = 2;
+                gbc.gridy = 0;
+                gbc.insets = new Insets(0, 15, 0, 5);
+		playernum.add(newShrinkJLabel( resb.getString("newgame.player.type.easyai") ), gbc);
+                gbc.gridx = 3;
+                gbc.gridy = 0;
+                gbc.insets = new Insets(0,0,0,0);
+		playernum.add(aieasy, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 1;
+                gbc.insets = new Insets(5,0,0,5);
+		playernum.add(newShrinkJLabel( resb.getString("newgame.player.type.averageai") ), gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.insets = new Insets(5,0,0,0);
+		playernum.add(aiaverage,gbc);
+                gbc.gridx = 2;
+                gbc.gridy = 1;
+                gbc.insets = new Insets(5, 15, 0, 5);
+                playernum.add(newShrinkJLabel( resb.getString("newgame.player.type.hardai") ), gbc);
+                gbc.gridx = 3;
+                gbc.gridy = 1;
+                gbc.insets = new Insets(5,0,0,0);
+		playernum.add(aihard, gbc);
                 
 		ButtonGroup GameTypeButtonGroup = new ButtonGroup();
 		ButtonGroup CardTypeButtonGroup = new ButtonGroup();
@@ -377,6 +404,8 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 dontStretch(gamename);
 		bottompanel.add(gamename);
 
+                bottompanel.add(Box.createHorizontalStrut(10));
+
                 bottompanel.add(new JLabel(resb.getString("newgame.label.timeout"))); // "Turn Timeout:"
                 int hour = 60*60;
                 Timeout[] timeouts = new Timeout[] {
@@ -399,7 +428,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 timeout.setSelectedIndex(3 /* 1 minute */);
 		bottompanel.add(timeout);
                 
-                GraphicsUtil.setBounds(bottompanel, 160, 504, 380, 80); // should be 528
+                GraphicsUtil.setBounds(bottompanel, 170, 504, 360, 80); // should be 528
                 add(bottompanel);
 
 		start = new JButton(resb.getString("newgame.startgame"));
@@ -412,8 +441,13 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		add(start);
 
 		list.setFixedCellHeight(GraphicsUtil.scale(33));
-
 	}
+        
+        private JLabel newShrinkJLabel(String text) {
+            JLabel label = new JLabel(text);
+            label.setHorizontalAlignment(SwingConstants.TRAILING);
+            return label;
+        }
         
         private void dontStretch(JComponent comp) {
             comp.setMaximumSize(new Dimension(comp.getMaximumSize().width, comp.getPreferredSize().height));
@@ -575,7 +609,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.map"), 55, 40);
 			GraphicsUtil.drawString(g, "Missions:", 350, 40);
 
-			GraphicsUtil.drawString(g, "Number of Players", 440, 300);
+			GraphicsUtil.drawString(g, "Number of Players", 440, 275);
 
 			//g.drawString( "Game Name:", 240, 545);
 
