@@ -312,7 +312,12 @@ public class GameFrame extends JFrame implements KeyListener {
 			if (gameStatus!=null) {
 
 				g.setColor( new Color( ColorUtil.getTextColorFor( cols[0] ) ) );
-				g.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, g.getFont().getSize() - 2)); // 13 - 2 = 11
+                                
+                                // do not let font go bellow 10,
+                                // on hi res windows, default fontsize is 10, and 10-2=8 looks tiny
+                                int fontSize = Math.max(10, g.getFont().getSize() - 2); // 13 - 2 = 11
+
+				g.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, fontSize));
 				GraphicsUtil.drawString(g, gameStatus, 22, 105);
 			}
 
