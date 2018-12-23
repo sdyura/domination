@@ -7,7 +7,7 @@
   </classPath>
   <dontWrapJar>true</dontWrapJar>
 
-  <outfile>../../build/game/Map Editor.exe</outfile>
+  <outfile>../../res_swing/scripts/Map Editor.exe</outfile>
   <errTitle>SimpleApp</errTitle>
   <chdir>.</chdir>
   <customProcName>true</customProcName>

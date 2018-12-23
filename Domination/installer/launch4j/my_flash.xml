@@ -4,7 +4,7 @@
   <jar>Domination.jar</jar>
   <dontWrapJar>true</dontWrapJar>
 
-  <outfile>../../build/game/Domination.exe</outfile>
+  <outfile>../../res_swing/scripts/Domination.exe</outfile>
   <errTitle>SimpleApp</errTitle>
   <chdir>.</chdir>
   <customProcName>true</customProcName>
