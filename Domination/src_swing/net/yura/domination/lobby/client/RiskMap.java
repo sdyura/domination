@@ -112,8 +112,10 @@ public class RiskMap {
 
     private void setImage(Image icon) {
         image = icon;
-        for (Component c : components) {
-            c.repaint();
+        // warning, items can be added to list while this is being called
+        // we can NOT use new java for loop as it will throw ConcurrentModificationException
+        for (int c = 0; c < components.size(); c++) {
+            components.get(c).repaint();
         }
         components = null;
     }
