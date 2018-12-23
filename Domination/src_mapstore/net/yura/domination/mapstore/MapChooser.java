@@ -179,7 +179,11 @@ public class MapChooser implements ActionListener,MapServerListener {
     }
 
     public static Icon getLocalIconForMap(Map map) {
-        return getIconForMapOrCategory(map, null, map.getPreviewUrl(), null);
+        Icon icon = getIconForMapOrCategory(map, null, map.getPreviewUrl(), null);
+        if (icon == null) {
+            throw new RuntimeException("could not find local icon for " + map + " " + map.getPreviewUrl());
+        }
+        return icon;
     }
 
     public static Icon getRemoteIconForMap(String mapUID, MapServerClient mapServerClient) {
