@@ -750,7 +750,10 @@ public class RiskUIUtil {
                         double scaleX = dat.getScaleX();
                         double scaleY = dat.getScaleY();
 
-			displayInfo = toolkit.getScreenSize().width + "x" + toolkit.getScreenSize().height + " (" + toolkit.getScreenResolution() + "dpi " + 
+                        Object gnomeDpi = Toolkit.getDefaultToolkit().getDesktopProperty("gnome.Xft/DPI");
+                        
+			displayInfo = toolkit.getScreenSize().width + "x" + toolkit.getScreenSize().height + " (" + toolkit.getScreenResolution() + "dpi " +
+                                (gnomeDpi == null ? "" : gnomeDpi + "gnome/dpi ") +
                                 "scaleX=" + scaleX + " scaleY=" + scaleY + ") density=" + GraphicsUtil.density + " scale=" + GraphicsUtil.scale;
 		}
 		catch(HeadlessException ex) {
