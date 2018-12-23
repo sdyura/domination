@@ -35,7 +35,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
         risk.addRiskListener( this );
 
         DominationMain main = (DominationMain) Midlet.getMidlet();
-        email = getEmail(main.accounts);
+        email = main.accounts == null ? null : getEmail(main.accounts);
     }
 
     private static String getEmail(List<String> emails) {
