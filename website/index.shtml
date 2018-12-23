@@ -29,6 +29,7 @@ Check the ChangeLog for more information.
 To find out the rest of the changes please check out the ChangeLog.
 Now, go check it out! The ChangeLog is lonely. Go visit it, too. 
 -->
+    <p>23.12.2018 - Domination 1.2.0 is out! better hi-res support and map editor improvements!</p>
 
     <p>05.12.2017 - New version of Domination Android (63) and for PC/Mac (1.1.1.7) is out! better map editor, jdk 9 support on windows and many bugs fixed <a href="http://sourceforge.net/projects/domination/files/latest/download">Download Domination for PC/Mac</a>.</p>
 
@@ -45,9 +46,9 @@ Now, go check it out! The ChangeLog is lonely. Go visit it, too.
     <p>31.10.2013 - New version (51) of <a href="https://play.google.com/store/apps/details?id=net.yura.domination">Domination for Android</a> comes with <a href="https://developers.google.com/games/services/">Google Play Game Services</a>. In this first version only <a href="https://developers.google.com/games/services/common/concepts/achievements">achievements</a> are supported, but more features will follow. This feature was done at the London <a href="http://uk.droidcon.com/">Droidcon</a> 2013 <a href="http://uk.droidcon.com/2013/hackathon/">hackathon</a>.</p>
 
     <p>21.09.2013 - I've been told about a strange Italian man who has made a copy of the Domination game and pretended that it is his game by removing all the credits and replacing them with his own name. The game has been modified and may contain malware so please do not download, his site is: <a href="http://translate.google.com/translate?u=http%3A%2F%2Fun0rtica.altervista.org">http://un0rtica.altervista.org</a> email is: <a href="mailto:0rtica@libero.it">0rtica@libero.it</a> Looks familiar:<br>
-    <a href="screenshots/bad_game1.jpg"><img src="screenshots/small/bad_game1.jpg" border="0" ></a>
-    <a href="screenshots/bad_game2.jpg"><img src="screenshots/small/bad_game2.jpg" border="0" ></a>
-    <a href="screenshots/bad_game3.jpg"><img src="screenshots/small/bad_game3.jpg" border="0" ></a>
+    <a href="screenshots/bad_game1.jpg">pic 1</a>
+    <a href="screenshots/bad_game2.jpg">pic 2</a>
+    <a href="screenshots/bad_game3.jpg">pic 3</a>
     </p>
 
     <p>22.08.2013 - New versions of Domination are out, <a href="https://play.google.com/store/apps/details?id=net.yura.domination">48 for Android</a> and <a href="http://sourceforge.net/projects/domination/files/latest/download">1.1.1.5 for Desktop</a>. See the updated <a href="applet/ChangeLog.txt">ChangeLog</a> for details.</p>
