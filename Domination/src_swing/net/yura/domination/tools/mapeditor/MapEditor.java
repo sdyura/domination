@@ -626,6 +626,14 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 
                     if (fileName==null) {
                         JOptionPane.showMessageDialog(this, "please save to disk first!");
+                        save.doClick();
+                        return;
+                    }
+
+                    // someone may have an old map saved with an invalid filename, we want them to re-save this map
+                    if (!RiskUtil.isValidName(fileName)) {
+                        JOptionPane.showMessageDialog(this, "please save the map using only standard ASCII characters in the file name.");
+                        save.doClick();
                         return;
                     }
 
