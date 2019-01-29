@@ -554,6 +554,10 @@ public class RiskUtil {
             "^(?!(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\\.[^.]*)?$)[" + allowedChars + "\\.]*[" + allowedChars + "]$", 
             Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(text);
-        return matcher.matches();
+        
+        if (!matcher.matches()) {
+            return false;
+        }
+        return !text.contains("  ");
     }
 }

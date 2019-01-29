@@ -596,7 +596,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         String filename = MapChooser.getFileUID( map.getMapUrl() );
                         String fileUID = RiskUtil.replaceAll(filename," ","").toLowerCase();
                         if (!RiskUtil.isValidName(filename) || ids.contains(fileUID)) {
-                            errors.add(fileUID);
+                            errors.add(filename);
                         }
                         else {
                             ids.add(fileUID);
