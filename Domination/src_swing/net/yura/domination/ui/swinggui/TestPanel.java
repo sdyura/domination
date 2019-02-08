@@ -30,6 +30,7 @@ import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.AbstractTableModel;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
@@ -592,8 +593,12 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                     List<Map> maps = MapUpdateService.getMaps(MapChooser.MAP_PAGE,Collections.EMPTY_LIST);
                     Set<String> ids = new HashSet();
                     Set<String> errors = new HashSet();
+                    String longestMapName = RiskGame.getDefaultMap();
                     for (Map map: maps) {
                         String filename = MapChooser.getFileUID( map.getMapUrl() );
+                        if (filename.length() > longestMapName.length()) {
+                            longestMapName = filename;
+                        }
                         String fileUID = RiskUtil.replaceAll(filename," ","").toLowerCase();
                         if (!RiskUtil.isValidName(filename) || ids.contains(fileUID)) {
                             errors.add(filename);
@@ -602,12 +607,15 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                             ids.add(fileUID);
                         }
                     }
-
+                    
+                    String options = OnlineUtil.createGameString(1, 1, 1, RiskGame.MODE_DOMINATION, RiskGame.CARD_ITALIANLIKE_SET, true, true, longestMapName);
+                    String info = "\nLongest map name: \"" + longestMapName + "\" (" + longestMapName.length() + ") " + options.length();
+                    
                     if (errors.isEmpty()) {
-                        JOptionPane.showMessageDialog(this, "No errors found.");
+                        JOptionPane.showMessageDialog(this, "No errors found." + info);
                     }
                     else {
-                        JOptionPane.showMessageDialog(this, "Error found with map: "+errors);
+                        JOptionPane.showMessageDialog(this, "Error found with map: " + errors + info);
                     }
                 }
 		else {
