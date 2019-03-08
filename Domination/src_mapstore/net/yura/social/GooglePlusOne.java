@@ -3,6 +3,7 @@ package net.yura.social;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -90,7 +91,7 @@ public class GooglePlusOne {
      * unfortunately the urls are re-encoded on the google end so may not exactly match the encoded urls we send. so we need to decode them before comparing.
      */
     public static Map<String,Integer> getCount(InputStream is) throws IOException {
-	Object[] object = (Object[])util.load(is);
+	Object[] object = (Object[])util.load(new InputStreamReader(is, "UTF-8"));
         Map<String,Integer> urlToValue = new HashMap();
         for (int c=0;c<object.length;c++) {
             Map<String, Object> response = (Map)object[c];

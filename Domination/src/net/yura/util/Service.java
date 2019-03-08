@@ -6,9 +6,9 @@ import java.util.*;
 
 /**
  * After the Service class from Sun and the Apache project.
- * With help from Frdric Miserey.
+ * With help from Frédéric Miserey.
  *
- * @credits Frdric Miserey, Joseph Oettinger
+ * @credits Frédéric Miserey, Joseph Oettinger
  * @author Matthias L. Jugel
  * @version $id$
  */
