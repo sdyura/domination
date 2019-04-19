@@ -54,7 +54,6 @@ public class DominationMain extends Midlet {
 
     public static Preferences appPreferences;
     public GooglePlayGameServices googlePlayGameServices;
-    public List accounts;
 
     public Risk risk;
     public MiniFlashRiskAdapter adapter;
@@ -338,12 +337,24 @@ public class DominationMain extends Midlet {
         }
     }
 
-    public void setAccounts(List<String> accounts) {
-        this.accounts = accounts;
-        if (appPreferences != null) {
-            appPreferences.put("accounts", MiniUtil.listToCsv(accounts, ','));
-            flushPreferences();
+    public static void setAccounts(List<String> accounts) {
+        if (!accounts.isEmpty()) {
+            if (appPreferences != null) {
+                appPreferences.put("accounts", MiniUtil.listToCsv(accounts, ','));
+                flushPreferences();
+            }
         }
+    }
+
+    public static String getAccountsString() {
+        String accounts = getString("accounts", null);
+        // if we accidentally saved an empty string in an old version, remove it
+        if ("".equals(accounts)) {
+            appPreferences.remove("accounts");
+            flushPreferences();
+            return null;
+        }
+        return accounts;
     }
 
     private static void flushPreferences() {

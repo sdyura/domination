@@ -181,7 +181,7 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                     emails.add(name);
                 }
             }
-            dmain.setAccounts(emails);
+            DominationMain.setAccounts(emails);
         }
     }
 
