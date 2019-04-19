@@ -6,14 +6,14 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	12
 
-	Android		66
+	Android		67
 	Flash GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.2.0
+1.2.0 (23.12.2018)
 
 	better support for hi-res windows (no more blurry text)
 	right click to get maps by same author works better
@@ -23,7 +23,9 @@ CURRENT VERSION:
 	MapEditor: action buttons affect only selected countries
 	MapEditor: better (cross OS) filename validation for saving maps
 
-1.1.1.7
+        Android 67 fix warning on new versions of Android
+
+1.1.1.7 (05.12.2017)
 
 	Fix for 'Top Rated' being broken on PC Domination.
 	Swedish translation update by sa-w w waara09
@@ -39,7 +41,7 @@ CURRENT VERSION:
 		   show last few chat messages in chat window
 		   shows how many of each type of AI in online game description
 
-1.1.1.6
+1.1.1.6 (21.09.2015)
 
 	OS X java 1.7 maps dir missing deadlock fix
 	OS X java 1.7 open html help in browser fix
