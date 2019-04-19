@@ -8,7 +8,7 @@
     <!-- android:targetSdkVersion 11 to hide the legacy menu button on tablets -->
     <!-- android:targetSdkVersion 14 to hide the legacy menu button on phones  -->
     <!-- this also has a side effect of hiding the legacy resize button -->
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="14"
+    <uses-sdk android:targetSdkVersion="27"
 		tools:overrideLibrary="android.support.fragment,android.arch.lifecycle,com.google.android.gms.games,com.google.android.gms.auth.api.phone,com.google.android.gms.tasks,com.google.android.gms.auth.api,com.google.android.gms.base,android.support.coreutils,android.support.coreui,android.support.mediacompat,android.support.v4,com.google.android.gms.common,com.google.android.gms.auth,android.support.compat,com.google.android.gms.drive" />
 
 	<!-- App receives GCM messages. -->
