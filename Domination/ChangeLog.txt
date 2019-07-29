@@ -23,7 +23,7 @@ CURRENT VERSION:
 	MapEditor: action buttons affect only selected countries
 	MapEditor: better (cross OS) filename validation for saving maps
 
-        Android 67 fix warning on new versions of Android
+	Android 67 fix warning on new versions of Android
 
 1.1.1.7 (05.12.2017)
 
