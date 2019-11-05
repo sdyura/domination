@@ -599,6 +599,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         if (filename.length() > longestMapName.length()) {
                             longestMapName = filename;
                         }
+
                         String fileUID = RiskUtil.replaceAll(filename," ","").toLowerCase();
                         if (!RiskUtil.isValidName(filename) || ids.contains(fileUID)) {
                             errors.add(filename);
@@ -607,10 +608,11 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                             ids.add(fileUID);
                         }
                     }
-                    
+
                     String options = OnlineUtil.createGameString(1, 1, 1, RiskGame.MODE_DOMINATION, RiskGame.CARD_ITALIANLIKE_SET, true, true, longestMapName);
-                    String info = "\nLongest map name: \"" + longestMapName + "\" (" + longestMapName.length() + ") " + options.length();
-                    
+                    String info = "\nLongest map name: \"" + longestMapName + "\" (" + longestMapName.length() + ") max options lenght: " + options.length();
+                    // current max allowed by Lobby DB is 200 {@link net.yura.lobby.database.GameRoom#getOptions()}
+
                     if (errors.isEmpty()) {
                         JOptionPane.showMessageDialog(this, "No errors found." + info);
                     }
