@@ -221,8 +221,8 @@ public class MapChooser implements ActionListener,MapServerListener {
 
             String url = getURL(context, iconUrl);
 
-            // if this is a remote file
-            if ( url.indexOf(':')>0 ) {
+            // if this is a remote file (starts with http:// or https://)
+            if (url.indexOf("://") > 0) {
                 getRemoteImage(key, url, c);
             }
             // if this is a locale file
