@@ -35,7 +35,7 @@ public class GameSettings implements GameSettingsMXBean {
     public static final Logger logger = Logger.getLogger(GameSettings.class.getName());
     
     private File mapsDir;
-    private int mapMaxRes = 677;
+    private int mapMaxRes = 2048;
     private int mapMaxCountries = 100;
 
     public GameSettings(File mapsDir) {
