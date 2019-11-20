@@ -44,6 +44,7 @@ import net.yura.domination.engine.guishared.PicturePanel;
 import net.yura.domination.mapstore.Map;
 import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mapstore.MapUpdateService;
+import net.yura.domination.tools.mapeditor.MapsTools;
 import net.yura.domination.ui.flashgui.MainMenu;
 import net.yura.mobile.util.Url;
 import net.yura.swing.JTable;
@@ -601,7 +602,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         }
 
                         String fileUID = RiskUtil.replaceAll(filename," ","").toLowerCase();
-                        if (!RiskUtil.isValidName(filename) || ids.contains(fileUID)) {
+                        if (!MapsTools.isValidName(filename) || ids.contains(fileUID)) {
                             errors.add(filename);
                         }
                         else {

@@ -13,6 +13,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
@@ -271,6 +273,35 @@ public class MapsTools {
         catch(Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static String getExtension(File file) {
+        String name = file.getName();
+        int index = name.lastIndexOf('.');
+        return index>0?name.substring( index+1 ):"";
+    }
+
+    public static boolean isValidName(String text) {
+
+        // !"#$%&'()*+,-./
+        //0123456789:;<=>?
+        //@ABCDEFGHIJKLMNO
+        //PQRSTUVWXYZ[\]^_
+        //`abcdefghijklmno
+        //pqrstuvwxyz{|}~
+
+        // All OSs support the & symbol in the name, but the current python version of the MapServer does not :-(
+        
+        final String allowedChars = " !#$%'()+,\\-0-9;=@A-Z\\[\\]^_`a-z{}";
+        Pattern pattern = Pattern.compile(
+            "^(?!(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\\.[^.]*)?$)[" + allowedChars + "\\.]*[" + allowedChars + "]$", 
+            Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(text);
+        
+        if (!matcher.matches()) {
+            return false;
+        }
+        return !text.contains("  ");
     }
 
 }

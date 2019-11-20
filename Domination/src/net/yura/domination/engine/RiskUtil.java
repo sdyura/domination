@@ -539,25 +539,4 @@ public class RiskUtil {
         }
         return text.toString();
     }
-    
-    public static boolean isValidName(String text) {
-
-        // !"#$%&'()*+,-./
-        //0123456789:;<=>?
-        //@ABCDEFGHIJKLMNO
-        //PQRSTUVWXYZ[\]^_
-        //`abcdefghijklmno
-        //pqrstuvwxyz{|}~
-
-        final String allowedChars = " !#$%&'()+,\\-0-9;=@A-Z\\[\\]^_`a-z{}";
-        Pattern pattern = Pattern.compile(
-            "^(?!(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\\.[^.]*)?$)[" + allowedChars + "\\.]*[" + allowedChars + "]$", 
-            Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(text);
-        
-        if (!matcher.matches()) {
-            return false;
-        }
-        return !text.contains("  ");
-    }
 }

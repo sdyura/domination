@@ -581,7 +581,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                             File file = fc.getSelectedFile();
                             newFileName = file.getName();
 
-                            if (!RiskUtil.isValidName(newFileName)) {
+                            if (!MapsTools.isValidName(newFileName)) {
                                     JOptionPane.showMessageDialog(this, "please use only standard ASCII characters in the file name.");
                                     continue;
                             }
@@ -631,7 +631,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                     }
 
                     // someone may have an old map saved with an invalid filename, we want them to re-save this map
-                    if (!RiskUtil.isValidName(fileName)) {
+                    if (!MapsTools.isValidName(fileName)) {
                         JOptionPane.showMessageDialog(this, "please save the map using only standard ASCII characters in the file name.");
                         save.doClick();
                         return;
@@ -1479,13 +1479,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
             dialog.setVisible(true);
         }
 
-        public static String getExtension(File file) {
-            String name = file.getName();
-            int index = name.lastIndexOf('.');
-            return index>0?name.substring( index+1 ):"";
-        }
-
-
         // ####################################################### MAKE CARDS FILE
         private String buildCardsFile(String cardsName) throws Exception {
 
@@ -1761,7 +1754,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
             String pic_extension = IMAGE_PIC_EXTENSION;
             boolean doCopy = false;
             if (imgFile!=null && imgFile.exists() ) {
-                String extension = getExtension(imgFile).toLowerCase();
+                String extension = MapsTools.getExtension(imgFile).toLowerCase();
                 if ("jpeg".equals(extension)) { extension="jpg"; }
 
                 // these are the file formats we do not want to re-encode
