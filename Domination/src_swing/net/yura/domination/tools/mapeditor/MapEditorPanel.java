@@ -348,6 +348,9 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	    int width = pic.getWidth();
 
 	    Country[] countries = myMap.getCountries();
+            
+            g.setFont( new java.awt.Font("Arial", java.awt.Font.PLAIN, (d+2)/2 ) );
+            int fontHeight = g.getFontMetrics().getAscent();
 
             for (int i = 0; i < countries.length; i++) {
 
@@ -422,8 +425,8 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 		g.setColor(Color.BLACK);
 
-		g.drawString(n.getIdString(), x,y);
-		g.drawString(String.valueOf(i+1), x,y+10);
+		g.drawString(n.getIdString(), x, y);
+		g.drawString(String.valueOf(i+1), x, y + fontHeight);
 
                 if (doXor) {
                     g.setPaintMode();
