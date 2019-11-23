@@ -319,7 +319,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		fader.setMajorTickSpacing(20);
 		fader.setPaintLabels(true);
 
-		brush = new JSlider(0,100,0);
+		brush = new JSlider(1, 100, MapEditorPanel.DEFAULT_BRUSH_SIZE);
 		brush.addChangeListener(this);
 		brush.setOpaque(false);
 		brush.setMajorTickSpacing(20);

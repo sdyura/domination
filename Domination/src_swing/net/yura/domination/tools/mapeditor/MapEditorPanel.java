@@ -41,6 +41,8 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	public static final int MODE_DISJOIN = 4;
 	public static final int MODE_DRAW = 5;
         
+        public static final int DEFAULT_BRUSH_SIZE = 5;
+        
 	//private List countries; // every item in this list also has its position+1 stored as the "color" value of it
 	//private List continents;
 	private RiskGame myMap;
@@ -50,7 +52,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	private Country selected;
 	private Rectangle box;
 	private int mode;
-	private int brush;
+	private int brush = DEFAULT_BRUSH_SIZE;
 	private float alpha;
 	private Point dragpoint;
 	private int zoom;
