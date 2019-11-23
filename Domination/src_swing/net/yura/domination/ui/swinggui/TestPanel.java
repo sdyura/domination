@@ -592,6 +592,11 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                 else if ("checkMapServer".equals(command)) {
                     // get all maps
                     List<Map> maps = MapUpdateService.getMaps(MapChooser.MAP_PAGE,Collections.EMPTY_LIST);
+                    if (maps.isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "ERROR: No maps found on server!");
+                        return;
+                    }
+
                     Set<String> ids = new HashSet();
                     Set<String> errors = new HashSet();
                     String longestMapName = RiskGame.getDefaultMap();
