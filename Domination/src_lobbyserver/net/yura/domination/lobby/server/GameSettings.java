@@ -72,6 +72,9 @@ public class GameSettings implements GameSettingsMXBean {
     public void updateMaps() {
         // get list of all maps from the server
         List<Map> serverMaps = MapUpdateService.getMaps(MapChooser.MAP_PAGE,Collections.EMPTY_LIST);
+        if (serverMaps.isEmpty()) {
+            throw new IllegalStateException("no maps");
+        }
 
         try {
             new XMLMapAccess().save(RiskUtil.streamOpener.saveMapFile("extra_maps.xml"), new Task("maps", serverMaps));
