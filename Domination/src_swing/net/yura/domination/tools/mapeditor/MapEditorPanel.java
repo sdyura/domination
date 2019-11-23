@@ -536,7 +536,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 	}
 
-	public Point getPoint(MouseEvent e) {
+	public Point getPointOnImage(MouseEvent e) {
 		return new Point( e.getX()/zoom,e.getY()/zoom );
 	}
 
@@ -558,7 +558,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 		if (myMap!=null) {
 
-		    Point point = getPoint(e);
+		    Point point = getPointOnImage(e);
 
 		    if ((e.getModifiers() & MouseEvent.BUTTON3_MASK) == MouseEvent.BUTTON3_MASK) {
 
@@ -662,7 +662,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 		)) {
 
-			Point point = getPoint(e);
+			Point point = getPointOnImage(e);
 
 			if (mode==MODE_MOVE) {
 
@@ -716,7 +716,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 	    if (myMap!=null) {
 
-		Point point = getPoint(e);
+		Point point = getPointOnImage(e);
 
 		if (mode == MODE_MOVE) {
 
@@ -774,7 +774,9 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                                 Rectangle rect = new Rectangle(dragpoint.x - halfBrush, dragpoint.y - halfBrush, brush, brush);
                                 rect.add(new Rectangle(end.x - halfBrush, end.y - halfBrush, brush, brush));
                                 rect.grow(3, 3);
-                                repaint(rect);
+                                
+                                // multiply by zoom to go from image coordinates to screen coordinates
+                                repaint(zoom * rect.x, zoom * rect.y, zoom * rect.width, zoom * rect.height);
 			}
 
 			dragpoint = end;
@@ -798,7 +800,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 	public void mouseMoved(MouseEvent e) {
 		if (mode == MODE_DRAW) {
-			dragpoint = getPoint(e);
+			dragpoint = getPointOnImage(e);
 			repaint();
 		}
 	}

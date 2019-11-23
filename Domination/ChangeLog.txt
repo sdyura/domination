@@ -17,6 +17,7 @@ CURRENT VERSION:
 
 	MapEditor: more checks on filenames, & symbol not allowed
 	MapEditor: fix for font size on hi-res screens
+	MapEditor: fix to see what you are drawing when zoomed in
 
 1.2.0 (23.12.2018)
 
