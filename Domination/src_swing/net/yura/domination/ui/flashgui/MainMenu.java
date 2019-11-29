@@ -4,6 +4,7 @@ package net.yura.domination.ui.flashgui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -18,10 +19,12 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.RootPaneContainer;
 import javax.swing.event.MouseInputListener;
 import net.yura.domination.engine.Risk;
@@ -33,6 +36,9 @@ import net.yura.domination.engine.guishared.AboutDialog;
 import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.domination.lobby.client.GameSidePanel;
+import net.yura.lobby.client.ChatBox;
+import net.yura.lobby.client.TurnBasedAdapter;
 import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.me4se.ME4SEPanel;
 
@@ -667,6 +673,12 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                     return super.isEnabled() && player != null && player.isAlive();
                 }
             };
+        }
+        
+        Component getOnlinePanel() {
+            //ChatBox cb = new ChatBox(mlc.mycom, mlc.openGameId, "game name");
+            //return mlc == null ? null : new GameSidePanel(new JProgressBar(), new JButton(), new JPanel(), new JPanel()).getPanel();
+            return null;
         }
 
 	/**

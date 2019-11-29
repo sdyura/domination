@@ -35,13 +35,7 @@ public class SwingGUIFrame {
 
                 RiskUIUtil.center(gui);
 
-		try {
-			gui.setMinimumSize( gui.getPreferredSize() );
-		}
-		catch(NoSuchMethodError ex) {
-			// must me java 1.4
-			gui.setResizable(false);
-		}
+                RiskUIUtil.setMinimumSize(gui, gui.getPreferredSize());
 
 		gui.setVisible(true);
 

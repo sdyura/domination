@@ -49,7 +49,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     public final static String EXTRA_GAME_OPTIONS = "net.yura.domination.GAME_OPTIONS";
 
     XULLoader loader;
-    List list;
+    List gameList;
     Window adminPopup;
 
     public final Connection mycom;
@@ -76,11 +76,11 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             throw new RuntimeException(ex);
         }
 
-        list = (List)loader.find("ResultList");
+        gameList = (List)loader.find("ResultList");
         GameRenderer r = new GameRenderer(this);
-        list.setCellRenderer( r );
-        list.setFixedCellHeight( Math.max( XULLoader.adjustSizeToDensity(50), r.getFixedCellHeight() ) );
-        list.setFixedCellWidth(10); // will streach
+        gameList.setCellRenderer( r );
+        gameList.setFixedCellHeight( Math.max( XULLoader.adjustSizeToDensity(50), r.getFixedCellHeight() ) );
+        gameList.setFixedCellWidth(10); // will streach
 
         ComboBox box = (ComboBox)loader.find("listView");
         ViewChooser viewChooser = new ViewChooser( (Option[])box.getItems().toArray(new Option[box.getItemCount()]) );
@@ -90,8 +90,8 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         viewChooser.setStretchCombo(true);
         viewChooser.setName(null);
 
-        adminPopup = list.getPopupMenu();
-        list.setPopupMenu(null);
+        adminPopup = gameList.getPopupMenu();
+        gameList.setPopupMenu(null);
 
         String uuid = getMyUUID();
 
@@ -167,7 +167,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     public void actionPerformed(String actionCommand) {
 
         if ("listSelect".equals(actionCommand)) {
-            final Game game = (Game)list.getSelectedValue();
+            final Game game = (Game)gameList.getSelectedValue();
             if (game!=null) {
                 int state = game.getState( whoAmI() );
                 switch (state) {
@@ -242,7 +242,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         else if ("renameGame".equals(actionCommand)) {
             if (playerType >= Player.PLAYER_MODERATOR) {
-                final Game game = (Game) list.getSelectedValue();
+                final Game game = (Game) gameList.getSelectedValue();
                 final TextField saveText = new TextField();
                 saveText.setText( game.getName() );
                 OptionPane.showOptionDialog(new ActionListener() {
@@ -263,7 +263,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         else if ("renameGame2".equals(actionCommand)) {
             if (playerType >= Player.PLAYER_MODERATOR) {
-                final Game game = (Game) list.getSelectedValue();
+                final Game game = (Game) gameList.getSelectedValue();
                 game.setName("game");
                 mycom.createNewGame(game);
             }
@@ -272,7 +272,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             }
         }
         else if ("delGame".equals(actionCommand)) {
-            final Game game = (Game) list.getSelectedValue();
+            final Game game = (Game) gameList.getSelectedValue();
             if (playerType >= Player.PLAYER_MODERATOR && game.getNumOfPlayers() < game.getMaxPlayers()) {
                 mycom.delGame(game.getId());
             }
@@ -379,7 +379,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     public void setUsername(String name, int type) {
         myusername = name;
         playerType = type;
-        list.setPopupMenu(playerType >= Player.PLAYER_MODERATOR ? adminPopup : null);
+        gameList.setPopupMenu(playerType >= Player.PLAYER_MODERATOR ? adminPopup : null);
         toast("You are logged in as: "+name);
         game.connected(name);
     }
@@ -425,7 +425,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
         if (index<0 && game.hasPlayer(whoAmI())) {
             // we are adding a new game that we are a player of, make this index visible
-            list.ensureIndexIsVisible(-index -1);
+            gameList.ensureIndexIsVisible(-index -1);
         }
     }
 
@@ -464,35 +464,35 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         ViewChooser box = (ViewChooser)loader.find("listView");
         java.util.List newGameList = filter(games, ((Option)box.getSelectedItem()).getKey() );
 
-        Object selected = list.getSelectedValue();
-        int visIndex = list.getFirstVisibleIndex();
-        Object visItem = (visIndex>=0&&visIndex<list.getSize())?list.getElementAt(visIndex):null;
+        Object selected = gameList.getSelectedValue();
+        int visIndex = gameList.getFirstVisibleIndex();
+        Object visItem = (visIndex>=0&&visIndex<gameList.getSize())?gameList.getElementAt(visIndex):null;
 
-        list.setListData( RiskUtil.asVector( newGameList ) );
+        gameList.setListData( RiskUtil.asVector( newGameList ) );
 
         if (update) {
             if (selected!=null) {
                 int newIndex = Collections.binarySearch(newGameList, selected);
                 if (newIndex>=0) {
-                    list.setSelectedIndex( newIndex );
+                    gameList.setSelectedIndex( newIndex );
                 }
             }
             if (visItem!=null) {
                 // as we know this is a update, it means 1 item has either been added or 1 item has been removed
-                Component view = ((ScrollPane)DesktopPane.getAncestorOfClass(ScrollPane.class, list)).getView();
+                Component view = ((ScrollPane)DesktopPane.getAncestorOfClass(ScrollPane.class, gameList)).getView();
                 int newIndex = Collections.binarySearch(newGameList, visItem);
                 if (newIndex > visIndex) { // item added to top
-                    view.setLocation(view.getX(), view.getY()-list.getFixedCellHeight());
+                    view.setLocation(view.getX(), view.getY()-gameList.getFixedCellHeight());
                 }
                 else if (newIndex < visIndex) { // item removed from top
-                    view.setLocation(view.getX(), view.getY()+list.getFixedCellHeight());
+                    view.setLocation(view.getX(), view.getY()+gameList.getFixedCellHeight());
                 }
                 // we ignore any change that happens bellow out first visible item
             }
         }
         else {
-            list.setSelectedIndex(-1);
-            if (list.getSize()>0) list.ensureIndexIsVisible(0);
+            gameList.setSelectedIndex(-1);
+            if (gameList.getSize()>0) gameList.ensureIndexIsVisible(0);
         }
 
         getRoot().revalidate();

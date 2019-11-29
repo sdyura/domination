@@ -4,6 +4,7 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Frame;
@@ -1238,6 +1239,21 @@ public class RiskUIUtil {
                 in.close();
             }
             catch (Throwable th) { }
+        }
+    }
+
+    public static void setMinimumSize(Window window, Dimension size) {
+        try {
+            window.setMinimumSize(size);
+        }
+        catch(NoSuchMethodError ex) {
+            // must me java 1.4
+            if (window instanceof Dialog) {
+                ((Dialog)window).setResizable(false);
+            }
+            else if (window instanceof Frame) {
+                ((Frame)window).setResizable(false);
+            }
         }
     }
 }

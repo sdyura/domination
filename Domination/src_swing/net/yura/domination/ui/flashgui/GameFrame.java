@@ -19,6 +19,9 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -140,22 +143,30 @@ public class GameFrame extends JFrame implements KeyListener {
 
 		graphdialog = null;
 
-		try {
-
-			setMinimumSize( getPreferredSize() );
-
-		}
-		catch(NoSuchMethodError ex) {
-
-			// must me java 1.4
-			setResizable(false);
-
-		}
-
+                RiskUIUtil.setMinimumSize(this, getPreferredSize());
 	}
 
         public void setExtraAction(Action action) {
             extraAction = action;
+        }
+        
+        public void setSidePanel(Component panel) {
+            Container container = getContentPane();
+            BorderLayout layout = (BorderLayout)container.getLayout();
+            for (int c = 0; c < container.getComponentCount(); c++) {
+                Component comp = container.getComponent(c);
+                if (layout.getConstraints(comp) == BorderLayout.EAST) {
+                    container.remove(c);
+                    RiskUIUtil.setMinimumSize(this, new Dimension(getMinimumSize().width - comp.getWidth(), getMinimumSize().height));
+                    setSize(getWidth() - comp.getWidth(), getHeight());
+                    break;
+                }
+            }
+            if (panel != null) {
+                container.add(panel, java.awt.BorderLayout.EAST);
+                setSize(getWidth() + panel.getPreferredSize().width, getHeight());
+                RiskUIUtil.setMinimumSize(this, new Dimension(getMinimumSize().width + panel.getPreferredSize().width, getMinimumSize().height));
+            }
         }
 
         @Override

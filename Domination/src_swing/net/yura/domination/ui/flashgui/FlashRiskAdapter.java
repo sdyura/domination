@@ -231,9 +231,9 @@ public class FlashRiskAdapter implements RiskListener {
 
 	/**
 	 * Starts the game
-	 * @param s If the game is a local game
+	 * @param localGame If the game is a local game
 	 */
-	public void startGame(boolean s) {
+	public void startGame(boolean localGame) {
 
 		if ( newgameframe.isVisible() ) {
 			newgameframe.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -242,7 +242,7 @@ public class FlashRiskAdapter implements RiskListener {
 			menu.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		}
 
-		gameFrame.setup(s);
+		gameFrame.setup(localGame);
 
                 RiskUIUtil.center(gameFrame);
 
@@ -254,6 +254,7 @@ public class FlashRiskAdapter implements RiskListener {
 		}
 
                 gameFrame.setExtraAction(menu.getOnlineAction());
+                gameFrame.setSidePanel(menu.getOnlinePanel());
                 
 		gameFrame.setVisible(true);
 

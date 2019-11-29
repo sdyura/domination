@@ -27,6 +27,7 @@ import net.yura.swingme.core.CoreUtil;
 
 /**
  * @author Yura Mamyrin
+ * @see net.yura.domination.lobby.client.ClientGameRisk
  */
 public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
 
@@ -78,6 +79,9 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
 
     private boolean openGame;
 
+    /**
+     * @see net.yura.domination.lobby.client.ClientGameRisk#gameObject(java.lang.Object)
+     */
     public void objectForGame(Object object) {
         if (object instanceof RiskGame) {
             RiskGame thegame = (RiskGame)object;
@@ -111,6 +115,9 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
         }
     }
 
+    /**
+     * @see net.yura.domination.lobby.client.ClientGameRisk#gameString(java.lang.String)
+     */
     public void stringForGame(String message) {
         if (openGame) {
             myrisk.parserFromNetwork(message);

@@ -7,6 +7,7 @@ import net.yura.mobile.util.Properties;
 
 /**
  * @author Yura Mamyrin
+ * @see net.yura.lobby.client.LobbyGame
  */
 public interface MiniLobbyGame {
 

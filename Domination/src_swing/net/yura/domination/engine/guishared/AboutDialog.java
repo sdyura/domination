@@ -249,18 +249,7 @@ public class AboutDialog extends JDialog {
 		pack();
 		Dimension size = getPreferredSize();
 
-		try {
-
-			setMinimumSize(size);
-
-		}
-		catch(NoSuchMethodError ex) {
-
-			// must me java 1.4
-			setResizable(false);
-
-		}
-
+                RiskUIUtil.setMinimumSize(this, size);
 
 		addTextToTextBox(editorPane1,"help/game_credits.htm");
 		addTextToTextBox(editorPane2,"gpl.txt");
