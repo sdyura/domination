@@ -14,12 +14,17 @@ import javax.swing.JProgressBar;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
+import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
 
 public class GameSidePanel {
 
+    private final static String product = RiskUtil.GAME_NAME + " Lobby Client";
+    private final static String version = "0.3";
+    
     private JSplitPane me;
 
     private JLabel nameLabel;
@@ -65,7 +70,7 @@ public class GameSidePanel {
 
         aboutButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
-                        //RiskUIUtil.openAbout(RiskUIUtil.findParentFrame(aboutButton), product, version);
+                        RiskUIUtil.openAbout(RiskUIUtil.findParentFrame(me), product, version);
                 }
         });
 

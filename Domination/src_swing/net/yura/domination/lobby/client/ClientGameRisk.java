@@ -2,10 +2,6 @@ package net.yura.domination.lobby.client;
 
 import java.awt.Component;
 import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,15 +12,8 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.WeakHashMap;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicSplitPaneUI;
 import net.yura.domination.engine.OnlineRisk;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
@@ -33,28 +22,20 @@ import net.yura.domination.engine.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.swing.GraphicsUtil;
-import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.ui.flashgui.FlashRiskAdapter;
 import net.yura.domination.ui.flashgui.GameFrame;
 import net.yura.lobby.client.LobbyClientGUI;
 import net.yura.lobby.client.ResBundle;
 import net.yura.lobby.client.TurnBasedAdapter;
 import net.yura.lobby.model.Game;
-import net.yura.swing.ImageIcon;
 
 public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
 
         private final static Logger logger = Logger.getLogger( ClientGameRisk.class.getName() );
 
-	private final static String product;
-	private final static String version = "0.2";
-
 	static {
                 final String RISK_PATH = RiskUtil.GAME_NAME + "/";
                 final String MAP_PATH = "maps/";
-
-		product = RiskUtil.GAME_NAME + " Lobby Client";
 
                 RiskUtil.streamOpener = new RiskIO() {
                     public InputStream openStream(String name) throws IOException {
