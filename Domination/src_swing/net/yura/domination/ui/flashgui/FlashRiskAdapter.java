@@ -264,10 +264,8 @@ public class FlashRiskAdapter implements RiskListener {
 			menu.hide();
 		}
 
-                if (lobby != null) {
-                    gameFrame.setExtraAction(lobby.getOnlineAction());
-                    gameFrame.setSidePanel(lobby.getOnlinePanel());
-                }
+                gameFrame.setExtraAction(lobby == null ? null : lobby.getOnlineAction());
+                gameFrame.setSidePanel(lobby == null ? null : lobby.getOnlinePanel());
                 
 		gameFrame.setVisible(true);
 
