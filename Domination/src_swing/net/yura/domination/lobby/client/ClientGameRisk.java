@@ -233,7 +233,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
         // TODO call this method when someone is killed in the game
         private void updateButtons() {
             Player player = myrisk.getGame().getPlayer(lgml.whoAmI());
-            sidepanel.updateButton(player!=null && player.isAlive(), myrisk.findEmptySpot() != null );
+            updateButton(player!=null && player.isAlive(), myrisk.findEmptySpot() != null );
         }
 
         // WMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMW

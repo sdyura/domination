@@ -569,15 +569,25 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
     }
 
-    public void renamePlayer(String oldname, String newname,int newtype) {
-        // if we had a player/spectator list we would rename the player there
+    public void addPlayer(int roomid, Player player) {
+        if (roomid == openGameId) {
+            game.addPlayer(player);
+        }
+    }
+    public void removePlayer(int roomid, String player) {
+        if (roomid == openGameId) {
+            game.removePlayer(player);
+        }
+    }
+    public void renamePlayer(String oldname, String newname, int newtype) {
+        game.renamePlayer(oldname, newname, newtype);
     }
 
 
 
     // chat
     public void incomingChat(String fromwho,String message) {
-        showMessage(fromwho, message);
+        game.showMessage(fromwho, message);
     }
     public void incomingChat(int roomid, String fromwho, String message) {
         if (openGameId == roomid) {
@@ -587,26 +597,14 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 }
                 chatMessages.add(fromwho + ": " + message);
             }
-            showMessage(fromwho, message);
+            game.showMessage(fromwho, message);
         }
     }
 
     public void addPlayer(Player player) { }
     public void removePlayer(String player) { }
-    public void addPlayer(int roomid, Player player) { }
-    public void removePlayer(int roomid, String player) { }
-
     public void privateMessage(String fromwho, String message) { }
     public void setUserInfo(String user,java.util.List info) { }
-
-    static void showMessage(String fromwho,String message) {
-        if (fromwho!=null) {
-            toast(fromwho+": "+message);
-        }
-        else {
-            toast(message);
-        }
-    }
 
     /**
      * @see net.yura.domination.android.GCMIntentService#onMessage(android.content.Context, android.content.Intent)
@@ -632,7 +630,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     /**
      * @see net.yura.domination.mobile.flashgui.GameActivity#toast(java.lang.String)
      */
-    static void toast(String message) {
+    public static void toast(String message) {
         if ( Display.getDisplay( Midlet.getMidlet() ).getCurrent() != null ) {
             if (Midlet.getPlatform()==Midlet.PLATFORM_ANDROID) {
                 Midlet.openURL("toast://show?message="+Url.encode(message));
@@ -643,4 +641,16 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
     }
 
+    public Game getCurrentOpenGame() {
+        if (openGameId == -1) {
+            return null;
+        }
+        for (int c = 0; c < games.size(); c++) {
+            Game game = (Game)games.get(c);
+            if (game.getId() == openGameId) {
+                return game;
+            }
+        }
+        throw new IllegalStateException(openGameId + " not found in " + games);
+    }
 }

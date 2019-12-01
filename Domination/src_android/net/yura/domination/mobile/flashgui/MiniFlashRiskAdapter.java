@@ -3,23 +3,20 @@ package net.yura.domination.mobile.flashgui;
 import javax.microedition.lcdui.Image;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
-import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.lobby.mini.MiniLobbyRisk;
-import net.yura.domination.mobile.MiniUtil;
 import net.yura.domination.mobile.flashgui.DominationMain.GooglePlayGameServices;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.Icon;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.Menu;
 import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.logging.Logger;
 import net.yura.mobile.util.Url;
-import java.util.List;
 import net.yura.domination.engine.OnlineUtil;
+import net.yura.lobby.mini.MiniLobbyClient;
 
 public class MiniFlashRiskAdapter implements RiskListener {
 
@@ -28,7 +25,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
     private GameSetup gameSetup;
     private GameActivity gameFrame;
 
-    public net.yura.lobby.mini.MiniLobbyClient lobby;
+    public MiniLobbyClient lobby;
 
     public MiniFlashRiskAdapter(Risk risk) {
         myRisk = risk;
@@ -72,6 +69,20 @@ public class MiniFlashRiskAdapter implements RiskListener {
             public void gameStarted(int id) {
                 DominationMain.getGooglePlayGameServices().gameStarted(id);
             }
+
+            @Override
+            public void showMessage(String fromwho, String message) {
+                MiniLobbyClient.toast(fromwho != null ? fromwho + ": " + message : message);
+            }
+
+            @Override
+            public void renamePlayer(String oldname, String newname, int newtype) {
+                // if we had a player/spectator list we would rename the player there
+            }
+            @Override
+            public void addPlayer(net.yura.lobby.model.Player player) { }
+            @Override
+            public void removePlayer(String player) { }
         } );
 
         updatePlayGamesInfo();

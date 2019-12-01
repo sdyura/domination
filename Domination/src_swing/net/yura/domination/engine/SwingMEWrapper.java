@@ -10,9 +10,12 @@ import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.lobby.mini.MiniLobbyRisk;
 import net.yura.domination.mapstore.MapChooser;
+import net.yura.lobby.client.ChatBox;
+import net.yura.lobby.client.PlayerList;
 import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
+import net.yura.lobby.model.Player;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.me4se.ME4SEPanel;
 
@@ -66,7 +69,7 @@ public class SwingMEWrapper {
         return result;
     }
 
-    public static MiniLobbyClient makeMiniLobbyClient(String server, Risk risk,final Window window) {
+    public static MiniLobbyClient makeMiniLobbyClient(String server, Risk risk,final Window window, final ChatBox chat, final PlayerList players) {
         MapChooser.loadThemeExtension();
         MiniLobbyClient miniLobbyClient = new MiniLobbyClient(new MiniLobbyRisk(risk) {
             private net.yura.domination.lobby.client.GameSetupPanel gsp;
@@ -84,6 +87,27 @@ public class SwingMEWrapper {
             }
             public String getAppVersion() {
                 return RiskUtil.RISK_VERSION;
+            }
+            public void showMessage(String fromwho, String message) {
+                if (chat != null) {
+                    chat.incomingChat(fromwho, message);
+                }
+            }
+
+            public void addPlayer(Player player) {
+                if (players != null) {
+                    players.addPlayer(player);
+                }
+            }
+            public void removePlayer(String player) {
+                if (players != null) {
+                    players.removePlayer(player);
+                }
+            }
+            public void renamePlayer(String oldname, String newname, int newtype) {
+                if (players != null) {
+                    players.renamePlayer(oldname, newname, newtype);
+                }
             }
         } );
         miniLobbyClient.connect(server);

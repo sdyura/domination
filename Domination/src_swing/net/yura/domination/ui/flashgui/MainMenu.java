@@ -2,9 +2,7 @@
 
 package net.yura.domination.ui.flashgui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -12,35 +10,23 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.RootPaneContainer;
 import javax.swing.event.MouseInputListener;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
-import net.yura.domination.engine.SwingMEWrapper;
-import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.guishared.AboutDialog;
 import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
 import net.yura.domination.engine.translation.TranslationBundle;
-import net.yura.domination.lobby.client.GameSidePanel;
-import net.yura.lobby.client.ChatBox;
-import net.yura.lobby.client.TurnBasedAdapter;
-import net.yura.lobby.mini.MiniLobbyClient;
-import net.yura.me4se.ME4SEPanel;
 
 /**
  * <p> Main Menu for FlashGUI </p>
@@ -298,11 +284,8 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	 * a button shall be activated
 	 */
 	private void activateButton(int thebutton) {
-
 		if (thebutton != 0) {
-
 			switch (thebutton) {
-
 				case MainMenu.BUTTON_NEW:{
 
 					myrisk.parser("newgame");
@@ -371,34 +354,23 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 					break;
 				}
 				case MainMenu.BUTTON_LOBBY: {
-
 					if (lobby.isVisible()) {
-
 //						RiskUIUtil.runLobby(myrisk);
-
-                                                showMiniLobby();
+                                                fra.showMiniLobby(root, window);
                                         }
-
 					break;
 				}
 				case MainMenu.BUTTON_ABOUT: {
-
 					Frame frame = RiskUIUtil.findParentFrame(this);
-
 					RiskUIUtil.openAbout(frame,product, version);
-
 					break;
 				}
 				case MainMenu.BUTTON_EXIT: {
-
 					exit();
-
 					break;
 				}
 				case MainMenu.BUTTON_DONATE: {
-
 					RiskUIUtil.donate(this);
-
 					break;
 				}
 			}//switch end
@@ -614,71 +586,10 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
         }
         
         void showMainMenu() {
-            
             root.setContentPane( this );
             window.setTitle( TranslationBundle.getBundle().getString( "mainmenu.title"));
             window.setResizable(false);
             window.pack();
-        }
-
-        MiniLobbyClient mlc;
-
-        void showMiniLobby() {
-            
-            final ME4SEPanel wrapper = new ME4SEPanel();
-            wrapper.getApplicationManager().applet = RiskUIUtil.applet;
-            
-            mlc = SwingMEWrapper.makeMiniLobbyClient(MiniLobbyClient.LOBBY_SERVER, myrisk, window);
-            wrapper.add(mlc.getRoot());
-
-            mlc.addCloseListener(new net.yura.mobile.gui.ActionListener() {
-                public void actionPerformed(String actionCommand) {
-                    wrapper.destroy();
-                    showMainMenu();
-                    mlc = null;
-                }
-            });
-
-            JPanel panel = new JPanel(new BorderLayout());
-            panel.add(wrapper);
-
-            BufferedImage img = RiskUIUtil.getUIImage(this.getClass(),"graph.jpg");
-            panel.setBorder( new FlashBorder(
-                        img.getSubimage(100, 0, 740, 50),
-                        img.getSubimage(0, 0, 50, 400),
-                        img.getSubimage(100, 350, 740, 50), //img.getSubimage(100, 332, 740, 68),
-                        img.getSubimage(50, 0, 50, 400)
-                    ) );
-            
-            root.setContentPane(panel);
-            window.setTitle( mlc.getTitle() );
-            window.setResizable(true);
-            window.setSize(GraphicsUtil.scale(500), GraphicsUtil.scale(600));
-        }
-
-        Action getOnlineAction() {
-            return mlc == null ? null : new AbstractAction(resBundle.getString("lobby.resign")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    mlc.resign();
-                    setEnabled(false); // we can only resign once
-                }
-                /**
-                 * TODO remove duplicate code from:
-                 * @see net.yura.domination.mobile.flashgui.MiniFlashRiskAdapter#amOnlinePlayer();
-                 */
-                @Override
-                public boolean isEnabled() {
-                    Player player = mlc == null ? null : myrisk.getGame().getPlayer(mlc.whoAmI());
-                    return super.isEnabled() && player != null && player.isAlive();
-                }
-            };
-        }
-        
-        Component getOnlinePanel() {
-            //ChatBox cb = new ChatBox(mlc.mycom, mlc.openGameId, "game name");
-            //return mlc == null ? null : new GameSidePanel(new JProgressBar(), new JButton(), new JPanel(), new JPanel()).getPanel();
-            return null;
         }
 
 	/**
@@ -717,7 +628,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 		gui.setVisible(true);
 
 		return mm;
-
 	}
         
         private static void initGrasshopper() {
@@ -747,5 +657,4 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 }
             }
         }
-
 }

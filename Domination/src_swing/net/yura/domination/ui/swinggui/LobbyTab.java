@@ -124,7 +124,7 @@ public class LobbyTab extends ME4SEPanel implements SwingGUITab,ActionListener {
 
 
     void createLobby(String server) {
-        mlc = SwingMEWrapper.makeMiniLobbyClient(server, risk, SwingUtilities.getWindowAncestor(this) );
+        mlc = SwingMEWrapper.makeMiniLobbyClient(server, risk, SwingUtilities.getWindowAncestor(this), null, null);
         mlc.removeBackButton();
         add( mlc.getRoot() );
     }

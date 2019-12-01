@@ -175,9 +175,9 @@
 
                 <copy todir="${dir.build.game}/lib">
                 	<!-- Desktop libs -->
-			<fileset dir="lib" includes="SwingME.jar,midletrunner.jar,m3gbasic.jar,TranslationTool.jar,Grasshopper.jar"/>
+			<fileset dir="lib" includes="SwingME.jar,midletrunner.jar,m3gbasic.jar,TranslationTool.jar,Grasshopper.jar,LobbyClient.jar"/>
 			<!-- libs shared between Android and Desktop -->
-			<fileset dir="libs" includes="httpmime-4.1.2.jar,httpcore-4.1.2.jar,LobbyCore.jar"/>
+			<fileset dir="libs" includes="httpmime-4.1.2.jar,httpcore-4.1.2.jar"/>
 		</copy>
 
 

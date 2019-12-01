@@ -4,8 +4,10 @@ package net.yura.domination.ui.flashgui;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Frame;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
+import javax.swing.RootPaneContainer;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
 import net.yura.domination.engine.RiskUIUtil;
@@ -15,14 +17,14 @@ import net.yura.swing.ImageIcon;
 import net.yura.domination.engine.guishared.PicturePanel;
 
 /**
+ * this get all the commands from the game and does what needs to be done
  * <p> Risk Listener for FlashGUI </p>
  * @author Yura Mamyrin
  */
-
-// this get all the commands from the game and does what needs to be done
 public class FlashRiskAdapter implements RiskListener {
 
 	private MainMenu menu;
+        private FlashMiniLobby lobby;
 	private Risk myrisk;
 
 	protected GameFrame gameFrame;
@@ -51,6 +53,15 @@ public class FlashRiskAdapter implements RiskListener {
 		menu = m;
 		newgameframe = new NewGameFrame(myrisk);
 	}
+        
+        void showMiniLobby(RootPaneContainer root, Frame window) {
+            lobby = new FlashMiniLobby(this, myrisk, root, window);
+        }
+        
+        void closeMiniLobby() {
+            lobby = null;
+            menu.showMainMenu();
+        }
 
 	/**
 	 * Checks if redrawing or repainting is needed
@@ -253,8 +264,10 @@ public class FlashRiskAdapter implements RiskListener {
 			menu.hide();
 		}
 
-                gameFrame.setExtraAction(menu.getOnlineAction());
-                gameFrame.setSidePanel(menu.getOnlinePanel());
+                if (lobby != null) {
+                    gameFrame.setExtraAction(lobby.getOnlineAction());
+                    gameFrame.setSidePanel(lobby.getOnlinePanel());
+                }
                 
 		gameFrame.setVisible(true);
 

@@ -2,12 +2,14 @@ package net.yura.lobby.mini;
 
 import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
+import net.yura.lobby.model.Player;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.util.Properties;
 
 /**
- * @author Yura Mamyrin
+ * A simpler interface then LobbyGame that only allows 1 open game at a time.
  * @see net.yura.lobby.client.LobbyGame
+ * @author Yura Mamyrin
  */
 public interface MiniLobbyGame {
 
@@ -48,4 +50,10 @@ public interface MiniLobbyGame {
     String getAppVersion();
 
     void lobbyShutdown();
+
+    void showMessage(String fromwho, String message);
+
+    public void addPlayer(Player player);
+    public void removePlayer(String player);
+    public void renamePlayer(String oldname, String newname, int newtype);
 }

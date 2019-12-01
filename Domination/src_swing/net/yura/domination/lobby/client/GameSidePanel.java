@@ -28,15 +28,12 @@ public class GameSidePanel {
     private JSplitPane me;
 
     private JLabel nameLabel;
-    private JButton startButton;
 
     public void setGameName(String name) {
 	nameLabel.setText(name);
     }
 
     public GameSidePanel(JProgressBar timer, JButton startButton, JPanel playerListArea, JPanel chatBoxArea) {
-        this.startButton = startButton;
-
         ResourceBundle resb = TranslationBundle.getBundle();
 
         //setReplay(false);
@@ -119,24 +116,5 @@ public class GameSidePanel {
 
     public JSplitPane getPanel() {
         return me;
-    }
-
-    public void updateButton(boolean amPlayer,boolean space) {
-        String action;
-        String text;
-        if (amPlayer) {
-                action = "resign";
-                text = "Resign";
-        }
-        else if ( space ) {
-                action = "join";
-                text = "Join";
-        }
-        else {
-                action = "close";
-                text = "Close";
-        }
-        startButton.setActionCommand(action);
-        startButton.setText(text);
     }
 }
