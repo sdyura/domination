@@ -1,6 +1,6 @@
 // Yura Mamyrin, Group D
 
-package net.yura.domination.engine.guishared;
+package net.yura.domination.guishared;
 
 import net.yura.swing.GraphicsUtil;
 import collisionphysics.BallWorld;
@@ -25,12 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
+import net.yura.domination.engine.guishared.MapPanel;
 import net.yura.domination.engine.translation.TranslationBundle;
 
 

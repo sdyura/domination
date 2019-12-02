@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.swing.GraphicsUtil;
 
 /**

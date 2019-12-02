@@ -1,6 +1,6 @@
 // Yura Mamyrin
 
-package net.yura.domination.engine.guishared;
+package net.yura.domination.guishared;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;

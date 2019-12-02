@@ -3,7 +3,7 @@ package net.yura.domination.engine.ai;
 import junit.framework.TestCase;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.ai.logic.AIDomination;
 import net.yura.domination.engine.core.Player;

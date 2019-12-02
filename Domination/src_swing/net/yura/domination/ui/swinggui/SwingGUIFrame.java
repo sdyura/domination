@@ -5,8 +5,8 @@ package net.yura.domination.ui.swinggui;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
-import net.yura.domination.engine.guishared.AboutDialog;
+import net.yura.domination.guishared.RiskUIUtil;
+import net.yura.domination.guishared.AboutDialog;
 
 /**
  * <p> Swing GUI Main Frame </p>

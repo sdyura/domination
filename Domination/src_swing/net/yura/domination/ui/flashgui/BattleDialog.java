@@ -19,7 +19,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Country;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;

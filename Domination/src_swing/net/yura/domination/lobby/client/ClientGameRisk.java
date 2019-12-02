@@ -18,7 +18,7 @@ import net.yura.domination.engine.OnlineRisk;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskIO;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;

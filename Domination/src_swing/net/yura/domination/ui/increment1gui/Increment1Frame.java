@@ -31,9 +31,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
-import net.yura.domination.engine.guishared.AboutDialog;
+import net.yura.domination.guishared.AboutDialog;
 import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
 

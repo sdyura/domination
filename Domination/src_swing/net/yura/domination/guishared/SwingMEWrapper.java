@@ -1,4 +1,4 @@
-package net.yura.domination.engine;
+package net.yura.domination.guishared;
 
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -6,6 +6,9 @@ import java.awt.Window;
 import java.io.File;
 import java.util.List;
 import javax.swing.SwingUtilities;
+import net.yura.domination.engine.OnlineUtil;
+import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.lobby.mini.MiniLobbyRisk;

@@ -1,6 +1,6 @@
 // Yura Mamyrin
 
-package net.yura.domination.engine.guishared;
+package net.yura.domination.guishared;
 
 import net.yura.swing.GraphicsUtil;
 import java.awt.GridBagLayout;
@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import javax.swing.JComponent;
-import net.yura.domination.engine.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.swing.ImageIcon;

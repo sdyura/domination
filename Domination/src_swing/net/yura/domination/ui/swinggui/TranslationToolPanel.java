@@ -3,7 +3,7 @@ package net.yura.domination.ui.swinggui;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.translation.MessageTool;
 import net.yura.translation.Mtcomm;
 import net.yura.translation.plugins.PropertiesComm;

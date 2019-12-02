@@ -1,6 +1,6 @@
 // Yura Mamyrin, Group D
 
-package net.yura.domination.engine.guishared;
+package net.yura.domination.guishared;
 
 import java.io.File;
 import java.io.FilenameFilter;

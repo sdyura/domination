@@ -10,11 +10,11 @@ import javax.swing.JOptionPane;
 import javax.swing.RootPaneContainer;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.swing.ImageIcon;
-import net.yura.domination.engine.guishared.PicturePanel;
+import net.yura.domination.guishared.PicturePanel;
 
 /**
  * this get all the commands from the game and does what needs to be done

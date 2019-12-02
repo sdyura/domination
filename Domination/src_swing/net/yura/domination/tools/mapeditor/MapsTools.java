@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mapstore.Map;
 import net.yura.domination.mapstore.MapChooser;

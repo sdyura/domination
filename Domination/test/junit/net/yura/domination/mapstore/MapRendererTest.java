@@ -56,6 +56,5 @@ public class MapRendererTest extends TestCase {
         assertEquals(test3,MapRenderer.getFirstLines(test3, 5));
         assertEquals(test4,MapRenderer.getFirstLines(test4, 5));
         assertEquals(test5,MapRenderer.getFirstLines(test5, 5));
-        
     }
 }

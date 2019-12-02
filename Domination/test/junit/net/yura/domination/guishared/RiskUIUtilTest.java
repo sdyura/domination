@@ -1,4 +1,4 @@
-package net.yura.domination.engine;
+package net.yura.domination.guishared;
 
 import junit.framework.TestCase;
 

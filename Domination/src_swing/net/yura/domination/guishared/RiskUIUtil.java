@@ -1,4 +1,4 @@
-package net.yura.domination.engine;
+package net.yura.domination.guishared;
 
 import java.applet.Applet;
 import java.awt.Color;
@@ -47,11 +47,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskIO;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.engine.guishared.AboutDialog;
 import net.yura.swing.BrowserLauncher;
 import net.yura.swing.GraphicsUtil;
-import net.yura.domination.engine.guishared.RiskFileFilter;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mapstore.MapUpdateService;
@@ -159,8 +161,6 @@ public class RiskUIUtil {
     private static Map UIImagesReferences = new HashMap();
 
     public static BufferedImage getUIImage(Class c,String name) {
-
-
 		try {
 			String id = c+" - "+name;
 			WeakReference wr = (WeakReference)UIImagesReferences.get(id);
@@ -180,7 +180,6 @@ public class RiskUIUtil {
 		catch (Exception e) {
 			throw new RuntimeException("error loading "+c+" "+name,e);
 		}
-
 	}
 
 
@@ -190,9 +189,6 @@ public class RiskUIUtil {
 	 * @return boolean Return true if you open the online help, returns false otherwise
 	 */
 	private static void riskOpenURL(URL docs) throws Exception {
-
-
-
 		if (applet != null) {
 
 			applet.getAppletContext().showDocument(docs,"_blank");
@@ -210,12 +206,8 @@ public class RiskUIUtil {
 
 		}
 		else {
-
 			BrowserLauncher.openURL(docs.toString());
-
 		}
-
-
 
 /*
 		if (applet == null ) {
@@ -256,43 +248,25 @@ public class RiskUIUtil {
 */
 	}
 
-
 	private static URL getRiskFileURL(String a) {
-
 		try {
-
 			if (applet!=null) {
-
 				return new URL( applet.getCodeBase(), a );
-
 			}
 			else if (webstart!=null) {
-
 				javax.jnlp.BasicService bs = (javax.jnlp.BasicService)javax.jnlp.ServiceManager.lookup("javax.jnlp.BasicService");
-
 				return new URL( bs.getCodeBase() , a);
-
 			}
 			else {
-
 				return new File(a).toURI().toURL();
-
 			}
-
-
-
 		}
 		catch (Exception e) {
-
 			throw new RuntimeException(e);
-
 		}
-
 	}
 
-
 	public static void setupMapsDir(Applet a) {
-
 		applet = a;
 
 		// only ever call this method once
@@ -304,15 +278,12 @@ public class RiskUIUtil {
 			webstart = System.getProperty("javawebstart.version");
 
 			if (webstart==null) {
-
 				nosandbox=true;
 
 				// we only want to setup the look and feel outside a sandbox
 				// though this WILL work inside too
 				setupLookAndFeel();
-
 			}
-
 		    }
 
 		    try {
@@ -355,19 +326,13 @@ public class RiskUIUtil {
 
 		    }
 		    catch (Exception e) {
-
 			throw new RuntimeException(e);
-
 		    }
 		}
-
 	}
 
 	public static Frame findParentFrame(Container c) {
-
-
 		return (Frame)javax.swing.SwingUtilities.getAncestorOfClass(Frame.class, c);
-
 /*
 		// this does not work as using the method setContentPane makes this method return null
 
@@ -512,7 +477,6 @@ public class RiskUIUtil {
             }
 
             return null;
-
         }
 
 	public static String getNewFileInSandbox(Frame f,String a) {
@@ -546,7 +510,6 @@ public class RiskUIUtil {
             }
 
             return null;
-
 	}
 
 
@@ -555,9 +518,7 @@ public class RiskUIUtil {
 	public static String getLoadFileName(Frame frame) {
 
 		if (applet!=null) {
-
 			showAppletWarning(frame);
-
 			return null;
 		}
 
@@ -572,20 +533,16 @@ public class RiskUIUtil {
 				javax.jnlp.FileContents fc = fos.openFileDialog(SAVES_DIR, new String[] { extension } );
 
 				if (fc!=null) {
-
 					fileio.put(fc.getName(),fc);
 
 					return fc.getName();
 				}
 				else {
-
 					return null;
 				}
 			}
 			catch(Exception e) {
-
 				return null;
-
 			}
 		}
 		else {
@@ -601,43 +558,29 @@ public class RiskUIUtil {
 				java.io.File file = fc.getSelectedFile();
 				// Write your code here what to do with selected file
 				return file.getAbsolutePath();
-
 			}
                         else {
 				// Write your code here what to do if user has canceled Open dialog
 				return null;
 			}
 		}
-
-
 	}
 
 	public static InputStream getLoadFileInputStream(String file) throws Exception {
-
 		// it is impossible for a applet to get here
-
 		if (webstart!=null) {
-
 			javax.jnlp.FileContents fc = (javax.jnlp.FileContents)fileio.remove(file);
-
 			return fc.getInputStream();
-
 		}
 		else {
-
 			return new java.io.FileInputStream(file);
-
 		}
-
 	}
-
 
 	public static String getSaveFileName(Frame frame) {
 
 		if (applet!=null) {
-
 			showAppletWarning(frame);
-
 			return null;
 		}
 
@@ -650,7 +593,6 @@ public class RiskUIUtil {
 
 		}
 		else {
-
                         File dir = getSaveGameDir();
 			JFileChooser fc = new JFileChooser(dir);
 			fc.setFileFilter(new RiskFileFilter(extension));
@@ -668,15 +610,12 @@ public class RiskUIUtil {
 				}
 
 				return fileName;
-
 			}
                         else {
 				// Write your code here what to do if user has canceled Save dialog
 				return null;
 			}
 		}
-
-
 	}
 
 	public static void saveFile(String name,RiskGame obj) throws Exception {
@@ -698,11 +637,9 @@ public class RiskUIUtil {
 	}
 
 	public static void showAppletWarning(Frame frame) {
-
 		JOptionPane.showMessageDialog(frame,
 			TranslationBundle.getBundle().getString("core.error.applet")
 		);
-
 	}
 
 	public static String getSystemInfoText() {
@@ -804,7 +741,6 @@ public class RiskUIUtil {
 		if (y < 0) y = 0;
 		aboutDialog.setLocation(x, y);
 		aboutDialog.setVisible(true);
-
 	}
 
 
@@ -853,9 +789,7 @@ public class RiskUIUtil {
 
                         }
                         catch(Throwable ex) { }
-
                 }
-
 		return canlobby;
 	}
 
@@ -971,19 +905,13 @@ public class RiskUIUtil {
 			}
 			//else if (lobbyAppletURL!=null) {
                         else {
-
                                 // on older clients open URL
 				RiskUtil.openURL(new URL(lobbyAppletURL));
-
 			}
-
 		}
 		catch(Exception e) {
-
 			risk.showMessageDialog("unable to run the lobby: "+e.toString() );
-
 		}
-
 	}
 
         private static File getFile(URL url) {
@@ -1063,7 +991,6 @@ public class RiskUIUtil {
 				catch (Exception e) {
 					RiskUtil.printStackTrace(e);
 				}
-
 			}
 		}
 /* OLD
@@ -1139,14 +1066,12 @@ public class RiskUIUtil {
     }
 
     public static void donate(Component parent) {
-
         try {
                 RiskUtil.donate();
         }
         catch(Exception e) {
                 JOptionPane.showMessageDialog( parent ,"Unable to open web browser: "+e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     public static boolean canWriteTo(File dir) {

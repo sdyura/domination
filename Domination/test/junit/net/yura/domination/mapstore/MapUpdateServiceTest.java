@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Vector;
 import junit.framework.TestCase;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 
 /**
  *

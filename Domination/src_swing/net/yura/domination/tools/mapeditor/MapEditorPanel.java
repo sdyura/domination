@@ -27,7 +27,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.engine.guishared.PicturePanel;
+import net.yura.domination.guishared.PicturePanel;
 
 /**
  * @author Yura Mamyrin

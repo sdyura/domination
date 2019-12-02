@@ -1,6 +1,6 @@
 // Yura Mamyrin
 
-package net.yura.domination.engine.guishared;
+package net.yura.domination.guishared;
 
 import net.yura.swing.GraphicsUtil;
 import java.awt.BasicStroke;
@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.JPanel;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.StatType;
 

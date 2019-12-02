@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.RootPaneContainer;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
-import net.yura.domination.engine.SwingMEWrapper;
+import net.yura.domination.guishared.RiskUIUtil;
+import net.yura.domination.guishared.SwingMEWrapper;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.lobby.client.GameSidePanel;
@@ -33,10 +33,10 @@ public class FlashMiniLobby {
 
     public FlashMiniLobby(final FlashRiskAdapter fra, final Risk myrisk, RootPaneContainer root, Frame window) {
         this.myrisk = myrisk;
-            
+
         final ME4SEPanel wrapper = new ME4SEPanel();
         wrapper.getApplicationManager().applet = RiskUIUtil.applet;
-        
+
         inGameChat = new ChatBox();
         playerList = new PlayerList(null);
 

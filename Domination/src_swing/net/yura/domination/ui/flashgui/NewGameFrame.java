@@ -43,15 +43,15 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.engine.guishared.AboutDialog;
-import net.yura.domination.engine.guishared.BadgeButton;
+import net.yura.domination.guishared.AboutDialog;
+import net.yura.domination.guishared.BadgeButton;
 import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
-import net.yura.domination.engine.guishared.RiskFileFilter;
+import net.yura.domination.guishared.RiskFileFilter;
 import net.yura.domination.engine.translation.TranslationBundle;
 
 /**

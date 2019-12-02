@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 

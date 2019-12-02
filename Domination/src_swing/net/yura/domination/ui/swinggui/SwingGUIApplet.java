@@ -4,7 +4,7 @@ package net.yura.domination.ui.swinggui;
 
 import javax.swing.JApplet;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 
 /**

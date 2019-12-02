@@ -19,7 +19,7 @@ import java.awt.image.BufferedImage;
 import java.util.ResourceBundle;
 import javax.swing.JDialog;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUIUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 

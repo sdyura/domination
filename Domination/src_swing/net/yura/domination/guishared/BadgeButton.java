@@ -1,4 +1,4 @@
-package net.yura.domination.engine.guishared;
+package net.yura.domination.guishared;
 
 import java.awt.Container;
 import java.awt.Graphics;
@@ -6,7 +6,6 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JButton;
 import net.yura.domination.engine.RiskUtil;
-import net.yura.domination.engine.SwingMEWrapper;
 import net.yura.domination.mapstore.MapUpdateService;
 
 /**
