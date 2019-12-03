@@ -170,7 +170,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
                 // TODO
             }
             else {
-                System.err.println("Unknown command: "+actionCommand);
+                System.err.println("GameSetup unknown command: "+actionCommand);
             }
         }
 

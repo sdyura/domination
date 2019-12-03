@@ -1,5 +1,7 @@
 package net.yura.domination.lobby.client;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -13,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSplitPane;
-import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -44,11 +45,23 @@ public class GameSidePanel extends JSplitPane {
         final Box sidepanelBottom = new Box(javax.swing.BoxLayout.Y_AXIS);
 
         int smallPadding = GraphicsUtil.scale(5);
-        int bigPadding = GraphicsUtil.scale(20);
+        int bigPadding = GraphicsUtil.scale(15);
 
-        JPanel panel2 = new JPanel();
-        panel2.setOpaque(false);
-        panel2.setBorder(BorderFactory.createEmptyBorder(bigPadding, 0, bigPadding, 0));
+        JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        panel1.setBorder(BorderFactory.createEmptyBorder(0, 0, bigPadding, 0));
+        panel1.setOpaque(false);
+        nameLabel = new JLabel("Game");
+        nameLabel.setForeground(Color.WHITE);
+        panel1.add( nameLabel );
+        sidepanelTop.add( panel1 );
+
+        if (timer != null) {
+            JPanel panel2 = new JPanel();
+            panel2.setOpaque(false);
+            panel2.setBorder(BorderFactory.createEmptyBorder(0, 0, bigPadding, 0));
+            panel2.add( timer );
+            sidepanelTop.add( panel2 );
+        }
 
         if (startButton != null) {
             final JButton aboutButton = new JButton( resb.getString( "mainmenu.about") );
@@ -72,13 +85,6 @@ public class GameSidePanel extends JSplitPane {
             sidepanelBottom.add( panel3 );
         }
 
-        nameLabel = new JLabel();
-        JPanel panel1 = new JPanel();
-        panel1.add( nameLabel );
-        panel2.add( timer );
-
-        sidepanelTop.add( panel1 );
-        sidepanelTop.add( panel2 );
         sidepanelTop.add( playerListArea );
         sidepanelBottom.add( chatBoxArea );
 

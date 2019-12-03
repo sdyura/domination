@@ -589,7 +589,7 @@ public class MapChooser implements ActionListener,MapServerListener {
             }
         }
         else {
-            System.out.println("Unknown command "+actionCommand);
+            System.out.println("MapChooser unknown command "+actionCommand);
         }
     }
 

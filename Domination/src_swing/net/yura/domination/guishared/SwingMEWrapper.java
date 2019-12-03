@@ -102,9 +102,15 @@ public class SwingMEWrapper {
                     players.addPlayer(player);
                 }
             }
-            public void removePlayer(String player) {
+            public void removePlayer(final String player) {
                 if (players != null) {
-                    players.removePlayer(player);
+                    // this comes in on com thread, and we dont want to remove item while its painting
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            players.removePlayer(player);
+                        }
+                    });
                 }
             }
             public void renamePlayer(String oldname, String newname, int newtype) {

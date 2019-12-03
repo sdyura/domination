@@ -90,7 +90,7 @@ public class FlashMiniLobby {
         Game game = mlc.getCurrentOpenGame();
         inGameChat.reset(mlc.mycom, null, game.getId());
         playerList.clearPlayerList();
-        GameSidePanel sidePanel = new GameSidePanel(new JProgressBar(), null, playerList, inGameChat);
+        GameSidePanel sidePanel = new GameSidePanel(null, null, playerList, inGameChat);
         sidePanel.setGameName(game.getName());
         return sidePanel;
     }

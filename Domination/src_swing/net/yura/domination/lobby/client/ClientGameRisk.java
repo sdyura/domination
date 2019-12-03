@@ -13,7 +13,6 @@ import java.util.ResourceBundle;
 import java.util.WeakHashMap;
 import java.util.logging.Logger;
 import javax.swing.Icon;
-import javax.swing.JSplitPane;
 import net.yura.domination.engine.OnlineRisk;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
@@ -218,7 +217,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
                     updateButtons();
                 }
                 else {
-                    System.out.println("unknown command "+command+" "+map);
+                    System.out.println("ClientGameRisk unknown command "+command+" "+map);
                 }
             }
 // END TODO

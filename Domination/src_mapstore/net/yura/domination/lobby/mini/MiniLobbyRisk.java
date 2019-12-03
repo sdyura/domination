@@ -106,12 +106,12 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
                 openGame = true;
             }
             else {
-                System.out.println("unknown command "+command+" "+map);
+                System.out.println("MiniLobbyRisk unknown command "+command+" "+map);
             }
         }
 // END TODO
         else {
-            System.out.println("unknown object "+object);
+            System.out.println("MiniLobbyRisk unknown object "+object);
         }
     }
 

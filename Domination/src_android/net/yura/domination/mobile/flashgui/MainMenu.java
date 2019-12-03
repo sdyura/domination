@@ -177,7 +177,7 @@ public class MainMenu extends Frame implements ActionListener {
         	DominationMain.getGooglePlayGameServices().showAchievements();
             }
             else {
-                System.err.println("Unknown command: "+actionCommand);
+                System.err.println("MainMenu unknown command: "+actionCommand);
             }
     }
 
