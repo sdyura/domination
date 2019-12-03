@@ -53,7 +53,7 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.BadgeButton;
-import net.yura.domination.engine.guishared.MapMouseListener;
+import net.yura.domination.guishared.MapMouseListener;
 import net.yura.domination.guishared.PicturePanel;
 import net.yura.domination.guishared.RiskFileFilter;
 import net.yura.domination.engine.translation.TranslationBundle;

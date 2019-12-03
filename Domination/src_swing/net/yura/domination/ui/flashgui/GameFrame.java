@@ -45,7 +45,7 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.AboutDialog;
 import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
-import net.yura.domination.engine.guishared.MapMouseListener;
+import net.yura.domination.guishared.MapMouseListener;
 import net.yura.domination.guishared.PicturePanel;
 import net.yura.domination.engine.translation.TranslationBundle;
 

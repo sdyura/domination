@@ -1,5 +1,6 @@
 package net.yura.domination.lobby.client;
 
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
@@ -20,13 +22,12 @@ import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
 
-public class GameSidePanel {
+public class GameSidePanel extends JSplitPane {
 
     private final static String product = RiskUtil.GAME_NAME + " Lobby Client";
     private final static String version = "0.3";
-    
-    private JSplitPane me;
 
+    final ImageIcon backpic = new ImageIcon( GameSidePanel.class.getResource("back.jpg") );
     private JLabel nameLabel;
 
     public void setGameName(String name) {
@@ -34,87 +35,76 @@ public class GameSidePanel {
     }
 
     public GameSidePanel(JProgressBar timer, JButton startButton, JPanel playerListArea, JPanel chatBoxArea) {
+        super(JSplitPane.VERTICAL_SPLIT, true);
         ResourceBundle resb = TranslationBundle.getBundle();
 
         //setReplay(false);
 
-        final ImageIcon borderimage = new ImageIcon( GameSidePanel.class.getResource("back.jpg") );
-
-
         final Box sidepanelTop = new Box(javax.swing.BoxLayout.Y_AXIS);
-        final Box sidepanelBottom = new Box(javax.swing.BoxLayout.Y_AXIS);/* {
+        final Box sidepanelBottom = new Box(javax.swing.BoxLayout.Y_AXIS);
 
-                public void paintComponent(java.awt.Graphics g) {
+        int smallPadding = GraphicsUtil.scale(5);
+        int bigPadding = GraphicsUtil.scale(20);
 
-                        java.awt.Image img = borderimage.getImage();
-
-                        int w = img.getWidth(this);
-                        int h = img.getHeight(this);
-
-                        for (int i = 0; i < getWidth(); i += w) for (int j = 0; j < getHeight(); j += h) {
-
-                                g.drawImage(img, i, j, this);
-
-                        }
-                }
-
-        };*/
-
-
-
-
-        final JButton aboutButton = new JButton( resb.getString( "mainmenu.about") );
-
-        aboutButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                        RiskUIUtil.openAbout(RiskUIUtil.findParentFrame(me), product, version);
-                }
-        });
-
-
-        JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
-        JPanel panel3 = new JPanel( new GridLayout(1,2,5,5) );
-        panel3.setBorder( new EmptyBorder(5,5,5,5) );
+        panel2.setOpaque(false);
+        panel2.setBorder(BorderFactory.createEmptyBorder(bigPadding, 0, bigPadding, 0));
 
-        Insets insets = new Insets( startButton.getMargin().top ,0, startButton.getMargin().bottom ,0);
-        startButton.setMargin(insets);
-        aboutButton.setMargin(insets);
+        if (startButton != null) {
+            final JButton aboutButton = new JButton( resb.getString( "mainmenu.about") );
+
+            aboutButton.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent ae) {
+                            RiskUIUtil.openAbout(RiskUIUtil.findParentFrame(GameSidePanel.this), product, version);
+                    }
+            });
+            
+            Insets insets = new Insets( startButton.getMargin().top ,0, startButton.getMargin().bottom ,0);
+            startButton.setMargin(insets);
+            aboutButton.setMargin(insets);
+            
+            JPanel panel3 = new JPanel( new GridLayout(1,2,smallPadding,smallPadding) );
+            panel3.setOpaque(false);
+            panel3.setBorder(BorderFactory.createEmptyBorder(smallPadding,smallPadding,bigPadding + smallPadding,smallPadding) );
+            
+            panel3.add( startButton );
+            panel3.add( aboutButton );
+            sidepanelBottom.add( panel3 );
+        }
 
         nameLabel = new JLabel();
-
+        JPanel panel1 = new JPanel();
         panel1.add( nameLabel );
         panel2.add( timer );
-        panel3.add( startButton );
-        panel3.add( aboutButton );
 
         sidepanelTop.add( panel1 );
         sidepanelTop.add( panel2 );
         sidepanelTop.add( playerListArea );
-        sidepanelBottom.add( panel3 );
         sidepanelBottom.add( chatBoxArea );
-
-        int bigPadding = 20;
-
-        JSplitPane sidepanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true);
-        sidepanel.setDividerSize(bigPadding);
-        sidepanel.setTopComponent(sidepanelTop);
-        sidepanel.setBottomComponent(sidepanelBottom);
-
-        panel2.setBorder( BorderFactory.createMatteBorder(bigPadding, 0, bigPadding, 0, borderimage ) );
-        ((BasicSplitPaneUI)sidepanel.getUI()).getDivider().setBorder( BorderFactory.createMatteBorder(0, 0, bigPadding, 0, borderimage ) );
-        chatBoxArea.setBorder( BorderFactory.createMatteBorder(bigPadding, 0, 0, 0, borderimage ) );
-        sidepanel.setBorder( BorderFactory.createMatteBorder(bigPadding, bigPadding, bigPadding, bigPadding, borderimage ) );
-
 
         playerListArea.setPreferredSize(GraphicsUtil.newDimension(160, 120));
 
-        sidepanel.setPreferredSize(GraphicsUtil.newDimension(200, 600));
+        setDividerSize(bigPadding);
+        setTopComponent(sidepanelTop);
+        setBottomComponent(sidepanelBottom);
 
-        me = sidepanel;
+        setBorder(BorderFactory.createEmptyBorder(bigPadding, bigPadding, bigPadding, bigPadding));
+        setUI( new BasicSplitPaneUI() {
+			public BasicSplitPaneDivider createDefaultDivider() {
+				return new BasicSplitPaneDivider(this) {
+					public void paint(Graphics g) { }
+				};
+			}
+		} );
+
+        setPreferredSize(GraphicsUtil.newDimension(200, 600));
     }
-
-    public JSplitPane getPanel() {
-        return me;
+    
+    public void paintComponent(Graphics g) {
+        int w = backpic.getIconWidth();
+        int h = backpic.getIconHeight();
+        for (int i = 0; i < getWidth(); i += w) for (int j = 0; j < getHeight(); j += h) {
+                g.drawImage(backpic.getImage(), i, j, this);
+        }
     }
 }

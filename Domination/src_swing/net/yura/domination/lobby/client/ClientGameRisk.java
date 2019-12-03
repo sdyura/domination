@@ -127,10 +127,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
 	}
 
 	private void makeNewGameFrame() {
-
                 sidepanel = new GameSidePanel(timer, startButton, playerListArea, chatBoxArea);
-            
-                JSplitPane sidepanel = this.sidepanel.getPanel();
 
 		FlashRiskAdapter riskadapter = new FlashRiskAdapter(myrisk) {
 
