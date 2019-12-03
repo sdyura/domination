@@ -1,4 +1,4 @@
-package net.yura.domination.engine.guishared;
+package net.yura.domination.guishared;
 
 /**
  * @author Yura Mamyrin

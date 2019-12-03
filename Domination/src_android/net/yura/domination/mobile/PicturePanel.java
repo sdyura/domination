@@ -19,7 +19,7 @@ import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.engine.guishared.MapPanel;
+import net.yura.domination.guishared.MapPanel;
 import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.DesktopPane;

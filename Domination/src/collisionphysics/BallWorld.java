@@ -2,7 +2,7 @@ package collisionphysics;
 
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.Country;
-import net.yura.domination.engine.guishared.MapPanel;
+import net.yura.domination.guishared.MapPanel;
 
 /**
  * @author yura mamyrin

@@ -1,4 +1,4 @@
-package net.yura.domination.engine.guishared;
+package net.yura.domination.guishared;
 
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.RiskGame;
