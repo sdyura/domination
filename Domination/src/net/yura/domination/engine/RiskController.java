@@ -140,7 +140,7 @@ public class RiskController {
         }
     }
 
-    public void startGame(boolean s) {
+    public void startGame(boolean localGame) {
 
         Object[] arrLocal;
 
@@ -150,7 +150,7 @@ public class RiskController {
 
 	try {
             for (int i = arrLocal.length-1; i>=0; i--)
-                ((RiskListener)arrLocal[i]).startGame(s);
+                ((RiskListener)arrLocal[i]).startGame(localGame);
 	}
         catch(Exception ex) {
             printStackTrace(ex);

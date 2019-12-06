@@ -16,7 +16,7 @@ public abstract class RiskAdapter implements RiskListener {
     public void noInput() {}
     public void setGameStatus(String state) {}
     public void newGame(boolean t) {}
-    public void startGame(boolean s) {}
+    public void startGame(boolean localGame) {}
     public void closeGame() {}
     public void showMapPic(RiskGame p) {}
     public void showCardsFile(String c, boolean m) {}

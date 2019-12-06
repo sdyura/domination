@@ -616,14 +616,10 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 			gameTab.newGame();
 		}
 
-		/**
-		 * Starts the game
-		 * @param s If the game is a local game
-		 */
-		public void startGame(boolean s) {
+		public void startGame(boolean localGame) {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-			gameTab.setLocalGame(s);
+			gameTab.setLocalGame(localGame);
 			// check maybe we should load from memory
 			if (myrisk.getGame().getMapFile() == null && myrisk.getGame().getCardsFile() == null) {
 				pp.memoryLoad(editorTab.getImageMap(),editorTab.getImagePic());
@@ -648,6 +644,10 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 			statisticsTab.startGame();
 
 			SwingGUIPanel.this.setCursor(null); // Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)
+
+                        if (!localGame && tabbedpane.getSelectedComponent() instanceof LobbyTab) {
+                            setSelectedTab(GameTab.class);
+                        }
 		}
 
 		/**
