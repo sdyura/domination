@@ -669,6 +669,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                         showPanel("winner");
                         break;
                     case RiskGame.STATE_SELECT_CAPITAL:
+                        capitalLabel.setText(resbundle.getString("core.help.selectcapital"));
                         showPanel("capital");
                         break;
                     case RiskGame.STATE_DEFEND_YOURSELF:
@@ -1917,26 +1918,27 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 	class capitalPanel extends JPanel {
 
 		public capitalPanel() {
-
 			this.setLayout(new java.awt.GridBagLayout());
 
 			GridBagConstraints c = new GridBagConstraints();
 			c.insets = new java.awt.Insets(3, 3, 3, 3);
 			c.fill = GridBagConstraints.BOTH;
 
-			JButton endtrade = new JButton(resbundle.getString("about.okbutton"));
+			JButton yesCapital = new JButton(resbundle.getString("about.okbutton"));
 
-			endtrade.addActionListener(
-					new ActionListener() {
-						public void actionPerformed(ActionEvent a) {
-                                                        int c1Id = swingGUIPanel.pp.getC1();
-							swingGUIPanel.pp.setC1(PicturePanel.NO_COUNTRY);
-							swingGUIPanel.go("capital "+c1Id );
-						}
-					}
+			yesCapital.addActionListener(
+                                new ActionListener() {
+                                        public void actionPerformed(ActionEvent a) {
+                                                int c1Id = swingGUIPanel.pp.getC1();
+                                                if (c1Id != PicturePanel.NO_COUNTRY) {
+                                                    swingGUIPanel.pp.setC1(PicturePanel.NO_COUNTRY);
+                                                    swingGUIPanel.go("capital " + c1Id);
+                                                }
+                                        }
+                                }
 			);
 
-			capitalLabel = new JLabel(resbundle.getString("core.help.selectcapital"));
+			capitalLabel = new JLabel();
 
 			c.gridx = 0; // col
 			c.gridy = 0; // row
@@ -1948,7 +1950,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			c.gridy = 0; // row
 			c.gridwidth = 1; // width
 			c.gridheight = 1; // height
-			this.add(endtrade, c);
+			this.add(yesCapital, c);
 		}
 	}
 
