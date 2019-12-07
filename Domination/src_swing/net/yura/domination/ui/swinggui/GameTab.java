@@ -18,7 +18,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -51,6 +53,7 @@ import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Continent;
+import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.BadgeButton;
 import net.yura.domination.guishared.MapMouseListener;
@@ -129,6 +132,8 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 	JPanel roll;
 	winnerPanel winner;
 	tradeCardsPanel tradeCards;
+        
+        private Map quickPlace = new HashMap();
 
 	public GameTab(SwingGUIPanel swingGUI) {
 		swingGUIPanel = swingGUI;
@@ -407,7 +412,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent a) {
-
                 String actionCommand = a.getActionCommand();
 
 		if ("showmission".equals(actionCommand)) {
@@ -575,7 +579,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 	}
         
 	public void openCards() {
-
 		Frame frame = RiskUIUtil.findParentFrame(this);
 
 		CardsDialog cardsDialog = new CardsDialog(frame, swingGUIPanel.pp, true, swingGUIPanel.myrisk, (swingGUIPanel.gameState == 1));
@@ -609,8 +612,117 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		mapViewComboBox.grabFocus();
 
 	}
+        
+        public void getInput(int gameState) {
+                if (gameState != -1 && gameState!=RiskGame.STATE_NEW_GAME) {
+                        enableInGameButtons();
+                }
 
-	public void getInput() {
+                switch (gameState) {
+                    case RiskGame.STATE_NEW_GAME:
+                        showPanel("nothing");
+                        break;
+                    case RiskGame.STATE_TRADE_CARDS:
+                        // after wiping out someone if you go into trade mode
+                        swingGUIPanel.pp.setC1(PicturePanel.NO_COUNTRY);
+                        swingGUIPanel.pp.setC2(PicturePanel.NO_COUNTRY);
+                        tradeCards.endtrade.setVisible( swingGUIPanel.myrisk.getGame().canEndTrade() );
+                        armiesLeft(swingGUIPanel.myrisk.getGame().getCurrentPlayer().getExtraArmies());
+                        showPanel("tradeCards");
+                        break;
+                    case RiskGame.STATE_PLACE_ARMIES:
+                        Player me = swingGUIPanel.myrisk.getGame().getCurrentPlayer();
+                        if (!swingGUIPanel.myrisk.getGame().getSetupDone() && quickPlace.containsKey(me)) {
+                            swingGUIPanel.go("placearmies " + quickPlace.get(me) + " 1");
+                        }
+                        else {
+                            armiesLeft(me.getExtraArmies());
+                            showPanel("placeArmies");
+                        }
+                        break;
+                    case RiskGame.STATE_ATTACKING:
+                        swingGUIPanel.pp.setC1(PicturePanel.NO_COUNTRY);
+                        swingGUIPanel.pp.setC2(PicturePanel.NO_COUNTRY);
+                        attacker.setText(resbundle.getString("game.note.selectattacker"));
+                        showPanel("attack");
+                        break;
+                    case RiskGame.STATE_ROLLING:
+                        showDice(swingGUIPanel.myrisk.getGame().getNoAttackDice(), true);
+                        showPanel("roll");
+                        break;
+                    case RiskGame.STATE_BATTLE_WON:
+                        int min = swingGUIPanel.myrisk.getGame().getMustMove();
+                        int max = swingGUIPanel.myrisk.hasArmiesInt( swingGUIPanel.myrisk.getGame().getAttacker().getColor() ) -1;
+                        slider.setMaximum(max);
+                        slider.setMinimum(min);
+                        slider.setValue(min);
+                        showPanel("move");
+                        break;
+                    case RiskGame.STATE_FORTIFYING:
+                        showPanel("tacMove");
+                        break;
+                    case RiskGame.STATE_END_TURN:
+                        showPanel("endgo");
+                        break;
+                    case RiskGame.STATE_GAME_OVER:
+                        winner.continueButton.setVisible( swingGUIPanel.myrisk.getGame().canContinue() );
+                        showPanel("winner");
+                        break;
+                    case RiskGame.STATE_SELECT_CAPITAL:
+                        showPanel("capital");
+                        break;
+                    case RiskGame.STATE_DEFEND_YOURSELF:
+                        showDice(swingGUIPanel.myrisk.getGame().getNoDefendDice(), false);
+                        showPanel("defend");
+                        break;
+                }
+        }
+
+        private void showDice(int n, boolean w) {
+                JPanel p;
+
+                if (w) { p=roll; }
+                else { p=defend; }
+
+                p.remove(roll1);
+                p.remove(roll2);
+                p.remove(roll3);
+
+                GridBagConstraints c = new GridBagConstraints();
+                c.insets = new java.awt.Insets(3, 3, 3, 3);
+                c.fill = GridBagConstraints.BOTH;
+
+                if (n > 0) {
+
+                        c.gridx = 0; // col
+                        c.gridy = 0; // row
+                        c.gridwidth = 1; // width
+                        c.gridheight = 1; // height
+                        p.add(roll1, c);
+
+                        if (n > 1) {
+                                c.gridx = 1; // col
+                                c.gridy = 0; // row
+                                c.gridwidth = 1; // width
+                                c.gridheight = 1; // height
+                                p.add(roll2, c);
+
+                                if (n > 2) {
+                                        c.gridx = 2; // col
+                                        c.gridy = 0; // row
+                                        c.gridwidth = 1; // width
+                                        c.gridheight = 1; // height
+                                        p.add(roll3, c);
+                                }
+                        }
+                }
+        }
+        
+        private void armiesLeft(int l) {
+                armies.setText( resbundle.getString("core.input.armiesleft").replaceAll("\\{0\\}", "" + l));
+        }
+
+	public void enableInGameButtons() {
 
 		if (localGame) {
 			gSaveGame.setEnabled(true);
@@ -626,7 +738,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
 		gOptions.setEnabled(true);
 		gmOptions.setEnabled(true);
-
 	}
 
 	public void newGame() {
@@ -664,32 +775,34 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 	}
 
 	public void closeGame() {
-			gNewGame.setEnabled(true);
-			gLoadGame.setEnabled(true);
-			gSaveGame.setEnabled(false);
-			gCloseGame.setEnabled(false);
+                quickPlace.clear();
+            
+                gNewGame.setEnabled(true);
+                gLoadGame.setEnabled(true);
+                gSaveGame.setEnabled(false);
+                gCloseGame.setEnabled(false);
 
-			gmNewGame.setEnabled(true);
-			gmLoadGame.setEnabled(true);
-			gmStartServer.setEnabled(true);
-			gmJoinGame.setEnabled(true);
+                gmNewGame.setEnabled(true);
+                gmLoadGame.setEnabled(true);
+                gmStartServer.setEnabled(true);
+                gmJoinGame.setEnabled(true);
 
-			gStartServer.setEnabled(true);
-			gJoinGame.setEnabled(true);
+                gStartServer.setEnabled(true);
+                gJoinGame.setEnabled(true);
 
-			gmSaveGame.setEnabled(false);
-			gmCloseGame.setEnabled(false);
+                gmSaveGame.setEnabled(false);
+                gmCloseGame.setEnabled(false);
 
-			gOptions.setEnabled(false);
-			gmOptions.setEnabled(false);
-			gmReplay.setEnabled(false);
+                gOptions.setEnabled(false);
+                gmOptions.setEnabled(false);
+                gmReplay.setEnabled(false);
 
-			remove(guiGame);
-			remove(guiSetup);
+                remove(guiGame);
+                remove(guiSetup);
 
-			add(Pix, java.awt.BorderLayout.CENTER );
+                add(Pix, java.awt.BorderLayout.CENTER );
 
-                        swingGUIPanel.pp.stopAni(); // stop anmations
+                swingGUIPanel.pp.stopAni(); // stop anmations
 	}
 
 	public void startGame() {
@@ -741,60 +854,60 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
         
 	public JPanel makeGameOptionsPanel() {
 
-			JPanel gameOptionsPanel = new JPanel();
+                JPanel gameOptionsPanel = new JPanel();
 
-			gameOptionsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 0));
+                gameOptionsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 0));
 
-			gameOptionsPanel.setOpaque(false);
+                gameOptionsPanel.setOpaque(false);
 
-			JLabel mapLookLabel = new JLabel(resbundle.getString("game.tabs.mapview") + ":");
+                JLabel mapLookLabel = new JLabel(resbundle.getString("game.tabs.mapview") + ":");
 
-			mapViewComboBox = new JComboBox();
+                mapViewComboBox = new JComboBox();
 
-			Dimension mapViewSize = GraphicsUtil.newDimension(120, 20);
+                Dimension mapViewSize = GraphicsUtil.newDimension(120, 20);
 
-			mapViewComboBox.setPreferredSize(mapViewSize);
-			mapViewComboBox.setMinimumSize(mapViewSize);
-			mapViewComboBox.setMaximumSize(mapViewSize);
+                mapViewComboBox.setPreferredSize(mapViewSize);
+                mapViewComboBox.setMinimumSize(mapViewSize);
+                mapViewComboBox.setMaximumSize(mapViewSize);
 
-			mapViewComboBox.addItem(resbundle.getString("game.tabs.continents"));
-			mapViewComboBox.addItem(resbundle.getString("game.tabs.ownership"));
-			mapViewComboBox.addItem(resbundle.getString("game.tabs.borderthreat"));
-			mapViewComboBox.addItem(resbundle.getString("game.tabs.cardownership"));
-			mapViewComboBox.addItem(resbundle.getString("game.tabs.troopstrength"));
-			mapViewComboBox.addItem(resbundle.getString("game.tabs.connectedempire"));
+                mapViewComboBox.addItem(resbundle.getString("game.tabs.continents"));
+                mapViewComboBox.addItem(resbundle.getString("game.tabs.ownership"));
+                mapViewComboBox.addItem(resbundle.getString("game.tabs.borderthreat"));
+                mapViewComboBox.addItem(resbundle.getString("game.tabs.cardownership"));
+                mapViewComboBox.addItem(resbundle.getString("game.tabs.troopstrength"));
+                mapViewComboBox.addItem(resbundle.getString("game.tabs.connectedempire"));
 
-			mapViewComboBox.addActionListener(
-					new ActionListener() {
-						public void actionPerformed(ActionEvent a) {
-							swingGUIPanel.pprepaintCountries();
-							swingGUIPanel.pp.repaint();
-						}
-					}
-			);
+                mapViewComboBox.addActionListener(
+                                new ActionListener() {
+                                        public void actionPerformed(ActionEvent a) {
+                                                swingGUIPanel.pprepaintCountries();
+                                                swingGUIPanel.pp.repaint();
+                                        }
+                                }
+                );
 
-			JLabel playersLabel = new JLabel(resbundle.getString("newgame.label.players"));
+                JLabel playersLabel = new JLabel(resbundle.getString("newgame.label.players"));
 
-			Dimension playerPanelSize = GraphicsUtil.newDimension(120, 20);
+                Dimension playerPanelSize = GraphicsUtil.newDimension(120, 20);
 
-			JPanel players = new playersPanel();
+                JPanel players = new playersPanel();
 
-			players.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0),1));
+                players.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0),1));
 
-			players.setPreferredSize(playerPanelSize);
-			players.setMinimumSize(playerPanelSize);
-			players.setMaximumSize(playerPanelSize);
+                players.setPreferredSize(playerPanelSize);
+                players.setMinimumSize(playerPanelSize);
+                players.setMaximumSize(playerPanelSize);
 
-			gameOptionsPanel.add(mapLookLabel);
-			gameOptionsPanel.add(mapViewComboBox);
-			gameOptionsPanel.add(playersLabel);
-			gameOptionsPanel.add(players);
-			gameOptionsPanel.add(showMission);
-			gameOptionsPanel.add(showCards);
-			gameOptionsPanel.add(Undo);
+                gameOptionsPanel.add(mapLookLabel);
+                gameOptionsPanel.add(mapViewComboBox);
+                gameOptionsPanel.add(playersLabel);
+                gameOptionsPanel.add(players);
+                gameOptionsPanel.add(showMission);
+                gameOptionsPanel.add(showCards);
+                gameOptionsPanel.add(Undo);
 
-			return gameOptionsPanel;
-	}
+                return gameOptionsPanel;
+        }
 
 	void showPanel(String name) {
 		inGameCards.show(inGameInput, name);
@@ -1021,7 +1134,14 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                                 swingGUIPanel.go( "placearmies " + countries[0] + " 1" );
                             }
                             else {
-                                swingGUIPanel.go( "placearmies " + countries[0] + " 10" );
+                                if (swingGUIPanel.myrisk.getGame().getSetupDone()) {
+                                    swingGUIPanel.go( "placearmies " + countries[0] + " 10" );
+                                }
+                                else if (swingGUIPanel.myrisk.getGame().NoEmptyCountries()) {
+                                    Player me = swingGUIPanel.myrisk.getGame().getCurrentPlayer();
+                                    quickPlace.put(me, new Integer(countries[0]));
+                                    swingGUIPanel.go( "placearmies " + countries[0] + " 1" );
+                                }
                             }
                         }
                     }

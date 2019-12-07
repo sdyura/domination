@@ -48,12 +48,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.core.StatType;
 import net.yura.swing.GraphicsUtil;
@@ -520,72 +522,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 		 */
 		public void needInput(int s) {
 			gameState=s;
-
-			if (gameState != -1 && gameState!=RiskGame.STATE_NEW_GAME) {
-				gameTab.getInput();
-			}
-
-			if (gameState == RiskGame.STATE_NEW_GAME) {
-				gameTab.showPanel("nothing");
-			}
-			else if (gameState == RiskGame.STATE_TRADE_CARDS) {
-
-				// after wiping out someone if you go into trade mode
-				pp.setC1(PicturePanel.NO_COUNTRY);
-				pp.setC2(PicturePanel.NO_COUNTRY);
-
-                                gameTab.tradeCards.endtrade.setVisible( myrisk.getGame().canEndTrade() );
-
-                                armiesLeft( myrisk.getGame().getCurrentPlayer().getExtraArmies() , myrisk.getGame().NoEmptyCountries() );
-				gameTab.showPanel("tradeCards");
-			}
-			else if (gameState == RiskGame.STATE_PLACE_ARMIES) {
-
-                                armiesLeft( myrisk.getGame().getCurrentPlayer().getExtraArmies() , myrisk.getGame().NoEmptyCountries() );
-				gameTab.showPanel("placeArmies");
-			}
-			else if (gameState == RiskGame.STATE_ATTACKING) {
-
-                                pp.setC1(PicturePanel.NO_COUNTRY);
-                                pp.setC2(PicturePanel.NO_COUNTRY);
-                                gameTab.attacker.setText(resbundle.getString("game.note.selectattacker"));
-
-				gameTab.showPanel("attack");
-			}
-			else if (gameState == RiskGame.STATE_ROLLING) {
-                                showDice(myrisk.getGame().getNoAttackDice(), true);
-				gameTab.showPanel("roll");
-			}
-			else if (gameState == RiskGame.STATE_BATTLE_WON) {
-
-                                int min = myrisk.getGame().getMustMove();
-                            	int max = myrisk.hasArmiesInt( myrisk.getGame().getAttacker().getColor() ) -1;
-                                gameTab.slider.setMaximum(max);
-                                gameTab.slider.setMinimum(min);
-                                gameTab.slider.setValue(min);
-
-				gameTab.showPanel("move");
-			}
-			else if (gameState == RiskGame.STATE_FORTIFYING) {
-				gameTab.showPanel("tacMove");
-			}
-			else if (gameState == RiskGame.STATE_END_TURN) {
-				gameTab.showPanel("endgo");
-			}
-			else if (gameState == RiskGame.STATE_GAME_OVER) {
-
-                                gameTab.winner.continueButton.setVisible( myrisk.getGame().canContinue() );
-
-				gameTab.showPanel("winner");
-			}
-			else if (gameState == RiskGame.STATE_SELECT_CAPITAL) {
-				gameTab.showPanel("capital");
-			}
-			else if (gameState == RiskGame.STATE_DEFEND_YOURSELF) {
-                                showDice(myrisk.getGame().getNoDefendDice(), false);
-				gameTab.showPanel("defend");
-			}
-
+                        gameTab.getInput(s);
 			consoleTab.getInput();
 			repaint();
 		}
@@ -654,54 +591,14 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 		 * Closes the game
 		 */
 		public void closeGame() {
-			gameTab.closeGame();
-			statisticsTab.closeGame();
-			System.gc();
-		}
-
-		private void armiesLeft(int l, boolean s) {
-			gameTab.armies.setText( resbundle.getString("core.input.armiesleft").replaceAll("\\{0\\}", "" + l));
-		}
-
-		private void showDice(int n, boolean w) {
-
-			JPanel p;
-
-			if (w) { p=gameTab.roll; }
-			else { p=gameTab.defend; }
-
-			p.remove(gameTab.roll1);
-			p.remove(gameTab.roll2);
-			p.remove(gameTab.roll3);
-
-			GridBagConstraints c = new GridBagConstraints();
-			c.insets = new java.awt.Insets(3, 3, 3, 3);
-			c.fill = GridBagConstraints.BOTH;
-
-			if (n > 0) {
-
-				c.gridx = 0; // col
-				c.gridy = 0; // row
-				c.gridwidth = 1; // width
-				c.gridheight = 1; // height
-				p.add(gameTab.roll1, c);
-
-				if (n > 1) {
-					c.gridx = 1; // col
-					c.gridy = 0; // row
-					c.gridwidth = 1; // width
-					c.gridheight = 1; // height
-					p.add(gameTab.roll2, c);
-
-					if (n > 2) {
-						c.gridx = 2; // col
-						c.gridy = 0; // row
-						c.gridwidth = 1; // width
-						c.gridheight = 1; // height
-						p.add(gameTab.roll3, c);
-					}
-				}
-			}
+                    // we are removing lots of UI, better do it in UI thread or things will crash
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            gameTab.closeGame();
+                            statisticsTab.closeGame();
+                        }
+                    });
 		}
 
 		public void showDiceResults(int[] att, int[] def) {

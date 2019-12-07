@@ -15,6 +15,7 @@ CURRENT VERSION:
 
 1.2.1
 
+	SwingGUI: can right click in game setup to place all armies on 1 country
 	In game chat added for Online lobby games
 	MapEditor: more checks on filenames, & symbol not allowed
 	MapEditor: fix for font size on hi-res screens
