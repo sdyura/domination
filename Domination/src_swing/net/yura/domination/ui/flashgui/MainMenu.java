@@ -318,13 +318,9 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 					);
 
 					if (name!=null) {
-
 						myrisk.parser("loadgame " + name );
-
 					}
-
 					break;
-
 				}
 				case MainMenu.BUTTON_HELP: {
 
@@ -399,20 +395,13 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 		}
 
 		if (newhighlightButton==BUTTON_DONATE) {
-
 			if (getCursor()==defaultCursor) {
-
 				setCursor(hand);
-
 			}
-
 		}
 		else if (getCursor()==hand) {
-
 			setCursor(defaultCursor);
-
 		}
-
 	}
 
 	/**
@@ -435,7 +424,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 				repaint();
 			}
 		}
-
 	}
 
 	/**
@@ -485,8 +473,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	/**
 	 * the user has released a key
 	 */
-	public void keyReleased( KeyEvent event )
-	{
+	public void keyReleased( KeyEvent event ) {
 		switch (event.getKeyCode()) {
 			//tab to the next button
 			case KeyEvent.VK_TAB:
@@ -510,7 +497,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 			case KeyEvent.VK_ENTER:
 				activateButton( highlightButton);
 				break;
-
 
 			//new game
 			case KeyEvent.VK_N:
@@ -575,7 +561,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 		//frame.setVisible(false);
 		//frame.dispose();
-
 	}
 
         public void hide() {

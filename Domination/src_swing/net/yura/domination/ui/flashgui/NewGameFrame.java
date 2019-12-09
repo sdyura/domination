@@ -120,8 +120,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 */
 	private int nRemoveButtonPos = 8;
 
-
-
 	/**
 	 * The NewGameFrame Constructor
 	 * @param r The Risk Parser used for playing the game
@@ -522,11 +520,8 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 * @param a The ImageIcon where the map is stored
 	 */
 	public void setMap(Icon a) {
-
 		mapPic.setIcon(a);
-
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-
 	}
 
 	/**
@@ -539,7 +534,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		if ( m==false && mission.isSelected() ) { domination.setSelected(true); AutoPlaceAll.setEnabled(true); }
 
 		mission.setEnabled(m);
-
 	}
 
 	/**
@@ -562,7 +556,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 
 			//let it cycle
 			arCycleList[nRemoveButtonPos + PlayersPanel.getComponents().length - 1] = player.getRemoveButton();
-
 		    }
 		});
 	}
@@ -600,13 +593,9 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 
 					break;
 				}
-
 			}
-
-
 		    }
 		});
-
 	}
 
 
@@ -634,8 +623,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		private Color color;
 		private String ip;
 		private JButton remove;
-
-
 
 		/**
 		 * Creates the panel where the player details are shown
@@ -734,7 +721,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 
 			//if (localgame) { g.drawString( resb.getString("newgame.type.local"), 140, 20); }
 			//else { g.drawString( ip, 140, 20); }
-
 		}
 
 		/**
@@ -759,8 +745,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		public JButton getRemoveButton() {
 			return this.remove;
 		}
-
-
 	}
 
 	class NewGamePanel extends JPanel {
@@ -798,9 +782,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			g.setColor( RiskUIUtil.getTextColorFor( thecolor ) );
 
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.color"), 410, 387);
-
 		}
-
 	}
 
 	class colorChooserPanel extends JPanel {
@@ -820,16 +802,11 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			GraphicsUtil.drawImage(g, newgame, 370, 395, 500, 500,     700, 0, 830, 105, this);
 
 			for (int c=0; c< Colors.length ; c++) {
-
 				g.setColor( Colors[c].getColor() );
 				GraphicsUtil.fillRect(g, Colors[c].getX(), Colors[c].getY(), Colors[c].getWidth(), Colors[c].getHeight());
-
 			}
-
 		}
-
 	}//class colorChooserPanel extends JPanel
-
 
 	/**
 	 * Actionlistener applies the correct command to the button pressed
@@ -846,42 +823,33 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 				myrisk.parser("choosemap " + name );
 
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
 			}
 		}
 		else if (e.getSource()==defaultMap) {
 
 			myrisk.parser("choosemap " + RiskGame.getDefaultMap() );
-
 		}
 		else if (e.getSource()==chooseCards) {
 
 			String name = RiskUIUtil.getNewFile( this, RiskFileFilter.RISK_CARDS_FILES);
 
 			if (name != null) {
-
 				myrisk.parser("choosecards " + name );
-
 			}
-
 		}
 		else if (e.getSource()==defaultCards) {
 
 			myrisk.parser("choosecards " + RiskGame.getDefaultCards() );
-
 		}
 		else if (e.getSource()==resetplayers) {
 
 			Component[] players = PlayersPanel.getComponents();
 
 			for (int c=0; c< players.length ; c++) {
-
 				myrisk.parser("delplayer " + ((playerPanel)players[c]).getName() );
-
 			}
 
 			resetPlayers();
-
 		}
 
 		else if (e.getSource()==addplayer) {
@@ -894,7 +862,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			else			{ type = "ai average"; }
 
 			myrisk.parser("newplayer "+ type +" "+ color +" "+ playerName.getText() );
-
 		}
 		else if (e.getSource()==start) {
 
@@ -919,14 +886,10 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 				else if (italianLike.isSelected()) type += " italianlike";
 
 				myrisk.parser("startgame " + type + (( AutoPlaceAll.isSelected() )?(" autoplaceall"):("")) + (( recycle.isSelected() )?(" recycle"):("")) );
-
 			}
 			else {
-
 				JOptionPane.showMessageDialog(this, resb.getString("newgame.error.numberofplayers") , resb.getString("newgame.error.title"), JOptionPane.ERROR_MESSAGE );
-
 			}
-
 		}
 		else if (e.getSource()==help) {
 
@@ -936,33 +899,21 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			catch(Exception er) {
 				JOptionPane.showMessageDialog(this,"Unable to open manual: "+er.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 			}
-
 		}
 		else if (e.getSource()==cancel) {
-
-
 			exitForm();
-
-
 		}
 		else if (e.getSource()==playerColor) {
 			colorChooser.setVisible(playerColor.isSelected());
-
 		}
 		else if (e.getSource()==mission) {
-
 			AutoPlaceAll.setEnabled(false);
-
 		}
 		else if (e.getSource()==domination) {
-
 			AutoPlaceAll.setEnabled(true);
-
 		}
 		else if (e.getSource()==capital) {
-
 			AutoPlaceAll.setEnabled(true);
-
 		}
 	}
 
@@ -996,8 +947,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	/**
 	 * the user has selected a player color on the player color panel
 	 */
-	protected void setSelectedPlayerColor(MyColor col)
-	{
+	protected void setSelectedPlayerColor(MyColor col) {
 		color		= col.getName();
 		thecolor	= col.getColor();
 	}//protected void setSelectedPlayerColor(MyColor col)
@@ -1007,8 +957,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	/**
 	 * Resets the players
 	 */
-	public void resetPlayers()
-	{
+	public void resetPlayers() {
 
 		myrisk.parser("autosetup");
 /*
@@ -1120,10 +1069,8 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 * Block the gamepanel
 	 */
 	public void noInput() {
-
 		nothing.setVisible(true);
 		//System.out.print("BLOCK INPUT\n");
-
 	}
 
 	/**
@@ -1302,5 +1249,3 @@ class ImageButtonFocusListener implements FocusListener {
 		}
 	}
 }//class ImageButtonFocusListener
-
-

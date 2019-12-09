@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
-import net.yura.domination.engine.core.StatType;
-
 /**
  * <p> Risk Player </p>
  * @author Yura Mamyrin
@@ -68,7 +66,6 @@ public class Player implements Serializable {
 	Statistics = new Vector();
 	currentStatistic = new Statistic();
 	Statistics.add(currentStatistic);
-
     }
 
     public void rename(String na) {
@@ -80,16 +77,12 @@ public class Player implements Serializable {
     }
 
     public String toString() {
-
 	return name;
-
     }
 
     public void nextTurn() {
-
 	currentStatistic = new Statistic();
 	Statistics.add(currentStatistic);
-
     }
 
     public double[] getStatistics(StatType type) {
@@ -344,5 +337,4 @@ public class Player implements Serializable {
     public boolean isAlive() {
         return getExtraArmies() > 0 || getNoTerritoriesOwned() > 0;
     }
-
 }
