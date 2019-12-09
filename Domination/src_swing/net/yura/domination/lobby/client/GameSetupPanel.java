@@ -154,6 +154,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 		sp2.setOpaque(false);
 		sp2.getViewport().setOpaque(false);
+                sp2.setViewportBorder(null); // for nimbus
 
 		add( sp2 );
 
@@ -177,6 +178,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		list.setOpaque(false);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
+                scrollPane.setViewportBorder(null); // for nimbus
 
 		add(scrollPane);
 
@@ -564,6 +566,8 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 			text.setLineWrap(true);
 			text.setWrapStyleWord(true);
 			text.setEditable(false);
+                        text.setBorder(null); // for nimbus
+                        text.setBackground(new Color(0x00000000, true)); // for numbus setting null does not work
 
 			text.setOpaque(false);
 
