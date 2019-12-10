@@ -15,6 +15,7 @@ CURRENT VERSION:
 
 1.2.1
 
+	Made possible by our patrons on Patreon, especially Colvin Goree and Karl Meiser
 	FlashGUI: can right click to select country for quickplace in game setup
 	SwingGUI: can right click in game setup to place all armies on 1 country
 	In game chat added for Online lobby games
