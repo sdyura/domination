@@ -41,6 +41,7 @@ import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -627,7 +628,9 @@ public class GameFrame extends JFrame implements KeyListener {
                         case RiskGame.STATE_PLACE_ARMIES:
                             Player me = myrisk.getGame().getCurrentPlayer();
                             if (!myrisk.getGame().getSetupDone() && quickPlace.containsKey(me)) {
-                                go("placearmies " + quickPlace.get(me) + " 1");
+                                int country = ((Integer)quickPlace.get(me)).intValue();
+                                flash(country);
+                                go("placearmies " + country + " 1");
                             }
                             else {
                                 if (!myrisk.getGame().NoEmptyCountries()) {
@@ -736,6 +739,18 @@ public class GameFrame extends JFrame implements KeyListener {
 
 		repaint(); // SwingGUI has this here, if here then not needed in set status
 	}
+        
+        private void flash(int country) {
+                pp.setC1(country);
+                pp.repaint();
+                try {
+                    Thread.sleep(AIManager.getWait());
+                }
+                catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                pp.setC1(PicturePanel.NO_COUNTRY);
+        }
 
         public String getArmiesLeftText() {
                 int l = myrisk.getGame().getCurrentPlayer().getExtraArmies();
