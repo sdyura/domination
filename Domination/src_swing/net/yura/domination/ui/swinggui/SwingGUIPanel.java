@@ -583,7 +583,13 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 			SwingGUIPanel.this.setCursor(null); // Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)
 
                         if (!localGame && tabbedpane.getSelectedComponent() instanceof LobbyTab) {
-                            setSelectedTab(GameTab.class);
+                            // SortingFocusTraversalPolicy can throw a null pointer if set tab called from non UI thread
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setSelectedTab(GameTab.class);
+                                }
+                            });
                         }
 		}
 

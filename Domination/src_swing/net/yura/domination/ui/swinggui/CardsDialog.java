@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -22,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,7 +42,6 @@ import net.yura.domination.engine.translation.TranslationBundle;
  * <p> Cards Dialog for Swing GUI </p>
  * @author Yura Mamyrin
  */
-
 public class CardsDialog extends JDialog {
 
     private Risk myrisk;
@@ -64,7 +65,6 @@ public class CardsDialog extends JDialog {
      * @param modal
      * @param r the risk main program
      */
-
     public CardsDialog(Frame parent, PicturePanel p, boolean modal, Risk r, boolean ct) {
         super(parent, modal);
 	myrisk = r;
@@ -92,15 +92,6 @@ public class CardsDialog extends JDialog {
         pack();
 
     }
-
-    public void populate(List cards) {
-        tradeButton.setEnabled(false);
-	for (int c=0; c < cards.size(); c++) {
-	    JPanel cp = new CardPanel( (Card)cards.get(c) );
-	    CardsPanel.add(cp);
-	}
-    }
-
 
     /** This method is called from within the constructor to initialize the dialog. */
     private void initGUI() {
@@ -156,8 +147,6 @@ public class CardsDialog extends JDialog {
 
 		    getNum.setText( getNumArmies() );
 		    tradeButton.setEnabled(false);
-
-
                 }
             }
 	);
@@ -168,17 +157,13 @@ public class CardsDialog extends JDialog {
 
 	CardsPlane.getViewport().add(CardsPanel);
 
-	Dimension CardsPlaneSize = GraphicsUtil.newDimension(550, 230);
+	Dimension CardsPlaneSize = GraphicsUtil.newDimension(540, 200);
 	CardsPlane.setBorder(javax.swing.BorderFactory.createTitledBorder(resb.getString("cards.yourcards")));
-	CardsPlane.setPreferredSize( CardsPlaneSize );
-	CardsPlane.setMinimumSize( CardsPlaneSize );
-	CardsPlane.setMaximumSize( CardsPlaneSize );
+        setPanelSize(CardsPlane, CardsPlaneSize);
 
-	Dimension TradePlaneSize = GraphicsUtil.newDimension(340, 210);
+	Dimension TradePlaneSize = GraphicsUtil.newDimension(320, 180);
 	TradePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resb.getString("cards.trade")));
-	TradePanel.setPreferredSize( TradePlaneSize );
-	TradePanel.setMinimumSize( TradePlaneSize );
-	TradePanel.setMaximumSize( TradePlaneSize );
+        setPanelSize(TradePanel, TradePlaneSize);
 
 	//CardsPlane.add(cards);
 
@@ -225,6 +210,22 @@ public class CardsDialog extends JDialog {
                 }
             }
 	);
+    }
+    
+    private static void setPanelSize(JComponent panel, Dimension size) {
+        Insets border = panel.getInsets();
+        Dimension newSize = new Dimension(size.width + border.left + border.right, size.height + border.top + border.bottom);
+        panel.setPreferredSize(newSize);
+	panel.setMinimumSize(newSize);
+	panel.setMaximumSize(newSize);
+    }
+
+    public void populate(List cards) {
+        tradeButton.setEnabled(false);
+	for (int c=0; c < cards.size(); c++) {
+	    JPanel cp = new CardPanel( (Card)cards.get(c) );
+	    CardsPanel.add(cp);
+	}
     }
 
     public String getNumArmies() {
