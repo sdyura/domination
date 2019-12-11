@@ -94,14 +94,11 @@ public class CardsDialog extends JDialog {
     }
 
     public void populate(List cards) {
-
         tradeButton.setEnabled(false);
-
 	for (int c=0; c < cards.size(); c++) {
 	    JPanel cp = new CardPanel( (Card)cards.get(c) );
 	    CardsPanel.add(cp);
 	}
-
     }
 
 
@@ -120,11 +117,12 @@ public class CardsDialog extends JDialog {
         note.setLineWrap(true);
         note.setWrapStyleWord(true);
 
-        //note.setBackground(getNum.getBackground());
+        note.setBackground(RiskUIUtil.getColorFromColorUIResource(getNum.getBackground()));
         note.setForeground(getNum.getForeground());
         note.setFont((new JLabel()).getFont());
         note.setEditable(false);
 	note.setOpaque(false);
+        note.setBorder(null); // for nimbus
 
 	Dimension noteSize = GraphicsUtil.newDimension(180, 120);
 
@@ -227,7 +225,6 @@ public class CardsDialog extends JDialog {
                 }
             }
 	);
-
     }
 
     public String getNumArmies() {
@@ -378,7 +375,6 @@ public class CardsDialog extends JDialog {
 
 	public void mouseReleased(MouseEvent e) {
 	}
-
     }
 
     /** Closes the dialog */

@@ -47,6 +47,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.plaf.UIResource;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskIO;
@@ -730,8 +731,6 @@ public class RiskUIUtil {
 
 
 	public static void openAbout(Frame frame,String product,String version) {
-
-
 		AboutDialog aboutDialog = new AboutDialog( frame , true, product, version);
 		Dimension frameSize = frame.getSize();
 		Dimension aboutSize = aboutDialog.getSize();
@@ -876,9 +875,7 @@ public class RiskUIUtil {
         }
 
 	public static void runLobby(Risk risk) {
-
 		try {
-
 			if (lobbyURL!=null) {
 
 				URLClassLoader ucl = URLClassLoader.newInstance(new URL[] { new URL("jar:"+lobbyURL+"/LobbyClient.jar!/") } );
@@ -953,10 +950,8 @@ public class RiskUIUtil {
         }
 
 	private static void setupLookAndFeel() {
-
 		// set up system Look&Feel
 		try {
-
                     String systemLookAndFeel = UIManager.getSystemLookAndFeelClassName();
                     AffineTransform dat = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().getDefaultTransform();
                     
@@ -975,16 +970,11 @@ public class RiskUIUtil {
 		// only do this check if there is NO sandbox
 		// as otherwise we will get an exception anyway
 		if (checkForNoSandbox()) {
-
 			// check for java bug with JFileChooser
 			try {
-
 				new JFileChooser();
-
 			}
 			catch (Throwable th) {
-
-
 				try {
 					UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 				}
@@ -1013,7 +1003,12 @@ public class RiskUIUtil {
 */
 	}
 
-
+        /**
+         * In nimbus theme it does not respect a ColorUIResource when setting a color
+         */
+        public static Color getColorFromColorUIResource(Color colorUIResource) {
+            return colorUIResource instanceof UIResource ? new Color(colorUIResource.getRGB(), true) : colorUIResource;
+        }
 
 
 

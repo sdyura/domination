@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import javax.swing.JComponent;
-import javax.swing.plaf.UIResource;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.swing.ImageIcon;
@@ -101,7 +100,7 @@ public class AboutDialog extends JDialog {
 
 		// commentField.setWrapStyleWord(true);
 		// commentField.setLineWrap(true);
-                Color defaultBackground = getColorFromColorUIResource(copLabel.getBackground());
+                Color defaultBackground = RiskUIUtil.getColorFromColorUIResource(copLabel.getBackground());
 
 		commentField.setBackground(defaultBackground);
 		commentField.setForeground(copLabel.getForeground());
@@ -262,13 +261,6 @@ public class AboutDialog extends JDialog {
 		//setSize(size);
 
 	}
-
-        /**
-         * In nimbus theme it does not respect a ColorUIResource when setting a color
-         */
-        private static Color getColorFromColorUIResource(Color colorUIResource) {
-            return colorUIResource instanceof UIResource ? new Color(colorUIResource.getRGB(), true) : colorUIResource;
-        }
 
 	private static void addTextToTextBox(JEditorPane a,String n) {
 
