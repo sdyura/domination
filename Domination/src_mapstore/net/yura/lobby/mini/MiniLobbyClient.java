@@ -325,9 +325,11 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     public void closeGame() {
-        mycom.closeGame(openGameId);
-        openGameId = -1;
-        chatMessages.clear();
+        if (openGameId != -1) {
+            mycom.closeGame(openGameId);
+            openGameId = -1;
+            chatMessages.clear();
+        }
     }
 
     public void createNewGame(Game game) {
@@ -357,9 +359,9 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     public void disconnected() {
         logger.info("disconnected openGame=" + openGameId);
         if (openGameId != -1) {
-            game.disconnected();
             openGameId = -1;
             chatMessages.clear();
+            game.disconnected(); // this will call MiniLobbyRisk.disconnected() -> Risk.closegame() -> MiniLobbyRisk.closeGame() -> MiniLobbyClient.closeGame()
         }
     }
 
