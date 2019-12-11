@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import javax.swing.JComponent;
+import javax.swing.plaf.UIResource;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.swing.ImageIcon;
@@ -100,13 +101,15 @@ public class AboutDialog extends JDialog {
 
 		// commentField.setWrapStyleWord(true);
 		// commentField.setLineWrap(true);
+                Color defaultBackground = getColorFromColorUIResource(copLabel.getBackground());
 
-		commentField.setBackground(copLabel.getBackground());
+		commentField.setBackground(defaultBackground);
 		commentField.setForeground(copLabel.getForeground());
 		commentField.setFont(copLabel.getFont());
 		commentField.setText(comments);
 		commentField.setEditable(false);
 		commentField.setOpaque(false);
+                commentField.setBorder(null); // for nimbus
 
 		JLabel image = new JLabel(new ImageIcon( AboutDialog.class.getResource("logo.png") ), JLabel.CENTER);
 
@@ -139,17 +142,19 @@ public class AboutDialog extends JDialog {
 
 		);
 
-		info1.setBackground(copLabel.getBackground());
+		info1.setBackground(defaultBackground);
 		info1.setForeground(copLabel.getForeground());
 		info1.setFont(copLabel.getFont());
 		info1.setEditable(false);
 		info1.setOpaque(false);
+                info1.setBorder(null); // for nimbus
 
-		info2.setBackground(copLabel.getBackground());
+		info2.setBackground(defaultBackground);
 		info2.setForeground(copLabel.getForeground());
 		info2.setFont(copLabel.getFont());
 		info2.setEditable(false);
 		info2.setOpaque(false);
+                info2.setBorder(null); // for nimbus
 
 		infoPanel.add(info1);
 		infoPanel.add(info2);
@@ -257,6 +262,13 @@ public class AboutDialog extends JDialog {
 		//setSize(size);
 
 	}
+
+        /**
+         * In nimbus theme it does not respect a ColorUIResource when setting a color
+         */
+        private static Color getColorFromColorUIResource(Color colorUIResource) {
+            return colorUIResource instanceof UIResource ? new Color(colorUIResource.getRGB(), true) : colorUIResource;
+        }
 
 	private static void addTextToTextBox(JEditorPane a,String n) {
 
