@@ -27,7 +27,6 @@ import net.yura.domination.engine.translation.TranslationBundle;
  * <p> Move Dialog for FlashGUI </p>
  * @author Yura Mamyrin
  */
-
 public class MoveDialog extends JDialog {
 
 	private GameFrame gui;
@@ -62,19 +61,12 @@ public class MoveDialog extends JDialog {
         }
         
 	public MoveDialog(Frame parent, boolean modal) {
-
 		super(parent, modal);
-
 		gui = (GameFrame)parent;
-
 		Move = RiskUIUtil.getUIImage(this.getClass(),"move.jpg");
-
 		MoveBack = Move.getSubimage(0, 0, 480, 330);
-
 		initGUI();
-
 		setResizable(false);
-
 		pack();
 	}
 
@@ -111,10 +103,10 @@ public class MoveDialog extends JDialog {
 		GraphicsUtil.setBounds(moveall, 196, 250, w, h);
 		moveall.setActionCommand("all");
 
-		JButton button = new JButton(resb.getString("move.move"));
-		NewGameFrame.sortOutButton( button, Move.getSubimage(342, 250, w, h), Move.getSubimage(480, 196, w, h), Move.getSubimage(480, 165, w, h) );
-		GraphicsUtil.setBounds(button, 343, 250, w, h);
-		button.setActionCommand("move");
+		JButton moveButton = new JButton(resb.getString("move.move"));
+		NewGameFrame.sortOutButton(moveButton, Move.getSubimage(342, 250, w, h), Move.getSubimage(480, 196, w, h), Move.getSubimage(480, 165, w, h) );
+		GraphicsUtil.setBounds(moveButton, 343, 250, w, h);
+		moveButton.setActionCommand("move");
 
 
 
@@ -147,64 +139,40 @@ public class MoveDialog extends JDialog {
 		b3.setActionCommand("b3");
 
 
-
-
 		ActionListener al = new ActionListener() {
-
-			/**
-			 *  Assigns the correct command to the button pressed
-			 * @param e ActionEvent object
-			 */
 			public void actionPerformed(ActionEvent e) {
-
 				if (e.getActionCommand().equals("cancel")) {
-
 					exitForm();
-
 				}
 				else if (e.getActionCommand().equals("all")) {
-
 					if (tacmove) {
 						gui.go("movearmies " +country1.getColor()+ " " +country2.getColor()+ " " + (csrc-1) );
 					}
 					else {
 						gui.go("move " + (csrc-1) );
 					}
-
 					//exitForm();
-
 				}
 				else if (e.getActionCommand().equals("move")) {
-
 					if (tacmove) {
 						gui.go("movearmies " +country1.getColor()+ " " +country2.getColor()+ " " + move );
 					}
 					else {
 						gui.go("move " + move);
 					}
-
 					//exitForm();
-
 				}
 				else if (e.getActionCommand().equals("b1")) {
-
 					slider.setValue( slider.getMinimum() );
-
 				}
 				else if (e.getActionCommand().equals("b2")) {
-
 					slider.setValue( move-1 );
-
 				}
 				else if (e.getActionCommand().equals("b3")) {
-
 					slider.setValue( move+1 );
-
 				}
 				else if (e.getActionCommand().equals("b4")) {
-
 					slider.setValue( slider.getMaximum() );
-
 				}
 			}
 		};
@@ -212,7 +180,7 @@ public class MoveDialog extends JDialog {
 
 		cancel.addActionListener( al );
 		moveall.addActionListener( al );
-		button.addActionListener( al );
+		moveButton.addActionListener( al );
 
 		b1.addActionListener( al );
 		b2.addActionListener( al );
@@ -226,7 +194,7 @@ public class MoveDialog extends JDialog {
 
 		movepanel.add(cancel);
 		movepanel.add(moveall);
-		movepanel.add(button);
+		movepanel.add(moveButton);
 
 		getContentPane().add(movepanel);
 
@@ -294,7 +262,6 @@ public class MoveDialog extends JDialog {
 		slider.addChangeListener(
 			new ChangeListener() {
 				public void stateChanged(ChangeEvent e) {
-
 					move = slider.getValue();
 					movepanel.repaint();
 				}
@@ -306,10 +273,6 @@ public class MoveDialog extends JDialog {
 		movepanel.add(slider);
 	}
 
-	/**
-         * Exit the Application
-	 * Closes the GUI
-	 */
 	public void exitForm() {
 		setVisible(false);
 	}

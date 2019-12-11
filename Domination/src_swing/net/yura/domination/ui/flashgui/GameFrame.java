@@ -799,27 +799,19 @@ public class GameFrame extends JFrame implements KeyListener {
 	 * @param command sends the input command to the parser via a string
 	 */
 	public void go(String command) {
-
 		blockInput();
-
 		myrisk.parser(command);
 	}
 
 	public void blockInput() {
-
-		pp.setHighLight(255);
-
+		pp.setHighLight(PicturePanel.NO_COUNTRY);
 		//c1Id = -1;
-
 		if (gameState==RiskGame.STATE_ROLLING || gameState==RiskGame.STATE_DEFEND_YOURSELF) {
-
 			//this does not close it, just resets its params
 			battledialog.blockInput();
 		}
 
-
 		if (gameState==RiskGame.STATE_BATTLE_WON || gameState==RiskGame.STATE_FORTIFYING) {
-
 			// this hides the dailog
 			movedialog.exitForm();
 		}
