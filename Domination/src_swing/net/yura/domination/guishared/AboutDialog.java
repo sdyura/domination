@@ -188,8 +188,9 @@ public class AboutDialog extends JDialog {
                 colors.setPreferredSize(GraphicsUtil.newDimension(100, 50));
 
                 JPanel mainInfo = new JPanel(new BorderLayout());
-                mainInfo.add(infoPanel,BorderLayout.SOUTH);
+                mainInfo.setOpaque(false);
                 mainInfo.add(colors);
+                mainInfo.add(infoPanel,BorderLayout.SOUTH);
 
 		JTabbedPane tabbedpane = new JTabbedPane();
 		tabbedpane.addTab( resb.getString("about.tab.sysinfo") , mainInfo);
