@@ -94,12 +94,12 @@ public class StatsPanel extends JPanel {
 	Graphics2D g2 = tempgraph.createGraphics();
         g2.setFont(getFont());
 
-	int xOffset = (int) (GraphicsUtil.density * 30); // offset from the left
-	int yOffset = (int) (GraphicsUtil.density * 30); // offset from the bottom
+	int xOffset = scale(35); // offset from the left
+	int yOffset = scale(25); // offset from the bottom
 
 	// size of devision
-	gridSizeX = (tempgraph.getWidth()-xOffset-20f) /maxTurns; // the 20 is the right offset
-	gridSizeY = (tempgraph.getHeight()-yOffset-20f) /maxValue; // the 20 is the top offset
+	gridSizeX = (tempgraph.getWidth()-xOffset-(float)scale(20)) /maxTurns; // the 20 is the right offset
+	gridSizeY = (tempgraph.getHeight()-yOffset-(float)scale(20)) /maxValue; // the 20 is the top offset
 
 	// the co-ords of the Zero Zero
 	ZeroX = xOffset;
@@ -112,12 +112,10 @@ public class StatsPanel extends JPanel {
 	    if ( i == maxValue || bob == 0 || ( i % bob )==0 ) {
 		g2.setColor(Color.gray);
 		g2.drawLine(ZeroX,(int)(ZeroY-(i*gridSizeY)),(int)(maxTurns*gridSizeX)+ZeroX,(int)(ZeroY-(i*gridSizeY)));
-
 		g2.setColor(Color.white);
-
 		String label = String.valueOf(i);
                 int labelWidth = g2.getFontMetrics().stringWidth(label);
-		g2.drawString(label, ZeroX-(6 + labelWidth), (int)(ZeroY-(i*gridSizeY)+5));
+		g2.drawString(label, ZeroX-(scale(6) + labelWidth), (int)(ZeroY-(i*gridSizeY) + scale(5)));
 	    }
 	}
 
@@ -130,7 +128,7 @@ public class StatsPanel extends JPanel {
 	    if ( i == maxTurns || fred == 0 || ( i % fred )==0 ) {
 		g2.setColor(Color.white);
                 int labelHeight = g2.getFontMetrics().getHeight();
-		g2.drawString(String.valueOf(i),(int)(i*gridSizeX + ZeroX-3),ZeroY + labelHeight);
+		g2.drawString(String.valueOf(i),(int)(i*gridSizeX + ZeroX-scale(3)),ZeroY + labelHeight);
 	    }
         }
 
@@ -152,6 +150,10 @@ public class StatsPanel extends JPanel {
 	g2.dispose();
 
 	graph = tempgraph;
+    }
+    
+    private int scale(int n) {
+        return (int) (GraphicsUtil.density * n);
     }
 
     private int ZeroX;
