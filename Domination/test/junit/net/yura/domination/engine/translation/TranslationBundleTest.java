@@ -34,6 +34,11 @@ public class TranslationBundleTest extends TestCase {
         super.tearDown();
     }
 
+    
+    /**
+     * to update the compiled note, run:
+     * sed -i 's+48.0/java1.4+49/java1.5+g' src/net/yura/domination/engine/translation/Risk*.properties
+     */
     public void testSystemInfoString() {
         System.out.println("testSystemInfoString");
 
@@ -75,6 +80,11 @@ public class TranslationBundleTest extends TestCase {
             //if (!split[6].equals(" Screen: ")) {
             //    throw new RuntimeException("error in " + locale + " >" + split[6] + "< ");
             //}
+            
+            String compiled = resb.getString("about.compiledfor");
+            if (!compiled.contains("49/java1.5")) {
+                throw new RuntimeException("error2 in " + locale);
+            }
         }
         System.out.println("testSystemInfoString PASS");
     }
