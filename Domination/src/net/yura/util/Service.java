@@ -33,6 +33,9 @@ public class Service {
 
   public static synchronized Iterator providers(Class cls, boolean instantiate) {
     ClassLoader classLoader = cls.getClassLoader();
+    if (classLoader == null) {
+        classLoader = Thread.currentThread().getContextClassLoader();
+    }
     String providerFile = SERVICES_LOCATION + cls.getName();
 
     // check whether we already loaded the provider classes

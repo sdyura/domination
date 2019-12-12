@@ -1,23 +1,23 @@
 package net.yura.domination.ui.swinggui;
 
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.util.ServiceLoader;
+import java.util.Iterator;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import net.yura.mobile.gui.plaf.LookAndFeel;
+import net.yura.util.Service;
 
 public class PLAF {
-
-    private static final ServiceLoader<LookAndFeel> LOOK_AND_FEEL_LOADER = ServiceLoader.load(LookAndFeel.class); 
 
     private SwingGUIPanel ui;
     private ButtonGroup lookAndFeelRadioGroup;
@@ -53,13 +53,23 @@ public class PLAF {
         lookAndFeelRadioGroup = new ButtonGroup();
         for(UIManager.LookAndFeelInfo lafInfo: lookAndFeelInfos) {
             menu.add(createLookAndFeelItem(lafInfo.getName(), lafInfo.getClassName()));
-        }  
-        // Now load any look and feels defined externally as service via java.util.ServiceLoader
-        LOOK_AND_FEEL_LOADER.iterator();
-        for (LookAndFeel laf : LOOK_AND_FEEL_LOADER) {           
-            menu.add(createLookAndFeelItem(laf.toString(), laf.getClass().getName()));
         }
 
+        //try {
+            // Now load any look and feels defined externally as service via java.util.ServiceLoader (java 1.6+)
+            //java.util.ServiceLoader<LookAndFeel> LOOK_AND_FEEL_LOADER = java.util.ServiceLoader.load(LookAndFeel.class);
+            //LOOK_AND_FEEL_LOADER.iterator();
+            //for (LookAndFeel laf : LOOK_AND_FEEL_LOADER) {
+            //    menu.add(createLookAndFeelItem(laf.toString(), laf.getClass().getName()));
+            //}
+        //}
+        //catch (Throwable th) {
+            Iterator<LookAndFeel> it = Service.providers(LookAndFeel.class);
+            while (it.hasNext()) {
+                LookAndFeel laf = it.next();
+                menu.add(createLookAndFeelItem(laf.toString(), laf.getClass().getName()));
+            }
+        //}
         return menu;
     }
 
@@ -67,7 +77,10 @@ public class PLAF {
         JRadioButtonMenuItem lafItem = new JRadioButtonMenuItem();
 
         lafItem.setSelected(lafClassName.equals(lookAndFeel));
-        lafItem.setHideActionText(true);
+        try {
+            lafItem.setHideActionText(true); // java 1.6+
+        }
+        catch (Throwable th) {}
         lafItem.setAction(setLookAndFeelAction);
         lafItem.setText(lafName);
         lafItem.setActionCommand(lafClassName);
@@ -90,7 +103,14 @@ public class PLAF {
     }
 
     private void updateLookAndFeel() {
-        Window windows[] = Window.getWindows();
+        
+        Window[] windows;
+        try {
+            windows = Window.getWindows(); // only JAVA-1.6, then again Multipart sending does not work in 1.4
+        }
+        catch (Throwable th) {
+            windows = Frame.getFrames();
+        }
 
         for(Window window : windows) {
             SwingUtilities.updateComponentTreeUI(window);
