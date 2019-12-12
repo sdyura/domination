@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.microedition.lcdui.Display;
 import net.yura.domination.engine.RiskUtil;
@@ -143,18 +144,48 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         catch (Exception ex) { }
 
         String uuid = prop.getProperty("uuid");
-        if (uuid!=null) {
-            return uuid;
-        }
-        uuid = UUID.randomUUID().toString();
-        prop.setProperty("uuid", uuid);
+        if (uuid == null) {
+            uuid = UUID.randomUUID().toString();
+            prop.setProperty("uuid", uuid);
 
-        try {
-            prop.store(new FileOutputStream(lobbySettingsFile), "yura.net Lobby");
+            try {
+                prop.store(new FileOutputStream(lobbySettingsFile), "yura.net Lobby");
+            }
+            catch (Exception ex) { }
         }
-        catch (Exception ex) { }
+        
+        // make file hidden
+        makeFileHidden(lobbySettingsFile);
 
         return uuid;
+    }
+    
+    private static void makeFileHidden(File file) {
+        if (!file.isHidden()) {
+            String os = System.getProperty("os.name");
+            if (os != null && os.toLowerCase().contains("windows")) {
+                String jv = System.getProperty("java.version");
+                if (jv != null && (jv.startsWith("1.5.") || jv.startsWith("1.6."))) {
+                    try {
+                        Process p = Runtime.getRuntime().exec("attrib +H " + file.getAbsolutePath());
+                        //wait for the command to complete
+                        p.waitFor();
+                    }
+                    catch (Throwable th) {
+                        logger.log(Level.WARNING, "legacy can not set file properties", th);
+                    }
+                }
+                else {
+                    try {
+                        //set hidden attribute
+                        java.nio.file.Files.setAttribute(file.toPath(), "dos:hidden", true, java.nio.file.LinkOption.NOFOLLOW_LINKS);
+                    }
+                    catch (Throwable th) {
+                        logger.log(Level.WARNING, "can not set file properties", th);
+                    }
+                }
+            }
+        }
     }
 
     public Panel getRoot() {
