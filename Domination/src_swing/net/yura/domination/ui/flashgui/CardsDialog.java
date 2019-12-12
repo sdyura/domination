@@ -211,8 +211,7 @@ public class CardsDialog extends JDialog {
 		CardsPlane.setOpaque(false);
 		CardsPlane.getViewport().add(myCardsPanel);
 		CardsPlane.getViewport().setOpaque(false);
-
-
+                CardsPlane.setViewportBorder(null); // for nimbus
 		CardsPlane.setBorder(null);
 		//CardsPlane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 1));
 		GraphicsUtil.setBounds(CardsPlane, 49, 48, 532, 198);
