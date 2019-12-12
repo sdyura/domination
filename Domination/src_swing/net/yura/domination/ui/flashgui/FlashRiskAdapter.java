@@ -70,7 +70,6 @@ public class FlashRiskAdapter implements RiskListener {
 	 * @param repaintNeeded If frame needs to be repainted
 	 */
 	public void sendMessage(String output, boolean redrawNeeded, boolean repaintNeeded) {
-
 		try {
 			if (redrawNeeded) {
 				gameFrame.repaintCountries();
@@ -91,28 +90,18 @@ public class FlashRiskAdapter implements RiskListener {
         }
 
 	public void showMessageDialog(String a) {
-
 		if ( gameFrame!=null && gameFrame.isVisible() ) {
-
 			JOptionPane.showMessageDialog(gameFrame,a);
-
 		}
 		else if (menu != null && menu.isVisible()) {
-
 			JOptionPane.showMessageDialog(menu,a);
-
 		}
 		else if (newgameframe != null && newgameframe.isVisible()) {
-
 			JOptionPane.showMessageDialog(newgameframe,a);
-
 		}
 		else {
-
 			JOptionPane.showMessageDialog(null,a);
-
 		}
-
 	}
 
 	/**
@@ -131,7 +120,10 @@ public class FlashRiskAdapter implements RiskListener {
 	 * @param s determines what needs input
 	 */
 	public void needInput(int s) {
-		if ( gameFrame.isVisible() ) {
+                if (newgameframe.isVisible()) {
+                        newgameframe.needInput();
+                }
+                else if ( gameFrame.isVisible() ) {
                         gameFrame.needInput(s);
                     
 			if (s == RiskGame.STATE_ROLLING) {
@@ -192,7 +184,6 @@ public class FlashRiskAdapter implements RiskListener {
 	 * @param def The defender's results
 	 */
 	public void showDiceResults(int[] att, int[] def) {
-
 		if (battledialog.isVisible() ) {
 			battledialog.showDiceResults(att, def);
 		}
@@ -202,9 +193,7 @@ public class FlashRiskAdapter implements RiskListener {
 	 * Closes the battle dialogue
 	 */
 	public void closeBattle() {
-
 		if (battledialog.isVisible() ) {
-
 			battledialog.setVisible(false);
 		}
 	}

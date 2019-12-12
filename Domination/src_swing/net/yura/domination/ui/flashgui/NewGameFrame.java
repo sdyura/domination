@@ -466,12 +466,13 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		nRemoveButtonPos = 8;
 	}//private void initGUI()
 
-	public void setup(boolean t) {
-
-		localgame=t;
+	public void setup(boolean localgame) {
+		this.localgame=localgame;
+                
+                start.setEnabled(true);
 
 		// set title
-		if (localgame) {
+		if (this.localgame) {
 			setTitle(resb.getString("newgame.title.local"));
 			resetplayers.setVisible(true);
 		}
@@ -490,11 +491,18 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 
 		nothing.setVisible(false);
 
-		if (t) {
+		if (this.localgame) {
                     RiskUtil.loadPlayers(myrisk,getClass());
                 }
-
 	}
+
+        /**
+         * Something has gone wrong starting the game e.g. the cards file does not match the map file
+         * we need to re-enable the start button so the user can have another go
+         */
+        public void needInput() {
+            start.setEnabled(true);
+        }
 
 	static class LimitedDocument extends PlainDocument {
 
@@ -598,22 +606,13 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		});
 	}
 
-
-	/** Exit the Application */
-
-	/**
-	 * Closes the GUI
-	 * @param evt Close button was pressed
-	 */
 	private void exitForm() {
-
 		//if (localgame) {
 			myrisk.parser("closegame");
 		//}
 		//else {
 		//	myrisk.parser("leave");
 		//}
-
 	}
 
 	class playerPanel extends JPanel {
@@ -689,10 +688,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			add(remove);
 		}
 
-		/**
-		 * Paints a graphic
-		 * @param g Graphics Component
-		 */
 		public void paintComponent(Graphics g) {
 
 			g.setColor( new Color(color.getRed(), color.getGreen(), color.getBlue(), 125) );
@@ -748,11 +743,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	}
 
 	class NewGamePanel extends JPanel {
-
-		/**
-		 * Paints a graphic
-		 * @param g Graphics Component
-		 */
 		public void paintComponent(Graphics g) {
 
 			((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -786,11 +776,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	}
 
 	class colorChooserPanel extends JPanel {
-
-		/**
-		 * Paints a graphic
-		 * @param g Graphics Component
-		 */
 		public void paintComponent(Graphics g) {
 
 			Graphics2D g2 = (Graphics2D)g;
@@ -813,9 +798,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 * @param e The ActionEvent Object
 	 */
 	public void actionPerformed(ActionEvent e) {
-
 		if (e.getSource()==chooseMap) {
-
 			String name = RiskUIUtil.getNewMap(this);
 
 			if (name != null) {
@@ -830,7 +813,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			myrisk.parser("choosemap " + RiskGame.getDefaultMap() );
 		}
 		else if (e.getSource()==chooseCards) {
-
 			String name = RiskUIUtil.getNewFile( this, RiskFileFilter.RISK_CARDS_FILES);
 
 			if (name != null) {
@@ -838,11 +820,9 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			}
 		}
 		else if (e.getSource()==defaultCards) {
-
 			myrisk.parser("choosecards " + RiskGame.getDefaultCards() );
 		}
 		else if (e.getSource()==resetplayers) {
-
 			Component[] players = PlayersPanel.getComponents();
 
 			for (int c=0; c< players.length ; c++) {
@@ -851,9 +831,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 
 			resetPlayers();
 		}
-
 		else if (e.getSource()==addplayer) {
-
 			String type="";
 
 			if (human.isSelected())	{ type = "human"; }
@@ -864,14 +842,12 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			myrisk.parser("newplayer "+ type +" "+ color +" "+ playerName.getText() );
 		}
 		else if (e.getSource()==start) {
-
 			Component[] players = PlayersPanel.getComponents();
 
 			if (
 					(players.length >= 2 && players.length <= RiskGame.MAX_PLAYERS )
 					// || (players.length == 2 && domination.isSelected() && ((playerPanel)players[0]).getType() == 0 && ((playerPanel)players[1]).getType() == 0 )
 			) {
-
                                 if (localgame) {
                                     RiskUtil.savePlayers(myrisk,getClass());
                                 }
@@ -886,6 +862,8 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 				else if (italianLike.isSelected()) type += " italianlike";
 
 				myrisk.parser("startgame " + type + (( AutoPlaceAll.isSelected() )?(" autoplaceall"):("")) + (( recycle.isSelected() )?(" recycle"):("")) );
+
+                                start.setEnabled(false);
 			}
 			else {
 				JOptionPane.showMessageDialog(this, resb.getString("newgame.error.numberofplayers") , resb.getString("newgame.error.title"), JOptionPane.ERROR_MESSAGE );
