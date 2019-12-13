@@ -72,7 +72,7 @@ public class SwingMEWrapper {
         return result;
     }
 
-    public static MiniLobbyClient makeMiniLobbyClient(String server, Risk risk,final Window window, final ChatBox chat, final PlayerList players) {
+    public static MiniLobbyClient makeMiniLobbyClient(String server, Risk risk,final Window window, final ChatBox chat, final PlayerList players, final String appName) {
         MapChooser.loadThemeExtension();
         MiniLobbyClient miniLobbyClient = new MiniLobbyClient(new MiniLobbyRisk(risk) {
             private net.yura.domination.lobby.client.GameSetupPanel gsp;
@@ -86,7 +86,7 @@ public class SwingMEWrapper {
                 }
             }
             public String getAppName() {
-                return "SwingDomination";
+                return appName;
             }
             public String getAppVersion() {
                 return RiskUtil.RISK_VERSION;

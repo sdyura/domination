@@ -10,6 +10,7 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.RootPaneContainer;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.guishared.SwingMEWrapper;
 import net.yura.domination.engine.core.Player;
@@ -38,7 +39,7 @@ public class FlashMiniLobby {
         inGameChat = new ChatBox();
         playerList = new PlayerList(null);
 
-        mlc = SwingMEWrapper.makeMiniLobbyClient(MiniLobbyClient.LOBBY_SERVER, myrisk, window, inGameChat, playerList);
+        mlc = SwingMEWrapper.makeMiniLobbyClient(MiniLobbyClient.LOBBY_SERVER, myrisk, window, inGameChat, playerList, "Flash" + RiskUtil.GAME_NAME);
         wrapper.add(mlc.getRoot());
 
         mlc.addCloseListener(new net.yura.mobile.gui.ActionListener() {
