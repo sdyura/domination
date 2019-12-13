@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.guishared.SwingMEWrapper;
 import net.yura.domination.engine.translation.TranslationBundle;
@@ -125,7 +124,7 @@ public class LobbyTab extends ME4SEPanel implements SwingGUITab,ActionListener {
 
 
     void createLobby(String server) {
-        mlc = SwingMEWrapper.makeMiniLobbyClient(server, risk, SwingUtilities.getWindowAncestor(this), null, null, "Swing" + RiskUtil.GAME_NAME);
+        mlc = SwingMEWrapper.makeMiniLobbyClient(server, risk, SwingUtilities.getWindowAncestor(this), null, null, "Swing");
         mlc.removeBackButton();
         add( mlc.getRoot() );
     }

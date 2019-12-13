@@ -86,7 +86,7 @@ public class SwingMEWrapper {
                 }
             }
             public String getAppName() {
-                return appName;
+                return appName + RiskUtil.GAME_NAME;
             }
             public String getAppVersion() {
                 return RiskUtil.RISK_VERSION;
