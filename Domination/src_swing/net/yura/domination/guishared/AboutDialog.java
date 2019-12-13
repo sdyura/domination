@@ -56,16 +56,15 @@ public class AboutDialog extends JDialog {
 	 * Creates a new AboutDialog
 	 * @param parent decides the parent of the frame
 	 * @param modal
-	 * @param p contains the product
-	 * @param v contains the GUI version
+	 * @param product contains the product name
+	 * @param ver contains the GUI version
 	 */
-
-	public AboutDialog(Frame parent, boolean modal, String product, String v) {
+	public AboutDialog(Frame parent, boolean modal, String product, String ver) {
 		super(parent, modal);
 
 		java.util.ResourceBundle resb = TranslationBundle.getBundle();
 
-		String version=resb.getString("about.version")+" " + v;
+		String version=resb.getString("about.version")+" " + ver;
 		String author = " Yura Mamyrin (yura@yura.net)";
 		String title		= resb.getString("about.title");
 
@@ -260,31 +259,20 @@ public class AboutDialog extends JDialog {
 		addTextToTextBox(editorPane3,"ChangeLog.txt");
 
 		//setSize(size);
-
 	}
 
 	private static void addTextToTextBox(JEditorPane a,String n) {
-
 		try {
-
 			if (n.endsWith(".htm") || n.endsWith(".html")) {
-
 				a.setContentType( "text/html" );
 			}
-
 			a.read(RiskUtil.openStream(n) , null );
-
 		}
 		catch(Exception e) {
-
 			a.setText( e.toString() );
-
 		}
-
 	}
 
-
-	/** Closes the dialog */
 	private void closeDialog() {
 		setVisible(false);
 		dispose();

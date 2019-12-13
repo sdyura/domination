@@ -106,7 +106,7 @@ public class PLAF {
         
         Window[] windows;
         try {
-            windows = Window.getWindows(); // only JAVA-1.6, then again Multipart sending does not work in 1.4
+            windows = Window.getWindows(); // only JAVA-1.6
         }
         catch (Throwable th) {
             windows = Frame.getFrames();
