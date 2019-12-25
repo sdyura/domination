@@ -120,7 +120,7 @@ public class FlashRiskAdapter implements RiskListener {
 	 * @param s determines what needs input
 	 */
 	public void needInput(int s) {
-                if (newgameframe.isVisible()) {
+                if (newgameframe != null && newgameframe.isVisible()) {
                         newgameframe.needInput();
                 }
                 else if ( gameFrame.isVisible() ) {
