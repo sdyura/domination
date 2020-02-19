@@ -58,6 +58,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -1086,7 +1088,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
         }
 
         public void delIslands(Collection<Country> countries) {
-            Set findColors = new HashSet();
+            Set<Integer> findColors = new HashSet();
             for (Country country : countries) {
                 Color color = new Color(country.getColor(),country.getColor(),country.getColor());
                 findColors.add(color.getRGB());
@@ -1147,7 +1149,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
             }
             else {
                 final Map<Integer,Integer> counts = new TreeMap(); // island size -> number of islands
-                final Map<Integer,Set> colors = new TreeMap(); // island size -> island colors
+                final Map<Integer,Set<Integer>> colors = new TreeMap(); // island size -> island colors
                 for (List<Integer> island: allIslands) {
                     int islandSize = island.size();
                     if (counts.get(islandSize)==null) {
@@ -1206,9 +1208,17 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 }
                 table.append("</table>");
 */
+                final JTable islandsJTable = new JTable(islandsTable);
+                islandsJTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                        public void valueChanged(ListSelectionEvent event) {
+                            Set<Integer> colorsForRow = colors.get(islandSizes.get(islandsJTable.getSelectedRow()));
+                            editPanel.setSelectedCountry(myMap.getCountryInt(colorsForRow.iterator().next()));
+                        }
+                    });
+
                 int result = JOptionPane.showConfirmDialog(this, new Object[] {
                     "<html>"+allIslands.size()+" islands found, are you sure you want to delete them from the map?",
-                    new JScrollPane(new JTable(islandsTable))}, "Del Islands?", JOptionPane.YES_NO_OPTION);
+                    new JScrollPane(islandsJTable)}, "Del Islands?", JOptionPane.YES_NO_OPTION);
 
                 if (result == JOptionPane.YES_OPTION) {
                     for (List<Integer> island: allIslands) {
