@@ -1211,8 +1211,10 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 final JTable islandsJTable = new JTable(islandsTable);
                 islandsJTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                         public void valueChanged(ListSelectionEvent event) {
-                            Set<Integer> colorsForRow = colors.get(islandSizes.get(islandsJTable.getSelectedRow()));
-                            editPanel.setSelectedCountry(myMap.getCountryInt(colorsForRow.iterator().next()));
+                            if (!event.getValueIsAdjusting() && islandsJTable.getSelectedRow() != -1) {
+                                Set<Integer> colorsForRow = colors.get(islandSizes.get(islandsJTable.getSelectedRow()));
+                                editPanel.setSelectedCountry(myMap.getCountryInt(colorsForRow.iterator().next()));
+                            }
                         }
                     });
 
