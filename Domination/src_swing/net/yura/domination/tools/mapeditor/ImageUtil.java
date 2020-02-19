@@ -14,6 +14,8 @@ public class ImageUtil {
         int imgHeight = source.getHeight();
         int oldColor = source.getRGB(x, y);
 
+        if (oldColor == newColor) return;
+        
         Queue<Point> queue = new LinkedList<Point>();
         int[] scanLine = new int[imgWidth];
 
