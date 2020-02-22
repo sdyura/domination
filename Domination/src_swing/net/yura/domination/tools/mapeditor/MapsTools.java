@@ -35,6 +35,7 @@ import org.apache.http.entity.mime.content.StringBody;
 public class MapsTools {
     
     public static final String MAPS_XML_FILE = "maps.xml";
+    public static final String DEFAULT_RISK_CARD_SET = "risk.cards";
 
     public static List loadMaps() {
 
@@ -62,8 +63,6 @@ public class MapsTools {
         catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        
-        
     }
     
     public static void saveMaps(List maps) {
@@ -125,7 +124,6 @@ public class MapsTools {
             if (!done) throw new Exception("not done "+format);
 
             return PREVIEW+"/"+prv;
-
     }
     
     
@@ -148,7 +146,7 @@ public class MapsTools {
                 files.add( info.get("map") );
 
                 String cardsFile = (String)info.get("crd");
-                if (!"risk.cards".equals(cardsFile) && !"nomission.cards".equals(cardsFile)) { // these 2 files come with ALL installs
+                if (!DEFAULT_RISK_CARD_SET.equals(cardsFile) && !"nomission.cards".equals(cardsFile)) { // these 2 files come with ALL installs
                     files.add( cardsFile );
                 }
 
@@ -224,8 +222,6 @@ public class MapsTools {
         catch (IOException e) {
             throw new RuntimeException(e);
         }
-        
-        
     }
     
     
@@ -258,7 +254,6 @@ public class MapsTools {
         	}
         	rd.close();
 		return buffer.toString();
-
     }
         
     public static List getCategories() {
@@ -303,5 +298,4 @@ public class MapsTools {
         }
         return !text.contains("  ");
     }
-
 }

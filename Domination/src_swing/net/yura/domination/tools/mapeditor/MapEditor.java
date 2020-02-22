@@ -96,6 +96,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 	private Risk myrisk;
 	private RiskGame myMap;
         private String fileName;
+        private boolean usesDefaultCards;
         private File imgFile;
         
 	private MapEditorPanel editPanel;
@@ -414,8 +415,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		}
 	}
 
-	public void setNewMap(RiskGame m,BufferedImage ip,BufferedImage im,String fname,File img) {
-
+	public void setNewMap(RiskGame m,BufferedImage ip,BufferedImage im, String fname, String cardsFile, File img) {
 		myMap = m;
 
 		editPanel.setMap(myMap);
@@ -434,6 +434,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 
                 fileName = fname;
                 imgFile = img;
+                usesDefaultCards = MapsTools.DEFAULT_RISK_CARD_SET.equals(cardsFile);
                 
                 circle.setValue( new Integer(m.getCircleSize()) );
                 
@@ -458,6 +459,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
         private void loadMap(String name) throws Exception {
             RiskGame map = makeNewMap();
             map.setMapfile(name); // this is here just to update the cards option, also set the name and version
+            String cardsFile = map.getCardsFile();
             map.loadMap();
             map.loadCards(true);
 
@@ -473,7 +475,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 file = ( (RiskUIUtil.FileInputStream)in ).getFile();
             }
 
-            setNewMap(map,ipic,imap,name,file);
+            setNewMap(map,ipic,imap,name,cardsFile,file);
         }
         
         void setImagePic(BufferedImage bufferedImage,File file,boolean checkmap) {
@@ -508,7 +510,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 				BufferedImage ipic = new BufferedImage(PicturePanel.PP_X , PicturePanel.PP_Y, BufferedImage.TYPE_INT_BGR);
 				BufferedImage imap = newImageMap(PicturePanel.PP_X,PicturePanel.PP_Y);
 
-				setNewMap(map,ipic,imap,null,null);
+				setNewMap(map,ipic,imap,null,null,null);
 			}
 			catch(Exception ex) {
 				showError(ex);
@@ -1046,7 +1048,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 			}
 		}
 		catch(Throwable ex) {
-
 			RiskUtil.printStackTrace(ex);
 			showError(ex);
 		}
@@ -1273,10 +1274,8 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 	}
 
 	public void showError(Throwable ex) {
-
 		JOptionPane.showMessageDialog(this, "Error: "+ex.toString(), "ERROR!", JOptionPane.ERROR_MESSAGE);
 		RiskUtil.printStackTrace(ex);
-
 	}
 
 	public BufferedImage getImageMap() {
@@ -1288,33 +1287,24 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		return editPanel.getImagePic();
 	}
 
-	public String getStringForContinent(Continent c) {
+	public static String getStringForContinent(Continent c, RiskGame context) {
 
 		if (c == null) {
-
 			return "0";
-
 		}
 		if (c == RiskGame.ANY_CONTINENT) {
-
 			return "*";
-
 		}
 
-		Continent[] continents = myMap.getContinents();
+		Continent[] continents = context.getContinents();
 
 		for (int i = 0; i < continents.length; i++) {
-
 			if (continents[i] == c) {
-
 				return String.valueOf(i+1);
-
 			}
-
 		}
 
 		throw new RuntimeException();
-
 	}
 
         private boolean checkNewImageMap(BufferedImage map) {
@@ -1337,16 +1327,12 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
         }
 
 	public boolean checkMap() {
-
 		String errors="";
 
 		if (myMap.getNoCountries() < 6) {
-
 			errors = errors + "\n* Less then 6 countries on this map.";
-
 		}
 		else {
-
 			List t = new ArrayList(Arrays.asList(myMap.getCountries()));
 			List a = new ArrayList();
 
@@ -1361,23 +1347,16 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 			);
 
 			if (a.size() != myMap.getNoCountries()) {
-
 				errors = errors + "\n* Some countries are isolated from the rest: "+t;
-
 			}
-
 		}
 
 		Continent[] continents = myMap.getContinents();
 
 		for (int c=0;c<continents.length;c++) {
-
 			if (continents[c].getTerritoriesContained().size() == 0) {
-
 				errors = errors + "\n* The continent \""+continents[c]+"\" is empty.";
-
 			}
-
 		}
 
 
@@ -1388,9 +1367,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 
 		BufferedImage pic = editPanel.getImagePic();
 		if (pic.getWidth()!=map.getWidth() || pic.getHeight()!=map.getHeight()) {
-
 			errors = errors + "\n* ImagePic and ImageMap are not the same size.";
-
 		}
 
 
@@ -1405,31 +1382,21 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 			color = pixels[c] & 0xff;
 
 			if (color == 255) {
-
 				// ignore
-
 			}
 			else if (color == 0 || color > noc) {
-
 				bad.add( new Integer(color) );
-
 			}
 			else {
-
 				good.remove( myMap.getCountryInt(color) );
-
 			}
 		}
 
 		if (bad.size() > 0) {
-
 			errors = errors + "\n* Image Map uses colors that do not match any country: "+bad;
-
 		}
 		if (good.size() > 0) {
-
 			errors = errors + "\n* Image Map does not contain areas for some countries: "+good;
-
 		}
 
 		// missions checks:
@@ -1437,9 +1404,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		List missions = myMap.getMissions();
 
 		if (missions.size()>0 && missions.size() <6) {
-
 			errors = errors + "\n* You have chosen to have missions but you have less then is needed for a game with 6 players.";
-
 		}
 
 		for (int i = 0; i < missions.size(); i++) {
@@ -1536,7 +1501,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		}
 
 		cardsBuffer.append(n);
-
 	    }
 
 	    List missions = myMap.getMissions();
@@ -1552,41 +1516,40 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 	    	cardsBuffer.append(n);
 
 		for (int i = 0; i < missions.size(); i++) {
-
 			Mission m = (Mission)missions.get(i);
-
-			if (m.getPlayer()!=null) {
-
-				cardsBuffer.append( m.getPlayer().getName().substring(6,7) ); // PLAYER1
-
-			}
-			else {
-
-				cardsBuffer.append("0");
-
-			}
-
-			cardsBuffer.append("\t");
-			cardsBuffer.append(String.valueOf( m.getNoofcountries() ));
-			cardsBuffer.append(" ");
-			cardsBuffer.append(String.valueOf( m.getNoofarmies() ));
-			cardsBuffer.append("\t");
-			cardsBuffer.append( getStringForContinent(m.getContinent1()) );
-			cardsBuffer.append(" ");
-			cardsBuffer.append( getStringForContinent(m.getContinent2()) );
-			cardsBuffer.append(" ");
-			cardsBuffer.append( getStringForContinent(m.getContinent3()) );
-			cardsBuffer.append("\t");
-			cardsBuffer.append(m.getDiscription());
+			cardsBuffer.append(getMissionString(m, myMap));
 			cardsBuffer.append(n);
 		}
-
 	    }
 
             return cardsBuffer.toString();
-
         }
 
+        private static String getMissionString(Mission m, RiskGame context) {
+            StringBuffer cardsBuffer = new StringBuffer();
+            
+            if (m.getPlayer()!=null) {
+                    cardsBuffer.append( m.getPlayer().getName().substring(6,7) ); // PLAYER1
+            }
+            else {
+                    cardsBuffer.append("0");
+            }
+
+            cardsBuffer.append("\t");
+            cardsBuffer.append(String.valueOf( m.getNoofcountries() ));
+            cardsBuffer.append(" ");
+            cardsBuffer.append(String.valueOf( m.getNoofarmies() ));
+            cardsBuffer.append("\t");
+            cardsBuffer.append( getStringForContinent(m.getContinent1(), context) );
+            cardsBuffer.append(" ");
+            cardsBuffer.append( getStringForContinent(m.getContinent2(), context) );
+            cardsBuffer.append(" ");
+            cardsBuffer.append( getStringForContinent(m.getContinent3(), context) );
+            cardsBuffer.append("\t");
+            cardsBuffer.append(m.getDiscription());
+            
+            return cardsBuffer.toString();
+        }
 
         // ####################################################### MAKE MAP FILE
         private String buildMapFile(String mapName, String cardsName, String imageMapName, String imagePicName) throws Exception {
@@ -1675,7 +1638,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 buffer.append(" ");
 		buffer.append( ColorUtil.getStringForColor( c.getColor() ) );
                 buffer.append(n);
-
             }
 
             buffer.append(n);
@@ -1696,13 +1658,12 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 buffer.append(" ");
                 buffer.append(c.getIdString());
                 buffer.append(" ");
-		buffer.append( getStringForContinent( c.getContinent() ) );
+		buffer.append( getStringForContinent(c.getContinent(), myMap));
                 buffer.append(" ");
 		buffer.append( c.getX() );
                 buffer.append(" ");
 		buffer.append( c.getY() );
                 buffer.append(n);
-
             }
 
 
@@ -1793,14 +1754,18 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		if (result != JOptionPane.YES_OPTION) {
 			return false;
 		}
-
 	    }
-
-            String cardsBuffer = buildCardsFile(cardsName);
+            
+            if (usesDefaultCards && cardsSameAsDefaultRiskCards()) {
+                cardsName = MapsTools.DEFAULT_RISK_CARD_SET;
+            }
+            else {
+                String cardsBuffer = buildCardsFile(cardsName);
+                saveMap(cardsBuffer, new FileOutputStream(cardsFile));
+            }
+            
 	    String buffer = buildMapFile(mapName, cardsName, imageMapName, imagePicName);
-
-            saveMap( buffer ,new FileOutputStream(mapFile));
-            saveMap( cardsBuffer ,new FileOutputStream(cardsFile));
+            saveMap(buffer, new FileOutputStream(mapFile));
 
             saveImage( editPanel.getImageMap() , IMAGE_MAP_EXTENSION , imageMapFile );
 
@@ -1818,8 +1783,33 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
             }
 
             return true;
-            
 	}
+        
+        private boolean cardsSameAsDefaultRiskCards() {
+            try {
+                RiskGame risk = makeNewMap();
+                risk.setMapfile("risk.map"); // just in case someone changed the defualt map in a config file
+                risk.loadMap();
+                risk.loadCards(true);
+                
+                if (!risk.getCards().equals(myMap.getCards()) || risk.getMissions().size() != myMap.getMissions().size()) {
+                    return false;
+                }
+                
+                for (int c = 0; c < myMap.getMissions().size(); c++) {
+                    Mission m1 = (Mission)myMap.getMissions().get(c);
+                    Mission m2 = (Mission)risk.getMissions().get(c);
+                    if (!getMissionString(m1, myMap).equals(getMissionString(m2, risk))) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex) {
+                RiskUtil.printStackTrace(ex);
+                return false;
+            }
+        }
 
         void saveImage(BufferedImage im, String formatName, File output) throws Exception {
 	    if ( !ImageIO.write( im , formatName , output ) ) {
@@ -1859,5 +1849,4 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		if (output != null) output.close();
 	    }
     }
-
 }

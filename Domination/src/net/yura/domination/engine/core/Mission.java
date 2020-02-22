@@ -33,7 +33,6 @@ public class Mission implements Serializable {
      * @param d The description of the mission
      */
     public Mission(Player p, int noc, int noa, Continent c1, Continent c2, Continent c3, String d) {
-
 	player = p;
 	noofcountries = noc;
 	noofarmies = noa;
@@ -41,7 +40,6 @@ public class Mission implements Serializable {
 	con2 = c2;
 	con3 = c3;
 	discription = d;
-
     }
 
     /**
@@ -100,16 +98,6 @@ public class Mission implements Serializable {
         return discription;
     }
 
-
-
-    public String toString() {
-
-	return "".equals(discription)?"(Discription Missing)":discription;
-
-    }
-
-
-
     public void setPlayer(Player a) {
         player = a;
     }
@@ -136,5 +124,9 @@ public class Mission implements Serializable {
 
     public void setDiscription(String a) {
         discription = a;
+    }
+
+    public String toString() {
+	return "".equals(discription)?"(Description Missing)":discription;
     }
 }

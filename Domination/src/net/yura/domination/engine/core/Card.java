@@ -76,4 +76,13 @@ public class Card implements Serializable {
 
     }
 
+    // used in the map Editor
+    public boolean equals(Object obj) {
+        return obj instanceof Card &&
+                name.equals(((Card)obj).name) &&
+                (
+                    (country == null && ((Card)obj).country == null) ||
+                    (country != null && ((Card)obj).country != null && country.getColor() == ((Card)obj).country.getColor())
+                );
+    }
 }
