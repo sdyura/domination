@@ -40,6 +40,9 @@ public class RiskMap {
         this.mapUID = mapUID;
     }
 
+    /**
+     * @Nullable: This method may or may not return a MapStore.Map object, it depends on if the icon has been requested and returned.
+     */
     public Map getMap() {
         return map;
     }

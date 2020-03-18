@@ -352,7 +352,11 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     public void sendChatMessage(String message) {
-        mycom.sendChat(openGameId, message);
+        int gameId = openGameId;
+        if (gameId == -1) {
+            throw new IllegalStateException("no game open");
+        }
+        mycom.sendChat(gameId, message);
     }
 
     public void closeGame() {
