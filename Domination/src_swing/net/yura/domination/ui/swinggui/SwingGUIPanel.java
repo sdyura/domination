@@ -426,7 +426,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                 }
 	}
 
-	public void submitBug(String messageFromUser,String from,String subjectIn,String cause) {
+	public void submitBug(String to, String from, String subjectIn, String messageFromUser, String cause) {
 
             String subject = RiskUtil.GAME_NAME +" "+RiskUtil.RISK_VERSION+" SwingGUI "+ TranslationBundle.getBundle().getLocale().toString()+" "+subjectIn;
 
@@ -443,6 +443,10 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                     map.put("lobbyID", net.yura.lobby.mini.MiniLobbyClient.getMyUUID());
                     map.put("debugText", debugTab.getDebugText());
                     map.put("errText", debugTab.getErrText());
+                    if (to != null) {
+                        // TODO: the current server (TF_MAIL) ignores this, so all emails end up going to bugs@
+                        map.put("recipient", to);
+                    }
 
                     net.yura.grasshopper.BugSubmitter.submitBug(map, from, subject, cause, RiskUtil.GAME_NAME,
                             RiskUtil.RISK_VERSION+" (save: " + RiskGame.SAVE_VERSION + " network: "+RiskGame.NETWORK_VERSION+")",
@@ -1258,7 +1262,7 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
 
                         if (email == null) { email ="none"; }
 
-                        submitBug(null, email, "Bug", cause);
+                        submitBug(null, email, "Bug", null, cause);
 		}
                 else if (a.getActionCommand().equals("clear error")) {
                     errText.setText("");
