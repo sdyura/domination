@@ -70,6 +70,14 @@ public class GameSettings implements GameSettingsMXBean {
     }
 
     public void updateMaps() {
+
+        LobbyServerMXBean lobby = GameLobby.getInstance();
+
+        // save all games just in case
+        if (!lobby.saveToDB()) {
+            throw new IllegalStateException("unable to save games");
+        }
+
         // get list of all maps from the server
         List<Map> serverMaps = MapUpdateService.getMaps(MapChooser.MAP_PAGE,Collections.EMPTY_LIST);
         if (serverMaps.isEmpty()) {
@@ -113,7 +121,6 @@ public class GameSettings implements GameSettingsMXBean {
             final Thread thread = Thread.currentThread();
 
             MapServerClient client = new MapServerClient(new MapServerListener() {
-                volatile int count;
                 public void gotResultCategories(String url, List categories) { }
                 public void gotResultMaps(String url, List maps) { }
                 public void onXMLError(String string) { }
@@ -174,7 +181,6 @@ public class GameSettings implements GameSettingsMXBean {
         }
 
         // save a list of the file names into the GameType
-        LobbyServerMXBean lobby = GameLobby.getInstance();
 
         String oldOptionsString = lobby.getGameOptions(RiskUtil.GAME_NAME);
 
