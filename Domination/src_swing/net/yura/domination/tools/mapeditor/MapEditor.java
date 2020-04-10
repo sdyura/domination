@@ -868,8 +868,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 else if (a.getActionCommand().equals("autodraw")) {
                         Collection<Country> selectedCountries = views.getSelectedCountries();
                         if (selectedCountries.isEmpty()) {
-                            showNoCountrySelectedError();
-                            return;
+                            selectedCountries = Arrays.asList(myMap.getCountries());
                         }
 
                         String[] options = {"Dots", "Flood Fill", "Cancel"};
@@ -887,8 +886,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 else if ("smartFill".equals(a.getActionCommand())) {
                         Collection<Country> selectedCountries = views.getSelectedCountries();
                         if (selectedCountries.isEmpty()) {
-                            showNoCountrySelectedError();
-                            return;
+                            selectedCountries = Arrays.asList(myMap.getCountries());
                         }
 
                         JSpinner tolerance = new JSpinner(new SpinnerNumberModel(20,0,255,1) );
@@ -907,8 +905,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		else if (a.getActionCommand().equals("islands")) {
                         Collection<Country> selectedCountries = views.getSelectedCountries();
                         if (selectedCountries.isEmpty()) {
-                            showNoCountrySelectedError();
-                            return;
+                            selectedCountries = Arrays.asList(myMap.getCountries());
                         }
 
 			delIslands(selectedCountries);
@@ -930,10 +927,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 numbers.add(country.getColor());
             }
             return "Selected countries: " + numbers;
-        }
-
-        private void showNoCountrySelectedError() {
-            JOptionPane.showMessageDialog(this, "No Countries Selected", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         private int showInputDialog(String[] labels, JComponent[] comps,String title) {
