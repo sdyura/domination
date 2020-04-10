@@ -1234,7 +1234,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		public SetupPanel() {
 
 			GridBagConstraints c = new GridBagConstraints();
-			c.insets = new java.awt.Insets(3, 3, 3, 3);
+			c.insets = GraphicsUtil.newInsets(3, 3, 3, 3);
 			c.fill = GridBagConstraints.BOTH;
 
 		// ##########################################################################################################

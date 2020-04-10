@@ -7,6 +7,7 @@ import java.util.Observer;
 import javax.swing.JButton;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mapstore.MapUpdateService;
+import net.yura.swing.GraphicsUtil;
 
 /**
  * @author Yura
@@ -34,7 +35,7 @@ public class BadgeButton extends JButton implements Observer {
         super.paint(g);
         
         try {
-            int overlap = 5;
+            int overlap = GraphicsUtil.scale(5);
 
             int w = getWidth();
             g.translate(w+overlap, -overlap);
