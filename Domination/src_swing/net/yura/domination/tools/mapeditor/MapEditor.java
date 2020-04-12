@@ -1343,6 +1343,18 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 				errors = errors + "\n* Some countries are isolated from the rest: "+t;
 			}
 		}
+                
+                Country[] countries = myMap.getCountries();
+                for (int a = 0; a < countries.length - 1; a++) {
+                    for (int b = a + 1; b < countries.length; b++) {
+                        if (countries[a].getX() > countries[b].getX() - myMap.getCircleSize()/2 &&
+                                countries[a].getX() < countries[b].getX() + myMap.getCircleSize()/2 &&
+                                countries[a].getY() > countries[b].getY() - myMap.getCircleSize()/2 &&
+                                countries[a].getY() < countries[b].getY() + myMap.getCircleSize()/2) {
+                            errors = errors + "\n* " + countries[a] + " circle overlaps " + countries[b] + " circle";
+                        }
+                    }
+                }
 
 		Continent[] continents = myMap.getContinents();
 

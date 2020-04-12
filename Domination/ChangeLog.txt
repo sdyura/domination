@@ -2,7 +2,7 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.2.1
+	Risk Game:	1.2.2
 	 * Save:	8
 	 * Network:	12
 
@@ -12,6 +12,10 @@ CURRENT VERSION:
 	Simple GUI:	2
 	Increment1GUI:	2
 	CommandLine:	2
+
+1.2.2
+
+	MapEditor: checks for overlapping circles
 
 1.2.1
 

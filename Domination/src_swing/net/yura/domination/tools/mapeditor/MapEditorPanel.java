@@ -323,7 +323,8 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		g.setXORMode(Color.WHITE);
 
 		g.setColor(Color.BLACK);
-
+                
+                // TODO sometimes (linux java1.8 after scrolling) this draws nothing, and there is no way to tell if that happens
 		g.drawOval(dragpoint.x-(brush/2),dragpoint.y-(brush/2),brush,brush);
 
 		g.setPaintMode();
@@ -438,8 +439,8 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
             long timeTaken = (System.currentTimeMillis() - time);
             
             if (timeTaken > 100) {
-                System.out.println("XORMode Badness: "+timeTaken);
                 badness++;
+                System.out.println("XORMode Badness: " + timeTaken + " " + badness);
             }
 
     }
