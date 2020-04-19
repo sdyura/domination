@@ -1,0 +1,17 @@
+Risk Maps
+
+Installation:
+- Link risk.apache2-conf to /etc/apache2/sites-enabled, be sure to set correct paths in this file
+
+Notes:
+- /database dir must belong to www-data group and have read/write permissions, ensure the db file contained inside also hase the same permissions
+- /storage must have read/write permissions for thumbnails and maps to be stored by django
+- /static/admin must point to your django install static admin files, something like: /usr/local/lib/python2.6/dist-packages/Django-1.2.5-py2.6.egg/django/contrib/admin/media
+- See pip-requirements.txt for list of package dependencies
+
+To Import Maps:
+> python manage.py shell
+(Now in Python Shell)
+> import MapImport
+> MapImport.run()
+
