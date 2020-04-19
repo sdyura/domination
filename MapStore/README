@@ -1,17 +1,27 @@
-Risk Maps
+MapStore
 
 Installation:
-- Link risk.apache2-conf to /etc/apache2/sites-enabled, be sure to set correct paths in this file
 
-Notes:
-- /database dir must belong to www-data group and have read/write permissions, ensure the db file contained inside also hase the same permissions
-- /storage must have read/write permissions for thumbnails and maps to be stored by django
-- /static/admin must point to your django install static admin files, something like: /usr/local/lib/python2.6/dist-packages/Django-1.2.5-py2.6.egg/django/contrib/admin/media
-- See pip-requirements.txt for list of package dependencies
+# make sure apache 2 is installed
+sudo apt install apache2
 
-To Import Maps:
-> python manage.py shell
-(Now in Python Shell)
-> import MapImport
-> MapImport.run()
+# we need to get all the extras for Django
+sudo -H pip install Django==1.2.7 --no-cache-dir --no-binary all
+
+# PIP NEEDS TO BE RUN WITH SUDO!!!!! or wont run from apache
+sudo -H pip install -r requirments.txt
+
+# django-ratings is in a local folder
+sudo pip install django-ratings
+
+# database & storage must have read/write permissions for www-data group
+chmod -R ug+rw database storage
+chgrp -R www-data database storage
+
+# Link risk.apache2-conf to /etc/apache2/sites-enabled, be sure to set correct paths in this file
+sudo ln -s risk.apache2-conf /etc/apache2/sites-enabled/risk.conf
+
+# ./static/admin must point to your django install static admin files, something like:
+ln -s /usr/local/lib/python2.7/dist-packages/django/contrib/admin/media static/admin
+
 
