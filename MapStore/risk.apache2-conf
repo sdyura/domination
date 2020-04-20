@@ -18,6 +18,6 @@
 	# alert, emerg.
 	LogLevel debug 
 
-	CustomLog /var/www/risk/access.log combined
+	CustomLog /var/log/apache2/risk-access.log combined
 </VirtualHost>
 
