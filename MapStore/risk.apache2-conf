@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-	ServerAdmin webmaster@localhost
+	ServerAdmin yura@yura.net
 	ServerName maps.yura.net
 	DocumentRoot /var/www/risk
 	WSGIScriptAlias / /var/www/risk/django.wsgi

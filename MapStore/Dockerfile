@@ -36,7 +36,7 @@ RUN ln -s /usr/local/apache/logs /var/log/apache2
 ############## PYTHON SETUP ############
 
 RUN apt-get update
-RUN pip install Django==1.2.7 --no-cache-dir --no-binary :all:
+RUN pip2 install Django==1.2.7 --no-cache-dir --no-binary :all:
 RUN pip2 install -r /var/www/risk/requirements.txt
 RUN chmod a+rw /var/www/risk/database /var/www/risk/storage
 RUN rm /var/www/risk/static/admin
