@@ -2753,7 +2753,11 @@ RiskUtil.printStackTrace(e);
         }
 
         public Player getSingleLocalHumanPlayer() {
-            List<Player> players = getGame().getPlayers();
+            RiskGame game = getGame();
+            if (game == null) {
+                return null;
+            }
+            List<Player> players = game.getPlayers();
             String myAddress = getMyAddress();
             Player human1 = null, human2 = null;
             boolean tooMany1 = false, tooMany2 = false;

@@ -316,7 +316,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 		pp.setHighLight(PicturePanel.NO_COUNTRY);
 		// Testing.append("Submitted: \""+input+"\"\n");
 
-		if (gameState!=2 || !myrisk.getGame().getSetupDone() ) { blockInput(); }
+		if (gameState != RiskGame.STATE_PLACE_ARMIES || !myrisk.getGame().getSetupDone() ) { blockInput(); }
 
 		myrisk.parser(input);
 
