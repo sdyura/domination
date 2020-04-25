@@ -131,12 +131,12 @@ public class CardsDialog extends JDialog {
 
 
 		myCardsPanel = new JPanel();
-		myCardsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+		myCardsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, GraphicsUtil.scale(5), GraphicsUtil.scale(5)));
 		myCardsPanel.setOpaque(false);
 
 
 		TradePanel = new JPanel();
-		TradePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+		TradePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, GraphicsUtil.scale(5), GraphicsUtil.scale(5)));
 		TradePanel.setOpaque(false);
 
 		tradeButton = GameFrame.makeRiskButton(Cards.getSubimage(396, 420, 88, 31), Cards.getSubimage(630, 335, 88, 31), Cards.getSubimage(630, 366, 88, 31), Cards.getSubimage(630, 397, 88, 31));
@@ -322,14 +322,18 @@ public class CardsDialog extends JDialog {
 
 			//this.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 1));
 
-			grayImage = new BufferedImage(CardSize.width, CardSize.height, java.awt.image.BufferedImage.TYPE_INT_RGB );
-			Graphics2D g2 = grayImage.createGraphics();
+			double scale = GraphicsUtil.scale;
 
+			grayImage = new BufferedImage((int)(CardSize.width * scale), (int)(CardSize.height * scale), java.awt.image.BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = grayImage.createGraphics();
+			g2.setFont(getFont()); // needed for hi-res java 1.8
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 			g2.setColor( Color.lightGray );
 			g2.fillRect(0, 0, grayImage.getWidth(), grayImage.getHeight());
 
+			g2.scale(scale, scale);
+                        
 			if (!(card.getName().equals("wildcard"))) {
 
 				String text = ((Country)card.getCountry()).getName(); // Display
@@ -390,9 +394,9 @@ public class CardsDialog extends JDialog {
 			Shape shape = GraphicsUtil.newRoundRectangle(0, 0, 100, 170, 25, 25);
 
 			g2.clip(shape);
-
-			if (select) { g2.drawImage( highlightImage ,0 ,0 ,this ); }
-			else { g2.drawImage( grayImage ,0 ,0 ,this ); }
+                        
+			if (select) { g2.drawImage(highlightImage, 0, 0, getWidth(), getHeight(), this); }
+			else { g2.drawImage(grayImage, 0, 0 ,getWidth(), getHeight(), this); }
 		}
 
 		/**
