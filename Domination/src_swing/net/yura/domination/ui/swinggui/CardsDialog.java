@@ -5,7 +5,6 @@ package net.yura.domination.ui.swinggui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,8 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.util.List;
@@ -82,10 +79,10 @@ public class CardsDialog extends JDialog {
         Wildcard = RiskUIUtil.getUIImage( this.getClass(),"wildcard.gif" );
 
 	CardsPanel = new JPanel();
-	CardsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+	CardsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, GraphicsUtil.scale(5), GraphicsUtil.scale(5)));
 
 	TradePanel = new JPanel();
-	TradePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+	TradePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, GraphicsUtil.scale(5), GraphicsUtil.scale(5)));
 
         initGUI();
         pack();
