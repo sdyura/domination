@@ -151,7 +151,7 @@ public class CardsDialog extends JDialog {
 		//note.setForeground((new JLabel()).getForeground());
 		note.setFont((new JLabel()).getFont());
 		note.setEditable(false);
-		GraphicsUtil.setBounds(note, 400, 270, 180, 150);
+		GraphicsUtil.setBounds(note, 400, 260, 180, 150);
 		note.setOpaque(false);
                 
                 // in nimbus theme we have to do this extra hack
