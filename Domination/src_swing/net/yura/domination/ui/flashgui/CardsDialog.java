@@ -131,12 +131,12 @@ public class CardsDialog extends JDialog {
 
 
 		myCardsPanel = new JPanel();
-		myCardsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, GraphicsUtil.scale(5), GraphicsUtil.scale(5)));
+		myCardsPanel.setLayout(GraphicsUtil.newFlowLayout(java.awt.FlowLayout.LEFT));
 		myCardsPanel.setOpaque(false);
 
 
 		TradePanel = new JPanel();
-		TradePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, GraphicsUtil.scale(5), GraphicsUtil.scale(5)));
+		TradePanel.setLayout(GraphicsUtil.newFlowLayout(java.awt.FlowLayout.LEFT));
 		TradePanel.setOpaque(false);
 
 		tradeButton = GameFrame.makeRiskButton(Cards.getSubimage(396, 420, 88, 31), Cards.getSubimage(630, 335, 88, 31), Cards.getSubimage(630, 366, 88, 31), Cards.getSubimage(630, 397, 88, 31));

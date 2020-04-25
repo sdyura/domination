@@ -2,6 +2,7 @@ package net.yura.swing;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -60,6 +61,10 @@ public class GraphicsUtil {
 
     public static RoundRectangle2D newRoundRectangle(int x, int y, int w, int h, int arcw, int arch) {
         return new RoundRectangle2D.Float(scale(x), scale(y), scale(w), scale(h), scale(arcw), scale(arch));
+    }
+    
+    public static FlowLayout newFlowLayout(int align) {
+        return new FlowLayout(align, scale(5), scale(5));
     }
 
     public static void drawImage(Graphics g, Image img, int x, int y, ImageObserver observer) {

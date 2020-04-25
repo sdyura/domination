@@ -79,10 +79,10 @@ public class CardsDialog extends JDialog {
         Wildcard = RiskUIUtil.getUIImage( this.getClass(),"wildcard.gif" );
 
 	CardsPanel = new JPanel();
-	CardsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, GraphicsUtil.scale(5), GraphicsUtil.scale(5)));
+	CardsPanel.setLayout(GraphicsUtil.newFlowLayout(java.awt.FlowLayout.LEFT));
 
 	TradePanel = new JPanel();
-	TradePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, GraphicsUtil.scale(5), GraphicsUtil.scale(5)));
+	TradePanel.setLayout(GraphicsUtil.newFlowLayout(java.awt.FlowLayout.LEFT));
 
         initGUI();
         pack();
