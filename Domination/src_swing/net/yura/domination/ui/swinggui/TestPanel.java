@@ -575,7 +575,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
 				Frame frame = RiskUIUtil.findParentFrame(this);
 
-				CardsDialog cardsDialog = new CardsDialog( frame ,pp, false, myrisk , false );
+				CardsDialog cardsDialog = new CardsDialog(frame, pp, false, myrisk);
 				Dimension frameSize = frame.getSize();
 				Dimension aboutSize = cardsDialog.getPreferredSize();
 				int x = frame.getLocation().x + (frameSize.width - aboutSize.width) / 2;
@@ -584,7 +584,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 				if (y < 0) y = 0;
 				cardsDialog.setLocation(x, y);
 
-				cardsDialog.populate( myrisk.getGame().getCards() );
+				cardsDialog.populate(myrisk.getGame().getCards(), false);
 
 				cardsDialog.setVisible(true);
 			}

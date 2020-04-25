@@ -826,8 +826,9 @@ public class GameFrame extends JFrame implements KeyListener {
                     movedialog.exitForm();
                 }
 
-		cardsbutton.setEnabled(false);
-		missionbutton.setEnabled(false);
+		Player oneHuman = myrisk.getSingleLocalHumanPlayer();
+		cardsbutton.setEnabled(oneHuman != null);
+		missionbutton.setEnabled(oneHuman != null);
 		undobutton.setEnabled(false);
 
 		savebutton.setEnabled(false);
@@ -956,20 +957,25 @@ public class GameFrame extends JFrame implements KeyListener {
 	 * displays the cards dialog
 	 */
 	private void displayCards() {
-
-		cardsDialog.setup( (gameState==RiskGame.STATE_TRADE_CARDS) );
-
+                // we ONLY come here if getSingleLocalHumanPlayer != null OR it is our turn.
+                Player human = myrisk.getSingleLocalHumanPlayer();
+                Player currentPlayer = myrisk.getGame().getCurrentPlayer();
+                if (human == null) {
+                    // it MUST be our turn!
+                    human = currentPlayer;
+                }
+            
+		cardsDialog.setup(human, human == currentPlayer && gameState == RiskGame.STATE_TRADE_CARDS);
 		cardsDialog.setVisible(true);
 	}
-
-
 
 	/**
 	 * displays the mission window
 	 */
 	private void displayMission() {
-		MissionDialog missiondialog = new MissionDialog(GameFrame.this, true, myrisk);
-
+		MissionDialog missiondialog = new MissionDialog(GameFrame.this, true);
+		missiondialog.setMission(myrisk.getHumanPlayerMission());
+                
 		Dimension frameSize = getSize();
 		Dimension aboutSize = missiondialog.getSize();
 		int x = getLocation().x + (frameSize.width - aboutSize.width) / 2;

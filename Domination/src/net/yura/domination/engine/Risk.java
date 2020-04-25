@@ -1510,7 +1510,7 @@ RiskUtil.printStackTrace(e);
                                             // only show to the right player!
 
                                             if ( showHumanPlayerThereInfo() ) {
-                                                    output = resb.getString( "core.showmission.mission") + " " + getCurrentMission();
+                                                    output = resb.getString( "core.showmission.mission") + " " + getHumanPlayerMission();
                                             }
                                             else { output=resb.getString( "core.showmission.error"); }
                                     }
@@ -2477,8 +2477,7 @@ RiskUtil.printStackTrace(e);
 	 * @return Vector Returns the cards in a vector
 	 */
 	public List getCurrentCards() {
-		//return game.getCards(); // for testing cards
-		return ((Player)game.getCurrentPlayer()).getCards();
+		return game.getCurrentPlayer().getCards();
 	}
 
 
@@ -2489,9 +2488,7 @@ RiskUtil.printStackTrace(e);
 	 * @return int Returns the number of armies
 	 */
 	public int hasArmiesInt(int name) {
-
 		return ((Country)game.getCountryInt(name)).getArmies();
-
 	}
 
 
@@ -2544,31 +2541,28 @@ RiskUtil.printStackTrace(e);
 
 		) { return true; }
 		else { return false; }
-
-
 	}
 
 	/**
 	 * Get the current mission of the game, depending on the game mode
 	 * @return String Returns the current mission
 	 */
-	public String getCurrentMission() {
-
-		if ( game.getGameMode() == RiskGame.MODE_DOMINATION ) {
-			return resb.getString( "core.mission.conquerworld");
-		}
-		//else if ( game.getGameMode() == 1 ) {
-		//	return resb.getString( "core.mission.eliminateenemy");
-		//}
-		else if ( game.getGameMode() == RiskGame.MODE_CAPITAL ) {
-			return resb.getString( "core.mission.capturecapitals");
-		}
-		else if ( game.getGameMode() == RiskGame.MODE_SECRET_MISSION ) {
-			return ((Mission)((Player)game.getCurrentPlayer()).getMission()).getDiscription();
-		}
-		else {
-			return resb.getString( "core.mission.error.cantshow");
-		}
+	public String getHumanPlayerMission() {
+            switch (game.getGameMode()) {
+                case RiskGame.MODE_DOMINATION:
+                    return resb.getString( "core.mission.conquerworld");
+                case RiskGame.MODE_CAPITAL:
+                    return resb.getString( "core.mission.capturecapitals");
+                case RiskGame.MODE_SECRET_MISSION:
+                    Player human = getSingleLocalHumanPlayer();
+                    if (human != null) {
+                        return human.getMission().getDiscription();
+                    }
+                    // else it MUST be our turn
+                    return game.getCurrentPlayer().getMission().getDiscription();
+                default:
+                    return resb.getString( "core.mission.error.cantshow");
+            }
 	}
 
 	/**
@@ -2635,9 +2629,7 @@ RiskUtil.printStackTrace(e);
 	 * @return Color Return the colour of a player that owns a country
 	 */
 	public int getColorOfOwner(int n) {
-
 		return ((Player)((Country)game.getCountryInt(n)).getOwner()).getColor();
-
 	}
 
 	/**
@@ -2688,14 +2680,12 @@ RiskUtil.printStackTrace(e);
 	 * @return String Return Country name if it is there, else return empty speech-marks otherwise
 	 */
 	public String getCountryName(int c) {
-
 		Country t = game.getCountryInt(c);
 		if (t==null) {
 			return "";
 		} else {
 			return t.getName();
 		}
-
 	}
 
 	public Player getCountryCapital(int c) {
@@ -2756,21 +2746,48 @@ RiskUtil.printStackTrace(e);
 			// this should never happen, but can come up with bad timing problems
 			return false;
 		}
-
 	}
 
         public String getMyAddress() {
             return myAddress;
         }
 
-
+        public Player getSingleLocalHumanPlayer() {
+            List<Player> players = getGame().getPlayers();
+            String myAddress = getMyAddress();
+            Player human1 = null, human2 = null;
+            boolean tooMany1 = false, tooMany2 = false;
+            for (Player player : players) {
+                if (player.getType() == Player.PLAYER_HUMAN) {
+                    if (human1 == null) {
+                        human1 = player;
+                    }
+                    else {
+                        tooMany1 = true;
+                    }
+                }
+                if (myAddress.equals(player.getAddress())) {
+                    if (human2 == null) {
+                        human2 = player;
+                    }
+                    else {
+                        tooMany2 = true;
+                    }
+                }
+            }
+            if (human1 != null && !tooMany1) {
+                return human1;
+            }
+            if (human2 != null && !tooMany2) {
+                return human2;
+            }
+            return null;
+        }
 
 
 
 	public void showMessageDialog(String a) {
-
 		controller.showMessageDialog(a);
-
 	}
 
         private synchronized void closeGame() {
@@ -2904,6 +2921,4 @@ RiskUtil.printStackTrace(e);
             }
             return null;
 	}
-
-
 }

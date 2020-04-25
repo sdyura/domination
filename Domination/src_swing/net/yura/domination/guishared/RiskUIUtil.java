@@ -647,12 +647,12 @@ public class RiskUIUtil {
 
 		ResourceBundle resb = TranslationBundle.getBundle();
 
-		String netInfo,home,cpu,name,info;
+		String netInfo,home,cpu,environment,info;
 
 		if (checkForNoSandbox()) {
 			home = System.getProperty("java.home");
 			cpu = System.getProperty("sun.cpu.isalist");
-			name = System.getProperty("java.runtime.name") + " ("+ System.getProperty("java.runtime.version") +")";
+			environment = System.getProperty("java.runtime.name") + " ("+ System.getProperty("java.runtime.version") +")";
 			info = System.getProperty("java.vm.info");
 
 			// we CAN do this outside the sandbox, but for some reason it promps the webstart
@@ -669,13 +669,13 @@ public class RiskUIUtil {
 			info = "?";
 
 			if (applet!=null) {
-				name = "applet";
+				environment = "applet";
 			}
 			else if (webstart!=null) {
-				name = "web start ("+webstart+")";
+				environment = "web start ("+webstart+")";
 			}
 			else {
-				name = "?";
+				environment = "?";
 			}
 
 			netInfo = "?";
@@ -706,10 +706,10 @@ public class RiskUIUtil {
 				" " + getOSString() + " \n" +
 				" " + cpu + " \n" +
 				" " + UIManager.getLookAndFeel() + " \n" +
-                                " " + displayInfo + " \n" +
+				" " + displayInfo + " \n" +
 				" " + System.getProperty("java.vendor") + " \n" +
 				" " + System.getProperty("java.vendor.url") + " \n" +
-				" " + name +" \n" +
+				" " + environment +" \n" +
 				" " + System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.version") +", "+ info +") \n" +
 				" " + System.getProperty("java.specification.version") +" ("+ System.getProperty("java.version") +") \n" +
 				" " + home + " \n" +

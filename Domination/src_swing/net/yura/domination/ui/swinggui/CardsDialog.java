@@ -65,10 +65,9 @@ public class CardsDialog extends JDialog {
      * @param modal
      * @param r the risk main program
      */
-    public CardsDialog(Frame parent, PicturePanel p, boolean modal, Risk r, boolean ct) {
+    public CardsDialog(Frame parent, PicturePanel p, boolean modal, Risk r) {
         super(parent, modal);
 	myrisk = r;
-	canTrade=ct;
 	pp=p;
 
 	resb = TranslationBundle.getBundle();
@@ -220,7 +219,8 @@ public class CardsDialog extends JDialog {
 	panel.setMaximumSize(newSize);
     }
 
-    public void populate(List cards) {
+    public void populate(List cards, boolean ct) {
+        canTrade = ct;
         tradeButton.setEnabled(false);
 	for (int c=0; c < cards.size(); c++) {
 	    JPanel cp = new CardPanel( (Card)cards.get(c) );
@@ -343,8 +343,14 @@ public class CardsDialog extends JDialog {
 	public void mouseClicked(MouseEvent e) {
 
 	    if ( this.getParent() == CardsPanel ) {
-		if (TradePanel.getComponentCount() < 3) { CardsPanel.remove(this); select=false; TradePanel.add(this); }
-		if (TradePanel.getComponentCount() == 3 && canTrade && myrisk.canTrade( ((CardPanel)TradePanel.getComponent(0)).getCardName() , ((CardPanel)TradePanel.getComponent(1)).getCardName(), ((CardPanel)TradePanel.getComponent(2)).getCardName() ) ) { tradeButton.setEnabled(true); }
+		if (TradePanel.getComponentCount() < 3) {
+                    CardsPanel.remove(this); 
+                    select=false;
+                    TradePanel.add(this);
+		}
+		if (TradePanel.getComponentCount() == 3 && canTrade && myrisk.canTrade( ((CardPanel)TradePanel.getComponent(0)).getCardName() , ((CardPanel)TradePanel.getComponent(1)).getCardName(), ((CardPanel)TradePanel.getComponent(2)).getCardName() ) ) {
+                    tradeButton.setEnabled(true);
+		}
 	    }
 	    else if ( this.getParent() == TradePanel ) {
 		TradePanel.remove(this); select=false; CardsPanel.add(this);

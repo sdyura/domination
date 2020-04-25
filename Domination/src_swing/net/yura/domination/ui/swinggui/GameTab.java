@@ -415,7 +415,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                 String actionCommand = a.getActionCommand();
 
 		if ("showmission".equals(actionCommand)) {
-			showMission( swingGUIPanel.myrisk.getCurrentMission() );
+			showMission();
 		}
 		else if ("showcards".equals(actionCommand)) {
 			openCards();
@@ -574,14 +574,15 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		}
 	}
         
-	public void showMission(String mission) {
+	public void showMission() {
+		String mission = swingGUIPanel.myrisk.getHumanPlayerMission();
 		JOptionPane.showMessageDialog(this, resbundle.getString("swing.message.mission") + " " + mission, resbundle.getString("swing.title.mission"), JOptionPane.INFORMATION_MESSAGE);
 	}
         
 	public void openCards() {
 		Frame frame = RiskUIUtil.findParentFrame(this);
 
-		CardsDialog cardsDialog = new CardsDialog(frame, swingGUIPanel.pp, true, swingGUIPanel.myrisk, (swingGUIPanel.gameState == 1));
+		CardsDialog cardsDialog = new CardsDialog(frame, swingGUIPanel.pp, true, swingGUIPanel.myrisk);
 		Dimension frameSize = frame.getSize();
 		Dimension aboutSize = cardsDialog.getPreferredSize();
 		int x = frame.getLocation().x + (frameSize.width - aboutSize.width) / 2;
@@ -590,7 +591,15 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		if (y < 0) y = 0;
 		cardsDialog.setLocation(x, y);
 
-		cardsDialog.populate(swingGUIPanel.myrisk.getCurrentCards());
+                // we ONLY come here if getSingleLocalHumanPlayer != null OR it is our turn.
+                Player human = swingGUIPanel.myrisk.getSingleLocalHumanPlayer();
+                Player currentPlayer = swingGUIPanel.myrisk.getGame().getCurrentPlayer();
+                if (human == null) {
+                    // it MUST be our turn!
+                    human = currentPlayer;
+                }
+                
+		cardsDialog.populate(human.getCards(), human == currentPlayer && swingGUIPanel.gameState == RiskGame.STATE_TRADE_CARDS);
 
 		cardsDialog.setVisible(true);
 	}
@@ -600,17 +609,17 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		gSaveGame.setEnabled(false);
 		gmSaveGame.setEnabled(false);
 
-		showMission.setEnabled(false);
-		showCards.setEnabled(false);
+		Player oneHuman = swingGUIPanel.myrisk.getSingleLocalHumanPlayer();
+		showMission.setEnabled(oneHuman != null);
+		showCards.setEnabled(oneHuman != null);
+                
 		Undo.setEnabled(false);
-
 		gOptions.setEnabled(false);
 		gmOptions.setEnabled(false);
 		gmReplay.setEnabled(false);
 
 		// this is so close is not selected
 		mapViewComboBox.grabFocus();
-
 	}
         
         public void getInput(int gameState) {

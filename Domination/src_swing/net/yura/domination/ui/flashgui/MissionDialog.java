@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.swing.GraphicsUtil;
 
@@ -30,28 +29,17 @@ public class MissionDialog extends JDialog implements MouseListener {
      * Creates a mission dialog
      * @param parent Frame
      * @param modal boolean
-     * @param r Risk parser
      */
-    public MissionDialog(Frame parent, boolean modal, Risk r) {
-
+    public MissionDialog(Frame parent, boolean modal) {
         super(parent, modal);
-
-	text=r.getCurrentMission();
-
 	mission = RiskUIUtil.getUIImage(this.getClass(),"mission.jpg");
-
         initGUI();
-
 	setResizable(false);
-
         pack();
-
     }
 
-    /** This method is called from within the constructor to initialize the form. */
-
     /**
-     * Initialises the GUI
+     * This method is called from within the constructor to initialize the form.
      */
     private void initGUI() {
 
@@ -75,20 +63,18 @@ public class MissionDialog extends JDialog implements MouseListener {
                 }
             }
 	);
-
+    }
+    
+    public void setMission(String text) {
+        	this.text = text;
     }
 
-    /** Exit the Application */
-
     /**
-     * Closes the GUI
-     * @param evt Close button was pressed
+     * Closes the Dialog
      */
     private void exitForm() {
-
 	setVisible(false);
 	dispose();
-
     }
 
     class missionPanel extends JPanel {
@@ -122,9 +108,7 @@ public class MissionDialog extends JDialog implements MouseListener {
 	//**********************************************************************
 
 	public void mouseClicked(MouseEvent e) {
-
 	    exitForm();
-
 	}
 
 	public void mouseEntered(MouseEvent e) {

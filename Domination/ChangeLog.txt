@@ -15,9 +15,10 @@ CURRENT VERSION:
 
 1.2.2
 
+	Can view cards and missions even when it is not your turn
 	MapEditor: checks for overlapping circles
 
-1.2.1
+1.2.1 (12.12.2019)
 
 	Made possible by our patrons on Patreon, especially Colvin Goree and Karl Meiser
 	FlashGUI: can right click to select country for quickplace in game setup

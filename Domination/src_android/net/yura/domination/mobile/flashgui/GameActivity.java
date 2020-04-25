@@ -490,7 +490,6 @@ public class GameActivity extends Frame implements ActionListener {
         else if ("mission".equals(actionCommand)) {
 
             String missionTitle = resb.getProperty("core.showmission.mission");
-            String mission=myrisk.getCurrentMission();
 
             //String html = "<html><p>" + status + "</p><p><b>" +missionTitle + "</b><br/>"+ mission + "</p></html>";
 
@@ -504,7 +503,7 @@ public class GameActivity extends Frame implements ActionListener {
                                         missionTitle
                                 ),
                                 new Element("br"),
-                                mission
+                                myrisk.getHumanPlayerMission()
                         ):
                         new Element("p",
                             resb.getString("game.pleasewaitnetwork") // "game.pleasewait"
@@ -558,7 +557,7 @@ public class GameActivity extends Frame implements ActionListener {
 
     CardsDialog cardsDialog;
     void openCards() {
-        cardsDialog = new CardsDialog( myrisk, pp) {
+        cardsDialog = new CardsDialog(myrisk, pp) {
             @Override
             public void setVisible(boolean b) { // catch closing of the dialog
                 super.setVisible(b);
@@ -568,46 +567,16 @@ public class GameActivity extends Frame implements ActionListener {
             }
         };
 
-        Player human = getSingleLocalHumanPlayer();
+        // we ONLY come here if getSingleLocalHumanPlayer != null OR it is our turn.
+        Player human = myrisk.getSingleLocalHumanPlayer();
         Player currentPlayer = myrisk.getGame().getCurrentPlayer();
         if (human == null) {
+            // it MUST be our turn!
             human = currentPlayer;
         }
 
         cardsDialog.setup(human, human == currentPlayer && gameState == RiskGame.STATE_TRADE_CARDS);
         cardsDialog.setVisible(true);
-    }
-
-    private Player getSingleLocalHumanPlayer() {
-        List<Player> players = myrisk.getGame().getPlayers();
-        String myAddress = myrisk.getMyAddress();
-        Player human1 = null, human2 = null;
-        boolean tooMany1 = false, tooMany2 = false;
-        for (Player player : players) {
-            if (player.getType() == Player.PLAYER_HUMAN) {
-                if (human1 == null) {
-                    human1 = player;
-                }
-                else {
-                    tooMany1 = true;
-                }
-            }
-            if (myAddress.equals(player.getAddress())) {
-                if (human2 == null) {
-                    human2 = player;
-                }
-                else {
-                    tooMany2 = true;
-                }
-            }
-        }
-        if (human1 != null && !tooMany1) {
-            return human1;
-        }
-        if (human2 != null && !tooMany2) {
-            return human2;
-        }
-        return null;
     }
 
     static String toString(Element element) {
@@ -976,7 +945,7 @@ public class GameActivity extends Frame implements ActionListener {
                 tacMove.setVisible(false);
             }
 
-            cardsbutton.setFocusable( getSingleLocalHumanPlayer() != null );
+            cardsbutton.setFocusable(myrisk.getSingleLocalHumanPlayer() != null);
             undobutton.setFocusable(false);
             savebutton.setFocusable(false);
             AutoEndGo.setFocusable(false);

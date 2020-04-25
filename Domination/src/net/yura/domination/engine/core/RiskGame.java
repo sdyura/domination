@@ -2527,10 +2527,8 @@ System.out.print(str+"]\n");
 	 * returns the country with the given color (ID)
 	 */
 	public Country getCountryInt(int color) {
-
 		if (color <= 0 || color > Countries.length ) { return null; }
 		else return Countries[color-1];
-
 	}
 
 
@@ -2589,7 +2587,6 @@ System.out.print(str+"]\n");
 		}
 
 		return c;
-
 	}
 
 	public Card findCardAndRemoveIt(String name) {
@@ -2619,7 +2616,6 @@ System.out.print(str+"]\n");
                 recycleUsedCards();
 
 		return theCard;
-
 	}
 
         /**
@@ -2668,7 +2664,6 @@ System.out.print(str+"]\n");
 	 * @return Vector Return the Countries in the current game
 	 */
 	public Country[] getCountries() {
-
 		return Countries;
 	}
 
@@ -2689,9 +2684,7 @@ System.out.print(str+"]\n");
 	}
 
 	public int getNoContinents() {
-
 		return Continents.length;
-
 	}
 
 	/**
@@ -2729,7 +2722,6 @@ System.out.print(str+"]\n");
 		// not needed as is reset each time a new RiskGame object is created
 		//net.yura.domination.engine.translation.MapTranslator.setMap( a );
 		//net.yura.domination.engine.translation.MapTranslator.setCards( b );
-
 	}
 
 
@@ -2748,9 +2740,7 @@ System.out.print(str+"]\n");
 	}
 
 	public static int getRandomColor() {
-
 		return HSBtoRGB( (float)Math.random(), 0.5F, 1.0F );
-
 	}
 
      /**

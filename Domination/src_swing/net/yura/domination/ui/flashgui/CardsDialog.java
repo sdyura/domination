@@ -30,6 +30,7 @@ import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
+import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.guishared.PicturePanel;
@@ -42,7 +43,8 @@ import net.yura.domination.engine.translation.TranslationBundle;
 public class CardsDialog extends JDialog {
 
 	private Risk myrisk;
-	private List cards;
+	private Player human;
+
 	private JPanel myCardsPanel;
 	private JPanel TradePanel;
 	private JScrollPane CardsPlane;
@@ -85,29 +87,26 @@ public class CardsDialog extends JDialog {
 		pack();
 	}
 
-	public void setup(boolean ct) {
-
+	public void setup(Player human, boolean ct) {
+		this.human = human;
 		canTrade=ct;
 
 		Component[] oldcards = myCardsPanel.getComponents();
 		for (int c=0; c< oldcards.length ; c++) {
 			myCardsPanel.remove(oldcards[c]);
 		}
-
-
 		oldcards = TradePanel.getComponents();
 		for (int c=0; c< oldcards.length ; c++) {
 			TradePanel.remove(oldcards[c]);
 		}
 
-
-		cards = myrisk.getCurrentCards();
+		List cards = this.human.getCards();
 		for (int c=0; c < cards.size(); c++) {
 			JPanel cp = new CardPanel( (Card)cards.get(c) );
 			myCardsPanel.add(cp);
 		}
 
-                tradeButton.setEnabled(false);
+		tradeButton.setEnabled(false);
 	}
 
 	/**
@@ -173,9 +172,7 @@ public class CardsDialog extends JDialog {
 		okButton.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-
 						closeDialog();
-
 					}
 				}
 		);
@@ -199,7 +196,6 @@ public class CardsDialog extends JDialog {
 						tradeButton.setEnabled(false);
 
 						repaint();
-
 					    }
 
 					}
@@ -246,7 +242,7 @@ public class CardsDialog extends JDialog {
 	 */
 	public Image getCountryImage(int a) {
 
-		BufferedImage pictureB = pp.getCountryImage(a, myrisk.isOwnedCurrentPlayerInt(a));
+		BufferedImage pictureB = pp.getCountryImage(a, isOwnedPlayer(a));
 
 		int width = pictureB.getWidth();
 		int height = pictureB.getHeight();
@@ -256,6 +252,11 @@ public class CardsDialog extends JDialog {
 
 		return pictureB.getScaledInstance(width,height, java.awt.Image.SCALE_SMOOTH );
 	}
+        
+        boolean isOwnedPlayer(int country) {
+            Country c = myrisk.getGame().getCountryInt(country);
+            return c != null && human == c.getOwner();
+        }
 
 	public String getNumArmies() {
             // return resb.getString("cards.nexttrade").replaceAll( "\\{0\\}", "" + resb.getString("cards.fixed"));
