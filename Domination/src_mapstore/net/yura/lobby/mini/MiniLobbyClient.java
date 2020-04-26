@@ -624,7 +624,12 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
     // chat
     public void incomingChat(String fromwho,String message) {
-        game.showMessage(fromwho, message);
+        if (openGameId == -1) {
+            toast(fromwho == null ? message : fromwho + ": " + message);
+        }
+        else {
+            game.showMessage(fromwho, message);
+        }
     }
     public void incomingChat(int roomid, String fromwho, String message) {
         if (openGameId == roomid) {
