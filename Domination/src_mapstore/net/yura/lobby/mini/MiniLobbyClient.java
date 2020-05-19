@@ -203,17 +203,27 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 int state = game.getState( whoAmI() );
                 switch (state) {
                     case Game.STATE_CAN_JOIN:
-                        if (game.getMaxPlayers() == game.getNumOfPlayers()+1) {
+                        if (game.getMagicWord() != null) {
+                            final TextField passwordField = new TextField();
                             OptionPane.showConfirmDialog(new ActionListener() {
                                 public void actionPerformed(String actionCommand) {
                                     if ("ok".equals(actionCommand)) {
-                                        mycom.joinGame(game.getId());
+                                        mycom.joinGame(game.getId(), passwordField.getText());
                                     }
                                 }
-                            }, "This game will start if you join!", "Are you sure?", OptionPane.OK_CANCEL_OPTION);
+                            }, passwordField, resBundle.getProperty("lobby.game-password") , OptionPane.OK_CANCEL_OPTION);
+                        }
+                        else if (game.getMaxPlayers() == game.getNumOfPlayers() + 1) {
+                            OptionPane.showConfirmDialog(new ActionListener() {
+                                public void actionPerformed(String actionCommand) {
+                                    if ("ok".equals(actionCommand)) {
+                                        mycom.joinGame(game.getId(), null);
+                                    }
+                                }
+                            }, resBundle.getProperty("lobby.question.game-start"), resBundle.getProperty("lobby.question.title"), OptionPane.OK_CANCEL_OPTION);
                         }
                         else {
-                            mycom.joinGame(game.getId());
+                            mycom.joinGame(game.getId(), null);
                         }
                         break;
                     case Game.STATE_CAN_LEAVE:
@@ -236,15 +246,15 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         else if ("setnick".equals(actionCommand)) {
             if (myusername!=null) {
-                final TextField saveText = new TextField();
-                saveText.setText( myusername );
-                OptionPane.showOptionDialog(new ActionListener() {
+                final TextField nickField = new TextField();
+                nickField.setText( myusername );
+                OptionPane.showConfirmDialog(new ActionListener() {
                     public void actionPerformed(String actionCommand) {
                         if ("ok".equals(actionCommand)) {
-                            mycom.setNick( saveText.getText() );
+                            mycom.setNick(nickField.getText() );
                         }
                     }
-                }, saveText, resBundle.getProperty("lobby.set-nick") , OptionPane.OK_CANCEL_OPTION, OptionPane.QUESTION_MESSAGE, null, null, null);
+                }, nickField, resBundle.getProperty("lobby.set-nick") , OptionPane.OK_CANCEL_OPTION);
             }
             else {
                 logger.info("current username is null, can not set nick dialog");
@@ -274,19 +284,19 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         else if ("renameGame".equals(actionCommand)) {
             if (playerType >= Player.PLAYER_MODERATOR) {
                 final Game game = (Game) gameList.getSelectedValue();
-                final TextField saveText = new TextField();
-                saveText.setText( game.getName() );
-                OptionPane.showOptionDialog(new ActionListener() {
+                final TextField gameNameField = new TextField();
+                gameNameField.setText( game.getName() );
+                OptionPane.showConfirmDialog(new ActionListener() {
                     public void actionPerformed(String actionCommand) {
                         if ("ok".equals(actionCommand)) {
-                            String newName = saveText.getText();
+                            String newName = gameNameField.getText();
                             if (!game.getName().equals(newName)) {
                                 game.setName(newName);
                                 mycom.createNewGame(game);
                             }
                         }
                     }
-                }, saveText, "Rename Game" , OptionPane.OK_CANCEL_OPTION, OptionPane.QUESTION_MESSAGE, null, null, null);
+                }, gameNameField, "Rename Game" , OptionPane.OK_CANCEL_OPTION);
             }
             else {
                 logger.warning(actionCommand+"called when we are "+playerType+" "+myusername);
@@ -341,14 +351,14 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             messages.append('\n');
         }
 
-        OptionPane.showOptionDialog(new ActionListener() {
+        OptionPane.showConfirmDialog(new ActionListener() {
             public void actionPerformed(String actionCommand) {
                 String message = chatText.getText();
                 if ("ok".equals(actionCommand) && !"".equals(message.trim())) {
                     sendChatMessage(message);
                 }
             }
-        }, new Object[] {messages.toString(), chatText}, "Chat" , OptionPane.OK_CANCEL_OPTION, OptionPane.QUESTION_MESSAGE, null, null, null);
+        }, new Object[] {messages.toString(), chatText}, resBundle.getProperty("lobby.chat") , OptionPane.OK_CANCEL_OPTION);
     }
 
     public void sendChatMessage(String message) {
@@ -445,7 +455,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     private java.util.List games = Collections.synchronizedList( new ArrayList() );
-    public void addOrUpdateGame(Game game) {
+    public void addOrUpdateGame(Game game) {        
         int index = Collections.binarySearch(games, game);
         if (index>=0) {
             games.set(index, game);
@@ -473,6 +483,16 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         return index >= 0 ? (Game) games.get(index) : null;
     }
 
+    public void resignPrompt() {
+         OptionPane.showConfirmDialog(new ActionListener() {
+            public void actionPerformed(String actionCommand) {
+                if ("ok".equals(actionCommand)) {
+                    resign();
+                }
+            }
+        }, resBundle.getProperty("lobby.question.game-resign"), resBundle.getProperty("lobby.question.title"), OptionPane.OK_CANCEL_OPTION);
+    }
+    
     public void resign() {
         mycom.leaveGame(openGameId);
     }

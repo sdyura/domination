@@ -21,6 +21,7 @@ public class GameRenderer extends DefaultListCellRenderer {
     AnalogClock clock = new AnalogClock();
     MiniLobbyClient lobby;
     ScaledIcon sicon;
+    Icon privateGame;
     Game game;
     String line1,line2,part2;
     
@@ -35,6 +36,8 @@ public class GameRenderer extends DefaultListCellRenderer {
 
         padding = XULLoader.adjustSizeToDensity(2);
         gap = XULLoader.adjustSizeToDensity(2);
+        
+        privateGame = new Icon("/ms_private_game.png");
     }
 
     public Component getListCellRendererComponent(Component list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -70,7 +73,6 @@ public class GameRenderer extends DefaultListCellRenderer {
     }
 
     public void paintComponent(Graphics2D g) {
-
         // draw icon
         super.paintComponent(g);
 
@@ -110,7 +112,8 @@ public class GameRenderer extends DefaultListCellRenderer {
         // draw action button
         String action;
         int color;
-        switch (game.getState( lobby.whoAmI() )) {
+        int gameState = game.getState(lobby.whoAmI());
+        switch (gameState) {
             case Game.STATE_CAN_JOIN: action = "Join"; color=ColorUtil.GREEN; break;
             case Game.STATE_CAN_LEAVE: action = "Leave"; color=ColorUtil.RED; break;
             case Game.STATE_CAN_PLAY: action = "Play"; color=ColorUtil.BLUE; break;
@@ -130,6 +133,12 @@ public class GameRenderer extends DefaultListCellRenderer {
             g.drawString(action, getWidth()-w-padding*2, padding*2);
         }
 
+        // draw lock for private games
+        if (gameState == Game.STATE_CAN_JOIN && game.getMagicWord() != null) {
+            int wh = privateGame.getIconHeight();
+            privateGame.paintIcon(this, g, actionx-wh-padding, (getHeight()-wh)/2);
+        }
+        
         // draw red 'my turn' indicator
         if (lobby.whoAmI().equals( game.getWhosTurn() )) {
             int wh = font.getHeight();
@@ -157,5 +166,4 @@ public class GameRenderer extends DefaultListCellRenderer {
             g.translate(-x, -y);
         }
     }
-
 }
