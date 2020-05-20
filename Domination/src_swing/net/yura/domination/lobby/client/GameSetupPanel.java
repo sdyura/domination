@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Observable;
@@ -47,6 +48,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.yura.domination.engine.OnlineUtil;
@@ -58,11 +61,11 @@ import net.yura.domination.mapstore.GetMap;
 import net.yura.domination.mapstore.Map;
 import net.yura.domination.ui.flashgui.NewGameFrame;
 import net.yura.lobby.model.Game;
+import net.yura.swing.HintTextField;
 import net.yura.swing.ImageIcon;
 import net.yura.swing.SpriteIcon;
 
 /**
- * <p> New Game Frame for FlashGUI </p>
  * @author Yura Mamyrin
  */
 public class GameSetupPanel extends JPanel implements ActionListener {
@@ -92,6 +95,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 	private ResourceBundle resb;
 
 	private String options;
+	private HintTextField search;
 	private JList list; // not using generics for java 1.6 support
 
 	private JDialog dialog;
@@ -173,17 +177,61 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		//list.setVisibleRowCount(10);
 		list.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
 		JScrollPane scrollPane = new JScrollPane(list);
-		GraphicsUtil.setBounds(scrollPane, 54, 192, 200, 260);
 		scrollPane.setBorder(null);
 		list.setOpaque(false);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
                 scrollPane.setViewportBorder(null); // for nimbus
 
-		add(scrollPane);
+		search = new HintTextField( "Search maps.." );
+		
+		// Listen for changes in the text
+		search.getDocument().addDocumentListener(new DocumentListener() {
+                    public void changedUpdate(DocumentEvent e) {
+                        search();
+                    }
 
+                    public void removeUpdate(DocumentEvent e) {
+                        search();
+                    }
 
+                    public void insertUpdate(DocumentEvent e) {
+                        search();
+                    }
 
+                    public void search() {
+                        final RiskMap[] availableMaps = getAllAvailableMaps();
+                        RiskMap[] mapsToDisplay;
+
+                        String searchText = search.getText().toLowerCase();
+                        if ("".equals(searchText)) {
+                            mapsToDisplay = availableMaps;
+                        }
+                        else {
+                            ArrayList<RiskMap> filteredMaps = new ArrayList<RiskMap>();
+                            for (int c = 0; c < availableMaps.length; c++) {
+                                RiskMap r = availableMaps[c];
+
+                                if (r.getID().toLowerCase().contains(searchText)
+                                        // TODO getMap is null for any map whos icon has not be requested
+                                        //|| (r.getMap() != null  &&  r.getMap().getName().toLowerCase().contains( search.getText().toLowerCase() ) )
+                                        ) {
+                                    filteredMaps.add(r);
+                                }
+                            }
+                            mapsToDisplay = filteredMaps.toArray(new RiskMap[filteredMaps.size()]);
+                        }
+                        list.setListData(mapsToDisplay);
+                        // list.setSelectedIndex(0);
+                    }
+		});
+
+		JPanel mapsPanel = new JPanel(new BorderLayout());
+		mapsPanel.setOpaque(false);
+		GraphicsUtil.setBounds(mapsPanel, 54, 192, 200, 260);
+		mapsPanel.add(search, BorderLayout.NORTH);
+		mapsPanel.add(scrollPane, BorderLayout.CENTER);
+		add(mapsPanel);
 
 
 
@@ -496,15 +544,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		if (serveroptions!=null && !serveroptions.equals(newGameOptions) ) {
 
 			newGameOptions = serveroptions;
-
-                        final String[] split = newGameOptions.split(",");
-			final RiskMap[] maps = new RiskMap[split.length];
-
-                        for (int c = 0; c < maps.length; c++) {
-                            maps[c] = RiskMap.getMapIcon(decode(split[c]));
-                        }
-
-                        list.setListData(maps);
+                        list.setListData(getAllAvailableMaps());
                         list.setSelectedIndex(0);
 		}
 
@@ -517,6 +557,15 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		if (op!=null) { return new Game( getGameName(), op, getNumberOfHumanPlayers(), ((Timeout)timeout.getSelectedItem()).getTime() ); }
 
 		return null;
+        }
+        
+        private RiskMap[] getAllAvailableMaps() {
+            String[] split = newGameOptions.split(",");
+            RiskMap[] maps = new RiskMap[split.length];
+            for (int c = 0; c < maps.length; c++) {
+                maps[c] = RiskMap.getMapIcon(decode(split[c]));
+            }
+            return maps;
         }
 
         static JDialog newJDialog(Window parent, String title, boolean modal) {
@@ -619,8 +668,6 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.gametype"), 400, 365);
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.cardsoptions"), 515, 365);
-
-
 	}
 
 	public void reset() {
@@ -677,24 +724,16 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 		}*/
 		else if (e.getSource()==cancel) {
-
 			dialog.setVisible(false);
-
 		}
 		else if (e.getSource()==mission) {
-
 			AutoPlaceAll.setEnabled(false);
-
 		}
 		else if (e.getSource()==domination) {
-
 			AutoPlaceAll.setEnabled(true);
-
 		}
 		else if (e.getSource()==capital) {
-
 			AutoPlaceAll.setEnabled(true);
-
 		}
 	}
 

@@ -455,7 +455,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     private java.util.List games = Collections.synchronizedList( new ArrayList() );
-    public void addOrUpdateGame(Game game) {        
+    public void addOrUpdateGame(Game game) {
         int index = Collections.binarySearch(games, game);
         if (index>=0) {
             games.set(index, game);

@@ -409,8 +409,8 @@ public class MapChooser implements ActionListener,MapServerListener {
             return (i>=0)?mapUrl.substring(i+1):mapUrl;
     }
 
-    void makeRequestForMap(String a,String b) {
-        client.makeRequestXML( MAP_PAGE , a, b);
+    void makeRequestForMap(String key, String value) {
+        client.makeRequestXML(MAP_PAGE, key, value);
     }
 
     public void actionPerformed(String actionCommand) {

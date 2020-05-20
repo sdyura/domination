@@ -39,12 +39,14 @@ public class RiskMap {
     private RiskMap(String mapUID) {
         this.mapUID = mapUID;
     }
-
-    /**
-     * @Nullable: This method may or may not return a MapStore.Map object, it depends on if the icon has been requested and returned.
-     */
-    public Map getMap() {
-        return map;
+    
+    public static RiskMap getMapIcon(final String mapUID) {
+        RiskMap icon  = mapUIDToIcon.get(mapUID);
+        if (icon == null) {
+            icon = new RiskMap(mapUID);
+            mapUIDToIcon.put(mapUID, icon);
+        }
+        return icon;
     }
 
     public Icon getIcon(int w, int h, Component comp) {
@@ -150,13 +152,11 @@ public class RiskMap {
         }
         return missions;
     }
-
-    public static RiskMap getMapIcon(final String mapUID) {
-        RiskMap icon  = mapUIDToIcon.get(mapUID);
-        if (icon == null) {
-            icon = new RiskMap(mapUID);
-            mapUIDToIcon.put(mapUID, icon);
-        }
-        return icon;
+    
+    /**
+     * @Nullable: This method may or may not return a MapStore.Map object, it depends on if the icon has been requested and returned.
+     */
+    Map getMap() {
+        return map;
     }
 }
