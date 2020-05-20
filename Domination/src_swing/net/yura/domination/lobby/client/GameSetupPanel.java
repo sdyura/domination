@@ -67,6 +67,7 @@ import net.yura.swing.SpriteIcon;
 
 /**
  * @author Yura Mamyrin
+ * @author Michiel Pater
  */
 public class GameSetupPanel extends JPanel implements ActionListener {
 
@@ -107,6 +108,9 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 	private JSpinner aihard;
 
 	private JTextField gamename;
+        private JCheckBox passwordCheckbox;
+        private JTextField passwordField;
+        private JComboBox timeout;
 
         private Set<RiskMap> downloading = Collections.synchronizedSet(new HashSet());
 
@@ -320,10 +324,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		aiaverage = new JSpinner( new SpinnerNumberModel(0,0,6,1) );
 		aieasy = new JSpinner( new SpinnerNumberModel(2,0,6,1) );
 		aihard = new JSpinner( new SpinnerNumberModel(2,0,6,1) );
-                dontStretch(human);
-                dontStretch(aiaverage);
-                dontStretch(aieasy);
-                dontStretch(aihard);
+
 
 		JComponent playernum = new JPanel(new GridBagLayout());
 		GraphicsUtil.setBounds(playernum, 320, 280, 350, 60);
@@ -445,18 +446,65 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		//NewGameFrame.sortOutButton( help , newgame.getSubimage(335, 528, 30 , 30) , newgame.getSubimage(794, 171, 30 , 30) , newgame.getSubimage(794, 202, 30 , 30) );
 		//help.addActionListener( this );
 		//help.setBounds(335, 529, 30 , 30 ); // should be 528
-
-                JComponent bottompanel = Box.createHorizontalBox();
+                
+                
+                GridBagConstraints c = new GridBagConstraints();
+                c.insets = GraphicsUtil.newInsets(2, 2, 2, 2);
+                c.fill = GridBagConstraints.HORIZONTAL;
+                final JComponent bottompanel = new JPanel(new java.awt.GridBagLayout());
                 bottompanel.setOpaque(false);
                 
-                bottompanel.add(new JLabel(resb.getString("newgame.label.name"))); // "Game Name:"
-		gamename = new JTextField();
-                dontStretch(gamename);
-		bottompanel.add(gamename);
 
-                bottompanel.add(Box.createHorizontalStrut(10));
+                passwordCheckbox = new JCheckBox(resb.getString("lobby.password"));
+                passwordCheckbox.setHorizontalAlignment(SwingConstants.RIGHT); // just in case name label is longer then password
+                passwordCheckbox.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        boolean privateGame = passwordCheckbox.isSelected();
+                        passwordField.setVisible(privateGame);
+                        bottompanel.revalidate();
+                        bottompanel.repaint();
+                        if (privateGame) {
+                            passwordField.requestFocusInWindow();
+                        }
+                    }
+                });
+                c.gridx = 0; // col
+                c.gridy = 1; // row
+                c.gridwidth = 1; // width
+                c.gridheight = 1; // height
+                bottompanel.add(passwordCheckbox, c); // "Password"
 
-                bottompanel.add(new JLabel(resb.getString("newgame.label.timeout"))); // "Turn Timeout:"
+                c.gridx = 0; // col
+                c.gridy = 0; // row
+                c.gridwidth = 1; // width
+                c.gridheight = 1; // height
+                bottompanel.add(new JLabel(resb.getString("newgame.label.name"), SwingConstants.RIGHT), c); // "Game Name:"
+
+                gamename = new JTextField();
+                c.gridx = 1; // col
+                c.gridy = 0; // row
+                c.gridwidth = 1; // width
+                c.gridheight = 1; // height
+                c.weightx = 1;
+		bottompanel.add(gamename, c);
+
+                
+                passwordField = new JTextField();
+                passwordField.setVisible(false);
+                c.gridx = 1; // col
+                c.gridy = 1; // row
+                c.gridwidth = 1; // width
+                c.gridheight = 1; // height
+		bottompanel.add(passwordField, c);
+                
+                c.gridx = 2; // col
+                c.gridy = 0; // row
+                c.gridwidth = 1; // width
+                c.gridheight = 2; // height
+                c.weightx = 0;
+                bottompanel.add(Box.createHorizontalStrut(GraphicsUtil.scale(10)), c);
+                
                 int hour = 60*60;
                 Timeout[] timeouts = new Timeout[] {
                     new Timeout("10sec",10),
@@ -474,9 +522,24 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                     new Timeout("24hours",hour*24)
                 };
 		timeout = new JComboBox(timeouts);
-                dontStretch(timeout);
                 timeout.setSelectedIndex(3 /* 1 minute */);
-		bottompanel.add(timeout);
+                
+                c.gridx = 3; // col
+                c.gridy = 1; // row
+                c.gridwidth = 1; // width
+                c.gridheight = 1; // height
+                c.anchor = GridBagConstraints.NORTH;
+		bottompanel.add(timeout, c);
+                
+                JLabel timeoutLabel = new JLabel(resb.getString("newgame.label.timeout"));
+                timeoutLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+                timeoutLabel.setLabelFor(timeout);
+                c.gridx = 3; // col
+                c.gridy = 0; // row
+                c.gridwidth = 1; // width
+                c.gridheight = 1; // height
+                c.anchor = GridBagConstraints.SOUTH;
+                bottompanel.add(timeoutLabel, c); // "Turn Timeout:"
                 
                 GraphicsUtil.setBounds(bottompanel, 170, 504, 360, 80); // should be 528
                 add(bottompanel);
@@ -494,16 +557,16 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 	}
         
         private JLabel newShrinkJLabel(String text) {
-            JLabel label = new JLabel(text);
-            label.setHorizontalAlignment(SwingConstants.TRAILING);
-            return label;
+            return new JLabel(text, SwingConstants.TRAILING);
         }
-        
+
+        /**
+         * useful only really when using box layout
+         */
         private void dontStretch(JComponent comp) {
             comp.setMaximumSize(new Dimension(comp.getMaximumSize().width, comp.getPreferredSize().height));
         }
-        
-        private JComboBox timeout;
+
         class Timeout {
             String name;
             int time;
@@ -554,8 +617,13 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 		String op = getOptions();
 
-		if (op!=null) { return new Game( getGameName(), op, getNumberOfHumanPlayers(), ((Timeout)timeout.getSelectedItem()).getTime() ); }
-
+		if (op != null) {
+                    Game newGame = new Game( getGameName(), op, getNumberOfHumanPlayers(), ((Timeout)timeout.getSelectedItem()).getTime() );
+                    if (passwordCheckbox.isSelected()) {
+                        newGame.setMagicWord(passwordField.getText());
+                    }
+                    return newGame;
+		}
 		return null;
         }
         
