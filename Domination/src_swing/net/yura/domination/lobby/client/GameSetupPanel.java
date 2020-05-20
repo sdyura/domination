@@ -457,6 +457,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
                 passwordCheckbox = new JCheckBox(resb.getString("newgame.private"));
                 passwordCheckbox.setHorizontalAlignment(SwingConstants.RIGHT); // just in case name label is longer then password
+                NewGameFrame.sortOutButton(passwordCheckbox); // needed for windows
                 passwordCheckbox.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {
