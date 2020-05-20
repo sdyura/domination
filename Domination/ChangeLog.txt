@@ -15,6 +15,7 @@ CURRENT VERSION:
 
 1.2.2
 
+	Can create private games online with a password to enter
 	Can view cards and missions even when it is not your turn
 	Filter online game maps by Michiel Pater
 	Do not show dice statistics for turns when the player rolled no dice
