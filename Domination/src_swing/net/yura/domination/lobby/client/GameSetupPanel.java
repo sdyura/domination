@@ -455,7 +455,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 bottompanel.setOpaque(false);
                 
 
-                passwordCheckbox = new JCheckBox(resb.getString("lobby.password"));
+                passwordCheckbox = new JCheckBox(resb.getString("newgame.private"));
                 passwordCheckbox.setHorizontalAlignment(SwingConstants.RIGHT); // just in case name label is longer then password
                 passwordCheckbox.addActionListener(new ActionListener() {
                     @Override
@@ -490,7 +490,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		bottompanel.add(gamename, c);
 
                 
-                passwordField = new JTextField();
+                passwordField = new HintTextField(resb.getString("lobby.password"));
                 passwordField.setVisible(false);
                 c.gridx = 1; // col
                 c.gridy = 1; // row
