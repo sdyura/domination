@@ -166,37 +166,38 @@ public class StatsPanel extends JPanel {
 	double[] PointToDraw = p.getStatistics(a);
 	g.setColor(new Color( p.getColor() ) );
 
-	double oldPoint = 0;
+	double oldPoint = Double.NaN;
 	double newPoint = 0;
 	int i;
 
 	for (i = 0; i < PointToDraw.length; i++) {
-
-	    if (a.isSummable()) {
+            
+            if (a.isSummable()) {
                 newPoint += PointToDraw[i];
-	    }
-	    else {
+            }
+            else {
                 newPoint = PointToDraw[i];
-	    }
-
-            int x1 = (int)(ZeroX + i*gridSizeX);
-            int y1 = (int)(ZeroY-(oldPoint*gridSizeY));
-            int x2 = (int)(ZeroX +(i+1)*gridSizeX);
-            int y2 = (int)(ZeroY-(newPoint*gridSizeY));
-
-            Color color = g.getColor();
-            Stroke stroke = g.getStroke();
-
-            if (Color.BLACK.equals( color )) {
-                g.setColor(Color.WHITE);
-                g.setStroke( new BasicStroke(3) );
-                g.drawLine(x1,y1,x2,y2);
-                g.setColor(color);
-                g.setStroke(stroke);
             }
 
-	    g.drawLine(x1,y1,x2,y2);
-	    oldPoint = newPoint;
+            // only draw the line if the last and next points are real numbers
+            if (!Double.isNaN(oldPoint) && !Double.isNaN(newPoint)) {
+                int x1 = (int)(ZeroX + i*gridSizeX);
+                int y1 = (int)(ZeroY-(oldPoint*gridSizeY));
+                int x2 = (int)(ZeroX +(i+1)*gridSizeX);
+                int y2 = (int)(ZeroY-(newPoint*gridSizeY));
+                Color color = g.getColor();
+                Stroke stroke = g.getStroke();
+                if (Color.BLACK.equals( color )) {
+                    g.setColor(Color.WHITE);
+                    g.setStroke( new BasicStroke(3) );
+                    g.drawLine(x1,y1,x2,y2);
+                    g.setColor(color);
+                    g.setStroke(stroke);
+                }
+                g.drawLine(x1,y1,x2,y2);
+            }
+
+            oldPoint = newPoint;
 	}
 
         int x = (int)(ZeroX + i*gridSizeX);

@@ -85,6 +85,9 @@ public class Player implements Serializable {
 	Statistics.add(currentStatistic);
     }
 
+    /**
+     * If there is no value for a statistic for a given turn of the game then {@link Double#NaN} will be used.
+     */
     public double[] getStatistics(StatType type) {
 	double[] statistics = new double[ Statistics.size() ];
 	for (int c=0; c< statistics.length ; c++) {

@@ -760,7 +760,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             if (downloading.contains(map)) {
-                int x = getWidth() - downloadingIcon.getIconWidth() - 5;
+                int x = getWidth() - downloadingIcon.getIconWidth() - GraphicsUtil.scale(5);
                 int y = (getHeight() - downloadingIcon.getIconHeight()) / 2;
                 g.setColor(Color.WHITE);
                 g.fillOval(x, y, downloadingIcon.getIconWidth(), downloadingIcon.getIconHeight());

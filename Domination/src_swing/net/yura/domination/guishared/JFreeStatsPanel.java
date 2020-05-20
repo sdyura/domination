@@ -92,13 +92,15 @@ public class JFreeStatsPanel extends JPanel {
             series.add( 0, newPoint ); // everything starts from 0
             for (int c=0;c<PointToDraw.length;c++) {
                 double aPointToDraw = PointToDraw[c];
-                if (statType.isSummable()) {
-                    newPoint += aPointToDraw;
+                if (!Double.isNaN(aPointToDraw)) {
+                    if (statType.isSummable()) {
+                        newPoint += aPointToDraw;
+                    }
+                    else {
+                        newPoint = aPointToDraw;
+                    }
+                    series.add( c+1, newPoint );
                 }
-                else {
-                    newPoint = aPointToDraw;
-                }
-                series.add( c+1, newPoint );
             }
             dataset.addSeries(series);
         }

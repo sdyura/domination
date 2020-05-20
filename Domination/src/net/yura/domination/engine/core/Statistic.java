@@ -92,6 +92,8 @@ public class Statistic implements Serializable {
 
     public double get(StatType statType) {
         if (statType==StatType.DICE) {
+            // if there were no dice rolled by the player in this turn, then we have no result
+            if (diceCount == 0) return Double.NaN;
             return dice;
         }
 	return statistics[ statType.ordinal() ];
@@ -106,5 +108,4 @@ public class Statistic implements Serializable {
             System.arraycopy(old, 0, statistics, 0, old.length);
         }
     }
-
 }

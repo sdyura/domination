@@ -17,6 +17,7 @@ CURRENT VERSION:
 
 	Can view cards and missions even when it is not your turn
 	Filter online game maps by Michiel Pater
+	Do not show dice statistics for turns when the player rolled no dice
 	MapEditor: checks for overlapping circles
 
 1.2.1 (12.12.2019)
