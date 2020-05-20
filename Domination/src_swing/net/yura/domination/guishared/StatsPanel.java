@@ -180,9 +180,17 @@ public class StatsPanel extends JPanel {
             }
 
             // only draw the line if the last and next points are real numbers
-            if (!Double.isNaN(oldPoint) && !Double.isNaN(newPoint)) {
-                int x1 = (int)(ZeroX + i*gridSizeX);
-                int y1 = (int)(ZeroY-(oldPoint*gridSizeY));
+            if (!Double.isNaN(newPoint)) {
+                int x1,y1;
+                if (!Double.isNaN(oldPoint)) {
+                    x1 = (int)(ZeroX + i*gridSizeX);
+                    y1 = (int)(ZeroY-(oldPoint*gridSizeY));
+
+                }
+                else {
+                    x1 = (int)(ZeroX +(i+1)*gridSizeX) - 3;
+                    y1 = (int)(ZeroY-(newPoint*gridSizeY));
+                }
                 int x2 = (int)(ZeroX +(i+1)*gridSizeX);
                 int y2 = (int)(ZeroY-(newPoint*gridSizeY));
                 Color color = g.getColor();
