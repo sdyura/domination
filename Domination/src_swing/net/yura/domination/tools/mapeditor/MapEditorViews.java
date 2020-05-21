@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -708,30 +709,32 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 	public void remove() {
 
-		Object[] a = cardsList.getSelectedValues();
+		Object[] selectedCards = cardsList.getSelectedValues();
 
-		if (a.length!=0) {
+		if (selectedCards.length != 0) {
 
 			String cardsString="";
 
-			for (int c=0;c<a.length;c++) {
-
-				cardsString = cardsString + "\n" + ((Card)a[c]).getName();
-
+			for (int c = 0; c < selectedCards.length; c++) {
+				cardsString = cardsString + "\n" + ((Card)selectedCards[c]).getName();
 			}
 
 			int result = JOptionPane.showConfirmDialog(MapEditorViews.this, "Are you sure you want to remove:"+
-			cardsString
-			, "Remove?", JOptionPane.YES_NO_OPTION);
+			cardsString, "Remove?", JOptionPane.YES_NO_OPTION);
 
 			if (result == JOptionPane.YES_OPTION) {
 
-				Vector cards = map.getCards();
-				cards.removeAll( Arrays.asList(a) );
+				List cardsToRemove = new ArrayList(Arrays.asList(selectedCards));
+				List cards = map.getCards();
 
 				for (int c=0;c<cards.size();c++) {
+					Card card = (Card)cards.get(c);
 
-					Card card = (Card)cards.elementAt(c);
+                                            // we can NOT call removeAll as then it will remove ALL wildcards even if we want to remove 1
+                                            if (cardsToRemove.remove(card)) {
+                                                cards.remove(c--);
+                                                continue;
+                                            }
 
 					if (!card.getName().equals(Card.WILDCARD)) {
 						card.setCountry( map.getCountryInt(c+1) );
