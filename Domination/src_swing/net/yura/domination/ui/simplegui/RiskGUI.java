@@ -186,19 +186,15 @@ public class RiskGUI extends JFrame implements MouseInputListener {
 				guiMain.add(gp, java.awt.BorderLayout.CENTER );
 
 				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-
 			}
 
 			/**
 			 * Closes the game
 			 */
 			public void closeGame() {
-
 				guiMain.remove(gp);
 				guiMain.add(Pix, java.awt.BorderLayout.CENTER );
-
 			}
-
 		};
 
 		gameStatus = new JLabel("");
@@ -568,18 +564,14 @@ public class RiskGUI extends JFrame implements MouseInputListener {
 						exitForm();
 					}
 				});
-
 		// pack();
-
 	}
-
-	/** Exit the Application */
 
 	/**
 	 * Closes the GUI
+	 * Exit the Application
 	 */
 	private void exitForm() {
-
 		System.exit(0);
 	}
 
@@ -651,7 +643,6 @@ public class RiskGUI extends JFrame implements MouseInputListener {
 	 * This opens the about dialog box
 	 */
 	public void openAbout() {
-
 		RiskUIUtil.openAbout(RiskGUI.this,product, version);
 	}
 
@@ -802,44 +793,36 @@ public class RiskGUI extends JFrame implements MouseInputListener {
 	}
 
 	public void mouseExited(MouseEvent e) {
-
 		if (pp.getHighLight() != 255) {
 			pp.setHighLight(255);
 			pp.repaint();
 		}
-
 	}
 
 	public void mousePressed(MouseEvent e) {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-
-		if ((e.getX() < PicturePanel.PP_X) && (e.getY() < PicturePanel.PP_Y) && (e.getX() >= 0) && (e.getY() >= 0) ) {
+		if ((e.getX() >= 0) && (e.getY() >= 0) && (e.getX() < pp.getWidth()) && (e.getY() < pp.getHeight())) {
 
 			int pixColor = pp.getCountryNumber(e.getX(),e.getY());
 
 			if (pixColor != 255 ) {
-
 				String name = pixColor+""; // risk.getCountryInt( pixColor );
 				Command.setText( Command.getText() + " " + name );
-
 			}
 		}
-
 	}
 
 	public void mouseDragged(MouseEvent e) {
 	}
 	public void mouseMoved(MouseEvent e) {
-
 		int cc = pp.getCountryNumber(e.getX(),e.getY());
 
 		if (pp.getHighLight() != cc) {
 			pp.setHighLight(cc);
 			pp.repaint();
 		}
-
 	}
 
 	/**
@@ -847,7 +830,6 @@ public class RiskGUI extends JFrame implements MouseInputListener {
 	 * @param argv
 	 */
 	public static void main(String[] argv) {
-
                 RiskUIUtil.parseArgs(argv);
 
 		RiskGUI gui = new RiskGUI( new Risk() );
