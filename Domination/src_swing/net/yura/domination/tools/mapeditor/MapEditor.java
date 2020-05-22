@@ -1383,7 +1383,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		HashSet good = new HashSet( Arrays.asList(myMap.getCountries()) );
 
 		for (int c=0;c<pixels.length;c++) {
-
 			color = pixels[c] & 0xff;
 
 			if (color == 255) {
@@ -1413,7 +1412,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		}
 
 		for (int i = 0; i < missions.size(); i++) {
-
 			Mission m = (Mission)missions.get(i);
 
                         if ("".equals( m.getDiscription() )) {
@@ -1429,10 +1427,19 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                             errors = errors + "\n* You have a mission with impossible option: occupy "+m.getNoofcountries()+" countries with "+m.getNoofarmies()+" troops";
                         }
 		}
+                
+                String warnings = "";
+                if (myMap.getCards().isEmpty()) {
+                    if (myMap.getMissions().isEmpty()) {
+                        warnings = warnings + "\n* You have no cards and no missions";
+                    }
+                    else {
+                        warnings = warnings + "*\n You have no cards";
+                    }
+                }
 
 		if (errors.length() > 0) {
-                    
-                    String errorMessage = "There are errors in this map that need to be fixed before it can be used:" + errors;
+                    String errorMessage = "There are errors in this map that need to be fixed before it can be used:" + errors + warnings;
                     
                     if (bad.size() > 0) {
                         showMessageDialog(this, new Object[] {errorMessage, delBadColorsButton});
@@ -1441,6 +1448,10 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 			showMessageDialog(this, errorMessage);
                     }
 		    return false;
+		}
+		if (warnings.length() > 0) {
+                    int result = JOptionPane.showConfirmDialog(this, "Are you sure you are happy with:"+ warnings, "Warning", JOptionPane.YES_NO_OPTION);
+                    return result == JOptionPane.YES_OPTION;                    
 		}
 		return true;
 	}
