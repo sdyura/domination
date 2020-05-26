@@ -1,11 +1,12 @@
 package net.yura.domination.engine;
 
 import net.yura.domination.engine.core.RiskGame;
+import net.yura.domination.engine.translation.TranslationBundle;
 
 public class OnlineUtil {
     
         public static String getDefaultOnlineGameName(String username) {
-            return "Cadet Game";
+            return TranslationBundle.getBundle().getString("newgame.default-name");
         }
         
         /**
