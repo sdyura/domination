@@ -85,12 +85,24 @@ public class TranslationBundleTest extends TestCase {
             if (!compiled.contains("49/java1.5")) {
                 throw new RuntimeException("error2 in " + locale);
             }
+            
+            String playOnline = resb.getString("mainmenu.globe.playonline");
+            int underlineIndex = playOnline.indexOf("<u>");
+            if (underlineIndex > 0) {
+                String o = playOnline.substring(underlineIndex + 3, playOnline.indexOf("</u>"));
+                if (!o.equalsIgnoreCase("o")) {
+                    throw new RuntimeException("wrong letter underline " + o + " in " + locale);
+                }
+            }
         }
         System.out.println("testSystemInfoString PASS");
     }
 
     private Locale[] getAppLocales() {
         File translation = new File("src/net/yura/domination/engine/translation");
+        
+        System.out.println("looking in " + translation.getAbsolutePath());
+        
         String[] files = translation.list(new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 return name.startsWith("Risk") && name.endsWith(".properties");
