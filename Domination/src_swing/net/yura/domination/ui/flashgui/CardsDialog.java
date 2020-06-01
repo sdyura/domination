@@ -151,19 +151,12 @@ public class CardsDialog extends JDialog {
 		//note.setForeground((new JLabel()).getForeground());
 		note.setFont((new JLabel()).getFont());
 		note.setEditable(false);
-		GraphicsUtil.setBounds(note, 400, 260, 180, 150);
+		GraphicsUtil.setBounds(note, 390, 260, 215, 135);
 		note.setOpaque(false);
                 
                 // in nimbus theme we have to do this extra hack
                 note.setBorder(null);
                 note.setBackground(new Color(0, 0, 0, 0));
-
-		Dimension noteSize = GraphicsUtil.newDimension(180, 120);
-
-		note.setPreferredSize( noteSize );
-		note.setMinimumSize( noteSize );
-		note.setMaximumSize( noteSize );
-
 
 		JButton okButton = GameFrame.makeRiskButton(Cards.getSubimage(500, 420, 88, 31), Cards.getSubimage(630, 428, 88, 31), Cards.getSubimage(630, 459, 88, 31), Cards.getSubimage(500, 420, 88, 31));
 		okButton.setText(resb.getString("cards.done"));
@@ -288,7 +281,7 @@ public class CardsDialog extends JDialog {
 			GraphicsUtil.drawString(g, resb.getString("cards.yourcards"), 60, 41);
 			GraphicsUtil.drawString(g, resb.getString("cards.trade"), 60, 263);
 
-			GraphicsUtil.drawString(g, getNumArmies() , 400, 410);
+			GraphicsUtil.drawString(g, getNumArmies(), 390, 410);
 		}
 	}
 
