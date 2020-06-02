@@ -958,6 +958,10 @@ public class RiskUIUtil {
                     // the system (gtk) theme on linux is broken with hi res screens (fonts are HUGE)
                     if (dat.getScaleX() != 1.0 && "com.sun.java.swing.plaf.gtk.GTKLookAndFeel".equals(systemLookAndFeel)) {
                         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                        
+                        // for some crazy reason this is not set (happens on jdk8 - jdk13 on linux)
+                        // https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6780500
+                        UIManager.put("ToolBar:Button[Disabled].textForeground", Color.GRAY);
                     }
                     else {
 			UIManager.setLookAndFeel(systemLookAndFeel);
