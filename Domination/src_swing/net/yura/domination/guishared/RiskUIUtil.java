@@ -961,7 +961,9 @@ public class RiskUIUtil {
                         
                         // for some crazy reason this is not set (happens on jdk8 - jdk13 on linux)
                         // https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6780500
-                        UIManager.put("ToolBar:Button[Disabled].textForeground", Color.GRAY);
+                        // https://stuffthathappens.com/blog/nimbus-jtoolbar-bug/
+                        UIManager.put("ToolBar:Button[Disabled].textForeground", UIManager.getColor("nimbusDisabledText"));
+                        UIManager.put("ToolBar:ToggleButton[Disabled].textForeground", UIManager.getColor("nimbusDisabledText"));
                     }
                     else {
 			UIManager.setLookAndFeel(systemLookAndFeel);
