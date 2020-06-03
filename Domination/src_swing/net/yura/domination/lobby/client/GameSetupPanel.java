@@ -592,7 +592,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 if (dialog == null) {
 
                         // TODO parent is passed in each time but is only used the first time
-                        dialog = newJDialog(parent, "Game Options", true);
+                        dialog = newJDialog(parent, resb.getString("newgame.title.network"), true);
 
 			// @todo:
 			// do noting on close
@@ -601,7 +601,6 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 			dialog.setContentPane(this);
 			dialog.setResizable(false);
 			dialog.pack();
-
 		}
 
 

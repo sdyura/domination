@@ -427,7 +427,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         myusername = name;
         playerType = type;
         gameList.setPopupMenu(playerType >= Player.PLAYER_MODERATOR ? adminPopup : null);
-        toast("You are logged in as: "+name);
+        toast(RiskUtil.replaceAll(resBundle.getString("lobby.logged-in-as"), "{0}", name)); // "You are logged in as: "+name
         game.connected(name);
     }
     public String whoAmI() {

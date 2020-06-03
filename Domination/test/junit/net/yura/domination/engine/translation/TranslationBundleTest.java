@@ -47,6 +47,26 @@ public class TranslationBundleTest extends TestCase {
         super.tearDown();
     }
 
+    public void testAllPlaceholders() throws Exception {
+        ResourceBundle defaultResourceBundle = RiskUtil.getResourceBundle(TranslationBundle.class, "Risk", Locale.ENGLISH);
+
+        Locale[] locales = getAppLocales();
+        for (Locale locale : locales) {
+            TranslationBundle.setLanguage(locale.toString());
+            ResourceBundle resb = TranslationBundle.getBundle();
+
+            for (String key : defaultResourceBundle.keySet()) {
+                String defaultValue = defaultResourceBundle.getString(key);
+                if (defaultValue.contains("{0}")) {
+                    String localeValue = resb.getString(key);
+                    if (!localeValue.contains("{0}")) {
+                        throw new Exception("no placeholder found for " + key +" in " +locale);
+                    }
+                }
+            }
+        }
+    }
+    
     /**
      * to update the compiled note, run:
      * sed -i 's+48.0/java1.4+49/java1.5+g' src/net/yura/domination/engine/translation/Risk*.properties
