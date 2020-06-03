@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yura.domination.engine.translation;
 
 import java.io.File;
@@ -27,24 +23,10 @@ public class TranslationBundleTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    
-    /**
-     * to update the compiled note, run:
-     * sed -i 's+48.0/java1.4+49/java1.5+g' src/net/yura/domination/engine/translation/Risk*.properties
-     */
-    public void testSystemInfoString() {
-        System.out.println("testSystemInfoString");
-
+        
         RiskUtil.streamOpener = new RiskIO() {
             public ResourceBundle getResourceBundle(Class c, String n, Locale l) {
-                return ResourceBundle.getBundle(c.getPackage().getName()+"."+n, l );
+                return ResourceBundle.getBundle(c.getPackage().getName() + "." + n, l);
             }
 
             public InputStream openStream(String name) throws IOException { return null; }
@@ -58,6 +40,19 @@ public class TranslationBundleTest extends TestCase {
             public void getMap(String filename, Observer observer) { }
             public boolean deleteMapFile(String mapName) { return false; }
         };
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
+
+    /**
+     * to update the compiled note, run:
+     * sed -i 's+48.0/java1.4+49/java1.5+g' src/net/yura/domination/engine/translation/Risk*.properties
+     */
+    public void testSystemInfoString() {
+        System.out.println("testSystemInfoString");
 
         //Locale[] locales = Locale.getAvailableLocales();
         Locale[] locales = getAppLocales();
