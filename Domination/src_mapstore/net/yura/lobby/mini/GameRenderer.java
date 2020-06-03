@@ -114,10 +114,10 @@ public class GameRenderer extends DefaultListCellRenderer {
         int color;
         int gameState = game.getState(lobby.whoAmI());
         switch (gameState) {
-            case Game.STATE_CAN_JOIN: action = "Join"; color=ColorUtil.GREEN; break;
-            case Game.STATE_CAN_LEAVE: action = "Leave"; color=ColorUtil.RED; break;
-            case Game.STATE_CAN_PLAY: action = "Play"; color=ColorUtil.BLUE; break;
-            case Game.STATE_CAN_WATCH: action = "Watch"; color=0xFFEEEEEE; break;
+            case Game.STATE_CAN_JOIN: action = lobby.resBundle.getString("lobby.game.join"); color=ColorUtil.GREEN; break;
+            case Game.STATE_CAN_LEAVE: action = lobby.resBundle.getString("lobby.game.leave"); color=ColorUtil.RED; break;
+            case Game.STATE_CAN_PLAY: action = lobby.resBundle.getString("lobby.game.play"); color=ColorUtil.BLUE; break;
+            case Game.STATE_CAN_WATCH: action = lobby.resBundle.getString("lobby.game.watch"); color=0xFFEEEEEE; break;
             default: action = null; color=0; break;
         }
         int actionx=getWidth();

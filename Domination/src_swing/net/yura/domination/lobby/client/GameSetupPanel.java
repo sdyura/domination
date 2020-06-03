@@ -729,9 +729,9 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 			g.setColor( Color.black );
 
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.map"), 55, 40);
-			GraphicsUtil.drawString(g, "Missions:", 350, 40);
+			GraphicsUtil.drawString(g, resb.getString("newgame.missions"), 350, 40);
 
-			GraphicsUtil.drawString(g, "Number of Players", 440, 275);
+			GraphicsUtil.drawString(g, resb.getString("newgame.player.number"), 440, 275);
 
 			//g.drawString( "Game Name:", 240, 545);
 

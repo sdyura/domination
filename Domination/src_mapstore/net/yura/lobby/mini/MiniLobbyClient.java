@@ -62,7 +62,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     int openGameId = -1;
     private final Queue<String> chatMessages = new LinkedList<String>();
 
-    private Properties resBundle;
+    final Properties resBundle;
 
     public MiniLobbyClient(MiniLobbyGame lobbyGame) {
         game = lobbyGame;
