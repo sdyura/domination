@@ -116,6 +116,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 
 	private JButton save;
 	private JButton play;
+	private JButton publish;
 	private JButton loadimagepic;
 	private JButton loadimagemap;
 	private JButton delBadColorsButton;
@@ -200,7 +201,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		play.addActionListener(this);
 		toolbar.add(play);
 
-		JButton publish = new JButton("Publish");
+		publish = new JButton("Publish");
 		publish.setActionCommand("publish");
 		publish.addActionListener(this);
 		toolbar.add(publish);
@@ -245,6 +246,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 
 		save.setEnabled(false);
 		play.setEnabled(false);
+		publish.setEnabled(false);
 		loadimagepic.setEnabled(false);
 		loadimagemap.setEnabled(false);
 
@@ -426,6 +428,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 
 		save.setEnabled(true);
 		play.setEnabled(true);
+		publish.setEnabled(true);
 		loadimagepic.setEnabled(true);
 		loadimagemap.setEnabled(true);
 		smartFill.setEnabled(true);
