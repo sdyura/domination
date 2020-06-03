@@ -187,7 +187,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		scrollPane.getViewport().setOpaque(false);
                 scrollPane.setViewportBorder(null); // for nimbus
 
-		search = new HintTextField( "Search maps.." );
+		search = new HintTextField(resb.getString("newgame.map.filter"));
 		
 		// Listen for changes in the text
 		search.getDocument().addDocumentListener(new DocumentListener() {
@@ -301,7 +301,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                                 mapsMissions.add( Box.createVerticalStrut(3) );
                                         }
                                         if (missions.length == 0) {
-                                                mapsMissions.add(new JLabel(" No missions for this map."));
+                                                mapsMissions.add(new JLabel(" " + resb.getString("newgame.missions.none")));
                                                 if (mission.isSelected()) {
                                                     domination.setSelected(true);
                                                     AutoPlaceAll.setEnabled(true);
