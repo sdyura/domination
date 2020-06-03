@@ -242,12 +242,12 @@ public class GameFrame extends JFrame implements KeyListener {
 
 			g2.setColor( Color.BLACK );
 
-			GraphicsUtil.drawStringCenteredAt(g, resb.getString("game.tabs.continents"), 81, 26);
-			GraphicsUtil.drawStringCenteredAt(g, resb.getString("game.tabs.ownership"), 196, 26);
-			GraphicsUtil.drawStringCenteredAt(g, resb.getString("game.tabs.borderthreat"), 311, 26);
-			GraphicsUtil.drawStringCenteredAt(g, resb.getString("game.tabs.cardownership"), 426, 26);
-			GraphicsUtil.drawStringCenteredAt(g, resb.getString("game.tabs.troopstrength"), 541, 26);
-			GraphicsUtil.drawStringCenteredAt(g, resb.getString("game.tabs.connectedempire"), 656, 26);
+			drawStringCenteredAt(g, resb.getString("game.tabs.continents"), 81, 26, 115);
+			drawStringCenteredAt(g, resb.getString("game.tabs.ownership"), 196, 26, 115);
+			drawStringCenteredAt(g, resb.getString("game.tabs.borderthreat"), 311, 26, 115);
+			drawStringCenteredAt(g, resb.getString("game.tabs.cardownership"), 426, 26, 115);
+			drawStringCenteredAt(g, resb.getString("game.tabs.troopstrength"), 541, 26, 115);
+			drawStringCenteredAt(g, resb.getString("game.tabs.connectedempire"), 656, 26, 115);
 
                         switch (mapView) {
                             case PicturePanel.VIEW_CONTINENTS:
@@ -296,7 +296,6 @@ public class GameFrame extends JFrame implements KeyListener {
 
 		JPanel fpBottom = new JPanel() {
 		    public void paintComponent(Graphics g) {
-
 			//g.drawImage(game,0,0,740,121,  63,54,803,175,this); // bottom
 
                         GraphicsUtil.drawImage(g, bottomleft, 0, 0, this);
@@ -312,7 +311,6 @@ public class GameFrame extends JFrame implements KeyListener {
 			int[] cols = colors;
 
 			for (int c=0; c<cols.length; c++) {
-
 				Color col = new Color( cols[c] );
 
 				g.setColor( new Color(col.getRed(),col.getGreen(),col.getBlue(), 100) );
@@ -324,18 +322,11 @@ public class GameFrame extends JFrame implements KeyListener {
 				else {
 					g.fillRect((getWidth() - GraphicsUtil.scale(177)) - (GraphicsUtil.scale(24) * (cols.length - c)), GraphicsUtil.scale(89), GraphicsUtil.scale(24), GraphicsUtil.scale(24));
 				}
-
 			}
 
 			if (gameStatus!=null) {
-
 				g.setColor( new Color( ColorUtil.getTextColorFor( cols[0] ) ) );
-                                
-                                // do not let font go bellow 10,
-                                // on hi res windows, default fontsize is 10, and 10-2=8 looks tiny
-                                int fontSize = Math.max(10, g.getFont().getSize() - 2); // 13 - 2 = 11
-
-				g.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, fontSize));
+				setSmallerFont(g);
 				GraphicsUtil.drawString(g, gameStatus, 22, 105);
 			}
 
@@ -496,6 +487,27 @@ public class GameFrame extends JFrame implements KeyListener {
 
 		getContentPane().add( flashPanel );
 	}
+
+        private static void drawStringCenteredAt(Graphics g, String label, int x, int y, int maxWidth) {
+            int width = GraphicsUtil.scale(maxWidth);
+            Font originalFont = g.getFont();
+           
+            if (g.getFontMetrics().stringWidth(label) > width) {
+                setSmallerFont(g);
+                if (g.getFontMetrics().stringWidth(label) > width) {
+                    setSmallerFont(g);
+                }
+            }
+            GraphicsUtil.drawStringCenteredAt(g, label, x, y);
+            g.setFont(originalFont);
+        }
+
+        private static void setSmallerFont(Graphics g) {
+            // do not let font go bellow 10,
+            // on hi res windows, default fontsize is 10, and 10-2=8 looks tiny
+            int fontSize = Math.max(10, (int)(g.getFont().getSize() * 0.85)); // 13 - 2 = 11
+            g.setFont(new java.awt.Font("SansSerif", java.awt.Font.PLAIN, fontSize));
+        }
 
 	public void setup(boolean localgame) {
             	try {
