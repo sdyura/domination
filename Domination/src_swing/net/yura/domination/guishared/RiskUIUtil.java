@@ -45,9 +45,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.plaf.UIResource;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskIO;
@@ -967,6 +969,14 @@ public class RiskUIUtil {
                     }
                     else {
 			UIManager.setLookAndFeel(systemLookAndFeel);
+
+			// the TabbedPaneUI in GTK theme has stopped working in Linux, use the default UI
+			// https://bugs.openjdk.java.net/browse/JDK-8232865
+			// there is no way to find out if its working other then draw the tab and see what happens
+			// other then that everything behaves normally, its in the native GTK code that it does not draw
+			if ("com.sun.java.swing.plaf.gtk.GTKLookAndFeel".equals(systemLookAndFeel) && !canDrawTabs()) {
+			    UIManager.put("TabbedPaneUI", BasicTabbedPaneUI.class.getName());
+			}
                     }
 		}
 		catch (Exception e) {
@@ -1008,6 +1018,29 @@ public class RiskUIUtil {
 		}
 */
 	}
+        
+        private static boolean canDrawTabs() {
+            try {
+                JTabbedPane component = new JTabbedPane();
+                javax.swing.plaf.synth.Region id = javax.swing.plaf.synth.Region.TABBED_PANE_TAB;
+                javax.swing.plaf.synth.SynthStyle style = javax.swing.plaf.synth.SynthLookAndFeel.getStyle(component, id);
+                javax.swing.plaf.synth.SynthContext context = new javax.swing.plaf.synth.SynthContext(component, id, style, javax.swing.plaf.synth.SynthConstants.ENABLED);
+                javax.swing.plaf.synth.SynthPainter painter = style.getPainter(context);
+
+                BufferedImage img = new BufferedImage(50, 25, BufferedImage.TYPE_4BYTE_ABGR);
+                painter.paintTabbedPaneTabBackground(context, img.getGraphics(), 0, 0, img.getWidth(), img.getHeight(), 0);
+                int[] out = img.getRGB(0, 0, img.getWidth(), img.getHeight(), null, 0, img.getWidth());
+                for (int a : out) {
+                    if (a != 0) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Throwable th) {
+                return true;
+            }
+        }
 
         /**
          * In nimbus theme it does not respect a ColorUIResource when setting a color
