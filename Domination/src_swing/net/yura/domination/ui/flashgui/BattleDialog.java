@@ -205,7 +205,7 @@ public class BattleDialog extends JDialog implements MouseListener {
 		};
 	}
 
-	/*
+	/**
 	 * @param a the number of attacking armies
 	 * @param b the number of defending armies
 	 * @param ai the image of attacker

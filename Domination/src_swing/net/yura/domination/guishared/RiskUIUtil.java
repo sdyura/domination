@@ -1018,7 +1018,10 @@ public class RiskUIUtil {
 		}
 */
 	}
-        
+
+        /**
+         * @see com.sun.java.swing.plaf.gtk.GTKPainter#paintTabbedPaneTabBackground(javax.swing.plaf.synth.SynthContext, java.awt.Graphics, int, int, int, int, int)
+         */
         private static boolean canDrawTabs() {
             try {
                 JTabbedPane component = new JTabbedPane();

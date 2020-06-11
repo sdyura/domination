@@ -5,7 +5,6 @@ package net.yura.domination.guishared;
 import net.yura.swing.GraphicsUtil;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -18,16 +17,20 @@ import javax.swing.JScrollPane;
 import java.awt.Frame;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Calendar;
 import javax.swing.JComponent;
+import javax.swing.SwingConstants;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.swing.BrowserLauncher;
 import net.yura.swing.ImageIcon;
 
 /**
@@ -65,7 +68,8 @@ public class AboutDialog extends JDialog {
 		java.util.ResourceBundle resb = TranslationBundle.getBundle();
 
 		String version=resb.getString("about.version")+" " + ver;
-		String author = " Yura Mamyrin (yura@yura.net)";
+		String author = " Yura Mamyrin ";
+		String email = "yura@yura.net";
 		String title		= resb.getString("about.title");
 
                 int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -80,22 +84,49 @@ public class AboutDialog extends JDialog {
 		prodLabel.setText(product);
 		contentPane.add(prodLabel,
 				new GridBagConstraints(GridBagConstraints.RELATIVE, GridBagConstraints.RELATIVE, GridBagConstraints.REMAINDER, 1,
-						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
+						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, GraphicsUtil.newInsets(5, 0, 0, 0), 0, 0));
 
 		verLabel.setText(version);
 		contentPane.add(verLabel,
 				new GridBagConstraints(GridBagConstraints.RELATIVE, GridBagConstraints.RELATIVE, GridBagConstraints.REMAINDER, 1,
-						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
+						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, GraphicsUtil.newInsets(5, 0, 0, 0), 0, 0));
 
 		authLabel.setText(resb.getString("about.author") + author);
 		contentPane.add(authLabel,
-				new GridBagConstraints(GridBagConstraints.RELATIVE, GridBagConstraints.RELATIVE, GridBagConstraints.REMAINDER, 1,
-						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
+				new GridBagConstraints(GridBagConstraints.RELATIVE, GridBagConstraints.RELATIVE, GridBagConstraints.RELATIVE, 1,
+						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, GraphicsUtil.newInsets(5, 0, 0, 0), 0, 0));
 
+                JButton emailLink = new JButton();
+                final String linkUrl = "mailto:" + email;
+                emailLink.setText("<html>(<a href=\"" + linkUrl + "\">" + email + "</a>)");
+                emailLink.setHorizontalAlignment(SwingConstants.LEFT);
+                emailLink.setBorderPainted(false);
+                emailLink.setBorder(null); // for nimbus to get rid of insets
+                emailLink.setOpaque(false);
+                emailLink.setContentAreaFilled(false); // for nimbus to get rid of background
+                emailLink.setToolTipText(linkUrl);
+                emailLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                emailLink.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        try {
+                            BrowserLauncher.openURL(linkUrl);
+                        }
+                        catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                });
+                
+                contentPane.add(emailLink,
+				new GridBagConstraints(GridBagConstraints.RELATIVE, GridBagConstraints.RELATIVE, GridBagConstraints.REMAINDER, 1,
+						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, GraphicsUtil.newInsets(5, 0, 0, 0), 0, 0));
+
+                
 		copLabel.setText(copyright);
 		contentPane.add(copLabel,
 				new GridBagConstraints(GridBagConstraints.RELATIVE, GridBagConstraints.RELATIVE, GridBagConstraints.REMAINDER, 1,
-						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
+						0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, GraphicsUtil.newInsets(5, 0, 0, 0), 0, 0));
 
 		// commentField.setWrapStyleWord(true);
 		// commentField.setLineWrap(true);
