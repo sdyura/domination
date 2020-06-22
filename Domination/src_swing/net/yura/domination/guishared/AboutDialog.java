@@ -161,6 +161,7 @@ public class AboutDialog extends JDialog {
 				});
 		btnPanel.add(okButton);
 		okButton.setDefaultCapable( true);
+                getRootPane().setDefaultButton(okButton);
 
 		infoPanel.setLayout(new javax.swing.BoxLayout(infoPanel, javax.swing.BoxLayout.X_AXIS));
 		info1.setText(" " + resb.getString("about.infopanel"));
@@ -269,7 +270,6 @@ public class AboutDialog extends JDialog {
 
 		setTitle(title);
 		//setResizable(false);
-		okButton.requestFocus();
 
 
 		addWindowListener(
@@ -290,6 +290,7 @@ public class AboutDialog extends JDialog {
 		addTextToTextBox(editorPane3,"ChangeLog.txt");
 
 		//setSize(size);
+                okButton.requestFocusInWindow(); // MUST be called after pack()
 	}
 
 	private static void addTextToTextBox(JEditorPane a,String n) {
