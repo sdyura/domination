@@ -29,6 +29,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -137,7 +138,9 @@ public class GameFrame extends JFrame implements KeyListener {
 		menuOn=false;
 		graphOn=false;
 
-		gameImg = RiskUIUtil.getUIImage(this.getClass(),"game.jpg");
+                resb = TranslationBundle.getBundle();
+                boolean i18n = !new Locale("").getLanguage().equals(resb.getLocale().getLanguage()) && !new Locale("en").getLanguage().equals(resb.getLocale().getLanguage());
+		gameImg = RiskUIUtil.getUIImage(this.getClass(), i18n ? "game_i18n.jpg" : "game.jpg");
 
 		initGUI();
 
@@ -150,49 +153,11 @@ public class GameFrame extends JFrame implements KeyListener {
                 RiskUIUtil.setMinimumSize(this, getPreferredSize());
 	}
 
-        public void setExtraAction(Action action) {
-            extraAction = action;
-        }
-        
-        public void setSidePanel(Component panel) {
-            Container container = getContentPane();
-            BorderLayout layout = (BorderLayout)container.getLayout();
-            for (int c = 0; c < container.getComponentCount(); c++) {
-                Component comp = container.getComponent(c);
-                if (layout.getConstraints(comp) == BorderLayout.EAST) {
-                    container.remove(c);
-                    RiskUIUtil.setMinimumSize(this, new Dimension(getMinimumSize().width - comp.getWidth(), getMinimumSize().height));
-                    setSize(getWidth() - comp.getWidth(), getHeight());
-                    break;
-                }
-            }
-            if (panel != null) {
-                container.add(panel, java.awt.BorderLayout.EAST);
-                setSize(getWidth() + panel.getPreferredSize().width, getHeight());
-                RiskUIUtil.setMinimumSize(this, new Dimension(getMinimumSize().width + panel.getPreferredSize().width, getMinimumSize().height));
-            }
-        }
-
-        @Override
-        public void setVisible(boolean visible) {
-            if (!visible) {
-		if (graphOn) { displayGraph(); }
-		if (menuOn) { displayMenu(); }
-		extraAction = null;
-                quickPlace.clear();
-            }
-            super.setVisible(visible);
-        }
-
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * Initialises the GUI
 	 */
 	private void initGUI() {
-
-		resb = TranslationBundle.getBundle();
-
-		// set title
 		setTitle("yura.net " + RiskUtil.GAME_NAME ); // resb.getString("game.title")
 
 		//JLayeredPane layeredPane = new JLayeredPane();
@@ -488,6 +453,40 @@ public class GameFrame extends JFrame implements KeyListener {
 
 		getContentPane().add( flashPanel );
 	}
+
+        public void setExtraAction(Action action) {
+            extraAction = action;
+        }
+        
+        public void setSidePanel(Component panel) {
+            Container container = getContentPane();
+            BorderLayout layout = (BorderLayout)container.getLayout();
+            for (int c = 0; c < container.getComponentCount(); c++) {
+                Component comp = container.getComponent(c);
+                if (layout.getConstraints(comp) == BorderLayout.EAST) {
+                    container.remove(c);
+                    RiskUIUtil.setMinimumSize(this, new Dimension(getMinimumSize().width - comp.getWidth(), getMinimumSize().height));
+                    setSize(getWidth() - comp.getWidth(), getHeight());
+                    break;
+                }
+            }
+            if (panel != null) {
+                container.add(panel, java.awt.BorderLayout.EAST);
+                setSize(getWidth() + panel.getPreferredSize().width, getHeight());
+                RiskUIUtil.setMinimumSize(this, new Dimension(getMinimumSize().width + panel.getPreferredSize().width, getMinimumSize().height));
+            }
+        }
+
+        @Override
+        public void setVisible(boolean visible) {
+            if (!visible) {
+		if (graphOn) { displayGraph(); }
+		if (menuOn) { displayMenu(); }
+		extraAction = null;
+                quickPlace.clear();
+            }
+            super.setVisible(visible);
+        }
 
         private static void drawStringCenteredAt(Graphics g, String label, int x, int y, int maxWidth) {
             int width = GraphicsUtil.scale(maxWidth);
