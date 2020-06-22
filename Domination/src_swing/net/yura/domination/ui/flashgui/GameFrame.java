@@ -363,35 +363,36 @@ public class GameFrame extends JFrame implements KeyListener {
 		int x=63;
 		int y=77;
 
-		graphbutton = makeRiskButton(gameImg.getSubimage(x, y, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y+98, w, h) );
+		graphbutton = makeRiskButton(gameImg.getSubimage(x, y+98, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y, w, h));
 		GraphicsUtil.setBounds(graphbutton, x - 63, y - 54, w, h);
 		graphbutton.addActionListener( buttonActionListener );
 		graphbutton.setToolTipText( resb.getString("game.button.statistics") );
 
 		x=x+w;
 
-		cardsbutton = makeRiskButton(gameImg.getSubimage(x, y, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y+98, w, h) );
+		cardsbutton = makeRiskButton(gameImg.getSubimage(x, y+98, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y, w, h));
 		GraphicsUtil.setBounds(cardsbutton, x - 63, y - 54, w, h);
 		cardsbutton.addActionListener( buttonActionListener );
 		cardsbutton.setToolTipText(resb.getString("game.button.cards"));
 
 		x=x+w;
 
-		missionbutton = makeRiskButton(gameImg.getSubimage(x, y, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y+98, w, h) );
+		missionbutton = makeRiskButton(gameImg.getSubimage(x, y+98, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y, w, h));
 		GraphicsUtil.setBounds(missionbutton, x - 63, y - 54, w, h);
 		missionbutton.addActionListener( buttonActionListener );
 		missionbutton.setToolTipText(resb.getString("game.button.mission"));
 
 		x=x+w;
 
-		undobutton = makeRiskButton(gameImg.getSubimage(x, y, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y+98, w, h) );
+		undobutton = makeRiskButton(gameImg.getSubimage(x, y+98, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y, w, h));
 		GraphicsUtil.setBounds(undobutton, x - 63, y - 54, w, h);
 		undobutton.addActionListener( buttonActionListener );
 		undobutton.setToolTipText(resb.getString("game.button.undo"));
 
 		x=x+w;
 
-		menubutton = makeRiskButton(gameImg.getSubimage(x, y, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y+98, w, h) );
+                w--; // avoid jpeg edge problem for last button
+		menubutton = makeRiskButton(gameImg.getSubimage(x, y+98, w, h), gameImg.getSubimage(x, y+230, w, h), gameImg.getSubimage(x, y+164, w, h), gameImg.getSubimage(x, y, w, h));
 		GraphicsUtil.setBounds(menubutton, x - 63, y - 54, w, h);
 		menubutton.addActionListener( buttonActionListener );
 		menubutton.setToolTipText( resb.getString("game.button.menu") );

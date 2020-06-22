@@ -63,9 +63,9 @@ public class ImageIcon extends javax.swing.ImageIcon {
         // * disabled (getImage() then to grayscale) draw directly for disabled icons
         // * aimated (SwingUtilities.doesIconReferenceImage in JLabel needs to return true)
         if (GraphicsUtil.scale(getIconWidth()) != getIconWidth()) {
-            // only scale default and fst work for animated gifs
             original = getImage();
-            setImage(getImage().getScaledInstance(GraphicsUtil.scale(getIconWidth()), GraphicsUtil.scale(getIconHeight()), Image.SCALE_DEFAULT));
+            // only scale default and fst work for animated gifs
+            setImage(original.getScaledInstance(GraphicsUtil.scale(getIconWidth()), GraphicsUtil.scale(getIconHeight()), original instanceof BufferedImage ? Image.SCALE_SMOOTH : Image.SCALE_DEFAULT));
         }
     }
 }
