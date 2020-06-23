@@ -1175,6 +1175,8 @@ public class PicturePanel extends JPanel implements MapPanel {
                         BufferedImage tmpimg = new BufferedImage( PREVIEW_WIDTH,PREVIEW_HEIGHT, java.awt.image.BufferedImage.TYPE_INT_RGB );
 			Graphics2D g = tmpimg.createGraphics();
 
+                        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
 			g.drawImage(img, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT, null);
 
 			if (name!=null) {
