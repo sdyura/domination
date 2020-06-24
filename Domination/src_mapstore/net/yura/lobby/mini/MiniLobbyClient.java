@@ -323,7 +323,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
                 OptionPane.showOptionDialog(new ActionListener() {
                     public void actionPerformed(String actionCommand) {
-                        if ("ok".equals(actionCommand)) {
+                        if ("yes".equals(actionCommand)) {
                             Player player = (Player)players.getSelectedValue();
                             Map request = new HashMap();
                             request.put("game_id", game.getId());
