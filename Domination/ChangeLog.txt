@@ -20,6 +20,7 @@ CURRENT VERSION:
 	Filter online game maps by Michiel Pater
 	Do not show dice statistics for turns when the player rolled no dice
 	French text update by Adrien Laugueux
+	? Can Flag a game as inappropriate with right click menu option
 	MapEditor: checks for overlapping circles
 	MapEditor: warning on no cards in map
 

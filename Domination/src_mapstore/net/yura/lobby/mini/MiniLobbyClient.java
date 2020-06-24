@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -17,6 +19,7 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.LobbyClient;
 import net.yura.lobby.client.LobbyCom;
+import net.yura.lobby.gen.ProtoLobby;
 import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
 import net.yura.lobby.model.Player;
@@ -28,6 +31,8 @@ import net.yura.mobile.gui.components.ComboBox;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.List;
+import net.yura.mobile.gui.components.Menu;
+import net.yura.mobile.gui.components.MenuBar;
 import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.gui.components.Panel;
 import net.yura.mobile.gui.components.ScrollPane;
@@ -92,7 +97,6 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         viewChooser.setName(null);
 
         adminPopup = gameList.getPopupMenu();
-        gameList.setPopupMenu(null);
 
         String uuid = getMyUUID();
 
@@ -312,6 +316,26 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 logger.warning(actionCommand+"called when we are "+playerType+" "+myusername);
             }
         }
+        else if ("flagGame".equals(actionCommand)) {
+            final Game game = (Game) gameList.getSelectedValue();
+            final List players = new List(new java.util.Vector(game.getPlayers()));
+            
+            OptionPane.showOptionDialog(new ActionListener() {
+                public void actionPerformed(String actionCommand) {
+                    if ("ok".equals(actionCommand)) {
+                        Player player = (Player)players.getSelectedValue();
+                        Map request = new HashMap();
+                        request.put("game_id", game.getId());
+                        request.put("message", game.getName());
+                        if (player != null) {
+                            request.put("username", player.getName());
+                        }
+                        mycom.sendAdminCommand(ProtoLobby.REQUEST_FLAG_USER, request);
+                    }
+                }
+            }, players, resBundle.getProperty("lobby.question.title"), OptionPane.OK_CANCEL_OPTION,
+            OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), null, null);
+        }
         else if ("delGame".equals(actionCommand)) {
             final Game game = (Game) gameList.getSelectedValue();
             if (playerType >= Player.PLAYER_MODERATOR && game.getNumOfPlayers() < game.getMaxPlayers()) {
@@ -426,7 +450,15 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     public void setUsername(String name, int type) {
         myusername = name;
         playerType = type;
-        gameList.setPopupMenu(playerType >= Player.PLAYER_MODERATOR ? adminPopup : null);
+        
+        MenuBar rightCLickMenu = Menu.getPopupMenu(adminPopup);
+        for (int c = 0; c < rightCLickMenu.getComponentCount(); c++) {
+            Button item = (Button)rightCLickMenu.getItems().get(c);
+            if (!"flagGame".equals(item.getActionCommand())) {
+                item.setVisible(playerType >= Player.PLAYER_MODERATOR);
+            }
+        }
+
         toast(RiskUtil.replaceAll(resBundle.getString("lobby.logged-in-as"), "{0}", name)); // "You are logged in as: "+name
         game.connected(name);
     }
