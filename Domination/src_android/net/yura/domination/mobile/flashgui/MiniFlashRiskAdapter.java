@@ -16,6 +16,7 @@ import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.logging.Logger;
 import net.yura.mobile.util.Url;
 import net.yura.domination.engine.OnlineUtil;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.lobby.mini.MiniLobbyClient;
 
 public class MiniFlashRiskAdapter implements RiskListener {
@@ -48,7 +49,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
             }
             @Override
             public String getAppName() {
-                return "AndroidDomination";
+                return "Android" + RiskUtil.GAME_NAME;
             }
             @Override
             public String getAppVersion() {
