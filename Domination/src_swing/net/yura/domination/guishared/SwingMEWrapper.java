@@ -95,6 +95,10 @@ public class SwingMEWrapper {
                 if (chat != null) {
                     chat.incomingChat(fromwho, message);
                 }
+                else {
+                    // if we do not have a in game chat box, fallback to toast
+                    MiniLobbyClient.toast(fromwho == null ? message : fromwho + ": " + message);
+                }
             }
 
             public void addPlayer(Player player) {
