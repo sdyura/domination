@@ -318,23 +318,25 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         else if ("flagGame".equals(actionCommand)) {
             final Game game = (Game) gameList.getSelectedValue();
-            final List players = new List(new java.util.Vector(game.getPlayers()));
-            
-            OptionPane.showOptionDialog(new ActionListener() {
-                public void actionPerformed(String actionCommand) {
-                    if ("ok".equals(actionCommand)) {
-                        Player player = (Player)players.getSelectedValue();
-                        Map request = new HashMap();
-                        request.put("game_id", game.getId());
-                        request.put("message", game.getName());
-                        if (player != null) {
-                            request.put("username", player.getName());
+            if (game != null) { // can only be null if there are no games in the list
+                final List players = new List(new java.util.Vector(game.getPlayers()));
+
+                OptionPane.showOptionDialog(new ActionListener() {
+                    public void actionPerformed(String actionCommand) {
+                        if ("ok".equals(actionCommand)) {
+                            Player player = (Player)players.getSelectedValue();
+                            Map request = new HashMap();
+                            request.put("game_id", game.getId());
+                            request.put("message", game.getName());
+                            if (player != null) {
+                                request.put("username", player.getName());
+                            }
+                            mycom.sendAdminCommand(ProtoLobby.REQUEST_FLAG_USER, request);
                         }
-                        mycom.sendAdminCommand(ProtoLobby.REQUEST_FLAG_USER, request);
                     }
-                }
-            }, players, resBundle.getProperty("lobby.question.title"), OptionPane.YES_NO_OPTION,
-            OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), null, null);
+                }, players, resBundle.getProperty("lobby.question.title"), OptionPane.YES_NO_OPTION,
+                OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), null, null);
+            }
         }
         else if ("delGame".equals(actionCommand)) {
             final Game game = (Game) gameList.getSelectedValue();
