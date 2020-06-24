@@ -333,7 +333,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                         mycom.sendAdminCommand(ProtoLobby.REQUEST_FLAG_USER, request);
                     }
                 }
-            }, players, resBundle.getProperty("lobby.question.title"), OptionPane.OK_CANCEL_OPTION,
+            }, players, resBundle.getProperty("lobby.question.title"), OptionPane.YES_NO_OPTION,
             OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), null, null);
         }
         else if ("delGame".equals(actionCommand)) {
