@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.Map;
+import java.util.logging.LogRecord;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -279,7 +281,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 		activateButton( thebutton);
 	}//public void mouseReleased(MouseEvent e)
 
-
 	/**
 	 * a button shall be activated
 	 */
@@ -379,7 +380,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 		}
 	}//private void activateButton(int thebutton)
 
-
 	/**
 	 * Checks if highlighting is needed
 	 * @param e A mouse event
@@ -464,13 +464,9 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 		}
                 return 0;
 	}
-        
 
 	/**
 	 * key control
-	 */
-
-	/**
 	 * the user has released a key
 	 */
 	public void keyReleased( KeyEvent event ) {
@@ -541,7 +537,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 		}//switch keycode
 	}//public void keyReleased( KeyEvent event )
-
 
 	//I don't want these, but we implement the interface
 	public void keyPressed( KeyEvent event ) {}
@@ -629,6 +624,19 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                     net.yura.grasshopper.PopupBug.initSimple(RiskUtil.GAME_NAME,
                             RiskUtil.RISK_VERSION+" FlashGUI" // "(save: " + RiskGame.SAVE_VERSION + " network: "+RiskGame.NETWORK_VERSION+")"
                             , TranslationBundle.getBundle().getLocale().toString());
+                    
+                    net.yura.grasshopper.BugSubmitter.setApplicationInfoProvider(new net.yura.grasshopper.ApplicationInfoProvider() {
+                        public void addInfoForSubmit(Map map) {
+                            // TODO SwingGUI should also prob send this
+                            map.put("lobbyID", net.yura.lobby.mini.MiniLobbyClient.getMyUUID());
+                        }
+                        public boolean ignoreError(LogRecord record) {
+                            if (RiskUIUtil.isOldVersion()) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    } );
                 }
                 catch(Throwable th) {
                     System.out.println("Grasshopper not loaded");

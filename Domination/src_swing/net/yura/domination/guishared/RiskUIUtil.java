@@ -155,11 +155,15 @@ public class RiskUIUtil {
     private static String webstart;
 
     private static boolean nosandbox;
+    private static boolean oldVersion;
 
     public static boolean checkForNoSandbox() {
             return nosandbox;
     }
 
+    public static boolean isOldVersion() {
+        return oldVersion;
+    }
 
     private static Map UIImagesReferences = new HashMap();
 
@@ -822,6 +826,7 @@ public class RiskUIUtil {
                                         String v = newversion[0].substring(7, newversion[0].length() );
 
                                         if (!v.equals(RiskUtil.RISK_VERSION)) {
+                                                oldVersion = true;
 
                                                 for (int c=1;c<newversion.length;c++) {
                                                         v = v+"\n"+newversion[c];
