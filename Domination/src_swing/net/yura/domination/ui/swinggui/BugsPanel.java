@@ -5,14 +5,21 @@ package net.yura.domination.ui.swinggui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.domination.guishared.RiskUIUtil;
+import net.yura.grasshopper.BugSubmitter;
 
 /**
  * @author Yura Mamyrin
@@ -57,7 +64,22 @@ public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
 
 	public void actionPerformed(ActionEvent a) {
             if (a.getActionCommand().equals("send")) {
-                gui.submitBug("yura@yura.net", from.getText(), "Suggestion", text.getText(), null);
+                try {
+                    // This code is a lot like the Alert Service in Lobby
+                    Map<String, String> map = new HashMap();
+                    map.put("recipient", "yura@yura.net");
+                    map.put("subject", RiskUtil.GAME_NAME + " " + RiskUtil.RISK_VERSION +" SwingGUI "+ TranslationBundle.getBundle().getLocale().toString() + " Suggestion");
+                    map.put("email", from.getText());
+                    map.put("text", text.getText());
+                    map.put("OS", RiskUIUtil.getOSString());
+                    map.put("lobbyID", net.yura.lobby.mini.MiniLobbyClient.getMyUUID());
+                    map.put("env_report", "REMOTE_HOST,HTTP_USER_AGENT");
+                    BugSubmitter.doPost(BugSubmitter.FORM_MAIL_URL, map);
+                    JOptionPane.showMessageDialog(this, "SENT!");
+                }
+                catch (Throwable ex) {
+                    throw new RuntimeException("can not send", ex);
+                }
             }
 	}
 
