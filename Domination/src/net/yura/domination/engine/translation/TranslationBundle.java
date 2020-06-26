@@ -24,7 +24,6 @@ public class TranslationBundle {
 	 * parts of the program
 	 */
 	static public ResourceBundle getBundle() {
-
 		if (resBundle == null) {
 			loadBundle();
 		}
@@ -35,7 +34,6 @@ public class TranslationBundle {
 	 * loads the translation bundle
 	 */
 	static private void loadBundle() {
-
 		final Locale loc;
 
 		//load the default or a forced locale
@@ -44,6 +42,9 @@ public class TranslationBundle {
 		}
 		else {
 			loc = getLocale(strLanguage);
+
+			// set the system defualt so things like JOptionPane have correct text in buttons
+			Locale.setDefault(loc);
 		}
 
 		resBundle = RiskUtil.getResourceBundle(TranslationBundle.class,"Risk",loc);
@@ -51,10 +52,7 @@ public class TranslationBundle {
 		// this will work MOST of the time, but does not in lobby
 		// for some reason it stops the classes from loading, and does not find the files
 		//resBundle = ResourceBundle.getBundle("net.yura.domination.engine.translation.Risk", loc );
-
-
 	}
-
 
 	public static Locale getLocale(String localeString) {
 		if ("".equals(localeString)) {
@@ -69,8 +67,6 @@ public class TranslationBundle {
 		}
 	}
 
-
-
 	/**
 	 * sets the language to use
 	 *
@@ -78,9 +74,7 @@ public class TranslationBundle {
 	 * command line
 	 */
 	public static void setLanguage(String strL) {
-
 		strLanguage = strL;
-
 		// need to reload it again!
 		loadBundle();
 	}
@@ -94,7 +88,6 @@ public class TranslationBundle {
 	 * language
 	 */
 	public static void parseArgs(String[] args) {
-
 		for (int nA = 0; nA < args.length; nA++ ) {
 			if (args[nA].length() > 7 && args[nA].substring(0,7).equals( "--lang=")) {
 				//set the language to the given string
@@ -102,5 +95,4 @@ public class TranslationBundle {
 			}
 		}
 	}
-
 }
