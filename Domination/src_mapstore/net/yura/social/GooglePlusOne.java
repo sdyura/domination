@@ -91,31 +91,39 @@ public class GooglePlusOne {
      * unfortunately the urls are re-encoded on the google end so may not exactly match the encoded urls we send. so we need to decode them before comparing.
      */
     public static Map<String,Integer> getCount(InputStream is) throws IOException {
-	Object[] object = (Object[])util.load(new InputStreamReader(is, "UTF-8"));
         Map<String,Integer> urlToValue = new HashMap();
-        for (int c=0;c<object.length;c++) {
-            Map<String, Object> response = (Map)object[c];
-            try {
-                Map<String, Object> result = (Map)response.get("result");
-                if (result != null) {
-                    String url = (String) result.get("id");
-                    Map<String, Object> metadata = (Map) result.get("metadata");
-                    Map<String, Object> globalCounts = (Map) metadata.get("globalCounts");
-                    double count = (Double) globalCounts.get("count");
-                    urlToValue.put(url, (int) count);
+        Object response = util.load(new InputStreamReader(is, "UTF-8"));
+
+        if (response instanceof Object[]) {
+            Object[] objectArray = (Object[])response;
+            for (int c=0;c<objectArray.length;c++) {
+                Map<String, Object> item = (Map)objectArray[c];
+                try {
+                    Map<String, Object> result = (Map)item.get("result");
+                    if (result != null) {
+                        String url = (String) result.get("id");
+                        Map<String, Object> metadata = (Map) result.get("metadata");
+                        Map<String, Object> globalCounts = (Map) metadata.get("globalCounts");
+                        double count = (Double) globalCounts.get("count");
+                        urlToValue.put(url, (int) count);
+                    }
+                    else {
+                        // {"error":{"message":"Backend Error","code":-32099,"data":[{"message":"Backend Error","domain":"global","reason":"backendError"}]},"id":"p"}
+                        logger.info("error getting count from: " + toJSON(item));
+                    }
                 }
-                else {
-                    // {"error":{"message":"Backend Error","code":-32099,"data":[{"message":"Backend Error","domain":"global","reason":"backendError"}]},"id":"p"}
-                    logger.info("error getting count from: " + toJSON(response));
+                catch (Exception ex) {
+                    logger.log(Level.WARNING, "error getting count from: " + toJSON(item), ex);
+                    // do not throw here as other responses may be fine
+                    //IOException ex2 = new IOException("error in "+responce);
+                    //ex2.initCause(ex); // Android 1.6
+                    //throw ex2;
                 }
             }
-            catch (Exception ex) {
-                logger.log(Level.WARNING, "error getting count from: " + toJSON(response), ex);
-                // do not throw here as other responses may be fine
-                //IOException ex2 = new IOException("error in "+responce);
-                //ex2.initCause(ex); // Android 1.6
-                //throw ex2;
-            }
+        }
+        else {
+            logger.info("unexpected responce json: " + toJSON(response));
+            // this service is probably not working any more, so ignore errors
         }
 	return urlToValue;
     }
