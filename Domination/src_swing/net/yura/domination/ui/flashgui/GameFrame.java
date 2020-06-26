@@ -479,13 +479,14 @@ public class GameFrame extends JFrame implements KeyListener {
 
         @Override
         public void setVisible(boolean visible) {
+            // close the main UI first to avoid user interacting with it as we shut it down
+            super.setVisible(visible);
             if (!visible) {
 		if (graphOn) { displayGraph(); }
 		if (menuOn) { displayMenu(); }
 		extraAction = null;
                 quickPlace.clear();
             }
-            super.setVisible(visible);
         }
 
         private static void drawStringCenteredAt(Graphics g, String label, int x, int y, int maxWidth) {
