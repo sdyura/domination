@@ -11,13 +11,10 @@ import junit.framework.TestCase;
 import net.yura.domination.guishared.RiskUIUtil;
 
 /**
- *
- * @author yuramamyrin
+ * @author yura mamyrin
  */
 public class MapUpdateServiceTest extends TestCase {
-    
-    
-    
+
     /*
      * possible things to test:
      * 
@@ -26,9 +23,6 @@ public class MapUpdateServiceTest extends TestCase {
      *  downloading a map when the existing map is missing a file
      * 
      */
-
-
-
     public MapUpdateServiceTest(String testName) {
         super(testName);
     }
@@ -99,9 +93,6 @@ public class MapUpdateServiceTest extends TestCase {
             if (!found) {
                 fail("not found: "+name);
             }
-            
         }
-        
     }
-
 }
