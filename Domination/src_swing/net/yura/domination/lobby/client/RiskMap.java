@@ -67,7 +67,13 @@ public class RiskMap {
                                             map = MapChooser.createMap(mapUID);
                                             net.yura.mobile.gui.Icon icon = MapChooser.getLocalIconForMap(map);
                                             javax.microedition.lcdui.Image img = icon.getImage();
-                                            setImage(img._image);
+                                            // img can be null if we failed to load the image because of OutOfMemoryError
+                                            if (img != null) {
+                                                setImage(img._image);
+                                            }
+                                            else {
+                                                logger.log(Level.INFO, "NO ICON FOR LOCAL MAP " + mapUID);
+                                            }
                                         }
                                         else {
                                             map = MapUpdateService.getOnlineMap(mapUID);
