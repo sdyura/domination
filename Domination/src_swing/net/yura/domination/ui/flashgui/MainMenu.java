@@ -352,9 +352,14 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 				}
 				case MainMenu.BUTTON_LOBBY: {
 					if (lobby.isVisible()) {
-//						RiskUIUtil.runLobby(myrisk);
-                                                fra.showMiniLobby(root, window);
-                                        }
+						try {
+							//RiskUIUtil.runLobby(myrisk);
+							fra.showMiniLobby(root, window);
+						}
+						catch(Throwable e) {
+							JOptionPane.showMessageDialog(RiskUIUtil.findParentFrame(this), "Unable to run lobby: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
 					break;
 				}
 				case MainMenu.BUTTON_ABOUT: {
@@ -580,7 +585,12 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 		RiskUIUtil.parseArgs(argv);
 
-                initGrasshopper();
+                try {
+                    BugLogger.initGrasshopper();
+                }
+                catch(Throwable th) {
+                    System.out.println("Grasshopper not loaded " + th);
+                }
                 
                 Risk r = new Risk();
 		newMainMenuFrame(r ,JFrame.EXIT_ON_CLOSE );
@@ -609,45 +619,4 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 		return mm;
 	}
-        
-        private static void initGrasshopper() {
-            if (RiskUIUtil.checkForNoSandbox()) {
-                try {
-                    // Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.
-                    // HACK this will print any problems loading the Preferences before we start grasshopper
-                    java.util.prefs.Preferences.userRoot(); // returns java.util.prefs.WindowsPreferences
-                }
-                catch (Throwable th) { }
-
-                // catch everything in my PrintStream
-                try {
-                    net.yura.grasshopper.PopupBug.initSimple(RiskUtil.GAME_NAME,
-                            RiskUtil.RISK_VERSION+" FlashGUI" // "(save: " + RiskGame.SAVE_VERSION + " network: "+RiskGame.NETWORK_VERSION+")"
-                            , TranslationBundle.getBundle().getLocale().toString());
-                    
-                    net.yura.grasshopper.BugSubmitter.setApplicationInfoProvider(new net.yura.grasshopper.ApplicationInfoProvider() {
-                        public void addInfoForSubmit(Map map) {
-                            // TODO SwingGUI should also prob send this
-                            map.put("lobbyID", net.yura.lobby.mini.MiniLobbyClient.getMyUUID());
-                        }
-                        public boolean ignoreError(LogRecord record) {
-                            if (RiskUIUtil.isOldVersion()) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    } );
-                }
-                catch(Throwable th) {
-                    System.out.println("Grasshopper not loaded");
-                }
-
-                try {
-                    net.yura.swingme.core.CoreUtil.setupLogging();
-                }
-                catch (Throwable th) {
-                    RiskUtil.printStackTrace(th);
-                }
-            }
-        }
 }

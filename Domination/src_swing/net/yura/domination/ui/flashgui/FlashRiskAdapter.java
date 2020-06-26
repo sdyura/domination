@@ -85,8 +85,7 @@ public class FlashRiskAdapter implements RiskListener {
             try {
                 net.yura.grasshopper.PopupBug.log( a + System.getProperty("line.separator") );
             }
-            catch(Throwable th) {
-            }
+            catch(Throwable th) { }
         }
 
 	public void showMessageDialog(String a) {
@@ -287,8 +286,7 @@ public class FlashRiskAdapter implements RiskListener {
                     net.yura.grasshopper.PopupBug.clearLog();
                     net.yura.grasshopper.PopupBug.log( "game "+nogames+" closed, log cleared"+System.getProperty("line.separator") );
                 }
-                catch(Throwable th) {
-                }
+                catch(Throwable th) { }
 
 		newgameframe.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
