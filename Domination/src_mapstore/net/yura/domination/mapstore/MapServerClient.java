@@ -89,12 +89,13 @@ public class MapServerClient extends HTTPClient {
                (ex instanceof SocketException &&
                    ("Connection timed out".equals(ex.getMessage()) ||
                     "Connection reset by peer".equals(ex.getMessage()) ||
+                    "Connection reset".equals(ex.getMessage()) ||
                     "recvfrom failed: ETIMEDOUT (Connection timed out)".equals(ex.getMessage()) ||
                     "recvfrom failed: ECONNRESET (Connection reset by peer)".equals(ex.getMessage())) ) ) {
             level = Level.INFO;
         }
         // print error to console
-        logger.log(level, "error: "+responseCode+" "+ex+" "+request+"\n"+headers, ex!=null?ex:new Exception());
+        logger.log(level, "http error: "+responseCode+" "+ex+" for request: "+request+"\n"+headers, ex!=null?ex:new Exception());
 
         // show error dialog to the user
         if (ch!=null) {
