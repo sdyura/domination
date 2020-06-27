@@ -14,8 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.Map;
-import java.util.logging.LogRecord;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -107,7 +107,12 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 		lobby = new JLabel(resBundle.getString("mainmenu.globe.playonline"), new ImageIcon(getClass().getResource("earth.gif")), JLabel.CENTER);
 		GraphicsUtil.setBounds(lobby, 152, 409, 95, 95);
 		lobby.setHorizontalTextPosition(JLabel.CENTER);
-		lobby.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, getFont().getSize() + 5)); // 13 + 5 = 18
+                try {
+                    lobby.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, getFont().getSize() + 5)); // 13 + 5 = 18
+                }
+                catch (Throwable th) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.INFO, "set font error", th);
+                }
 
 		lobby.setVisible( RiskUIUtil.checkForNoSandbox() );
 
