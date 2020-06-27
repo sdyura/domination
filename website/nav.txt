@@ -11,6 +11,7 @@
 <p>
 <a href="index.shtml">News</a><br>
 <a href="ss.shtml">Screen Shots</a><br>
+<a href="http://sf.net/p/domination/code/HEAD/tree/Domination/ChangeLog.txt">Change Log</a><br>
 <a href="faq.shtml">FAQ</a><br>
 </p>
 
@@ -96,8 +97,7 @@
 
 
 <p>
-<a href="http://sf.net/p/domination/code/HEAD/tree/Domination/ChangeLog.txt">Change Log</a> (<a href="https://sourceforge.net/p/domination/code/HEAD/tree/Domination/todo.txt">todo</a>)<br>
-<a href="http://sf.net/p/domination/_list/tickets">Bug Tracker</a><br>
+<a href="http://sf.net/p/domination/_list/tickets">Bug Tracker</a> (<a href="https://sourceforge.net/p/domination/code/HEAD/tree/Domination/todo.txt">todo</a>)<br>
 <a href="http://sf.net/p/domination/discussion/271205/">Discussion</a><!-- <a href="http://yura.net/projects/domination#comments">Comments</a>--><br>
 <a href="http://sf.net/p/jrisk/mailman/">Mailinglist</a>
 (<a href="http://sf.net/p/lobby/mailman/">lobby</a>)
