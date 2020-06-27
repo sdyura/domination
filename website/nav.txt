@@ -28,8 +28,8 @@
 </p>
 
 
-<p>
-<a href="download.shtml">Download<img src="images/platforms/mac.png" width="24" height="24" alt="Mac"><img src="images/platforms/windows.png" width="24" height="24" alt="Windows"><img src="images/platforms/linux.png" width="24" height="24" alt="Linux"></a><br>
+<p style="white-space:nowrap">
+<a href="download.shtml"><img alt="Download" src="https://img.shields.io/sourceforge/dt/domination.svg" ><img src="images/platforms/mac.png" width="24" height="24" alt="Mac"><img src="images/platforms/windows.png" width="24" height="24" alt="Windows"><img src="images/platforms/linux.png" width="24" height="24" alt="Linux"></a><br>
 </p>
 
 
