@@ -41,6 +41,9 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -178,14 +181,29 @@ public class RiskUIUtil {
 					return img;
 				}
 			}
-			BufferedImage img = ImageIO.read( c.getResource(name) );
+			BufferedImage img;
+                        
+                        try {
+                            img = ImageIO.read( c.getResource(name) );
+                        }
+                        catch (IIOException ex) {
+                            // can get a javax.imageio.IIOException: Can't create cache file!
+                            if (ImageIO.getUseCache()) {
+                                Logger.getLogger(RiskUIUtil.class.getName()).log(Level.INFO, "could not load UI image " + c + " " + name, ex);
+                                ImageIO.setUseCache(false);
+                                img = ImageIO.read( c.getResource(name) );
+                            }
+                            else {
+                                throw ex;
+                            }
+                        }
 
 			UIImagesReferences.put(id,new WeakReference(img));
 
 			return img;
 		}
 		catch (Exception e) {
-			throw new RuntimeException("error loading "+c+" "+name,e);
+			throw new RuntimeException("error loading UI Image "+c+" "+name,e);
 		}
 	}
 
