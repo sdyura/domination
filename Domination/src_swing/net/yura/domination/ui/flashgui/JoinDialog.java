@@ -107,14 +107,11 @@ public class JoinDialog extends JDialog implements MouseInputListener {
 
 	}
 
-	/** Exit the Application */
-
 	/**
 	 * Closes the GUI
 	 * @param evt Close button was pressed
 	 */
 	public void exitForm() {
-
 		setVisible(false);
 		dispose();
 	}

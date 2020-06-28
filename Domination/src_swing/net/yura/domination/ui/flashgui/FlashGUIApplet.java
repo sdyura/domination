@@ -44,8 +44,6 @@ public class FlashGUIApplet extends JApplet {
 			TranslationBundle.parseArgs( new String[] {"--lang="+lang } );
 		}
 
-        	new MainMenu( new Risk(), (Frame)SwingUtilities.getAncestorOfClass(Frame.class, this), this );
-
+		new MainMenu(new Risk(), RiskUIUtil.findParentFrame(this), this);
 	}
-
 }

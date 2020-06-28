@@ -318,7 +318,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 				case MainMenu.BUTTON_LOADGAME: {
 
 					String name = RiskUIUtil.getLoadFileName(
-						RiskUIUtil.findParentFrame(this)
+						window
 						//RiskUtil.SAVES_DIR,
 						//RiskFileFilter.RISK_SAVE_FILES
 					);
@@ -334,20 +334,18 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 						RiskUtil.openDocs( TranslationBundle.getBundle().getString( "helpfiles.flash" ) );
 					}
 					catch(Exception e) {
-						JOptionPane.showMessageDialog( RiskUIUtil.findParentFrame(this) ,"Unable to open manual: "+e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(window ,"Unable to open manual: "+e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 					}
 
 					break;
 				}
 				case MainMenu.BUTTON_JOIN: {
 
-					Frame frame = RiskUIUtil.findParentFrame(this);
-
-					joinDialog = new JoinDialog( frame , true, myrisk);
-					Dimension frameSize = frame.getSize();
+					joinDialog = new JoinDialog(window, true, myrisk);
+					Dimension frameSize = window.getSize();
 					Dimension aboutSize = joinDialog.getPreferredSize();
-					int x = frame.getLocation().x + (frameSize.width - aboutSize.width) / 2;
-					int y = frame.getLocation().y + (frameSize.height - aboutSize.height) / 2;
+					int x = window.getLocation().x + (frameSize.width - aboutSize.width) / 2;
+					int y = window.getLocation().y + (frameSize.height - aboutSize.height) / 2;
 					if (x < 0) x = 0;
 					if (y < 0) y = 0;
 					joinDialog.setLocation(x, y+10);
@@ -362,14 +360,13 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 							fra.showMiniLobby(root, window);
 						}
 						catch(Throwable e) {
-							JOptionPane.showMessageDialog(RiskUIUtil.findParentFrame(this), "Unable to run lobby: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(window, "Unable to run lobby: " + e, "Error", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 					break;
 				}
 				case MainMenu.BUTTON_ABOUT: {
-					Frame frame = RiskUIUtil.findParentFrame(this);
-					RiskUIUtil.openAbout(frame,product, version);
+					RiskUIUtil.openAbout(window, product, version);
 					break;
 				}
 				case MainMenu.BUTTON_EXIT: {
@@ -587,7 +584,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	 * @param argv
 	 */
 	public static void main(String[] argv) {
-
 		RiskUIUtil.parseArgs(argv);
 
                 try {
@@ -597,22 +593,22 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                     System.out.println("Grasshopper not loaded " + th);
                 }
                 
-                Risk r = new Risk();
-		newMainMenuFrame(r ,JFrame.EXIT_ON_CLOSE );
+                Risk risk = new Risk();
+		newMainMenuFrame(risk, JFrame.EXIT_ON_CLOSE );
 
-                RiskUIUtil.openFile(argv,r);
+                RiskUIUtil.openFile(argv, risk);
 
-		RiskUIUtil.checkForUpdates(r);
+		RiskUIUtil.checkForUpdates(risk);
 	}
 
-	public static MainMenu newMainMenuFrame(Risk r,int a) {
+	public static MainMenu newMainMenuFrame(Risk risk, int defaultCloseOperation) {
 
 		JFrame gui = new JFrame();
                 gui.setIconImage(Toolkit.getDefaultToolkit().getImage( AboutDialog.class.getResource("icon.gif") ));
 
-		final MainMenu mm = new MainMenu( r,gui,gui );
+		final MainMenu mm = new MainMenu(risk, gui, gui);
 
-                gui.setDefaultCloseOperation(a);
+                gui.setDefaultCloseOperation(defaultCloseOperation);
 		gui.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent evt) {
                         mm.exit();

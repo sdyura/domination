@@ -738,8 +738,6 @@ public class RiskUIUtil {
 				" " + System.getProperty("java.specification.version") +" ("+ System.getProperty("java.version") +") \n" +
 				" " + home + " \n" +
 				" " + System.getProperty("java.class.version");
-
-
 	}
 
         public static String getOSString() {
