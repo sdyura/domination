@@ -18,21 +18,17 @@
 
 <h3>Play:</h3>
 
-
-<p>
-<a href="https://play.google.com/store/apps/details?id=net.yura.domination"><img src="images/android_app_on_play_logo_small.png" alt="Android App on Google Play" width="129" height="45"></a>
+<p style="white-space:nowrap">
+<a href="download.shtml"><img alt="Download" src="https://img.shields.io/sourceforge/dt/domination.svg" ><img src="images/platforms/mac.png" width="24" height="24" alt="Mac"><img src="images/platforms/windows.png" width="24" height="24" alt="Windows"><img src="images/platforms/linux.png" width="24" height="24" alt="Linux"></a><br>
 </p>
-
 
 <p>
 <a href="http://www.amazon.com/gp/product/B008HQRC6O/ref=domination_sf_net"><img src="images/Amazon_APP_Store_Badge.png" alt="Android App on Amazon AppStore" width="143" height="48"></a>
 </p>
 
-
-<p style="white-space:nowrap">
-<a href="download.shtml"><img alt="Download" src="https://img.shields.io/sourceforge/dt/domination.svg" ><img src="images/platforms/mac.png" width="24" height="24" alt="Mac"><img src="images/platforms/windows.png" width="24" height="24" alt="Windows"><img src="images/platforms/linux.png" width="24" height="24" alt="Linux"></a><br>
+<p>
+<a href="https://play.google.com/store/apps/details?id=net.yura.domination"><img src="images/android_app_on_play_logo_small.png" alt="Android App on Google Play" width="129" height="45"></a>
 </p>
-
 
 <p>
 <a href="applet/flashDomination.jnlp"><img src="images/webstart.png" alt="Launches Flash GUI Domination" height="23" width="88"></a>
@@ -47,7 +43,7 @@
 -->
 
 
-<h3>Donate:</h3>
+<h3>Support:</h3>
 
 
 <p>
@@ -99,8 +95,7 @@
 <p>
 <a href="http://sf.net/p/domination/_list/tickets">Bug Tracker</a> (<a href="https://sourceforge.net/p/domination/code/HEAD/tree/Domination/todo.txt">todo</a>)<br>
 <a href="http://sf.net/p/domination/discussion/271205/">Discussion</a><!-- <a href="http://yura.net/projects/domination#comments">Comments</a>--><br>
-<a href="http://sf.net/p/jrisk/mailman/">Mailinglist</a>
-(<a href="http://sf.net/p/lobby/mailman/">lobby</a>)
+<a href="http://sf.net/p/jrisk/mailman/">Mailinglist</a> (<a href="http://sf.net/p/lobby/mailman/">lobby</a>)
 </p>
 
 
