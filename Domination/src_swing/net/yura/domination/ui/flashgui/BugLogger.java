@@ -29,7 +29,7 @@ public class BugLogger {
                         map.put("lobbyID", net.yura.lobby.mini.MiniLobbyClient.getMyUUID());
                     }
                     public boolean ignoreError(LogRecord record) {
-                        if (RiskUIUtil.isOldVersion()) {
+                        if (RiskUtil.isOldVersion()) {
                             return true;
                         }
                         return false;

@@ -39,7 +39,6 @@ import java.util.Map;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,14 +157,9 @@ public class RiskUIUtil {
     private static String webstart;
 
     private static boolean nosandbox;
-    private static boolean oldVersion;
 
     public static boolean checkForNoSandbox() {
             return nosandbox;
-    }
-
-    public static boolean isOldVersion() {
-        return oldVersion;
     }
 
     private static Map UIImagesReferences = new HashMap();
@@ -381,7 +375,7 @@ public class RiskUIUtil {
 
         private static List getFileList(final String a) {
 
-            List namesvector = new Vector();
+            List namesvector = new ArrayList();
 
             if (checkForNoSandbox()) {
 
@@ -724,7 +718,7 @@ public class RiskUIUtil {
 			if (displayInfo != null) displayInfo = RiskUtil.replaceAll(displayInfo, "\n", " ");
 		}
 
-		return		" " + RiskUtil.RISK_VERSION + " (save: " + RiskGame.SAVE_VERSION + " network: "+RiskGame.NETWORK_VERSION+") \n" +
+		return		" " + RiskUtil.RISK_VERSION + " (save: " + RiskGame.SAVE_VERSION + " network: "+RiskGame.NETWORK_VERSION+") " + (RiskUtil.isOldVersion()?"OLD VERSION":"") + "\n" +
 				" " + "system:"+java.util.Locale.getDefault()+" current:" + resb.getLocale() + " \n" +
 				" " + netInfo + " \n" +
 				" " + getOSString() + " \n" +
@@ -816,57 +810,30 @@ public class RiskUIUtil {
 
 
         public static void checkForUpdates(Risk risk) {
-
                 if (checkForNoSandbox()) {
-
                         try {
-
                                 //try { Thread.sleep(5000); }
                                 //catch(InterruptedException e) {}
 
-                                URL url = new URL(RiskUtil.RISK_VERSION_URL);
+                                String v = RiskUtil.getNewVersionCheck();
 
-                                BufferedReader bufferin=new BufferedReader( new InputStreamReader(url.openStream()) );
-                                Vector buffer = new Vector();
-                                String input = bufferin.readLine();
+                                if (v != null) {
+                                    ResourceBundle resb = TranslationBundle.getBundle();
 
-                                while(input != null) {
-                                        buffer.add(input);
-                                        input = bufferin.readLine(); // get next line
-                                }
+                                    v = resb.getString("mainmenu.new-version.text").replaceAll("\\{0\\}", RiskUtil.GAME_NAME) + " "+v;
 
-                                String[] newversion = (String[])buffer.toArray( new String[buffer.size()] );
-
-                                if (newversion[0].startsWith("RISKOK ")) {
-
-                                        String v = newversion[0].substring(7, newversion[0].length() );
-
-                                        if (!v.equals(RiskUtil.RISK_VERSION)) {
-                                                oldVersion = true;
-
-                                                for (int c=1;c<newversion.length;c++) {
-                                                        v = v+"\n"+newversion[c];
-                                                }
-
-                                                ResourceBundle resb = TranslationBundle.getBundle();
-
-                                                v = resb.getString("mainmenu.new-version.text").replaceAll("\\{0\\}", RiskUtil.GAME_NAME) + " "+v;
-
-                                                String link = getURL(v);
-                                                if (link!=null) {
-                                                    int result = JOptionPane.showConfirmDialog(null, v, resb.getString("mainmenu.new-version.title"), JOptionPane.OK_CANCEL_OPTION);
-                                                    if (result == JOptionPane.OK_OPTION) {
-                                                        RiskUtil.streamOpener.openURL( new URL(link) );
-                                                    }
-                                                }
-                                                else {
-                                                    // do not use this, this is used for errors
-                                                    risk.showMessageDialog(v);
-                                                }
-
+                                    String link = getURL(v);
+                                    if (link!=null) {
+                                        int result = JOptionPane.showConfirmDialog(null, v, resb.getString("mainmenu.new-version.title"), JOptionPane.OK_CANCEL_OPTION);
+                                        if (result == JOptionPane.OK_OPTION) {
+                                            RiskUtil.streamOpener.openURL( new URL(link) );
                                         }
+                                    }
+                                    else {
+                                        // do not use this, this is used for errors
+                                        risk.showMessageDialog(v);
+                                    }
                                 }
-
                         }
                         catch (Throwable e) { }
 

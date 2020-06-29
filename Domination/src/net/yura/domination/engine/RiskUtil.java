@@ -13,13 +13,14 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.PushbackInputStream;
 import java.net.URL;
-import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -38,6 +39,8 @@ public class RiskUtil {
 	public static final String GAME_NAME;
 	public static final String RISK_VERSION;
 //	private static final String DEFAULT_MAP;
+
+        private static boolean oldVersion;
 
         private static final Logger logger = Logger.getLogger(RiskUtil.class.getName());
 	public static RiskIO streamOpener;
@@ -256,9 +259,9 @@ public class RiskUtil {
          * in the case of map files it will get the "name" "crd" "prv" "pic" "map" and any "comment" and number of "countries"
          * and for cards it will have a "missions" that will contain the String[] of all the missions
          */
-	public static java.util.Map loadInfo(String fileName,boolean cards) {
+	public static Map loadInfo(String fileName, boolean cards) {
 
-            Hashtable info = new Hashtable();
+            Map info = new HashMap();
 
             for (int c=0;true;c++) {
 
@@ -267,11 +270,11 @@ public class RiskUtil {
                 try {
 
                         bufferin= RiskUtil.readMap(RiskUtil.openMapStream(fileName));
-                        Vector misss=null;
+                        List misss=null;
 
                         if (cards) {
                             MapTranslator.setCards( fileName );
-                            misss = new Vector();
+                            misss = new ArrayList();
                         }
 
                         String input = bufferin.readLine();
@@ -426,16 +429,48 @@ public class RiskUtil {
             }
         }
 
+        public static String getNewVersionCheck() throws IOException {
+                URL url = new URL(RiskUtil.RISK_VERSION_URL);
 
+                BufferedReader bufferin=new BufferedReader( new InputStreamReader(url.openStream()) );
+                List buffer = new ArrayList();
+                String input = bufferin.readLine();
 
-    public static Vector asVector(java.util.List list) {
-        return list instanceof Vector?(Vector)list:new Vector(list);
+                while(input != null) {
+                        buffer.add(input);
+                        input = bufferin.readLine(); // get next line
+                }
+
+                String[] newversion = (String[])buffer.toArray( new String[buffer.size()] );
+                
+                if (newversion[0].startsWith("RISKOK ")) {
+
+                        String v = newversion[0].substring(7, newversion[0].length() );
+
+                        if (!v.equals(RiskUtil.RISK_VERSION)) {
+                                oldVersion = true;
+
+                                for (int c=1;c<newversion.length;c++) {
+                                        v = v+"\n"+newversion[c];
+                                }
+                
+                                return v;
+                        }
+                }
+                return null;
+        }
+        
+    public static boolean isOldVersion() {
+        return oldVersion;
     }
 
-    public static Hashtable asHashtable(java.util.Map map) {
-        return map instanceof Hashtable?(Hashtable)map:new Hashtable(map);
+    public static java.util.Vector asVector(java.util.List list) {
+        return list instanceof java.util.Vector?(java.util.Vector)list:new java.util.Vector(list);
     }
 
+    public static java.util.Hashtable asHashtable(Map map) {
+        return map instanceof java.util.Hashtable?(java.util.Hashtable)map:new java.util.Hashtable(map);
+    }
 
     public static String replaceAll(String string, String notregex, String replacement) {
         return string.replaceAll( quote(notregex) , quoteReplacement(replacement));
