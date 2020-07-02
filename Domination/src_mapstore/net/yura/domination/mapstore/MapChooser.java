@@ -470,7 +470,10 @@ public class MapChooser implements ActionListener,MapServerListener {
             }
             else {
                 updateAll.setVisible(true);
-                setListData( MAP_PAGE , mapsToUpdate);
+                // take a copy of the update vector so if we do update, they dont just disappear from screen
+                // otherwise we may get array index out of bounds, as the list is updated during paint
+                // also after updating, we may want to actaully select the map
+                setListData(MAP_PAGE, new java.util.Vector(mapsToUpdate));
             }
         }
         else if ("updateall".equals(actionCommand)) {
@@ -718,7 +721,9 @@ public class MapChooser implements ActionListener,MapServerListener {
 
         if (((Button)loader.find("updateButton")).isSelected() && MapUpdateService.getInstance().mapsToUpdate.isEmpty()) {
             loader.find("updateAll").setVisible(false);
-            show("AllUpToDate");
+            getRoot().revalidate();
+            getRoot().repaint();
+            //show("AllUpToDate"); // allow user to select map even after update
         }
 
         //else {
