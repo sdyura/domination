@@ -619,7 +619,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		gmReplay.setEnabled(false);
 
 		// this is so close is not selected
-		mapViewComboBox.grabFocus();
+		mapViewComboBox.requestFocusInWindow();
 	}
         
         public void getInput(int gameState) {
