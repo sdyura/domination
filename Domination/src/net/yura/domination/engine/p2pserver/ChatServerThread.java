@@ -5,6 +5,7 @@ package net.yura.domination.engine.p2pserver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -46,7 +47,8 @@ public class ChatServerThread extends Thread {
 			// Outbound Stream (actually a PrintWriter)
 
 			PrintWriter outChat = new PrintWriter(
-                           socket.getOutputStream(), true, RiskUtil.UTF_8);
+                               new OutputStreamWriter(
+                                   socket.getOutputStream(), RiskUtil.UTF_8), true);
 
 			// Inbound Stream (actually a BufferedReader)
 

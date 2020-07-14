@@ -3,6 +3,7 @@ package net.yura.domination.engine.p2pclient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import net.yura.domination.engine.OnlineRisk;
@@ -29,11 +30,11 @@ public class ChatClient implements OnlineRisk {
 
                 // Create a PrintWriter object for socket output
 
-                outChat = new PrintWriter(chatSocket.getOutputStream(), true, RiskUtil.UTF_8);
+                outChat = new PrintWriter(new OutputStreamWriter(chatSocket.getOutputStream(), RiskUtil.UTF_8), true);
 
                 // Create a BufferedReader object for socket input
 
-                inChat = new BufferedReader( new InputStreamReader(chatSocket.getInputStream(), RiskUtil.UTF_8));
+                inChat = new BufferedReader(new InputStreamReader(chatSocket.getInputStream(), RiskUtil.UTF_8));
 
                 myReader = new ChatDisplayThread(risk, inChat);
                 myReader.start();
