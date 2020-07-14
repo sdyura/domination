@@ -12,24 +12,18 @@ import net.yura.domination.engine.RiskController;
  * <p> Chat Area </p>
  * @author Yura Mamyrin
  */
-
 public class ChatArea extends Thread {
-
 
     private ServerSocket serverSocket = null;
     //private static int port = 4444;
     private RiskController gui;
-
 
     // You could make this more dynamic, but it's a little
     // simpler to keep the simple array approach
     private ChatServerThread chatArr[]= new ChatServerThread[100];
     private boolean stopFlag = false;
 
-
-
     public ChatArea(RiskController g,int port) throws Exception {
-
 	gui = g;
 
         InetAddress iaddr = InetAddress.getLocalHost();
@@ -41,7 +35,6 @@ public class ChatArea extends Thread {
 	gui.sendMessage("port = " + port , false, false);
 
 	start();
-
     }
 
     public void run() {
@@ -126,14 +119,12 @@ public class ChatArea extends Thread {
 	stopFlag=true;
 
 	notifyAll();
-
     }
 
     public boolean isOff() {
 
 	return serverSocket.isClosed();
     }
-
 
     // Add a new string to all linked lists
     synchronized void putString(int index, String s) {
@@ -180,7 +171,6 @@ public class ChatArea extends Thread {
     // called to wait for any new messages for a given thread
 
     synchronized String waitForString(int index) {
-
        String str;
 
        do {

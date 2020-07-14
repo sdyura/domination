@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.PushbackInputStream;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,11 @@ public class RiskUtil {
         private static final Logger logger = Logger.getLogger(RiskUtil.class.getName());
 	public static RiskIO streamOpener;
 
+        /**
+         * @see java.nio.charset.StandardCharsets#UTF_8
+         */
+        public final static Charset UTF_8 = Charset.forName("UTF-8");
+        
 	static {
 
 		Properties settings = new Properties();
@@ -429,7 +435,8 @@ public class RiskUtil {
             }
         }
 
-        public static String getNewVersionCheck() throws IOException {
+        public static String getNewVersionCheck() {
+            try {
                 URL url = new URL(RiskUtil.RISK_VERSION_URL);
 
                 BufferedReader bufferin=new BufferedReader( new InputStreamReader(url.openStream()) );
@@ -457,7 +464,12 @@ public class RiskUtil {
                                 return v;
                         }
                 }
-                return null;
+            }
+            catch (Throwable e) {
+                logger.info("version check fail " + e);
+            }
+
+            return null;
         }
         
     public static boolean isOldVersion() {

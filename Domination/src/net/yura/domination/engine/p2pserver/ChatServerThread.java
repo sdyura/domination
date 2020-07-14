@@ -8,16 +8,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.LinkedList;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 
 /**
  * <p> Chat Server Thread </p>
+ * The main child thread waits for new information in the ChatArea, and
+ * sends it out to the eagerly waiting clients
  * @author Yura Mamyrin
  */
-
-// The main child thread waits for new information in the ChatArea, and 
-// sends it out to the eagerly waiting clients
-
 public class ChatServerThread extends Thread {
 
     LinkedList m_lList = new LinkedList();
@@ -47,13 +46,13 @@ public class ChatServerThread extends Thread {
 			// Outbound Stream (actually a PrintWriter)
 
 			PrintWriter outChat = new PrintWriter(
-                           socket.getOutputStream(), true);
+                           socket.getOutputStream(), true, RiskUtil.UTF_8);
 
 			// Inbound Stream (actually a BufferedReader)
 
 			BufferedReader inChat = new BufferedReader(
                                new InputStreamReader(
-                                   socket.getInputStream()));
+                                   socket.getInputStream(), RiskUtil.UTF_8));
 
 
 			// got a connection from the client and do a read right away to get the version
@@ -116,6 +115,5 @@ public class ChatServerThread extends Thread {
                 myChatArea.putString(myIndex, "LEAVE "+id);
                 
 		//System.out.println("ChatServerThread Terminating: " + myIndex);
-
 	}
 }

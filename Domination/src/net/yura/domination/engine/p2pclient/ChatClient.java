@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import net.yura.domination.engine.OnlineRisk;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 
 /**
@@ -28,17 +29,16 @@ public class ChatClient implements OnlineRisk {
 
                 // Create a PrintWriter object for socket output
 
-                outChat = new PrintWriter( chatSocket.getOutputStream(), true);
+                outChat = new PrintWriter(chatSocket.getOutputStream(), true, RiskUtil.UTF_8);
 
                 // Create a BufferedReader object for socket input
 
-                inChat = new BufferedReader( new InputStreamReader( chatSocket.getInputStream()));
+                inChat = new BufferedReader( new InputStreamReader(chatSocket.getInputStream(), RiskUtil.UTF_8));
 
                 myReader = new ChatDisplayThread(risk, inChat);
                 myReader.start();
 
                 outChat.println( RiskGame.NETWORK_VERSION +" "+uid+" "+RiskGame.getDefaultMap() );
-
         }
 
         public void sendUserCommand(String mtemp) {

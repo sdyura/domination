@@ -8,13 +8,10 @@ import net.yura.domination.engine.Risk;
 
 /**
  * <p> Display Thread </p>
+ * This thread reads in input stream from a socket and
+ * appends the output to a TextArea object
  * @author Yura Mamyrin
  */
-
-
- // This thread reads in input stream from a socket and 
- // appends the output to a TextArea object
-
 public class ChatDisplayThread extends Thread {    
    Risk risk; 
    BufferedReader inChat = null;
@@ -50,6 +47,5 @@ public class ChatDisplayThread extends Thread {
 	//System.out.println("Display Thread Finishing");
 
 	risk.disconnected();
-
     } 
 } 
