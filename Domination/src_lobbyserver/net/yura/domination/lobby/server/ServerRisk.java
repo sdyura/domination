@@ -74,8 +74,8 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 		//inbox.add( myAddress +" "+m);
 		//this.notify();
             
-            // over 20,000 commands, the game must be stuck in a loop, kill the game
-            if (getGame().getCommands().size() > 200000) {
+            // over 50,000 commands, the game must be stuck in a loop, kill the game
+            if (getGame().getCommands().size() > 50000) {
                 sgr.gameFinished("Nobody");
             }
             else {
