@@ -1,5 +1,6 @@
 package net.yura.lobby.mini;
 
+import java.util.Collection;
 import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
 import net.yura.lobby.model.Player;
@@ -53,7 +54,9 @@ public interface MiniLobbyGame {
 
     void showMessage(String fromwho, String message);
 
-    public void addPlayer(Player player);
-    public void removePlayer(String player);
-    public void renamePlayer(String oldname, String newname, int newtype);
+    void addSpectator(Player player);
+    void removeSpectator(String player);
+    void renameSpectator(String oldname, String newname, int newtype);
+
+    void updatePlayerList(Collection playersInGame, String whoTurn);
 }

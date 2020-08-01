@@ -362,6 +362,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         openGameId = game.getId();
         this.game.prepareAndOpenGame(game);
+        this.game.updatePlayerList(game.getPlayers(), game.getWhosTurn());
     }
 
     public void sendGameMessage(String messagefromgui) {
@@ -490,6 +491,10 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
     private java.util.List games = Collections.synchronizedList( new ArrayList() );
     public void addOrUpdateGame(Game game) {
+        if (game.getId() == openGameId) {
+            this.game.updatePlayerList(game.getPlayers(), game.getWhosTurn());
+        }
+        
         int index = Collections.binarySearch(games, game);
         if (index>=0) {
             games.set(index, game);
@@ -662,16 +667,16 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
     public void addPlayer(int roomid, Player player) {
         if (roomid == openGameId) {
-            game.addPlayer(player);
+            game.addSpectator(player);
         }
     }
     public void removePlayer(int roomid, String player) {
         if (roomid == openGameId) {
-            game.removePlayer(player);
+            game.removeSpectator(player);
         }
     }
     public void renamePlayer(String oldname, String newname, int newtype) {
-        game.renamePlayer(oldname, newname, newtype);
+        game.renameSpectator(oldname, newname, newtype);
     }
 
 
@@ -697,6 +702,20 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
     }
 
+    public Game getCurrentOpenGame() {
+        if (openGameId == -1) {
+            return null;
+        }
+        for (int c = 0; c < games.size(); c++) {
+            Game game = (Game)games.get(c);
+            if (game.getId() == openGameId) {
+                return game;
+            }
+        }
+        throw new IllegalStateException(openGameId + " not found in " + games);
+    }
+
+    public void ping(long time) { }
     public void addPlayer(Player player) { }
     public void removePlayer(String player) { }
     public void privateMessage(String fromwho, String message) { }
@@ -735,18 +754,5 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 DesktopPane.getDesktopPane().toast(message);
             }
         }
-    }
-
-    public Game getCurrentOpenGame() {
-        if (openGameId == -1) {
-            return null;
-        }
-        for (int c = 0; c < games.size(); c++) {
-            Game game = (Game)games.get(c);
-            if (game.getId() == openGameId) {
-                return game;
-            }
-        }
-        throw new IllegalStateException(openGameId + " not found in " + games);
     }
 }

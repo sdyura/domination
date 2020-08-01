@@ -4,6 +4,7 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Window;
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import net.yura.domination.engine.OnlineUtil;
@@ -101,27 +102,35 @@ public class SwingMEWrapper {
                 }
             }
 
-            public void addPlayer(Player player) {
+            public void addSpectator(Player player) {
                 if (players != null) {
-                    players.addPlayer(player);
+                    players.addSpectator(player);
                 }
             }
-            public void removePlayer(final String player) {
+            public void removeSpectator(final String player) {
                 if (players != null) {
                     // this comes in on com thread, and we dont want to remove item while its painting
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            players.removePlayer(player);
+                            players.removeSpectator(player);
                         }
                     });
                 }
             }
-            public void renamePlayer(String oldname, String newname, int newtype) {
+            public void renameSpectator(String oldname, String newname, int newtype) {
                 if (players != null) {
-                    players.renamePlayer(oldname, newname, newtype);
+                    players.renameSpectator(oldname, newname, newtype);
                 }
             }
+
+            public void updatePlayerList(Collection playersInGame, String whosTurn) {
+                if (players != null) {
+                    players.setPlayers(playersInGame);
+                    players.setCurrentPlayer(whosTurn);
+                }
+            }
+
         } );
         miniLobbyClient.connect(server);
         return miniLobbyClient;

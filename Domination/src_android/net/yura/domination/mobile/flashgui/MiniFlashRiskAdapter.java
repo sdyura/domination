@@ -1,5 +1,6 @@
 package net.yura.domination.mobile.flashgui;
 
+import java.util.Collection;
 import javax.microedition.lcdui.Image;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
@@ -77,13 +78,15 @@ public class MiniFlashRiskAdapter implements RiskListener {
             }
 
             @Override
-            public void renamePlayer(String oldname, String newname, int newtype) {
+            public void updatePlayerList(Collection playersInGame, String whosTurn) {
                 // if we had a player/spectator list we would rename the player there
             }
             @Override
-            public void addPlayer(net.yura.lobby.model.Player player) { }
+            public void addSpectator(net.yura.lobby.model.Player player) { }
             @Override
-            public void removePlayer(String player) { }
+            public void removeSpectator(String player) { }
+            @Override
+            public void renameSpectator(String oldname, String newname, int newtype) { }
         } );
 
         updatePlayGamesInfo();

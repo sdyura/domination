@@ -87,7 +87,7 @@ public class FlashMiniLobby {
     Component getOnlinePanel() {
         Game game = mlc.getCurrentOpenGame();
         inGameChat.reset(mlc.mycom, null, game.getId());
-        playerList.clearPlayerList();
+        playerList.clearSpectatorList();
         GameSidePanel sidePanel = new GameSidePanel(null, null, playerList, inGameChat);
         sidePanel.setGameName(game.getName());
         return sidePanel;
