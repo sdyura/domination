@@ -435,6 +435,9 @@ public class RiskUtil {
             }
         }
 
+        /**
+         * this method must NEVER throw an exception, even if everything goes very very wrong
+         */
         public static String getNewVersionCheck() {
             try {
                 URL url = new URL(RiskUtil.RISK_VERSION_URL);

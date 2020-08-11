@@ -811,38 +811,41 @@ public class RiskUIUtil {
 
         public static void checkForUpdates(Risk risk) {
                 if (checkForNoSandbox()) {
-                        try {
-                                //try { Thread.sleep(5000); }
-                                //catch(InterruptedException e) {}
+                        //try { Thread.sleep(5000); }
+                        //catch(InterruptedException e) {}
 
-                                String v = RiskUtil.getNewVersionCheck();
+                        String v = RiskUtil.getNewVersionCheck();
 
-                                if (v != null) {
-                                    ResourceBundle resb = TranslationBundle.getBundle();
+                        if (v != null) {
+                            ResourceBundle resb = TranslationBundle.getBundle();
 
-                                    v = resb.getString("mainmenu.new-version.text").replaceAll("\\{0\\}", RiskUtil.GAME_NAME) + " "+v;
+                            v = RiskUtil.replaceAll(resb.getString("mainmenu.new-version.text"), "{0}", RiskUtil.GAME_NAME) + " "+v;
 
-                                    String link = getURL(v);
-                                    if (link!=null) {
-                                        int result = JOptionPane.showConfirmDialog(null, v, resb.getString("mainmenu.new-version.title"), JOptionPane.OK_CANCEL_OPTION);
-                                        if (result == JOptionPane.OK_OPTION) {
-                                            RiskUtil.streamOpener.openURL( new URL(link) );
-                                        }
+                            String link = getURL(v);
+                            if (link!=null) {
+                                int result = JOptionPane.showConfirmDialog(null, v, resb.getString("mainmenu.new-version.title"), JOptionPane.OK_CANCEL_OPTION);
+                                if (result == JOptionPane.OK_OPTION) {
+                                    try {
+                                        RiskUtil.streamOpener.openURL( new URL(link) );
                                     }
-                                    else {
-                                        // do not use this, this is used for errors
-                                        risk.showMessageDialog(v);
+                                    catch (Throwable th) {
+                                        RiskUtil.printStackTrace(th);
                                     }
                                 }
+                            }
+                            else {
+                                // do not use this, this is used for errors
+                                risk.showMessageDialog(v);
+                            }
                         }
-                        catch (Throwable e) { }
-
 
                         try {
                             //check for map updates
                             MapUpdateService.getInstance().init( getFileList("map"), MapChooser.MAP_PAGE );
                         }
-                        catch (Throwable th) { }
+                        catch (Throwable th) {
+                            RiskUtil.printStackTrace(th);
+                        }
                 }
         }
 
@@ -938,17 +941,26 @@ public class RiskUIUtil {
 
             return md;
         }
+        
+        private static final String GTK_PLAF_CLASS = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
 
 	private static void setupLookAndFeel() {
 		// set up system Look&Feel
 		try {
                     String systemLookAndFeel = UIManager.getSystemLookAndFeelClassName();
-                    AffineTransform dat = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().getDefaultTransform();
+                    String os = System.getProperty("os.name");
+
+                    // when we run in KDE, for some reason it does not select GTK as the theme, it picks Metal, but the fonts are way too small
+                    if (os != null && os.startsWith("Linux") && !systemLookAndFeel.equals(GTK_PLAF_CLASS) && isPLAFInstalled(GTK_PLAF_CLASS)) {
+                        systemLookAndFeel = GTK_PLAF_CLASS;
+                    }
                     
+                    AffineTransform dat = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().getDefaultTransform();
+
                     // the system (gtk) theme on linux is broken with hi res screens (fonts are HUGE)
-                    if (dat.getScaleX() != 1.0 && "com.sun.java.swing.plaf.gtk.GTKLookAndFeel".equals(systemLookAndFeel)) {
+                    if (dat.getScaleX() != 1.0 && GTK_PLAF_CLASS.equals(systemLookAndFeel)) {
                         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                        
+
                         // for some crazy reason this is not set (happens on jdk8 - jdk13 on linux)
                         // https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6780500
                         // https://stuffthathappens.com/blog/nimbus-jtoolbar-bug/
@@ -962,7 +974,7 @@ public class RiskUIUtil {
 			// https://bugs.openjdk.java.net/browse/JDK-8232865
 			// there is no way to find out if its working other then draw the tab and see what happens
 			// other then that everything behaves normally, its in the native GTK code that it does not draw
-			if ("com.sun.java.swing.plaf.gtk.GTKLookAndFeel".equals(systemLookAndFeel) && !canDrawTabs()) {
+			if (GTK_PLAF_CLASS.equals(systemLookAndFeel) && !canDrawTabs()) {
 			    UIManager.put("TabbedPaneUI", BasicTabbedPaneUI.class.getName());
 			}
                     }
@@ -979,6 +991,7 @@ public class RiskUIUtil {
 				new JFileChooser();
 			}
 			catch (Throwable th) {
+				Logger.getLogger(RiskUIUtil.class.getName()).log(Level.INFO, "PLAF JFileChooser FAIL, falling back to metal", th);
 				try {
 					UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 				}
@@ -987,25 +1000,17 @@ public class RiskUIUtil {
 				}
 			}
 		}
-/* OLD
-		// set up system Look&Feel
-		try {
-
-			String os = System.getProperty("os.name");
-			String jv = System.getProperty("java.version");
-
-			if ( jv.startsWith("1.4.2") && os != null && os.startsWith("Linux")) {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-			}
-			else {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			}
-		}
-		catch (Exception e) {
-			RiskUtil.printStackTrace(e);
-		}
-*/
 	}
+        
+        private static boolean isPLAFInstalled(String className) {
+            UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
+            for (int c = 0; c < plafs.length; c++) {
+                if (className.equals(plafs[c].getClassName())) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         /**
          * @see com.sun.java.swing.plaf.gtk.GTKPainter#paintTabbedPaneTabBackground(javax.swing.plaf.synth.SynthContext, java.awt.Graphics, int, int, int, int, int)
