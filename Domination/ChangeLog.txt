@@ -2,7 +2,7 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.2.2
+	Risk Game:	1.2.3
 	 * Save:	8
 	 * Network:	12
 
@@ -13,7 +13,11 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.2.2
+1.2.3
+
+	Fix for hi-res Linux jdk-11 that sometimes uses display density instead of scale
+
+1.2.2 (27.06.2020)
 
 	Can create private games online with a password to enter
 	Can view cards and missions even when it is not your turn
