@@ -65,6 +65,10 @@ public class Risk extends Thread {
 	//private SealedObject Undo;
 	private ByteArrayOutputStream Undo = new ByteArrayOutputStream();
 
+        /**
+         * this is true ONLY for local games, in p2p and Lobby client it is false
+         * and on the Lobby server even though {@link #onlinePlayClient} is null, this is FALSE!
+         */
 	protected boolean unlimitedLocalMode;
 	private boolean autoplaceall;
 	private boolean battle;
@@ -2186,7 +2190,7 @@ RiskUtil.printStackTrace(e);
 		}
 		// work out what to do next
 		else if ( game!=null && game.getCurrentPlayer()!=null && game.getState()!=RiskGame.STATE_GAME_OVER ) {// if player type is human or neutral or ai
-
+                    
                         updateBattleState();
 
 			if (game.getState()==RiskGame.STATE_TRADE_CARDS) {
@@ -2197,8 +2201,8 @@ RiskUtil.printStackTrace(e);
 				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.armiesleft"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + ""), false, false);
 				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
 			}
-
-			if (!replay && (unlimitedLocalMode || game.getCurrentPlayer().getAddress().equals(myAddress))) {
+                        
+			if (!replay && (onlinePlayClient == null || game.getCurrentPlayer().getAddress().equals(myAddress))) {
 				if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getAutoDefend()) {
                                         String autoDefendCommand = getBasicPassiveGo();
                                         if (onlinePlayClient == null) {

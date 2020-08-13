@@ -28,6 +28,7 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 		catch (Exception ex) {
 			throw new RuntimeException("unable to make game!",ex);
 		}
+		unlimitedLocalMode = false;
 		paused = true;
 		// a new game, clear anything from the inbox
 		inbox.clear();
@@ -138,16 +139,7 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 	@Override
 	public void getInput() {
 		super.getInput();
-		if (!paused) {
-                    // normally we want to get the command from whatever computer belongs to the current player
-                    // for for Lobby mode, we just want to always get it from the server, here
-                    if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getType()==Player.PLAYER_HUMAN && game.getCurrentPlayer().getAutoDefend()) {
-                        parser(getBasicPassiveGo());
-                    }
-                    else {
-                        sgr.getInputFromSomeone();
-                    }
-                }
+		if (!paused) { sgr.getInputFromSomeone(); }
 	}
 
 	@Override
