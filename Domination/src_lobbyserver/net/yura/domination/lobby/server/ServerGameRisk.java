@@ -240,11 +240,17 @@ public class ServerGameRisk extends TurnBasedGame {
 		}
 
                 // ignore messages from defenders as old version still send them (android <= 67 & desktop <= 1.2.2)
+                // first we need to make sure we ignore rolls that are sent at the correct time, like when it is our turn defending
                 Country defending = myrisk.getGame().getDefender();
                 Player defender = defending == null ? null : defending.getOwner();
                 if (defender != null && defender.getAutoDefend() && defender.getAddress().equals(address) && message.trim().startsWith("roll")) {
                     // this command may arrive in our turn or just after (as the autodefend on the server has already happened)
-                    System.out.println("DEFENDING ROLL IGNORED \"" + username + "\" [" + address + " " + message + "] myturn=" + player.getAddress().equals(address));
+                    System.out.println("DEFENDING ROLL IGNORED \"" + username + "\" [" + address + " " + message + "] myturn=" + player.getAddress().equals(address)+ " state=" + myrisk.getGame().getState());
+                    return;
+                }
+                // also we may get the defending roll at any point after, such as during moving when defender country is not owned by us any more
+                if (!player.getAddress().equals(address) && myrisk.getGame().getState() == RiskGame.STATE_BATTLE_WON && message.trim().startsWith("roll")) {
+                    System.out.println("DEFENDING ROLL IGNORED \"" + username + "\" [" + address + " " + message + "] myturn=FALSE state=STATE_BATTLE_WON");
                     return;
                 }
                 // end ignore defend hack for (android <= 67 & desktop <= 1.2.2)
