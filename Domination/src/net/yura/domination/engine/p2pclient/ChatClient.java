@@ -50,10 +50,6 @@ public class ChatClient implements OnlineRisk {
             outChat.println(myUID + " " + command);
         }
 
-        public void sendAutoCommand(String command) {
-            outChat.println(myUID + " " + command);
-        }
-
         public void closeGame() {
             try {
                     outChat.close();

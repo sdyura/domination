@@ -245,11 +245,6 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
             logger.info("ignore GameCommand " + gameCommand);
         }
 
-        public void sendAutoCommand(String command) {
-            // this happens for auto commands on my go
-            logger.info("ignore AutoCommand " + command);
-        }
-
         public boolean isThisMe(String name) {
             return name.equals(lgml.whoAmI());
         }

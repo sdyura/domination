@@ -2190,7 +2190,7 @@ RiskUtil.printStackTrace(e);
 		}
 		// work out what to do next
 		else if ( game!=null && game.getCurrentPlayer()!=null && game.getState()!=RiskGame.STATE_GAME_OVER ) {// if player type is human or neutral or ai
-                    
+
                         updateBattleState();
 
 			if (game.getState()==RiskGame.STATE_TRADE_CARDS) {
@@ -2201,15 +2201,15 @@ RiskUtil.printStackTrace(e);
 				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.armiesleft"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + ""), false, false);
 				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
 			}
-                        
+
 			if (!replay && (onlinePlayClient == null || game.getCurrentPlayer().getAddress().equals(myAddress))) {
 				if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getAutoDefend()) {
-                                        String autoDefendCommand = getBasicPassiveGo();
+                                        String autoDefendCommand = myAddress + " " + getBasicPassiveGo();
                                         if (onlinePlayClient == null) {
-                                            inGameParser(myAddress + " " + autoDefendCommand);
+                                            inGameParser(autoDefendCommand);
                                         }
                                         else {
-                                            onlinePlayClient.sendAutoCommand(autoDefendCommand);
+                                            onlinePlayClient.sendGameCommand(autoDefendCommand);
                                         }
 				}
 				// || ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_NEUTRAL

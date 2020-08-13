@@ -223,11 +223,6 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
         logger.info("ignore GameCommand " + gameCommand);
     }
 
-    public void sendAutoCommand(String command) {
-	// this happens for auto commands on my go
-        logger.info("ignore AutoCommand " + command);
-    }
-
     public void closeGame() {
         openGame = false;
         lobby.closeGame();
