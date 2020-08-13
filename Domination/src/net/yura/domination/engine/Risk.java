@@ -2202,15 +2202,9 @@ RiskUtil.printStackTrace(e);
 				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
 			}
 
-			if (!replay && (onlinePlayClient == null || game.getCurrentPlayer().getAddress().equals(myAddress))) {
+			if (shouldGameCommand(game.getCurrentPlayer().getAddress())) {
 				if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getAutoDefend()) {
-                                        String autoDefendCommand = myAddress + " " + getBasicPassiveGo();
-                                        if (onlinePlayClient == null) {
-                                            inGameParser(autoDefendCommand);
-                                        }
-                                        else {
-                                            onlinePlayClient.sendGameCommand(autoDefendCommand);
-                                        }
+                                        gameCommand(myAddress, myAddress, getBasicPassiveGo());
 				}
 				// || ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_NEUTRAL
 				else if ( ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_HUMAN ) {
