@@ -194,15 +194,11 @@ transient - A keyword in the Java programming language that indicates that a fie
 	}
 
 	public void addCommand(String a) {
-
 		replayCommands.add(a);
-
 	}
 
 	public Vector getCommands() {
-
 		return replayCommands;
-
 	}
 
 	public void setCommands(Vector replayCommands) {
@@ -260,7 +256,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 			}
 		}
 		else return false;
-
 	}
 
 	/**
@@ -354,9 +349,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 			gameState=STATE_PLACE_ARMIES;
 			capturedCountry=false;
 			tradeCap=false;
-
 		}
-
 	}
 
 	/**
@@ -385,18 +378,14 @@ transient - A keyword in the Java programming language that indicates that a fie
 					Country c3 = (Country)c2neighbours.elementAt(b);
 
 					if ( c1 == c3 ) { ok=true; }
-
 				}
 
 				if (ok==false) {
 					throw new Exception("Borders error with: " + Countries[c].getName() + " ("+Countries[c].getColor()+") and " + ((Country)c1neighbours.elementAt(a)).getName() +" ("+((Country)c1neighbours.elementAt(a)).getColor()+")" ); // Display
 				}
-
 			}
 		}
-
 		//System.out.print("End map test.\n");
-
 	}
 
 	/**
@@ -407,7 +396,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 	public Player setCurrentPlayer(int c) {
                 currentPlayer = (Player)Players.get(c);
 		return currentPlayer;
-
 	}
 
 	/**
@@ -748,7 +736,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 		else {
 			return cardState+5;
 		}
-
 	}
 
 	/**
@@ -863,7 +850,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 		}
 		return done;
-
 	}
 
 	/**
@@ -999,7 +985,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 		}
 		else return false;
-
 	}
 
 	public int getAttackerDice() {
@@ -1160,7 +1145,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 		}
 		return -1;
-
 	}
 
 	public int getMustMove() {
@@ -1222,7 +1206,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 			}
 		}
 		return false;
-
 	}
 
 	/**
@@ -1238,7 +1221,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 			return true;
 		}
 		else return false;
-
 	}
 
 	public void workOutEndGoStats(Player p) {
@@ -1250,7 +1232,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 		int cards = p.getCards().size();
 
 		p.currentStatistic.endGoStatistics(countries, armies, continents, conectedEmpire, cards);
-
 	}
 
 	public List getConnectedEmpire(Player p) {
@@ -1277,7 +1258,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 		}
 
 		return b;
-
 	}
 
 	/**
@@ -1298,11 +1278,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 				a.add( country );
 
 				getConnectedEmpire( t, a, country.getNeighbours(), p);
-
-
 			}
 		}
-
 	}
 
 	/**
@@ -1331,7 +1308,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 		}
 		return false;
-
 	}
 
 	/**
@@ -1466,27 +1442,19 @@ transient - A keyword in the Java programming language that indicates that a fie
 		}
 
 		return result;
-
 	}
 
 	private boolean checkPlayerOwnesContinentForMission(Continent c,int n) {
 
 		if ( ANY_CONTINENT.equals(c) ) {
-
 			return (getNoContinentsOwned(currentPlayer) >=n);
-
 		}
 		else if (c!=null) {
-
 			return c.isOwned(currentPlayer);
-
 		}
 		else {
-
 			return true;
-
 		}
-
 	}
 
         public boolean canContinue() {
@@ -1502,7 +1470,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
                 }
                 return false;
-
         }
 
 	public boolean continuePlay() {
@@ -1854,7 +1821,6 @@ transient - A keyword in the Java programming language that indicates that a fie
                 previewPic=null;
 
 		setMemoryLoad();
-
 	}
 
 	public void setCountries(Country[] a) {
@@ -2010,24 +1976,16 @@ transient - A keyword in the Java programming language that indicates that a fie
 					else {
 						throw new Exception("unknown section found in cards file: "+mode);
 					}
-
 				}
 				else {
-
 					throw new Exception("unknown item found in cards file: "+input);
-
 				}
-
 			}
 
 			input = bufferin.readLine(); // get next line
-
 		}
 		bufferin.close();
-
-
 		//System.out.print("Cards and missions loaded.\n");
-
 	}
 
 	private Continent getMissionContinentfromString(String a) {
@@ -2043,7 +2001,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 			else {
 				return Continents[ s-1 ];
 			}
-
 		}
 	}
 
@@ -2139,7 +2096,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 		MapTranslator.setCards( f );
 
 		return yesmissions;
-
 	}
 
 	/**
@@ -2159,7 +2115,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 		Collections.shuffle(oldCountries);
 		return oldCountries;
-
 	}
 
 	/**
@@ -2259,7 +2214,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 		else {
 			return true;
 		}
-
 	}
 
 	/**
@@ -2455,7 +2409,6 @@ str+="|"+(dice[i]+1);
 System.out.print(str+"]\n");
 */
 		return dice;
-
 	}
 
 	/**
@@ -2495,7 +2448,6 @@ System.out.print(str+"]\n");
 		}
 		System.out.println( "ERROR: Country not found: " + name );
 		return null;
-
 	}
 	 */
 
@@ -2581,9 +2533,7 @@ System.out.print(str+"]\n");
 					c[a] = (Card) playersCards.remove(b);
 					continue jumppoint;
 				}
-
 			}
-
 		}
 
 		return c;
@@ -2830,5 +2780,4 @@ System.out.print(str+"]\n");
         }
         return null;
     }
-
 }

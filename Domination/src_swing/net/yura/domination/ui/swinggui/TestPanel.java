@@ -242,11 +242,8 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 					case 4: return new Integer( continent.getTerritoriesContained().size() );
 					case 5: return ColorUtil.getStringForColor( continent.getColor() );
 					default: throw new RuntimeException();
-
 				}
-
 			}
-
 		};
 
 
@@ -320,9 +317,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 					case 10: return new Boolean( player.getAutoDefend() );
 					case 11: return new Boolean( player.getAutoEndGo() );
 					default: throw new RuntimeException();
-
 				}
-
 			}
 
                         @Override
@@ -360,13 +355,14 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                                 map.put("newName", name);
                                 map.put("newType", type);
                                 map.put("newAddress", address);
+                                
+                                // this will only change the local state, there is no way to send this out to all in a network game
                                 myrisk.parserFromNetwork("RENAME "+Url.toQueryString(RiskUtil.asHashtable(map)) );
                             }
                             catch (Exception ex) {
                                 System.out.println("error "+ex);
                             }
                         }
-
 		};
 
 
@@ -506,20 +502,14 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                 }
 
                 public Object getValueAt(int row, int col) {
-
                         Card card = (Card)getCards().get(row);
-
                         switch(col) {
-
                                 case 0: return new Integer( row+1 );
                                 case 1: return card.getName();
                                 case 2: return card.getCountry();
                                 default: throw new RuntimeException();
-
                         }
-
                 }
-
         }
 
 	public void actionPerformed(ActionEvent a) {
@@ -632,14 +622,10 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 	}
 
 	public JToolBar getToolBar() {
-
 		return toolbar;
-
 	}
+
 	public JMenu getMenu() {
-
 		return null;
-
 	}
-
 }

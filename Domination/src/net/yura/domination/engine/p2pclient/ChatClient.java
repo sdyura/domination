@@ -42,12 +42,16 @@ public class ChatClient implements OnlineRisk {
                 outChat.println( RiskGame.NETWORK_VERSION +" "+uid+" "+RiskGame.getDefaultMap() );
         }
 
-        public void sendUserCommand(String mtemp) {
-            outChat.println( myUID+" "+mtemp );
+        public void sendGameCommand(String gameCommand) {
+            outChat.println(gameCommand);
         }
 
-        public void sendGameCommand(String mtemp) {
-            outChat.println( mtemp );
+        public void sendUserCommand(String command) {
+            outChat.println(myUID + " " + command);
+        }
+
+        public void sendAutoCommand(String command) {
+            outChat.println(myUID + " " + command);
         }
 
         public void closeGame() {
@@ -66,6 +70,6 @@ public class ChatClient implements OnlineRisk {
         }
 
         public void playerRenamed(String oldName, String newName, String newAddress, int newType) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            // dont care
         }
 }

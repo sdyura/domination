@@ -1,6 +1,7 @@
 package net.yura.domination.lobby.server;
 
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.lobby.server.LobbyLogger;
 
@@ -137,7 +138,16 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 	@Override
 	public void getInput() {
 		super.getInput();
-		if (!paused) { sgr.getInputFromSomeone(); }
+		if (!paused) {
+                    // normally we want to get the command from whatever computer belongs to the current player
+                    // for for Lobby mode, we just want to always get it from the server, here
+                    if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getType()==Player.PLAYER_HUMAN && game.getCurrentPlayer().getAutoDefend()) {
+                        parser(getBasicPassiveGo());
+                    }
+                    else {
+                        sgr.getInputFromSomeone();
+                    }
+                }
 	}
 
 	@Override

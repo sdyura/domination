@@ -280,11 +280,11 @@ public class Risk extends Thread {
         }
 
 	/**
-	 * This parses the string, calls the relavant method and displays the correct error messages
-	 * @param m The string needed for parsing
+	 * This parses the string, calls the relevant method and displays the correct error messages
+	 * @param commandFromUI The string needed for parsing
 	 */
-	public void parser(String m) {
-            addToInbox( new GameCommand(GameCommand.UI_COMMAND, m ) );
+	public void parser(String commandFromUI) {
+            addToInbox(new GameCommand(GameCommand.UI_COMMAND, commandFromUI));
 	}
 
         public void parserFromNetwork(String m) {
@@ -449,9 +449,7 @@ public class Risk extends Thread {
                             controller.sendMessage(output, false, false);
                             getInput();
                         }
-
                 }
-
 	}
 
         private void noGameParser(String message) {
@@ -495,9 +493,7 @@ RiskUtil.printStackTrace(e);
                                 //}
                         }
                         else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "newgame"); }
-
                 }
-
                 // LOAD GAME
                 else if (input.equals("loadgame")) {
 
@@ -545,9 +541,7 @@ RiskUtil.printStackTrace(e);
 
                         }
                         else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "loadgame filename"); }
-
                 }
-
                 else if (input.equals("join")) {
 
                         if (StringT.countTokens() == 1) {
@@ -557,7 +551,6 @@ RiskUtil.printStackTrace(e);
 
                                         // CREATE A CLIENT
                                         try {
-
                                                 onlinePlayClient = new ChatClient( this, myAddress, StringT.nextToken(), port );
 
                                                 // CREATE A GAME
@@ -607,9 +600,7 @@ RiskUtil.printStackTrace(e);
                                 //}
                         }
                         else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "join server"); }
-
                 }
-
                 // NEW SERVER
                 else if (input.equals("startserver")) {
 
@@ -640,7 +631,6 @@ RiskUtil.printStackTrace(e);
                                 }
                         }
                         else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "startserver"); }
-
                 }
                 // KILL SERVER
                 else if (input.equals("killserver")) {
@@ -689,13 +679,12 @@ RiskUtil.printStackTrace(e);
                 controller.sendMessage(output, false, true );
 
                 getInput();
-
         }
 
 
 	/**
 	 * This parses the string, calls the relavant method and displays the correct error messages
-	 * @param mem The string needed for parsing
+	 * @param message The string needed for parsing
 	 */
 	protected void inGameParser(final String message) {
 
@@ -734,9 +723,7 @@ RiskUtil.printStackTrace(e);
 
                     // if it is NOT there go the set needinput to false
                     if (game.getCurrentPlayer()!=null && !(game.getCurrentPlayer().getAddress().equals(id) && game.getCurrentPlayer().getType() == Player.PLAYER_HUMAN)) {
-
                             needInput = false;
-
                     }
                     // if this command stopped the last needInput from being called, then this will be screwed
                     // at worst AI or human wont get a chance to put any input in, game stalled
@@ -757,7 +744,6 @@ RiskUtil.printStackTrace(e);
                                     newPlayerAddress = ((Player)leavers.get(c)).getAddress();
                                     break;
                             }
-
                     }
 
 
@@ -797,17 +783,13 @@ RiskUtil.printStackTrace(e);
                                                     patc.setAddress( newPlayerAddress );
                                             }
                                             else {
-
                                                     // this means there are only spectators left
                                                     // so nothing really needs to be done
                                                     // game will stop, but hay there r no more players
                                             }
                                     }
-
                             }
-
                     }
-
                 }
 		else if (Addr.equals("DICE")) { // a server command
 
@@ -918,11 +900,8 @@ RiskUtil.printStackTrace(e);
 
 			// ==1 this fixes the automove bug, when u need to trade after rolling and automove
 			if ( game.getState()!=RiskGame.STATE_ROLLING && game.getState()!=RiskGame.STATE_DEFEND_YOURSELF) {
-
 				closeBattle();
-
 			}
-
 		}
 		else if (Addr.equals("PLAYER")) { // a server command
 
@@ -948,7 +927,6 @@ RiskUtil.printStackTrace(e);
 			else {
 				saveGameToUndoObject();
 			}
-
 		}
 		else if (Addr.equals("CARD")) { // a server command
 
@@ -985,8 +963,6 @@ RiskUtil.printStackTrace(e);
 			if ( unlimitedLocalMode && game.getSetupDone() && newplayer.getName().equals("Theo")) { newplayer.addArmies( newplayer.getExtraArmies() ); }
 
 			saveGameToUndoObject();
-
-
 		}
 		else if (Addr.equals("PLACE")) { // a server command
 
@@ -994,7 +970,6 @@ RiskUtil.printStackTrace(e);
 			game.placeArmy( c ,1);
 			controller.sendMessage( RiskUtil.replaceAll( resb.getString( "core.place.oneplacedin"), "{0}", c.getName()) , false, false); // Display
 			output=resb.getString( "core.place.autoplaceok");
-
 		}
 		else if (Addr.equals("PLACEALL")) { // a server command
 
@@ -1015,7 +990,6 @@ RiskUtil.printStackTrace(e);
 			controller.sendMessage("Auto place all successful.", false, false);
 			//New player selected: {0}.
 			output= RiskUtil.replaceAll( resb.getString( "core.player.newselected"), "{0}", ((Player)game.getCurrentPlayer()).getName());
-
 		}
 		else if (Addr.equals("MISSION")) { // a server command
 
@@ -1032,7 +1006,6 @@ RiskUtil.printStackTrace(e);
 
 			output=null;
 			needInput=false;
-
 		}
                 else if (Addr.equals("RENAME")) {
                     Map map = Url.toHashtable( message.substring( Addr.length()+1 ) );
@@ -1215,38 +1188,23 @@ RiskUtil.printStackTrace(e);
 
 				}
 				else if (input.equals("autosetup")) {
-
 					if (StringT.hasMoreTokens()==false) {
-
 						if ( game.getPlayers().size() == 0) {
-
 						    if (!replay) {
-
 							for (int c=1;c<=RiskGame.MAX_PLAYERS;c++) {
-
 								parser("newplayer " + riskconfig.getProperty("default.player"+c+".type")+" "+ riskconfig.getProperty("default.player"+c+".color")+" "+ riskconfig.getProperty("default.player"+c+".name") );
-
 							}
-
 							output = resb.getString( "core.info.autosetup");
-
 						    }
 						    else {
-
 							output = "replay mode, nothing done";
-
 						    }
-
 						}
 						else {
-
 							output = resb.getString( "core.info.autosetup.error");
-
 						}
-
 					}
 					else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autosetup"); }
-
 				}
 				else if (input.equals("startgame")) {
 					if (StringT.countTokens() >= 2 && StringT.countTokens() <= 4) {
@@ -1377,7 +1335,6 @@ RiskUtil.printStackTrace(e);
                                             output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "startgame gametype cardtype (autoplaceall recycle)");
                                         }
 				}
-
 				// REPLAY A GAME
 				else if (input.equals("play")) {
 
@@ -1462,7 +1419,6 @@ RiskUtil.printStackTrace(e);
 					else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "play filename"); }
 				}
 				else { output=RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "newplayer, delplayer, startgame, choosemap, choosecards, info, autosetup"); }
-
                         }
                         else {
                             boolean aiPlayer = game.getCurrentPlayer().getType()!=Player.PLAYER_HUMAN;
@@ -1603,7 +1559,6 @@ RiskUtil.printStackTrace(e);
                                     }
                                     else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "showcards"); }
                                 }
-
                                 else if (input.equals("autoendgo")) {
                                     if (StringT.hasMoreTokens()==false) {
                                             String strSelected;
@@ -1632,7 +1587,6 @@ RiskUtil.printStackTrace(e);
                                     }
                                     else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autoendgo on/off"); }
                                 }
-
                                 else if (input.equals("autodefend")) {
                                     if (StringT.hasMoreTokens()==false) {
 
@@ -1744,7 +1698,6 @@ RiskUtil.printStackTrace(e);
                                             else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autoplace")); }
                                     }
                                     else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "showarmies, placearmies, autoplace")); }
-
                                 }
                                 else if (game.getState()==RiskGame.STATE_ATTACKING) {
 
@@ -1808,7 +1761,6 @@ RiskUtil.printStackTrace(e);
                                             else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "endattack")); }
                                     }
                                     else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "attack, endattack")); }
-
                                 }
                                 else if (game.getState()==RiskGame.STATE_ROLLING) {
 
@@ -1855,7 +1807,6 @@ RiskUtil.printStackTrace(e);
                                             else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "retreat")); }
                                     }
                                     else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "roll, retreat")); }
-
                                 }
                                 else if (game.getState()==RiskGame.STATE_BATTLE_WON) {
 
@@ -1887,7 +1838,6 @@ RiskUtil.printStackTrace(e);
                                             else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "move number")); }
                                     }
                                     else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "move")); }
-
                                 }
                                 else if (game.getState()==RiskGame.STATE_FORTIFYING) {
 
@@ -1941,7 +1891,6 @@ RiskUtil.printStackTrace(e);
                                             else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "nomove")); }
                                     }
                                     else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "movearmies, nomove")); }
-
                                 }
                                 else if (game.getState()==RiskGame.STATE_END_TURN) {
 
@@ -1958,7 +1907,6 @@ RiskUtil.printStackTrace(e);
                                             else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "endgo")); }
                                     }
                                     else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "emdgo")); }
-
                                 }
                                 else if (game.getState()==RiskGame.STATE_GAME_OVER) {
 
@@ -1978,7 +1926,6 @@ RiskUtil.printStackTrace(e);
                                             //The game is over. {0} won! (current possible commands are: continue)
                                             throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.gameover.won"), "{0}", game.getCurrentPlayer().getName()));
                                     }
-
                                 }
                                 else if (game.getState()==RiskGame.STATE_SELECT_CAPITAL) {
 
@@ -2058,7 +2005,6 @@ RiskUtil.printStackTrace(e);
                                             else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "roll number")); }
                                     }
                                     else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "roll")); }
-
                                 }
                                 else { throw new IllegalStateException(resb.getString( "core.error.unknownstate")); }
                             }
@@ -2186,7 +2132,7 @@ RiskUtil.printStackTrace(e);
 	/**
 	 * Method that deals with an end of a player's turn
 	 */
-	public void DoEndGo() {
+	void DoEndGo() {
 
                 controller.noInput(); // definatly need to block input at the end of someones go
                 String Addr = ((Player)game.getCurrentPlayer()).getAddress();
@@ -2197,19 +2143,29 @@ RiskUtil.printStackTrace(e);
                 }
 	}
 
-        void gameCommand(String address,String command,String options) {
-            if (!replay) {
-                String fullCommand = command+" "+options;
-		if ( onlinePlayClient == null ) {
-			inGameParser( fullCommand );
-		}
-		else if ( address.equals( myAddress ) ) {
-			onlinePlayClient.sendGameCommand( fullCommand );
-		}
-            }
-        }
         boolean shouldGameCommand(String Addr) {
             return !replay && (onlinePlayClient == null || myAddress.equals(Addr));
+        }
+        
+        /**
+         * should ONLY be called if {@link #shouldGameCommand(java.lang.String) } returns true
+         */
+        void gameCommand(String address, String command, String options) {
+            if (replay) {
+                throw new IllegalStateException("game command sent during replay");
+            }
+
+            String fullCommand = command + " " + options;
+            if (onlinePlayClient == null) {
+                    inGameParser(fullCommand);
+            }
+            else {
+                    if (!address.equals(myAddress)) {
+                        throw new IllegalStateException("trying to send game command when not my address " + address +" " + myAddress);
+                    }
+
+                    onlinePlayClient.sendGameCommand(fullCommand);
+            }
         }
 
 	public void setReplay(boolean a) {
@@ -2220,7 +2176,6 @@ RiskUtil.printStackTrace(e);
 	 * This deals with trying to find out what input is required for the parser
 	 */
 	public void getInput() {
-
                 // if we have more commands we need to process, do not bother asking for input
                 if (!inbox.isEmpty()) return;
 
@@ -2232,11 +2187,7 @@ RiskUtil.printStackTrace(e);
 		// work out what to do next
 		else if ( game!=null && game.getCurrentPlayer()!=null && game.getState()!=RiskGame.STATE_GAME_OVER ) {// if player type is human or neutral or ai
 
-
-
                         updateBattleState();
-
-
 
 			if (game.getState()==RiskGame.STATE_TRADE_CARDS) {
 				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.newarmies"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + "") , false, false);
@@ -2247,48 +2198,28 @@ RiskUtil.printStackTrace(e);
 				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
 			}
 
-			if (!replay) {
-
-				// yura:lobby taken out: || ((Player)game.getCurrentPlayer()).getAddress().equals("all")
-
-				// IF local game, OR addres match get input
-			    if ( unlimitedLocalMode || ((Player)game.getCurrentPlayer()).getAddress().equals(myAddress) ) {
-
-				if ( game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getAutoDefend() ) {
-
-					parser( getBasicPassiveGo() );
-
+			if (!replay && (unlimitedLocalMode || game.getCurrentPlayer().getAddress().equals(myAddress))) {
+				if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getAutoDefend()) {
+                                        String autoDefendCommand = getBasicPassiveGo();
+                                        if (onlinePlayClient == null) {
+                                            inGameParser(myAddress + " " + autoDefendCommand);
+                                        }
+                                        else {
+                                            onlinePlayClient.sendAutoCommand(autoDefendCommand);
+                                        }
 				}
-
 				// || ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_NEUTRAL
-
 				else if ( ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_HUMAN ) {
-
 					controller.needInput( game.getState() );
-
 				}
 				else {
-
 					ai.play(this);
-
 				}
-
-			    }
-			    //else if ( game.getCurrentPlayer().getType()==Player.PLAYER_HUMAN ) {
-
-				// this is here for the lobby
-				//getHumanInput();
-
-			    //}
-
 			}
-
-
 		}
 		else {
 			controller.needInput( game.getState() );
 		}
-
 	}
 
         final AIManager ai = new AIManager();

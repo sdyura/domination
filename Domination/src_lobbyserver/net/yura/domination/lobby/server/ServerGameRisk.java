@@ -21,6 +21,7 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.lobby.server.LobbySession;
@@ -237,11 +238,22 @@ public class ServerGameRisk extends TurnBasedGame {
 		if (player==null) {
                         throw new RuntimeException("currentPlayer is null");
 		}
-                if (!player.getAddress().equals( address )) {
-                        throw new RuntimeException("got command but it is not our go: username="+username+" address="+address+" message=\""+message+"\" current player: "+player.getName() );
+
+                // ignore messages from defenders as old version still send them (android <= 67 & desktop <= 1.2.2)
+                Country defending = myrisk.getGame().getDefender();
+                Player defender = defending == null ? null : defending.getOwner();
+                if (defender != null && defender.getAutoDefend() && defender.getAddress().equals(address) && message.trim().startsWith("roll")) {
+                    // this command may arrive in our turn or just after (as the autodefend on the server has already happened)
+                    System.out.println("DEFENDING ROLL IGNORED \"" + username + "\" [" + address + " " + message + "] myturn=" + player.getAddress().equals(address));
+                    return;
+                }
+                // end ignore defend hack for (android <= 67 & desktop <= 1.2.2)
+
+                if (!player.getAddress().equals(address)) {
+                    throw new RuntimeException("got command but it is not our go: username="+username+" address="+address+" message=\""+message+"\" current player: "+player.getName() + " state: " + myrisk.getGame().getState());                        
                 }
 
-		myrisk.addPlayerCommandToInbox(address , message);
+		myrisk.addPlayerCommandToInbox(address, message);
 	}
 
 

@@ -214,13 +214,20 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     // WMWMWMWMWMWMWMWMWMWMWMWMWMW OnlineRisk MWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMW
     // WMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMW
 
-    public void sendUserCommand(final String messagefromgui) {
+    public void sendUserCommand(String messagefromgui) {
         lobby.sendGameMessage(messagefromgui);
     }
-    public void sendGameCommand(String mtemp) {
+
+    public void sendGameCommand(String gameCommand) {
 	// this happens for game commands on my go
-        logger.info("ignore GameCommand "+mtemp );
+        logger.info("ignore GameCommand " + gameCommand);
     }
+
+    public void sendAutoCommand(String command) {
+	// this happens for auto commands on my go
+        logger.info("ignore AutoCommand " + command);
+    }
+
     public void closeGame() {
         openGame = false;
         lobby.closeGame();

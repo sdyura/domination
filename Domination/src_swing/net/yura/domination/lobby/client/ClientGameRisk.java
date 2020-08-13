@@ -240,9 +240,14 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
             sendGameMessage(messagefromgui);
         }
 
-        public void sendGameCommand(String mtemp) {
+        public void sendGameCommand(String gameCommand) {
             // this happens for game commands on my go
-            logger.info("ignore GameCommand "+mtemp );
+            logger.info("ignore GameCommand " + gameCommand);
+        }
+
+        public void sendAutoCommand(String command) {
+            // this happens for auto commands on my go
+            logger.info("ignore AutoCommand " + command);
         }
 
         public boolean isThisMe(String name) {
