@@ -16,6 +16,7 @@ CURRENT VERSION:
 1.2.3
 
 	Fix for hi-res Linux jdk-11 that sometimes uses display density instead of scale
+	Now works for gtk dark theme
 	Auto-Defend now happens on the server for Lobby Multiplayer
 
 1.2.2 (27.06.2020)

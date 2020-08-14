@@ -496,6 +496,8 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 			editcolor = new Color( continent.getColor() );
 
+			((JButton)message[5]).setContentAreaFilled(false); // needed for gtk theme
+			((JButton)message[5]).setOpaque(true); // needed for gtk theme
 			((JButton)message[5]).setBackground( editcolor );
 			((JButton)message[5]).setForeground( RiskUIUtil.getTextColorFor(editcolor) );
 
