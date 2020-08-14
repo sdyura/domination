@@ -301,7 +301,9 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                                 mapsMissions.add( Box.createVerticalStrut(3) );
                                         }
                                         if (missions.length == 0) {
-                                                mapsMissions.add(new JLabel(" " + resb.getString("newgame.missions.none")));
+                                                JLabel noMissionsLabel = new JLabel(" " + resb.getString("newgame.missions.none"));
+                                                noMissionsLabel.setForeground(Color.BLACK); // for gtk dark theme
+                                                mapsMissions.add(noMissionsLabel);
                                                 if (mission.isSelected()) {
                                                     domination.setSelected(true);
                                                     AutoPlaceAll.setEnabled(true);
@@ -480,7 +482,9 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 c.gridy = 0; // row
                 c.gridwidth = 1; // width
                 c.gridheight = 1; // height
-                bottompanel.add(new JLabel(resb.getString("newgame.label.name"), SwingConstants.RIGHT), c); // "Game Name:"
+                JLabel nameLabel = new JLabel(resb.getString("newgame.label.name"), SwingConstants.RIGHT); // "Game Name:"
+                nameLabel.setForeground(Color.BLACK); // os default may be white in dark gtk theme
+                bottompanel.add(nameLabel, c);
 
                 gamename = new JTextField();
                 c.gridx = 1; // col
@@ -535,6 +539,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 JLabel timeoutLabel = new JLabel(resb.getString("newgame.label.timeout"));
                 timeoutLabel.setVerticalAlignment(SwingConstants.BOTTOM);
                 timeoutLabel.setLabelFor(timeout);
+                timeoutLabel.setForeground(Color.BLACK); // os default may be white in dark gtk theme
                 c.gridx = 3; // col
                 c.gridy = 0; // row
                 c.gridwidth = 1; // width
@@ -558,7 +563,9 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 	}
         
         private JLabel newShrinkJLabel(String text) {
-            return new JLabel(text, SwingConstants.TRAILING);
+            JLabel label = new JLabel(text, SwingConstants.TRAILING);
+            label.setForeground(Color.BLACK); // in case OS default is dark theme with white text
+            return label;
         }
 
         /**
@@ -685,6 +692,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 			text.setEditable(false);
                         text.setBorder(null); // for nimbus
                         text.setBackground(new Color(0x00000000, true)); // for numbus setting null does not work
+                        text.setForeground(Color.BLACK); // for gtk dark theme
 
 			text.setOpaque(false);
 
@@ -816,6 +824,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Component retValue = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             setBackground(isSelected ? new Color(255,255,255,100) : new Color(0,0,0,0));
+            setForeground(Color.BLACK); // as we are in flash theme, and default color can be anything
             component = list;
             if (value instanceof RiskMap) {
                 map = (RiskMap) value;
