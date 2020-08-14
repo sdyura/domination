@@ -249,8 +249,8 @@ public class ServerGameRisk extends TurnBasedGame {
                     return;
                 }
                 // also we may get the defending roll at any point after, such as during moving when defender country is not owned by us any more
-                if (!player.getAddress().equals(address) && myrisk.getGame().getState() == RiskGame.STATE_BATTLE_WON && message.trim().startsWith("roll")) {
-                    System.out.println("DEFENDING ROLL IGNORED \"" + username + "\" [" + address + " " + message + "] myturn=FALSE state=STATE_BATTLE_WON");
+                if (!player.getAddress().equals(address) && (myrisk.getGame().getState() == RiskGame.STATE_BATTLE_WON || myrisk.getGame().getState() == RiskGame.STATE_ATTACKING) && message.trim().startsWith("roll")) {
+                    System.out.println("DEFENDING ROLL IGNORED \"" + username + "\" [" + address + " " + message + "] myturn=FALSE state=" + myrisk.getGame().getState());
                     return;
                 }
                 // end ignore defend hack for (android <= 67 & desktop <= 1.2.2)

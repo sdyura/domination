@@ -1231,9 +1231,7 @@ public class GameFrame extends JFrame implements KeyListener {
 			AutoEndGo = new JCheckBox(resb.getString("game.menu.autoendgo"));
 			AutoEndGo.setToolTipText( resb.getString("game.menu.autoendgo"));
 
-			AutoEndGo.setMargin(new Insets(0,0,0,0));
-			AutoEndGo.setBorderPainted(false);
-			AutoEndGo.setFocusPainted(false);
+			sortOutButton(AutoEndGo);
 
 			GraphicsUtil.setBounds(AutoEndGo, 35, 110, w, 20);
 			AutoEndGo.addActionListener( buttonActionListener );
@@ -1247,9 +1245,7 @@ public class GameFrame extends JFrame implements KeyListener {
 			AutoDefend = new JCheckBox(resb.getString("game.menu.autodefend"));
 			AutoDefend.setToolTipText( resb.getString("game.menu.autodefend"));
 
-			AutoDefend.setMargin(new Insets(0,0,0,0));
-			AutoDefend.setBorderPainted(false);
-			AutoDefend.setFocusPainted(false);
+			sortOutButton(AutoDefend);
 
 			GraphicsUtil.setBounds(AutoDefend, 35, 140, w, 20);
 			AutoDefend.addActionListener( buttonActionListener );
@@ -1279,6 +1275,13 @@ public class GameFrame extends JFrame implements KeyListener {
 			add(closebutton);
 			add(resumebutton);
 		}
+                
+                private void sortOutButton(AbstractButton button) {
+			button.setMargin(new Insets(0,0,0,0));
+			button.setBorderPainted(false);
+			button.setFocusPainted(false);
+			button.setForeground(Color.BLACK); // for OS UI theme where text is white
+                }
 
 		public void paintComponent(Graphics g) {
 

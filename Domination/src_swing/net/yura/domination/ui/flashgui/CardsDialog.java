@@ -157,6 +157,7 @@ public class CardsDialog extends JDialog {
                 // in nimbus theme we have to do this extra hack
                 note.setBorder(null);
                 note.setBackground(new Color(0, 0, 0, 0));
+                note.setForeground(Color.BLACK);
 
 		JButton okButton = GameFrame.makeRiskButton(Cards.getSubimage(500, 420, 88, 31), Cards.getSubimage(630, 428, 88, 31), Cards.getSubimage(630, 459, 88, 31), Cards.getSubimage(500, 420, 88, 31));
 		okButton.setText(resb.getString("cards.done"));
@@ -278,6 +279,7 @@ public class CardsDialog extends JDialog {
 
 			GraphicsUtil.drawImage(g, Back, 0, 0, this);
 
+			g.setColor(Color.BLACK);
 			GraphicsUtil.drawString(g, resb.getString("cards.yourcards"), 60, 41);
 			GraphicsUtil.drawString(g, resb.getString("cards.trade"), 60, 263);
 
