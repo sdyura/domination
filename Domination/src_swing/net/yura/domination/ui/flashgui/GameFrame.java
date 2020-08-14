@@ -1280,7 +1280,9 @@ public class GameFrame extends JFrame implements KeyListener {
 			button.setMargin(new Insets(0,0,0,0));
 			button.setBorderPainted(false);
 			button.setFocusPainted(false);
-			button.setForeground(Color.BLACK); // for OS UI theme where text is white
+			if (!Color.BLACK.equals(button.getForeground())) { // nimbus does not like this when button disabled
+				button.setForeground(Color.BLACK); // for OS UI theme where text is white
+			}
                 }
 
 		public void paintComponent(Graphics g) {

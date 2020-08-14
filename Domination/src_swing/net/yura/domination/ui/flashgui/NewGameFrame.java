@@ -1073,7 +1073,9 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		button.setBorderPainted(false);
 		button.setFocusPainted(false);
 		button.setContentAreaFilled(false);
-		button.setForeground(Color.BLACK); // this is needed as OS theme may have white text
+		if (!Color.BLACK.equals(button.getForeground())) { // nimbus does not like this when button disabled
+                    button.setForeground(Color.BLACK); // this is needed as OS theme may have white text
+		}
 
 		button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -1093,7 +1095,9 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		button.setBorderPainted(false);
 //		button.setFocusPainted(false);
 		button.setContentAreaFilled(false);
-		button.setForeground(Color.BLACK); // this is needed as OS theme may have white text
+		if (!Color.BLACK.equals(button.getForeground())) { // nimbus does not like this when button disabled
+                    button.setForeground(Color.BLACK); // this is needed as OS theme may have white text
+		}
 
 		button.addFocusListener( new ImageButtonFocusListener(button));
 	}
