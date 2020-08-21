@@ -18,6 +18,8 @@ CURRENT VERSION:
 	Fix for hi-res Linux jdk-11 that sometimes uses display density instead of scale
 	Now works for gtk dark theme
 	Auto-Defend now happens on the server for Lobby Multiplayer
+	Map Editor shows rectangle for country that is used on cards
+	SwingGUI: Options and AI speed setting put into same Options Dialog
 
 1.2.2 (27.06.2020)
 

@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -49,6 +50,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	private BufferedImage pic;
 	private BufferedImage map;
 	private BufferedImage drawImage;
+        private Rectangle drawRect;
 	private Country selected;
 	private Rectangle box;
 	private int mode;
@@ -255,8 +257,18 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
             int redColor = Color.RED.getRGB();
 
+            int startX = Integer.MAX_VALUE,endX = Integer.MIN_VALUE,startY = Integer.MAX_VALUE,endY = Integer.MIN_VALUE;
+            
             for (int c=0;c<pixels1.length;c++) {
                     if (selected!=null && selected.getColor() == (pixels1[c]&0xff) ) {
+                            int x = c % width;
+                            int y = c / width;
+
+                            if (x < startX) { startX = x; }
+                            if (x > endX) { endX = x; }
+                            if (y < startY) { startY = y; }
+                            if (y > endY) { endY = y; }
+
                             pixels2[c] = redColor;
                     }
                     else {
@@ -264,6 +276,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                     }
             }
 
+            drawRect = selected == null ? null : new Rectangle(startX - 1, startY - 1, endX - startX + 3, endY - startY + 3);
             drawImage.setRGB(0,0,width,height,pixels2,0,width);
             repaint();
         }
@@ -308,12 +321,18 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 		drawImage(g2, map, 0, 0, this);
 
+                if (drawRect != null) {
+                    Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{1}, 0);
+                    g2.setStroke(dashed);
+                    g2.setColor(Color.GREEN);
+                    g2.drawRect(drawRect.x, drawRect.y, drawRect.width, drawRect.height);
+                }
+
 		//if (mode == MODE_DRAW) {
 
 			drawImage(g2, drawImage, 0, 0, this);
 
 		//}
-
 	    }
 
 
@@ -372,7 +391,6 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                     int x1 = n1.getX();
                     int y1 = n1.getY();
 
-
                     if (n1.getNeighbours().contains(n)) {
                         g.setColor(Color.BLUE);
 		    }
@@ -380,31 +398,21 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                         g.setColor(Color.GREEN);
 		    }
 
-
-
 			if ( Math.abs( x - x1 ) > ( width  / 2) ) {
-
 
 				if ( x > (width / 2) ) { // ie "n" is on the right
 					g.drawLine( x, y, x1+width, y1);
 					g.drawLine( x-width, y, x1, y1);
-
 				}
 				else { // the attacker is on the left
 					g.drawLine( x, y, x1-width, y1);
 					g.drawLine( x+width, y, x1, y1);
 				}
-
 			}
 			else {
-
                     		g.drawLine(x,y,x1,y1);
-
 			}
-
 		}
-
-
 
 
 
@@ -468,21 +476,16 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		show = show + "</html>";
 
  		setToolTipText(show);
-
 	    }
 	    else {
-
 		setToolTipText(null);
-
 	    }
 
 	    return true; // this is needed so the mouse listoner can use it
 
 	}
 	else {
-
 	    return false;
-
 	}
     }
 
@@ -505,8 +508,17 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                 g1.setStroke(bs);
                 g2.setStroke(bs);
 
-                if (selected != null && draw) { g1.setColor(Color.RED); g2.setColor( new Color(selected.getColor(),selected.getColor(),selected.getColor()) ); }
-                else { g1.setColor(Color.BLACK); g2.setColor(Color.WHITE); }
+                if (selected != null && draw) {
+                    g1.setColor(Color.RED);
+                    g2.setColor( new Color(selected.getColor(),selected.getColor(),selected.getColor()) );
+
+                    drawRect.add(new Rectangle(a.x - brush / 2 -1, a.y - brush / 2 - 1, brush + 2, brush + 2));
+                    drawRect.add(new Rectangle(b.x - brush / 2 -1, b.y - brush / 2 - 1, brush + 2, brush + 2));
+                }
+                else {
+                    g1.setColor(Color.BLACK);
+                    g2.setColor(Color.WHITE);
+                }
 
                 g1.drawLine(a.x, a.y, b.x, b.y);
                 g2.drawLine(a.x, a.y, b.x, b.y);
@@ -534,7 +546,6 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 			}
 
 			return mynode;
-
 	}
 
 	public Point getPointOnImage(MouseEvent e) {
@@ -562,13 +573,9 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		    Point point = getPointOnImage(e);
 
 		    if ((e.getModifiers() & MouseEvent.BUTTON3_MASK) == MouseEvent.BUTTON3_MASK) {
-
 			if (mode != MODE_DRAW) {
-
 				setSelectedCountry(null);
-
 			}
-
 		    }
 		    else if ((e.getModifiers() & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK) {
 
@@ -620,7 +627,6 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 					repaint();
 				}
-
 			}
 			else if (mode == MODE_DISJOIN) {
 
@@ -647,9 +653,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 					repaint();
 				}
 			}
-
 		    }
-
 		}
 	}
 
@@ -670,21 +674,16 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 				Country mynode = getCountryAt(point.x,point.y);
 
 				if (mynode!=null) {
-
 					setSelectedCountry(mynode);
 					xdrag = true;
 				}
 				else {
-
 					dragpoint = e.getPoint();
 					xdrag = false;
 				}
-
 			}
 			else if (mode==MODE_MOVEALL) {
-
 				dragpoint = point;
-
 			}
 			else if (mode==MODE_DRAW) {
 
@@ -762,22 +761,25 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 			Point end = point;
 
 			if (
-
 				( (e.getModifiers() & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK) ||
 				( (e.getModifiers() & MouseEvent.BUTTON3_MASK) == MouseEvent.BUTTON3_MASK)
 
 			) {
+                                boolean draw = selected != null && (e.getModifiers() & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK;
+				drawLine(dragpoint, end, draw);
 
-				drawLine(dragpoint,end, ( (e.getModifiers() & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK) );
-
-                                // Only repaint the area where we have drawn something (or the draw is very slow on OS X)
-                                int halfBrush = brush / 2;
-                                Rectangle rect = new Rectangle(dragpoint.x - halfBrush, dragpoint.y - halfBrush, brush, brush);
-                                rect.add(new Rectangle(end.x - halfBrush, end.y - halfBrush, brush, brush));
-                                rect.grow(3, 3);
-                                
-                                // multiply by zoom to go from image coordinates to screen coordinates
-                                repaint(zoom * rect.x, zoom * rect.y, zoom * rect.width, zoom * rect.height);
+                                if (draw) {
+                                    repaint(zoom * drawRect.x - 3, zoom * drawRect.y - 3, zoom * drawRect.width + 6, zoom * drawRect.height + 6);
+                                }
+                                else {
+                                     // Only repaint the area where we have drawn something (or the draw is very slow on OS X)
+                                    int halfBrush = brush / 2;
+                                    Rectangle rect = new Rectangle(dragpoint.x - halfBrush, dragpoint.y - halfBrush, brush, brush);
+                                    rect.add(new Rectangle(end.x - halfBrush, end.y - halfBrush, brush, brush));
+                                    rect.grow(3, 3);
+                                    // multiply by zoom to go from image coordinates to screen coordinates
+                                    repaint(zoom * rect.x, zoom * rect.y, zoom * rect.width, zoom * rect.height);
+                                }
 			}
 
 			dragpoint = end;
@@ -807,5 +809,4 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	}
 
         public void mouseEntered(MouseEvent e) {}
-
 }
