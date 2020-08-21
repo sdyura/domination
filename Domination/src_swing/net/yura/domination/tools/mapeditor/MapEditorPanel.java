@@ -258,7 +258,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
             int redColor = Color.RED.getRGB();
 
             int startX = Integer.MAX_VALUE,endX = Integer.MIN_VALUE,startY = Integer.MAX_VALUE,endY = Integer.MIN_VALUE;
-            
+
             for (int c=0;c<pixels1.length;c++) {
                     if (selected!=null && selected.getColor() == (pixels1[c]&0xff) ) {
                             int x = c % width;
@@ -703,12 +703,20 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		}
 		else if (mode == MODE_MOVEALL) {
 			dragpoint=null;
-		}				// ((JViewport)getParent()).getViewRect()
-		else if (mode == MODE_DRAW && !getVisibleRect().contains(e.getPoint()) ) {
+		}				
+		else if (mode == MODE_DRAW) {
 
-			// if mouse released outside the box
-			dragpoint=null;
-			repaint();
+                        // if mouse released outside the box
+                        if (!getVisibleRect().contains(e.getPoint())) {
+                            // ((JViewport)getParent()).getViewRect()
+                            dragpoint=null;
+                            repaint();
+                        }
+
+                        // if we were using the eraser we may have shrunk the bounds of the current country, so we must re-calculate it
+                        if (selected != null && (e.getModifiers() & MouseEvent.BUTTON1_MASK) != MouseEvent.BUTTON1_MASK) {
+                                repaintSelected();
+                        }
 		}
 	}
 
