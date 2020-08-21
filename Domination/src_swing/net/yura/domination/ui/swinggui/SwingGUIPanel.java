@@ -127,15 +127,6 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 
 		addTab(gameTab);
 		addTab( new FX3DPanel(pp) );
-                try {
-                    if (RiskUIUtil.checkForNoSandbox()) {
-                        addTab( new LobbyTab(myrisk) );
-                    }
-                }
-                catch (Throwable th) {
-                    RiskUtil.printStackTrace(th); // midletrunner.jar could be missing
-                }
-		addTab(consoleTab);
 
                 try {
                     statisticsTab = new StatisticsTab();
@@ -144,6 +135,17 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                 catch (Throwable th) {
                     RiskUtil.printStackTrace(th); // jfreechart could be missing
                 }
+
+                try {
+                    if (RiskUIUtil.checkForNoSandbox()) {
+                        addTab(new LobbyTab(myrisk));
+                    }
+                }
+                catch (Throwable th) {
+                    RiskUtil.printStackTrace(th); // midletrunner.jar could be missing
+                }
+
+		addTab(consoleTab);
 
                 try {
                     debugTab = new DebugTab();
