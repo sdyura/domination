@@ -2,7 +2,6 @@
 
 package net.yura.domination.ui.swinggui;
 
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -15,26 +14,20 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.table.AbstractTableModel;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
-import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Country;
@@ -52,7 +45,6 @@ import net.yura.swing.JTable;
 /**
  * @author Yura Mamyrin
  */
-
 public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
 	private Risk myrisk;
@@ -98,13 +90,6 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		flash.setActionCommand("flash");
 		flash.addActionListener(this);
 		toolbar.add(flash);
-
-		toolbar.addSeparator();
-
-		JButton changeaiwait = new JButton("Change AI wait");
-		changeaiwait.setActionCommand("aiwait");
-		changeaiwait.addActionListener(this);
-		toolbar.add(changeaiwait);
 
                 toolbar.addSeparator();
 
@@ -278,19 +263,15 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 			}
 
 			public int getRowCount() {
-
 				RiskGame game = myrisk.getGame();
 
 				if (game != null) {
-
-					Vector players = game.getPlayers();
+					List players = game.getPlayers();
 
 					if (players != null) {
-
 						return players.size();
 					}
 				}
-
 				return 0;
   			}
 
@@ -530,34 +511,6 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		}
 		else if ("flash".equals(command)) {
 			MainMenu.newMainMenuFrame( myrisk, JFrame.DISPOSE_ON_CLOSE );
-		}
-		else if ("aiwait".equals(command)) {
-
-			Object[] message = new Object[3];
-			message[0] = new JLabel("AI wait time (in milliseconds):");
-			message[1] = new JSpinner( new SpinnerNumberModel( AIManager.getWait(),0,10000,100 ) );
-			message[2] = new JCheckBox("show dice", true);
-
-			String[] options = {
-			    "OK",
-			    "cancel"
-			};
-
-			int result = JOptionPane.showOptionDialog(
-			    this,                             // the parent that the dialog blocks
-			    message,                                    // the dialog message array
-			    "AI Options", // the title of the dialog window
-			    JOptionPane.OK_CANCEL_OPTION,                 // option type
-			    JOptionPane.PLAIN_MESSAGE,            // message type
-			    null,                                       // optional icon, use null to use the default icon
-			    options,                                    // options string array, will be made into buttons
-			    options[0]                                  // option that should be made into a default button
-			);
-
-			if (result == JOptionPane.OK_OPTION ) {
-				AIManager.setWait( ((Integer)((JSpinner)message[1]).getValue()).intValue() );
-				Risk.setShowDice(((JCheckBox)message[2]).isSelected());
-			}
 		}
 		else if ("allcards".equals(command)) {
 

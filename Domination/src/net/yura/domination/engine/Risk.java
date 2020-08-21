@@ -231,6 +231,10 @@ public class Risk extends Thread {
                 ROLL_DICE_SLEEP = 0;
             }
         }
+        
+        public static boolean isShowDice() {
+            return SHOW_DICE_SLEEP > 0 || ROLL_DICE_SLEEP > 0;
+        }
 
 	public String getRiskConfig(String a) {
 		return riskconfig.getProperty(a);

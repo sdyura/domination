@@ -40,8 +40,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
@@ -50,8 +52,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -506,51 +510,42 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		}
 		else if ("options".equals(actionCommand)) {
 
-			Object[] message = new Object[2];
-			message[0] = new JCheckBox("Auto End Go");
-			message[1] = new JCheckBox("Auto Defend");
+			Object[] message = new Object[4];
+			message[0] = new JCheckBox("Auto End Go", swingGUIPanel.myrisk.getAutoEndGo());
+			message[1] = new JCheckBox("Auto Defend", swingGUIPanel.myrisk.getAutoDefend());
 
+                        message[2] = new JCheckBox("Show dice", Risk.isShowDice());
+                        
+                        JSpinner aiwait = new JSpinner(new SpinnerNumberModel(AIManager.getWait(), 0, 10000, 100));
+                        JPanel aiWaitPanel = new JPanel();
+                        aiWaitPanel.add(new JLabel("AI wait time:"));
+                        aiWaitPanel.add(aiwait);
+                        aiWaitPanel.add(new JLabel("milliseconds"));
+			message[3] = aiWaitPanel;
 
-			((JCheckBox)message[0]).setSelected( swingGUIPanel.myrisk.getAutoEndGo() );
-			((JCheckBox)message[1]).setSelected( swingGUIPanel.myrisk.getAutoDefend() );
-
-			String[] options = {
-			    "OK",
-			    "cancel"
-			};
-
-			int result = JOptionPane.showOptionDialog(
+			int result = JOptionPane.showConfirmDialog(
 			    this,                             // the parent that the dialog blocks
 			    message,                                    // the dialog message array
 			    "Options", // the title of the dialog window
 			    JOptionPane.OK_CANCEL_OPTION,                 // option type
-			    JOptionPane.PLAIN_MESSAGE,            // message type
-			    null,                                       // optional icon, use null to use the default icon
-			    options,                                    // options string array, will be made into buttons
-			    options[0]                                  // option that should be made into a default button
+			    JOptionPane.PLAIN_MESSAGE            // message type
 			);
 
-			if (result == JOptionPane.OK_OPTION ) {
+			if (result == JOptionPane.OK_OPTION) {
+				AIManager.setWait(((Integer)aiwait.getValue()).intValue());
+				Risk.setShowDice(((JCheckBox)message[2]).isSelected());
 
-                                swingGUIPanel.myrisk.parser( "autodefend " + ((((JCheckBox)message[1]).isSelected()) ? "on" : "off") );
-                                // "autoendgo on" may trigger the end of my go
-				swingGUIPanel.myrisk.parser( "autoendgo " + ((((JCheckBox)message[0]).isSelected()) ? "on" : "off") );
+                                boolean autodefend = (((JCheckBox)message[1]).isSelected());
+                                boolean autoendgo = (((JCheckBox)message[0]).isSelected());
 
+                                if (swingGUIPanel.myrisk.getAutoDefend() != autodefend) {
+                                    swingGUIPanel.myrisk.parser("autodefend " + (autodefend ? "on" : "off"));
+                                }
+                                // "autoendgo on" may trigger the end of my go, so must be changed last
+                                if (swingGUIPanel.myrisk.getAutoEndGo() != autoendgo) {
+                                    swingGUIPanel.myrisk.parser("autoendgo " + (autoendgo ? "on" : "off"));
+                                }
 			}
-/*
-
-			Frame frame = Risk.findParentFrame(this);
-
-			OptionsDialog optionsDialog = new OptionsDialog( frame , true, myrisk);
-			Dimension frameSize = frame.getSize();
-			Dimension optionsSize = optionsDialog.getPreferredSize();
-			int x = frame.getLocation().x + (frameSize.width - optionsSize.width) / 2;
-			int y = frame.getLocation().y + (frameSize.height - optionsSize.height) / 2;
-			if (x < 0) x = 0;
-			if (y < 0) y = 0;
-			optionsDialog.setLocation(x, y);
-			optionsDialog.setVisible(true);
-*/
 		}
 		else if ("replay".equals(actionCommand)) {
 			swingGUIPanel.go("replay");
