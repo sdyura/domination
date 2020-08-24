@@ -151,7 +151,7 @@ public class AIHardMission extends AIHardDomination {
 		       if ( name == null )
 			   output = "placearmies " + ((Country)t.elementAt(0)).getColor() +" "+player.getExtraArmies()  ;
 
-		       else if (game.getSetup() )
+		       else if (game.getSetupDone())
 			   output = "placearmies " + name +" "+player.getExtraArmies();
 
 		       else

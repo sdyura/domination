@@ -139,7 +139,7 @@ public class AIHardCapital extends AIHardDomination {
 //Removed so that it will add armies one at a time, thus reinforcing the base until it has enough defense
 //at which time it will place in other territories as well.  Re-added so that it would not take forever
 //for the computer to place armies. Re-removed after seeing that the time is neglibile.
-		    else if (game.getSetup() ) 
+		    else if (game.getSetupDone()) 
 			    output = "placearmies " + name +" "+player.getExtraArmies();
 
 		    else
