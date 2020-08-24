@@ -37,7 +37,7 @@ public class RiskGame implements Serializable { // transient
 
 	public final static String NETWORK_VERSION = "12";
 
-	public final static int MAX_PLAYERS = 6;
+	public static int MAX_PLAYERS = 6; // can be changed in game.ini config
 	public final static Continent ANY_CONTINENT = new Continent("any","any", 0, 0);
 
 	public final static int STATE_NEW_GAME        = 0;

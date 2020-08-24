@@ -57,7 +57,7 @@ public class Risk extends Thread {
         OnlineRisk onlinePlayClient;
 	private ChatArea p2pServer;
 
-	private int port;
+	private int p2pPort = 4444;
 
 	protected String myAddress;
 
@@ -74,17 +74,10 @@ public class Risk extends Thread {
 	private boolean battle;
 	private boolean replay;
 
-	protected final List inbox;
+	protected final List inbox = new java.util.Vector();
 
 	protected ResourceBundle resb;
 	protected Properties riskconfig;
-
-
-	public Risk(String b,String c) {
-		this();
-
-		RiskGame.setDefaultMapAndCards(b,c);
-	}
 
         public static final String[] types = new String[] { "human","ai easy","ai easy","ai easy","ai average","ai average" };
         public static final String[] names = new String[] { "player","bob","fred","ted","yura","lala"};
@@ -101,7 +94,7 @@ public class Risk extends Thread {
                 // 10,000,000,000 still crashes on "Castle in the Sky" (also crashes 32bit java SE)
                 // 100,000,000,000 still crashes on "Castle in the Sky" (also crashes 32bit java SE)
                 // 1,000,000,000,000 crashes the whole Android JVM, FUCK FUCK FUCK
-		super(null,null,"DOMINATION-GAME-THREAD", 100000000 );
+		super(null,null,"DOMINATION-GAME-THREAD", 100000000);
 
 		resb = TranslationBundle.getBundle();
 
@@ -124,19 +117,18 @@ public class Risk extends Thread {
 
 		riskconfig = new Properties();
 
-		riskconfig.setProperty("default.port","4444");
-		riskconfig.setProperty("default.host","localhost");
-		riskconfig.setProperty("default.map", RiskGame.getDefaultMap() );
-		riskconfig.setProperty("default.cards", RiskGame.getDefaultCards() );
+                // game setup defaults
                 riskconfig.setProperty("default.autoplaceall","false");
                 riskconfig.setProperty("default.recyclecards","true");
-                riskconfig.setProperty("ai.wait", String.valueOf(AIManager.getWait()) );
-
+                // player settings are only used at first launch or if java.util.prefs.Preferences fail to save
                 for (int c=0;c<names.length;c++) {
-                    riskconfig.setProperty("default.player"+(c+1)+".type",types[c]);
-                    riskconfig.setProperty("default.player"+(c+1)+".color",colors[c]);
-                    riskconfig.setProperty("default.player"+(c+1)+".name", names[c] );
+                    riskconfig.setProperty("default.player" + (c + 1) + ".type", types[c]);
+                    riskconfig.setProperty("default.player" + (c + 1) + ".color", colors[c]);
+                    riskconfig.setProperty("default.player" + (c + 1) + ".name", names[c]);
                 }
+
+                // set default to display in UI connect dialog
+		riskconfig.setProperty("p2p.host","localhost");
 
 		try {
                     riskconfig.load( RiskUtil.openStream("game.ini") );
@@ -145,21 +137,26 @@ public class Risk extends Thread {
                     // can not find file, no problem
 		}
 
-                AIManager.setWait( Integer.parseInt( riskconfig.getProperty("ai.wait") ) );
-
+                // initalise static settings from game config file (on PC game only)
+		RiskGame.setDefaultMapAndCards(
+                        riskconfig.getProperty("default.map", RiskGame.getDefaultMap()),
+                        riskconfig.getProperty("default.cards", RiskGame.getDefaultCards())
+                );
+                RiskGame.MAX_PLAYERS = Integer.parseInt(riskconfig.getProperty("game.players.max", String.valueOf(RiskGame.MAX_PLAYERS)));
+                setShowDice(Boolean.parseBoolean(riskconfig.getProperty("game.dice.show", String.valueOf(isShowDice()))));
+                AIManager.setWait(Integer.parseInt(riskconfig.getProperty("ai.wait", String.valueOf(AIManager.getWait()))));
+		p2pPort = Integer.parseInt(riskconfig.getProperty("p2p.port", String.valueOf(p2pPort)));
+                
                 myAddress = createRandomUniqueAddress();
-
-		RiskGame.setDefaultMapAndCards( riskconfig.getProperty("default.map") , riskconfig.getProperty("default.cards") );
-		port = Integer.parseInt( riskconfig.getProperty("default.port") );
-
-		battle = false;
-		replay = false;
 
 		controller = new RiskController();
 
-		inbox = new java.util.Vector();
-		this.start();
+		start();
+	}
 
+        public Risk(String b,String c) {
+		this();
+		RiskGame.setDefaultMapAndCards(b,c);
 	}
 
         static String createRandomUniqueAddress() {
@@ -546,7 +543,6 @@ RiskUtil.printStackTrace(e);
                                 //else {
                                 //	output=resb.getString( "core.newgame.alreadyloaded");
                                 //}
-
                         }
                         else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "loadgame filename"); }
                 }
@@ -559,7 +555,7 @@ RiskUtil.printStackTrace(e);
 
                                         // CREATE A CLIENT
                                         try {
-                                                onlinePlayClient = new ChatClient( this, myAddress, StringT.nextToken(), port );
+                                                onlinePlayClient = new ChatClient(this, myAddress, StringT.nextToken(), p2pPort);
 
                                                 // CREATE A GAME
                                                 game = new RiskGame();
@@ -570,7 +566,6 @@ RiskUtil.printStackTrace(e);
                                                 setupPreviews( doesMapHaveMission() );
 
                                                 output=resb.getString( "core.join.created");
-
                                         }
                                         catch (UnknownHostException e) {
                                                 game = null;
@@ -618,21 +613,16 @@ RiskUtil.printStackTrace(e);
 
                                         // CREATE A SERVER
                                         try {
-
-                                                p2pServer = new ChatArea(controller,port);
+                                                p2pServer = new ChatArea(controller, p2pPort);
 
                                                 output=resb.getString( "core.startserver.started");
                                                 controller.serverState(true);
-
                                         }
                                         catch(Exception e) {
-
                                                 p2pServer = null;
                                                 output=resb.getString( "core.startserver.error")+" "+e;
                                                 showMessageDialog(output);
-
                                         }
-
                                 }
                                 else {
                                         output=resb.getString( "core.startserver.error");
@@ -642,13 +632,9 @@ RiskUtil.printStackTrace(e);
                 }
                 // KILL SERVER
                 else if (input.equals("killserver")) {
-
                         if (StringT.hasMoreTokens()==false) {
-
                                 if ( p2pServer != null ) {
-
                                         try {
-
                                                 // shut down the server
                                                 //if (chatter.serverSocket != null) {
                                                 //	chatter.serverSocket.close();
@@ -662,20 +648,16 @@ RiskUtil.printStackTrace(e);
 
                                                 output=resb.getString( "core.killserver.killed");
                                                 controller.serverState(false);
-
                                         }
                                         catch (Exception e) {
                                                 output=resb.getString( "core.killserver.error")+" "+e.getMessage();
                                         }
-
-
                                 }
                                 else {
                                         output=resb.getString( "core.killserver.noserver");
                                 }
                         }
                         else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "killserver"); }
-
                 }
 
                 else { // if there is no game and the command was unknown
@@ -2103,10 +2085,10 @@ RiskUtil.printStackTrace(e);
         }
 
 	public int getType(String type) {
-            if (type.equals("human")) {
+            if ("human".equals(type)) {
                     return Player.PLAYER_HUMAN;
             }
-            if (type.startsWith("ai ")) {
+            if (type != null && type.startsWith("ai ")) {
                 String aiType = type.substring(3);
                 try {
                     return ai.getTypeFromCommand(aiType);
@@ -2117,6 +2099,7 @@ RiskUtil.printStackTrace(e);
             }
             return -1;
 	}
+
         public String getType(int type) {
             if (type==Player.PLAYER_HUMAN) {
                 return "human";

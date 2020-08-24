@@ -469,7 +469,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			swingGUIPanel.go("roll 3");
 		}
 		else if ("join game".equals(actionCommand)) {
-			String result = JOptionPane.showInputDialog(RiskUIUtil.findParentFrame(this), "type the server name", swingGUIPanel.myrisk.getRiskConfig("default.host") );
+			String result = JOptionPane.showInputDialog(RiskUIUtil.findParentFrame(this), "type the server name", swingGUIPanel.myrisk.getRiskConfig("p2p.host") );
 			if (result!=null) { swingGUIPanel.go("join "+result); }
 		}
 		else if ("new game".equals(actionCommand)) {
@@ -1402,11 +1402,8 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 							);
 
 							if (result==0) {
-
 								String type=((PlayerType)typeComboBox.getSelectedItem()).getType();
-
 								swingGUIPanel.go("newplayer "+type+" "+((NamedColor)colorComboBox.getSelectedItem()).getRealName()+" "+((JTextField)message[1]).getText());
-
 							}
 						}
 					}
@@ -1847,7 +1844,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                             String name = settings.getProperty("default.player"+c+".name");
                             String color = settings.getProperty("default.player"+c+".color");
                             String type = settings.getProperty("default.player"+c+".type");
-                            if (!"".equals(name)&&!"".equals(color)&&!"".equals(type)) {
+                            if (name != null && color != null && type != null && !"".equals(name) && !"".equals(color) && !"".equals(type)) {
                                 try {
                                     ((DefaultTableModel)dataModel).addRow( new Object[] {name , findColor( ColorUtil.getColor( color ) ), findType( swingGUIPanel.myrisk.getType( type ) ) } );
                                 }
@@ -1894,6 +1891,10 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 				}
 				return null;
 		}
+                
+                /**
+                 * @throws IllegalArgumentException if the type is unknown 
+                 */
 		public PlayerType findType(int t) {
                     String type = swingGUIPanel.myrisk.getType(t);
                     for (int a=0;a<playerTypes.length;a++) {

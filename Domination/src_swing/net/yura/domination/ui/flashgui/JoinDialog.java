@@ -43,7 +43,7 @@ public class JoinDialog extends JDialog implements MouseInputListener {
 	public JoinDialog(Frame parent, boolean modal, Risk r) {
 		super(parent, modal);
 
-		serverField = new JTextField( r.getRiskConfig("default.host") );
+		serverField = new JTextField(r.getRiskConfig("p2p.host"));
 
 		resb = TranslationBundle.getBundle();
 

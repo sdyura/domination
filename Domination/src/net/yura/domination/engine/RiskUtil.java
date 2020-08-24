@@ -141,8 +141,8 @@ public class RiskUtil {
                 String name = playerSettings.getProperty("default.player"+cc+".name");
                 String color = playerSettings.getProperty("default.player"+cc+".color");
                 String type = playerSettings.getProperty("default.player"+cc+".type");
-                if (!"".equals(name)&&!"".equals(color)&&!"".equals(type)) {
-                    risk.parser("newplayer " + type+" "+ color+" "+ name );
+                if (name != null && color != null && type != null && !"".equals(name) && !"".equals(color) && !"".equals(type)) {
+                    risk.parser("newplayer " + type + " " + color + " " + name);
                 }
             }
         }
