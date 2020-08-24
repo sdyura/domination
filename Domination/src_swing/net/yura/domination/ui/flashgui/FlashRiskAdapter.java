@@ -241,7 +241,10 @@ public class FlashRiskAdapter implements RiskListener {
 			menu.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		}
 
-		gameFrame.setup(localGame);
+                gameFrame.setExtraAction(lobby == null ? null : lobby.getOnlineAction()); // setup Online UI as soon as we can as we will start getting updates to it
+                gameFrame.setSidePanel(lobby == null ? null : lobby.getOnlinePanel());
+
+		gameFrame.setup(localGame); // this may take a bit of time to load the map
 
                 RiskUIUtil.center(gameFrame);
 
@@ -252,9 +255,6 @@ public class FlashRiskAdapter implements RiskListener {
 			menu.hide();
 		}
 
-                gameFrame.setExtraAction(lobby == null ? null : lobby.getOnlineAction());
-                gameFrame.setSidePanel(lobby == null ? null : lobby.getOnlinePanel());
-                
 		gameFrame.setVisible(true);
 
 		// this should not have to be here, but is the only way to get rid of it
