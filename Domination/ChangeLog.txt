@@ -21,6 +21,7 @@ CURRENT VERSION:
 	Map Editor shows rectangle for country that is used on cards
 	SwingGUI: Options and AI speed setting put into same Options Dialog
 	max players can be changed in game.ini config file, requested by Patreon Steve Sybesma
+	MapEditor: fixed zoom to to keep the mouse position on map static
 
 1.2.2 (27.06.2020)
 

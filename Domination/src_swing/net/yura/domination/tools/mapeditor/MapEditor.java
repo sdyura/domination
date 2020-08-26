@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -860,10 +861,12 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 			}
 		}
 		else if (a.getActionCommand().equals("zoomin")) {
-			zoom(true);
+                        Rectangle rect = editPanel.getVisibleRect();
+			zoom(true, new Point(rect.x + rect.width / 2, rect.y + rect.height / 2));
 		}
 		else if (a.getActionCommand().equals("zoomout")) {
-			zoom(false);
+                        Rectangle rect = editPanel.getVisibleRect();
+			zoom(false, new Point(rect.x + rect.width / 2, rect.y + rect.height / 2));
 		}
 		else if (a.getActionCommand().equals("fix")) {
 			removeBadMapColors();
@@ -1250,8 +1253,21 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		return ipic;
 	}
 
-	public void zoom(boolean in) {
-		setZoom( (in)?(zoomint+1):(zoomint-1) );
+	public void zoom(boolean in, Point fixed) {
+                Dimension size1 = editPanel.getPreferredSize();
+                Rectangle rect = editPanel.getVisibleRect();
+            
+		setZoom(in ? (zoomint + 1) : (zoomint - 1));
+                
+                Dimension size2 = editPanel.getPreferredSize();
+                if (!size1.equals(size2)) {
+                    rect.x = (fixed.x * size2.width / size1.width) - (fixed.x - rect.x);
+                    rect.y = (fixed.y * size2.height / size1.height) - (fixed.y - rect.y);
+
+                    // we need to force a validate so sizes update or zoom out scroll update will not always work
+                    editPanel.getParent().validate();
+                    editPanel.scrollRectToVisible(rect);
+                }
 	}
 
 	private void setZoom(int a) {
