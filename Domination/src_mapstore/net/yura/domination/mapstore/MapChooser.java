@@ -216,7 +216,7 @@ public class MapChooser implements ActionListener,MapServerListener {
      */
     public static Icon getIconForMapOrCategory(Object key,String context,String iconUrl,MapServerClient c) {
         Icon aicon = iconCache.get( key );
-        if (aicon==null) {
+        if (aicon == null) {
             aicon = iconCache.newIcon(key);
 
             String url = getURL(context, iconUrl);
@@ -227,28 +227,23 @@ public class MapChooser implements ActionListener,MapServerListener {
             }
             // if this is a locale file
             else {
-                InputStream in=null;
-
-                //Map map = (Map)key;
-                //String mapName = map.getMapUrl();
-                //java.util.Map info = RiskUtil.loadInfo(mapName, false);
-                //String prv = (String)info.get("prv");
-                //if (prv!=null) {
+                InputStream in;
 
                 if (url.startsWith(PREVIEW_FILE_PREFIX)) {
+                    in = null;
                     try {
-                        in = RiskUtil.openMapStream( url ); // PREVIEW_FILE_PREFIX+prv
+                        in = RiskUtil.openMapStream(url);
+                        
+                        if (in == null) {
+                            throw new IllegalStateException("local preview stream null " + url);
+                        }
                     }
                     catch (Exception ex) {
                         Logger.warn("cant open " + url, ex);
                     }
                 }
-                //if (in==null) {
-                //    String pic = (String)info.get("pic");
-
                 else {
-
-                    in = repo!=null?repo.get(url):null;
+                    in = repo!=null ? repo.get(url) : null;
 
                     if (in==null) {
                         try {
@@ -278,7 +273,6 @@ public class MapChooser implements ActionListener,MapServerListener {
                     gotImg(key, in);
                 }
             }
-
         }
         return aicon;
     }

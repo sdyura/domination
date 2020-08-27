@@ -119,6 +119,10 @@ public class Map {
         this.numberOfRatings = numberOfRatings;
     }
 
+    /**
+     * for remote maps the is the url to the remote generated thumbnail
+     * for local maps this is either the "prv" if available image or the main "map image pic"
+     */
     public String getPreviewUrl() {
         return previewUrl;
     }
