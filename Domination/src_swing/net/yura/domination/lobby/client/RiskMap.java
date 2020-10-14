@@ -22,6 +22,10 @@ import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mapstore.MapUpdateService;
 import net.yura.swing.GraphicsUtil;
 
+/**
+ * for mobile version the Map Preview Image memory cache:
+ * @see net.yura.domination.ImageManager
+ */
 public class RiskMap {
 
     private static final Logger logger = Logger.getLogger(RiskMap.class.getName());

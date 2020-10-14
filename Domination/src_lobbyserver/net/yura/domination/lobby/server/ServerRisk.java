@@ -41,18 +41,18 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 		}
 	}
 
-	public synchronized void addSetupCommandToInbox(String a) {
-		addSetupCommandToInbox(myAddress,a);
+	public synchronized void addSetupCommandToInbox(String command) {
+		addSetupAddressCommandToInbox(myAddress + " " + command);
 	}
 
-	public synchronized void addSetupCommandToInbox(String ad, String a) {
-		inbox.add(ad+" "+a);
+	public synchronized void addSetupAddressCommandToInbox(String addressAndCommand) {
+		inbox.add(addressAndCommand);
 		waiting = false;
 		notify();
 	}
 
-	public synchronized void addPlayerCommandToInbox(String a, String b) {
-		inbox.add(a+" "+b);
+	public synchronized void addPlayerCommandToInbox(String address, String command) {
+		inbox.add(address + " " + command);
 		notify();
 	}
 
@@ -137,9 +137,9 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 
 	@Override
 	public void getInput() {
-		super.getInput();
 		if (!paused) { sgr.getInputFromSomeone(); }
-	}
+		super.getInput(); // getInput() may actually end up calls getInput() method again in autodefend
+        }
 
 	@Override
 	public String whoWon() {

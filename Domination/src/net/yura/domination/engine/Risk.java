@@ -702,7 +702,6 @@ RiskUtil.printStackTrace(e);
 			}
 
 			showMessageDialog(Pname);
-
 		}
                 else if (Addr.equals("LEAVE")) {
 
@@ -2047,6 +2046,51 @@ RiskUtil.printStackTrace(e);
 		}
 	}
 
+	/**
+	 * This deals with trying to find out what input is required for the parser
+	 */
+	public void getInput() {
+                // if we have more commands we need to process, do not bother asking for input
+                if (!inbox.isEmpty()) return;
+
+                setHelp();
+
+		if (game==null) {
+			controller.needInput( -1 );
+		}
+		// work out what to do next
+		else if ( game!=null && game.getCurrentPlayer()!=null && game.getState()!=RiskGame.STATE_GAME_OVER ) {// if player type is human or neutral or ai
+
+                        updateBattleState();
+
+			if (game.getState()==RiskGame.STATE_TRADE_CARDS) {
+				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.newarmies"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + "") , false, false);
+				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
+			}
+			else if (game.getState()==RiskGame.STATE_PLACE_ARMIES) {
+				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.armiesleft"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + ""), false, false);
+				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
+			}
+
+                        // check if the next command should come from this computer
+			if (shouldGameCommand(game.getCurrentPlayer().getAddress())) {
+				if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getAutoDefend()) {
+                                        gameCommand(myAddress, myAddress + "-autoDefend", getBasicPassiveGo());
+				}
+				// || ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_NEUTRAL
+				else if ( ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_HUMAN ) {
+					controller.needInput( game.getState() );
+				}
+				else {
+					ai.play(this);
+				}
+			}
+		}
+		else {
+			controller.needInput( game.getState() );
+		}
+	}
+
         // TODO is this thread safe???
         private void setMap(String filename) throws Exception {
 
@@ -2141,12 +2185,12 @@ RiskUtil.printStackTrace(e);
         /**
          * should ONLY be called if {@link #shouldGameCommand(java.lang.String) } returns true
          */
-        void gameCommand(String address, String command, String options) {
+        void gameCommand(String address, String gameCommandOrAddress, String options) {
             if (replay) {
                 throw new IllegalStateException("game command sent during replay");
             }
 
-            String fullCommand = command + " " + options;
+            String fullCommand = gameCommandOrAddress + " " + options;
             if (onlinePlayClient == null) {
                     inGameParser(fullCommand);
             }
@@ -2161,50 +2205,6 @@ RiskUtil.printStackTrace(e);
 
 	public void setReplay(boolean a) {
 		replay = a;
-	}
-
-	/**
-	 * This deals with trying to find out what input is required for the parser
-	 */
-	public void getInput() {
-                // if we have more commands we need to process, do not bother asking for input
-                if (!inbox.isEmpty()) return;
-
-                setHelp();
-
-		if (game==null) {
-			controller.needInput( -1 );
-		}
-		// work out what to do next
-		else if ( game!=null && game.getCurrentPlayer()!=null && game.getState()!=RiskGame.STATE_GAME_OVER ) {// if player type is human or neutral or ai
-
-                        updateBattleState();
-
-			if (game.getState()==RiskGame.STATE_TRADE_CARDS) {
-				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.newarmies"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + "") , false, false);
-				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
-			}
-			else if (game.getState()==RiskGame.STATE_PLACE_ARMIES) {
-				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.armiesleft"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + ""), false, false);
-				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
-			}
-
-			if (shouldGameCommand(game.getCurrentPlayer().getAddress())) {
-				if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getAutoDefend()) {
-                                        gameCommand(myAddress, myAddress, getBasicPassiveGo());
-				}
-				// || ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_NEUTRAL
-				else if ( ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_HUMAN ) {
-					controller.needInput( game.getState() );
-				}
-				else {
-					ai.play(this);
-				}
-			}
-		}
-		else {
-			controller.needInput( game.getState() );
-		}
 	}
 
         final AIManager ai = new AIManager();
@@ -2362,7 +2362,6 @@ RiskUtil.printStackTrace(e);
                 controller.sendMessage(resb.getString( "core.kicked.error.disconnected"),false,false);
 
                 getInput();
-
 	}
 
         private void updateBattleState() {

@@ -6,6 +6,10 @@ import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.components.Component;
 
+/**
+ * for desktop version the Map Preview Image memory cache:
+ * @see net.yura.domination.lobby.client.RiskMap
+ */
 public class ImageManager {
 
     public final WeakHashMap images = new WeakHashMap();
@@ -73,6 +77,5 @@ public class ImageManager {
         public Image getImage() {
             return img;
         }
-
     }
 }

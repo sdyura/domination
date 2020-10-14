@@ -11,6 +11,7 @@ import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,10 +31,11 @@ import net.yura.mobile.util.Url;
 
 public class ServerGameRisk extends TurnBasedGame {
 
-	private ServerRisk myrisk;
+	ServerRisk myrisk;
 
         static {
-            final File gameDir = new File(RiskUtil.GAME_NAME);
+            // we get 'user.dir' here so that we can override this for junit tests
+            final File gameDir = new File(System.getProperty("user.dir"), RiskUtil.GAME_NAME);
             final File mapsDir = new File(gameDir, "maps");
 
             RiskUtil.streamOpener = new RiskIO() {
@@ -99,10 +101,6 @@ public class ServerGameRisk extends TurnBasedGame {
         }
 
 	public void startGame(String startGameOptions, String[] players) {
-
-		// sort them so if player bob was green last time, they r again
-		Arrays.sort(players);
-
 		//System.out.println("\tNEW GAME STARTING FOR RISK: "+gameid);
 
 		//myguid = gameid;
@@ -112,14 +110,16 @@ public class ServerGameRisk extends TurnBasedGame {
 
 		String[] options = startGameOptions.split("\\n");
 
-		int aiaverage = Integer.parseInt(options[0]);
 		int aieasy = Integer.parseInt(options[1]);
+		int aiaverage = Integer.parseInt(options[0]);
 		int aihard = Integer.parseInt(options[2]);
 
 		if ((players.length+aiaverage+aieasy+aihard)>RiskGame.MAX_PLAYERS ) { throw new RuntimeException("player number missmatch for startgame"); }
 
 		myrisk.addSetupCommandToInbox(options[3]); // set the map file to use
 
+                List<String> playerCommands = new ArrayList();
+                
 		List<String> colorString = new ArrayList<String>();
 		colorString.add( myrisk.getRiskConfig("default.player1.color") );
 		colorString.add( myrisk.getRiskConfig("default.player2.color") );
@@ -129,34 +129,43 @@ public class ServerGameRisk extends TurnBasedGame {
 		colorString.add( myrisk.getRiskConfig("default.player6.color") );
 		Iterator<String> it = colorString.iterator();
 
-		for (int c=0;c<players.length;c++) {
+                // sort them so if player bob was green last time, they are again
+		Arrays.sort(players);
+		for (int c = 0; c < players.length; c++) {
 			it.hasNext();
 			String color = it.next();
 			String playerid = "player"+(c+1);
-			myrisk.addSetupCommandToInbox(playerid,"newplayer human "+color + " " + players[c]);
+			playerCommands.add(playerid + " newplayer human "+color + " " + players[c]);
 		}
-
+                
                 // BeginnerBot, RookieBot, AmateurBot and ProBot.
                 // Normal Medium Average Standard
 
-		for (int c=0;c<aiaverage;c++) {
+		for (int c = 0; c < aieasy; c++) {
 			it.hasNext();
 			String color = it.next();
-			myrisk.addSetupCommandToInbox("newplayer ai average "+color + " AverageBot" + (c+1));
+			playerCommands.add(myrisk.getAddress() + " newplayer ai easy " + color + " EasyBot" + (c+1));
 		}
-
-		for (int c=0;c<aieasy;c++) {
+                for (int c = 0; c < aiaverage; c++) {
 			it.hasNext();
 			String color = it.next();
-			myrisk.addSetupCommandToInbox("newplayer ai easy "+color + " EasyBot" + (c+1));
+			playerCommands.add(myrisk.getAddress() + " newplayer ai average " + color + " AverageBot" + (c+1));
 		}
-
-		for (int c=0;c<aihard;c++) {
+		for (int c = 0; c < aihard; c++) {
 			it.hasNext();
 			String color = it.next();
-			myrisk.addSetupCommandToInbox("newplayer ai hard "+color + " HardBot" + (c+1));
+			playerCommands.add(myrisk.getAddress() + " newplayer ai hard " + color + " HardBot" + (c+1));
 		}
 
+                // shuffle so the starting order is not the same each game
+                // otherwise there will be a much higher chance (5 out of 6) person A goes before person B
+                // we also want to mix up the order the bots take
+                Collections.shuffle(playerCommands);
+                
+                for (String playerCommand : playerCommands) {
+                    myrisk.addSetupAddressCommandToInbox(playerCommand);
+                }
+                
 		myrisk.addSetupCommandToInbox(options[4]); // start the game
 
 		// HACK: only return when the game is setup
@@ -405,11 +414,19 @@ public class ServerGameRisk extends TurnBasedGame {
             sendRename(oldUser, newUser, playerId, Player.PLAYER_HUMAN, false);
 	}
 
-
+        /**
+         * This is called each time we want input from ANYEONE, including humans and AI
+         * it also may get called more times then it should, e.g. during auto defend
+         * @see #doBasicGo(java.lang.String)
+         */
 	public void getInputFromSomeone() {
             Player player = myrisk.getGame().getCurrentPlayer();
             // Player should never be null, but better not to crash here
             String username = (player != null && player.getType() == Player.PLAYER_HUMAN) ? player.getName() : null;
+
+            // we tell TurnBasedGame who we expect a command from
+            // if this person does not give us a command, TurnBasedGame will call doBasicGo()
+            // when called with null (for AI) it cancels the timeout timer
             getInputFromClient(username);
 	}
 
@@ -432,5 +449,4 @@ public class ServerGameRisk extends TurnBasedGame {
                 }
                 return name;
 	}
-
 }

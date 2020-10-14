@@ -422,7 +422,7 @@ public class GameActivity extends Frame implements ActionListener {
                 menu.add( AutoDefend );
                 //menu.add( helpbutton );
 
-                controller.addExtraButtons(menu);
+                controller.addExtraButtons(menu); // adds 2 buttons, resign/chat
         }
         else if ("save".equals(actionCommand)) {
 
