@@ -571,7 +571,8 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
         
 	public void showMission() {
 		String mission = swingGUIPanel.myrisk.getHumanPlayerMission();
-		JOptionPane.showMessageDialog(this, resbundle.getString("swing.message.mission") + " " + mission, resbundle.getString("swing.title.mission"), JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this, resbundle.getString("swing.message.mission") + " " + mission, resbundle.getString("swing.title.mission"), JOptionPane.INFORMATION_MESSAGE,
+                        new ImageIcon( GameTab.class.getResource("mission.png") ));
 	}
         
 	public void openCards() {
