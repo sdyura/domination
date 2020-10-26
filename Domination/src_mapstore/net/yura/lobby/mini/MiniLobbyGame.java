@@ -58,5 +58,5 @@ public interface MiniLobbyGame {
     void removeSpectator(String player);
     void renameSpectator(String oldname, String newname, int newtype);
 
-    void updatePlayerList(Collection playersInGame, String whoTurn);
+    void updatePlayerList(Collection<Player> playersInGame, String whoTurn);
 }

@@ -1,18 +1,23 @@
 package net.yura.domination.ui.flashgui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.RootPaneContainer;
+import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.core.Player;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.guishared.SwingMEWrapper;
-import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.lobby.client.GameSidePanel;
 import net.yura.lobby.client.ChatBox;
@@ -90,6 +95,33 @@ public class FlashMiniLobby {
         playerList.clearSpectatorList();
         GameSidePanel sidePanel = new GameSidePanel(null, null, playerList, inGameChat);
         sidePanel.setGameName(game.getName());
+
+
+        // if forground is light, we are in a dark theme
+        boolean darkTheme = ColorUtil.isColorLight(playerList.getForeground().getRGB());
+        Map<net.yura.lobby.model.Player, Color> playerColors = new HashMap();
+        for (net.yura.lobby.model.Player player : (Collection<net.yura.lobby.model.Player>)game.getPlayers()) {
+            Player gamePlayer = myrisk.getGame().getPlayer(player.getName());
+            if (gamePlayer != null) {
+                Color playerColor = new Color(gamePlayer.getColor());
+                boolean lightPlayer = ColorUtil.isColorLight(playerColor.getRGB());
+
+                if (!darkTheme && lightPlayer) {
+                    playerColor = playerColor.darker();
+                }
+                if (darkTheme && !lightPlayer) {
+                    playerColor = playerColor.brighter();
+                }
+
+                playerColors.put(player, playerColor);
+            }
+            else {
+                System.out.println("PLAYER NOT FOUND IN GAME " + player.getName() + " - " + myrisk.getGame().getPlayers());
+            }
+        }
+        // TODO this only sets up the colors when the game is opened, but what about if someone leaves or joins the game???
+        playerList.setPlayers(playerColors);
+        
         return sidePanel;
     }
 }

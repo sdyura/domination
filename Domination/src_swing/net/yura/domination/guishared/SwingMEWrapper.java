@@ -124,7 +124,7 @@ public class SwingMEWrapper {
                 }
             }
 
-            public void updatePlayerList(Collection playersInGame, String whosTurn) {
+            public void updatePlayerList(Collection<Player> playersInGame, String whosTurn) {
                 if (players != null) {
                     players.setPlayers(playersInGame);
                     players.setCurrentPlayer(whosTurn);

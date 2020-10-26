@@ -69,21 +69,22 @@ public class ColorUtil {
                 }
 
 		try {
-
                     Integer result = Integer.decode(nm);
 
                     // the 0xff000000 | means the alpha is 255
                     return 0xff000000 | result.intValue();
 		}
 		catch(Exception ex) {
-
 			//System.out.print("Error: unable to find color "+s+".\n"); // testing
 			return 0;
 		}
 	}
+        
+        public static int getTextColorFor(int c) {
+            return isColorLight(c) ? BLACK: WHITE;
+        }
 
-	public static int getTextColorFor(int c) {
-
+	public static boolean isColorLight(int c) {
 /*
 if ( c.getRed() < 100 && c.getBlue() < 100 && c.getGreen() < 100 ) {
 return Color.white;
@@ -111,14 +112,7 @@ return Color.white;
 		int g = getGreen(c);
 		// int b = c.getBlue();
 
-
-		if ((r > 240 || g > 240) || (r > 150 && g > 150)) {
-			return BLACK;
-		}
-		else {
-			return WHITE;
-		}
-
+		return (r > 240 || g > 240) || (r > 150 && g > 150);
 	}
 
         /**
@@ -163,5 +157,4 @@ return Color.white;
         public static String getHexForColor(int c) {
                 return "#" + Integer.toHexString((  c & 0xffffff) | 0x1000000).substring(1);
         }
-
 }
