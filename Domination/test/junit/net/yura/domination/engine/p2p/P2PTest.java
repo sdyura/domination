@@ -1,16 +1,14 @@
 package net.yura.domination.engine.p2p;
 
-import java.io.File;
 import junit.framework.TestCase;
-import static junit.framework.TestCase.assertEquals;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
-import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.test.TestUtil;
+
+import static junit.framework.TestCase.assertEquals;
 
 public class P2PTest extends TestCase {
     

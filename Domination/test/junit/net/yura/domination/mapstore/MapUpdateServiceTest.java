@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yura.domination.mapstore;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import junit.framework.TestCase;
-import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.test.TestUtil;
 
 /**
@@ -46,7 +40,7 @@ public class MapUpdateServiceTest extends TestCase {
     public void testInit() throws Exception {
         System.out.println("init");
         
-        List mapsUIDs = new Vector();
+        List mapsUIDs = new ArrayList();
 
         // ALL THESE MAPS NEED TO ACTUALLY BE IN THE MAPS DIR
         mapsUIDs.add("RiskEurope.map");
@@ -68,14 +62,13 @@ public class MapUpdateServiceTest extends TestCase {
         
         List result = instance.mapsToUpdate;
         
-        Vector check = new Vector();
+        List check = new ArrayList();
         check.add("ameroki.map");
         
-        testResultContains(result,check);
-        
+        assertResultContains(result,check);
     }
 
-    private void testResultContains(List result, List check) {
+    private void assertResultContains(List result, List check) {
         assertEquals( check.size(), result.size() );
         
         for (int c=0;c<check.size();c++) {
