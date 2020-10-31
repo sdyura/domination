@@ -941,7 +941,7 @@ public class RiskUIUtil {
 
             return md;
         }
-        
+
         private static final String GTK_PLAF_CLASS = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
 
 	private static void setupLookAndFeel() {

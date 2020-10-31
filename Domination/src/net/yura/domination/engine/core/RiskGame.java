@@ -1687,7 +1687,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 		}
 		//System.out.print("Map Loaded\n");
 	}
-
+        
 	/**
 	 * Sets the filename of the map file
 	 * @param f The name of the new file
@@ -1744,27 +1744,21 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 					else if ( input.startsWith("prv ") ) { previewPic = input.substring(4); }
 
-					else if ( input.startsWith("crd ") ) { yescards=true; returnvalue = setCardsfile( input.substring(4) ); }
-
+					else if ( input.startsWith("crd ") ) { yescards=true; returnvalue = setCardsfile(RiskUtil.getContext(f) + input.substring(4)); }
 				}
 				else if ("borders".equals(mode)) {
-
 					yesmap=true;
-
 				}
 				else if ("newsection".equals(mode)) {
-
-					mode = input.substring(1, input.length()-1); // set mode to the name of the section
-
+					// set mode to the name of the section
+					mode = input.substring(1, input.length()-1);
 				}
 				else if (mode == null) {
 
                                         int space = input.indexOf(' ');
 
                                         if (input.equals("test")) {
-
 						runmaptest = true;
-
 					}
                                         //else if (input.startsWith("name ")) {
 					//	mapName = input.substring(5,input.length());
@@ -1949,7 +1943,6 @@ transient - A keyword in the Java programming language that indicates that a fie
                                             else {
                                                 System.err.println("newkey: "+newkey+" and oldkey: "+oldkey+" not found in mission: "+description);
                                             }
-
                                         }
 
 					if ( rawLoad || s1 <= Players.size() ) {
@@ -2013,9 +2006,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 */
 	public boolean setCardsfile(String f) throws Exception {
 
-
 		StringTokenizer st=null;
-
 
 		if (f.equals("default")) {
 			f = defaultCards;
@@ -2068,23 +2059,15 @@ transient - A keyword in the Java programming language that indicates that a fie
 					mode = input.substring(1, input.length()-1); // set mode to the name of the section
 
 					if (mode.equals("cards")) {
-
 						yescards=true;
-
 					}
 					else if (mode.equals("missions")) {
-
 						yesmissions=true;
-
 					}
 				}
-
-
 			}
 
-
 			input = bufferin.readLine(); // get next line
-
 		}
 
 

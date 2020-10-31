@@ -355,7 +355,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
                 commands = new AbstractTableModel() {
 
-			private final String[] columnNames = { "No", "Command"};
+			private final String[] columnNames = { "No", "Player", "Command"};
 
 			public int getColumnCount() {
 				return columnNames.length;
@@ -377,14 +377,26 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 			}
 
 			public Object getValueAt(int row, int col) {
-				Object command = myrisk.getGame().getCommands().elementAt(row);
+				String command = String.valueOf(myrisk.getGame().getCommands().elementAt(row));
 				switch(col) {
-					case 0: return String.valueOf( row );
-					case 1: return String.valueOf(command);
+					case 0: return String.valueOf(row);
+                                        case 1: {
+                                            int space = command.indexOf(" ");
+                                            if (space > 0) {
+                                                String address = command.substring(0, space);
+                                                List<Player> players = myrisk.getGame().getPlayers();
+                                                for (Player player : players) {
+                                                    if (player.getAddress().equals(address)) {
+                                                        return player;
+                                                    }
+                                                }
+                                            }
+                                            return null;
+                                        }
+					case 2: return command;
 					default: throw new RuntimeException();
 				}
 			}
-
 		};
 
 

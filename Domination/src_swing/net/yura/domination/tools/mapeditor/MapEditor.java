@@ -461,16 +461,19 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 	}
         
         private void loadMap(String name) throws Exception {
+
+            String folderIfNotDefault = RiskUtil.getContext(name);
+
             RiskGame map = makeNewMap();
             map.setMapfile(name); // this is here just to update the cards option, also set the name and version
             String cardsFile = map.getCardsFile();
             map.loadMap();
             map.loadCards(true);
 
-            InputStream in = RiskUtil.openMapStream(map.getImagePic());
+            InputStream in = RiskUtil.openMapStream(folderIfNotDefault + map.getImagePic());
 
             BufferedImage ipic = makeRGBImage( RiskUIUtil.read( in ) );
-            BufferedImage imap = makeRGBImage( RiskUIUtil.read(RiskUtil.openMapStream(map.getImageMap()) ) );
+            BufferedImage imap = makeRGBImage( RiskUIUtil.read(RiskUtil.openMapStream(folderIfNotDefault + map.getImageMap()) ) );
 
             map.setMemoryLoad();
 
