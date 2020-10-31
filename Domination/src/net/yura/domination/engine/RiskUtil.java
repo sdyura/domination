@@ -391,8 +391,22 @@ public class RiskUtil {
             }
 
             return info;
-
 	}
+        
+        /**
+         * This is only non empty when loading from random file locations in the MapEditor
+         */
+        public static String getContext(String f) {
+                int slash = f.lastIndexOf('\\');
+                if (slash >= 0) {
+                    return f.substring(0, slash + 1);
+                }
+                slash = f.lastIndexOf('/');
+                if (slash >= 0) {
+                    return f.substring(0, slash + 1);
+                }
+                return "";
+        }
 
         public static void saveGameLog(File logFile, RiskGame game) throws IOException {
             FileWriter fileout = new FileWriter(logFile);
