@@ -19,11 +19,8 @@ public class P2PTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        // we must change the current folder for map loading to work
-        System.setProperty("user.dir", System.getProperty("user.dir") + File.separator + "game" + File.separator + RiskUtil.GAME_NAME);
-        
-        // trigger static block
-        RiskUIUtil.setupMapsDir(null);
+        // we must set the maps folder for map loading to work
+        RiskUIUtil.mapsdir = new File("game" + File.separator + RiskUtil.GAME_NAME + File.separator + "maps").toURI().toURL();
         
         myrisk = new Risk();
 
