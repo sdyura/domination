@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Vector;
 import junit.framework.TestCase;
 import net.yura.domination.guishared.RiskUIUtil;
+import net.yura.domination.test.TestUtil;
 
 /**
  * @author yura mamyrin
@@ -30,6 +31,8 @@ public class MapUpdateServiceTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        
+        TestUtil.setupForTest();
     }
     
     @Override
@@ -42,8 +45,6 @@ public class MapUpdateServiceTest extends TestCase {
      */
     public void testInit() throws Exception {
         System.out.println("init");
-
-        RiskUIUtil.mapsdir = new File("./game/Domination/maps").toURI().toURL();
         
         List mapsUIDs = new Vector();
 

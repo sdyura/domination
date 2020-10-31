@@ -10,6 +10,7 @@ import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.RiskUIUtil;
+import net.yura.domination.test.TestUtil;
 
 public class P2PTest extends TestCase {
     
@@ -19,14 +20,9 @@ public class P2PTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        // we must set the maps folder for map loading to work
-        RiskUIUtil.mapsdir = new File("game" + File.separator + RiskUtil.GAME_NAME + File.separator + "maps").toURI().toURL();
+        TestUtil.setupForTest();
         
         myrisk = new Risk();
-
-        // we want test to run quickly
-        AIManager.setWait(0);
-        Risk.setShowDice(false);
 
         myrisk.addRiskListener(new RiskAdapter() {
             AIManager fakeHuman = new AIManager();
@@ -56,6 +52,7 @@ public class P2PTest extends TestCase {
         
         myrisk.parser("closegame");
         myrisk.parser("killserver");
+        myrisk.kill();
     }
     
     public void testP2PGame() throws Exception {

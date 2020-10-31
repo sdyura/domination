@@ -3,6 +3,7 @@ package net.yura.domination.engine.core;
 import java.io.File;
 import junit.framework.TestCase;
 import net.yura.domination.guishared.RiskUIUtil;
+import net.yura.domination.test.TestUtil;
 
 /**
  * @author Yur Mamyrin
@@ -15,6 +16,8 @@ public class RiskGameTest extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
+        
+        TestUtil.setupForTest();
     }
 
     protected void tearDown() throws Exception {
@@ -24,17 +27,10 @@ public class RiskGameTest extends TestCase {
     /**
      * Test of trade method, of class RiskGame.
      */
-    public void testTrade() {
+    public void testTrade() throws Exception {
         System.out.println("trade");
 
-        RiskGame instance;
-        try {
-            RiskUIUtil.mapsdir = new File("./game/Domination/maps").toURI().toURL();
-            instance = new RiskGame();
-        }
-        catch(Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        RiskGame instance = new RiskGame();
 
         //Country country =  new Country(1, "name", "Full Name", new Continent("name", "Full Name", 5, 0xFFFF0000), 10, 10);
 
@@ -347,10 +343,5 @@ public class RiskGameTest extends TestCase {
         assertEquals(two_wildcards, instance.getTradeAbsValue(Card.CANNON, Card.WILDCARD, Card.WILDCARD, RiskGame.CARD_ITALIANLIKE_SET) );
         assertEquals(two_wildcards, instance.getTradeAbsValue(Card.INFANTRY, Card.WILDCARD, Card.WILDCARD, RiskGame.CARD_ITALIANLIKE_SET) );
         assertEquals(two_wildcards, instance.getTradeAbsValue(Card.CAVALRY, Card.WILDCARD, Card.WILDCARD, RiskGame.CARD_ITALIANLIKE_SET) );
-        
-        
-        
-        
     }
-
 }

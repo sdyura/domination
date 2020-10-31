@@ -3,24 +3,29 @@ package net.yura.domination.engine.ai;
 import junit.framework.TestCase;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
-import net.yura.domination.guishared.RiskUIUtil;
-import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.ai.logic.AIDomination;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
+import net.yura.domination.test.TestUtil;
 
-public class AISimulationTest extends TestCase{
-	
+public class AISimulationTest extends TestCase {
+
 	private static boolean debug = false;
 	int state = 0;
-	
+
 	int hard;
 	int easy;
 	int avg;
 	int other;
-	
-	public void testSomething() throws InterruptedException {
-		RiskUIUtil.parseArgs(new String[] {});
+
+        @Override
+        protected void setUp() throws Exception {
+            super.setUp();
+
+            TestUtil.setupForTest();
+        }
+
+	public void test300games() throws InterruptedException {
 		final Risk risk = new Risk();
 		risk.addRiskListener(new RiskAdapter() {
 
@@ -33,7 +38,7 @@ public class AISimulationTest extends TestCase{
 		    public void needInput(int s) {
 		    	synchronized (risk) {
 		    		risk.notifyAll();
-				}
+			}
 		    }
 
 		    public void noInput() {
@@ -41,12 +46,12 @@ public class AISimulationTest extends TestCase{
 		    }
 
 		} );
-		AIManager.setWait(0);
-		long start = System.currentTimeMillis();
+
+                long start = System.currentTimeMillis();
 		for (int i = 0; i < 300; i++) {
 			playGame(risk);
 		}
-		System.out.println(easy + " " + avg + " " + hard + " " + other);
+		System.out.println("-- Wins --\neasy: " + easy + "\naverage: " + avg + "\nhard: " + hard + "\nother: " + other);
 		if (debug) {
 			System.out.println(System.currentTimeMillis()-start);
 		}
@@ -93,5 +98,4 @@ public class AISimulationTest extends TestCase{
 			}
 		}
 	}
-
 }
