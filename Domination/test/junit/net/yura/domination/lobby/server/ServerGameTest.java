@@ -41,7 +41,7 @@ public class ServerGameTest extends TestCase {
                 // Player should never be null, but better not to crash here
                 if (player != null && player.getType() == Player.PLAYER_HUMAN && game.getState() != RiskGame.STATE_GAME_OVER &&
                         (!player.getAutoDefend() || game.getState() != RiskGame.STATE_DEFEND_YOURSELF)) {
-                    
+
                     //System.out.println("getInputFromSomeone " + player);
                     String move = fakeHuman.getOutput(game, Player.PLAYER_AI_HARD);
                     serverGame.messageFromUser(player.getName(), move);

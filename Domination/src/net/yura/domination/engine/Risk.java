@@ -581,7 +581,7 @@ RiskUtil.printStackTrace(e);
                                         }
                                         catch (IOException e) {
                                                 game = null;
-                                                output=resb.getString( "core.join.error.002");
+                                                output=resb.getString("core.join.error.002") + " " + e;
                                         }
                                         catch (java.security.AccessControlException e) {
                                                 game = null;
@@ -2075,7 +2075,9 @@ RiskUtil.printStackTrace(e);
                         // check if the next command should come from this computer
 			if (shouldGameCommand(game.getCurrentPlayer().getAddress())) {
 				if (game.getState() == RiskGame.STATE_DEFEND_YOURSELF && game.getCurrentPlayer().getAutoDefend()) {
-                                        gameCommand(myAddress, myAddress + "-autoDefend", getBasicPassiveGo());
+                                        // 1st param = online play will check that this matches our address
+                                        // 2nd param = we MUST send this command using our address, so the p2p server can roll the dice on the same client
+                                        gameCommand(myAddress, myAddress, getBasicPassiveGo());
 				}
 				// || ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_NEUTRAL
 				else if ( ((Player)game.getCurrentPlayer()).getType()==Player.PLAYER_HUMAN ) {
