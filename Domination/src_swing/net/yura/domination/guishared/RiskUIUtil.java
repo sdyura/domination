@@ -104,7 +104,9 @@ public class RiskUIUtil {
                     }
                     catch (Throwable th) {
                         try {
-                            return new URL(mapsdir,name).openStream();
+                            // on windows, absolute paths starting with "c:" confuse java, MalformedURLException: unknown protocol: c
+                            // so we need to put a "/" at the start so it knows the c: is not the protocol
+                            return new URL(mapsdir, name.contains(":") ? "/" + name : name).openStream();
                         }
                         catch (Throwable ex) { // dont really care about this one, it just means the file is not found here
                             IOException exception = new IOException( ex.toString() );
