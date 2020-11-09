@@ -3,7 +3,6 @@ package net.yura.domination.engine.translation;
 import java.util.ResourceBundle;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
-import java.io.IOException;
 import net.yura.domination.engine.RiskUtil;
 
 /**
@@ -12,11 +11,10 @@ import net.yura.domination.engine.RiskUtil;
  *
  * @author Christian Weiske <cweiske@cweiske.de>
  */
-public class MapTranslator
-{
+public class MapTranslator {
+
 	private static ResourceBundle MapResb = null;
 	private static ResourceBundle CardsResb = null;
-
 
 	/**
 	 * sets the currently used map
@@ -37,53 +35,46 @@ public class MapTranslator
 		//now get the locale and try to the strName + "_" + 2-letter-code
 		strFile = strName + "_" + TranslationBundle.getBundle().getLocale().getLanguage() + ".properties";
 
-		//file exists, use it!
 		try {
+                                //file exists, use it!
 				MapResb = new PropertyResourceBundle( RiskUtil.openMapStream(strFile) );
-
 		}
-		catch( Exception ioe ) {
+		catch (Exception ioe) {
 			try {
-				MapResb = ResourceBundle.getBundle( "net.yura.domination.engine.translation.DefaultMaps", TranslationBundle.getBundle().getLocale());
+				MapResb = ResourceBundle.getBundle("net.yura.domination.engine.translation.DefaultMaps", TranslationBundle.getBundle().getLocale());
 			}
-                        catch( MissingResourceException e) {
+                        catch (MissingResourceException e) {
 				//ok, we don't have one
 				MapResb = null;
 			}
 		}
-
-	}//public static void setMap(String strFile)
-
-
+	}
 
 	/**
 	 * returns the translation for the given string if any
 	 * If there is no translation, the string is simply returned
 	 */
-	public static String getTranslatedMapName(String strOriginal)
-	{
+	public static String getTranslatedMapName(String strOriginal) {
 		if (MapResb == null) {
 			return strOriginal;
 		}
 
 		String strReturn;
 		try {
-			strReturn = MapResb.getString( strOriginal);
-		} catch(MissingResourceException e) {
+			strReturn = MapResb.getString(strOriginal);
+		}
+                catch (MissingResourceException e) {
 			//no translation for the string
 			strReturn = strOriginal;
 		}
 		return strReturn;
-	}//public static String getTranslation(String strOriginal)
-
-
-
+	}
 
 	/**
 	 * sets the currently used map
 	 * Tries to find a matching properties file + resource bundle
 	 *
-	 * @param strFile	The map file absolute path
+	 * @param INstrFile	The map file absolute path
 	 */
 	public static void setCards(String INstrFile) {
 
@@ -93,50 +84,42 @@ public class MapTranslator
 		//now get the locale and try to the strName + "_" + 2-letter-code
 		String strFile = strName + "_" + TranslationBundle.getBundle().getLocale().getLanguage() + ".properties";
 
-		//file exists, use it!
 		try {
-
-			CardsResb = new PropertyResourceBundle( RiskUtil.openMapStream(strFile) );
-
-
-		} catch( Exception ioe ) {
-
-		    if ( INstrFile.equals("risk.cards") ) { // only use this with the default cards file
+                        // if file exists, use it!
+			CardsResb = new PropertyResourceBundle(RiskUtil.openMapStream(strFile));
+		}
+                catch (Exception ioe) {
+		    if (INstrFile.equals("risk.cards")) { // only use this with the default cards file
 			//load default cards translation bundle
 			try {
-				CardsResb = ResourceBundle.getBundle( "net.yura.domination.engine.translation.DefaultCards", TranslationBundle.getBundle().getLocale());
-			} catch( MissingResourceException e) {
-
-				//ok, we don't have one
+				CardsResb = ResourceBundle.getBundle("net.yura.domination.engine.translation.DefaultCards", TranslationBundle.getBundle().getLocale());
+			}
+                        catch (MissingResourceException e) {
 				CardsResb = null;
 			}
 		    }
-
+                    else {
+                        //ok, we don't have one
+                        CardsResb = null;
+                    }
 		}
-
 	}
 
-
-
 	/**
-	 * returns the translation for the given string if any
-	 * If there is no translation, the string is simply returned
+	 * returns the translation for the given missionId if any
+	 * If there is no translation, null is returned
 	 */
-	public static String getTranslatedMissionName(String strOriginal)
-	{
+	public static String getTranslatedMissionName(String riskMissionId) {
 		if (CardsResb == null) {
 			return null;
 		}
 
-		String strReturn;
 		try {
-			strReturn = CardsResb.getString( strOriginal);
-		} catch(MissingResourceException e) {
-			//no translation for the string
-			strReturn = null;
+			return CardsResb.getString(riskMissionId);
 		}
-		return strReturn;
+                catch (MissingResourceException e) {
+			//no translation for the string
+			return null;
+		}
 	}
-
-
 }
