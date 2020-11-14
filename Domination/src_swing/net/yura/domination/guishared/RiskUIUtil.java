@@ -93,6 +93,10 @@ public class RiskUIUtil {
                 public InputStream openStream(String name) throws IOException {
                     return getRiskFileURL(name).openStream();
                 }
+                
+                /**
+                 * in Desktop app mode we need to allow full paths for MapEditor, and relative mapId filenames
+                 */
                 public InputStream openMapStream(String name) throws IOException {
                     try {
                         // TODO

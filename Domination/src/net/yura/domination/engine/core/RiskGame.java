@@ -1514,7 +1514,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 	public void loadMap(boolean cleanLoad, BufferedReader bufferin) throws Exception {
 
-                MapTranslator.setMap( mapfile );
+                MapTranslator mapTranslator = new MapTranslator();
+                mapTranslator.setMap(mapfile);
 
 		StringTokenizer st=null;
 
@@ -1570,7 +1571,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 					String id=st.nextToken(); //System.out.print(name+"\n"); // testing
 
 					// get translation
-					String name = MapTranslator.getTranslatedMapName(id).replaceAll( "_", " ");
+					String name = mapTranslator.getTranslatedMapName(id).replaceAll("_", " ");
 
 					int noa=Integer.parseInt( st.nextToken() ); //System.out.print(noa+"\n"); // testing
 					int color=ColorUtil.getColor( st.nextToken() ); //System.out.print(color.toString()+"\n"); // testing
@@ -1597,7 +1598,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 					String id=st.nextToken(); //System.out.print(name+"\n"); // testing
 
 					// get translation
-					String name = MapTranslator.getTranslatedMapName(id).replaceAll( "_", " ");
+					String name = mapTranslator.getTranslatedMapName(id).replaceAll("_", " ");
 
 					int continent = Integer.parseInt(st.nextToken());
 					int x = Integer.parseInt(st.nextToken());
@@ -1840,6 +1841,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 		//System.out.print("Starting load cards and missions...\n");
 
 		BufferedReader bufferin=RiskUtil.readMap( RiskUtil.openMapStream(cardsfile) );
+                MapTranslator mapTranslator = new MapTranslator();
+                mapTranslator.setCards(cardsfile);
 
 		String input = bufferin.readLine();
 		String mode = "none";
@@ -1910,7 +1913,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 					Continent c3 = getMissionContinentfromString( s6 );
 
 					String missioncode=s1+"-"+noc+"-"+noa+"-"+s4+"-"+s5+"-"+s6;
-					String description=rawLoad?null:MapTranslator.getTranslatedMissionName(missioncode);
+					String description=rawLoad?null:mapTranslator.getTranslatedMissionName(missioncode);
 
 					if (description==null) {
 					    description="";
@@ -1954,7 +1957,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 					else {
 						//System.out.print("NOT adding this mission as it refures to an unused player\n"); // testing
 					}
-
 				}
 				else if (mode.equals("newsection")) {
 
@@ -2075,8 +2077,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 		cardsfile = f;
 		bufferin.close();
-
-		MapTranslator.setCards( f );
 
 		return yesmissions;
 	}

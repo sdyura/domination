@@ -275,11 +275,13 @@ public class RiskUtil {
 
                 try {
 
-                        bufferin= RiskUtil.readMap(RiskUtil.openMapStream(fileName));
-                        List misss=null;
+                        bufferin = RiskUtil.readMap(RiskUtil.openMapStream(fileName));
+                        List misss = null;
+                        MapTranslator mapTranslator = null;
 
                         if (cards) {
-                            MapTranslator.setCards( fileName );
+                            mapTranslator = new MapTranslator();
+                            mapTranslator.setCards(fileName);
                             misss = new ArrayList();
                         }
 
@@ -330,7 +332,7 @@ public class RiskUtil {
 
                                                 StringTokenizer st = new StringTokenizer(input);
                                             
-                                                String description=MapTranslator.getTranslatedMissionName(st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken());
+                                                String description=mapTranslator.getTranslatedMissionName(st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken()+"-"+st.nextToken());
 
                                                 if (description==null) {
 

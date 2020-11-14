@@ -13,8 +13,8 @@ import net.yura.domination.engine.RiskUtil;
  */
 public class MapTranslator {
 
-	private static ResourceBundle MapResb = null;
-	private static ResourceBundle CardsResb = null;
+	private ResourceBundle MapResb = null;
+	private ResourceBundle CardsResb = null;
 
 	/**
 	 * sets the currently used map
@@ -22,7 +22,7 @@ public class MapTranslator {
 	 *
 	 * @param strFile	The map file absolute path
 	 */
-	public static void setMap(String strFile) {
+	public void setMap(String strFile) {
 
                 if (strFile==null) {
                     MapResb = null;
@@ -41,7 +41,7 @@ public class MapTranslator {
 		}
 		catch (Exception ioe) {
 			try {
-				MapResb = ResourceBundle.getBundle("net.yura.domination.engine.translation.DefaultMaps", TranslationBundle.getBundle().getLocale());
+				MapResb = RiskUtil.getResourceBundle(MapTranslator.class, "DefaultMaps", TranslationBundle.getBundle().getLocale());
 			}
                         catch (MissingResourceException e) {
 				//ok, we don't have one
@@ -54,7 +54,7 @@ public class MapTranslator {
 	 * returns the translation for the given string if any
 	 * If there is no translation, the string is simply returned
 	 */
-	public static String getTranslatedMapName(String strOriginal) {
+	public String getTranslatedMapName(String strOriginal) {
 		if (MapResb == null) {
 			return strOriginal;
 		}
@@ -76,7 +76,7 @@ public class MapTranslator {
 	 *
 	 * @param INstrFile	The map file absolute path
 	 */
-	public static void setCards(String INstrFile) {
+	public void setCards(String INstrFile) {
 
 		//remove the extension
 		String strName = INstrFile.substring( 0, INstrFile.lastIndexOf( '.'));
@@ -92,7 +92,7 @@ public class MapTranslator {
 		    if (INstrFile.equals("risk.cards")) { // only use this with the default cards file
 			//load default cards translation bundle
 			try {
-				CardsResb = ResourceBundle.getBundle("net.yura.domination.engine.translation.DefaultCards", TranslationBundle.getBundle().getLocale());
+				CardsResb = RiskUtil.getResourceBundle(MapTranslator.class, "DefaultCards", TranslationBundle.getBundle().getLocale());
 			}
                         catch (MissingResourceException e) {
 				CardsResb = null;
@@ -109,7 +109,7 @@ public class MapTranslator {
 	 * returns the translation for the given missionId if any
 	 * If there is no translation, null is returned
 	 */
-	public static String getTranslatedMissionName(String riskMissionId) {
+	public String getTranslatedMissionName(String riskMissionId) {
 		if (CardsResb == null) {
 			return null;
 		}
