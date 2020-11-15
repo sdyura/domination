@@ -98,8 +98,8 @@ public class MapServerClient extends HTTPClient {
         logger.log(level, "http error: "+responseCode+" "+ex+" for request: "+request+"\n"+headers, ex!=null?ex:new Exception());
 
         // show error dialog to the user
-        if (ch!=null) {
-            String error = "error:"+(responseCode!=0?" "+responseCode:"")+(ex!=null?" "+ex:"");
+        if (ch != null) {
+            String error = "MapServer error:"+(responseCode!=0?" "+responseCode:"")+(ex!=null?" "+ex:"");
             if (request.type == REQUEST_TYPE_XML || request.type == REQUEST_TYPE_PLUS) {
                 ch.onXMLError(error);
             }

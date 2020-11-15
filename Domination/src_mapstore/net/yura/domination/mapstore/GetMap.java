@@ -33,12 +33,16 @@ public class GetMap extends Observable implements MapServerListener {
             client.downloadMap(MapChooser.getURL(MapChooser.getContext(url), themap.mapUrl));
         }
         else {
-            onError("wrong number of maps on server: " + maps.size() + " for map: " + filename);
+            String error = "wrong number of maps on server: " + maps.size() + " for map: " + filename;
+            System.err.println("invalid responce from MapStore: " + error);
+            onError(error);
         }
     }
 
     private void onError(String error) {
-        System.err.println(error); // TODO we dont want to trigger the error catcher for network problems
+        // all errors come here including network errors, so we just log the info
+        // any serious error would have already been logged as such by the MapServerClient
+        System.out.println("GetMap Error: " + error);
         notifyListeners(RiskUtil.ERROR);
     }
 
@@ -62,5 +66,4 @@ public class GetMap extends Observable implements MapServerListener {
 
     public void gotResultCategories(String url, List categories) { }
     public void publishImg(Object param) { }
-
 }
