@@ -3,6 +3,9 @@ package net.yura.domination.lobby.client;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -83,7 +86,18 @@ public class RiskMap {
                                             map = MapUpdateService.getOnlineMap(mapUID);
                                             // map is null if we can not connect to the server to get it
                                             if (map != null) {
-                                                setImage(ImageIO.read(new URL(new URL(MapChooser.MAP_PAGE), map.getPreviewUrl())));
+                                                try {
+                                                    setImage(ImageIO.read(new URL(new URL(MapChooser.MAP_PAGE), map.getPreviewUrl())));
+                                                }
+                                                catch (IOException ex) { // javax.imageio.IIOException: Error reading PNG image data
+                                                    // we may have bad network
+                                                    if (ex.getCause() instanceof SocketException || ex.getCause() instanceof SocketTimeoutException) {
+                                                        logger.log(Level.INFO, "network error getting preview for " + mapUID);
+                                                    }
+                                                    else {
+                                                        throw ex;
+                                                    }
+                                                }
                                             }
                                             else {
                                                 logger.log(Level.INFO, "no online map found " + mapUID);

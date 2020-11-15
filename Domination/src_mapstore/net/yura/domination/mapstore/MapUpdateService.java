@@ -115,7 +115,7 @@ logger.fine("URL: " + url + " payload: " + payload);
             return (List)map.get("maps");
         }
         catch (Throwable ex) {
-            logger.log(Level.INFO, "error in getting map versions", ex);
+            logger.log(Level.INFO, "error in getting map metadata", ex);
             return Collections.EMPTY_LIST;
         }
     }
@@ -204,6 +204,5 @@ logger.fine("URL: " + url + " payload: " + payload);
             
             g.setClip(clip);
         }
-
     }
 }
