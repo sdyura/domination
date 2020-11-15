@@ -1519,15 +1519,15 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 		StringTokenizer st=null;
 
-		Vector Countries;
-		Vector Continents;
+		List Countries;
+		List Continents;
 		if (cleanLoad) {
-                    Countries = new Vector();
-                    Continents = new Vector();
+                    Countries = new ArrayList();
+                    Continents = new ArrayList();
                 }
                 else {
-                    Countries = new Vector(Arrays.asList(this.Countries));
-                    Continents = new Vector(Arrays.asList(this.Continents));
+                    Countries = Arrays.asList(this.Countries);
+                    Continents = Arrays.asList(this.Continents);
 		}
 
                 int mapVer = 1;
@@ -1580,7 +1580,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 						// there was no check for null b4 here, but now we need this for the map editor
 						color = getRandomColor();
-
 					}
 
 					if ( st.hasMoreTokens() ) { throw new Exception("unknown item found in map file: "+ st.nextToken() ); }
@@ -1611,14 +1610,14 @@ transient - A keyword in the Java programming language that indicates that a fie
 					if (cleanLoad) {
 						country = new Country();
 						Countries.add(country);
-						((Continent)Continents.elementAt( continent - 1 )).addTerritoriesContained(country);
+						((Continent)Continents.get( continent - 1 )).addTerritoriesContained(country);
 					}
                                         else {
 						country = (Country)Countries.get(color -1);
 					}
 
 					country.setColor(color);
-					country.setContinent((Continent)Continents.elementAt( continent - 1 ));
+					country.setContinent((Continent)Continents.get( continent - 1 ));
 					country.setIdString(id);
 					country.setName(name);
 					country.setX(x);
@@ -1629,10 +1628,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 					int country=Integer.parseInt( st.nextToken() ); //System.out.print(country+"\n"); // testing
 					while (st.hasMoreElements()) {
-						((Country)Countries.elementAt( country - 1 )).addNeighbour( ((Country)Countries.elementAt( Integer.parseInt(st.nextToken()) - 1 )) );
+						((Country)Countries.get( country - 1 )).addNeighbour( ((Country)Countries.get( Integer.parseInt(st.nextToken()) - 1 )) );
 					}
-
-
 				}
 				else if (mode.equals("newsection")) {
 
@@ -2740,11 +2737,14 @@ System.out.print(str+"]\n");
     	this.r = new Random();
     	if (this.mapfile != null && gameState!=STATE_NEW_GAME) {
             try {
+                    if (Countries.length == 0) {
+                        throw new IllegalStateException("no countries found in game");
+                    }
                     loadMap(false, null);
             }
             catch (Exception e1) {
         	// stupid fix for android 1.6
-        	IOException ex = new IOException(e1.toString());
+        	IOException ex = new IOException("can not load map " + mapfile + " " + gameState + " " + e1);
         	ex.initCause(e1);
                 throw ex;
             }
