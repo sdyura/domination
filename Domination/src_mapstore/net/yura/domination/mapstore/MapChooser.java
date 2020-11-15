@@ -206,7 +206,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                 return true;
             }
             catch (Exception ex) {
-                Logger.info("can not load image in cache " + key + " " + url, ex);
+                Logger.warn("can not load image in cache " + key + " " + url, ex);
             }
         }
         // can be null when shut down
