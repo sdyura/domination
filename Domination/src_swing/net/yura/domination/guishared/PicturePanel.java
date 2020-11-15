@@ -912,7 +912,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 			GrayImage=null;
 			HighLightImage=null;
 			normalImage=null;
-
 		}
 
 		public boolean checkChange(Color b) {
@@ -924,7 +923,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 			}
 
 			return false;
-
 		}
 
 		public void setTemp1(BufferedImage a) {
@@ -1075,8 +1073,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 		public int getHeight() {
 			return (y2-y1+1);
 		}
-
-
 	}
 
 	/**
@@ -1102,8 +1098,18 @@ public class PicturePanel extends JPanel implements MapPanel {
 
 		RescaleOp HighLight = new RescaleOp( 0.5f, -1.0f, null);
                 // we have to filter to the same type of image as the source image
-		HighLight.filter( ci.getGrayImage() , pictureA );
-
+                
+                try {
+                    HighLight.filter(ci.getGrayImage(), pictureA);
+                }
+                catch (UnsatisfiedLinkError err) {
+                    // java.lang.UnsatisfiedLinkError: no awt in java.library.path
+                    // no idea why this error can happen
+                    // fall back to unfiltered image
+                    pictureA = ci.getGrayImage();
+                    System.err.println("unable to filter " + HighLight + " " + w + "x" + h + " " + ci.getGrayImage().getType());
+                    err.printStackTrace();
+                }
 
 		BufferedImage pictureB = new BufferedImage( w ,h, java.awt.image.BufferedImage.TYPE_INT_ARGB );
 
@@ -1131,7 +1137,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 		g.dispose();
 
 		return pictureB;
-
 	}
 
         public final static int PREVIEW_WIDTH=203;
@@ -1198,13 +1203,9 @@ public class PicturePanel extends JPanel implements MapPanel {
 			return tmpimg;
                 }
                 return img;
-
 	}
 
 	public Image getImage() {
-
 		return img;
-
 	}
-
 }
