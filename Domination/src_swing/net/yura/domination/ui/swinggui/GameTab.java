@@ -1560,7 +1560,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 					new ActionListener() {
 						public void actionPerformed(ActionEvent a) {
 
-							String name = RiskUIUtil.getNewFile( RiskUIUtil.findParentFrame(swingGUIPanel), RiskFileFilter.RISK_CARDS_FILES);
+							String name = RiskUIUtil.getNewMapsFile(RiskUIUtil.findParentFrame(swingGUIPanel), RiskFileFilter.RISK_CARDS_FILES);
 
 							if (name != null) {
 

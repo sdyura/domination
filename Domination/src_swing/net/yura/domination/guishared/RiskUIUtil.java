@@ -451,15 +451,15 @@ public class RiskUIUtil {
             }
 
             // can not have the map store, fall back to normal map chooser
-            return getNewFile(f, RiskFileFilter.RISK_MAP_FILES);
+            return getNewMapsFile(f, RiskFileFilter.RISK_MAP_FILES);
         }
 
-        public static String getNewFile(Frame f,String a) {
+        public static String getNewMapsFile(Frame f,String extension) {
             if (checkForNoSandbox()) {
-                return getNewFileNoSandbox(f, a);
+                return getNewMapsFileNoSandbox(f, extension);
             }
             else {
-                return getNewFileInSandbox(f, a);
+                return getNewFileInSandbox(f, extension);
             }
         }
         
@@ -468,40 +468,55 @@ public class RiskUIUtil {
             return osName.startsWith("mac");
         }
 
-        public static String getNewFileNoSandbox(Frame f,String a) {
+        /**
+         * Used if the MapStore fails, also used in the map editor
+         * and also for selecting the cards file
+         */
+        public static String getNewMapsFileNoSandbox(Frame f, String extension) {
+            File md = getFile(mapsdir);
+            RiskFileFilter filter = new RiskFileFilter(extension);
 
-            File md = getFile( mapsdir );
-            RiskFileFilter filter = new RiskFileFilter(a);
-
+            java.io.File file = null;
+            
             // JFileChooser on mac is really bad, but FileDialog uses the native picker
             if (isMac()) {
+                file = getAWTFileDialogFile(f, md, filter);
+            }
+            else {
+                JFileChooser fc = new JFileChooser(md);
+                fc.setFileFilter(filter);
+
+                int returnVal = fc.showOpenDialog(f);
+                if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+                    file = fc.getSelectedFile();
+                    // sometimes this is null, bug in java? fall back to FileDialog
+                    if (file == null) {
+                        file = getAWTFileDialogFile(f, md, filter);
+                    }
+                }
+            }
+            
+            if (file == null) {
+                return null;
+            }
+            if (file.getParentFile().equals(md)) {
+                return file.getName();
+            }
+            return file.getPath();
+        }
+        
+        private static File getAWTFileDialogFile(Frame f, File md, FilenameFilter filter) {
                 FileDialog fileDialog = new FileDialog(f);
-                fileDialog.setDirectory(md.toString());
+                fileDialog.setMode(FileDialog.LOAD);
+                fileDialog.setDirectory(md.getAbsolutePath());
                 fileDialog.setFilenameFilter(filter);
                 fileDialog.setVisible(true);
-                return fileDialog.getFile();
-            }
-
-            JFileChooser fc = new JFileChooser( md );
-            fc.setFileFilter(filter);
-
-            int returnVal = fc.showOpenDialog( f );
-            if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-
-                    java.io.File file = fc.getSelectedFile();
-
-                    // useless chack, but sometimes this is null
-                    if (file==null) { return null; }
-
-                    if (file.getParentFile().equals(md)) {
-                        return file.getName();
-                    }
-                    else {
-                        return file.getPath();
-                    }
-            }
-
-            return null;
+                String filename = fileDialog.getFile();
+                if (filename == null) {
+                    return null;
+                }
+                return new File(fileDialog.getDirectory(), filename);
         }
 
 	public static String getNewFileInSandbox(Frame f,String a) {
@@ -567,14 +582,23 @@ public class RiskUIUtil {
 		}
 
                 File dir = getSaveGameDir();
+                RiskFileFilter filter = new RiskFileFilter(extension);
+                
+                if (isMac()) {
+                    File file = getAWTFileDialogFile(frame, dir, filter);
+                    if (file == null) {
+                        return null;
+                    }
+                    return file.getAbsolutePath();
+                }
+                
                 JFileChooser fc = new JFileChooser(dir);
-
-                fc.setFileFilter(new RiskFileFilter(extension));
+                fc.setFileFilter(filter);
 
                 int returnVal = fc.showDialog(frame, TranslationBundle.getBundle().getString("mainmenu.loadgame.loadbutton"));
                 if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
                         java.io.File file = fc.getSelectedFile();
-                        // Write your code here what to do with selected file
+
                         return file.getAbsolutePath();
                 }
 
@@ -605,8 +629,9 @@ public class RiskUIUtil {
 		}
 
                 File dir = getSaveGameDir();
+                RiskFileFilter filter = new RiskFileFilter(extension);
                 JFileChooser fc = new JFileChooser(dir);
-                fc.setFileFilter(new RiskFileFilter(extension));
+                fc.setFileFilter(filter);
 
                 int returnVal = fc.showSaveDialog( frame );
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -617,7 +642,7 @@ public class RiskUIUtil {
                             FileDialog fd = new FileDialog(frame);
                             fd.setMode(FileDialog.SAVE);
                             fd.setDirectory(dir.getAbsolutePath());
-                            fd.setFilenameFilter(new RiskFileFilter(extension)); // does nothing on windows
+                            fd.setFilenameFilter(filter); // does nothing on windows
                             fd.setVisible(true);
                             String filename = fd.getFile();
                             if (filename == null) {

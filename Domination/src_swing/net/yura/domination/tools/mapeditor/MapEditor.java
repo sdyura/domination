@@ -526,7 +526,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		else if ("load".equals(action)) {
 
 		    try {
-			String name = RiskUIUtil.getNewFile( RiskUIUtil.findParentFrame(this), "map" );
+			String name = RiskUIUtil.getNewMapsFile(RiskUIUtil.findParentFrame(this), "map");
 
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 

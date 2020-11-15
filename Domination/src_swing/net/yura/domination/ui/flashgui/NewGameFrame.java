@@ -815,7 +815,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			myrisk.parser("choosemap " + RiskGame.getDefaultMap() );
 		}
 		else if (e.getSource()==chooseCards) {
-			String name = RiskUIUtil.getNewFile( this, RiskFileFilter.RISK_CARDS_FILES);
+			String name = RiskUIUtil.getNewMapsFile(this, RiskFileFilter.RISK_CARDS_FILES);
 
 			if (name != null) {
 				myrisk.parser("choosecards " + name );
