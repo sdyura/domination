@@ -110,6 +110,11 @@ public class FlashMiniLobby {
                     playerColor = playerColor.darker();
                 }
                 if (darkTheme && !lightPlayer) {
+                    // brighter() does not do anything to blue, so we make it brigher ourselves
+                    if (playerColor.equals(playerColor.brighter()) && playerColor.equals(Color.BLUE)) {
+                        System.out.println("blue brighter fail");
+                        playerColor = new Color(30, 30, 255);
+                    }
                     playerColor = playerColor.brighter();
                 }
 
