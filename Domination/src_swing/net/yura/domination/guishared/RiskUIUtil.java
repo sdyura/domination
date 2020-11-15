@@ -612,6 +612,20 @@ public class RiskUIUtil {
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                         java.io.File file = fc.getSelectedFile(); // can return null, bug in java?? what should we do??
 
+                        // if JFileChooser failed, fall back to awt FileDialog
+                        if (file == null) {
+                            FileDialog fd = new FileDialog(frame);
+                            fd.setMode(FileDialog.SAVE);
+                            fd.setDirectory(dir.getAbsolutePath());
+                            fd.setFilenameFilter(new RiskFileFilter(extension)); // does nothing on windows
+                            fd.setVisible(true);
+                            String filename = fd.getFile();
+                            if (filename == null) {
+                                return null;
+                            }
+                            file = new File(fd.getDirectory(), filename);
+                        }
+                        
                         String fileName = file.getAbsolutePath();
 
                         if (!(fileName.endsWith( "." + extension ))) {
