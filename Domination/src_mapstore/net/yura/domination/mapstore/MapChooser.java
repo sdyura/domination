@@ -201,14 +201,17 @@ public class MapChooser implements ActionListener,MapServerListener {
     public static boolean getRemoteImage(Object key, String url, MapServerClient c) {
         InputStream in = repo != null ? repo.get(url) : null;
         if (in != null) {
-            gotImg(key, in);
-            return true;
+            try {
+                gotImg(key, in);
+                return true;
+            }
+            catch (Exception ex) {
+                Logger.info("can not load image in cache " + key + " " + url, ex);
+            }
         }
-        else {
-            // can be null when shut down
-            if (c != null) c.getImage(url, key);
-            return false;
-        }
+        // can be null when shut down
+        if (c != null) c.getImage(url, key);
+        return false;
     }
 
     /**
