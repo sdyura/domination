@@ -113,7 +113,7 @@ public class RiskUIUtil {
                             return new URL(mapsdir, name.contains(":") ? "/" + name : name).openStream();
                         }
                         catch (Throwable ex) { // dont really care about this one, it just means the file is not found here
-                            IOException exception = new IOException( ex.toString() );
+                            IOException exception = new IOException("openMap error \"" + name + "\" " + ex);
                             exception.initCause(th); // in java 1.4
                             throw exception;
                         }
