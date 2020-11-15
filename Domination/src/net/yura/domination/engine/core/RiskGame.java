@@ -1731,7 +1731,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 			}
 			else {
-
 				if (input.charAt(0)=='[' && input.charAt( input.length()-1 )==']') {
 					mode="newsection";
 				}
@@ -1777,8 +1776,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 			input = bufferin.readLine(); // get next line
 		}
 
-		if ( yesmap==false ) { throw new Exception("error with map file"); }
-		if ( yescards==false ) { throw new Exception("cards file not specified in map file"); }
+		if ( yesmap==false ) { throw new Exception("borders not found in map " + f); }
+		if ( yescards==false ) { throw new Exception("cards file not specified in map " + f); }
 
 		mapfile = f;
 		bufferin.close();
