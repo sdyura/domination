@@ -293,14 +293,7 @@ public class FlashRiskAdapter implements RiskListener {
 		System.gc();
 
 
-
-
-		menu.show();
-
-
-
-
-
+		menu.show(); // TODO not in UI thread, can cause errors
 		menu.requestFocus();
 		menu.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}

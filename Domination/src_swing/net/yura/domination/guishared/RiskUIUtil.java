@@ -541,7 +541,6 @@ public class RiskUIUtil {
         public static final String SAVES_DIR = "saves/";
 
 	public static String getLoadFileName(Frame frame) {
-
 		if (applet!=null) {
 			showAppletWarning(frame);
 			return null;
@@ -549,61 +548,50 @@ public class RiskUIUtil {
 
                 String extension = RiskFileFilter.RISK_SAVE_FILES;
 
-		if (webstart!=null) {
-
+		if (webstart != null) {
 			try {
-
 				javax.jnlp.FileOpenService fos = (javax.jnlp.FileOpenService)javax.jnlp.ServiceManager.lookup("javax.jnlp.FileOpenService");
 
 				javax.jnlp.FileContents fc = fos.openFileDialog(SAVES_DIR, new String[] { extension } );
 
-				if (fc!=null) {
+				if (fc != null) {
 					fileio.put(fc.getName(),fc);
-
 					return fc.getName();
 				}
-				else {
-					return null;
-				}
+
+				return null;
 			}
 			catch(Exception e) {
 				return null;
 			}
 		}
-		else {
 
-                        File dir = getSaveGameDir();
-			JFileChooser fc = new JFileChooser(dir);
+                File dir = getSaveGameDir();
+                JFileChooser fc = new JFileChooser(dir);
 
-			fc.setFileFilter(new RiskFileFilter(extension));
+                fc.setFileFilter(new RiskFileFilter(extension));
 
-			int returnVal = fc.showDialog( frame , TranslationBundle.getBundle().getString("mainmenu.loadgame.loadbutton"));
-			if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
+                int returnVal = fc.showDialog(frame, TranslationBundle.getBundle().getString("mainmenu.loadgame.loadbutton"));
+                if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
+                        java.io.File file = fc.getSelectedFile();
+                        // Write your code here what to do with selected file
+                        return file.getAbsolutePath();
+                }
 
-				java.io.File file = fc.getSelectedFile();
-				// Write your code here what to do with selected file
-				return file.getAbsolutePath();
-			}
-                        else {
-				// Write your code here what to do if user has canceled Open dialog
-				return null;
-			}
-		}
+                return null;
 	}
 
 	public static InputStream getLoadFileInputStream(String file) throws Exception {
 		// it is impossible for a applet to get here
-		if (webstart!=null) {
+		if (webstart != null) {
 			javax.jnlp.FileContents fc = (javax.jnlp.FileContents)fileio.remove(file);
 			return fc.getInputStream();
 		}
-		else {
-			return new java.io.FileInputStream(file);
-		}
+
+		return new java.io.FileInputStream(file);
 	}
 
 	public static String getSaveFileName(Frame frame) {
-
 		if (applet!=null) {
 			showAppletWarning(frame);
 			return null;
@@ -611,36 +599,28 @@ public class RiskUIUtil {
 
                 String extension = RiskFileFilter.RISK_SAVE_FILES;
 
-		if (webstart!=null) {
-
+		if (webstart != null) {
 			JOptionPane.showMessageDialog(frame,"Please make sure to select a file name ending with \"."+extension+"\"");
 			return SAVES_DIR+"filename."+extension;
-
 		}
-		else {
-                        File dir = getSaveGameDir();
-			JFileChooser fc = new JFileChooser(dir);
-			fc.setFileFilter(new RiskFileFilter(extension));
 
-			int returnVal = fc.showSaveDialog( frame );
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File dir = getSaveGameDir();
+                JFileChooser fc = new JFileChooser(dir);
+                fc.setFileFilter(new RiskFileFilter(extension));
 
-				java.io.File file = fc.getSelectedFile();
-				// Write your code here what to do with selected file
+                int returnVal = fc.showSaveDialog( frame );
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        java.io.File file = fc.getSelectedFile(); // can return null, bug in java?? what should we do??
 
-				String fileName = file.getAbsolutePath();
+                        String fileName = file.getAbsolutePath();
 
-				if (!(fileName.endsWith( "." + extension ))) {
-					fileName = fileName + "." + extension;
-				}
+                        if (!(fileName.endsWith( "." + extension ))) {
+                                fileName = fileName + "." + extension;
+                        }
 
-				return fileName;
-			}
-                        else {
-				// Write your code here what to do if user has canceled Save dialog
-				return null;
-			}
-		}
+                        return fileName;
+                }
+                return null;
 	}
 
 	public static void saveFile(String name,RiskGame obj) throws Exception {
