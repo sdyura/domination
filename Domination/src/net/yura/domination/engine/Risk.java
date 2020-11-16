@@ -1247,16 +1247,11 @@ RiskUtil.printStackTrace(e);
                                                             autoplaceall = newgame_autoplaceall;
 
                                                             try {
-
                                                                     game.startGame(newgame_type,newgame_cardType,newgame_recycle,threeDice);
-
                                                             }
                                                             catch (Exception e) {
-
                                                                     RiskUtil.printStackTrace(e);
-
                                                             }
-
                                                     }
 
                                                     // this checks if the game was able to start or not
@@ -1310,10 +1305,12 @@ RiskUtil.printStackTrace(e);
 
                                                         output=null;
                                                         needInput=false;
-
+                                                    }
+                                                    else if (newgame_type == RiskGame.MODE_SECRET_MISSION && game.getMissions().size() < game.getPlayers().size()) {
+                                                        output="map does not have enough missions for players";
                                                     }
                                                     else {
-                                                        output=resb.getString( "core.start.error.players");
+                                                        output=resb.getString("core.start.error.players");
                                                     }
                                                 }
                                                 else {

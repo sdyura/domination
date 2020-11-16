@@ -2148,7 +2148,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * @param file The filename of the save
 	 * @return boolean Return trues if you saved, returns false if you cannot
 	 */
-	public void saveGame(OutputStream file) throws Exception { //added RiskGame parameter g, so remember to change in parser
+	public void saveGame(OutputStream file) throws IOException { //added RiskGame parameter g, so remember to change in parser
 
             ObjectOutputStream out = new RiskObjectOutputStream(file);
             out.writeObject(this);
@@ -2185,7 +2185,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 				empty = Countries[c];
 				c=Countries.length;
 			}
-
 		}
 		if (empty != null ) {
 			return false;
@@ -2734,7 +2733,7 @@ System.out.print(str+"]\n");
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
     	in.defaultReadObject();
     	this.r = new Random();
-    	if (this.mapfile != null && gameState!=STATE_NEW_GAME) {
+    	if (this.mapfile != null && gameState != STATE_NEW_GAME) {
             try {
                     if (Countries.length == 0) {
                         throw new IllegalStateException("no countries found in game");

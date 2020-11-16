@@ -273,22 +273,24 @@ public class CardsDialog extends JDialog {
 	    if (!(card.getName().equals("wildcard"))) {
 
 		g2.setColor( Color.black );
-                GraphicsUtil.drawStringCenteredAt(g2, ((Country)card.getCountry()).getName(), cardWidth / 2, 15);
+                String countryName = card.getCountry().getName();
+                // as we use SwingGUI for debugging, allow the display of broken game state
+                GraphicsUtil.drawStringCenteredAt(g2, countryName == null ? "ERROR" : countryName, cardWidth / 2, 15);
 
+                int countryId = card.getCountry().getColor();
+                if (countryId > 0) { // this should never happen unless there is a broken game state
+                    BufferedImage pictureB = pp.getCountryImage(countryId, false);
 
+                    int width = pictureB.getWidth();
+                    int height = pictureB.getHeight();
 
-		BufferedImage pictureB = pp.getCountryImage( ((Country)card.getCountry()).getColor() , false);
+                    if (width > 50) { width=50; }
+                    if (height > 50) { height=50; }
 
-		int width = pictureB.getWidth();
-		int height = pictureB.getHeight();
+                    Image i = pictureB.getScaledInstance(width,height, java.awt.Image.SCALE_SMOOTH );
 
-		if (width > 50) { width=50; }
-		if (height > 50) { height=50; }
-
-		Image i = pictureB.getScaledInstance(width,height, java.awt.Image.SCALE_SMOOTH );
-
-
-		GraphicsUtil.drawImage(g2, i, 25 + (25 - (i.getWidth(this) / 2)), 25 + (25 - (i.getHeight(this) / 2)), null);
+                    GraphicsUtil.drawImage(g2, i, 25 + (25 - (i.getWidth(this) / 2)), 25 + (25 - (i.getHeight(this) / 2)), null);
+                }
 
 		if (card.getName().equals("Infantry")) {
 		    GraphicsUtil.drawImage(g2, Infantry, 15, 85, null);

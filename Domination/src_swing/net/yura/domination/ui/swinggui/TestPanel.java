@@ -526,7 +526,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		}
 		else if ("allcards".equals(command)) {
 
-			if (myrisk.getGame()!=null && myrisk.getGame().getState()!=RiskGame.STATE_NEW_GAME && myrisk.getGame().getCards()!=null) {
+			if (myrisk.getGame() != null && myrisk.getGame().getCards() != null) {
 
 				Frame frame = RiskUIUtil.findParentFrame(this);
 

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.UncheckedIOException;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.util.ArrayList;
@@ -175,6 +176,15 @@ public class ServerGameRisk extends TurnBasedGame {
 		}
 
                 myrisk.setPaued(false);
+
+                if (myrisk.getGame().getState() == RiskGame.STATE_NEW_GAME) {
+                    // give better error if player tries to start a mission game when map does not support it
+                    if (myrisk.getGame().getGameMode() == RiskGame.MODE_SECRET_MISSION && myrisk.getGame().getMissions().size() < myrisk.getGame().getPlayers().size() ) {
+                        throw new IllegalStateException("map does not support missions");
+                    }
+                    // this can happen if the user creates a mission game on a map that does not support missions
+                    throw new IllegalStateException("game failed to start");
+                }
 	}
 
         public byte[] saveGameState() {
@@ -183,8 +193,8 @@ public class ServerGameRisk extends TurnBasedGame {
                 myrisk.getGame().saveGame(bout); // TODO this is prob not very thread safe!!
                 return bout.toByteArray();
             }
-            catch (Exception ex) {
-                throw new RuntimeException(ex);
+            catch (IOException ex) {
+                throw new UncheckedIOException(ex);
             }
         }
 
