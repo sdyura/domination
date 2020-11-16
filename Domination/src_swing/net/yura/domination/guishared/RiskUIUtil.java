@@ -476,11 +476,11 @@ public class RiskUIUtil {
             File md = getFile(mapsdir);
             RiskFileFilter filter = new RiskFileFilter(extension);
 
-            java.io.File file = null;
+            java.io.File file;
             
             // JFileChooser on mac is really bad, but FileDialog uses the native picker
             if (isMac()) {
-                file = getAWTFileDialogFile(f, md, filter);
+                file = getAWTFileDialogFile(f, md, filter, FileDialog.LOAD);
             }
             else {
                 JFileChooser fc = new JFileChooser(md);
@@ -492,8 +492,11 @@ public class RiskUIUtil {
                     file = fc.getSelectedFile();
                     // sometimes this is null, bug in java? fall back to FileDialog
                     if (file == null) {
-                        file = getAWTFileDialogFile(f, md, filter);
+                        file = getAWTFileDialogFile(f, md, filter, FileDialog.LOAD);
                     }
+                }
+                else {
+                    file = null;
                 }
             }
             
@@ -506,17 +509,17 @@ public class RiskUIUtil {
             return file.getPath();
         }
         
-        private static File getAWTFileDialogFile(Frame f, File md, FilenameFilter filter) {
-                FileDialog fileDialog = new FileDialog(f);
-                fileDialog.setMode(FileDialog.LOAD);
-                fileDialog.setDirectory(md.getAbsolutePath());
-                fileDialog.setFilenameFilter(filter);
-                fileDialog.setVisible(true);
-                String filename = fileDialog.getFile();
-                if (filename == null) {
-                    return null;
-                }
-                return new File(fileDialog.getDirectory(), filename);
+        private static File getAWTFileDialogFile(Frame f, File md, FilenameFilter filter, int mode) {
+            FileDialog fileDialog = new FileDialog(f);
+            fileDialog.setMode(mode);
+            fileDialog.setDirectory(md.getAbsolutePath());
+            fileDialog.setFilenameFilter(filter); // does nothing on windows
+            fileDialog.setVisible(true);
+            String filename = fileDialog.getFile();
+            if (filename == null) {
+                return null;
+            }
+            return new File(fileDialog.getDirectory(), filename);
         }
 
 	public static String getNewFileInSandbox(Frame f,String a) {
@@ -585,7 +588,7 @@ public class RiskUIUtil {
                 RiskFileFilter filter = new RiskFileFilter(extension);
                 
                 if (isMac()) {
-                    File file = getAWTFileDialogFile(frame, dir, filter);
+                    File file = getAWTFileDialogFile(frame, dir, filter, FileDialog.LOAD);
                     if (file == null) {
                         return null;
                     }
@@ -630,42 +633,42 @@ public class RiskUIUtil {
 
                 File dir = getSaveGameDir();
                 RiskFileFilter filter = new RiskFileFilter(extension);
-                JFileChooser fc = new JFileChooser(dir);
-                fc.setFileFilter(filter);
-
-                int returnVal = fc.showSaveDialog( frame );
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        java.io.File file = fc.getSelectedFile(); // can return null, bug in java?? what should we do??
-
-                        // if JFileChooser failed, fall back to awt FileDialog
-                        if (file == null) {
-                            FileDialog fd = new FileDialog(frame);
-                            fd.setMode(FileDialog.SAVE);
-                            fd.setDirectory(dir.getAbsolutePath());
-                            fd.setFilenameFilter(filter); // does nothing on windows
-                            fd.setVisible(true);
-                            String filename = fd.getFile();
-                            if (filename == null) {
-                                return null;
-                            }
-                            file = new File(fd.getDirectory(), filename);
-                        }
-                        
-                        String fileName = file.getAbsolutePath();
-
-                        if (!(fileName.endsWith( "." + extension ))) {
-                                fileName = fileName + "." + extension;
-                        }
-
-                        return fileName;
+                java.io.File file;
+                
+                if (isMac()) {
+                    file = getAWTFileDialogFile(frame, dir, filter, FileDialog.SAVE);
                 }
-                return null;
+                else {
+                    JFileChooser fc = new JFileChooser(dir);
+                    fc.setFileFilter(filter);
+
+                    int returnVal = fc.showSaveDialog(frame);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                            file = fc.getSelectedFile(); // can return null, bug in java??
+
+                            // if JFileChooser failed, fall back to awt FileDialog
+                            if (file == null) {
+                                file = getAWTFileDialogFile(frame, dir, filter, FileDialog.SAVE);
+                            }
+                    }
+                    else {
+                        file = null;
+                    }
+                }
+
+                if (file == null) {
+                    return null;
+                }
+
+                String fileName = file.getAbsolutePath();
+                if (!(fileName.endsWith( "." + extension))) {
+                        fileName = fileName + "." + extension;
+                }
+                return fileName;
 	}
 
 	public static void saveFile(String name,RiskGame obj) throws Exception {
-
 		// it is impossible for a applet to get here
-
 		if (webstart!=null) {
 			ByteArrayOutputStream stor = new ByteArrayOutputStream();
                         obj.saveGame(stor);
@@ -681,9 +684,7 @@ public class RiskUIUtil {
 	}
 
 	public static void showAppletWarning(Frame frame) {
-		JOptionPane.showMessageDialog(frame,
-			TranslationBundle.getBundle().getString("core.error.applet")
-		);
+		JOptionPane.showMessageDialog(frame, TranslationBundle.getBundle().getString("core.error.applet"));
 	}
 
 	public static String getSystemInfoText() {
