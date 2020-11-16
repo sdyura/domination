@@ -97,6 +97,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         viewChooser.setName(null);
 
         adminPopup = gameList.getPopupMenu();
+        gameList.setPopupMenu(null); // hide menu untill we have logged in and we know what items can be shown
 
         String uuid = getMyUUID();
 
@@ -303,7 +304,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 }, gameNameField, "Rename Game" , OptionPane.OK_CANCEL_OPTION);
             }
             else {
-                logger.warning(actionCommand+"called when we are "+playerType+" "+myusername);
+                logger.warning(actionCommand + " called when we are " + ProtoLobby.getPlayerTypeString(playerType) + " " + myusername);
             }
         }
         else if ("renameGame2".equals(actionCommand)) {
@@ -453,7 +454,8 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     public void setUsername(String name, int type) {
         myusername = name;
         playerType = type;
-        
+
+        gameList.setPopupMenu(adminPopup);
         MenuBar rightCLickMenu = Menu.getPopupMenu(adminPopup);
         for (int c = 0; c < rightCLickMenu.getComponentCount(); c++) {
             Button item = (Button)rightCLickMenu.getItems().get(c);
