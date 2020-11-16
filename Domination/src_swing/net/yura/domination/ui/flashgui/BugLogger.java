@@ -32,6 +32,9 @@ public class BugLogger {
                         if (RiskUtil.isOldVersion()) {
                             return true;
                         }
+                        if ("Trying to recreate Windows registry node Software\\JavaSoft\\Prefs\\net\\yura\\domination\\ui\\flashgui at root 0xffffffff80000001.".equals(record.getMessage())) {
+                            return true;
+                        }
                         return false;
                     }
                 } );
