@@ -21,7 +21,7 @@ public class RiskController {
 	obs = new Vector();
     }
 
-    private void printStackTrace(Exception ex) {
+    private void printStackTrace(Throwable ex) {
         logger.log(Level.WARNING, "Error in UI", ex);
     }
 
@@ -152,7 +152,7 @@ public class RiskController {
             for (int i = arrLocal.length-1; i>=0; i--)
                 ((RiskListener)arrLocal[i]).startGame(localGame);
 	}
-        catch(Exception ex) {
+        catch(Throwable ex) {
             printStackTrace(ex);
         }
     }

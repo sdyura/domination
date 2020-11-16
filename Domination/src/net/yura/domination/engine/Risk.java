@@ -1258,12 +1258,8 @@ RiskUtil.printStackTrace(e);
 
                                                         controller.noInput();
 
-                                                        try {
-                                                            controller.startGame(unlimitedLocalMode);                          }
-                                                        catch (OutOfMemoryError oom) {
-                                                            showMessageDialog("unable to load images " + oom);
-                                                        }
-                                                            
+                                                        controller.startGame(unlimitedLocalMode);
+
                                                         if (shouldGameCommand(Addr)) {
                                                             gameCommand(Addr, "PLAYER", String.valueOf( game.getRandomPlayer() ) );
 

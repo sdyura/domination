@@ -574,7 +574,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                                         RiskUtil.printStackTrace(e);
 				}
                                 catch(OutOfMemoryError e) {
-                                        RiskUtil.printStackTrace(e);
+                                        showError("load images error " + e);
                                 }
 			}
 

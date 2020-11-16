@@ -517,6 +517,9 @@ public class GameFrame extends JFrame implements KeyListener {
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+                catch (OutOfMemoryError oom) {
+                    JOptionPane.showMessageDialog(this, "unable to load images " + oom);
+                }
 
 		gameState=0; // -1 or 0 means no input needed
 		mapView=PicturePanel.VIEW_CONTINENTS;
