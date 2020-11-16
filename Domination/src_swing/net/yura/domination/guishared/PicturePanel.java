@@ -32,12 +32,10 @@ import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
 
-
 /**
  * <p> Picture Panel </p>
  * @author Yura Mamyrin
  */
-
 public class PicturePanel extends JPanel implements MapPanel {
 
 	public final static int NO_COUNTRY = 255;
@@ -67,7 +65,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 	 * Creates an Picture Panel
 	 */
 	public PicturePanel(Risk r) {
-
 		myrisk=r;
 
 		this.strCountry = TranslationBundle.getBundle().getString( "picturepanel.country");
@@ -122,8 +119,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 
                 int mWidth = m.getWidth();
                 int mHeight = m.getHeight();
-
-
 
 		RiskGame game = myrisk.getGame();
                 BALL_SIZE = game.getCircleSize();

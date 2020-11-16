@@ -504,7 +504,19 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
          */
         public void needInput() {
             start.setEnabled(true);
+            if (nothing.isVisible()) {
+                nothing.setVisible(false);
+            }
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
+
+	/**
+	 * Block the gamepanel
+	 */
+	public void noInput() {
+		nothing.setVisible(true);
+		//System.out.print("BLOCK INPUT\n");
+	}
 
 	static class LimitedDocument extends PlainDocument {
 
@@ -977,7 +989,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		 * @param h The height
 		 */
 		public MyColor(Color c, String n, int x, int y, int w, int h, int keyCode) {
-
 			color=c;
 			name=n;
 			myX=x;
@@ -985,7 +996,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			myW=w;
 			myH=h;
 			this.keyCode = keyCode;
-
 		}
 
 		/**
@@ -1042,15 +1052,6 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		public int getKeyCode() {
 			return this.keyCode;
 		}
-
-	}
-
-	/**
-	 * Block the gamepanel
-	 */
-	public void noInput() {
-		nothing.setVisible(true);
-		//System.out.print("BLOCK INPUT\n");
 	}
 
 	/**

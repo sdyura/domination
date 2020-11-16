@@ -326,7 +326,6 @@ public class Risk extends Thread {
             while (running) {
 		try {
 			synchronized(inbox) {
-
 				while ( inbox.isEmpty() ) {
                                         if (!running) return;
 
@@ -343,7 +342,7 @@ public class Risk extends Thread {
                         message.run();
                 }
                 catch (Exception ex) {
-			logger.log(Level.WARNING,"ERROR processing "+ message,ex);
+			logger.log(Level.WARNING, "ERROR processing " + message, ex);
                 }
             }
         }
@@ -533,7 +532,7 @@ RiskUtil.printStackTrace(e);
                                                     controller.startGame(unlimitedLocalMode);
                                                 }
                                         }
-                                        catch (Exception ex) {
+                                        catch (Throwable ex) {
                                                 logger.log(Level.WARNING,"error loading game from file: "+filename,ex);
 
                                                 output=resb.getString( "core.loadgame.error.load")+" "+ex;
@@ -1259,10 +1258,13 @@ RiskUtil.printStackTrace(e);
 
                                                         controller.noInput();
 
-                                                        controller.startGame( unlimitedLocalMode );
-
-                                                        if ( shouldGameCommand(Addr) ) {
-
+                                                        try {
+                                                            controller.startGame(unlimitedLocalMode);                          }
+                                                        catch (OutOfMemoryError oom) {
+                                                            showMessageDialog("unable to load images " + oom);
+                                                        }
+                                                            
+                                                        if (shouldGameCommand(Addr)) {
                                                             gameCommand(Addr, "PLAYER", String.valueOf( game.getRandomPlayer() ) );
 
                                                             // do that mission thing
@@ -1300,7 +1302,6 @@ RiskUtil.printStackTrace(e);
 
                                                                     gameCommand(Addr, "PLACEALL", outputb.toString());
                                                             }
-
                                                         }
 
                                                         output=null;
