@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Observable;
@@ -45,6 +46,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -208,8 +210,10 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                         RiskMap[] mapsToDisplay;
 
                         String searchText = search.getText().toLowerCase();
+                        int indexToSelect = -1;
                         if ("".equals(searchText)) {
                             mapsToDisplay = availableMaps;
+                            indexToSelect = Arrays.asList(mapsToDisplay).indexOf(riskmap);
                         }
                         else {
                             ArrayList<RiskMap> filteredMaps = new ArrayList<RiskMap>();
@@ -221,12 +225,17 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                         //|| (r.getMap() != null  &&  r.getMap().getName().toLowerCase().contains( search.getText().toLowerCase() ) )
                                         ) {
                                     filteredMaps.add(r);
+                                    if (r == riskmap) {
+                                        indexToSelect = filteredMaps.size() - 1;
+                                    }
                                 }
                             }
                             mapsToDisplay = filteredMaps.toArray(new RiskMap[filteredMaps.size()]);
                         }
                         list.setListData(mapsToDisplay);
-                        // list.setSelectedIndex(0);
+                        if (indexToSelect >= 0) {
+                            list.setSelectedIndex(indexToSelect);
+                        }
                     }
 		});
 
@@ -253,7 +262,14 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                         // no easy way to make modal JInternalFrame, as JOptionPane uses Container.startLWModal voodoo
 
                                         // reset the list
-                                        list.setSelectedValue(riskmap, false);
+                                        int oldItemIndex = getIndexOfItem(list, riskmap);
+                                        if (oldItemIndex >= 0) {
+                                            // setSelectedValue wont cut it as it does not clear selection if item is not found
+                                            list.setSelectedIndex(oldItemIndex);
+                                        }
+                                        else {
+                                            list.clearSelection();
+                                        }
                                         
                                         if(downloading.contains(it)) {
                                             return;
@@ -561,6 +577,16 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 		list.setFixedCellHeight(GraphicsUtil.scale(33));
 	}
+        
+        private static int getIndexOfItem(JList list, Object obj) {
+            ListModel model = list.getModel();
+            for (int c = 0; c < model.getSize(); c++) {
+                if (model.getElementAt(c) == obj) {
+                    return c;
+                }
+            }
+            return -1;
+        }
         
         private JLabel newShrinkJLabel(String text) {
             JLabel label = new JLabel(text, SwingConstants.TRAILING);
