@@ -11,6 +11,7 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -393,27 +394,27 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 	}
 
 	public void setVisible(boolean v) {
-
 		super.setVisible(v);
 
-		if (v && views == null ) {
+		if (v && views == null) {
+			views = new MapEditorViews(RiskUIUtil.findParentFrame(this), editPanel);
+                        
+                        Frame frame = RiskUIUtil.findParentFrame(this);
 
-			views = new MapEditorViews( RiskUIUtil.findParentFrame(this) , editPanel );
+                        Dimension frameSize = frame.getSize();
+                        Point frameLocation = frame.getLocation();
+
+                        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                        int x = frameLocation.x + frameSize.width;
+                        int width = GraphicsUtil.scale(200);
+                        if (x + width > screenSize.width) {
+                            x = screenSize.width - width;
+                        }
+                        views.setLocation(x, frameLocation.y);
+                        views.setSize(width, frameSize.height);
 		}
 
-		if (views!= null) {
-
-			if (v) {
-
-				Frame frame = RiskUIUtil.findParentFrame(this);
-
-				Dimension frameSize = frame.getSize();
-				Point frameLocation = frame.getLocation();
-
-				views.setLocation(frameLocation.x+frameSize.width, frameLocation.y);
-				views.setSize(GraphicsUtil.scale(200), frameSize.height);
-
-			}
+		if (views != null) {
 			views.setVisible(v);
 		}
 	}

@@ -18,7 +18,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
@@ -51,7 +50,6 @@ import net.yura.swing.GraphicsUtil;
  * <p> Options Dialog for SwingGUI </p>
  * @author Yura Mamyrin
  */
-
 public class MapEditorViews extends JDialog implements ActionListener,ListSelectionListener {
 
     private MapEditorPanel editPanel;
@@ -250,7 +248,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 		if (a.length>0) {
 
-				Vector countries = new Vector( Arrays.asList( map.getCountries() ) );
+				List countries = new ArrayList( Arrays.asList( map.getCountries() ) );
 				List removeList = Arrays.asList(a);
 
 				countries.removeAll( removeList );
@@ -273,18 +271,14 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 					newCountries[c].getNeighbours().removeAll( removeList );
 				}
 
-				Vector cards = map.getCards();
+				List cards = map.getCards();
 
 				for (int c=0;c<cards.size();c++) {
-
-					Card card = (Card)cards.elementAt(c);
-
+					Card card = (Card)cards.get(c);
 					if (removeList.contains(card.getCountry())) {
-
 						cards.remove(c);
 						c--;
 					}
-
 				}
 
 
@@ -436,7 +430,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 				}
 
-				Vector newCountries = new Vector( Arrays.asList(oldCountries) );
+				List newCountries = new ArrayList( Arrays.asList(oldCountries) );
 
 				Continent continent = (Continent)((JComboBox)message[3]).getSelectedItem();
 
@@ -559,14 +553,12 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 			if (result == JOptionPane.YES_OPTION) {
 
-				Vector continents = new Vector( Arrays.asList( map.getContinents() ) );
+				List continents = new ArrayList( Arrays.asList( map.getContinents() ) );
 				List removeList = Arrays.asList(a);
-				Vector removeCountreis = new Vector();
+				List removeCountreis = new ArrayList();
 
 				for (int c=0;c<a.length;c++) {
-
 					removeCountreis.addAll( ((Continent)a[c]).getTerritoriesContained() );
-
 				}
 
 				removeCountries( removeCountreis.toArray() );
@@ -578,11 +570,11 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				continentsList.clearSelection();
 
 
-				Vector missions = map.getMissions();
+				List missions = map.getMissions();
 
 				for (int c=0;c<missions.size();c++) {
 
-					Mission mission = (Mission)missions.elementAt(c);
+					Mission mission = (Mission)missions.get(c);
 
 					if (removeList.contains( mission.getContinent1() )) {
 						mission.setContinent1(null);
@@ -616,7 +608,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				String[] names = ((OptionPaneTextArea)message[1]).getLines();
 
 				Continent[] oldContinents = map.getContinents();
-				Vector newContinents = new Vector( Arrays.asList(oldContinents) );
+				List newContinents = new ArrayList( Arrays.asList(oldContinents) );
 
 				for (int c=0;c<names.length;c++) {
 
@@ -763,12 +755,12 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				int number = ((Integer)((JSpinner)message[1]).getValue()).intValue();
 				int n = number;
 
-				Vector cards = map.getCards();
-				Vector wilds = new Vector();
+				List cards = map.getCards();
+				List wilds = new ArrayList();
 
 				for (int c=0;c<cards.size();c++) {
 
-					if ( ((Card)cards.elementAt(c)).getName().equals(Card.WILDCARD) ) {
+					if ( ((Card)cards.get(c)).getName().equals(Card.WILDCARD) ) {
 
 						wilds.add( cards.remove(c) );
 						c--;
@@ -920,7 +912,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 			if (result == JOptionPane.YES_OPTION) {
 
-				Vector missions = map.getMissions();
+				List missions = map.getMissions();
 
 				missions.removeAll( Arrays.asList(m) );
 
@@ -949,7 +941,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 				);
 
-				Vector missions = map.getMissions();
+				List missions = map.getMissions();
 
 				missions.add(mission);
 
@@ -982,7 +974,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 	public String[] getLines() {
             String[] strings = getText().split("\\n");
-            Vector goodStrings = new Vector();
+            List goodStrings = new ArrayList();
             for (int c=0;c<strings.length;c++) {
                 if (!"".equals(strings[c])) {
                     goodStrings.add( strings[c] );
