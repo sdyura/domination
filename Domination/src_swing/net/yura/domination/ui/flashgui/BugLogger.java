@@ -35,6 +35,9 @@ public class BugLogger {
                         if ("Trying to recreate Windows registry node Software\\JavaSoft\\Prefs\\net\\yura\\domination\\ui\\flashgui at root 0xffffffff80000001.".equals(record.getMessage())) {
                             return true;
                         }
+                        if ("Couldn't flush user prefs: java.util.prefs.BackingStoreException: Couldn't get file lock.".equals(record.getMessage())) {
+                            return true;
+                        }
                         return false;
                     }
                 } );
