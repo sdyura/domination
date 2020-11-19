@@ -165,7 +165,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
                 public void gotResultCategories(String url, List categories) { }
                 public void gotResultMaps(String url, List maps) {
                     if (maps.size() != 1) {
-                        logger.warning("no map found on MapServer for "+url);
+                        logger.warning("wrong number of maps found on MapServer for " + url + " " + maps);
                         return;
                     }
                     Map map = (Map) maps.get(0);
