@@ -99,7 +99,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 	private String options;
 	private HintTextField search;
-	private JList list; // not using generics for java 1.6 support
+	private JList mapList; // not using generics for java 1.6 support
 
 	private JDialog dialog;
 	private RiskMap riskmap;
@@ -163,6 +163,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		sp2.setBorder(null);
 
 		sp2.setOpaque(false);
+                sp2.getViewport().setBackground(new Color(0x00000000, true)); // needed for java1.5 Linux GTKTheme
 		sp2.getViewport().setOpaque(false);
                 sp2.setViewportBorder(null); // for nimbus
 
@@ -177,15 +178,18 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 
 
-		list = new JList();
-		list.setCellRenderer(new RiskMapListCellRenderer());
-                list.setFixedCellWidth(10); // will stretch
-		//list.setVisibleRowCount(10);
-		list.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-		JScrollPane scrollPane = new JScrollPane(list);
+		mapList = new JList();
+		mapList.setCellRenderer(new RiskMapListCellRenderer());
+                mapList.setFixedCellWidth(10); // will stretch
+		//mapList.setVisibleRowCount(10);
+		mapList.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+                mapList.setBackground(new Color(0x00000000, true)); // needed for java1.5 Linux GTKTheme
+		mapList.setOpaque(false);
+
+		JScrollPane scrollPane = new JScrollPane(mapList);
 		scrollPane.setBorder(null);
-		list.setOpaque(false);
-		scrollPane.setOpaque(false);
+                scrollPane.setOpaque(false);
+                scrollPane.getViewport().setBackground(new Color(0x00000000, true)); // needed for java1.5 Linux GTKTheme
 		scrollPane.getViewport().setOpaque(false);
                 scrollPane.setViewportBorder(null); // for nimbus
 
@@ -232,9 +236,9 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                             }
                             mapsToDisplay = filteredMaps.toArray(new RiskMap[filteredMaps.size()]);
                         }
-                        list.setListData(mapsToDisplay);
+                        mapList.setListData(mapsToDisplay);
                         if (indexToSelect >= 0) {
-                            list.setSelectedIndex(indexToSelect);
+                            mapList.setSelectedIndex(indexToSelect);
                         }
                     }
 		});
@@ -248,13 +252,13 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 
 
-		list.addListSelectionListener( new ListSelectionListener() {
+		mapList.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent e) {
 
 				if (e.getValueIsAdjusting()) {return;}
 
-				final RiskMap it = (RiskMap) list.getSelectedValue();
+				final RiskMap it = (RiskMap) mapList.getSelectedValue();
 
 				if (it!=null) {
 
@@ -262,13 +266,13 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                         // no easy way to make modal JInternalFrame, as JOptionPane uses Container.startLWModal voodoo
 
                                         // reset the list
-                                        int oldItemIndex = getIndexOfItem(list, riskmap);
+                                        int oldItemIndex = getIndexOfItem(mapList, riskmap);
                                         if (oldItemIndex >= 0) {
                                             // setSelectedValue wont cut it as it does not clear selection if item is not found
-                                            list.setSelectedIndex(oldItemIndex);
+                                            mapList.setSelectedIndex(oldItemIndex);
                                         }
                                         else {
-                                            list.clearSelection();
+                                            mapList.clearSelection();
                                         }
                                         
                                         if(downloading.contains(it)) {
@@ -298,7 +302,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                                     downloading.remove(it);
 
                                                     if (result == RiskUtil.SUCCESS) {
-                                                        list.setSelectedValue(it, true);
+                                                        mapList.setSelectedValue(it, true);
                                                     }
                                                 }
                                             });
@@ -575,7 +579,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		//add(help);
 		add(start);
 
-		list.setFixedCellHeight(GraphicsUtil.scale(33));
+		mapList.setFixedCellHeight(GraphicsUtil.scale(33));
 	}
         
         private static int getIndexOfItem(JList list, Object obj) {
@@ -640,8 +644,8 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		if (serveroptions!=null && !serveroptions.equals(newGameOptions) ) {
 
 			newGameOptions = serveroptions;
-                        list.setListData(getAllAvailableMaps());
-                        list.setSelectedIndex(0);
+                        mapList.setListData(getAllAvailableMaps());
+                        mapList.setSelectedIndex(0);
 		}
 
 		reset();
@@ -687,7 +691,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
         }
 
 	public JList getList() {
-		return list;
+		return mapList;
 	}
 
 	public JPanel makeNewMission(String a) {

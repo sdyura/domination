@@ -200,7 +200,8 @@ public class CardsDialog extends JDialog {
 		CardsPlane = new JScrollPane();
 		CardsPlane.setOpaque(false);
 		CardsPlane.getViewport().add(myCardsPanel);
-		CardsPlane.getViewport().setOpaque(false);
+                CardsPlane.getViewport().setBackground(new Color(0x00000000, true)); // needed for java1.5 Linux GTKTheme
+                CardsPlane.getViewport().setOpaque(false);
                 CardsPlane.setViewportBorder(null); // for nimbus
 		CardsPlane.setBorder(null);
 		//CardsPlane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 1));
