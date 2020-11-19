@@ -298,6 +298,9 @@ public class AboutDialog extends JDialog {
 			if (n.endsWith(".htm") || n.endsWith(".html")) {
 				a.setContentType( "text/html" );
 			}
+			else {
+				a.putClientProperty("charset", "UTF-8");
+			}
 			a.read(RiskUtil.openStream(n) , null );
 		}
 		catch(Exception e) {
