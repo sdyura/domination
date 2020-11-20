@@ -123,7 +123,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
 
                 // its annoying if the game opens, but we can not actually display anything as we have no map
                 if (!MapChooser.haveLocalMap(mapUID)) {
-                    throw new IllegalArgumentException("map not found: " + mapUID);
+                    throw new UnsupportedOperationException("Lobby Client does not support downloading map: " + mapUID);
                 }
 
 		if (frame==null) {
