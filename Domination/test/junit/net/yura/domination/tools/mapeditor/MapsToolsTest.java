@@ -14,6 +14,7 @@ public class MapsToolsTest extends TestCase {
     }
 
     public void testIsValidName() {
+        System.out.println("isValidName");
 
         assertTrue(MapsTools.isValidName("file"));
         assertTrue(MapsTools.isValidName("file.txt"));
@@ -22,6 +23,7 @@ public class MapsToolsTest extends TestCase {
         assertTrue(MapsTools.isValidName("my.file.text"));
         assertTrue(MapsTools.isValidName("my file.text"));
         assertTrue(MapsTools.isValidName(" !#$%'()+,-09;=@AZ[]^_`az{}"));
+        assertTrue(MapsTools.isValidName("file name.map"));
 
         // bad windows chars
         assertFalse(MapsTools.isValidName("file\\name"));
@@ -42,6 +44,9 @@ public class MapsToolsTest extends TestCase {
         assertFalse(MapsTools.isValidName("con.txt"));
         assertFalse(MapsTools.isValidName("file€name.txt"));
         assertFalse(MapsTools.isValidName("file & name.map"));
+        
+        assertFalse(MapsTools.isValidName("file.map name.map"));
+        assertFalse(MapsTools.isValidName("TEST.MAP.map"));
     }
     
     

@@ -47,9 +47,7 @@ public class P2PTest extends TestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        
-        myrisk.parser("closegame");
-        myrisk.parser("killserver");
+
         myrisk.kill();
     }
     
@@ -71,5 +69,8 @@ public class P2PTest extends TestCase {
         }
         
         assertEquals(RiskGame.STATE_GAME_OVER, myrisk.getGame().getState());
+
+        myrisk.parser("closegame");
+        myrisk.parser("killserver");
     }
 }

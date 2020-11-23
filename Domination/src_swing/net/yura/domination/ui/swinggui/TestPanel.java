@@ -562,7 +562,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         }
 
                         String fileUID = RiskUtil.replaceAll(filename," ","").toLowerCase();
-                        if (!MapsTools.isValidName(filename) || ids.contains(fileUID) || filename.toLowerCase().indexOf(".map") < filename.length() - 4) {
+                        if (!MapsTools.isValidName(filename) || ids.contains(fileUID)) {
                             errors.add(filename);
                         }
                         else {

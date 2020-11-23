@@ -13,6 +13,7 @@ import junit.framework.TestCase;
 import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
+import static junit.framework.TestCase.fail;
 
 public class TranslationBundleTest extends TestCase {
 
@@ -60,7 +61,7 @@ public class TranslationBundleTest extends TestCase {
                 if (defaultValue.contains("{0}")) {
                     String localeValue = resb.getString(key);
                     if (!localeValue.contains("{0}")) {
-                        throw new Exception("no placeholder found for " + key +" in " +locale);
+                        fail("no placeholder found for " + key +" in " +locale);
                     }
                 }
             }
@@ -78,7 +79,7 @@ public class TranslationBundleTest extends TestCase {
         Locale[] locales = getAppLocales();
 
         if (locales.length < 5) {
-            throw new RuntimeException("number too small");
+            fail("number too small");
         }
 
         for (Locale locale : locales) {
@@ -90,15 +91,15 @@ public class TranslationBundleTest extends TestCase {
             String[] split = text.split("\\n");
 
             if (split.length != 14) {
-                throw new RuntimeException("error in " + locale);
+                fail("error in " + locale);
             }
             //if (!split[6].equals(" Screen: ")) {
-            //    throw new RuntimeException("error in " + locale + " >" + split[6] + "< ");
+            //    fail("error in " + locale + " >" + split[6] + "< ");
             //}
             
             String compiled = resb.getString("about.compiledfor");
             if (!compiled.contains("49/java1.5")) {
-                throw new RuntimeException("error2 in " + locale);
+                fail("error2 in " + locale);
             }
             
             String playOnline = resb.getString("mainmenu.globe.playonline");
@@ -106,7 +107,7 @@ public class TranslationBundleTest extends TestCase {
             if (underlineIndex > 0) {
                 String o = playOnline.substring(underlineIndex + 3, playOnline.indexOf("</u>"));
                 if (!o.equalsIgnoreCase("o")) {
-                    throw new RuntimeException("wrong letter underline " + o + " in " + locale);
+                    fail("wrong letter underline " + o + " in " + locale);
                 }
             }
         }

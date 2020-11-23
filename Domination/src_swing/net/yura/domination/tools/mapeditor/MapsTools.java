@@ -296,6 +296,13 @@ public class MapsTools {
         if (!matcher.matches()) {
             return false;
         }
+
+        int dotmapIndex = text.toLowerCase().indexOf(".map");
+        if (dotmapIndex >= 0 && dotmapIndex != text.length() - 4) {
+            // map store gets confused on names like "bob.map_fred.map"
+            return false;
+        }
+        
         return !text.contains("  ");
     }
 }
