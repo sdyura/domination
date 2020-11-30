@@ -43,6 +43,7 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -330,6 +331,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		gmSaveGame.setMnemonic('S');
 		gmSaveGame.setActionCommand("save game");
 		gmSaveGame.addActionListener( this );
+                gmSaveGame.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		gGame.add(gmSaveGame);
 
 		gmCloseGame = new JMenuItem(resbundle.getString("swing.menu.close"));
