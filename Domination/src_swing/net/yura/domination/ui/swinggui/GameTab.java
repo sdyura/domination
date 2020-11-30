@@ -1806,9 +1806,9 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			mission.setEnabled(m);
 		}
 
-		public void showMapImage(Icon p, String tooltip) {
-			mapPic.setIcon( p ); // SCALE_DEFAULT
-                        mapPic.setToolTipText(tooltip);
+		public void showMapImage(Icon preview, String mapUID, int version) {
+			mapPic.setIcon(preview); // SCALE_DEFAULT
+                        mapPic.setToolTipText(mapUID + " (v" + version + ")");
 			swingGUIPanel.setCursor(null); // Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)
 		}
 

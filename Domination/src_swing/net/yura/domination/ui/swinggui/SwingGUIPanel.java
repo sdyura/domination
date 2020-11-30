@@ -354,7 +354,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
          * called by the map editor to show a preview of the map we are making/testing
          */
         public void showMapImage(Icon p) {
-            gameTab.guiSetup.showMapImage(p, "loaded from memory");
+            gameTab.guiSetup.showMapImage(p, "loaded from memory", myrisk.getGame().getVersion());
         }
 
 	/**
@@ -546,7 +546,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                         i = new ImageIcon( PicturePanel.getImage(p) );
                     }
                     catch(Throwable e) { }
-                    gameTab.guiSetup.showMapImage(i, p.getMapFile());
+                    gameTab.guiSetup.showMapImage(i, p.getMapFile(), p.getVersion());
 		}
 
 		public void showCardsFile(String c, boolean m) {
