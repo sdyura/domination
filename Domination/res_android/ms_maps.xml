@@ -31,6 +31,8 @@
         <list action="listSelect" name="ResultList" weightx="1" weighty="1">
             <popupmenu>
                 <menuitem text="mapchooser.sameauthor" i18n="true" action="sameAuthor"/>
+                <menuitem text="copy id" action="copyId"/>
+                <menuitem text="del" action="delMap"/>
             </popupmenu>    
         </list>
         <label text="mapchooser.no-matches" i18n="true" name="NoMatches" alignment="center" property="valign=center" weightx="1" weighty="1" visible="false"/>

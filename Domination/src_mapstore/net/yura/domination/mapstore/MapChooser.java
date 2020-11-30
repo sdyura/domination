@@ -33,6 +33,7 @@ import net.yura.mobile.gui.components.TextComponent;
 import net.yura.mobile.gui.layout.XULLoader;
 import net.yura.mobile.gui.plaf.LookAndFeel;
 import net.yura.mobile.gui.plaf.SynthLookAndFeel;
+import net.yura.mobile.io.ClipboardManager;
 import net.yura.mobile.io.FileUtil;
 import net.yura.mobile.logging.Logger;
 import net.yura.mobile.util.ImageUtil;
@@ -533,6 +534,12 @@ public class MapChooser implements ActionListener,MapServerListener {
                 }
             }
         }
+        else if ("copyId".equals(actionCommand)) {
+            Object value = list.getSelectedValue();
+            if (value instanceof Map) {
+                ClipboardManager.getInstance().setText(((Map)value).getId());
+            }
+        }
         else if ("delMap".equals(actionCommand)) {
             Object value = list.getSelectedValue();
             if (value instanceof Map) {
@@ -564,7 +571,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                                 }
                             }
                             else {
-                                OptionPane.showMessageDialog(null, "can not delete this map", "message", 0);
+                                OptionPane.showMessageDialog(null, "can not delete bundled map", "message", 0);
                             }
                         }
                     });
@@ -674,7 +681,6 @@ public class MapChooser implements ActionListener,MapServerListener {
         }
 
         clearList();
-
     }
 
     void clearList() {
@@ -791,10 +797,8 @@ public class MapChooser implements ActionListener,MapServerListener {
     }
 
     private void activateGroup(String string) {
-
         String mincat = ((ButtonGroup)loader.getGroups().get(string)).getSelection().getActionCommand();
         actionPerformed(mincat);
-
     }
 
     public boolean willDownload(Map map) {
@@ -824,5 +828,4 @@ public class MapChooser implements ActionListener,MapServerListener {
             FileUtil.close(in);
         }
     }
-
 }
