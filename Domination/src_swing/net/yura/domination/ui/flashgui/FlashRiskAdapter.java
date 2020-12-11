@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RootPaneContainer;
 import net.yura.domination.engine.Risk;
@@ -315,7 +317,9 @@ public class FlashRiskAdapter implements RiskListener {
             try {
                 i = new ImageIcon( PicturePanel.getImage(p) );
             }
-            catch (Throwable th) { }
+            catch (Throwable th) {
+                Logger.getLogger(FlashRiskAdapter.class.getName()).log(Level.INFO, "error creating map preview", th);
+            }
             newgameframe.setMap( i ); // SCALE_DEFAULT
 	}
 
