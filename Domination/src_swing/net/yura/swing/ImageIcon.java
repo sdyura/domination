@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.logging.Logger;
 
 /**
  * TODO: add support for apple image@2x.png
@@ -35,6 +36,8 @@ public class ImageIcon extends javax.swing.ImageIcon {
         catch (ClassCastException ex) {
             // java 1.8 on Linux has some bug in drawing a scaled image, so we try scaleing it ourselves instead
             if (original != null) {
+                Logger.getLogger(ImageIcon.class.getName()).info("getScaledInstance failed, falling back to drawImage for " + this);
+                
                 BufferedImage newImg = new BufferedImage(getIconWidth(), getIconHeight(), BufferedImage.TYPE_INT_BGR);
                 Graphics g2 = newImg.getGraphics();
                 g2.drawImage(original, 0, 0, getIconWidth(), getIconHeight(), 0, 0, original.getWidth(c), original.getHeight(c), c);

@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
@@ -1153,6 +1154,8 @@ public class PicturePanel extends JPanel implements MapPanel {
                         height = s.getHeight();
                     }
                     catch (IOException ex) { // if we fail to load the preview its not the end of the world
+                        Logger.getLogger(PicturePanel.class.getName()).info("error loading prv file " + previewName + " " + ex);
+
                         error = true;
                     }
 		}
