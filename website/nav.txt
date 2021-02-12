@@ -113,7 +113,7 @@
 
 
 <p><a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=79448&amp;type=2" alt="SourceForge.net Logo" border="0" /></a></p>
-<p>copyright 2003-2020 <a href="http://yura.net/">yura.net</a></p>
+<p>copyright 2003-2021 <a href="http://yura.net/">yura.net</a></p>
 
 
 <!--
