@@ -140,7 +140,7 @@ public class SwingMEWrapper {
         javax.microedition.lcdui.Graphics j2meG = new javax.microedition.lcdui.Graphics(g);
         // on retina mac all our SwingME images are double size
         // but our Swing Graphics are not scaled, so we reverse scale the graphics
-        double scale = javax.microedition.midlet.ApplicationManager.getScale();
+        double scale = GraphicsUtil.scale;
         j2meG.scale(1 / scale, 1 / scale);
         return new net.yura.mobile.gui.Graphics2D(j2meG);
     }
