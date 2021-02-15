@@ -1389,6 +1389,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                         for (int i = (c + 1); i < continents.length; i++) {
                             if (continents[c].getColor() == continents[i].getColor()) {
                                 errors = errors + "\n* The continent \""+continents[c]+"\" and \"" + continents[i] + "\" are the same color.";
+                                break; // only allow 1 color error per continents or we get too many errors when all continents are the same color
                             }
                         }
 		}
