@@ -1385,6 +1385,12 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 			if (continents[c].getTerritoriesContained().size() == 0) {
 				errors = errors + "\n* The continent \""+continents[c]+"\" is empty.";
 			}
+                        
+                        for (int i = (c + 1); i < continents.length; i++) {
+                            if (continents[c].getColor() == continents[i].getColor()) {
+                                errors = errors + "\n* The continent \""+continents[c]+"\" and \"" + continents[i] + "\" are the same color.";
+                            }
+                        }
 		}
 
 
