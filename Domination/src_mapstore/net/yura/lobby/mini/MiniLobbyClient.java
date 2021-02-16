@@ -182,7 +182,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 }
                 else {
                     try {
-                        //set hidden attribute
+                        //set hidden attribute (API allowed in android-api-26)
                         java.nio.file.Files.setAttribute(file.toPath(), "dos:hidden", true, java.nio.file.LinkOption.NOFOLLOW_LINKS);
                     }
                     catch (Throwable th) {

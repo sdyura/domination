@@ -455,6 +455,7 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 		<!-- used for getting the map preview icon -->
 		<unzip src="lib/SwingME.jar" dest="${dir.build.lobby.client.classes}"/>
 		<unzip src="lib/midletrunner.jar" dest="${dir.build.lobby.client.classes}"/>
+                <unzip src="lib/m3gbasic.jar" dest="${dir.build.lobby.client.classes}"/> <!-- resize and save local map preview icons -->
 
 	</target>
 

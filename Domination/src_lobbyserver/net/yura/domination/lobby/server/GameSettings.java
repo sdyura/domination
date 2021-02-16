@@ -71,6 +71,9 @@ public class GameSettings implements GameSettingsMXBean {
 
     public void updateMaps() {
 
+        // TODO we are currently broken with map: "italia.map" as it clashes with map: "ITALIA.MAP.map"
+        // this returns 2 results instead of 1 http://maps.yura.net/maps?format=xml&mapfile=italia.map
+        
         LobbyServerMXBean lobby = GameLobby.getInstance();
 
         // save all games just in case
