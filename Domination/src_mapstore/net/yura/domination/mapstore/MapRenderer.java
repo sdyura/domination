@@ -1,6 +1,5 @@
 package net.yura.domination.mapstore;
 
-import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.Sprite;
 import net.yura.domination.engine.translation.TranslationBundle;
@@ -11,6 +10,7 @@ import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.cellrenderer.DefaultListCellRenderer;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.ProgressBar;
+import net.yura.mobile.gui.layout.XULLoader;
 import net.yura.mobile.gui.plaf.Style;
 
 /**
@@ -161,7 +161,7 @@ public class MapRenderer extends DefaultListCellRenderer {
 
         if (map!=null) {
 
-            int gap = 5;
+            int gap = XULLoader.adjustSizeToDensity(5);
 
             String mapUID = MapChooser.getFileUID( map.getMapUrl() );
 
@@ -207,5 +207,4 @@ public class MapRenderer extends DefaultListCellRenderer {
         }
         return input.substring(0, lastchar-1)+"...";
     }
-
 }
