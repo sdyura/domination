@@ -18,17 +18,31 @@ import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.awt.image.IndexColorModel;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.PicturePanel;
+import net.yura.swing.JTable;
 
 /**
  * @author Yura Mamyrin
@@ -208,22 +222,16 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 			Object obj = a.get( new Integer(oldcolor) );
 
 			if (obj != null) {
-
 				newcolor = ((Integer)obj).intValue();
-
 			}
 			else {
-
 				newcolor = oldcolor;
-
-				System.out.println("bad color: "+oldcolor);
-
+				//System.out.println("bad color: "+oldcolor);
 			}
 
 //if (newcolor == 0) {
 //System.out.println( oldcolor+" goes to 0!!!" );
 //}
-
 
 			pixels[c] = ((newcolor & 0xFF) << 16) | ((newcolor & 0xFF) << 8) | ((newcolor & 0xFF) << 0);
 
@@ -234,7 +242,6 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		//map = newImageMap;
 
 		repaint();
-
 	}
 
 	public void setSelectedCountry(Country a) {
@@ -551,6 +558,188 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	public Point getPointOnImage(MouseEvent e) {
 		return new Point( e.getX()/zoom,e.getY()/zoom );
 	}
+
+        public void autodraw(Collection<Country> countries, boolean dots) {
+            BufferedImage imgMap = getImageMap();
+            Graphics g = imgMap.getGraphics();
+            int size = myMap.getCircleSize();
+            for (Country country:countries) {
+                Color color = new Color(country.getColor(), country.getColor(), country.getColor());
+                if (dots) {
+                    g.setColor(color);
+                    g.fillOval(country.getX()-(size/2),country.getY()-(size/2),size,size);
+                }
+                else {
+                    ImageUtil.floodFill(imgMap, country.getX(), country.getY(), color.getRGB());
+                }
+            }
+            g.dispose();
+            repaintSelected();
+        }
+        
+        public void smartDraw(Collection<Country> selectedCountries) {
+            JSpinner tolerance = new JSpinner(new SpinnerNumberModel(20,0,255,1) );
+            int result = JOptionPane.showConfirmDialog(this, new Object[] {
+                MapEditor.getCountiresListMessage(selectedCountries),
+                "Smart Fill will use the color from the Image Pic\nto select the area in the Image Map. Tolerance:", tolerance}, "Smart Fill", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                int t = ((Number)tolerance.getValue()).intValue();
+                for (Country country : selectedCountries) {
+                    Color color = new Color(country.getColor(), country.getColor(), country.getColor());
+                    ImageUtil.smartFill(getImagePic(), getImageMap(), country.getX(), country.getY(), color.getRGB(), t);
+                }
+                repaintSelected();
+            }
+        }
+
+        public void delIslands(Collection<Country> countries) {
+            Set<Integer> findColors = new HashSet();
+            for (Country country : countries) {
+                Color color = new Color(country.getColor(),country.getColor(),country.getColor());
+                findColors.add(color.getRGB());
+            }
+            
+            long startTime = System.currentTimeMillis();
+            BufferedImage map = getImageMap();
+            int width = map.getWidth();
+            int[] pixels = map.getRGB(0,0,width,map.getHeight(),null,0,width);
+
+            Map<Integer,List<Integer>> colorToPositions = new HashMap();
+            for (int c=0;c<pixels.length;c++) {
+                if (findColors.contains(pixels[c])) {
+                    List<Integer> positions = colorToPositions.get( pixels[c] );
+                    if (positions==null) { positions = new ArrayList(); colorToPositions.put(pixels[c], positions); }
+                    positions.add(c);
+                }
+            }
+
+            List<List<Integer>> allIslands = new ArrayList();
+            for (List<Integer> positions:colorToPositions.values()) {
+                List<Integer> largestIsland=null;
+                List<List<Integer>> islands = new ArrayList();
+                while (!positions.isEmpty()) {
+                    List<Integer> island = new ArrayList();
+                    Stack<Integer> stack = new Stack();
+                    stack.push( positions.get(0) );
+                    while (!stack.isEmpty()) {
+                        int position = stack.pop();
+                        int index = positions.indexOf(position);
+                        if (index>=0) {
+                            int pos = positions.remove(index);
+                            island.add(pos);
+                            if (position >= width) {
+                                stack.push( position-width ); // top
+                            }
+                            if (position % width != 0) {
+                                stack.push( position-1 ); // left
+                            }
+                            if ((position+1) % width != 0) {
+                                stack.push( position+1 ); // right
+                            }
+                            stack.push( position + width ); // bottom
+                        }
+                    }
+                    islands.add(island);
+                    if (largestIsland==null || island.size() > largestIsland.size()) {
+                        largestIsland = island;
+                    }
+                }
+                islands.remove(largestIsland);
+                allIslands.addAll(islands);
+            }
+            System.out.println("finished! took "+(System.currentTimeMillis()-startTime));
+
+            if (allIslands.isEmpty()) {
+                JOptionPane.showMessageDialog(this, MapEditor.getCountiresListMessage(countries) + "\nNo islands found");
+            }
+            else {
+                final Map<Integer,Integer> counts = new TreeMap(); // island size -> number of islands
+                final Map<Integer,Set<Integer>> colors = new TreeMap(); // island size -> island colors
+                for (List<Integer> island: allIslands) {
+                    int islandSize = island.size();
+                    if (counts.get(islandSize)==null) {
+                        counts.put(islandSize, 1);
+                        colors.put(islandSize, new TreeSet());
+                    }
+                    else {
+                        counts.put(islandSize, counts.get(islandSize)+1);
+                    }
+                    colors.get(islandSize).add(Integer.valueOf(pixels[island.get(0).intValue()] & 0xff));
+                }
+
+                final List<Integer> islandSizes = new ArrayList(counts.keySet());
+                final boolean[] del = new boolean[islandSizes.size()];
+                TableModel islandsTable = new AbstractTableModel() {
+                        private static final int BOOL_ROW = 3;
+			private final String[] columnNames = {"size", "count", "Countries", "del"};
+			public int getColumnCount() {
+				return columnNames.length;
+			}
+			public String getColumnName(int col) {
+				return columnNames[col];
+			}
+			public int getRowCount() {
+				return islandSizes.size();
+  			}
+			public Object getValueAt(int row, int col) {
+				switch (col) {
+					case 0: return islandSizes.get(row);
+					case 1: return counts.get(islandSizes.get(row));
+					case 2: return colors.get(islandSizes.get(row));
+                                        case BOOL_ROW: return del[row];
+					default: throw new RuntimeException();
+				}
+			}
+                        public boolean isCellEditable(int row, int col) {
+                                return col == BOOL_ROW;
+                        }
+                        public Class<?> getColumnClass(int col) {
+                                return col == BOOL_ROW ? Boolean.class : super.getColumnClass(col);
+                        }
+                        public void setValueAt(Object aValue, int row, int col) {
+                                if (col != BOOL_ROW) throw new RuntimeException();
+                                del[row] = (Boolean)aValue;
+                        }
+		};
+/*
+                StringBuilder table = new StringBuilder();
+                table.append("<table border=\"1\"><tr><th>size</th><th>count</th></tr>");
+                for (Integer islandSize: counts.keySet()) {
+                    table.append("<tr><td>");
+                    table.append( islandSize );
+                    table.append("</td><td>");
+                    table.append( counts.get(islandSize) );
+                    table.append("</td></tr>");
+                }
+                table.append("</table>");
+*/
+                final JTable islandsJTable = new JTable(islandsTable);
+                islandsJTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                        public void valueChanged(ListSelectionEvent event) {
+                            if (!event.getValueIsAdjusting() && islandsJTable.getSelectedRow() != -1) {
+                                Set<Integer> colorsForRow = colors.get(islandSizes.get(islandsJTable.getSelectedRow()));
+                                setSelectedCountry(myMap.getCountryInt(colorsForRow.iterator().next()));
+                            }
+                        }
+                    });
+
+                int result = JOptionPane.showConfirmDialog(this, new Object[] {
+                    "<html>"+allIslands.size()+" islands found, are you sure you want to delete them from the map?",
+                    new JScrollPane(islandsJTable)}, "Del Islands?", JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    for (List<Integer> island: allIslands) {
+                        if (del[islandSizes.indexOf(island.size())]) {
+                            for (int pos: island) {
+                                pixels[pos] = 0xFFFFFFFF;
+                            }
+                        }
+                    }
+                    map.setRGB(0,0,width,map.getHeight(),pixels,0,width);
+                    repaintSelected();
+                }
+            }
+        }
 
 	// #############################################################
 	// ###################### mouse ###########################

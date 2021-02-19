@@ -27,7 +27,9 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -110,6 +112,21 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
                         edit.doClick();
                     //}
                 }
+            }
+            
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger())
+                    doPop(e);
+            }
+
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger())
+                    doPop(e);
+            }
+
+            private void doPop(MouseEvent e) {
+                ViewTab current = ((ViewTab)((JList)((javax.swing.JViewport)((JScrollPane)tabs.getSelectedComponent()).getViewport()).getView()).getModel());
+                current.rightClick(e.getComponent(), e.getX(), e.getY());
             }
         };
         
@@ -259,13 +276,10 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				updateMap.put(new Integer(255),new Integer(255));
 
 				for (int c=0;c<a.length;c++) {
-
 					updateMap.put( new Integer(((Country)a[c]).getColor()), new Integer(255) );
-
 				}
 
 				for (int c=0;c<newCountries.length;c++) {
-
 					updateMap.put( new Integer(newCountries[c].getColor()), new Integer(c+1) );
 					newCountries[c].setColor(c+1);
 					newCountries[c].getNeighbours().removeAll( removeList );
@@ -285,9 +299,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				Continent[] continents = map.getContinents();
 
 				for (int c=0;c<continents.length;c++) {
-
 					continents[c].getTerritoriesContained().removeAll( removeList );
-
 				}
 
 
@@ -302,9 +314,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 				((ViewTab)countriesList.getModel()).changed();
 				((ViewTab)cardsList.getModel()).changed();
-
 		}
-
 	}
 
 	interface ViewTab {
@@ -312,11 +322,13 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 		void edit();
 		void remove();
 		void add();
+                void rightClick(Component c, int x, int y);
+                
 		void changed();
 	}
 
 
-    class CountriesListModel extends AbstractListModel implements ViewTab {
+    class CountriesListModel extends AbstractListModel implements ViewTab, ActionListener {
 
 	public void changed() {
 		fireContentsChanged(this,0, map.getNoCountries()-1 );
@@ -324,17 +336,13 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 	}
 
 	public Object getElementAt(int index) {
-
 		if (map==null) { return null; }
 		return map.getCountries()[index];
-
 	}
 
 	public int getSize() {
-
 		if (map==null) { return 0; }
 		return map.getNoCountries();
-
 	}
 
 	public void edit() {
@@ -448,6 +456,71 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				editPanel.repaint();
 			}
 	}
+
+        public void rightClick(Component c, int x, int y) {
+            	Object[] a = countriesList.getSelectedValues();
+
+		if (a.length != 0) {
+                    JPopupMenu pop = new JPopupMenu();
+
+                    JMenuItem delFromImgMap = new JMenuItem("Delete from Image Map");
+                    delFromImgMap.setActionCommand("delFromImgMap");
+                    delFromImgMap.addActionListener(this);
+                    pop.add(delFromImgMap);
+
+                    JMenuItem autoDrawDot = new JMenuItem("Auto Draw Dot");
+                    autoDrawDot.setActionCommand("autoDrawDot");
+                    autoDrawDot.addActionListener(this);
+                    pop.add(autoDrawDot);
+                    
+                    JMenuItem autoDrawFloodFill = new JMenuItem("Auto Draw Flood Fill");
+                    autoDrawFloodFill.setActionCommand("autoDrawFloodFill");
+                    autoDrawFloodFill.addActionListener(this);
+                    pop.add(autoDrawFloodFill);
+                    
+                    JMenuItem smartDraw = new JMenuItem("Smart Fill (Flood Fill ImageMap from ImagePic Color)");
+                    smartDraw.setActionCommand("smartDraw");
+                    smartDraw.addActionListener(this);
+                    pop.add(smartDraw);
+                    
+                    JMenuItem delIslands = new JMenuItem("Del Islands");
+                    delIslands.setActionCommand("delIslands");
+                    delIslands.addActionListener(this);
+                    pop.add(delIslands);
+                    
+                    pop.show(c, x, y);
+                }
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Collection<Country> selectedCountries = getSelectedCountries();
+            String actionCommand = e.getActionCommand();
+
+            if ("delFromImgMap".equals(actionCommand)) {
+                java.util.Map updateMap = new HashMap();
+                for (Country country : selectedCountries) {
+                        updateMap.put(new Integer(country.getColor()),new Integer(255));
+                }
+                editPanel.update(updateMap);
+                editPanel.repaintSelected();
+            }
+            else if ("autoDrawDot".equals(actionCommand)) {
+                editPanel.autodraw(selectedCountries, true);
+            }
+            else if ("autoDrawFloodFill".equals(actionCommand)) {
+                editPanel.autodraw(selectedCountries, false);
+            }
+            else if ("smartDraw".equals(actionCommand)) {
+                editPanel.smartDraw(selectedCountries);
+            }
+            else if ("delIslands".equals(actionCommand)) {
+                editPanel.delIslands(selectedCountries);
+            }
+            else {
+                System.err.println("unknown command " + actionCommand);
+            }
+        }
     }
 
 
@@ -624,6 +697,9 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 			}
 
 	}
+        
+        public void rightClick(Component c, int x, int y) {
+        }
 
     }
 
@@ -792,6 +868,9 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				fireContentsChanged(this,cards.size()-n, cards.size()-1 );
 			}
 	}
+        
+        public void rightClick(Component c, int x, int y) {
+        }
     }
 
     class MissionsListModel extends AbstractListModel implements ViewTab {
@@ -948,6 +1027,9 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				fireContentsChanged(this,missions.size()-1,missions.size()-1);
 			}
 	}
+        
+        public void rightClick(Component c, int x, int y) {
+        }
     }
 
     static class OptionPaneTextArea extends JScrollPane {
