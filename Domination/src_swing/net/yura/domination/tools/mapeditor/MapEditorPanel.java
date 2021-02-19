@@ -75,6 +75,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 	private MapEditor editor;
         private ListSelectionListener selectionListener;
+        private int smartDrawTolerance = 20;
 
 	public MapEditorPanel(MapEditor a) {
 		editor = a;
@@ -578,15 +579,15 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
         }
         
         public void smartDraw(Collection<Country> selectedCountries) {
-            JSpinner tolerance = new JSpinner(new SpinnerNumberModel(20,0,255,1) );
+            JSpinner tolerance = new JSpinner(new SpinnerNumberModel(smartDrawTolerance,0,255,1) );
             int result = JOptionPane.showConfirmDialog(this, new Object[] {
                 MapEditor.getCountiresListMessage(selectedCountries),
                 "Smart Fill will use the color from the Image Pic\nto select the area in the Image Map. Tolerance:", tolerance}, "Smart Fill", JOptionPane.OK_CANCEL_OPTION);
             if (result == JOptionPane.OK_OPTION) {
-                int t = ((Number)tolerance.getValue()).intValue();
+                smartDrawTolerance = ((Number)tolerance.getValue()).intValue();
                 for (Country country : selectedCountries) {
                     Color color = new Color(country.getColor(), country.getColor(), country.getColor());
-                    ImageUtil.smartFill(getImagePic(), getImageMap(), country.getX(), country.getY(), color.getRGB(), t);
+                    ImageUtil.smartFill(getImagePic(), getImageMap(), country.getX(), country.getY(), color.getRGB(), smartDrawTolerance);
                 }
                 repaintSelected();
             }

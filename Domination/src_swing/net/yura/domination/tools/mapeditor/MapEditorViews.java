@@ -472,22 +472,22 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
                     autoDrawDot.setActionCommand("autoDrawDot");
                     autoDrawDot.addActionListener(this);
                     pop.add(autoDrawDot);
-                    
+
                     JMenuItem autoDrawFloodFill = new JMenuItem("Auto Draw Flood Fill");
                     autoDrawFloodFill.setActionCommand("autoDrawFloodFill");
                     autoDrawFloodFill.addActionListener(this);
                     pop.add(autoDrawFloodFill);
-                    
+
                     JMenuItem smartDraw = new JMenuItem("Smart Fill (Flood Fill ImageMap from ImagePic Color)");
                     smartDraw.setActionCommand("smartDraw");
                     smartDraw.addActionListener(this);
                     pop.add(smartDraw);
-                    
-                    JMenuItem delIslands = new JMenuItem("Del Islands");
+
+                    JMenuItem delIslands = new JMenuItem("Delete Islands");
                     delIslands.setActionCommand("delIslands");
                     delIslands.addActionListener(this);
                     pop.add(delIslands);
-                    
+
                     pop.show(c, x, y);
                 }
         }

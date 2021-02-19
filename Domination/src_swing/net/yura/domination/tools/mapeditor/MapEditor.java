@@ -32,10 +32,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -60,11 +56,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -83,7 +75,6 @@ import net.yura.domination.ui.swinggui.GameTab;
 import net.yura.domination.ui.swinggui.SwingGUIPanel;
 import net.yura.domination.ui.swinggui.SwingGUITab;
 import net.yura.swing.ImageIcon;
-import net.yura.swing.JTable;
 
 /**
  * @author Yura Mamyrin
