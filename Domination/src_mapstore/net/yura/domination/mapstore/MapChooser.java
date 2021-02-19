@@ -564,7 +564,17 @@ public class MapChooser implements ActionListener,MapServerListener {
                                 }
                                 if (RiskUtil.streamOpener.deleteMapFile(mapUID)) {
                                     localMaps.remove(mapUID);
-                                    actionPerformed("local");
+                                    
+                                    String context = ((MapRenderer)list.getCellRenderer()).getContext();
+                                    if (context == null) {
+                                        // if we are already looking at local maps, then reload the list
+                                        // TODO this is not very good as jumps to the top of the list
+                                        actionPerformed("local");
+                                    }
+                                    else {
+                                        // if we are looking at server maps, repaint the download icon
+                                        list.repaint();
+                                    }
                                 }
                                 else {
                                     OptionPane.showMessageDialog(null, "could not delete this map", "error", 0);

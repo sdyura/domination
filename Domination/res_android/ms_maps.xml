@@ -32,7 +32,7 @@
             <popupmenu>
                 <menuitem text="mapchooser.sameauthor" i18n="true" action="sameAuthor"/>
                 <menuitem text="copy id" action="copyId"/>
-                <menuitem text="del" action="delMap"/>
+                <menuitem text="delete" action="delMap"/>
             </popupmenu>    
         </list>
         <label text="mapchooser.no-matches" i18n="true" name="NoMatches" alignment="center" property="valign=center" weightx="1" weighty="1" visible="false"/>
