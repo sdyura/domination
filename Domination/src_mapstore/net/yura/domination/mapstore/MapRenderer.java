@@ -154,7 +154,9 @@ public class MapRenderer extends DefaultListCellRenderer {
             int state = getCurrentState();
             // if NOT focused or selected
             if ( (state&Style.FOCUSED)==0 && (state&Style.SELECTED)==0 ) {
-                g.setColor( theme.getForeground(Style.DISABLED) );
+                list.setState(Style.DISABLED);
+                g.setColor(list.getForeground());
+                list.setState(-1);
             }
             g.drawString(line2, textx , padding + getFont().getHeight() + gap);
         }
