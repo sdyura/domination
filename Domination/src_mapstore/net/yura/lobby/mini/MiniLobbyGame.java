@@ -41,7 +41,7 @@ public interface MiniLobbyGame {
     /**
      * button inside lobby was clicked that the user wants to join a private game
      */
-    void joinPrivateGame();
+    void loginGoogle();
     /**
      * a private game was started on the server
      */

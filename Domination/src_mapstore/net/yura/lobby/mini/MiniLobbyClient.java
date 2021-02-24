@@ -110,7 +110,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     public void setPlayGamesSingedIn(boolean signedIn, String id, String idToken, String email) {
-        Button joinPrivate = (Button)loader.find("joinPrivate");
+        Button joinPrivate = (Button)loader.find("loginGoogle");
         if (joinPrivate != null) {
             joinPrivate.setVisible(!signedIn);
             Panel root = getRoot();
@@ -283,8 +283,8 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         else if ("register".equals(actionCommand)) {
             // TODO
         }
-        else if ("joinPrivate".equals(actionCommand)) {
-            game.joinPrivateGame();
+        else if ("loginGoogle".equals(actionCommand)) {
+            game.loginGoogle();
         }
         else if ("renameGame".equals(actionCommand)) {
             if (playerType >= Player.PLAYER_MODERATOR) {
@@ -321,6 +321,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             final Game game = (Game) gameList.getSelectedValue();
             if (game != null) { // can only be null if there are no games in the list
                 final List players = new List(new java.util.Vector(game.getPlayers()));
+                players.setSelectedIndex(0); // select a default
 
                 OptionPane.showOptionDialog(new ActionListener() {
                     public void actionPerformed(String actionCommand) {
@@ -335,7 +336,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                             mycom.sendAdminCommand(ProtoLobby.REQUEST_FLAG_USER, request);
                         }
                     }
-                }, players, resBundle.getProperty("lobby.question.title"), OptionPane.YES_NO_OPTION,
+                }, players, resBundle.getProperty("lobby.flagPlayer"), OptionPane.YES_NO_OPTION,
                 OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), null, null);
             }
         }

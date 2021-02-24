@@ -133,7 +133,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
 
     public void connected(String username) {
     }
-    public void joinPrivateGame() {
+    public void loginGoogle() {
     }
     public void gameStarted(int id) {
     }
