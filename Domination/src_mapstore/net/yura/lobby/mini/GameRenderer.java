@@ -24,6 +24,7 @@ public class GameRenderer extends DefaultListCellRenderer {
     Icon privateGame;
     Game game;
     String line1,line2,part2;
+    Component list;
     
     public GameRenderer(MiniLobbyClient l) {
         lobby = l;
@@ -42,6 +43,7 @@ public class GameRenderer extends DefaultListCellRenderer {
 
     public Component getListCellRendererComponent(Component list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         Component c = super.getListCellRendererComponent(list, null, index, isSelected, cellHasFocus);
+        this.list = list;
 
         game = (Game)value;
 
@@ -97,7 +99,9 @@ public class GameRenderer extends DefaultListCellRenderer {
         int state = getCurrentState();
         // if NOT focused or selected
         if ( (state&Style.FOCUSED)==0 && (state&Style.SELECTED)==0 ) {
-            g.setColor( theme.getForeground(Style.DISABLED) );
+            list.setState(Style.DISABLED);
+            g.setColor(list.getForeground());
+            list.setState(-1);
         }
 
         // draw line2
