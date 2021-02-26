@@ -72,8 +72,8 @@
 	<property name="dir.build.lobby.client.classes" location="${dir.build}/lobby/clientclasses"/>
 	<property name="dir.build.lobby.server.classes" location="${dir.build}/lobby/serverclasses"/>
 
-	<property name="dir.lobby.dist.server" location="../Lobby/dist/server"/>
-	<property name="dir.lobby.dist.client" location="../Lobby/dist/client"/>
+	<property name="dir.lobby.dist.server" location="../../Lobby/dist/server"/>
+	<property name="dir.lobby.dist.client" location="../../Lobby/dist/client"/>
 
 	<available file="${dir.lobby.dist.server}" property="dir.lobby.dist.server.available"/>
 	<available file="${dir.lobby.dist.client}" property="dir.lobby.dist.client.available"/>
@@ -116,14 +116,14 @@
 
                 <!-- for the map chooser -->
                 <copy todir="${dir.build.classes}">
-        	        <fileset dir="../sharedUI/res_mapstore_lobby" includes="**/ms_*.*"/>
-	                <fileset dir="../sharedUI/img_mapstore_lobby/drawable-mdpi" includes="**/ms_*.*"/>
+        	        <fileset dir="../sharedUI/res_mapstore_lobby" />
+	                <fileset dir="../sharedUI/img_mapstore_lobby/drawable-mdpi" />
 		</copy>
 
                 <!-- for Apple Retina Display -->
                 <mkdir dir="${dir.build.classes}/drawable-xhdpi"/>
                 <copy todir="${dir.build.classes}/drawable-xhdpi">
-	                <fileset dir="../sharedUI/img_mapstore_lobby/drawable-xhdpi" includes="**/ms_*.*"/>
+	                <fileset dir="../sharedUI/img_mapstore_lobby/drawable-xhdpi" />
 		</copy>
 
                 <copy file="res/images/map.png" todir="${dir.build.classes}/net/yura/domination/ui/increment1gui"/>
@@ -505,8 +505,8 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 			<fileset dir="game/${game.name}/maps" includes="**/*.*"/>
 		</copy>
 
-		<copy file="gpl.txt" todir="${dir.lobby.dist.client}/${game.name}"/>
-		<copy file="ChangeLog.txt" todir="${dir.lobby.dist.client}/${game.name}"/>
+		<copy file="../gpl.txt" todir="${dir.lobby.dist.client}/${game.name}"/>
+		<copy file="../ChangeLog.txt" todir="${dir.lobby.dist.client}/${game.name}"/>
 
 		<mkdir dir="${dir.lobby.dist.client}/${game.name}/help"/>
 		<copy file="game/${game.name}/help/game_credits.htm" todir="${dir.lobby.dist.client}/${game.name}/help"/>
@@ -539,23 +539,25 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 
     <target name="setup.android" description="copy maps/help/changelog/gpl into assets" >
 
-	<mkdir dir="android/assets/maps"/>
-	<copy todir="android/assets/maps">
+        <property name="dir.assets" location="../android/assets"/>
+        
+	<mkdir dir="${dir.assets}/maps"/>
+	<copy todir="${dir.assets}/maps">
 		<fileset dir="game/${game.name}/maps" includes="**/*.*"/>
 	</copy>
 
-	<mkdir dir="android/assets/help"/>
-	<copy todir="android/assets/help">
+	<mkdir dir="${dir.assets}/help"/>
+	<copy todir="${dir.assets}/help">
 		<fileset dir="game/${game.name}/help" includes="**/*.*"/>
 	</copy>
 
-	<mkdir dir="android/assets/services"/>
-	<copy todir="android/assets/services">
+	<mkdir dir="${dir.assets}/services"/>
+	<copy todir="${dir.assets}/services">
 		<fileset dir="../src/META-INF/services" includes="**/*.*"/>
 	</copy>
 
-	<copy file="../gpl.txt" todir="android/assets"/>
-	<copy file="../ChangeLog.txt" todir="android/assets"/>
+	<copy file="../gpl.txt" todir="${dir.assets}"/>
+	<copy file="../ChangeLog.txt" todir="${dir.assets}"/>
 
     </target>
 
@@ -608,10 +610,10 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 
         <taskdef classname="net.yura.tools.mobilegen.MobileXmlGen" classpathref="class.path" name="gen-xml"/>
         <gen-xml
-            classNamesFile="../sharedUI/gen_mapstore.properties"
+            classNamesFile="sharedUI/gen_mapstore.properties"
             outputPackage="net.yura.domination.mapstore.gen"
             outputClass="XMLMapAccess"
-            sourceRoot="../sharedUI/src_mapstore_lobby"/>
+            sourceRoot="sharedUI/src_mapstore_lobby"/>
 
     </target>
 

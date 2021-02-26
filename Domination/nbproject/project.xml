@@ -9,10 +9,12 @@
                 <root id="src.src.dir"/>
                 <root id="src.src2.dir" name="src_swing"/>
                 <root id="src.src_lobbyserver.dir"/>
-                <root id="src.src_mapstore_lobby.dir" name="src_mapstore"/>
-                <root id="src.src_mini_game_ui.dir" name="src_android"/>
-                <root id="src.res_mini_game_ui.dir" name="res_android"/>
-                <root id="src.drawable-mdpi.dir" name="res_drawable"/>
+                <root id="src.src_mapstore_lobby.dir" name="src_mapstore_lobby"/>
+                <root id="src.res_mapstore_lobby.dir" name="res_mapstore_lobby"/>
+                <root id="src.drawable-mdpi2.dir" name="img_mapstore_lobby"/>
+                <root id="src.src_mini_game_ui.dir" name="src_mini_game_ui"/>
+                <root id="src.res_mini_game_ui.dir" name="res_mini_game_ui"/>
+                <root id="src.drawable-mdpi.dir" name="img_mini_game_ui"/>
             </source-roots>
             <test-roots>
                 <root id="test.junit.dir" name="test"/>
