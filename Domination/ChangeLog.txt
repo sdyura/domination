@@ -28,7 +28,7 @@ CURRENT VERSION:
 	Android 68 Fix theme fix so can now flag games
 		   can join private games
 		   can delete maps
-		   WIP: can create private games
+		   can create private games
 
 1.2.2 (27.06.2020)
 

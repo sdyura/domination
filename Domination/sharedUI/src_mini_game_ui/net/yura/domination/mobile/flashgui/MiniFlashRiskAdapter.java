@@ -105,15 +105,10 @@ public class MiniFlashRiskAdapter implements RiskListener {
         mapFrame.setVisible(true);
     }
 
-    void createLobbyGame(String name,String options,int numPlayers,int timeout, boolean privateGame) {
+    void createLobbyGame(String name,String options,int numPlayers,int timeout, String password) {
         net.yura.lobby.model.Game game = new net.yura.lobby.model.Game(name, options, numPlayers,timeout);
-        if (privateGame) {
-            game.getPlayers().add(new net.yura.lobby.model.Player(lobby.whoAmI(),0));
-            DominationMain.getGooglePlayGameServices().startGameGooglePlay(game);
-        }
-        else {
-            lobby.createNewGame(game);
-        }
+        game.setMagicWord(password);
+        lobby.createNewGame(game);
     }
     boolean shouldShowClosePrompt() {
         return myRisk.getLocalGame() || amOnlinePlayer();

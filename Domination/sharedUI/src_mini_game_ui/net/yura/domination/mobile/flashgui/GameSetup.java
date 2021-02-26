@@ -18,6 +18,7 @@ import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.ButtonGroup;
 import net.yura.mobile.gui.ChangeListener;
 import net.yura.mobile.gui.components.Button;
+import net.yura.mobile.gui.components.CheckBox;
 import net.yura.mobile.gui.components.ComboBox;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.Frame;
@@ -129,9 +130,9 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
                                             autoplaceall.isSelected(),
                                             recycle.isSelected(),
                                             lobbyMapName),
-                                    privateGame ? RiskGame.MAX_PLAYERS - easyAI - averageAI - hardAI : getNoPlayers(Player.PLAYER_HUMAN),
+                                    getNoPlayers(Player.PLAYER_HUMAN),
                                     Integer.parseInt(((Option) ((ComboBox) newgame.find("TimeoutValue")).getSelectedItem()).getKey()),
-                                    privateGame
+                                    privateGame ? ((TextComponent)newgame.find("password")).getText() : null
                             );
 
                             controller.openMainMenu(); // close the game setup screen
@@ -165,6 +166,17 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
             }
             else if ("increasing".equals(actionCommand) || "fixed".equals(actionCommand) || "italianlike".equals(actionCommand)) {
                 // ignore these radio buttons
+            }
+            else if ("private".equals(actionCommand)) {
+                CheckBox privateButton = (CheckBox)newgame.find("private");
+                newgame.find("passwordLabel").setVisible(privateButton.isSelected());
+                Component password = newgame.find("password");
+                password.setVisible(privateButton.isSelected());
+                if (privateButton.isSelected()) {
+                    password.requestFocusInWindow();
+                }
+                newgame.getRoot().revalidate();
+                newgame.getRoot().repaint();
             }
             else if ("customPlayers".equals(actionCommand)) {
                 // TODO
@@ -263,8 +275,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
             TextComponent tc = (TextComponent)newgame.find("GameName");
             tc.setText( gameName );
             tc.setVisible(true);
-            newgame.find("Timeout").setVisible(true);
-            newgame.find("private").setVisible(DominationMain.getGooglePlayGameServices() != null);
+            newgame.find("Online").setVisible(true);
         }
 
         MapUpdateService.getInstance().addObserver( (BadgeButton)newgame.find("MapImg") );
