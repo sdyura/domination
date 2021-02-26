@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	12
 
-	Android		67
+	Android		68
 	Flash GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -24,6 +24,11 @@ CURRENT VERSION:
 	max players can be changed in game.ini config file, requested by Patreon Steve Sybesma
 	MapEditor: fixed zoom to keep the mouse position on map static
 	SwingGUI: testing tab, show player for online games
+
+	Android 68 Fix theme fix so can now flag games
+		   can join private games
+		   can delete maps
+		   WIP: can create private games
 
 1.2.2 (27.06.2020)
 
