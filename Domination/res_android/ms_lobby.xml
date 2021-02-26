@@ -12,7 +12,7 @@
     <panel columns="1" scrollable="true" weighty="1">
         <label alignment="center" i18n="true" name="Loading" property="valign=center" text="mapchooser.loading" visible="false" weightx="1" weighty="1"/>
         <label alignment="center" i18n="true" name="NoMatches" property="valign=center" text="mapchooser.no-matches" visible="false" weightx="1" weighty="1"/>
-        <button action="joinPrivate" i18n="true" name="joinPrivate" text="lobby.joinPrivateGame" visible="false" weightx="1"/>
+        <button action="loginGoogle" i18n="true" name="loginGoogle" text="lobby.loginGoogle" visible="false" weightx="1"/>
         <list action="listSelect" name="ResultList" weightx="1" weighty="1">
             <popupmenu>
                 <menuitem action="flagGame" i18n="true" icon="/ms_flag.png" text="lobby.flagGame"/>

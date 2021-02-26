@@ -13,6 +13,12 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
@@ -110,6 +116,22 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
             TheBackupAgent.backup(this);
+        }
+
+        try {
+            AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
+            Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+            appUpdateInfoTask.addOnSuccessListener(new com.google.android.play.core.tasks.OnSuccessListener<AppUpdateInfo>() {
+                @Override
+                public void onSuccess(AppUpdateInfo appUpdateInfo) {
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                        RiskUtil.setOldVersion();
+                    }
+                }
+            });
+        }
+        catch (Throwable th) {
+            logger.log(Level.INFO, "can not check for updates", th);
         }
     }
 

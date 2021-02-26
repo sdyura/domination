@@ -14,7 +14,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.android.tools.build:gradle:3.3.3'
     }
 }
 
@@ -25,12 +25,13 @@ dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.android.gms:play-services-games:17.0.0'
+    implementation 'com.google.android.play:core:1.9.1'
 }
 
 android {
     compileOptions.encoding = 'cp1252'
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     // this to to avoid error from httpcore-4.1.2.jar and httpcore-4.1.2.jar having the same file
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'

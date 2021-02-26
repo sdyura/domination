@@ -94,7 +94,7 @@ public class MiniUtil {
 // end CSS
                 "\"></div>"+
                 "<h3>yura.net "+RiskUtil.GAME_NAME+"</h3>"+
-                "<p>"+DominationMain.product+" "+resb.getString("about.version")+" "+version+("true".equals( System.getProperty("debug") )?" DEBUG":"")+"</p>"+
+                "<p>"+DominationMain.product+" "+resb.getString("about.version")+" "+version + (RiskUtil.isOldVersion()?" OLD VERSION":"") + ("true".equals( System.getProperty("debug") )?" DEBUG":"")+"</p>"+
                 "<p>"+"Game Engine: "+" "+RiskUtil.RISK_VERSION +"</p>"+
                 "<p>"+author+"</p>"+
                 "<p>"+copyright+"</p>"+

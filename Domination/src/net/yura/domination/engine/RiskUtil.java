@@ -490,7 +490,11 @@ public class RiskUtil {
 
             return null;
         }
-        
+
+    public static void setOldVersion() {
+        oldVersion = true;
+    }
+
     public static boolean isOldVersion() {
         return oldVersion;
     }

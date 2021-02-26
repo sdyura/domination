@@ -100,6 +100,9 @@ public class DominationMain extends Midlet {
                 }
                 @Override
                 public boolean ignoreError(LogRecord record) {
+                    if (RiskUtil.isOldVersion()) {
+                        return true;
+                    }
                     String loggerName = record.getLoggerName();
                     if ("DataScheduler".equals(loggerName)) { // "libcore.io.IoBridge".equals(className) && "isDataSchedulerEnabled".equals(methodName)
                         // isDataSchedulerEnabled(): DataScheduler is disabled, exeption=java.io.FileNotFoundException: /system/etc/datascheduling_policy_conf.xml: open failed: ENOENT (No such file or directory)
@@ -273,6 +276,10 @@ public class DominationMain extends Midlet {
         new Thread() {
             @Override
             public void run() {
+
+                // TODO check game version for non-PlayStore game
+                //RiskUtil.getNewVersionCheck() is not good enough for android as uses RiskUtil.RISK_VERSION
+
                 MapUpdateService.getInstance().init( MiniUtil.getFileList("map"), MapChooser.MAP_PAGE );
             }
         }.start();
