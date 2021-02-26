@@ -26,6 +26,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.android.gms:play-services-games:17.0.0'
     implementation 'com.google.android.play:core:1.9.1'
+    // some things are broken when moving to org.apache.httpcomponents:http 4.2+
+    implementation 'org.apache.httpcomponents:httpcore:4.1.2'
+    implementation 'org.apache.httpcomponents:httpmime:4.1.2'
 }
 
 android {
@@ -40,9 +43,9 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src', 'src_android', 'src_mapstore']
-            resources.srcDirs = ['src', 'res_android']
-            res.srcDirs = ['res']
+            java.srcDirs = ['../src', 'src', '../sharedUI/src_mini_game_ui', '../sharedUI/src_mapstore_lobby']
+            resources.srcDirs = ['../src', '../sharedUI/res_mini_game_ui', '../sharedUI/res_mapstore_lobby']
+            res.srcDirs = ['res', '../sharedUI/img_mini_game_ui', '../sharedUI/img_mapstore_lobby']
             assets.srcDirs = ['assets']
         }
     }
@@ -57,15 +60,15 @@ android {
 
 // same as ant tasks "setup.android"
 task copyAssets(type: Copy) {
-    from('game/Domination') {
+    from('../swingUI/game/Domination') {
         include 'maps/**'
         include 'help/**'
     }
-    from('src/META-INF') {
+    from('../src/META-INF') {
         include 'services/**'
     }
-    from 'gpl.txt'
-    from 'ChangeLog.txt'
+    from '../gpl.txt'
+    from '../ChangeLog.txt'
     into 'assets'
 }
 project.preBuild.dependsOn(copyAssets)

@@ -3,7 +3,7 @@
 // example: https://android.googlesource.com/platform/tools/buildSrc/+/master/base/settings.gradle
 
 include ':AndroidME'
-project(':AndroidME').projectDir = new File(rootDir.getParentFile(), 'AndroidME')
+project(':AndroidME').projectDir = new File(rootDir.getParentFile().getParentFile(), 'AndroidME')
 
 
 // this will only be supported when Android Studio adds support for gradle 3
