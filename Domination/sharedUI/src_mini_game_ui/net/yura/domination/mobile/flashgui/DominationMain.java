@@ -53,6 +53,7 @@ public class DominationMain extends Midlet {
     }
 
     public static Preferences appPreferences;
+    public static String installerPackageName;
     public GooglePlayGameServices googlePlayGameServices;
 
     public Risk risk;
@@ -96,6 +97,8 @@ public class DominationMain extends Midlet {
                             map.put("gameLog", new LogList( game.getCommands() ));
                         }
                     }
+
+                    map.put("installerPackageName", String.valueOf(installerPackageName));
                     map.put("lobbyID", MiniLobbyClient.getMyUUID() );
                 }
                 @Override

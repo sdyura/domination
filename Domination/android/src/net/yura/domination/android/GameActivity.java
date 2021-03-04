@@ -118,6 +118,10 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             TheBackupAgent.backup(this);
         }
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ECLAIR) {
+            DominationMain.installerPackageName = getPackageManager().getInstallerPackageName(getPackageName());
+        }
+
         try {
             AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
             Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
