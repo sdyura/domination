@@ -87,6 +87,10 @@ public class DominationMain extends Midlet {
         try {
             SimpleBug.initLogFile(RiskUtil.GAME_NAME + " " + product, version, TranslationBundle.getBundle().getLocale().toString());
             BugSubmitter.setApplicationInfoProvider( new ApplicationInfoProvider() {
+                /**
+                 * info specific to Domination goes here, for general android system info look in:
+                 * @see net.yura.android.AndroidMeApp#setSystemProperties()
+                 */
                 @Override
                 public void addInfoForSubmit(Map map) {
                     Risk r = risk;

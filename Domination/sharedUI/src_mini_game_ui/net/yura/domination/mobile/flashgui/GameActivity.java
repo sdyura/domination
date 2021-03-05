@@ -431,10 +431,12 @@ public class GameActivity extends Frame implements ActionListener {
 
             Button ok = new Button((String) DesktopPane.get("okText"));
             ok.setActionCommand("ok");
-            Button cancel = new Button((String) DesktopPane.get("cancelText"));
-            cancel.setActionCommand("cancel");
             Button send = new Button(resb.getProperty("game.menu.send"));
             send.setActionCommand("send");
+
+            Button cancel = new Button((String) DesktopPane.get("cancelText"));
+            cancel.setActionCommand("cancel");
+            cancel.setMnemonic(KeyEvent.KEY_SOFTKEY2);
 
             OptionPane.showOptionDialog(new ActionListener() {
                 public void actionPerformed(String actionCommand) {
@@ -457,7 +459,7 @@ public class GameActivity extends Frame implements ActionListener {
                     }
                     // if user presses cancel then ignore
                 }
-            }, saveText, resb.getProperty("game.menu.save") , 0, OptionPane.QUESTION_MESSAGE, null, new Button[] {ok, cancel, send}, ok);
+            }, saveText, resb.getProperty("game.menu.save") , 0, OptionPane.QUESTION_MESSAGE, null, new Button[] {ok, send, cancel}, ok);
 
         }
         else if ("graph".equals(actionCommand)) {
