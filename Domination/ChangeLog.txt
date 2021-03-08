@@ -2,9 +2,9 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.2.3
+	Risk Game:	1.2.4
 	 * Save:	8
-	 * Network:	12
+	 * Network:	13
 
 	Android		68
 	Flash GUI:	2
@@ -13,7 +13,13 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.2.3
+
+1.2.4
+
+	MapEditor: right click menu items added to countries list
+	Fix should have bumped the network version when unicode support was added
+
+1.2.3 (19.11.2020)
 
 	PlayerList for Lobby games shows players with correct color
 	Fix for hi-res Linux jdk-11 that sometimes uses display density instead of scale
@@ -25,10 +31,11 @@ CURRENT VERSION:
 	MapEditor: fixed zoom to keep the mouse position on map static
 	SwingGUI: testing tab, show player for online games
 
-	Android 68 Fix theme fix so can now flag games
+	Android 68 can delete maps
 		   can join private games
-		   can delete maps
 		   can create private games
+		   Fix theme fix so can now flag players
+		   Fix samsung android-10 save game dialog buttons squashed bug
 
 1.2.2 (27.06.2020)
 

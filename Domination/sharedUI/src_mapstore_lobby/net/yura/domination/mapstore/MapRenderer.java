@@ -55,9 +55,6 @@ public class MapRenderer extends DefaultListCellRenderer {
         try {
             int w = img.getWidth()/cols;
             int h = img.getHeight()/rows;
-            if ( img.getWidth() % w != 0 || img.getHeight() % h != 0) {
-                img = Image.createImage(img, 0, 0, w*cols, h*rows, 0);
-            }
             return new Sprite(img, w, h); // 29x29
         }
         catch(RuntimeException ex) {

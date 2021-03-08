@@ -546,6 +546,8 @@ public class MapChooser implements ActionListener,MapServerListener {
                 Map map = (Map)value;
                 final String mapUID = getFileUID(map.getMapUrl());
                 if (localMaps.contains(mapUID)) {
+                    // we check with the server to see if this map can be deleted
+                    // TODO this means we are unable to delete any maps when we are not connected to the internet
                     client.makeRequestMap(MAP_PAGE, mapUID, new Observer() {
                         public void update(Observable o, Object map) {
                             if (map != null) {

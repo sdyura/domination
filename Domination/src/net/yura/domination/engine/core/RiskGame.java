@@ -35,7 +35,7 @@ public class RiskGame implements Serializable { // transient
 	private static final long serialVersionUID = 8L;
 	public final static String SAVE_VERSION = String.valueOf(serialVersionUID);
 
-	public final static String NETWORK_VERSION = "12";
+	public final static String NETWORK_VERSION = "13";
 
 	public static int MAX_PLAYERS = 6; // can be changed in game.ini config
 	public final static Continent ANY_CONTINENT = new Continent("any","any", 0, 0);

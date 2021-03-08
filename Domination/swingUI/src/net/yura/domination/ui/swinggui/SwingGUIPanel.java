@@ -451,8 +451,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                     }
 
                     net.yura.grasshopper.BugSubmitter.submitBug(map, from, subject, cause, RiskUtil.GAME_NAME,
-                            RiskUtil.RISK_VERSION+" (save: " + RiskGame.SAVE_VERSION + " network: "+RiskGame.NETWORK_VERSION+")",
-                            TranslationBundle.getBundle().getLocale().toString()
+                            RiskUtil.RISK_VERSION, TranslationBundle.getBundle().getLocale().toString()
                         );
                     JOptionPane.showMessageDialog(this, "SENT!");
                     // everything went well sending through grasshopper, we return
