@@ -50,7 +50,7 @@
         <a href="http://prdownloads.sourceforge.net/domination/Domination_1.2.3.zip?download">Domination game zip file</a> 5.7MB
 	(pre 10.5 Mac OS and any other OS that runs Java 1.5+)<br><br>
 
-	<a href="https://sourceforge.net/projects/domination/files/Domination/1.2.0/Domination-67.apk/download">Android Domination apk</a> 5.2MB<br>
+	<a href="https://sourceforge.net/projects/domination/files/Domination/1.2.3/Domination-68.apk/download">Android Domination apk</a> 5.2MB<br>
 
 <!-- TODO
         <a href="http://prdownloads.sourceforge.net/domination/backup_of_Domination_1.0.9.8.zip?download">Domination
@@ -107,7 +107,7 @@
 	svn co https://svn.code.sf.net/p/swingme/code/AndroidME<br>
 	</code>
 
-	<p>please use <a href="http://developer.android.com/sdk/index.html">Android Studio</a>/<a href="http://developer.android.com/sdk/installing/studio-build.html">Gradle</a> to build the project</p>
+	<p>please use <a href="http://developer.android.com/sdk/index.html">Android Studio 3.2.1</a>/<a href="http://developer.android.com/sdk/installing/studio-build.html">Gradle</a> to build the project</p>
 
 <h3>Other projects used by Domination</h3>
 
