@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.RiskObjectOutputStream;
 import net.yura.domination.engine.RiskUtil;
@@ -29,7 +28,6 @@ import net.yura.domination.engine.translation.TranslationBundle;
  * <p> Risk Game Main Class </p>
  * @author Yura Mamyrin
  */
-
 public class RiskGame implements Serializable { // transient
 
 	private static final long serialVersionUID = 8L;
