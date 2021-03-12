@@ -235,8 +235,13 @@ public class PicturePanel extends ImageView implements MapPanel {
                 // create a very big 2d array with all the data from the image map
                 for(int y=0; y < m.getHeight(); y++) {
 
+                    try {
                         // load line by line to not use up too much mem
-                        m.getRGB(pixels,0,m.getWidth(),0,y,m.getWidth(),1);
+                        m.getRGB(pixels, 0, m.getWidth(), 0, y, m.getWidth(), 1);
+                    }
+                    catch (Exception ex) {
+                        throw new RuntimeException("can not getRGB from " + m + " offset=0 scanlength=" + m.getWidth() + " x=0 y=" + y + " width=" + m.getWidth() + " height=1", ex);
+                    }
 
                         for(int x=0; x < m.getWidth(); x++) {
 
