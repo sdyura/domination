@@ -101,6 +101,10 @@ public class DominationMain extends Midlet {
                         }
                     }
 
+                    if (adapter != null && adapter.email != null) {
+                        map.put("email", adapter.email);
+                    }
+
                     map.put("lobbyID", MiniLobbyClient.getMyUUID() );
                 }
                 @Override
