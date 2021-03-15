@@ -331,7 +331,17 @@ public class GameActivity extends Frame implements ActionListener {
         }
         catch (Throwable ex) { // ALL errors come here
             System.gc();
-            String text = ((ex instanceof OutOfMemoryError)?"Not enough memory to load map: ":"Error loading map: ")+mapFile +" "+ex+(ex.getCause()!=null?" "+ex.getCause():"")+(error?" TWO ERRORS!!":"");
+
+            String text;
+            if (ex instanceof OutOfMemoryError) {
+                text = "Not enough memory to load map: " + mapFile + " " + ex;
+            }
+            else {
+                text = "Error loading map: " + mapFile + " " + ex +
+                        (ex.getCause() != null ? " " + ex.getCause() : "") +
+                        (error ? " TWO ERRORS!!" : "") +
+                        " Please email a screenshot to: yura@yura.net";
+            }
 
             TextArea ta = new TextArea(text);
             ta.setLineWrap(true);
