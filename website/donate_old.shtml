@@ -42,8 +42,6 @@
     </script>
 
 
-
-
 <head>
 <title>yura.net Domination (Risk Board Game) - Donations</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" ></script>
@@ -88,23 +86,8 @@
 </style>
 
 
-
-
 <!--#include file="top.txt" -->
 
-<!--
-<div class="money">
-    <script src="//www.gmodules.com/ig/ifr?url=http://money.technetium.be/google_interactive.xml%3FTC_LANG_language%3Den&amp;up_flag=1&amp;up_ATS=0&amp;up_AUD=0&amp;up_BEF=1&amp;up_BGN=0&amp;up_BRL=0&amp;up_CAD=0&amp;up_CHF=1&amp;up_CNY=0&amp;up_CYP=0&amp;up_CZK=0&amp;up_DEM=1&amp;up_DKK=1&amp;up_EEK=0&amp;up_ESP=0&amp;up_EUR=1&amp;up_FIM=0&amp;up_FRF=0&amp;up_GBP=1&amp;up_GRD=0&amp;up_HKD=0&amp;up_HRK=0&amp;up_HUF=0&amp;up_IDR=0&amp;up_IEP=0&amp;up_ILS=0&amp;up_INR=0&amp;up_ISK=0&amp;up_ITL=0&amp;up_JPY=1&amp;up_KRW=0&amp;up_LTL=0&amp;up_LUX=0&amp;up_LVL=0&amp;up_MTL=0&amp;up_MXN=0&amp;up_MYR=0&amp;up_NLG=1&amp;up_NOK=0&amp;up_NZD=0&amp;up_PHP=0&amp;up_PLN=0&amp;up_PTE=0&amp;up_RON=0&amp;up_RUB=0&amp;up_SEK=0&amp;up_SGD=0&amp;up_SIT=0&amp;up_SKK=0&amp;up_THB=0&amp;up_TRY=0&amp;up_USD=1&amp;up_ZAR=0&amp;synd=open&amp;w=200&amp;h=260&amp;title=Interactive+exchange+rates&amp;lang=en&amp;country=ALL&amp;border=%23ffffff%7C3px%2C1px+solid+%23999999&amp;output=js"></script>
-</div>
--->
-
-<h1>Domination Donations</h1>
-
-<h2>Donate to a feature</h2>
-
-<p>Sponsors a feature or bugfix for Domination on <a href="http://www.freedomsponsors.org/core/issue/?s=&project_id=170&project_name=Domination">FreedomSponsors</a>.</p>
-
-<p>If you like this app and would want me to spend more time on it, please donate, anything would be appreciated!</p>
 
 <script type="text/javascript">
 function validateAmount(amount){
@@ -117,6 +100,25 @@ function validateAmount(amount){
     }
 }
 </script>
+
+
+<!--
+<div class="money">
+    <script src="//www.gmodules.com/ig/ifr?url=http://money.technetium.be/google_interactive.xml%3FTC_LANG_language%3Den&amp;up_flag=1&amp;up_ATS=0&amp;up_AUD=0&amp;up_BEF=1&amp;up_BGN=0&amp;up_BRL=0&amp;up_CAD=0&amp;up_CHF=1&amp;up_CNY=0&amp;up_CYP=0&amp;up_CZK=0&amp;up_DEM=1&amp;up_DKK=1&amp;up_EEK=0&amp;up_ESP=0&amp;up_EUR=1&amp;up_FIM=0&amp;up_FRF=0&amp;up_GBP=1&amp;up_GRD=0&amp;up_HKD=0&amp;up_HRK=0&amp;up_HUF=0&amp;up_IDR=0&amp;up_IEP=0&amp;up_ILS=0&amp;up_INR=0&amp;up_ISK=0&amp;up_ITL=0&amp;up_JPY=1&amp;up_KRW=0&amp;up_LTL=0&amp;up_LUX=0&amp;up_LVL=0&amp;up_MTL=0&amp;up_MXN=0&amp;up_MYR=0&amp;up_NLG=1&amp;up_NOK=0&amp;up_NZD=0&amp;up_PHP=0&amp;up_PLN=0&amp;up_PTE=0&amp;up_RON=0&amp;up_RUB=0&amp;up_SEK=0&amp;up_SGD=0&amp;up_SIT=0&amp;up_SKK=0&amp;up_THB=0&amp;up_TRY=0&amp;up_USD=1&amp;up_ZAR=0&amp;synd=open&amp;w=200&amp;h=260&amp;title=Interactive+exchange+rates&amp;lang=en&amp;country=ALL&amp;border=%23ffffff%7C3px%2C1px+solid+%23999999&amp;output=js"></script>
+</div>
+-->
+
+<h1>Domination Donations</h1>
+
+<h2>Donate to a feature</h2>
+
+<!--
+<p>Sponsors a feature or bugfix for Domination on <a href="http://www.freedomsponsors.org/core/issue/?s=&project_id=170&project_name=Domination">FreedomSponsors</a>.</p>
+-->
+
+
+<p>If you like this app and would want me to spend more time on it, please donate, anything would be appreciated!</p>
+
 
 <!--
 <h4>Step 1</h4>
@@ -132,7 +134,6 @@ function validateAmount(amount){
 <h4>Step 2</h4>
 <p>click the "Support" button for the feature you want added next to Domination:</p>
 -->
-
 
 
 <div id="mapstore-web-interface" class="feature">
