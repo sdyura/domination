@@ -491,9 +491,16 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 		 * @param redrawNeeded If frame needs to be redrawn
 		 * @param repaintNeeded If frame needs to be repainted
 		 */
-		public void sendMessage(String output, boolean redrawNeeded, boolean repaintNeeded) {
+		public void sendMessage(final String output, boolean redrawNeeded, boolean repaintNeeded) {
 			// Testing.append("Returned: \""+output+"\"\n");
-			consoleTab.addOutput(output);
+                        
+                        // messages can come from threads in any state, setCaretPosition can not handle interupted threads
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                consoleTab.addOutput(output);
+                            }
+                        });
 
 			if (redrawNeeded) {
 				pprepaintCountries();
