@@ -8,8 +8,8 @@ import java.util.logging.Logger;
  */
 public class J2SELogger extends net.yura.mobile.logging.Logger {
 
-    static final Logger logger = Logger.getLogger(J2SELogger.class.getName());
-    
+    static final Logger logger = Logger.getLogger(net.yura.mobile.logging.Logger.class.getName());
+
     protected synchronized void log(String message, int level) {
         logger.log(getLevel(level), message);
     }
@@ -17,7 +17,7 @@ public class J2SELogger extends net.yura.mobile.logging.Logger {
     protected synchronized void log(String error, Throwable throwable, int level) {
         logger.log(getLevel(level), error, throwable);
     }
-    
+
     private static Level getLevel(int level) {
         switch (level) {
             case net.yura.mobile.logging.Logger.DEBUG: return Level.FINE;
@@ -29,5 +29,4 @@ public class J2SELogger extends net.yura.mobile.logging.Logger {
             default: throw new IllegalArgumentException("level: "+level);
         }
     }
-    
 }

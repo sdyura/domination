@@ -1,17 +1,17 @@
 package net.yura.domination.mobile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import android.graphics.ColorMatrix;
 import collisionphysics.BallWorld;
 import com.nokia.mid.ui.DirectGraphics;
 import com.nokia.mid.ui.DirectUtils;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
@@ -1045,6 +1045,9 @@ public class PicturePanel extends ImageView implements MapPanel {
                 private int y2;
                 private Image SourceImage;
 
+                /**
+                 * the highlight/filter color (NOT the country color/id)
+                 */
                 private int  color;
 
                 public CountryImage() {
@@ -1053,13 +1056,10 @@ public class PicturePanel extends ImageView implements MapPanel {
                 }
 
                 public boolean checkChange(int b) {
-
                         if (b != color) {
-
                                 color = b;
                                 return true;
                         }
-
                         return false;
                 }
 
@@ -1161,12 +1161,9 @@ public class PicturePanel extends ImageView implements MapPanel {
 
                 @Override
                 public String toString() {
-                    return "CountryImage{x1=" + x1 + ", y1=" + y1 + ", x2=" + x2 + ", y2=" + y2 + ", w=" + getWidth() + ", h=" + getHeight() + '}';
+                    return "CountryImage{x1=" + x1 + ", y1=" + y1 + ", x2=" + x2 + ", y2=" + y2 + ", w=" + getWidth() + ", h=" + getHeight() + ", highlight=" + (color == 0 ? "none" : ColorUtil.getStringForColor(color)) + '}';
                 }
-
         }
-
-
 
         class Polygon {
 

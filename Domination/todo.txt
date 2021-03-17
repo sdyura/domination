@@ -56,22 +56,13 @@ Desktop P2P:
 
 Android:
 
+    support push on "Amazon ADM", "Google FCM" and "Huawei HMS"
     crash when About or Stat Activity is open and 'Dont Keep Activities' and 'No Backgtound processes' are selected, and we go from Domination to another activity and back
-    add option to change the language of the game
     new icon?
     fullscreen mode (including hiding the top action bar, the status bar and for nexus phones the navbar)
     load big maps without OutOfMemErrors - http://developer.android.com/training/displaying-bitmaps/load-bitmap.html
     ability to select number of armies to place on android (1 or 5 or 10 or 25 ...) or long press gives slider for number of troops to place
-    When bulding with ant, to extra jars for grasshopper are not included
-    on ldpi "Start Game" button still not visable
-    add "custom player" button and dialog to GameSetup screen
-    at least have a way of the player to set there own color
     some way to del saved games when they are not needed any more
-
-Android Donate to Feature:
-
-    add pay for feature screen to domination
-    [Donate] button on main menu needs to say something else [vote/donate for next feature]
 
 BlackBerry:
 

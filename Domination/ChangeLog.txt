@@ -31,6 +31,8 @@ CURRENT VERSION:
 	MapEditor: fixed zoom to keep the mouse position on map static
 	SwingGUI: testing tab, show player for online games
 
+	Android 71 Fix for maps not loading on some Samsung devices
+
 	Android 68 can delete maps
 		   can join private games
 		   can create private games
