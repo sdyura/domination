@@ -30,6 +30,7 @@ import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.border.Border;
 import net.yura.mobile.gui.components.ImageView;
 import net.yura.mobile.gui.plaf.Style;
+import net.yura.mobile.logging.Logger;
 
 /**
  * <p> Picture Panel </p>
@@ -516,6 +517,10 @@ public class PicturePanel extends ImageView implements MapPanel {
                                 if (ballWorld==null) {
                                     x = t.getX();
                                     y = t.getY();
+
+                                    if (x > img.getWidth() || y > img.getHeight()) {
+                                        Logger.warn("country outside map " + t);
+                                    }
                                 }
                                 else {
                                     x = (int)ballWorld.balls[c].x;
