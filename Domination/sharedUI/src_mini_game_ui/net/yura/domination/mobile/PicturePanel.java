@@ -320,6 +320,13 @@ public class PicturePanel extends ImageView implements MapPanel {
                 img = newImg;
                 tempimg = newTempimg;
                 map = newMap;
+
+                // sanity check to make sure the map loaded correctly, we know how android likes to mess with images
+                for (Country country : game.getCountries()) {
+                    if (country.getX() > img.getWidth() || country.getY() > img.getHeight()) {
+                        Logger.warn("country outside map " + country);
+                    }
+                }
         }
 
         public static class CountryNotFoundException extends RuntimeException {
@@ -517,10 +524,6 @@ public class PicturePanel extends ImageView implements MapPanel {
                                 if (ballWorld==null) {
                                     x = t.getX();
                                     y = t.getY();
-
-                                    if (x > img.getWidth() || y > img.getHeight()) {
-                                        Logger.warn("country outside map " + t);
-                                    }
                                 }
                                 else {
                                     x = (int)ballWorld.balls[c].x;
