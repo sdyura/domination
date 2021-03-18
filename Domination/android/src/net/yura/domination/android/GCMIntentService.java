@@ -12,6 +12,7 @@ import net.yura.lobby.client.AndroidLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 
@@ -47,9 +48,13 @@ public class GCMIntentService extends GCMBaseIntentService {
      */
     @Override
     protected void onMessage(Context context, Intent intent) {
-	String msg = intent.getExtras().getString(AndroidLobbyClient.MESSAGE);
-        String gameId = intent.getExtras().getString(AndroidLobbyClient.GAME_ID);
-        String options = intent.getExtras().getString(AndroidLobbyClient.OPTIONS);
+        Bundle bundle = intent.getExtras();
+        String msg=null, gameId=null, options=null;
+        if (bundle != null) {
+            msg = bundle.getString(AndroidLobbyClient.MESSAGE);
+            gameId = bundle.getString(AndroidLobbyClient.GAME_ID);
+            options = bundle.getString(AndroidLobbyClient.OPTIONS);
+        }
 
         String message = msg==null?"Received message":msg;
         displayMessage(context, message);
