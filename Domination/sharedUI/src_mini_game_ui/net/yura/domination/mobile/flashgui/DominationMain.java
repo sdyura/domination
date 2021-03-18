@@ -37,6 +37,8 @@ import net.yura.util.Service;
 
 public class DominationMain extends Midlet {
 
+    private static final Logger logger = Logger.getLogger(DominationMain.class.getName());
+
     public static final boolean DEFAULT_SHOW_DICE = true;
     public static final String SHOW_DICE_KEY = "show_dice";
 
@@ -189,7 +191,7 @@ public class DominationMain extends Midlet {
             // cant do this on J2SE, swing will print too much junk.
             if (Midlet.getPlatform() != Midlet.PLATFORM_ME4SE) {
                 // if we want to see DEBUG, default is INFO
-                java.util.logging.Logger.getLogger("").setLevel(java.util.logging.Level.ALL);
+                Logger.getLogger("").setLevel(java.util.logging.Level.ALL);
             }
 
             // so we do not need to wait for AI while testing
@@ -239,8 +241,8 @@ public class DominationMain extends Midlet {
 
         }
         catch (Exception ex) {
-            if (Midlet.getPlatform()==Midlet.PLATFORM_ANDROID) {
-                net.yura.mobile.logging.Logger.warn(null, ex);
+            if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                logger.log(Level.WARNING, "can not load android theme", ex);
             }
 
             synth = new NimbusLookAndFeel();
@@ -269,19 +271,22 @@ public class DominationMain extends Midlet {
             public void run() {
                 File autoSaveFile = getAutoSaveFile();
                 if (autoSaveFile.exists()) {
-                    GameActivity.logger.info("[GameActivity] LOADING FROM AUTOSAVE");
+                    logger.info("Loading from autosave");
                     // rename the file before we load it with the game thread so it does not get deleted by another thread
                     RiskUtil.rename(autoSaveFile, new File(autoSaveFile.getParent(),autoSaveFile.getName()+".load"));
                     risk.parser( "loadgame "+getAutoSaveFile()+".load" );
                 }
                 else {
+                    logger.info("Opening main menu");
                     adapter.openMainMenu();
-                    
+
                     GooglePlayGameServices gpgs = getGooglePlayGameServices();
                     if (gpgs != null && gpgs.hasPendingOpenLobby()) {
                         adapter.openLobby();
                     }
                 }
+
+                logger.info("UI STARTED");
             }
         });
 
@@ -297,13 +302,11 @@ public class DominationMain extends Midlet {
             }
         }.start();
 
-
         //risk.parser("newgame");
         //risk.parser("newplayer ai hard blue bob");
         //risk.parser("newplayer ai hard red fred");
         //risk.parser("newplayer ai hard green greg");
         //risk.parser("startgame domination increasing");
-
 
 //        try {
 //            File saves = new File( net.yura.android.AndroidMeApp.getIntance().getFilesDir() ,"saves");
@@ -315,7 +318,6 @@ public class DominationMain extends Midlet {
 //        catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
-
     }
 
     private final static String AUTO_SAVE_FILE_NAME = "auto.save";
@@ -382,7 +384,7 @@ public class DominationMain extends Midlet {
             appPreferences.flush();
         }
         catch(Exception ex) {
-            Logger.getLogger(DominationMain.class.getName()).log(Level.WARNING, "can not flush prefs", ex);
+            logger.log(Level.WARNING, "can not flush prefs", ex);
         }
     }
 
@@ -420,7 +422,7 @@ public class DominationMain extends Midlet {
                 listener.onCanceled();
             }
             else {
-                Logger.getLogger("").warning("unknown resultCode "+resultCode);
+                logger.warning("unknown resultCode "+resultCode);
             }
         }
     }
