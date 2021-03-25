@@ -3,6 +3,7 @@ package net.yura.cache;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.logging.Level;
@@ -83,7 +84,13 @@ public class Cache {
                 if (exists) {
                     deleted = file.delete();
                 }
-                logger.log(Level.WARNING, 
+
+                Level level  = Level.WARNING;
+                if (ex instanceof IOException && "write failed: ENOSPC (No space left on device)".equals(ex.getMessage())) {
+                    level = Level.INFO;
+                }
+
+                logger.log(level,
                         "failed to save data to file: "+file+
                         " exists="+exists+
                         " deleted="+deleted+
