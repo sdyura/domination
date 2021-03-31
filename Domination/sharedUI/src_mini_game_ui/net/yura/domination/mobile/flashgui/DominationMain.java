@@ -177,6 +177,7 @@ public class DominationMain extends Midlet {
                         if (!open) {
                             open = true;
                             try {
+                                // TODO this does not work if the theme is not set yet, it will just throw an exception
                                 OptionPane.showMessageDialog(null, record.getMessage()+" "+record.getThrown(), "WARN", OptionPane.WARNING_MESSAGE);
                             }
                             catch(Exception ex) { ex.printStackTrace(); }
