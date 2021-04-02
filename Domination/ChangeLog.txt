@@ -6,12 +6,12 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	13
 
-	Android		68
 	Flash GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
 	Increment1GUI:	2
 	CommandLine:	2
+	Android		76
 
 
 1.2.4
@@ -31,8 +31,8 @@ CURRENT VERSION:
 	MapEditor: fixed zoom to keep the mouse position on map static
 	SwingGUI: testing tab, show player for online games
 
-	Android 71 Fix for maps not loading on some Samsung devices
-
+	Android 76 Fix for maps not loading on some Samsung devices
+		   Fix notifications not being shown because no channel
 	Android 68 can delete maps
 		   can join private games
 		   can create private games
