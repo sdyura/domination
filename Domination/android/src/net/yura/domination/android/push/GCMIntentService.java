@@ -1,6 +1,4 @@
-package net.yura.domination.android;
-
-import static net.yura.domination.android.GCMActivity.displayMessage;
+package net.yura.domination.android.push;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,19 +25,19 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onRegistered(Context context, String registrationId) {
-        displayMessage(context,"Device registered: regId = "+registrationId);
+        GCMActivity.displayMessage(context,"Device registered: regId = "+registrationId);
         GCMServerUtilities.register(context, registrationId);
     }
 
     @Override
     protected void onUnregistered(Context context, String registrationId) {
-        displayMessage(context, "Device unregistered");
+        GCMActivity.displayMessage(context, "Device unregistered");
         if (GCMRegistrar.isRegisteredOnServer(context)) {
             GCMServerUtilities.unregister(context, registrationId);
         } else {
             // This callback results from the call to unregister made on
             // ServerUtilities when the registration to the server failed.
-            displayMessage(context, "Ignoring unregister callback");
+            GCMActivity.displayMessage(context, "Ignoring unregister callback");
         }
     }
 
@@ -57,7 +55,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         }
 
         String message = msg==null?"Received message":msg;
-        displayMessage(context, message);
+        GCMActivity.displayMessage(context, message);
         // notifies user
         Map<String, Object> extras = new HashMap();
         if (gameId != null) {
@@ -72,20 +70,20 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onDeletedMessages(Context context, int total) {
         String message = "Received deleted messages notification "+total;
-        displayMessage(context, message);
+        GCMActivity.displayMessage(context, message);
         // notifies user
         MIDlet.showNotification(context.getString(R.string.app_name), message, R.drawable.icon, -1, Collections.EMPTY_MAP);
     }
 
     @Override
     public void onError(Context context, String errorId) {
-        displayMessage(context, "Received error: "+errorId);
+        GCMActivity.displayMessage(context, "Received error: "+errorId);
     }
 
     @Override
     protected boolean onRecoverableError(Context context, String errorId) {
         // log message
-        displayMessage(context, "Received recoverable error: "+errorId);
+        GCMActivity.displayMessage(context, "Received recoverable error: "+errorId);
         return super.onRecoverableError(context, errorId);
     }
 

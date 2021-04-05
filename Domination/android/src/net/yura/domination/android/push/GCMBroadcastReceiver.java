@@ -1,4 +1,4 @@
-package net.yura.domination.android;
+package net.yura.domination.android.push;
 
 import android.content.Context;
 

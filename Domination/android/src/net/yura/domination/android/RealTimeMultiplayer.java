@@ -20,14 +20,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.AnnotatedData;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesCallbackStatusCodes;
-import com.google.android.gms.games.Player;
 import com.google.android.gms.games.RealTimeMultiplayerClient;
 import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.games.multiplayer.InvitationBuffer;
@@ -40,6 +37,8 @@ import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.android.gms.games.multiplayer.realtime.RoomStatusUpdateCallback;
 import com.google.android.gms.games.multiplayer.realtime.RoomUpdateCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * if 2 people (B and Q) create games with 1 friend each (C and G) and 2 auto-match players each:

@@ -52,15 +52,15 @@
 
 		<!-- <service android:name="net.yura.android.AndroidMeService" /> -->
 
-		<receiver android:name="net.yura.domination.android.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+		<receiver android:name="net.yura.domination.android.push.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
 		  <intent-filter>
 		    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 		    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 		    <category android:name="net.yura.domination" />
 		  </intent-filter>
 		</receiver>
-		<service android:name="net.yura.domination.android.GCMIntentService" />
-		<activity android:name="net.yura.domination.android.GCMActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize" android:windowSoftInputMode="stateAlwaysHidden" android:theme="@android:style/Theme.NoDisplay"/>
+		<service android:name="net.yura.domination.android.push.GCMIntentService" />
+		<activity android:name="net.yura.domination.android.push.GCMActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize" android:windowSoftInputMode="stateAlwaysHidden" android:theme="@android:style/Theme.NoDisplay"/>
 
         <activity android:name="net.yura.domination.android.GameActivity"
             	  android:launchMode="singleTask"
