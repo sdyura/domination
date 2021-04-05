@@ -12,12 +12,17 @@ public class FCMRegistrar {
 
     private static final String KEY = "onServerToken";
     private static final String PROPERTY_ON_SERVER_EXPIRATION_TIME = "onServerExpirationTime";
+
     /**
      * @see com.google.android.gcm.GCMRegistrar#isRegisteredOnServer(Context)
      */
     public static boolean isRegisteredOnServer(String token) {
         String dbtoken = DominationMain.appPreferences.get(KEY, null);
-        boolean isRegistered = token == null ? dbtoken != null : token.equals(dbtoken);
+        if (token == null) {
+            // if token is null we want to find out if we are registered on the server at all
+            return dbtoken != null;
+        }
+        boolean isRegistered = token.equals(dbtoken);
         if (isRegistered) {
             long expirationTime = DominationMain.appPreferences.getLong(PROPERTY_ON_SERVER_EXPIRATION_TIME, -1L);
             if (System.currentTimeMillis() > expirationTime) {

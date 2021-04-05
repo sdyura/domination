@@ -57,9 +57,6 @@ public class FCMActivity extends Activity {
                         }
                         else {
                             FCMServerUtilities.register(token);
-                            // TODO if we FAIL at registering on our server then call
-                            // GCMRegistrar.unregister(context);
-                            // currently can not tell
                         }
                     }
                 });
@@ -76,7 +73,6 @@ public class FCMActivity extends Activity {
                            logger.log(Level.WARNING, "FCM deleteToken failed", task.getException());
                            return;
                        }
-
 
                        displayMessage("Device unregistered");
                        if (FCMRegistrar.isRegisteredOnServer(null)) {
