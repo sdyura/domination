@@ -487,6 +487,11 @@ public class MapChooser implements ActionListener,MapServerListener {
             makeRequestForMap("sort","TOP_NEW" );
         }
         else if ("TOP_RATINGS".equals(actionCommand)) {
+
+            if ( "true".equals( System.getProperty("debug") ) ) {
+                System.err.println("no ratings :-(");
+            }
+
             clearList();
             makeRequestForMap("sort","TOP_RATINGS" );
         }

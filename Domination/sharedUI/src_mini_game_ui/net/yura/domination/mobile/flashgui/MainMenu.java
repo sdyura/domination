@@ -1,5 +1,6 @@
 package net.yura.domination.mobile.flashgui;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import net.yura.domination.engine.Risk;
@@ -132,11 +133,7 @@ public class MainMenu extends Frame implements ActionListener {
                 MiniUtil.showAbout();
             }
             else if ("quit".equals(actionCommand)) {
-                // HACK: if the user hits quit 2 times in a row,
-                // the 2nd event may throw a nullpointer as desktopPane is set to null after the 1st
-                if (net.yura.mobile.gui.DesktopPane.getDesktopPane() != null) {
-                    Midlet.exit();
-                }
+                DominationMain.quit();
             }
             else if ("donate".equals(actionCommand)) {
                 try {

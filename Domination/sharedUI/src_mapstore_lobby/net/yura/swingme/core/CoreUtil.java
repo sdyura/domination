@@ -27,9 +27,4 @@ public class CoreUtil {
             }
         };
     }
-
-    public static void setupLogging() {
-        Logger.setLogger(new net.yura.swingme.core.J2SELogger());
-    }
-
 }

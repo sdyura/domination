@@ -10,6 +10,10 @@ public class J2SELogger extends net.yura.mobile.logging.Logger {
 
     static final Logger logger = Logger.getLogger(net.yura.mobile.logging.Logger.class.getName());
 
+    public static void setupLogging() {
+        net.yura.mobile.logging.Logger.setLogger(new J2SELogger());
+    }
+
     protected synchronized void log(String message, int level) {
         logger.log(getLevel(level), message);
     }

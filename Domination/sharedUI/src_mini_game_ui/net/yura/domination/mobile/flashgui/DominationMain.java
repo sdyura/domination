@@ -33,6 +33,7 @@ import net.yura.mobile.gui.plaf.Style;
 import net.yura.mobile.gui.plaf.SynthLookAndFeel;
 import net.yura.mobile.gui.plaf.nimbus.NimbusLookAndFeel;
 import net.yura.swingme.core.CoreUtil;
+import net.yura.swingme.core.J2SELogger;
 import net.yura.util.Service;
 
 public class DominationMain extends Midlet {
@@ -163,7 +164,7 @@ public class DominationMain extends Midlet {
             th.printStackTrace();
         }
 
-        CoreUtil.setupLogging();
+        J2SELogger.setupLogging();
 
         if ( "true".equals( System.getProperty("debug") ) ) {
 
@@ -319,6 +320,17 @@ public class DominationMain extends Midlet {
 //        catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
+    }
+
+    public static void quit() {
+        // HACK: if the user hits quit 2 times in a row,
+        // the 2nd event may throw a nullpointer as desktopPane is set to null after the 1st
+        if (net.yura.mobile.gui.DesktopPane.getDesktopPane() != null) {
+
+            logger.info("UI QUIT");
+
+            Midlet.exit();
+        }
     }
 
     private final static String AUTO_SAVE_FILE_NAME = "auto.save";
