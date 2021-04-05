@@ -30,6 +30,8 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpcore:4.1.2'
     implementation 'org.apache.httpcomponents:httpmime:4.1.2'
     implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.core:core:1.3.2' // for FileProvider
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
 }
 
 android {

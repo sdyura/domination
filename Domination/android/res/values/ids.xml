@@ -2,4 +2,14 @@
 <resources>
     <string name="app_id" translatable="false">783159960229</string>
     <string name="server_client_id" translatable="false">783159960229-3ssrlemm017ak0qrlpv83rvjjud1mn2b.apps.googleusercontent.com</string>
+
+    <!-- FCM stuff from build/generated/res/google-services/debug/values/values.xml -->
+    <string name="default_web_client_id" translatable="false">623586182374-l8hoqgl9jnggajs7lpsgtmgm6ih6gbrb.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://admob-app-id-8510063660.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">623586182374</string>
+    <string name="google_api_key" translatable="false">AIzaSyCqCH_yEahW67repvPokaR5ZlZJxq55VeM</string>
+    <string name="google_app_id" translatable="false">1:623586182374:android:c209de909b7cd0e2</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCqCH_yEahW67repvPokaR5ZlZJxq55VeM</string>
+    <string name="google_storage_bucket" translatable="false">admob-app-id-8510063660.appspot.com</string>
+    <string name="project_id" translatable="false">admob-app-id-8510063660</string>
 </resources>

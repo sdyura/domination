@@ -86,5 +86,4 @@ public class GCMIntentService extends GCMBaseIntentService {
         GCMActivity.displayMessage(context, "Received recoverable error: "+errorId);
         return super.onRecoverableError(context, errorId);
     }
-
 }
