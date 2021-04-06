@@ -57,7 +57,7 @@ public class FCMActivity extends Activity {
                         String token = task.getResult();
 
                         if (FCMRegistrar.isRegisteredOnServer(token)) {
-                            logger.info("Already registered");
+                            logger.info("FCM Already registered");
                         }
                         else {
                             FCMServerUtilities.register(token);
@@ -78,14 +78,14 @@ public class FCMActivity extends Activity {
                            return;
                        }
 
-                       logger.info("Device unregistered");
+                       logger.info("FCM Device unregistered");
                        if (FCMRegistrar.isRegisteredOnServer(null)) {
                            FCMServerUtilities.unregister();
                        }
                        else {
                            // This callback results from the call to unregister made on
                            // ServerUtilities when the registration to the server failed.
-                           logger.info("Ignoring unregister callback");
+                           logger.info("FCM Ignoring unregister callback");
                        }
                    }
                });
