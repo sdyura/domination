@@ -22,13 +22,11 @@ public class FCMActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	try {
-            if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
-                setup();
-                //unregister();
-            }
-            else {
-                logger.log(Level.INFO, "FCM fail: GMS not found on device");
-            }
+            // can not use this check as sometimes even if this is not SUCCESS, push still works fine
+            //if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
+
+            setup();
+            //unregister();
 	}
 	catch (Throwable th) {
 	    logger.log(Level.WARNING, "FCM fail", th);
@@ -49,7 +47,15 @@ public class FCMActivity extends Activity {
                         if (!task.isSuccessful()) {
                             // something went wrong, should we request to register? it should do this automatically
                             // FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-                            logger.log(Level.WARNING, "Fetching FCM registration token failed", task.getException());
+
+                            Exception exception = task.getException();
+                            Level level = Level.WARNING;
+                            // for some strange reason this comes back as IOException
+                            if (exception != null && "MISSING_INSTANCEID_SERVICE".equals(exception.getMessage())) {
+                                level = Level.INFO;
+                            }
+
+                            logger.log(level, "Fetching FCM registration token failed", exception);
                             return;
                         }
 
