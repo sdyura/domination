@@ -424,7 +424,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
         // GCM push only works on android
         if (Midlet.getPlatform()==Midlet.PLATFORM_ANDROID) {
-            Midlet.openURL("nativeNoResult://net.yura.domination.android.push.GCMActivity");
+            Midlet.openURL("nativeNoResult://net.yura.domination.android.push.FCMActivity");
         }
 
         mycom.getGameTypes();

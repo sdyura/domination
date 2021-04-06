@@ -2,6 +2,8 @@ package net.yura.domination.android.push;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -20,11 +22,13 @@ public class FCMActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	try {
-            setup();
-            //unregister();
-	}
-	catch (UnsupportedOperationException th) {
-	    logger.log(Level.INFO, "FCM fail", th);
+            if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
+                setup();
+                //unregister();
+            }
+            else {
+                logger.log(Level.INFO, "FCM fail: GMS not found on device");
+            }
 	}
 	catch (Throwable th) {
 	    logger.log(Level.WARNING, "FCM fail", th);
@@ -53,7 +57,7 @@ public class FCMActivity extends Activity {
                         String token = task.getResult();
 
                         if (FCMRegistrar.isRegisteredOnServer(token)) {
-                            displayMessage("Already registered");
+                            logger.info("Already registered");
                         }
                         else {
                             FCMServerUtilities.register(token);
@@ -74,14 +78,14 @@ public class FCMActivity extends Activity {
                            return;
                        }
 
-                       displayMessage("Device unregistered");
+                       logger.info("Device unregistered");
                        if (FCMRegistrar.isRegisteredOnServer(null)) {
                            FCMServerUtilities.unregister();
                        }
                        else {
                            // This callback results from the call to unregister made on
                            // ServerUtilities when the registration to the server failed.
-                           displayMessage("Ignoring unregister callback");
+                           logger.info("Ignoring unregister callback");
                        }
                    }
                });
