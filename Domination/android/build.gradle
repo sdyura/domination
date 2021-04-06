@@ -15,6 +15,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.3'
+        //classpath 'com.google.gms:google-services:4.3.3'  // Google Services plugin
     }
 }
 
@@ -23,9 +24,9 @@ apply plugin: 'com.android.application'
 dependencies {
     implementation project(':AndroidME')
     implementation fileTree(include: '*.jar', dir: 'libs')
-    implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.google.android.gms:play-services-games:17.0.0'
-    implementation 'com.google.android.play:core:1.9.1'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.google.android.gms:play-services-games:20.0.0'
+    implementation 'com.google.android.play:core:1.10.0'
     // some things are broken when moving to org.apache.httpcomponents:http 4.2+
     implementation 'org.apache.httpcomponents:httpcore:4.1.2'
     implementation 'org.apache.httpcomponents:httpmime:4.1.2'
@@ -60,6 +61,8 @@ android {
         minSdkVersion 4
     }
 }
+
+//apply plugin: 'com.google.gms.google-services'
 
 // same as ant tasks "setup.android"
 task copyAssets(type: Copy) {
