@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	13
 
-	Android:	77
+	Android:	78
 	Flash GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -31,7 +31,7 @@ CURRENT VERSION:
 	MapEditor: fixed zoom to keep the mouse position on map static
 	SwingGUI: testing tab, show player for online games
 
-	Android 77 FCM added so push notifications work again
+	Android 78 FCM added so push notifications work again
 	Android 76 Fix for maps not loading on some Samsung devices
 		   Fix notifications not being shown because no channel
 	Android 68 can delete maps
