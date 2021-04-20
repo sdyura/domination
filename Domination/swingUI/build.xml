@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="Domination" default="jar" basedir="swingUI">
+<project name="Domination" default="jar" basedir=".">
 	<!--
 		Domination ant build file
 		http://domination.sourceforge.net

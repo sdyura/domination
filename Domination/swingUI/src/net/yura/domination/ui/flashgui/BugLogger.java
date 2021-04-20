@@ -47,7 +47,7 @@ public class BugLogger {
             }
 
             try {
-                net.yura.swingme.core.CoreUtil.setupLogging();
+                net.yura.swingme.core.J2SELogger.setupLogging();
             }
             catch (Throwable th) {
                 RiskUtil.printStackTrace(th);

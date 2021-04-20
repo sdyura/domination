@@ -115,7 +115,7 @@ public class TranslationBundleTest extends TestCase {
     }
 
     private Locale[] getAppLocales() {
-        File translation = new File("src/net/yura/domination/engine/translation");
+        File translation = new File("../../../src/net/yura/domination/engine/translation");
         
         System.out.println("looking in " + translation.getAbsolutePath());
         

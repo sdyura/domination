@@ -17,10 +17,8 @@ public class P2PTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-
-        TestUtil.setupForTest();
         
-        myrisk = new Risk();
+        myrisk = TestUtil.newRisk();
 
         myrisk.addRiskListener(new RiskAdapter() {
             AIManager fakeHuman = new AIManager();

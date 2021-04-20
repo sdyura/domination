@@ -14,8 +14,6 @@ public class RiskGameTest extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        
-        TestUtil.setupForTest();
     }
 
     protected void tearDown() throws Exception {
@@ -28,7 +26,7 @@ public class RiskGameTest extends TestCase {
     public void testTrade() throws Exception {
         System.out.println("trade");
 
-        RiskGame instance = new RiskGame();
+        RiskGame instance = TestUtil.newRiskGame();
 
         //Country country =  new Country(1, "name", "Full Name", new Continent("name", "Full Name", 5, 0xFFFF0000), 10, 10);
 

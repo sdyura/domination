@@ -24,7 +24,7 @@ public class ServerGameTest extends TestCase {
         super.setUp();
 
         // we must change the current folder for map loading to work
-        System.setProperty("user.dir", System.getProperty("user.dir") + File.separator +"game" );
+        System.setProperty("user.dir", System.getProperty("user.dir") + File.separator +".." + File.separator +".." + File.separator +"game" );
 
         AIManager.setWait(0);
         Risk.setShowDice(false);

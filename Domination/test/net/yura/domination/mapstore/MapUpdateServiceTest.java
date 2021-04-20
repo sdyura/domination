@@ -26,7 +26,7 @@ public class MapUpdateServiceTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         
-        TestUtil.setupForTest();
+        TestUtil.setupMapsForTest();
     }
     
     @Override
@@ -36,6 +36,7 @@ public class MapUpdateServiceTest extends TestCase {
 
     /**
      * Test of init method, of class MapUpdateService.
+     * we use the maps ****QA**** server
      */
     public void testInit() throws Exception {
         System.out.println("init");

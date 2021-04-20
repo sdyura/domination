@@ -21,12 +21,11 @@ public class AISimulationTest extends TestCase {
         @Override
         protected void setUp() throws Exception {
             super.setUp();
-
-            TestUtil.setupForTest();
         }
 
-	public void test300games() throws InterruptedException {
-		final Risk risk = new Risk();
+	public void test300games() throws Exception {
+                final Risk risk = TestUtil.newRisk();
+                
 		risk.addRiskListener(new RiskAdapter() {
 
 		    public void sendMessage(String output, boolean redrawNeeded, boolean repaintNeeded) {
