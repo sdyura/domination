@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ConnectException;
+import java.net.ProtocolException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
@@ -86,6 +87,7 @@ public class MapServerClient extends HTTPClient {
                 ex instanceof SocketTimeoutException ||
                 ex instanceof ConnectException ||
                (ex instanceof EOFException && responseCode==0) || // end of stream during getResponseCode
+               (ex instanceof ProtocolException && "unexpected end of stream".equals(ex.getMessage())) ||
                (ex instanceof SocketException &&
                    ("Connection timed out".equals(ex.getMessage()) ||
                     "Connection reset by peer".equals(ex.getMessage()) ||

@@ -398,7 +398,12 @@ public class Risk extends Thread {
                                             output=resb.getString( "core.save.saved");
                                         }
                                         catch (Exception ex) {
-                                            logger.log(Level.WARNING, "error saving game to file: "+filename,ex);
+                                            Level level = Level.WARNING;
+                                            if (ex.getMessage() != null && ex.getMessage().endsWith("open failed: ENOSPC (No space left on device)")) {
+                                                level = Level.INFO;
+                                            }
+
+                                            logger.log(level, "error saving game to file: " + filename, ex);
 
                                             output=resb.getString( "core.save.error.unable")+" "+ex;
                                             showMessageDialog(output);
