@@ -154,7 +154,7 @@ public class MapServerClient extends HTTPClient {
                         }
                         
                         // check if needs to be sorted by rating.
-                        if (request.params != null && "TOP_RATINGS".equals(request.params.get("sort")) && list.size() > 0) {
+                        if (request.params != null && "PLUS_RATINGS".equals(request.params.get("sort")) && list.size() > 0) {
                             List<String> urls = new ArrayList(list.size());
                             for (Map map : list) {
                                 String fileUID = MapChooser.getFileUID( map.getMapUrl() );
