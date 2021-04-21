@@ -3,6 +3,8 @@ package net.yura.domination.android.push;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.microedition.midlet.MIDlet;
 import net.yura.domination.R;
 import net.yura.lobby.client.AndroidLobbyClient;
@@ -12,11 +14,19 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class FCMIntentService extends FirebaseMessagingService {
 
+    /**
+     * This gets called from inside the FirebaseMessagingService, so we dont want to throw into there.
+     */
     @Override
     public void onNewToken(String registrationId) {
-        FCMActivity.displayMessage("Device registered: regId = "+registrationId);
-        FCMRegistrar.setRegisteredOnServer(null);
-        FCMServerUtilities.register(registrationId);
+        try {
+            FCMActivity.displayMessage("Device registered: regId = " + registrationId);
+            FCMRegistrar.setRegisteredOnServer(null);
+            FCMServerUtilities.register(registrationId);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(FCMIntentService.class.getName()).log(Level.WARNING, "failed to handle onNewToken " + registrationId, ex);
+        }
     }
 
     /**
