@@ -1,5 +1,6 @@
 package net.yura.domination.android;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,6 +19,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 import net.yura.domination.engine.core.StatType;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.mobile.gui.layout.XULLoader;
@@ -39,6 +41,19 @@ public class StatsActivity extends Activity {
         
         setTitle( resb.getString("swing.tab.statistics") );
         showGraph( StatType.COUNTRIES );
+
+        // hack to always show the overflow menu, as users are not finding it
+        // from https://stackoverflow.com/a/11438245/15542109
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            if (menuKeyField != null) {
+                menuKeyField.setAccessible(true);
+                menuKeyField.setBoolean(config, false);
+            }
+        }
+        catch (Throwable ignored) {
+        }
     }
 
     @Override
