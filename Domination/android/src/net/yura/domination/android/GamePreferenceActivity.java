@@ -231,5 +231,4 @@ public class GamePreferenceActivity extends PreferenceActivity {
             }
         }
     }
-
 }

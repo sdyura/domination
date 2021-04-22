@@ -11,6 +11,7 @@ import net.yura.lobby.client.AndroidLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import androidx.annotation.NonNull;
 
 public class FCMIntentService extends FirebaseMessagingService {
 
@@ -18,7 +19,7 @@ public class FCMIntentService extends FirebaseMessagingService {
      * This gets called from inside the FirebaseMessagingService, so we dont want to throw into there.
      */
     @Override
-    public void onNewToken(String registrationId) {
+    public void onNewToken(@NonNull String registrationId) {
         try {
             FCMActivity.displayMessage("Device registered: regId = " + registrationId);
             FCMRegistrar.setRegisteredOnServer(null);
@@ -33,7 +34,7 @@ public class FCMIntentService extends FirebaseMessagingService {
      * @see MiniLobbyClient#notify(net.yura.lobby.model.Game, boolean)
      */
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage){
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage){
         String from = remoteMessage.getFrom();
         Map<String, String> data = remoteMessage.getData();
 
@@ -63,12 +64,12 @@ public class FCMIntentService extends FirebaseMessagingService {
     }
 
     @Override
-    public void onSendError(String s, Exception e) {
-        FCMActivity.displayMessage("Received error: " + s + " " + e);
+    public void onSendError(@NonNull String s, @NonNull Exception ex) {
+        FCMActivity.displayMessage("Received error: " + s + " " + ex);
     }
 
     @Override
-    public void onMessageSent(String s) {
+    public void onMessageSent(@NonNull String s) {
         FCMActivity.displayMessage("onMessageSent: "+s);
     }
 }

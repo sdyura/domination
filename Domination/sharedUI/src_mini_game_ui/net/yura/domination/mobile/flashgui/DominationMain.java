@@ -32,10 +32,12 @@ import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.gui.plaf.Style;
 import net.yura.mobile.gui.plaf.SynthLookAndFeel;
 import net.yura.mobile.gui.plaf.nimbus.NimbusLookAndFeel;
-import net.yura.swingme.core.CoreUtil;
 import net.yura.swingme.core.J2SELogger;
 import net.yura.util.Service;
 
+/**
+ * This class is instantiated by the AndroidMEApp even if there is no AndroidMEActivity
+ */
 public class DominationMain extends Midlet {
 
     private static final Logger logger = Logger.getLogger(DominationMain.class.getName());

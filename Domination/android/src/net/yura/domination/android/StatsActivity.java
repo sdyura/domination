@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import net.yura.domination.engine.core.StatType;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.mobile.gui.layout.XULLoader;
 
 public class StatsActivity extends Activity {
 
@@ -66,11 +67,12 @@ public class StatsActivity extends Activity {
         GraphicalView gview = ChartFactory.getLineChartView(this, getDataset(statType), getRenderer());
         setContentView(gview);
     }
-    
+
     private XYMultipleSeriesRenderer getRenderer() {
-        
         XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-        
+        renderer.setLegendTextSize(XULLoader.adjustSizeToDensity((int)renderer.getLegendTextSize()));
+        renderer.setLabelsTextSize(XULLoader.adjustSizeToDensity((int)renderer.getLabelsTextSize()));
+
         List<Player> players = getPlayersStats();
 
         for (Player p : players) {
@@ -108,15 +110,11 @@ public class StatsActivity extends Activity {
                 }
 
                 series.add( newPoint );
-
             }
 
             dataset.addSeries(series.toXYSeries());
-
         }
         
         return dataset;
-
     }
-
 }

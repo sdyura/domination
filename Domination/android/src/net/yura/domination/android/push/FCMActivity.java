@@ -2,8 +2,6 @@ package net.yura.domination.android.push;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
