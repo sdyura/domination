@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 /**
@@ -51,6 +52,12 @@ public class FCMActivity extends Activity {
                             // for some strange reason this comes back as IOException
                             if (exception != null && "MISSING_INSTANCEID_SERVICE".equals(exception.getMessage())) {
                                 level = Level.INFO;
+                            }
+
+                            if (exception != null && "TOO_MANY_REGISTRATIONS".equals(exception.getMessage())) {
+                                if (net.yura.android.AndroidMeActivity.DEFAULT_ACTIVITY != null) {
+                                    javax.microedition.midlet.MIDlet.showToast("FCM Error: TOO_MANY_REGISTRATIONS, try uninstalling some apps for notifications to work", Toast.LENGTH_LONG);
+                                }
                             }
 
                             logger.log(level, "Fetching FCM registration token failed", exception);
