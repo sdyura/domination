@@ -210,13 +210,14 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                     case Game.STATE_CAN_JOIN:
                         if (game.getMagicWord() != null) {
                             final TextField passwordField = new TextField();
+                            passwordField.setTitle(resBundle.getProperty("lobby.password"));
                             OptionPane.showConfirmDialog(new ActionListener() {
                                 public void actionPerformed(String actionCommand) {
                                     if ("ok".equals(actionCommand)) {
                                         mycom.joinGame(game.getId(), passwordField.getText());
                                     }
                                 }
-                            }, passwordField, resBundle.getProperty("lobby.game-password") , OptionPane.OK_CANCEL_OPTION);
+                            }, passwordField, resBundle.getProperty("lobby.joinPrivateGame") , OptionPane.OK_CANCEL_OPTION);
                         }
                         else if (game.getMaxPlayers() == game.getNumOfPlayers() + 1) {
                             OptionPane.showConfirmDialog(new ActionListener() {

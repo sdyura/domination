@@ -16,5 +16,5 @@
     <button action="join game" i18n="true" mnemonic="74" text="mainmenu.joingame"/>
     <button action="start server" i18n="true" mnemonic="83" text="mainmenu.startserver"/>
     -->
-    <button action="donate" icon="/donate.png" property="plafname=DonateButton"/>
+    <button action="donate" icon="/donate.png" property="plafname=DonateButton" name="donateButton"/>
 </panel>

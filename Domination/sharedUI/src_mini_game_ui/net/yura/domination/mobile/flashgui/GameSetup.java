@@ -273,6 +273,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
 
         if (gameName!=null) {
             TextComponent tc = (TextComponent)newgame.find("GameName");
+            tc.setTitle(resb.getProperty("newgame.label.name"));
             tc.setText( gameName );
             tc.setVisible(true);
             newgame.find("Online").setVisible(true);
