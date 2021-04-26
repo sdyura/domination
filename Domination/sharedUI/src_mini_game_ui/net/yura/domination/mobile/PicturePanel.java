@@ -282,6 +282,7 @@ public class PicturePanel extends ImageView implements MapPanel {
                 for (int c=0; c < newCountryImages.length ; c++) {
 
                     cci = newCountryImages[c];
+                    int color = c + 1;
 
                     try {
                         int x1=cci.getX1();
@@ -298,7 +299,7 @@ public class PicturePanel extends ImageView implements MapPanel {
 
                         for(int y=y1; y <= y2; y++) {
                                 for(int x=0; x < w; x++) {
-                                        if (newMap[x+x1][y] + 128 != (c+1) ) {
+                                        if (newMap[x+x1][y] + 128 != color ) {
                                                 cimg.setRGB( x, (y-y1), 0); // clear the un-needed area!
                                         }
                                 }
@@ -306,11 +307,11 @@ public class PicturePanel extends ImageView implements MapPanel {
                     }
                     catch (RuntimeException ex) {
                         if ( cci.getWidth() < 0 || cci.getHeight() < 0) {
-                            throw new CountryNotFoundException("c=" + c + " " + cci);
+                            throw new CountryNotFoundException("index=" + c + " color=" + color + " " + cci);
                         }
                         else {
                             // this wraps Caused by: java.lang.RuntimeException: Bitmap.createBitmap returned null for w=103 h=67 config=ARGB_8888 error=java.lang.OutOfMemoryError: Bitmap.createBitmap returned null
-                            throw new RuntimeException( "Error creating CountryImages: c=" + c + " " + cci , ex);
+                            throw new RuntimeException( "Error creating CountryImages: index=" + c + " color=" + color + " " + cci , ex);
                         }
                     }
                 }
