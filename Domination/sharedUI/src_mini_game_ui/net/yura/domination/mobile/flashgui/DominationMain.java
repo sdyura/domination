@@ -144,6 +144,8 @@ public class DominationMain extends Midlet {
                         "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/net.yura.domination_preferences.xml.bak".equals(message) ||
                         "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/com.google.android.gcm.xml.bak".equals(message) ||
                         "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/com.google.android.gms.signin.xml.bak".equals(message) ||
+                        "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/com.google.android.gms.appid.xml.bak".equals(message) ||
+                        "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/FirebaseAppHeartBeat.xml.bak".equals(message) ||
                         "mkdir failed: EEXIST (File exists) : /data/user/0/net.yura.domination/cache/WebView/Crash Reports".equals(message) ||
                         "mkdir failed: EEXIST (File exists) : /data/data/net.yura.domination/cache/WebView/Crash Reports".equals(message) ||
                         "stat failed: ENOENT (No such file or directory) : /data/data/net.yura.domination/files/assetpacks".equals(message) ||
