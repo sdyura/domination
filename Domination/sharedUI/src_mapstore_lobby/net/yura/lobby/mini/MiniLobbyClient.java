@@ -19,6 +19,7 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.LobbyClient;
 import net.yura.lobby.client.LobbyCom;
+import net.yura.lobby.client.ProtoAccess;
 import net.yura.lobby.gen.ProtoLobby;
 import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
@@ -343,11 +344,25 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         else if ("delGame".equals(actionCommand)) {
             final Game game = (Game) gameList.getSelectedValue();
-            if (playerType >= Player.PLAYER_MODERATOR && game.getNumOfPlayers() < game.getMaxPlayers()) {
-                mycom.delGame(game.getId());
+            if (playerType >= Player.PLAYER_MODERATOR) {
+                if (game.getNumOfPlayers() < game.getMaxPlayers()) {
+                    mycom.delGame(game.getId());
+                }
+                else if (playerType >= Player.PLAYER_ADMIN) {
+                    OptionPane.showConfirmDialog(new ActionListener() {
+                            public void actionPerformed(String actionCommand) {
+                                if ("yes".equals(actionCommand)) {
+                                    mycom.delGame(game.getId());
+                                }
+                            }
+                        }, "Delete started game: " + game.getId(), resBundle.getProperty("lobby.question.title"), OptionPane.YES_NO_OPTION);
+                }
+                else {
+                    OptionPane.showMessageDialog(null, "game already started", "unable to delete", OptionPane.PLAIN_MESSAGE);
+                }
             }
             else {
-                logger.warning(actionCommand+"called when we are "+playerType+" "+myusername);
+                logger.warning(actionCommand + " called when we are " + ProtoAccess.getPlayerTypeString(playerType) + " " + myusername);
             }
         }
         else {
