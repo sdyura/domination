@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.microedition.midlet.MIDlet;
 import net.yura.domination.R;
 import net.yura.lobby.client.AndroidLobbyClient;
@@ -26,7 +25,7 @@ public class FCMIntentService extends FirebaseMessagingService {
             FCMServerUtilities.registerOnLobbyServer(registrationId);
         }
         catch (Exception ex) {
-            Logger.getLogger(FCMIntentService.class.getName()).log(Level.WARNING, "failed to handle onNewToken " + registrationId, ex);
+            FCMServerUtilities.logger.log(Level.WARNING, "failed to handle onNewToken " + registrationId, ex);
         }
     }
 

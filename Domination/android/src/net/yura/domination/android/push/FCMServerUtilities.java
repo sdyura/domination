@@ -1,18 +1,14 @@
 package net.yura.domination.android.push;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
-
 import net.yura.lobby.client.AndroidLobbyClient;
 import net.yura.lobby.client.Connection;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import androidx.annotation.NonNull;
 
 public class FCMServerUtilities implements AndroidLobbyClient {
 
