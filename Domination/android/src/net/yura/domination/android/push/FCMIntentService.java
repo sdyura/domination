@@ -21,9 +21,9 @@ public class FCMIntentService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String registrationId) {
         try {
-            FCMActivity.displayMessage("Device registered: regId = " + registrationId);
+            FCMServerUtilities.logger.info("Device registered: regId = " + registrationId);
             FCMRegistrar.setRegisteredOnServer(null);
-            FCMServerUtilities.register(registrationId);
+            FCMServerUtilities.registerOnLobbyServer(registrationId);
         }
         catch (Exception ex) {
             Logger.getLogger(FCMIntentService.class.getName()).log(Level.WARNING, "failed to handle onNewToken " + registrationId, ex);
@@ -43,7 +43,7 @@ public class FCMIntentService extends FirebaseMessagingService {
         String options = data.get(AndroidLobbyClient.OPTIONS);
 
         String message = msg==null?"Received message":msg;
-        FCMActivity.displayMessage(from + ": " + message);
+        FCMServerUtilities.logger.info(from + ": " + message);
         // notifies user
         Map<String, Object> extras = new HashMap();
         if (gameId != null) {
@@ -58,18 +58,18 @@ public class FCMIntentService extends FirebaseMessagingService {
     @Override
     public void onDeletedMessages() {
         String message = "Received deleted messages notification ";
-        FCMActivity.displayMessage(message);
+        FCMServerUtilities.logger.info(message);
         // notifies user
         MIDlet.showNotification(this.getString(R.string.app_name), message, R.drawable.icon, -1, Collections.EMPTY_MAP);
     }
 
     @Override
     public void onSendError(@NonNull String s, @NonNull Exception ex) {
-        FCMActivity.displayMessage("Received error: " + s + " " + ex);
+        FCMServerUtilities.logger.info("Received error: " + s + " " + ex);
     }
 
     @Override
     public void onMessageSent(@NonNull String s) {
-        FCMActivity.displayMessage("onMessageSent: "+s);
+        FCMServerUtilities.logger.info("onMessageSent: "+s);
     }
 }

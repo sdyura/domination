@@ -2,11 +2,11 @@ package net.yura.domination.android.push;
 
 import android.content.Context;
 
-public class GCMBroadcastReceiver extends com.google.android.gcm.GCMBroadcastReceiver {
+public class ADMBroadcastReceiver extends com.google.android.gcm.GCMBroadcastReceiver {
 
     @Override
     protected String getGCMIntentServiceClassName(Context context) {
-        return GCMIntentService.class.getName();
+        return ADMIntentService.class.getName();
     }
     
 }

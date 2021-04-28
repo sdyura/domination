@@ -17,27 +17,27 @@ import com.google.android.gcm.GCMRegistrar;
 /**
  * @see com.google.android.gcm.demo.app.GCMIntentService
  */
-public class GCMIntentService extends GCMBaseIntentService {
+public class ADMIntentService extends GCMBaseIntentService {
 
-    public GCMIntentService() {
+    public ADMIntentService() {
         super(AndroidMeApp.getContext().getString(R.string.app_id));
     }
 
     @Override
     protected void onRegistered(Context context, String registrationId) {
-        GCMActivity.displayMessage(context,"Device registered: regId = "+registrationId);
-        GCMServerUtilities.register(context, registrationId);
+        ADMServerUtilities.logger.info("Device registered: regId = "+registrationId);
+        ADMServerUtilities.registerOnLobbyServer(context, registrationId);
     }
 
     @Override
     protected void onUnregistered(Context context, String registrationId) {
-        GCMActivity.displayMessage(context, "Device unregistered");
+        ADMServerUtilities.logger.info("Device unregistered");
         if (GCMRegistrar.isRegisteredOnServer(context)) {
-            GCMServerUtilities.unregister(context, registrationId);
+            ADMServerUtilities.unregisterOnLobbyServer(context, registrationId);
         } else {
             // This callback results from the call to unregister made on
             // ServerUtilities when the registration to the server failed.
-            GCMActivity.displayMessage(context, "Ignoring unregister callback");
+            ADMServerUtilities.logger.info("Ignoring unregister callback");
         }
     }
 
@@ -55,7 +55,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         }
 
         String message = msg==null?"Received message":msg;
-        GCMActivity.displayMessage(context, message);
+        ADMServerUtilities.logger.info(message);
         // notifies user
         Map<String, Object> extras = new HashMap();
         if (gameId != null) {
@@ -70,20 +70,20 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onDeletedMessages(Context context, int total) {
         String message = "Received deleted messages notification "+total;
-        GCMActivity.displayMessage(context, message);
+        ADMServerUtilities.logger.info(message);
         // notifies user
         MIDlet.showNotification(context.getString(R.string.app_name), message, R.drawable.icon, -1, Collections.EMPTY_MAP);
     }
 
     @Override
     public void onError(Context context, String errorId) {
-        GCMActivity.displayMessage(context, "Received error: "+errorId);
+        ADMServerUtilities.logger.info("Received error: "+errorId);
     }
 
     @Override
     protected boolean onRecoverableError(Context context, String errorId) {
         // log message
-        GCMActivity.displayMessage(context, "Received recoverable error: "+errorId);
+        ADMServerUtilities.logger.info("Received recoverable error: "+errorId);
         return super.onRecoverableError(context, errorId);
     }
 }
