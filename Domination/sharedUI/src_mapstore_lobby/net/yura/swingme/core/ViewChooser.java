@@ -24,7 +24,7 @@ public class ViewChooser extends Panel implements ActionListener {
     ActionListener actionListener;
     String actionCommand;
     boolean stretchCombo;
-    
+
     public ViewChooser(Option[] pp) {
         options = pp;
         
@@ -32,8 +32,8 @@ public class ViewChooser extends Panel implements ActionListener {
         test.workoutPreferredSize();
 
         setPreferredSize(10, test.getHeightWithBorder()); // some small size, but we will strech
-
     }
+
     public void setStretchCombo(boolean stretch) {
         stretchCombo = stretch;
     }
@@ -46,56 +46,62 @@ public class ViewChooser extends Panel implements ActionListener {
     }
 
     public void setSize(int width, int height) {
+        if (width != getWidth() || height != getHeight()) {
 
-        Option currentOption = getSelectedItem();
+            Option currentOption = getSelectedItem();
 
-        int buttonsWidth = 0;
-        Button[] buttons = new Button[options.length];
-        for (int c=0;c<buttons.length;c++) {
-            buttons[c] = new Button( options[c].getValue() );
+            int buttonsWidth = 0;
+            Button[] buttons = new Button[options.length];
+            for (int c = 0; c < buttons.length; c++) {
+                buttons[c] = new Button(options[c].getValue());
 
-            if (c==0) {
-                buttons[c].setName("SegmentedControlLeft");
+                if (c == 0) {
+                    buttons[c].setName("SegmentedControlLeft");
+                }
+                else if (c == (buttons.length - 1)) {
+                    buttons[c].setName("SegmentedControlRight");
+                }
+                else {
+                    buttons[c].setName("SegmentedControlMiddle");
+                }
+
+                buttons[c].workoutPreferredSize();
+                buttonsWidth = buttonsWidth + buttons[c].getWidthWithBorder();
             }
-            else if (c== (buttons.length-1) ) {
-                buttons[c].setName("SegmentedControlRight");
+
+            if (buttonsWidth <= width) {
+                setLayout(new FlowLayout(Graphics.HCENTER, 0));
+                ButtonGroup group = new ButtonGroup();
+                for (int c = 0; c < buttons.length; c++) {
+                    Button b = buttons[c];
+                    b.setActionCommand(options[c].getKey());
+                    if (currentOption == options[c]) {
+                        b.setSelected(true);
+                    }
+                    group.add(b);
+                    b.addActionListener(this);
+                    add(b);
+                }
+                // remove the rest
+                while (getComponentCount() > buttons.length) {
+                    remove(0);
+                }
             }
             else {
-                buttons[c].setName("SegmentedControlMiddle");
-            }
-
-            buttons[c].workoutPreferredSize();
-            buttonsWidth = buttonsWidth + buttons[c].getWidthWithBorder();
-        }
-
-        if (buttonsWidth <= width) {
-            setLayout( new FlowLayout(Graphics.HCENTER,0) );
-            ButtonGroup group = new ButtonGroup();
-            for (int c=0;c<buttons.length;c++) {
-                Button b = buttons[c];
-                b.setActionCommand( options[c].getKey() );
-                if (currentOption == options[c]) {
-                    b.setSelected(true);
+                ComboBox combo = new ComboBox(RiskUtil.asVector(Arrays.asList(options)));
+                combo.setSelectedItem(currentOption);
+                combo.workoutPreferredSize();
+                combo.addActionListener(this);
+                setLayout(stretchCombo ? (Layout) new BorderLayout() : new BoxLayout(Graphics.HCENTER));
+                insert(combo, 0);
+                // remove the rest
+                while (getComponentCount() > 1) {
+                    remove(1);
                 }
-                group.add(b);
-                b.addActionListener(this);
-                add(b);
             }
-            // remove the rest
-            while (getComponentCount() > buttons.length) { remove(0); }
+            // we do the removing after we add the new component so that other threads
+            // can still call getSelectedItem() while this is happening and get a value
         }
-        else {
-            ComboBox combo = new ComboBox( RiskUtil.asVector( Arrays.asList( options ) ) );
-            combo.setSelectedItem(currentOption);
-            combo.workoutPreferredSize();
-            combo.addActionListener(this);
-            setLayout( stretchCombo?(Layout)new BorderLayout():new BoxLayout(Graphics.HCENTER) );
-            insert(combo,0);
-            // remove the rest
-            while (getComponentCount() > 1) { remove(1); }
-        }
-        // we do the removing after we add the new component so that other threads
-        // can still call getSelectedItem() while this is happening and get a value
 
         super.setSize(width, height);
     }
@@ -103,7 +109,7 @@ public class ViewChooser extends Panel implements ActionListener {
     public void actionPerformed(String ac) {
         actionListener.actionPerformed(actionCommand);
     }
-    
+
     public Option getSelectedItem() {
         
         List components = getComponents();
@@ -127,7 +133,7 @@ public class ViewChooser extends Panel implements ActionListener {
             }
         }
     }
-    
+
     public void resetMapView() {
         List components = getComponents();
         if (components.isEmpty()) {
@@ -140,5 +146,4 @@ public class ViewChooser extends Panel implements ActionListener {
             ((Button)components.get(0)).setSelected(true);
         }
     }
-    
 }
