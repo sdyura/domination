@@ -309,7 +309,7 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
                         w = heightOfComponents; // strech the slider to at least heightOfComponents
                     }
                     int h = c.getHeightWithBorder();
-                    c.setBoundsWithBorder(
+                    c.setBounds(
                             (width-w)/2, 
                             yOffset, 
                             w, 
