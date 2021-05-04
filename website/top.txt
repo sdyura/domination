@@ -1,12 +1,11 @@
 
-<meta name="google-translate-customization" content="ccf97d9d94ca76fd-696ab5c10b238ca8-g545e217465e1f912-1a"></meta>
+<meta name="google-translate-customization" content="ccf97d9d94ca76fd-696ab5c10b238ca8-g545e217465e1f912-1a" />
+<meta name="flattr:id" content="4263dv" />
 
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
-</script>
+<LINK REL="SHORTCUT ICON" type="image/gif" HREF="images/earth_small.gif" />
+<link rel="stylesheet" type="text/css" href="domination.css" />
 
-<LINK REL="SHORTCUT ICON" type="image/gif" HREF="images/earth_small.gif">
-
-<link rel="stylesheet" type="text/css" href="domination.css"/>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
 <script type="text/javascript">
 /* <![CDATA[ */
@@ -36,8 +35,7 @@
 
 </head>
 
-<body background="images/back.jpg" text="#FFFFFF" link="#FF66FF"
-vlink="#FFFF00" alink="#00FF00" topmargin="0" leftmargin="0">
+<body background="images/back.jpg" text="#FFFFFF" link="#FF66FF" vlink="#FFFF00" alink="#00FF00" topmargin="0" leftmargin="0">
 
 
 <div id="fb-root"></div>
