@@ -35,11 +35,16 @@ public class BugLogger {
                         String message = record.getMessage();
                         if (
                                 "Trying to recreate Windows registry node Software\\JavaSoft\\Prefs\\net\\yura\\domination\\ui\\flashgui at root 0xffffffff80000001.".equals(message) ||
-                                "Couldn't flush user prefs: java.util.prefs.BackingStoreException: Couldn't get file lock.".equals(message) ||
-                                "Non-Java exception raised, not handled! (Original problem: Deprecated in 10_12... DO NOT EVER USE CGSEventRecord directly. Bad things, man.... bad things.)".equals(message)
+                                "Couldn't flush user prefs: java.util.prefs.BackingStoreException: Couldn't get file lock.".equals(message)
                                 ) {
                             return true;
                         }
+
+                        Throwable exception = record.getThrown();
+                        if (exception instanceof RuntimeException && "Non-Java exception raised, not handled! (Original problem: Deprecated in 10_12... DO NOT EVER USE CGSEventRecord directly. Bad things, man.... bad things.)".equals(exception.getMessage())) {
+                            return true;
+                        }
+                        
                         return false;
                     }
                 } );
