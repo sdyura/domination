@@ -958,6 +958,9 @@ public class PicturePanel extends JPanel implements MapPanel {
 			HighLightImage=a;
 		}
 
+                /**
+                 * The country as drawn with the currently selected map view
+                 */
 		public void setNormalImage(BufferedImage a) {
 			normalImage=a;
 		}
@@ -1078,7 +1081,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 	 * @return BufferedImage Image buffered of a country
 	 */
 	public BufferedImage getCountryImage(int num, boolean incolor) {
-
 		int i = num-1;
 
 		CountryImage ci = countryImages[i];
@@ -1090,49 +1092,55 @@ public class PicturePanel extends JPanel implements MapPanel {
 		int w=ci.getWidth();
 		int h=ci.getHeight();
 
-		BufferedImage pictureA = new BufferedImage( w ,h, ci.getGrayImage().getType() );
-
-		RescaleOp HighLight = new RescaleOp( 0.5f, -1.0f, null);
-                // we have to filter to the same type of image as the source image
-                
                 try {
-                    HighLight.filter(ci.getGrayImage(), pictureA);
+                
+                    BufferedImage pictureA = new BufferedImage( w ,h, ci.getGrayImage().getType() );
+
+                    RescaleOp HighLight = new RescaleOp( 0.5f, -1.0f, null);
+                    // we have to filter to the same type of image as the source image
+
+                    try {
+                        HighLight.filter(ci.getGrayImage(), pictureA);
+                    }
+                    catch (UnsatisfiedLinkError err) {
+                        // java.lang.UnsatisfiedLinkError: no awt in java.library.path
+                        // no idea why this error can happen
+                        // fall back to unfiltered image
+                        pictureA = ci.getGrayImage();
+                        System.err.println("unable to filter " + HighLight + " " + w + "x" + h + " " + ci.getGrayImage().getType());
+                        err.printStackTrace();
+                    }
+
+                    BufferedImage pictureB = new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+
+                    Graphics g = pictureB.getGraphics();
+
+                    g.drawImage(pictureA, 0, 0, this);
+
+                    if (incolor) {
+                            Color ownerColor = new Color( ((Player) ((Country) ((RiskGame)myrisk.getGame()) .getCountryInt( num )) .getOwner()).getColor() );
+
+                            g.setColor( new Color(ownerColor.getRed(), ownerColor.getGreen(), ownerColor.getBlue(), 100) );
+                            g.fillRect(0, 0, w, h);
+                    }
+
+                    for(int y=y1; y <= y2; y++) {
+                            for(int x=0; x <= w-1; x++) {
+                                    if (map[x+x1][y] + 128 != (i+1) ) {
+                                            pictureB.setRGB(x, (y-y1), 0); // clear the un-needed area!
+                                    }
+                            }
+                    }
+
+                    g.dispose();
+
+                    return pictureB;
                 }
-                catch (UnsatisfiedLinkError err) {
-                    // java.lang.UnsatisfiedLinkError: no awt in java.library.path
-                    // no idea why this error can happen
-                    // fall back to unfiltered image
-                    pictureA = ci.getGrayImage();
-                    System.err.println("unable to filter " + HighLight + " " + w + "x" + h + " " + ci.getGrayImage().getType());
-                    err.printStackTrace();
+                catch (OutOfMemoryError error) {
+                    Logger.getLogger(PicturePanel.class.getName()).info("error in getCountryImage " + error);
+
+                    return incolor ? ci.getSourceImage() : ci.getGrayImage();
                 }
-
-		BufferedImage pictureB = new BufferedImage( w ,h, java.awt.image.BufferedImage.TYPE_INT_ARGB );
-
-		Graphics g = pictureB.getGraphics();
-
-		g.drawImage( pictureA ,0 ,0 ,this);
-
-		if (incolor) {
-
-			Color ownerColor = new Color( ((Player) ((Country) ((RiskGame)myrisk.getGame()) .getCountryInt( num )) .getOwner()).getColor() );
-
-			g.setColor( new Color(ownerColor.getRed(), ownerColor.getGreen(), ownerColor.getBlue(), 100) );
-			g.fillRect(0,0,w,h);
-
-		}
-
-		for(int y=y1; y <= y2; y++) {
-			for(int x=0; x <= w-1; x++) {
-				if (map[x+x1][y] + 128 != (i+1) ) {
-					pictureB.setRGB( x, (y-y1), 0); // clear the un-needed area!
-				}
-			}
-		}
-
-		g.dispose();
-
-		return pictureB;
 	}
 
         public final static int PREVIEW_WIDTH=203;
