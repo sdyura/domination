@@ -1195,7 +1195,9 @@ public class RiskUIUtil {
         File userHome = new File( System.getProperty("user.home") );
         File userMaps = new File(userHome, RiskUtil.GAME_NAME+" Maps");
         if (!userMaps.isDirectory() && !userMaps.mkdirs()) { // if it does not exist and i cant make it
-            throw new RuntimeException("can not create dir "+userMaps);
+            throw new RuntimeException("can not create dir " + userMaps +
+                    " exists=" + userMaps.exists() + " isDirectory=" + userMaps.isDirectory() +
+                    " userHome.exists=" + userHome.exists() + " userHome.canWrite=" + userHome.canWrite());
         }
 
         mapsDir = userMaps;
