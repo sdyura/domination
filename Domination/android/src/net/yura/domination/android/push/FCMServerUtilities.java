@@ -31,7 +31,12 @@ public class FCMServerUtilities implements AndroidLobbyClient {
                             Level level = Level.WARNING;
                             // for some strange reason this comes back as IOException
                             if (exception != null && (
+                                    // this is returned when GMS is not installed
                                     "MISSING_INSTANCEID_SERVICE".equals(exception.getMessage()) ||
+
+                                    // this can happen when the phones date/time is incorrect
+                                    // TODO maybe prompt user to check phone date/time
+                                    // TODO also some report that retrying can fix this issue
                                     "SERVICE_NOT_AVAILABLE".equals(exception.getMessage())
                             )) {
                                 level = Level.INFO;
