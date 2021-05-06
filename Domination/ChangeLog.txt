@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	13
 
-	Android:	80
+	Android:	82
 	Flash GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -31,7 +31,8 @@ CURRENT VERSION:
 	MapEditor: fixed zoom to keep the mouse position on map static
 	SwingGUI: testing tab, show player for online games
 
-	Android 80 Fixed: Font size in Stats Activty are tiny
+	Android 82 Fixed: share files broken because of support.v4 -> androidx move
+	Android 81 Fixed: Font size in Stats Activty are tiny
 		   Fixed: FCM nullpointer error in onNewToken
 	Android 79 FCM added so push notifications work again
 	Android 76 Fix for maps not loading on some Samsung devices
