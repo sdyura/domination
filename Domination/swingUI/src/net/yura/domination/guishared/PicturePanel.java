@@ -1104,10 +1104,16 @@ public class PicturePanel extends JPanel implements MapPanel {
                     }
                     catch (UnsatisfiedLinkError err) {
                         // java.lang.UnsatisfiedLinkError: no awt in java.library.path
-                        // no idea why this error can happen
-                        // fall back to unfiltered image
+                        // no idea why this error can happen, fall back to unfiltered image
                         pictureA = ci.getGrayImage();
-                        System.err.println("unable to filter " + HighLight + " " + w + "x" + h + " " + ci.getGrayImage().getType());
+                        System.out.println("unable to filter " + HighLight + " " + w + "x" + h + " " + ci.getGrayImage().getType());
+                        err.printStackTrace();
+                    }
+                    catch (NoClassDefFoundError err) {
+                        // java.lang.NoClassDefFoundError: Could not initialize class sun.awt.image.ShortComponentRaster 
+                        // no idea why this error can happen, fall back to unfiltered image
+                        pictureA = ci.getGrayImage();
+                        System.out.println("unable to filter " + HighLight + " " + w + "x" + h + " " + ci.getGrayImage().getType());
                         err.printStackTrace();
                     }
 
