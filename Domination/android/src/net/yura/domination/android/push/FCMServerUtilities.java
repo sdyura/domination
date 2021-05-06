@@ -30,7 +30,10 @@ public class FCMServerUtilities implements AndroidLobbyClient {
                             Exception exception = task.getException();
                             Level level = Level.WARNING;
                             // for some strange reason this comes back as IOException
-                            if (exception != null && "MISSING_INSTANCEID_SERVICE".equals(exception.getMessage())) {
+                            if (exception != null && (
+                                    "MISSING_INSTANCEID_SERVICE".equals(exception.getMessage()) ||
+                                    "SERVICE_NOT_AVAILABLE".equals(exception.getMessage())
+                            )) {
                                 level = Level.INFO;
                             }
 
