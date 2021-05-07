@@ -211,6 +211,8 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
     protected void onResume() {
         super.onResume();
 
+        logger.info("[GameActivity] onResume");
+
         if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
             googleAccount.signInSilently();
         }
