@@ -283,7 +283,6 @@ public class DominationMain extends Midlet {
                     risk.parser( "loadgame "+getAutoSaveFile()+".load" );
                 }
                 else {
-                    logger.info("Opening main menu");
                     adapter.openMainMenu();
 
                     GooglePlayGameServices gpgs = getGooglePlayGameServices();

@@ -153,6 +153,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
     // as we may be opening a game, and opening a gamesetup in another thread
     // (in lobby, quickly click on a game and newgame button right after)
     private void show(String what) {
+        Logger.info("Opening " + what);
 
         if (mainmenu!=null) {
             mainmenu.setVisible(false);
