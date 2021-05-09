@@ -261,11 +261,16 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                             mycom.setNick(nickField.getText() );
                         }
                     }
-                }, nickField, resBundle.getProperty("lobby.set-nick") , OptionPane.OK_CANCEL_OPTION);
+                }, nickField, resBundle.getProperty("lobby.set-nickname"), OptionPane.OK_CANCEL_OPTION);
             }
             else {
                 logger.info("current username is null, can not set nick dialog");
             }
+        }
+        else if ("chat".equals(actionCommand)) {
+
+            Midlet.openURL("https://discord.gg/jMmB6zT3m3");
+
         }
         else if ("close".equals(actionCommand)) {
             destroy();

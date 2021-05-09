@@ -32,6 +32,7 @@ CURRENT VERSION:
 	SwingGUI: testing tab, show player for online games
 
 	Android 82 Fixed: share files broken because of support.v4 -> androidx move
+		   Discord button added to game
 	Android 81 Fixed: Font size in Stats Activty are tiny
 		   Fixed: FCM nullpointer error in onNewToken
 	Android 79 FCM added so push notifications work again

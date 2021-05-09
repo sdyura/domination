@@ -30,9 +30,10 @@
     </panel>
     <panel bottom="5" gap="5" left="5" right="5" top="5" weightx="1">
         <button action="close" i18n="true" mnemonic="112" name="BackButton" text="lobby.back" type="cancel" weightx="1"/>
-        <button action="create" i18n="true" text="lobby.create-game" weightx="1"/>
         <button action="login" text="Login" visible="false" weightx="1"/>
         <button action="register" text="Register" visible="false" weightx="1"/>
-        <button action="setnick" i18n="true" text="lobby.set-nickname" weightx="1"/>
+        <button action="setnick" i18n="true" text="lobby.set-nick" weightx="2"/>
+        <button action="create" i18n="true" text="lobby.create-game" weightx="2"/>
+        <button action="chat" icon="/discord.png" weightx="1"/>
     </panel>
 </panel>
