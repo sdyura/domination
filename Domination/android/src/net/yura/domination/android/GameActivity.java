@@ -408,7 +408,7 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                 }
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                logger.log(Level.WARNING, "onSaveInstanceState AUTOSAVE Error", ex);
             }
         }
     }
