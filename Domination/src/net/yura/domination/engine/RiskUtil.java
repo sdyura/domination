@@ -78,7 +78,7 @@ public class RiskUtil {
 
 	public static InputStream openMapStream(String a) throws IOException {
             if (a == null) {
-                throw new NullPointerException();
+                throw new NullPointerException("map filename is null");
             }
             return streamOpener.openMapStream(a);
 	}
