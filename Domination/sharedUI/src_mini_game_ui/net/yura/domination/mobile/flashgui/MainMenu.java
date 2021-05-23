@@ -140,7 +140,7 @@ public class MainMenu extends Frame implements ActionListener {
                     RiskUtil.donate();
                 }
                 catch (Exception ex) {
-                    ex.printStackTrace();
+                    RiskUtil.printStackTrace(ex);
                 }
             }
             else if ("online".equals(actionCommand)) {

@@ -156,7 +156,7 @@ public class MiniUtil {
             }
         }
         catch (Exception ex1) {
-            ex1.printStackTrace();
+            RiskUtil.printStackTrace(ex1);
             // ignore if we cant find map in external dir.
         }
 

@@ -15,6 +15,7 @@ import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.util.Service;
 
 public class PLAF {
@@ -32,7 +33,7 @@ public class PLAF {
                 setLookAndFeel(lookAndFeelName);
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                RiskUtil.printStackTrace(ex);
                 ui.showError("unable To Change LookAndFeel to " + lookAndFeelName);
             }
         }

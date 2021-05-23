@@ -1855,7 +1855,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                                 }
                                 catch (Exception ex) {
                                     System.err.println("unable to add player "+name+" "+color+" "+type);
-                                    ex.printStackTrace();
+                                    RiskUtil.printStackTrace(ex);
                                 }
                             }
 			}

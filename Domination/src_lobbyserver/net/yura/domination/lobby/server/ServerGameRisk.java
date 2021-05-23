@@ -82,7 +82,7 @@ public class ServerGameRisk extends TurnBasedGame {
                 mbs.registerMBean(settings, new ObjectName("net.yura.domination:type=GameSettings") );
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                RiskUtil.printStackTrace(ex);
             }
         }
 

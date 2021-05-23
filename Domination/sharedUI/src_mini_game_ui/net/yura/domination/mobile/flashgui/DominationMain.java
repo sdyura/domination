@@ -165,7 +165,7 @@ public class DominationMain extends Midlet {
         }
         catch (Throwable th) {
             System.out.println("Grasshopper not loaded");
-            th.printStackTrace();
+            RiskUtil.printStackTrace(th);
         }
 
         J2SELogger.setupLogging();
@@ -185,7 +185,9 @@ public class DominationMain extends Midlet {
                                 // TODO this does not work if the theme is not set yet, it will just throw an exception
                                 OptionPane.showMessageDialog(null, record.getMessage()+" "+record.getThrown(), "WARN", OptionPane.WARNING_MESSAGE);
                             }
-                            catch(Exception ex) { ex.printStackTrace(); }
+                            catch(Exception ex) {
+                                RiskUtil.printStackTrace(ex);
+                            }
                         }
                     }
                 }
@@ -321,7 +323,7 @@ public class DominationMain extends Midlet {
 //            System.out.println("files"+ Arrays.asList( saves.list() ) );
 //        }
 //        catch (Exception ex) {
-//            ex.printStackTrace();
+//            RiskUtil.printStackTrace(ex);
 //        }
     }
 

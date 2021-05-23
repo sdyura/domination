@@ -1107,14 +1107,14 @@ public class PicturePanel extends JPanel implements MapPanel {
                         // no idea why this error can happen, fall back to unfiltered image
                         pictureA = ci.getGrayImage();
                         System.out.println("unable to filter " + HighLight + " " + w + "x" + h + " " + ci.getGrayImage().getType());
-                        err.printStackTrace();
+                        RiskUtil.printStackTrace(err);
                     }
                     catch (NoClassDefFoundError err) {
                         // java.lang.NoClassDefFoundError: Could not initialize class sun.awt.image.ShortComponentRaster 
                         // no idea why this error can happen, fall back to unfiltered image
                         pictureA = ci.getGrayImage();
                         System.out.println("unable to filter " + HighLight + " " + w + "x" + h + " " + ci.getGrayImage().getType());
-                        err.printStackTrace();
+                        RiskUtil.printStackTrace(err);
                     }
 
                     BufferedImage pictureB = new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_ARGB);

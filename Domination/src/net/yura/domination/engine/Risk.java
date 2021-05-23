@@ -1012,7 +1012,7 @@ RiskUtil.printStackTrace(e);
                         renamePlayer(oldName,newName,newAddress,newType);
                     }
                     catch (Exception ex) {
-                        ex.printStackTrace();
+                        RiskUtil.printStackTrace(ex);
                     }
                 }
 		else { // parse this normal cammand
