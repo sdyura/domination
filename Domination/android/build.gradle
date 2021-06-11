@@ -1,37 +1,15 @@
-allprojects {
-    repositories {
-        mavenCentral()
-        jcenter()
-        google()
-    }
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-        google()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.3'
-        //classpath 'com.google.gms:google-services:4.3.3'  // Google Services plugin
-    }
-}
-
 apply plugin: 'com.android.application'
+//apply plugin: 'com.google.gms.google-services'
 
 dependencies {
+    implementation rootProject
     implementation project(':AndroidME')
     implementation fileTree(include: '*.jar', dir: 'libs')
+    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.core:core:1.3.2' // for FileProvider
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-games:20.0.0'
     implementation 'com.google.android.play:core:1.10.0'
-    // some things are broken when moving to org.apache.httpcomponents:http 4.2+
-    implementation 'org.apache.httpcomponents:httpcore:4.1.2'
-    implementation 'org.apache.httpcomponents:httpmime:4.1.2'
-    implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'androidx.core:core:1.3.2' // for FileProvider
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
 }
 
@@ -47,8 +25,8 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['../src', 'src', '../sharedUI/src_mini_game_ui', '../sharedUI/src_mapstore_lobby']
-            resources.srcDirs = ['../src', '../sharedUI/res_mini_game_ui', '../sharedUI/res_mapstore_lobby']
+            java.srcDirs = ['src']
+            resources.srcDirs = []
             res.srcDirs = ['res', '../sharedUI/img_mini_game_ui', '../sharedUI/img_mapstore_lobby']
             assets.srcDirs = ['assets']
         }
@@ -61,8 +39,6 @@ android {
         minSdkVersion 4
     }
 }
-
-//apply plugin: 'com.google.gms.google-services'
 
 // same as ant tasks "setup.android"
 task copyAssets(type: Copy) {
@@ -78,4 +54,3 @@ task copyAssets(type: Copy) {
     into 'assets'
 }
 project.preBuild.dependsOn(copyAssets)
-
