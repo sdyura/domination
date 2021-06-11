@@ -46,5 +46,5 @@ dependencies {
     api project(":SwingME")
 
     // these are needed for compile only, the actual versions used are specific to android/ios
-    compileOnly fileTree(dir: 'swingui/lib', include: ['Grasshopper.jar','midletrunner.jar'])
+    compileOnly fileTree(dir: 'swingUI/lib', include: ['Grasshopper.jar','midletrunner.jar'])
 }
