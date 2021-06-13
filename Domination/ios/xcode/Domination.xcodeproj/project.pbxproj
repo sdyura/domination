@@ -417,6 +417,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -444,7 +445,7 @@
 					"${MOE_OTHER_LDFLAGS}",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.moe.samples.Domination;
+				PRODUCT_BUNDLE_IDENTIFIER = net.yura.domination;
 				PRODUCT_NAME = Domination;
 				STRIP_STYLE = "non-global";
 			};
@@ -454,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -481,7 +483,7 @@
 					"${MOE_OTHER_LDFLAGS}",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.moe.samples.Domination;
+				PRODUCT_BUNDLE_IDENTIFIER = net.yura.domination;
 				PRODUCT_NAME = Domination;
 				STRIP_STYLE = "non-global";
 			};
