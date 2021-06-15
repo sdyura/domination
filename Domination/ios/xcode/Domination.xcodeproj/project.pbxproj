@@ -12,6 +12,8 @@
 		583D44871E40B4910048FF77 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 583D44861E40B4910048FF77 /* main.cpp */; };
 		583D448A1E40B4B90048FF77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 583D44881E40B4B90048FF77 /* Assets.xcassets */; };
 		583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 583D44891E40B4B90048FF77 /* LaunchScreen.storyboard */; };
+		DE079D292678C41300CFBB43 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = DE079D282678C41300CFBB43 /* maps */; };
+		DE079D2B2678C45800CFBB43 /* help in Resources */ = {isa = PBXBuildFile; fileRef = DE079D2A2678C45800CFBB43 /* help */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,6 +49,8 @@
 		9793DC7BCA03B1F0E1B02782 /* Domination.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Domination.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7A3E898974177A2A2F0C417 /* Domination-Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Domination-Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC4876D3960503C5F9FA285C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DE079D282678C41300CFBB43 /* maps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maps; path = ../../swingUI/game/Domination/maps; sourceTree = "<group>"; };
+		DE079D2A2678C45800CFBB43 /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../../swingUI/game/Domination/help; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,8 @@
 		24D12A0CC041D52E8DD7E2AC = {
 			isa = PBXGroup;
 			children = (
+				DE079D2A2678C45800CFBB43 /* help */,
+				DE079D282678C41300CFBB43 /* maps */,
 				4D85E57E486ED51FA34DE305 /* Domination */,
 				73D1721AB6220D74E351DD53 /* Domination-Test */,
 				235E336D9FBC6ED908F4C9C7 /* Frameworks */,
@@ -213,6 +219,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE079D292678C41300CFBB43 /* maps in Resources */,
+				DE079D2B2678C45800CFBB43 /* help in Resources */,
 				583D448A1E40B4B90048FF77 /* Assets.xcassets in Resources */,
 				583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */,
 			);
