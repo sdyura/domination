@@ -28,6 +28,8 @@
 	<true/>
 	<key>MOE.Main.Class</key>
 	<string>net.yura.ios.SwingMEiOSApplication</string>
+	<key>SwingME.Main.Class</key>
+	<string>net.yura.domination.mobile.flashgui.DominationMain</string>
 	<key>UIApplicationExitsOnSuspend</key>
 	<false/>
 	<key>UILaunchStoryboardName</key>
