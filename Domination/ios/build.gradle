@@ -53,4 +53,25 @@ dependencies {
 }
 
 
+task copyAssets(type: Copy) {
+    from '../sharedUI/img_mini_game_ui/drawable-mdpi'
+    from '../sharedUI/img_mapstore_lobby/drawable-mdpi'
+    into 'xcode/Graphics'
+}
+project.processResources.dependsOn(copyAssets)
 
+task copyAssets2x(type: Copy) {
+    from '../sharedUI/img_mini_game_ui/drawable-xhdpi'
+    from '../sharedUI/img_mapstore_lobby/drawable-xhdpi'
+    into 'xcode/Graphics'
+    rename { filename -> filename.replace '.png', '@2x.png' }
+}
+project.processResources.dependsOn(copyAssets2x)
+
+task copyAssets3x(type: Copy) {
+    from '../sharedUI/img_mini_game_ui/drawable-xxhdpi'
+    from '../sharedUI/img_mapstore_lobby/drawable-xxhdpi'
+    into 'xcode/Graphics'
+    rename { filename -> filename.replace '.png', '@3x.png' }
+}
+project.processResources.dependsOn(copyAssets3x)

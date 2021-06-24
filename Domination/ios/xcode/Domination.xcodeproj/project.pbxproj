@@ -14,6 +14,7 @@
 		583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 583D44891E40B4B90048FF77 /* LaunchScreen.storyboard */; };
 		DE079D292678C41300CFBB43 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = DE079D282678C41300CFBB43 /* maps */; };
 		DE079D2B2678C45800CFBB43 /* help in Resources */ = {isa = PBXBuildFile; fileRef = DE079D2A2678C45800CFBB43 /* help */; };
+		DE3135722684F4F400E558A3 /* Graphics in Resources */ = {isa = PBXBuildFile; fileRef = DE3135712684F4F400E558A3 /* Graphics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +52,7 @@
 		DC4876D3960503C5F9FA285C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DE079D282678C41300CFBB43 /* maps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maps; path = ../../swingUI/game/Domination/maps; sourceTree = "<group>"; };
 		DE079D2A2678C45800CFBB43 /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../../swingUI/game/Domination/help; sourceTree = "<group>"; };
+		DE3135712684F4F400E558A3 /* Graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Graphics; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 		24D12A0CC041D52E8DD7E2AC = {
 			isa = PBXGroup;
 			children = (
+				DE3135712684F4F400E558A3 /* Graphics */,
 				DE079D2A2678C45800CFBB43 /* help */,
 				DE079D282678C41300CFBB43 /* maps */,
 				4D85E57E486ED51FA34DE305 /* Domination */,
@@ -222,6 +225,7 @@
 				DE079D292678C41300CFBB43 /* maps in Resources */,
 				DE079D2B2678C45800CFBB43 /* help in Resources */,
 				583D448A1E40B4B90048FF77 /* Assets.xcassets in Resources */,
+				DE3135722684F4F400E558A3 /* Graphics in Resources */,
 				583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
