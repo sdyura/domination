@@ -6,12 +6,16 @@ buildscript {
     // Add central and local Maven repos
     repositories {
         jcenter()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         mavenLocal()
     }
     dependencies {
         // MOE plugin
         classpath group: 'org.multi-os-engine', name: 'moe-gradle', version: '1.7.+'
     }
+    //configurations.all {
+    //    resolutionStrategy.cacheChangingModulesFor 60, 'seconds'
+    //}
 }
 
 /*******************/
@@ -37,11 +41,6 @@ moe {
         mainTarget = 'Domination'
         testTarget = 'Domination-Test'
     }
-    //xcode.packageName = 'net.yura.domination'
-    //xcode.launchScreenFilePath = 'src/main/resources/LaunchScreen.xib'
-    //xcode.bundleID = 'net.Domination'
-    //xcode.generateProject = false
-    //xcode.xcodeProjectDirPath = 'xcode'
 }
 
 // Set dependencies
