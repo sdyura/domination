@@ -98,12 +98,13 @@
 -->
 	<a href="http://sf.net/p/domination/code/">Browse Subversion Repository</a><br>
 
-<h3><a id="android">Android Domination</a></h3>
+<h3><a id="android">iOS & Android Domination</a></h3>
 
 	<code>
 	svn co https://svn.code.sf.net/p/domination/code/Domination<br>
 	svn co https://svn.code.sf.net/p/swingme/code/UtilME<br>
 	svn co https://svn.code.sf.net/p/swingme/code/SwingME<br>
+	svn co https://svn.code.sf.net/p/swingme/code/iOSME<br>
 	svn co https://svn.code.sf.net/p/swingme/code/AndroidME<br>
 	</code>
 
