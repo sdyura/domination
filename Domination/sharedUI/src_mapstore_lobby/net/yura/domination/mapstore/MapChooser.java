@@ -264,6 +264,9 @@ public class MapChooser implements ActionListener,MapServerListener {
                             img = null; // drop the small image as soon as we can
                             byte[] bytes = out.toByteArray();
                             out = null; // drop the OutputStream as soon as we can
+                            if (bytes.length == 0) {
+                                throw new IllegalStateException("img failed to save " + url);
+                            }
                             cache(url,bytes);
                             // TODO we should only cache if we are sure it can be opened as a image
                             in = new ByteArrayInputStream(bytes);
