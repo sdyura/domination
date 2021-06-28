@@ -88,10 +88,11 @@ public class MapChooser implements ActionListener,MapServerListener {
     private List list;
 
     public static void loadThemeExtension() {
+        InputStream themeData = Midlet.getResourceAsStream("/ms_tabbar.xml");
         try {
             LookAndFeel laf = DesktopPane.getDesktopPane().getLookAndFeel();
             if (laf instanceof SynthLookAndFeel) {
-                ((SynthLookAndFeel)laf).load( Midlet.getResourceAsStream("/ms_tabbar.xml") );
+                ((SynthLookAndFeel)laf).load(themeData);
             }
             else {
                 System.err.println("LookAndFeel not SynthLookAndFeel "+laf);
@@ -100,6 +101,9 @@ public class MapChooser implements ActionListener,MapServerListener {
         catch(Exception ex) {
             // this is a none faital error, we will go on
             RiskUtil.printStackTrace(ex);
+        }
+        finally {
+            RiskUtil.close(themeData);
         }
     }
 

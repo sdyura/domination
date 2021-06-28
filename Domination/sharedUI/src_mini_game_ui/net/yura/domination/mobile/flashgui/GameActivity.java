@@ -2,6 +2,7 @@ package net.yura.domination.mobile.flashgui;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -1066,12 +1067,16 @@ public class GameActivity extends Frame implements ActionListener {
 
     public static XULLoader getPanel(String xmlfile, ActionListener al) {
 
+        InputStream data = Midlet.getResourceAsStream(xmlfile);
         XULLoader loader;
         try {
-            loader = XULLoader.load( Midlet.getResourceAsStream(xmlfile) , al, resb);
+            loader = XULLoader.load(data, al, resb);
         }
         catch(Exception ex) {
             throw new RuntimeException(ex);
+        }
+        finally {
+            RiskUtil.close(data);
         }
         return loader;
 

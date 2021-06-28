@@ -2,6 +2,7 @@ package net.yura.domination.engine;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -55,11 +56,15 @@ public class RiskUtil {
 
 		Properties settings = new Properties();
 
+		InputStream settingsData = RiskUtil.class.getResourceAsStream("settings.ini");
 		try {
-			settings.load(RiskUtil.class.getResourceAsStream("settings.ini"));
+			settings.load(settingsData);
 		}
 		catch (Exception ex) {
 			throw new RuntimeException("can not find settings.ini file!",ex);
+		}
+		finally {
+		    close(settingsData);
 		}
 
 		RISK_VERSION_URL = settings.getProperty("VERSION_URL");
@@ -73,8 +78,18 @@ public class RiskUtil {
 		String dcards = settings.getProperty("defaultcards");
 
 		RiskGame.setDefaultMapAndCards( dmap , dcards );
-
 	}
+
+	public static void close(Closeable obj) {
+	    try {
+	        if (obj != null) {
+                obj.close();
+            }
+        }
+        catch (Exception ex) {
+            logger.info("not able to close " + obj);
+        }
+    }
 
 	public static InputStream openMapStream(String a) throws IOException {
             if (a == null) {

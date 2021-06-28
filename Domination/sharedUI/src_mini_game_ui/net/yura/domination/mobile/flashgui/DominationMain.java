@@ -1,6 +1,7 @@
 package net.yura.domination.mobile.flashgui;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,9 @@ public class DominationMain extends Midlet {
 
     public DominationMain() {
 
-        Service.SERVICES_LOCATION = "assets/services/";
+        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+            Service.SERVICES_LOCATION = "assets/services/";
+        }
 
         // IO depends on this, so we need to do this first
         RiskUtil.streamOpener = new RiskMiniIO();
@@ -256,12 +259,17 @@ public class DominationMain extends Midlet {
             synth = new NimbusLookAndFeel();
         }
 
+        InputStream themeData = Midlet.getResourceAsStream("/dom_synth.xml");
         try {
-            synth.load( Midlet.getResourceAsStream("/dom_synth.xml") );
+            synth.load(themeData);
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+        finally {
+            RiskUtil.close(themeData);
+        }
+
         rootpane.setLookAndFeel( synth );
 
         MapChooser.loadThemeExtension(); // this has theme elements used inside AND outside of the MapChooser

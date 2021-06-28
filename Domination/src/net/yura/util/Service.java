@@ -57,9 +57,10 @@ public class Service {
       if (providerFiles.hasMoreElements()) {
         // cycle through the provider files and load classes
         while (providerFiles.hasMoreElements()) {
+          Reader reader = null;
           try {
             URL url = (URL) providerFiles.nextElement();
-            Reader reader = new InputStreamReader(url.openStream(), "UTF-8");
+            reader = new InputStreamReader(url.openStream(), "UTF-8");
             if (instantiate) {
               loadResource(reader, classLoader, providers);
             } else {
@@ -68,6 +69,10 @@ public class Service {
           } catch (Exception ex) {
             //ex.printStackTrace();
             // Just try the next file...
+          } finally {
+            if (reader != null) {
+              reader.close();
+            }
           }
         }
       } else {
