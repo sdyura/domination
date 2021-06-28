@@ -43,6 +43,10 @@ moe {
     }
 }
 
+moeMainProGuard {
+    appendCfgFile "../../iOSME/proguard.append.cfg"
+}
+
 // Set dependencies
 dependencies {
     implementation rootProject
