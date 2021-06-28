@@ -10,6 +10,7 @@ import net.yura.domination.lobby.mini.MiniLobbyRisk;
 import net.yura.domination.mobile.flashgui.DominationMain.GooglePlayGameServices;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.Icon;
+import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.Menu;
@@ -50,7 +51,17 @@ public class MiniFlashRiskAdapter implements RiskListener {
             }
             @Override
             public String getAppName() {
-                return "Android" + RiskUtil.GAME_NAME;
+                String appNamePrefix;
+                if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                    appNamePrefix = "Android";
+                }
+                else if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+                    appNamePrefix = "iOS";
+                }
+                else {
+                    appNamePrefix = "Mobile";
+                }
+                return appNamePrefix + RiskUtil.GAME_NAME;
             }
             @Override
             public String getAppVersion() {
