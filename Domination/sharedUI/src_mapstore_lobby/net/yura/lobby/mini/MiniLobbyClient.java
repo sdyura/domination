@@ -143,11 +143,16 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         java.util.Properties prop = new java.util.Properties();
 
         File lobbySettingsFile = new File( System.getProperty("user.home"),".lobby" );
+        FileInputStream lobbySettingsData = null;
 
         try {
-            prop.load( new FileInputStream(lobbySettingsFile) );
+            lobbySettingsData = new FileInputStream(lobbySettingsFile);
+            prop.load(lobbySettingsData);
         }
         catch (Exception ex) { }
+        finally {
+            RiskUtil.close(lobbySettingsData);
+        }
 
         String uuid = prop.getProperty("uuid");
         if (uuid == null) {

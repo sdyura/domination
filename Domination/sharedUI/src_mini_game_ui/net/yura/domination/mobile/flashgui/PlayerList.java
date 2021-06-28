@@ -115,7 +115,7 @@ public class PlayerList extends List {
             @Override
             public void actionPerformed(String actionCommand) {
                 final Player player = (Player) getSelectedValue();
-                if (player != null) {
+                if (player != null && Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
                     DominationMain.openURL("native://net.yura.domination.android.ColorPickerActivity", new DominationMain.ActivityResultListener() {
                         public void onActivityResult(Object data) {
                             int color = (Integer) data;
