@@ -238,24 +238,28 @@ public class DominationMain extends Midlet {
     @Override
     public void initialize(DesktopPane rootpane) {
 
-        SynthLookAndFeel synth;
+        SynthLookAndFeel synth = null;
 
         try {
-            synth = (SynthLookAndFeel)Class.forName("net.yura.android.plaf.AndroidLookAndFeel").newInstance();
+            if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                synth = (SynthLookAndFeel) Class.forName("net.yura.android.plaf.AndroidLookAndFeel").newInstance();
 
-            // small hack to center radiobutton icon
-            Style radioButtonStyle = synth.getStyle("RadioButton");
-            Icon radioButtonIcon = (Icon)radioButtonStyle.getProperty("icon", Style.ALL);
-            if (radioButtonIcon!=null) {
-                radioButtonStyle.addProperty( new CentreIcon(radioButtonIcon,radioButtonIcon.getIconWidth(),radioButtonIcon.getIconWidth()), "icon", Style.ALL);
+                // small hack to center radiobutton icon
+                Style radioButtonStyle = synth.getStyle("RadioButton");
+                Icon radioButtonIcon = (Icon) radioButtonStyle.getProperty("icon", Style.ALL);
+                if (radioButtonIcon != null) {
+                    radioButtonStyle.addProperty(new CentreIcon(radioButtonIcon, radioButtonIcon.getIconWidth(), radioButtonIcon.getIconWidth()), "icon", Style.ALL);
+                }
             }
-
+            if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+                synth = (SynthLookAndFeel) Class.forName("net.yura.ios.plaf.IOSLookAndFeel").newInstance();
+            }
         }
         catch (Exception ex) {
-            if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
-                logger.log(Level.WARNING, "can not load android theme", ex);
-            }
+            logger.log(Level.WARNING, "can not load theme", ex);
+        }
 
+        if (synth == null) {
             synth = new NimbusLookAndFeel();
         }
 
