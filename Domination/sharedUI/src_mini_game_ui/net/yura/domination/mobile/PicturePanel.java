@@ -567,7 +567,7 @@ public class PicturePanel extends ImageView implements MapPanel {
 
 
             // TODO any size fonts do not work on me4se!!
-            if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+            if (Midlet.getPlatform() != Midlet.PLATFORM_ME4SE) {
                 if (ballSize!=fontBallSize) {
                     String density = System.getProperty("display.scaledDensity"); // use scaledDensity, as in the FontManager scaledDensity is also used
                     float d = (density!=null)?Float.parseFloat(density):1.0F;
