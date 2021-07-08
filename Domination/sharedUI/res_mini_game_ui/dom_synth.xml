@@ -87,14 +87,31 @@
     <bind style="scrollBarThumbStyle" type="REGION" key="ScrollBarThumb" />
 -->
 
-    <style id="panel">
-        <opaque value="false"/>
+	<style id="backingStyle">
+		<opaque value="false"/>
+	</style>
+	<bind style="backingStyle" type="region" key=".*"/>
+
+	<style id="frameStyle">
+		<state>
+			<color value="#FFBDB5AD" type="BACKGROUND"/>
+		</state>
+	</style>
+	<bind style="frameStyle" type="region" key="Frame"/>
+
+    <style id="itemStyle">
+        <state>
+            <color value="#FFE6E1DA" type="BACKGROUND"/>
+        </state>
+		<state value="FOCUSED">
+			<color value="#0000" type="BACKGROUND"/>
+		</state>
+		<state value="SELECTED">
+			<color value="#0000" type="BACKGROUND"/>
+		</state>
     </style>
-    <bind style="panel" type="region" key="Panel"/>
-    <bind style="panel" type="region" key="ScrollPane"/>
-    <bind style="panel" type="region" key="Label"/>
-    <bind style="panel" type="region" key="PicturePanel"/>
-    <bind style="panel" type="region" key="TransparentDialog"/>
+    <bind style="itemStyle" type="region" key="ListRenderer"/>
+	<bind style="itemStyle" type="region" key="ListRendererCollapsed"/>
 
     <style id="view">
 	   <opaque value="false"/>
@@ -122,9 +139,17 @@
     </style>
     <bind style="actionbarMenuButton" type="region" key="ActionbarMenuButton"/>
 
+	<style id="actionbarBackButton">
+		<insets top="10" left="10" bottom="10" right="10"/>
+		<state value="FOCUSED">
+			<color value="#994f5b85" type="BORDERFILL"/>
+		</state>
+	</style>
+	<bind style="actionbarBackButton" type="region" key="ActionbarBackButton"/>
 
 
     <style id="spinner">
+      <insets top="5" left="25" bottom="5" right="25"/>
       <imageIcon id="icon_left_normal" path="/spinner.png" x="0" y="0" width="25" height="25"/>
       <imageIcon id="icon_right_normal" path="/spinner.png" x="0" y="25" width="25" height="25"/>
       <imageIcon id="icon_left_highlight" path="/spinner.png" x="0" y="50" width="25" height="25"/>

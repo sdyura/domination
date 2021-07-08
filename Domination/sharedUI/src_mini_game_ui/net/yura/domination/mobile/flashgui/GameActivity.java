@@ -189,6 +189,15 @@ public class GameActivity extends Frame implements ActionListener {
         Panel gamecontrol = new Panel( new BorderLayout() );
         gamecontrol.setName("TransPanel");
 
+        closebutton = new Button();
+        closebutton.setIcon( new Icon("/back.png") );
+        closebutton.setName("ActionbarBackButton");
+        closebutton.setMnemonic( KeyEvent.KEY_END );
+        closebutton.setActionCommand("close");
+        closebutton.addActionListener(this);
+        gamecontrol.add(closebutton,Graphics.LEFT);
+
+
         Option[] options = new Option[6];
         options[0] = new Option( String.valueOf( PicturePanel.VIEW_CONTINENTS ) , resb.getProperty("game.tabs.continents") );
         options[1] = new Option( String.valueOf( PicturePanel.VIEW_OWNERSHIP ) , resb.getProperty("game.tabs.ownership") );
@@ -197,18 +206,13 @@ public class GameActivity extends Frame implements ActionListener {
         options[4] = new Option( String.valueOf( PicturePanel.VIEW_TROOP_STRENGTH ) , resb.getProperty("game.tabs.troopstrength") );
         options[5] = new Option( String.valueOf( PicturePanel.VIEW_CONNECTED_EMPIRE ) , resb.getProperty("game.tabs.connectedempire") );
 
-
         mapViewControl = new ViewChooser(options);
         mapViewControl.addActionListener(this);
         mapViewControl.setActionCommand("mapViewChanged");
 
         gamecontrol.add(mapViewControl);
 
-        closebutton = new Button();
-        closebutton.setMnemonic( KeyEvent.KEY_END );
-        closebutton.setActionCommand("close");
-        closebutton.addActionListener(this);
-        gamecontrol.add(closebutton,Graphics.LEFT);
+
 
         gamecontrol.add(menu,Graphics.RIGHT);
 
@@ -311,14 +315,14 @@ public class GameActivity extends Frame implements ActionListener {
         String mapFile = myrisk.getGame().getMapFile();
         logger.log(Level.INFO, "Starting new game: {0}", mapFile);
 
-        closebutton.setText( getLeaveCloseText(localGame) );
+        closebutton.setToolTipText( getLeaveCloseText(localGame) );
 
         // ============================================ setup UI
 
         boolean retry=false;
         boolean error = pp != scroll.getView();
 
-        if (!error) Midlet.openURL("nativeNoResult://net.yura.android.LoadingDialog?message=" + Url.encode( resb.getProperty("mainmenu.loading") ));
+        if (!error) showloadingScreen(true);
 
         try {
             pp.load();
@@ -377,7 +381,7 @@ public class GameActivity extends Frame implements ActionListener {
             logger.log( (retry || ex instanceof OutOfMemoryError) ?Level.INFO:Level.WARNING , text, ex);
         }
         finally {
-            if (!retry) Midlet.openURL("nativeNoResult://net.yura.android.LoadingDialog?command=hide");
+            if (!retry) showloadingScreen(false);
         }
 
         note.setText( resb.getString("game.pleasewait") );
@@ -394,10 +398,25 @@ public class GameActivity extends Frame implements ActionListener {
         setVisible(true);
     }
 
+    private void showloadingScreen(boolean show) {
+        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+            if (show) {
+                Midlet.openURL("nativeNoResult://net.yura.android.LoadingDialog?message=" + Url.encode(resb.getProperty("mainmenu.loading")));
+            }
+            else {
+                Midlet.openURL("nativeNoResult://net.yura.android.LoadingDialog?command=hide");
+            }
+        }
+    }
+
     @Override
     public void setVisible(boolean b) {
     	super.setVisible(b);
-    	Midlet.openURL("wakelock://"+b);
+
+    	if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID || Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+            Midlet.openURL("wakelock://" + b);
+        }
+
         if (!b) {
             if (cardsDialog != null) {
                 cardsDialog.setVisible(false);
