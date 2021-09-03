@@ -16,10 +16,12 @@ CURRENT VERSION:
 
 1.2.4
 
-	MapEditor: right click menu items added to countries list
+	Started iOS version
 	Fix should have bumped the network version when unicode support was added
 	MacOS openJDK 1.8 launch script update
-	Started iOS version
+	MapEditor: right click menu items added to countries list
+	MapEditor: can stretch imageMap when selecting new imagePic
+	MapEditor: hold down shift to scale added in "move all" mode
 
 1.2.3 (19.11.2020)
 

@@ -880,7 +880,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                                 "This action is not reversible so please save a copy of your map first." },"Auto Draw?",
                                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-                        if (result == JOptionPane.YES_OPTION || result == JOptionPane.NO_OPTION) {                            
+                        if (result == JOptionPane.YES_OPTION || result == JOptionPane.NO_OPTION) {
                             editPanel.autodraw(selectedCountries, result == JOptionPane.YES_OPTION);
                         }
 		}

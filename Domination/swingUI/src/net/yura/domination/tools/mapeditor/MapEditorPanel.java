@@ -70,12 +70,15 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	private int mode;
 	private int brush = DEFAULT_BRUSH_SIZE;
 	private float alpha;
-	private Point dragpoint;
-	private int zoom;
-
+        private int zoom;
 	private MapEditor editor;
         private ListSelectionListener selectionListener;
         private int smartDrawTolerance = 20;
+
+        // these variables are used by the mouse listener interface
+	private Point dragpoint;
+	private boolean xdrag; // do we drag a single country or just move the map scroll position
+	private Point[] countryPositions;
 
 	public MapEditorPanel(MapEditor a) {
 		editor = a;
@@ -134,27 +137,38 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
                 if (checkmap && (pic.getWidth()!=map.getWidth() || pic.getHeight()!=map.getHeight())) {
 
-			int result = JOptionPane.showConfirmDialog(this,
+                        String[] options = {"Stretch", "Resize", "No"};
+			int result = JOptionPane.showOptionDialog(this,
 				"This ImagePic does not match the ImageMap size!\n"
 			      + "ImagePic: "+pic.getWidth()+"x"+pic.getHeight()+"\n"
 			      + "ImageMap: "+map.getWidth()+"x"+map.getHeight()+"\n"
 			      + "They should match for the game to work!\n"      
 			      + "would you like to update the ImageMap size?",
-				"?", JOptionPane.YES_NO_OPTION);
-			if (result == JOptionPane.YES_OPTION) {
-				resizeAndSetImageMap(map);
+				"?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+			if (result == JOptionPane.YES_OPTION || result == JOptionPane.NO_OPTION) { 
+				resizeAndSetImageMap(map, result == JOptionPane.YES_OPTION);
 			}
                 }
 
 		zoom(zoom);
 	}
         
-	private void resizeAndSetImageMap(BufferedImage imageMap) {
+	private void resizeAndSetImageMap(BufferedImage imageMap, boolean stretch) {
 		BufferedImage newmap = new BufferedImage(pic.getWidth(), pic.getHeight(), imageMap.getType());
 		Graphics g = newmap.getGraphics();
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, newmap.getWidth(), newmap.getHeight());
-		g.drawImage(imageMap, 0, 0, this);
+                
+                if (stretch) {
+                    double scale = Math.max(newmap.getWidth() / (double)imageMap.getWidth(), newmap.getHeight() / (double)imageMap.getHeight());
+                    int newWidth = (int) (imageMap.getWidth() * scale);
+                    int newHeight = (int) (imageMap.getHeight() * scale);
+                    g.drawImage(imageMap, (newmap.getWidth() - newWidth) / 2, (newmap.getHeight() - newHeight) / 2, newWidth, newHeight, this);
+                }
+                else {
+                    g.drawImage(imageMap, 0, 0, this);
+                }
 		g.dispose();
 		setImageMap(newmap);
 	}
@@ -170,7 +184,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 			      + "would you like to update the ImageMap size?",
 				"?", JOptionPane.YES_NO_OPTION);
                         if (result == JOptionPane.YES_OPTION) {
-                            resizeAndSetImageMap(a);
+                            resizeAndSetImageMap(a, false); // this will just crop the image
                             return;
                         }
 		}
@@ -849,7 +863,6 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		}
 	}
 
-	private boolean xdrag;
 	public void mousePressed(MouseEvent e) {
 
 		if ( myMap!=null && (
@@ -876,6 +889,14 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 			}
 			else if (mode==MODE_MOVEALL) {
 				dragpoint = point;
+                                
+                                if (e.isShiftDown()) {
+                                    Country[] countries = myMap.getCountries();
+                                    countryPositions = new Point[countries.length];
+                                    for (int i = 0; i < countries.length; i++) {
+                                        countryPositions[i] = new Point(countries[i].getX(), countries[i].getY());
+                                    }
+                                }
 			}
 			else if (mode==MODE_DRAW) {
 
@@ -895,6 +916,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		}
 		else if (mode == MODE_MOVEALL) {
 			dragpoint=null;
+                        countryPositions = null;
 		}				
 		else if (mode == MODE_DRAW) {
 
@@ -941,20 +963,27 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		}
 		else if (mode == MODE_MOVEALL && dragpoint!=null) {
 
+                    Country[] countries = myMap.getCountries();
+
+                    if (countryPositions == null) {
 			int xdif = point.x - dragpoint.x;
 			int ydif = point.y - dragpoint.y;
-
-			Country[] countries = myMap.getCountries();
 			for(int i = 0; i < countries.length; i++) {
-
 				countries[i].setX( countries[i].getX()+xdif );
 				countries[i].setY( countries[i].getY()+ydif );
-
 			}
-
 			dragpoint = point;
-
-			repaint();
+                    }
+                    else {
+                        double xdif = point.x / (double) dragpoint.x;
+                        double ydif = point.y / (double) dragpoint.y;
+                        double dif = Math.max(xdif, ydif);
+                        for (int i = 0; i < countries.length; i++) {
+				countries[i].setX( (int)Math.round(countryPositions[i].getX() * dif) );
+				countries[i].setY( (int)Math.round(countryPositions[i].getY() * dif) );
+			}
+                    }
+                    repaint();
 		}
 		else if (mode == MODE_DRAW && dragpoint!=null) {
 
