@@ -19,9 +19,11 @@ CURRENT VERSION:
 	Started iOS version
 	Fix should have bumped the network version when unicode support was added
 	MacOS openJDK 1.8 launch script update
+	izpack installer moved from standalone (legacy version) 4.3.5 to new 5.1.3
 	MapEditor: right click menu items added to countries list
 	MapEditor: can stretch imageMap when selecting new imagePic
 	MapEditor: hold down shift to scale added in "move all" mode
+	MapEditor: right click menu option to grow country area by 1px
 
 1.2.3 (19.11.2020)
 

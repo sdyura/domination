@@ -39,6 +39,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.PicturePanel;
@@ -258,6 +259,57 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 		repaint();
 	}
+
+        public void growEdges(Set<Integer> colorsToGrow) {
+
+                int width = map.getWidth();
+                int height = map.getHeight();
+
+                int[] pixels = map.getRGB(0, 0, width, height, null, 0, width);
+                int[] newpixels = new int[pixels.length];
+
+		for (int position=0; position < pixels.length; position++) {
+
+			int color = pixels[position];
+
+                        int darkestNeighbour = ColorUtil.WHITE; // start with white
+
+                        if (position >= width) {
+                            int top = pixels[ position - width ]; // top
+                            darkestNeighbour = top;
+                        }
+                        if (position % width != 0) {
+                            int left = pixels[ position - 1 ]; // left
+                            if (ColorUtil.getBrightness(left) < ColorUtil.getBrightness(darkestNeighbour)) {
+                                darkestNeighbour = left;
+                            }
+                        }
+                        if ((position+1) % width != 0) {
+                            int right = pixels[ position + 1 ]; // right
+                            if (ColorUtil.getBrightness(right) < ColorUtil.getBrightness(darkestNeighbour)) {
+                                darkestNeighbour = right;
+                            }
+                        }
+                        if (position < (pixels.length - width)) {
+                            int bottom = pixels[ position + width ]; // bottom
+                            if (ColorUtil.getBrightness(bottom) < ColorUtil.getBrightness(darkestNeighbour)) {
+                                darkestNeighbour = bottom;
+                            }
+                        }
+
+                        if (color != darkestNeighbour && ColorUtil.getBrightness(darkestNeighbour) < ColorUtil.getBrightness(color) &&
+                                (!colorsToGrow.isEmpty() && colorsToGrow.contains(Integer.valueOf(darkestNeighbour & 0xff)))) {
+                            color = darkestNeighbour;
+                        }
+
+                        newpixels[position] = color;
+                }
+
+                map.setRGB(0, 0, width, height, newpixels, 0, width);
+
+                repaintSelected();
+                repaint();
+        }
 
 	public void setSelectedCountry(Country a) {
 	    if (selected != a) {

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.swing.AbstractListModel;
@@ -467,6 +468,11 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
                     delFromImgMap.setActionCommand("delFromImgMap");
                     delFromImgMap.addActionListener(this);
                     pop.add(delFromImgMap);
+                    
+                    JMenuItem growInImgMap = new JMenuItem("Grow by 1px in Image Map");
+                    growInImgMap.setActionCommand("growInImgMap");
+                    growInImgMap.addActionListener(this);
+                    pop.add(growInImgMap);
 
                     JMenuItem autoDrawDot = new JMenuItem("Auto Draw Dot");
                     autoDrawDot.setActionCommand("autoDrawDot");
@@ -504,6 +510,13 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
                 }
                 editPanel.update(updateMap);
                 editPanel.repaintSelected();
+            }
+            else if ("growInImgMap".equals(actionCommand)) {
+                java.util.Set updateSet = new HashSet();
+                for (Country country : selectedCountries) {
+                        updateSet.add(new Integer(country.getColor()));
+                }
+                editPanel.growEdges(updateSet);
             }
             else if ("autoDrawDot".equals(actionCommand)) {
                 editPanel.autodraw(selectedCountries, true);
