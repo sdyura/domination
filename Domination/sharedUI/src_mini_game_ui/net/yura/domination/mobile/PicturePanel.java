@@ -778,7 +778,6 @@ public class PicturePanel extends ImageView implements MapPanel {
                     if (view == VIEW_CONTINENTS) {
 
                                 val = 0x00000000;
-
                     }
                     else if (view == VIEW_OWNERSHIP) {
 
@@ -791,7 +790,6 @@ public class PicturePanel extends ImageView implements MapPanel {
                                 }
 
                                 val = colorWithAlpha(val, 100);
-
                     }
                     else if (view == VIEW_BORDER_THREAT) {
 
@@ -820,8 +818,6 @@ public class PicturePanel extends ImageView implements MapPanel {
                                 }
 
                                 val = colorWithAlpha(val, 200);
-
-
                     }
                     else if (view == VIEW_CARD_OWNERSHIP) {
 
@@ -841,15 +837,18 @@ public class PicturePanel extends ImageView implements MapPanel {
                         }
 
                         val = colorWithAlpha(val, 100);
-
                     }
                     else if (view == VIEW_TROOP_STRENGTH) {
 
-                                int armies = game.getCountryInt(c + 1).getArmies();
+                                Country country = game.getCountryInt(c + 1);
+                                int armies = country.getArmies();
                                 armies=armies * 25;
                                 if (armies > 255) { armies = 255; }
-                        
-                                if (game.getCountryInt(c + 1).getOwner() != game.getCurrentPlayer()) {
+
+                                if (country.getOwner() == null) {
+                                    val = GRAY;
+                                }
+                                else if (country.getOwner() != game.getCurrentPlayer()) {
                                         val = newColor(255, 255 - armies, 255 - armies);
                                 }
                                 else {
