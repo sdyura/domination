@@ -244,7 +244,7 @@ public class DominationMain extends Midlet {
             if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
                 synth = (SynthLookAndFeel) Class.forName("net.yura.android.plaf.AndroidLookAndFeel").newInstance();
 
-                // small hack to center radiobutton icon
+                // small hack to center radiobutton icon (the default height is too big, we set it to the width so the icon is square)
                 Style radioButtonStyle = synth.getStyle("RadioButton");
                 Icon radioButtonIcon = (Icon) radioButtonStyle.getProperty("icon", Style.ALL);
                 if (radioButtonIcon != null) {

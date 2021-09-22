@@ -274,8 +274,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         else if ("chat".equals(actionCommand)) {
 
-            Midlet.openURL("https://discord.gg/jMmB6zT3m3");
-
+            game.openChat();
         }
         else if ("close".equals(actionCommand)) {
             destroy();

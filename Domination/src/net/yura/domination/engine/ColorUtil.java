@@ -153,6 +153,22 @@ return Color.white;
         public static int getAlpha(int rgb) {
             return (rgb >> 24) & 0xff;
         }
+        
+        /**
+         * @see java.awt.Color#RGBtoHSB(int, int, int, float[])
+         */
+        public static int getBrightness(int rgb) {
+            int r = getRed(rgb);
+            int g = getGreen(rgb);
+            int b = getBlue(rgb);
+
+            int cmax = (r > g) ? r : g;
+            if (b > cmax) cmax = b;
+            int cmin = (r < g) ? r : g;
+            if (b < cmin) cmin = b;
+
+            return cmax;
+        }
 
         public static String getHexForColor(int c) {
                 return "#" + Integer.toHexString((  c & 0xffffff) | 0x1000000).substring(1);

@@ -17,6 +17,7 @@ public interface MiniLobbyGame {
     void addLobbyGameMoveListener(MiniLobbyClient lgl);
 
     Properties getProperties();
+    void openChat();
 
     boolean isMyGameType(GameType gametype);
     Icon getIconForGame(Game game);
