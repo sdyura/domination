@@ -695,21 +695,18 @@ public class PicturePanel extends JPanel implements MapPanel {
 		    }
 		    else if (view == VIEW_TROOP_STRENGTH) {
 
-				if (((Country)game.getCountryInt(c+1)).getOwner() != (Player)game.getCurrentPlayer()) {
-					val = Color.gray;
+                                int armies = game.getCountryInt(c + 1).getArmies();
+                                armies = armies * 25;
+                                if (armies > 255) { armies = 255; }
+                        
+				if (game.getCountryInt(c + 1).getOwner() != game.getCurrentPlayer()) {
+					val = new Color(255, 255 - armies, 255 - armies);
 				}
 				else {
-					int armies = ((Country)game.getCountryInt(c+1)).getArmies();
-
-					armies=armies*25;
-
-					if (armies > 255) { armies=255; }
-
-					val = (new Color( 0 , armies, 0));
+					val = new Color(0, armies, 0);
 				}
 
 				val = new Color(val.getRed(), val.getGreen(), val.getBlue(), 200);
-
 		    }
 		    else if (view == VIEW_CONNECTED_EMPIRE) {
 

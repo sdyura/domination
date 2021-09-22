@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.2.4
 
 	Started iOS version
+	Troop Strength view also shows enemies troop strength in red
 	Fix should have bumped the network version when unicode support was added
 	MacOS openJDK 1.8 launch script update
 	izpack installer moved from standalone (legacy version) 4.3.5 to new 5.1.3
