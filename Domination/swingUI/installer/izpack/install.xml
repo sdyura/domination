@@ -129,7 +129,7 @@
 
 		<pack name="Manual" required="no" id="package.manual">
 			<description>The program manual and documentation</description>
-			<file src="help" targetdir="$INSTALL_PATH"/>
+			<fileset dir="help" targetdir="$INSTALL_PATH/help"/>
 		</pack>
 
 		<pack name="Sources" required="no" id="package.source">
