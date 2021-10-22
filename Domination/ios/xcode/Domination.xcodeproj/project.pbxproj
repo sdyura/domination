@@ -16,6 +16,8 @@
 		DE079D2B2678C45800CFBB43 /* help in Resources */ = {isa = PBXBuildFile; fileRef = DE079D2A2678C45800CFBB43 /* help */; };
 		DE30C94F268FBDCE0018914C /* iosmeimg in Resources */ = {isa = PBXBuildFile; fileRef = DE30C94E268FBDCE0018914C /* iosmeimg */; };
 		DE3135722684F4F400E558A3 /* Graphics in Resources */ = {isa = PBXBuildFile; fileRef = DE3135712684F4F400E558A3 /* Graphics */; };
+		DE7C5DAD27230ADA000EB1FF /* gpl.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAC27230ADA000EB1FF /* gpl.txt */; };
+		DE7C5DAF27230B2E000EB1FF /* ChangeLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +57,8 @@
 		DE079D2A2678C45800CFBB43 /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../../swingUI/game/Domination/help; sourceTree = "<group>"; };
 		DE30C94E268FBDCE0018914C /* iosmeimg */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iosmeimg; path = ../../../iOSME/iosmeimg; sourceTree = "<group>"; };
 		DE3135712684F4F400E558A3 /* Graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Graphics; sourceTree = "<group>"; };
+		DE7C5DAC27230ADA000EB1FF /* gpl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gpl.txt; path = ../../gpl.txt; sourceTree = "<group>"; };
+		DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ChangeLog.txt; path = ../../ChangeLog.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,8 @@
 		24D12A0CC041D52E8DD7E2AC = {
 			isa = PBXGroup;
 			children = (
+				DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */,
+				DE7C5DAC27230ADA000EB1FF /* gpl.txt */,
 				DE30C94E268FBDCE0018914C /* iosmeimg */,
 				DE3135712684F4F400E558A3 /* Graphics */,
 				DE079D2A2678C45800CFBB43 /* help */,
@@ -228,8 +234,10 @@
 				DE30C94F268FBDCE0018914C /* iosmeimg in Resources */,
 				DE079D292678C41300CFBB43 /* maps in Resources */,
 				DE079D2B2678C45800CFBB43 /* help in Resources */,
+				DE7C5DAF27230B2E000EB1FF /* ChangeLog.txt in Resources */,
 				583D448A1E40B4B90048FF77 /* Assets.xcassets in Resources */,
 				DE3135722684F4F400E558A3 /* Graphics in Resources */,
+				DE7C5DAD27230ADA000EB1FF /* gpl.txt in Resources */,
 				583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

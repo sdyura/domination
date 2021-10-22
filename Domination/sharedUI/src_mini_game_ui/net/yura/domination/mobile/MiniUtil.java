@@ -24,10 +24,15 @@ import net.yura.mobile.io.FileUtil;
 public class MiniUtil {
 
     public static void showAbout() {
-        Midlet.openURL("nativeNoResult://net.yura.domination.android.AboutActivity");
+        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+            Midlet.openURL("nativeNoResult://net.yura.domination.android.AboutActivity");
+        }
+        else {
+            showPlatformIndependentAbout();
+        }
     }
 
-    private static void showOldAbout() {
+    private static void showPlatformIndependentAbout() {
 
         ResourceBundle resb = TranslationBundle.getBundle();
 
