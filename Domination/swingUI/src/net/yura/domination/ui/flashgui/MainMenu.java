@@ -37,8 +37,11 @@ import net.yura.domination.engine.translation.TranslationBundle;
  */
 public class MainMenu extends JPanel implements MouseInputListener, KeyListener {
 
+        /**
+         * @see net.yura.domination.mobile.flashgui.DominationMain#product
+         */
+	private final static String product = "GameGUI for " + RiskUtil.GAME_NAME;
 	private final static String version = "2";
-	private final static String product = "Flash GUI for " + RiskUtil.GAME_NAME;
 
 	private BufferedImage MenuImage;
 	private BufferedImage Server;

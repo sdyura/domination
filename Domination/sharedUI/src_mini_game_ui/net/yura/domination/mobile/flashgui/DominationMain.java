@@ -51,7 +51,10 @@ public class DominationMain extends Midlet {
     public static final String DEFAULT_AUTO_PLACE_ALL_KEY = "default.autoplaceall";
     public static final String DEFAULT_RECYCLE_CARDS_KEY = "default.recycle";
 
-    public static final String product = "AndroidGUI";
+    /**
+     * @see net.yura.domination.ui.flashgui.MainMenu#product
+     */
+    public static final String product = "MiniGameGUI";
     public static final String version;
     static {
         String versionCode = System.getProperty("versionCode");

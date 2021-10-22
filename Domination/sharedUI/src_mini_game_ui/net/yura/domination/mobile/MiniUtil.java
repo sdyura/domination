@@ -84,6 +84,15 @@ public class MiniUtil {
             version = versionName + " (" + version + ")";
         }
 
+        String displayInfo;
+
+        if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+            displayInfo = "<p>Screen scale: " + System.getProperty("display.scale") + "</p>";
+        }
+        else {
+            displayInfo = "<p>DPI: " + System.getProperty("display.dpi") + " Density: " + System.getProperty("display.density") + " Size: " + System.getProperty("display.size") + "</p>";
+        }
+
         return "<html>" +
                 "<div style=\"" +
 // start CSS
@@ -104,7 +113,7 @@ public class MiniUtil {
                 "<p>"+author+"</p>"+
                 "<p>"+copyright+"</p>"+
                // "<p>"+ resb.getString("about.comments") +"</p>"+
-                "<p>DPI: "+System.getProperty("display.dpi")+" Density: "+System.getProperty("display.density")+" Size: "+System.getProperty("display.size")+"</p>"+
+                displayInfo +
                 "<p>Locale: "+Locale.getDefault()+" use: "+resb.getLocale()+"</p>"+
                 "<p>"+BugUIInfo.getLookAndFeel()+"</p>"+
                 "<p>ExternalMapDir="+(externalMapDir == null ? "none" : "<a href=\""+externalMapDir.toURI()+"\">"+externalMapDir+"</a>")+"</p>"+
