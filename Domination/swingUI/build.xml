@@ -185,7 +185,6 @@
 		<copy todir="${dir.build.game}" filtering="true">
 			<!-- script start files for easy starting -->
 			<fileset dir="${basedir}/res/scripts" includes="*.sh,*.cmd,*.command"/>
-			<fileset dir="${basedir}/res/html"/>
 		</copy>
 
 		<copy todir="${dir.build.game}">
