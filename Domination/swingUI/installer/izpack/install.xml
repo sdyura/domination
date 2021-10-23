@@ -106,18 +106,15 @@
 		<pack name="Game base files" required="yes" id="package.base">
 			<description>Contains all the files and maps required to run the game</description>
 
-			<fileset dir="." targetdir="$INSTALL_PATH" excludes="help/**,src.zip,*.cmd,*.exe,*.sh,*.app/**,game.ini"/>
-                        <fileset dir="." targetdir="$INSTALL_PATH" includes="game.ini" override="false"/>
+			<fileset dir="." targetdir="$INSTALL_PATH" excludes="help/**,src.zip,*.cmd,*.exe,*.sh,*.command,*.app/**,game.ini"/>
+			<fileset dir="." targetdir="$INSTALL_PATH" includes="game.ini" override="false"/>
+
 			<fileset dir="." targetdir="$INSTALL_PATH" os="windows" includes="*.cmd,*.exe"/>
-			<fileset dir="." targetdir="$INSTALL_PATH" os="unix" includes="*.sh" excludes="mac.sh"/>
-			<fileset dir="." targetdir="$INSTALL_PATH" os="mac" includes="mac.sh,*.app/**"/>
+			<fileset dir="." targetdir="$INSTALL_PATH" os="unix" includes="*.sh"/>
+			<fileset dir="." targetdir="$INSTALL_PATH" os="mac" includes="mac.command,*.app/**"/>
 			<fileset dir="." targetdir="$INSTALL_PATH" os="mac" includes="._*" defaultexcludes="no"/>
 
 			<!-- set the executable flag on unix -->
-
-			<executable stage="postinstall" targetfile="$INSTALL_PATH/mac.sh" os="mac"/>
-			<executable stage="never" targetfile="$INSTALL_PATH/Domination.app/Contents/MacOS/universalJavaApplicationStub" os="mac"/>
-			<executable stage="never" targetfile="$INSTALL_PATH/Map Editor.app/Contents/MacOS/universalJavaApplicationStub" os="mac"/>
 
 			<executable stage="never" targetfile="$INSTALL_PATH/run.sh" os="unix"/>
 			<executable stage="never" targetfile="$INSTALL_PATH/CommandLine.sh" os="unix"/>
@@ -125,6 +122,11 @@
 			<executable stage="never" targetfile="$INSTALL_PATH/Increment1GUI.sh" os="unix"/>
 			<executable stage="never" targetfile="$INSTALL_PATH/SimpleGUI.sh" os="unix"/>
 			<executable stage="never" targetfile="$INSTALL_PATH/SwingGUI.sh" os="unix"/>
+
+			<executable stage="never" targetfile="$INSTALL_PATH/Domination.app/Contents/MacOS/universalJavaApplicationStub" os="mac"/>
+			<executable stage="never" targetfile="$INSTALL_PATH/Map Editor.app/Contents/MacOS/universalJavaApplicationStub" os="mac"/>
+			<executable stage="postinstall" targetfile="$INSTALL_PATH/mac.command" os="mac"/>
+
 		</pack>
 
 		<pack name="Manual" required="no" id="package.manual">

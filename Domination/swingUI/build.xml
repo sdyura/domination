@@ -184,7 +184,7 @@
 
 		<copy todir="${dir.build.game}" filtering="true">
 			<!-- script start files for easy starting -->
-			<fileset dir="${basedir}/res/scripts" includes="*.sh,*.cmd"/>
+			<fileset dir="${basedir}/res/scripts" includes="*.sh,*.cmd,*.command"/>
 			<fileset dir="${basedir}/res/html"/>
 		</copy>
 
@@ -201,7 +201,7 @@
 		-->
 
 		<!-- remember the installer chmod in installer/izpack/install.xml -->
-		<chmod dir="${dir.build.game}" includes="*.sh,**/universalJavaApplicationStub" perm="ugo+x" />
+		<chmod dir="${dir.build.game}" includes="*.sh,*.command,**/universalJavaApplicationStub" perm="ugo+x" />
 
 	</target>
 
@@ -228,9 +228,9 @@
 		<copy file="${file.src}" todir="${dir.build.game}"/>
 
 		<zip destfile="${dir.dist}/${game.name}_${game.version}.zip">
- 			<zipfileset dir="${dir.build.game}" prefix="${game.name}" excludes="*.sh,**/universalJavaApplicationStub"/>
+ 			<zipfileset dir="${dir.build.game}" prefix="${game.name}" excludes="*.sh,**/universalJavaApplicationStub,mac.command"/>
 			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="._*" defaultexcludes="no"/>
-			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="*.sh,**/universalJavaApplicationStub" excludes="mac.sh" filemode="755"/>
+			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="*.sh,**/universalJavaApplicationStub" filemode="755"/>
 		</zip>
 	</target>
 
