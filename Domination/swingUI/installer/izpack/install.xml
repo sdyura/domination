@@ -121,7 +121,7 @@
 
 			<executable stage="never" targetfile="$INSTALL_PATH/run.sh" os="unix"/>
 			<executable stage="never" targetfile="$INSTALL_PATH/CommandLine.sh" os="unix"/>
-			<executable stage="never" targetfile="$INSTALL_PATH/FlashGUI.sh" os="unix"/>
+			<executable stage="never" targetfile="$INSTALL_PATH/GameGUI.sh" os="unix"/>
 			<executable stage="never" targetfile="$INSTALL_PATH/Increment1GUI.sh" os="unix"/>
 			<executable stage="never" targetfile="$INSTALL_PATH/SimpleGUI.sh" os="unix"/>
 			<executable stage="never" targetfile="$INSTALL_PATH/SwingGUI.sh" os="unix"/>

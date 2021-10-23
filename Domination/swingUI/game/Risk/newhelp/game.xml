@@ -72,7 +72,7 @@
         <listitem>
           <para>If you are on windows, all you have to do is (double) clicking
           on the <filename>Risk.jar</filename> or
-          <filename>FlashGUI.cmd</filename> file. On Linux or Mac OS, open a
+          <filename>GameGUI.cmd</filename> file. On Linux or Mac OS, open a
           terminal and type <command>java -jar Risk.jar</command>.</para>
         </listitem>
 
