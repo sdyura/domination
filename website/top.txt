@@ -35,7 +35,7 @@
 
 </head>
 
-<body background="images/back.jpg" text="#FFFFFF" link="#FF66FF" vlink="#FFFF00" alink="#00FF00" topmargin="0" leftmargin="0">
+<body background="images/back.jpg" bgcolor="#6d6c67" text="#FFFFFF" link="#FF66FF" vlink="#FFFF00" alink="#00FF00" topmargin="0" leftmargin="0">
 
 
 <div id="fb-root"></div>
