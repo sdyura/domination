@@ -21,6 +21,11 @@
 		<url>@game.website@</url>
 		<run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
 		<!-- izpack.macinstall is needed for non-admin mac users, but most mac users are admins -->
+
+		<!-- installationinformation upgrade from version 4.3.5 to version 5.1.3 is broken
+		     So this needs to be disabled so we can update from <= Game1.2.3 to >= Game1.2.4 -->
+		<readinstallationinformation>false</readinstallationinformation>
+		<writeinstallationinformation>false</writeinstallationinformation>
 	</info>
 
 	<guiprefs width="640" height="480" resizable="yes"/>
