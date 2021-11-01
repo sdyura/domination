@@ -54,6 +54,7 @@ import net.yura.mobile.util.Option;
 import net.yura.mobile.util.Properties;
 import net.yura.mobile.util.Url;
 import net.yura.swingme.core.CoreUtil;
+import net.yura.swingme.core.LoadingScreen;
 import net.yura.swingme.core.ViewChooser;
 
 /**
@@ -399,13 +400,11 @@ public class GameActivity extends Frame implements ActionListener {
     }
 
     private void showloadingScreen(boolean show) {
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
-            if (show) {
-                Midlet.openURL("nativeNoResult://net.yura.android.LoadingDialog?message=" + Url.encode(resb.getProperty("mainmenu.loading")));
-            }
-            else {
-                Midlet.openURL("nativeNoResult://net.yura.android.LoadingDialog?command=hide");
-            }
+        if (show) {
+            LoadingScreen.show(resb.getProperty("mainmenu.loading"));
+        }
+        else {
+            LoadingScreen.hide();
         }
     }
 
