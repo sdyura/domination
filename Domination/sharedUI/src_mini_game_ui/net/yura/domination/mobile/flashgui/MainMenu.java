@@ -11,6 +11,7 @@ import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.Button;
+import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.FileChooser;
 import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.OptionPane;
@@ -52,10 +53,10 @@ public class MainMenu extends Frame implements ActionListener {
 
 	mainMenu = GameActivity.getPanel("/mainmenu.xml",this);
 
-        //Component onlineButton = loader.find("OnlineButton");
-        //if (onlineButton!=null) {
-        //    onlineButton.setVisible( Locale.getDefault().equals(new Locale("en","GB")) );
-        //}
+        Component quitButton = mainMenu.find("QuitButton");
+        if (quitButton != null && !"true".equals(System.getProperty("debug")) && Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+            quitButton.setVisible(false);
+        }
 
         setContentPane( new ScrollPane( mainMenu.getRoot() ) );
         revalidate();
