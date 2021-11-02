@@ -1,9 +1,11 @@
 package net.yura.swingme.core;
 
 import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.components.Label;
 import net.yura.mobile.gui.components.ProgressBar;
 import net.yura.mobile.gui.components.Window;
 import net.yura.mobile.util.Url;
+import javax.microedition.lcdui.Graphics;
 
 public class LoadingScreen {
 
@@ -24,6 +26,7 @@ public class LoadingScreen {
             bar.setIndeterminate(true);
 
             instance.add(bar);
+            instance.add(new Label(message), Graphics.RIGHT);
             instance.pack();
             instance.setLocationRelativeTo(null);
         }
