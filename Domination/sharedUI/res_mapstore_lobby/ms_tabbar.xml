@@ -54,5 +54,12 @@
     </style>
     <bind style="segmentedControlRight" key="SegmentedControlRight"/>
 
+	<style id="indeterminateSpinner">
+		<imageIcon id="spinner_strip" path="/ms_strip.png" frameWidth="20" frameHeight="20"/>
+		<state>
+			<property key="sprite" value="spinner_strip"/>
+		</state>
+	</style>
+	<bind style="indeterminateSpinner" key="ProgressBar"/>
 
 </synth>
