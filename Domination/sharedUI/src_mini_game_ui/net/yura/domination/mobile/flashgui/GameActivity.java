@@ -47,6 +47,7 @@ import net.yura.mobile.gui.layout.BorderLayout;
 import net.yura.mobile.gui.layout.GridBagConstraints;
 import net.yura.mobile.gui.layout.GridBagLayout;
 import net.yura.mobile.gui.layout.XULLoader;
+import net.yura.mobile.gui.plaf.Style;
 import net.yura.mobile.io.kdom.Document;
 import net.yura.mobile.io.kdom.Element;
 import net.yura.mobile.io.kxml2.KXmlSerializer;
@@ -169,6 +170,7 @@ public class GameActivity extends Frame implements ActionListener {
 
         note = new Button(" ");
         note.setName("GoNote");
+        note.setState(Style.DISABLED); // set up a theme override so it looks like normal label
         note.setHorizontalAlignment(Graphics.HCENTER);
         note.setActionCommand("go");
         note.addActionListener(this);
@@ -280,6 +282,9 @@ public class GameActivity extends Frame implements ActionListener {
     }
 
     class PlayersPanel extends Component {
+        public PlayersPanel() {
+            setFocusable(false);
+        }
         @Override
         protected String getDefaultName() {
             return "PlayersPanel";
