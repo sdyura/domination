@@ -125,26 +125,20 @@ public class GameActivity extends Frame implements ActionListener {
         savebutton.addActionListener(this);
         savebutton.setActionCommand("save");
 
-        // TODO make this work on other platforms
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
-            graphbutton = new Button(resb.getProperty("game.button.statistics"));
-            graphbutton.setIcon(new Icon("/ic_menu_chartsettings.png"));
-            graphbutton.addActionListener(this);
-            graphbutton.setActionCommand("graph");
-        }
+        graphbutton = new Button(resb.getProperty("game.button.statistics"));
+        graphbutton.setIcon(new Icon("/ic_menu_chartsettings.png"));
+        graphbutton.addActionListener(this);
+        graphbutton.setActionCommand("graph");
 
         undobutton = new Button( resb.getProperty("game.button.undo") );
         undobutton.setIcon( new Icon("/undo.png") );
         undobutton.addActionListener(this);
         undobutton.setActionCommand("undo");
 
-        // TODO make this work on other platforms
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
-            options = new Button(resb.getProperty("swing.menu.options"));
-            options.setIcon(new Icon("/ic_menu_preferences.png"));
-            options.setActionCommand("options");
-            options.addActionListener(this);
-        }
+        options = new Button(resb.getProperty("swing.menu.options"));
+        options.setIcon(new Icon("/ic_menu_preferences.png"));
+        options.setActionCommand("options");
+        options.addActionListener(this);
 
         AutoEndGo = new CheckBox( resb.getProperty("game.menu.autoendgo") );
         AutoEndGo.setActionCommand("autoendgo");
@@ -455,9 +449,19 @@ public class GameActivity extends Frame implements ActionListener {
 
                 // REMEBER WE ARE ONLY ALLOWED 6 BUTTONS TO BE COMPATIBLE WITH OLD DEVICES!
                 if (localGame) menu.add( savebutton );
-                menu.add( graphbutton );
+
+                // TODO make this work on other platforms
+                if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                    menu.add(graphbutton);
+                }
+
                 if (localGame) menu.add( undobutton );
-                menu.add( options );
+
+                // TODO make this work on other platforms
+                if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                    menu.add(options);
+                }
+
                 menu.add( AutoEndGo );
                 menu.add( AutoDefend );
                 //menu.add( helpbutton );
@@ -499,7 +503,9 @@ public class GameActivity extends Frame implements ActionListener {
                     }
                     // if user presses cancel then ignore
                 }
-            }, saveText, resb.getProperty("game.menu.save") , 0, OptionPane.QUESTION_MESSAGE, null, new Button[] {ok, send, cancel}, ok);
+            }, saveText, resb.getProperty("game.menu.save") , 0, OptionPane.QUESTION_MESSAGE, null,
+                    Midlet.getPlatform() == Midlet.PLATFORM_ANDROID ? new Button[] {ok, send, cancel} : new Button[] {ok, cancel}
+                    , ok);
 
         }
         else if ("cards".equals(actionCommand)) {
