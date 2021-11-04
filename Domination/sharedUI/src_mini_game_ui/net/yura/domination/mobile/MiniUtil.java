@@ -13,7 +13,6 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
-import net.yura.grasshopper.BugUIInfo;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.KeyEvent;
 import net.yura.mobile.gui.Midlet;
@@ -115,7 +114,7 @@ public class MiniUtil {
                // "<p>"+ resb.getString("about.comments") +"</p>"+
                 displayInfo +
                 "<p>Locale: "+Locale.getDefault()+" use: "+resb.getLocale()+"</p>"+
-                "<p>"+BugUIInfo.getLookAndFeel()+"</p>"+
+                "<p>Device: " + System.getProperty("microedition.platform") + "</p>"+
                 "<p>ExternalMapDir="+(externalMapDir == null ? "none" : "<a href=\""+externalMapDir.toURI()+"\">"+externalMapDir+"</a>")+"</p>"+
                 // e.g. file:///storage/emulated/0/Domination%20Maps/
                 "</html>";
