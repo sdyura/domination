@@ -353,11 +353,6 @@ public class DominationMain extends Midlet {
         }
     }
 
-    private final static String AUTO_SAVE_FILE_NAME = "auto.save";
-    public static File getAutoSaveFile() {
-        return new File(MiniUtil.getSaveGameDir(), AUTO_SAVE_FILE_NAME);
-    }
-
     public static class CentreIcon extends Icon {
         Icon wrappedIcon;
         public CentreIcon(Icon icon,int w,int h) {
@@ -443,6 +438,70 @@ public class DominationMain extends Midlet {
         url = url + (url.indexOf('?') >= 0 ? "&" : "?") + "requestCode=" + nativeCallsCount;
         nativeCalls.put(nativeCallsCount,listener);
         Midlet.openURL(url);
+    }
+
+    // ----------------------------- GAME SAVE -----------------------------
+
+    private final static String AUTO_SAVE_FILE_NAME = "auto.save";
+    public static File getAutoSaveFile() {
+        return new File(MiniUtil.getSaveGameDir(), AUTO_SAVE_FILE_NAME);
+    }
+
+    public boolean shouldSaveGame() {
+        Risk risk = this.risk;
+        return risk != null && risk.getGame() != null && risk.getLocalGame();
+    }
+
+    /**
+     * this is called when the user decides to quit the game, in that situation saveState will NOT be called
+     * this is also called when a transparent activity is opened over the game, (e.g. GamePreferenceActivity)
+     * in that case, we do not want to waste time saving state, as we know we will not get removed.
+     */
+    protected void pauseApp() {
+        super.pauseApp();
+
+        logger.info("[GameActivity] onPause");
+        // if everything is shut down and there is no current game
+        // make sure we clean up so no game is loaded on next start
+
+        // TODO we may have been paused WHILE the game is starting,
+        // and then we may end up deleting the file we are trying to load.
+        if ( !shouldSaveGame() ) {
+            File file = getAutoSaveFile();
+            if (file.exists()) {
+                logger.info("[GameActivity] DELETING AUTOSAVE");
+                file.delete();
+            }
+        }
+    }
+
+    public void saveState() {
+        logger.info("[GameActivity] onSaveInstanceState");
+        // if the system wants to kill our activity we need to save the game if we have one
+
+        if (shouldSaveGame()) {
+            logger.info("[GameActivity] SAVING TO AUTOSAVE");
+            // in game thread, we do not want to do it there as we will not know when its finished
+            //getRisk().parser("savegame "+getAutoSaveFileURL());
+
+            try {
+                final Risk risk = this.risk;
+                if (risk != null) {
+                    final File autoSaveFile = DominationMain.getAutoSaveFile();
+                    final File tempSaveFile = new File(autoSaveFile.getParent(), autoSaveFile.getName() + ".part");
+
+                    risk.parserAndWait("savegame " + DominationMain.getAutoSaveFile() + ".part");
+                    // if we may have closed the game while also closing the activity
+                    // the save probably failed, and the rename will fail for sure.
+                    if (shouldSaveGame()) {
+                        RiskUtil.rename(tempSaveFile, autoSaveFile);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                logger.log(Level.WARNING, "onSaveInstanceState AUTOSAVE Error", ex);
+            }
+        }
     }
 
     public void onResult(int requestCode, int resultCode, Object obj) {

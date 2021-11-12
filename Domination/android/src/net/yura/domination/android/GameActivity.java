@@ -1,6 +1,5 @@
 package net.yura.domination.android;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,7 +17,6 @@ import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
@@ -29,14 +27,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
 import net.yura.android.AndroidMeActivity;
 import net.yura.android.AndroidMeApp;
 import net.yura.android.AndroidPreferences;
 import net.yura.domination.BuildConfig;
-import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
@@ -383,66 +379,8 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
         }
     }
 
-    // ----------------------------- GAME SAVE -----------------------------
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        logger.info("[GameActivity] onSaveInstanceState");
-        // if the system wants to kill our activity we need to save the game if we have one
-        if ( shouldSaveGame() ) {
-            logger.info("[GameActivity] SAVING TO AUTOSAVE");
-            // in game thread, we do not want to do it there as we will not know when its finished
-            //getRisk().parser("savegame "+getAutoSaveFileURL());
-
-            try {
-                final Risk risk = getRisk();
-                final File autoSaveFile = DominationMain.getAutoSaveFile();
-                final File tempSaveFile = new File(autoSaveFile.getParent(),autoSaveFile.getName()+".part");
-
-                risk.parserAndWait("savegame "+DominationMain.getAutoSaveFile()+".part");
-                // if we may have closed the game while also closing the activity
-                // the save probably failed, and the rename will fail for sure.
-                if ( shouldSaveGame() ) {
-                    RiskUtil.rename(tempSaveFile, autoSaveFile);
-                }
-            }
-            catch (Exception ex) {
-                logger.log(Level.WARNING, "onSaveInstanceState AUTOSAVE Error", ex);
-            }
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        logger.info("[GameActivity] onPause");
-        // if everything is shut down and there is no current game
-        // make sure we clean up so no game is loaded on next start
-
-        // TODO we may have been paused WHILE the game is starting,
-        // and then we may end up deleting the file we are trying to load.
-        if ( !shouldSaveGame() ) {
-            File file = DominationMain.getAutoSaveFile();
-            if (file.exists()) {
-                logger.info("[GameActivity] DELETING AUTOSAVE");
-                file.delete();
-            }
-        }
-    }
-
-    private boolean shouldSaveGame() {
-        Risk risk = getRisk();
-        return risk!=null && risk.getGame()!=null && risk.getLocalGame();
-    }
-
-    private Risk getRisk() {
-        DominationMain dmain = (DominationMain)AndroidMeApp.getMIDlet();
-        return dmain==null?null:dmain.risk;
-    }
-
     private MiniFlashRiskAdapter getUi() {
         DominationMain dmain = (DominationMain)AndroidMeApp.getMIDlet();
-        return dmain==null?null:dmain.adapter;
+        return dmain == null ? null : dmain.adapter;
     }
 }
