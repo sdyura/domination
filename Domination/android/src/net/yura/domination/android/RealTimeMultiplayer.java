@@ -55,6 +55,8 @@ import androidx.annotation.Nullable;
  * as B is less then Q, Q sends its name and the name it received from G to B
  * if Q only got the name of G after it found out B is a creator it will now send G's name to B
  * now B has everyones name and starts the game.
+ *
+ * @deprecated
  */
 public class RealTimeMultiplayer extends InvitationCallback implements GoogleAccount.SignInListener {
 

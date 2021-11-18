@@ -24,6 +24,7 @@ import net.yura.grasshopper.BugSubmitter;
 import net.yura.grasshopper.LogList;
 import net.yura.grasshopper.SimpleBug;
 import net.yura.lobby.mini.MiniLobbyClient;
+import net.yura.lobby.model.Game;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
@@ -61,7 +62,7 @@ public class DominationMain extends Midlet {
         version = versionCode != null ? versionCode : RiskUtil.RISK_VERSION;
     }
 
-    public static Preferences appPreferences;
+    public static Preferences appPreferences = Preferences.userNodeForPackage(DominationMain.class);
     public GooglePlayGameServices googlePlayGameServices;
 
     public Risk risk;
@@ -75,11 +76,18 @@ public class DominationMain extends Midlet {
 	void showAchievements();
         void unlockAchievement(String id);
 
+        /**
+         * @deprecated
+         */
 	void startGameGooglePlay(net.yura.lobby.model.Game game);
+        /**
+         * @deprecated
+         */
 	void setLobbyUsername(String username);
+        /**
+         * @deprecated
+         */
 	void gameStarted(int id);
-	
-	boolean hasPendingOpenLobby();
     }
 
     public DominationMain() {
@@ -214,13 +222,16 @@ public class DominationMain extends Midlet {
             // MWMWMWMWMWMWMWMWMWMWM END ONLY DEBUG MWMWMMWMWMWMWMWMWMWMWMWM
         }
 
-        if (appPreferences!=null) {
+        if (appPreferences != null) {
             AIManager.setWait( appPreferences.getInt("ai_wait", AIManager.getWait()) );
             String lang = appPreferences.get("lang", null);
             if (lang!=null) {
                 TranslationBundle.setLanguage(lang);
             }
             Risk.setShowDice(appPreferences.getBoolean(SHOW_DICE_KEY, DEFAULT_SHOW_DICE));
+        }
+        else {
+            System.out.println("can not load appPreferences as it is NULL!");
         }
     }
 
@@ -302,8 +313,7 @@ public class DominationMain extends Midlet {
                 else {
                     adapter.openMainMenu();
 
-                    GooglePlayGameServices gpgs = getGooglePlayGameServices();
-                    if (gpgs != null && gpgs.hasPendingOpenLobby()) {
+                    if (hasPendingOpenLobby()) {
                         adapter.openLobby();
                     }
                 }
@@ -438,6 +448,57 @@ public class DominationMain extends Midlet {
         url = url + (url.indexOf('?') >= 0 ? "&" : "?") + "requestCode=" + nativeCallsCount;
         nativeCalls.put(nativeCallsCount,listener);
         Midlet.openURL(url);
+    }
+
+    // ----------------------------- handle open from notification -----------------------------
+
+    private Game pendingOpenGame;
+
+    public boolean hasPendingOpenLobby() {
+        return pendingOpenGame != null;
+    }
+
+    public void lobbyConnected() {
+        if (pendingOpenGame != null) {
+            adapter.lobby.playGame(pendingOpenGame);
+            pendingOpenGame = null;
+        }
+    }
+
+    public void openNotification(Map params) {
+
+        String gameId = (String)params.get(MiniLobbyClient.EXTRA_GAME_ID);
+        String options = (String)params.get(MiniLobbyClient.EXTRA_GAME_OPTIONS);
+
+        if (gameId != null) {
+            Game game = new Game();
+            game.setId(Integer.parseInt(gameId));
+            game.setOptions(options);
+
+            MiniFlashRiskAdapter ui = adapter;
+            if (ui != null) {
+                if (ui.lobby != null) {
+                    if (ui.lobby.whoAmI() != null) {
+                        ui.lobby.playGame(game);
+                    }
+                    else {
+                        pendingOpenGame = game;
+                        logger.warning("lobby open but we are not logged in yet");
+                    }
+                }
+                else {
+                    pendingOpenGame = game;
+                    ui.openLobby();
+                }
+            }
+            else {
+                // the game has not initialized yet
+                pendingOpenGame = game;
+            }
+        }
+        else {
+            logger.info("opened from notification, but no game info " + params);
+        }
     }
 
     // ----------------------------- GAME SAVE -----------------------------

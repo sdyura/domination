@@ -69,6 +69,9 @@ public class MiniFlashRiskAdapter implements RiskListener {
             }
             @Override
             public void connected(String username) {
+                DominationMain dmain = (DominationMain)Midlet.getMidlet();
+                dmain.lobbyConnected(); // open any pending game
+
                 GooglePlayGameServices play = DominationMain.getGooglePlayGameServices();
                 if (play != null) {
                     play.setLobbyUsername(username);

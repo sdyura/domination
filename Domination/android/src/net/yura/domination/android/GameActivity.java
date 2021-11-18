@@ -1,7 +1,9 @@
 package net.yura.domination.android;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +61,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
     private boolean pendingShowAchievements;
     private net.yura.lobby.model.Game pendingStartGameGooglePlay;
     private boolean pendingSendLobbyUsername;
-    private Game pendingOpenGame;
 
     /**
      * need to create everything owned by the activity, but the game/static objects may already exist
@@ -108,8 +109,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
 
-        handleIntent(getIntent());
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
             TheBackupAgent.backup(this);
         }
@@ -129,51 +128,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
         catch (Throwable th) {
             logger.log(Level.INFO, "can not check for updates", th);
         }
-    }
-
-    private void handleIntent(Intent intent) {
-        String gameId = intent.getStringExtra(MiniLobbyClient.EXTRA_GAME_ID);
-        String options = intent.getStringExtra(MiniLobbyClient.EXTRA_GAME_OPTIONS);
-
-        if (gameId != null) {
-            Game game = new Game();
-            game.setId(Integer.parseInt(gameId));
-            game.setOptions(options);
-
-            MiniFlashRiskAdapter ui = getUi();
-            if (ui != null) {
-                if (ui.lobby != null) {
-                    if (ui.lobby.whoAmI() != null) {
-                        ui.lobby.playGame(game);
-                    }
-                    else {
-                        pendingOpenGame = game;
-                        logger.warning("lobby open but we are not logged in yet");
-                    }
-                }
-                else {
-                    pendingOpenGame = game;
-                    ui.openLobby();
-                }
-            }
-            else {
-        	// the game has not initialized yet
-        	pendingOpenGame = game;
-            }
-
-            // as we have handled this open game request, clear it
-            intent.removeExtra(MiniLobbyClient.EXTRA_GAME_ID);
-            intent.removeExtra(MiniLobbyClient.EXTRA_GAME_OPTIONS);
-        }
-    }
-
-    @Override
-    public boolean hasPendingOpenLobby() {
-        return pendingOpenGame != null;
-    }
-
-    public static boolean getDefaultFullScreen(Context context) {
-        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL;
     }
 
     /**
@@ -201,6 +155,42 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             }
             DominationMain.setAccounts(emails);
         }
+
+        handleIntent(getIntent());
+    }
+
+    private void handleIntent(Intent intent) {
+        String gameId = intent.getStringExtra(MiniLobbyClient.EXTRA_GAME_ID);
+        String options = intent.getStringExtra(MiniLobbyClient.EXTRA_GAME_OPTIONS);
+
+        DominationMain dmain = (DominationMain)AndroidMeApp.getMIDlet();
+
+        if (gameId != null && dmain != null) {
+
+            Map params = new HashMap();
+            params.put(MiniLobbyClient.EXTRA_GAME_ID, gameId);
+            params.put(MiniLobbyClient.EXTRA_GAME_OPTIONS, options);
+
+            // use cross-platform method for opening a notification
+            dmain.openNotification(params);
+
+            // as we have handled this open game request, clear it
+            intent.removeExtra(MiniLobbyClient.EXTRA_GAME_ID);
+            intent.removeExtra(MiniLobbyClient.EXTRA_GAME_OPTIONS);
+        }
+    }
+
+    /**
+     * This is called if we are already open, but user has clicked on a game notification
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    public static boolean getDefaultFullScreen(Context context) {
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL;
     }
 
     @Override
@@ -221,12 +211,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             // sometimes cancelAll throws a SecurityException, internet says just add try/catch
             logger.log(Level.WARNING, "error in onResume", ex);
         }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
     }
 
     @Override
@@ -319,10 +303,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
         if (pendingSendLobbyUsername) {
             pendingSendLobbyUsername = false;
             realTimeMultiplayer.setLobbyUsername(username);
-        }
-        if (pendingOpenGame != null) {
-            getUi().lobby.playGame(pendingOpenGame);
-            pendingOpenGame = null;
         }
     }
 
