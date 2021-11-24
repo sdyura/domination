@@ -5,10 +5,10 @@ import java.util.logging.Logger;
 import android.content.Context;
 import com.google.android.gcm.GCMRegistrar;
 import net.yura.domination.R;
-import net.yura.lobby.client.AndroidLobbyClient;
 import net.yura.lobby.client.Connection;
+import net.yura.lobby.client.PushLobbyClient;
 
-public class ADMServerUtilities implements AndroidLobbyClient {
+public class ADMServerUtilities implements PushLobbyClient {
 
     static final Logger logger = Logger.getLogger(ADMServerUtilities.class.getName());
 
@@ -55,16 +55,16 @@ public class ADMServerUtilities implements AndroidLobbyClient {
     public static void registerOnLobbyServer(Context context, String registrationId) {
         Connection con = PushActivity.getLobbyConnection();
         if (con != null) {
-            con.addAndroidEventListener(new ADMServerUtilities(context));
-            con.androidRegister(registrationId);
+            con.addPushEventListener(new ADMServerUtilities(context));
+            con.setPushToken(PUSH_SYSTEM_ADM, registrationId);
         }
     }
 
     public static void unregisterOnLobbyServer(Context context, String registrationId) {
         Connection con = PushActivity.getLobbyConnection();
         if (con != null) {
-            con.addAndroidEventListener(new ADMServerUtilities(context));
-            con.androidUnregister(registrationId);
+            con.addPushEventListener(new ADMServerUtilities(context));
+            con.setPushToken(PUSH_SYSTEM_ADM, registrationId);
         }
     }
 
@@ -79,10 +79,4 @@ public class ADMServerUtilities implements AndroidLobbyClient {
     public void registerDone() {
         GCMRegistrar.setRegisteredOnServer(context, true);
     }
-
-    @Override
-    public void unregisterDone() {
-        GCMRegistrar.setRegisteredOnServer(context, false);
-    }
-
 }

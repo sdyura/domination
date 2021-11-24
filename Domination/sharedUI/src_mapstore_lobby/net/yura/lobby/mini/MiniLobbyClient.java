@@ -119,7 +119,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             root.repaint();
         }
         mycom.setEmail(email);
-        mycom.setGoogleIdToken(idToken);
+        mycom.setOAuthToken("googleIdToken", idToken);
     }
 
     public void removeBackButton() {

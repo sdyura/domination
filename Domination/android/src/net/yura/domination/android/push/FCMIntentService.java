@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import javax.microedition.midlet.MIDlet;
 import net.yura.domination.R;
-import net.yura.lobby.client.AndroidLobbyClient;
+import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -37,9 +37,9 @@ public class FCMIntentService extends FirebaseMessagingService {
         String from = remoteMessage.getFrom();
         Map<String, String> data = remoteMessage.getData();
 
-        String msg = data.get(AndroidLobbyClient.MESSAGE);
-        String gameId = data.get(AndroidLobbyClient.GAME_ID);
-        String options = data.get(AndroidLobbyClient.OPTIONS);
+        String msg = data.get(PushLobbyClient.MESSAGE);
+        String gameId = data.get(PushLobbyClient.GAME_ID);
+        String options = data.get(PushLobbyClient.OPTIONS);
 
         String message = msg==null?"Received message":msg;
         FCMServerUtilities.logger.info(from + ": " + message);

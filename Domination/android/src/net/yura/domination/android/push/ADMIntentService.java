@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.microedition.midlet.MIDlet;
 import net.yura.android.AndroidMeApp;
 import net.yura.domination.R;
-import net.yura.lobby.client.AndroidLobbyClient;
+import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import android.content.Context;
 import android.content.Intent;
@@ -49,9 +49,9 @@ public class ADMIntentService extends GCMBaseIntentService {
         Bundle bundle = intent.getExtras();
         String msg=null, gameId=null, options=null;
         if (bundle != null) {
-            msg = bundle.getString(AndroidLobbyClient.MESSAGE);
-            gameId = bundle.getString(AndroidLobbyClient.GAME_ID);
-            options = bundle.getString(AndroidLobbyClient.OPTIONS);
+            msg = bundle.getString(PushLobbyClient.MESSAGE);
+            gameId = bundle.getString(PushLobbyClient.GAME_ID);
+            options = bundle.getString(PushLobbyClient.OPTIONS);
         }
 
         String message = msg==null?"Received message":msg;

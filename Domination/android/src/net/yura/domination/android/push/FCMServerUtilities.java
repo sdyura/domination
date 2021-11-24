@@ -7,10 +7,10 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
-import net.yura.lobby.client.AndroidLobbyClient;
 import net.yura.lobby.client.Connection;
+import net.yura.lobby.client.PushLobbyClient;
 
-public class FCMServerUtilities implements AndroidLobbyClient {
+public class FCMServerUtilities implements PushLobbyClient {
 
     static final Logger logger = Logger.getLogger(FCMServerUtilities.class.getName());
 
@@ -98,16 +98,16 @@ public class FCMServerUtilities implements AndroidLobbyClient {
     public static void registerOnLobbyServer(String registrationId) {
         Connection con = PushActivity.getLobbyConnection();
         if (con != null) {
-            con.addAndroidEventListener(new FCMServerUtilities(registrationId));
-            con.androidRegister(registrationId);
+            con.addPushEventListener(new FCMServerUtilities(registrationId));
+            con.setPushToken(PUSH_SYSTEM_FCM, registrationId);
         }
     }
 
     public static void unregisterOnLobbyServer() {
         Connection con = PushActivity.getLobbyConnection();
         if (con != null) {
-            con.addAndroidEventListener(new FCMServerUtilities(null));
-            con.androidUnregister(null);
+            con.addPushEventListener(new FCMServerUtilities(null));
+            con.setPushToken(PUSH_SYSTEM_FCM, null);
         }
     }
 
@@ -119,10 +119,5 @@ public class FCMServerUtilities implements AndroidLobbyClient {
     @Override
     public void registerDone() {
         FCMRegistrar.setRegisteredOnServer(token);
-    }
-
-    @Override
-    public void unregisterDone() {
-        FCMRegistrar.setRegisteredOnServer(null);
     }
 }
