@@ -64,7 +64,7 @@ public class ADMServerUtilities implements PushLobbyClient {
         Connection con = PushActivity.getLobbyConnection();
         if (con != null) {
             con.addPushEventListener(new ADMServerUtilities(context));
-            con.setPushToken(PUSH_SYSTEM_ADM, registrationId);
+            con.setPushToken(PUSH_SYSTEM_ADM, null);
         }
     }
 

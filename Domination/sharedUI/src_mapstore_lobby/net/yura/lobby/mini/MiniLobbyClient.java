@@ -20,6 +20,7 @@ import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.LobbyClient;
 import net.yura.lobby.client.LobbyCom;
 import net.yura.lobby.client.ProtoAccess;
+import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.gen.ProtoLobby;
 import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
@@ -220,7 +221,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                             OptionPane.showConfirmDialog(new ActionListener() {
                                 public void actionPerformed(String actionCommand) {
                                     if ("ok".equals(actionCommand)) {
-                                        mycom.joinGame(game.getId(), passwordField.getText());
+                                        joinGame(game, passwordField.getText());
                                     }
                                 }
                             }, passwordField, resBundle.getProperty("lobby.joinPrivateGame") , OptionPane.OK_CANCEL_OPTION);
@@ -229,13 +230,13 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                             OptionPane.showConfirmDialog(new ActionListener() {
                                 public void actionPerformed(String actionCommand) {
                                     if ("ok".equals(actionCommand)) {
-                                        mycom.joinGame(game.getId(), null);
+                                        joinGame(game, null);
                                     }
                                 }
                             }, resBundle.getProperty("lobby.question.game-start"), resBundle.getProperty("lobby.question.title"), OptionPane.OK_CANCEL_OPTION);
                         }
                         else {
-                            mycom.joinGame(game.getId(), null);
+                            joinGame(game, null);
                         }
                         break;
                     case Game.STATE_CAN_LEAVE:
@@ -431,25 +432,67 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
     }
 
+    public void joinGame(Game game, String password) {
+        requestNotificationAuthorization();
+        mycom.joinGame(game.getId(), password);
+    }
+
     public void createNewGame(Game game) {
+        requestNotificationAuthorization();
         game.setType(theGameType); // we can only make a game of this type
         mycom.createNewGame(game);
+    }
+
+    /**
+     * on Android showing notifications is a install time permission, so we do not need to ask
+     * @see #connected()
+     */
+    private void requestNotificationAuthorization() {
+        if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+            String iosNotificationSetting = System.getProperty("iosNotificationSetting");
+
+            // the OS will only ever show this once, so we must make sure we only ever request it once
+            if ("ask".equals(iosNotificationSetting)) {
+                OptionPane.showMessageDialog(new ActionListener() {
+                    @java.lang.Override
+                    public void actionPerformed(java.lang.String actionCommand) {
+                        Midlet.openURL("notify://requestAuthorization");
+                    }
+                }, resBundle.getProperty("lobby.notification.authorization.request"), resBundle.getProperty("lobby.notification.authorization.title"), OptionPane.OK_OPTION);
+            }
+        }
     }
 
     // WMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMW
     // WMWMWMWMWMWMWMWMWMWMWMWMWMWM LobbyClient MWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMW
     // WMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMW
 
-
-    public ClassLoader getClassLoader(GameType gameType) {
-        return getClass().getClassLoader();
-    }
-
+    /**
+     * This is called after the login message is sent to the server
+     * @see #requestNotificationAuthorization()
+     * @see net.yura.domination.mobile.flashgui.DominationMain#pushNotificationsToken(String)
+     */
     public void connected() {
 
-        // GCM push only works on android
-        if (Midlet.getPlatform()==Midlet.PLATFORM_ANDROID) {
+        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
             Midlet.openURL("nativeNoResult://net.yura.domination.android.push.PushActivity");
+        }
+        else if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+
+            // TODO do we care? do we need to save this? what will we do with this next?
+            mycom.addPushEventListener(new PushLobbyClient() {
+                @Override
+                public void registerDone() {
+                    logger.info("ios getToken registerDone");
+                    //Preferences prefs = LobbySettings.getLobbyPreferences();
+                    //prefs.putBoolean("APNTokenSent", true);
+                    //LobbySettings.saveSettings(prefs);
+                }
+            });
+
+            // token can change at any time, so we need to keep asking for it when ever we connect
+            // https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/HandlingRemoteNotifications.html#//apple_ref/doc/uid/TP40008194-CH6-SW3
+            Midlet.openURL("notify://getToken");
         }
 
         mycom.getGameTypes();
@@ -473,9 +516,9 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         OptionPane.showMessageDialog(null, error, "Lobby Error", OptionPane.ERROR_MESSAGE);
     }
 
-
-
-
+    public ClassLoader getClassLoader(GameType gameType) {
+        return getClass().getClassLoader();
+    }
 
     public void setUsername(String name, int type) {
         myusername = name;

@@ -94,7 +94,7 @@ public class FlashMiniLobby {
         inGameChat.reset(mlc.mycom, null, game.getId());
         playerList.clearSpectatorList();
         GameSidePanel sidePanel = new GameSidePanel(null, null, playerList, inGameChat);
-        sidePanel.setGameName(game.getName());
+        sidePanel.setGameName(game.getName(), String.valueOf(game.getId()));
 
 
         // if forground is light, we are in a dark theme

@@ -130,7 +130,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
 			myrisk = new Risk();
 			makeNewGameFrame();
 		}
-                sidepanel.setGameName(game.getName());
+                sidepanel.setGameName(game.getName(), String.valueOf(game.getId()));
 	}
 
 	private void makeNewGameFrame() {

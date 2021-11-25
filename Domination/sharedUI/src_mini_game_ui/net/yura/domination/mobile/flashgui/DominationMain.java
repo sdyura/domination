@@ -23,6 +23,7 @@ import net.yura.grasshopper.ApplicationInfoProvider;
 import net.yura.grasshopper.BugSubmitter;
 import net.yura.grasshopper.LogList;
 import net.yura.grasshopper.SimpleBug;
+import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.lobby.model.Game;
 import net.yura.mobile.gui.DesktopPane;
@@ -435,6 +436,8 @@ public class DominationMain extends Midlet {
 	return main == null ? null : main.googlePlayGameServices;
     }
 
+    // ----------------------------- calling native Activity -----------------------------
+
     private static Map<Integer,ActivityResultListener> nativeCalls = new HashMap();
     private static int nativeCallsCount = 100000; // auto Ids need to start higher then all hard coded ids.
 
@@ -450,6 +453,21 @@ public class DominationMain extends Midlet {
         Midlet.openURL(url);
     }
 
+    public void onResult(int requestCode, int resultCode, Object obj) {
+        ActivityResultListener listener = nativeCalls.remove(requestCode);
+        if (listener != null) {
+            if (resultCode == -1) { // Activity.RESULT_OK
+                listener.onActivityResult(obj);
+            }
+            else if (resultCode == 0) { // Activity.RESULT_CANCELED
+                listener.onCanceled();
+            }
+            else {
+                logger.warning("unknown resultCode "+resultCode);
+            }
+        }
+    }
+
     // ----------------------------- handle open from notification -----------------------------
 
     private Game pendingOpenGame;
@@ -462,6 +480,15 @@ public class DominationMain extends Midlet {
         if (pendingOpenGame != null) {
             adapter.lobby.playGame(pendingOpenGame);
             pendingOpenGame = null;
+        }
+    }
+
+    public void pushNotificationsToken(String token) {
+
+        if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+            logger.info("Apple Push Token " + token);
+            // we only request the token once we have connected
+            adapter.lobby.mycom.setPushToken(PushLobbyClient.PUSH_SYSTEM_APN, token);
         }
     }
 
@@ -561,21 +588,6 @@ public class DominationMain extends Midlet {
             }
             catch (Exception ex) {
                 logger.log(Level.WARNING, "onSaveInstanceState AUTOSAVE Error", ex);
-            }
-        }
-    }
-
-    public void onResult(int requestCode, int resultCode, Object obj) {
-        ActivityResultListener listener = nativeCalls.remove(requestCode);
-        if (listener != null) {
-            if (resultCode == -1) { // Activity.RESULT_OK
-                listener.onActivityResult(obj);
-            }
-            else if (resultCode == 0) { // Activity.RESULT_CANCELED
-                listener.onCanceled();
-            }
-            else {
-                logger.warning("unknown resultCode "+resultCode);
             }
         }
     }

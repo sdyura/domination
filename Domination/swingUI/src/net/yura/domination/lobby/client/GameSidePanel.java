@@ -31,8 +31,9 @@ public class GameSidePanel extends JSplitPane {
     final ImageIcon backpic = new ImageIcon( GameSidePanel.class.getResource("back.jpg") );
     private JLabel nameLabel;
 
-    public void setGameName(String name) {
+    public void setGameName(String name, String tooltip) {
 	nameLabel.setText(name);
+        nameLabel.setToolTipText(tooltip);
     }
 
     public GameSidePanel(JProgressBar timer, JButton startButton, JPanel playerListArea, JPanel chatBoxArea) {

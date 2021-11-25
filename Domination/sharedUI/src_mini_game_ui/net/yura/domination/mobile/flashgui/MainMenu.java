@@ -1,6 +1,5 @@
 package net.yura.domination.mobile.flashgui;
 
-import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import net.yura.domination.engine.Risk;
@@ -123,11 +122,6 @@ public class MainMenu extends Frame implements ActionListener {
                 chooser = null;
             }
             else if ("manual".equals(actionCommand)) {
-
-                //WebView webView = new WebView( AndroidMeActivity.DEFAULT_ACTIVITY );
-                //webView.loadUrl("file:///android_asset/help/index.htm");
-                //AndroidMeActivity.DEFAULT_ACTIVITY.setContentView(webView);
-
                 MiniUtil.openHelp();
             }
             else if ("about".equals(actionCommand)) {
