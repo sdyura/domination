@@ -210,7 +210,7 @@ CURRENT VERSION:
 		   got rid of titlebar in main menu
 		   fixed: nullpointer in getting game commands when game is not open
 
-1.1.1.3 (10.03.2013)
+1.1.1.3 (10.03.2013) ### SWITCH TO JAVA 1.5 from 1.4 ###
 
 	Online Mini Lobby added to FlashGUI and SwingGUI
 	Brazilian Portuguese added by Ricardo Gomes Ponce
@@ -220,7 +220,7 @@ CURRENT VERSION:
 	MapEditor can detect more errors on missions
 	SwingGUI can remember the players you used last time
 	new pluggable AI system
-	NEW AI BY Steven Hawkins
+	NEW AI BY Steven Hawkins (svn rev 1122 java 1.4 -> 1.5)
 
 	Android 30 fixed: do not show old games when re-connect to lobby
 		   fixed: Threading problem in ViewChooser isEmpty() is false but get(0) throws ArrayIndexOutOfBoundsException
