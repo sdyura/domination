@@ -12,6 +12,7 @@ import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.KeyEvent;
+import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.CheckBox;
 import net.yura.mobile.gui.components.Frame;
@@ -34,8 +35,8 @@ public class BattleDialog extends Frame implements ActionListener {
     public BattleDialog(Risk a) {
         myrisk = a;
 
-        red_dice = MapRenderer.getSprite("/red_dice.png",3,3);
-        blue_dice = MapRenderer.getSprite("/blue_dice.png",3,3);
+        red_dice = getSprite("/red_dice.png",3,3);
+        blue_dice = getSprite("/blue_dice.png",3,3);
 
         setName("TransparentDialog");
         setForeground(0xFF000000);
@@ -65,6 +66,20 @@ public class BattleDialog extends Frame implements ActionListener {
         contentPane.add(controls);
 
         setMaximum(true);
+    }
+
+    public static Sprite getSprite(String name,int cols,int rows) {
+        Image img = Midlet.createImage(name);
+        try {
+            int w = img.getWidth()/cols;
+            int h = img.getHeight()/rows;
+            return new Sprite(img, w, h); // 29x29
+        }
+        catch(RuntimeException ex) {
+            throw new RuntimeException("error creating sprite "+name+" "+img+" "+
+                    (img!=null?"("+img.getWidth()+"x"+img.getHeight()+") m="+img.isMutable()+" ":"")+
+                    cols+"x"+rows,ex);
+        }
     }
     
     private int getImageAreaHeight() {

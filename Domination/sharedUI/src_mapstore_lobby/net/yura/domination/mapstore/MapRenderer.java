@@ -38,8 +38,6 @@ public class MapRenderer extends DefaultListCellRenderer {
         this.chooser = chooser;
         setName("ListRendererCollapsed"); // get rid of any padding
 
-        Sprite spin1 = getSprite( "/ms_strip.png" , 8, 1 );
-        bar.setSprite(spin1);
         bar.workoutPreferredSize();
         //add(bar); // YURA do we need this???
 
@@ -50,21 +48,6 @@ public class MapRenderer extends DefaultListCellRenderer {
 
     }
 
-    public static Sprite getSprite(String name,int cols,int rows) {
-        Image img = Midlet.createImage(name);
-        try {
-            int w = img.getWidth()/cols;
-            int h = img.getHeight()/rows;
-            return new Sprite(img, w, h); // 29x29
-        }
-        catch(RuntimeException ex) {
-            throw new RuntimeException("error creating sprite "+name+" "+img+" "+
-                    (img!=null?"("+img.getWidth()+"x"+img.getHeight()+") m="+img.isMutable()+" ":"")+
-                    cols+"x"+rows,ex);
-        }
-    }
-
-
     public void animate() {
         bar.animate();
 
@@ -72,7 +55,6 @@ public class MapRenderer extends DefaultListCellRenderer {
             list.repaint();
         }
     }
-
 
     public void setContext(String c) {
         context = c;
