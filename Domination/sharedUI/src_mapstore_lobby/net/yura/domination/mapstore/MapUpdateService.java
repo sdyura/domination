@@ -200,8 +200,8 @@ logger.fine("URL: " + url + " payload: " + payload);
             }
 
             g.setColor(0xFFFFFFFF);
-            g.drawString(badge, 1+ x + (w-font.getWidth(badge))/2, 1+ y + (h-font.getHeight())/2);
-            
+            g.drawString(badge, x + (int)Math.round((w - font.getWidth(badge)) / 2D), y + (int)Math.round((h - font.getHeight()) / 2D));
+
             g.setClip(clip);
         }
     }

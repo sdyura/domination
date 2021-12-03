@@ -578,14 +578,14 @@ public class PicturePanel extends ImageView implements MapPanel {
             }
 
 
-            int h = y -(font.getHeight()/2 -1);
-            String noa=String.valueOf(armies);
+            int h = y - (int)Math.round(font.getHeight() / 2D);
+            String noa = String.valueOf(armies);
 
             g.setColor( ColorUtil.getTextColorFor( countryOwnerColor ) );
             g.setFont(font);
-            g.drawString( noa, x - (font.getWidth(noa)/2) , h );
+            g.drawString(noa, x - (int)Math.round(font.getWidth(noa) / 2D), h);
 
-            if ( capital!=null ) {
+            if (capital != null) {
                 int capitalColor = capital.getColor();
                 int stroke = ballSize / 10;
 
