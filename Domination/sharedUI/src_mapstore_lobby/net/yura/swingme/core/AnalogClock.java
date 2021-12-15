@@ -112,6 +112,10 @@ public class AnalogClock extends Component {
         return "AnalogClock";
     }
 
+    protected boolean getDefaultEnabled() {
+        return false;
+    }
+
     protected void workoutMinimumSize() {
         width=10;
         height=10;

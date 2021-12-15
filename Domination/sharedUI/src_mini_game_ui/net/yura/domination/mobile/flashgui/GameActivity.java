@@ -162,15 +162,24 @@ public class GameActivity extends Frame implements ActionListener {
 
         // MWMWMWMWMWMWM END MENU MWMWMWMWMWMWMW
 
-        gobutton = new Button(" ");
+        gobutton = new Button(" ") {
+            @Override
+            protected boolean getDefaultEnabled() {
+                return false;
+            }
+        };
         gobutton.setName("GoButton");
         gobutton.setPreferredSize(gobutton.getFont().getWidth("WWWWWWWWWWW"), -1);
         gobutton.setActionCommand("go");
         gobutton.addActionListener(this);
 
-        note = new Button(" ");
+        note = new Button(" ") {
+            @Override
+            protected boolean getDefaultEnabled() {
+                return false;
+            }
+        };
         note.setName("GoNote");
-        note.setState(Style.DISABLED); // set up a theme override so it looks like normal label
         note.setHorizontalAlignment(Graphics.HCENTER);
         note.setActionCommand("go");
         note.addActionListener(this);
@@ -282,13 +291,16 @@ public class GameActivity extends Frame implements ActionListener {
     }
 
     class PlayersPanel extends Component {
-        public PlayersPanel() {
-            setFocusable(false);
-        }
         @Override
         protected String getDefaultName() {
             return "PlayersPanel";
         }
+
+        @Override
+        protected boolean getDefaultEnabled() {
+            return false;
+        }
+
         @Override
         public void paintComponent(Graphics2D g) {
             int[] colors = myrisk.getPlayerColors();
