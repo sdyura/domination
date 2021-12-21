@@ -206,51 +206,51 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		ButtonGroup GameTypeButtonGroup = new ButtonGroup();
 		ButtonGroup CardTypeButtonGroup = new ButtonGroup();
 
-                int col1offset = 50;
+                int col1offset = 40;
                 int col2offset = 160;
-                int bw1 = 109; // leave 1px gap before next col
-                int bw2 = 130;
+                int col1width = 119; // leave 1px gap before next col
+                int col2width = 130;
                 int bh = 25;
 
 		domination = new JRadioButton(resb.getString("newgame.mode.domination"), true);
 		sortOutButton( domination );
-		GraphicsUtil.setBounds(domination, col1offset, 370, bw1, bh);
+		GraphicsUtil.setBounds(domination, col1offset, 370, col1width, bh);
 		domination.addActionListener(this);
 
 		capital = new JRadioButton(resb.getString("newgame.mode.capital"));
 		sortOutButton( capital );
-		GraphicsUtil.setBounds(capital, col1offset, 390, bw1, bh);
+		GraphicsUtil.setBounds(capital, col1offset, 390, col1width, bh);
 		capital.addActionListener(this);
 
 		mission = new JRadioButton(resb.getString("newgame.mode.mission"));
 		sortOutButton( mission );
-		GraphicsUtil.setBounds(mission, col1offset, 410, bw1, bh);
+		GraphicsUtil.setBounds(mission, col1offset, 410, col1width, bh);
 		mission.addActionListener(this);
 
 		AutoPlaceAll = new JCheckBox(resb.getString("newgame.autoplace"));
                 AutoPlaceAll.setToolTipText( resb.getString("newgame.autoplace"));
 		sortOutButton( AutoPlaceAll );
-		GraphicsUtil.setBounds(AutoPlaceAll, col1offset, 440, bw1, bh);
+		GraphicsUtil.setBounds(AutoPlaceAll, col1offset, 440, col1width, bh);
                 AutoPlaceAll.setSelected( "true".equals(myrisk.getRiskConfig("default.autoplaceall")) );
 
 		recycle = new JCheckBox(resb.getString("newgame.recycle"));
                 recycle.setToolTipText( resb.getString("newgame.recycle"));
 		sortOutButton( recycle );
-		GraphicsUtil.setBounds(recycle, col2offset, 440, bw2, bh);
+		GraphicsUtil.setBounds(recycle, col2offset, 440, col2width, bh);
                 recycle.setSelected( "true".equals(myrisk.getRiskConfig("default.recyclecards")) );
 
 
 		increasing = new JRadioButton(resb.getString("newgame.cardmode.increasing"),true);
 		sortOutButton( increasing );
-		GraphicsUtil.setBounds(increasing, col2offset, 370, bw2, bh);
+		GraphicsUtil.setBounds(increasing, col2offset, 370, col2width, bh);
 
 		fixed = new JRadioButton(resb.getString("newgame.cardmode.fixed"));
 		sortOutButton( fixed );
-		GraphicsUtil.setBounds(fixed, col2offset, 390, bw2, bh);
+		GraphicsUtil.setBounds(fixed, col2offset, 390, col2width, bh);
 
                 italianLike = new JRadioButton(resb.getString("newgame.cardmode.italianlike"));
 		sortOutButton( italianLike );
-		GraphicsUtil.setBounds(italianLike, col2offset, 410, bw2, bh);
+		GraphicsUtil.setBounds(italianLike, col2offset, 410, col2width, bh);
 
 		//AutoEndGo = new JCheckBox("Auto End Go");
 		//sortOutButton( AutoEndGo );
