@@ -6,6 +6,7 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	13
 
+	iOS:		1
 	Android:	82
 	Flash GUI:	2
 	Swing GUI:	2
