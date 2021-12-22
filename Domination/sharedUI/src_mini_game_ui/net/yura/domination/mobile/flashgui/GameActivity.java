@@ -516,8 +516,7 @@ public class GameActivity extends Frame implements ActionListener {
                     // if user presses cancel then ignore
                 }
             }, saveText, resb.getProperty("game.menu.save") , 0, OptionPane.QUESTION_MESSAGE, null,
-                    Midlet.getPlatform() == Midlet.PLATFORM_ANDROID ? new Button[] {ok, send, cancel} : new Button[] {ok, cancel}
-                    , ok);
+                    new Button[] {ok, send, cancel}, ok);
 
         }
         else if ("cards".equals(actionCommand)) {
