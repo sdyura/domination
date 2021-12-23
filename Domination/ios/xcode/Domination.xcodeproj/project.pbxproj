@@ -18,6 +18,7 @@
 		DE3135722684F4F400E558A3 /* Graphics in Resources */ = {isa = PBXBuildFile; fileRef = DE3135712684F4F400E558A3 /* Graphics */; };
 		DE7C5DAD27230ADA000EB1FF /* gpl.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAC27230ADA000EB1FF /* gpl.txt */; };
 		DE7C5DAF27230B2E000EB1FF /* ChangeLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */; };
+		DE7E9AE22774A71400555709 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE7E9AE12774A71400555709 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,7 @@
 		DE3135712684F4F400E558A3 /* Graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Graphics; sourceTree = "<group>"; };
 		DE7C5DAC27230ADA000EB1FF /* gpl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gpl.txt; path = ../../gpl.txt; sourceTree = "<group>"; };
 		DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ChangeLog.txt; path = ../../ChangeLog.txt; sourceTree = "<group>"; };
+		DE7E9AE12774A71400555709 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE7E9AE22774A71400555709 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +93,7 @@
 		235E336D9FBC6ED908F4C9C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DE7E9AE12774A71400555709 /* MessageUI.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
