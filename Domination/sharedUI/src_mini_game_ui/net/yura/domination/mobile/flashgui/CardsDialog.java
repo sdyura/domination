@@ -275,8 +275,9 @@ public class CardsDialog extends Frame implements ActionListener {
 
                                     g.setColor(ownerColor);
 
-                                    Font f = g.getFont();
-                                    int w = f.getHeight();
+                                    Font font = getFont();
+                                    g.setFont(font);
+                                    int w = font.getHeight();
                                     int x = (getWidth()-w)/2;
                                     int y = getHeight()/2 - imgSize/2 - w/2;
                                     g.fillOval(x, y, w, w);
