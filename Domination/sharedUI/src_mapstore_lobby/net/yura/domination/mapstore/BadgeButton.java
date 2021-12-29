@@ -33,7 +33,8 @@ public class BadgeButton extends RadioButton implements Observer {
         
         int w = getWidth();
         g.translate(w, 0);
-        MapUpdateService.paintBadge(g,badge,border );
+        g.setFont(getFont()); // set font for the badge
+        MapUpdateService.paintBadge(g, badge, border);
         g.translate(-w, 0);
     }
 
