@@ -750,9 +750,6 @@ public class PicturePanel extends ImageView implements MapPanel {
          * @param view The name of each of the map views.
          */
         public synchronized void repaintCountries(int view) { // synchronized
-
-            long time = System.currentTimeMillis();
-
                 if (tempimg == null) return;
 
                 RiskGame game = myrisk.getGame();
@@ -917,9 +914,6 @@ public class PicturePanel extends ImageView implements MapPanel {
                 img = tempimg;
 
                 tempimg = newback;
-
-
-                System.out.println("repaintCountries took " + (System.currentTimeMillis() - time));
         }
 
         /**

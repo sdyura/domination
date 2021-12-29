@@ -105,7 +105,7 @@ public class DominationMain extends Application {
         //Risk.RISK_VERSION = versionName!=null ? versionName : "?me4se?";
 
         try {
-            //SimpleBug.initLogFile(RiskUtil.GAME_NAME + " " + product, version, TranslationBundle.getBundle().getLocale().toString());
+            SimpleBug.initLogFile(RiskUtil.GAME_NAME + " " + product, version, TranslationBundle.getBundle().getLocale().toString());
             BugSubmitter.setApplicationInfoProvider( new ApplicationInfoProvider() {
                 /**
                  * info specific to Domination goes here, for general android system info look in:
