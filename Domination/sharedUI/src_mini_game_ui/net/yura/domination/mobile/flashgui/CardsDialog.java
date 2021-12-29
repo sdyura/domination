@@ -16,7 +16,7 @@ import net.yura.domination.mobile.PicturePanel;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.Font;
 import net.yura.mobile.gui.Graphics2D;
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.Frame;
@@ -55,7 +55,7 @@ public class CardsDialog extends Frame implements ActionListener {
 		myrisk = r;
 		pp=p;
 
-                Image cards = Midlet.createImage("/cards.png");
+                Image cards = Application.createImage("/cards.png");
 
                 int w = cards.getWidth()/4;
                 int h = cards.getHeight();

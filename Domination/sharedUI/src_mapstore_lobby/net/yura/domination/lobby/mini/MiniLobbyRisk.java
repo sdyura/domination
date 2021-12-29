@@ -22,7 +22,7 @@ import net.yura.lobby.mini.MiniLobbyGame;
 import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
 import net.yura.mobile.gui.Icon;
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.util.Properties;
 import net.yura.swingme.core.CoreUtil;
 
@@ -50,7 +50,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     }
     
     public void openChat() {
-        Midlet.openURL("http://domination.sourceforge.net/chat.shtml");
+        Application.openURL("http://domination.sourceforge.net/chat.shtml");
     }
 
     public boolean isMyGameType(GameType gametype) {

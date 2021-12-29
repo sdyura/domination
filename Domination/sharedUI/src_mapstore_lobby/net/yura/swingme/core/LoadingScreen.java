@@ -1,6 +1,6 @@
 package net.yura.swingme.core;
 
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.components.Label;
 import net.yura.mobile.gui.components.ProgressBar;
 import net.yura.mobile.gui.components.Window;
@@ -13,8 +13,8 @@ public class LoadingScreen {
 
     public static void show(String message) {
 
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
-            Midlet.openURL("nativeNoResult://net.yura.android.LoadingDialog?message=" + Url.encode(message));
+        if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+            Application.openURL("nativeNoResult://net.yura.android.LoadingDialog?message=" + Url.encode(message));
             return;
         }
 
@@ -36,8 +36,8 @@ public class LoadingScreen {
 
     public static void hide() {
 
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
-            Midlet.openURL("nativeNoResult://net.yura.android.LoadingDialog?command=hide");
+        if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+            Application.openURL("nativeNoResult://net.yura.android.LoadingDialog?command=hide");
             return;
         }
 

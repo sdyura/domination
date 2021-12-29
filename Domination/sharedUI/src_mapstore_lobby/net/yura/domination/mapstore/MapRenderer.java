@@ -1,12 +1,11 @@
 package net.yura.domination.mapstore;
 
 import javax.microedition.lcdui.Image;
-import javax.microedition.lcdui.game.Sprite;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.mobile.gui.Animation;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.cellrenderer.DefaultListCellRenderer;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.ProgressBar;
@@ -41,8 +40,8 @@ public class MapRenderer extends DefaultListCellRenderer {
         bar.workoutPreferredSize();
         //add(bar); // YURA do we need this???
 
-        play = Midlet.createImage("/ms_play.png");
-        download = Midlet.createImage("/ms_download.png");
+        play = Application.createImage("/ms_play.png");
+        download = Application.createImage("/ms_download.png");
 
         loading = new Icon("/ms_icon_loading.png");
 

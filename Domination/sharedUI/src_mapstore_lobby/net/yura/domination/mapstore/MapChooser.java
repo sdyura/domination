@@ -19,10 +19,10 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.mobile.gui.ActionListener;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.ButtonGroup;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Icon;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.List;
@@ -88,7 +88,7 @@ public class MapChooser implements ActionListener,MapServerListener {
     private List list;
 
     public static void loadThemeExtension() {
-        InputStream themeData = Midlet.getResourceAsStream("/ms_tabbar.xml");
+        InputStream themeData = Application.getResourceAsStream("/ms_tabbar.xml");
         try {
             LookAndFeel laf = DesktopPane.getDesktopPane().getLookAndFeel();
             if (laf instanceof SynthLookAndFeel) {
@@ -113,7 +113,7 @@ public class MapChooser implements ActionListener,MapServerListener {
         this.allowedMaps = allowedMaps;
 
         try {
-            loader = XULLoader.load( Midlet.getResourceAsStream("/ms_maps.xml") , this, resBundle);
+            loader = XULLoader.load( Application.getResourceAsStream("/ms_maps.xml") , this, resBundle);
         }
         catch(Exception ex) {
             throw new RuntimeException(ex);
@@ -159,7 +159,7 @@ public class MapChooser implements ActionListener,MapServerListener {
         }
 
         list = (List)loader.find("ResultList");
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ME4SE) {
+        if (Application.getPlatform() == Application.PLATFORM_ME4SE) {
             list.setDoubleClick(true);
         }
         MapRenderer r = new MapRenderer(this);

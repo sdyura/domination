@@ -30,7 +30,7 @@ import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.KeyEvent;
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.border.Border;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.CheckBox;
@@ -47,7 +47,6 @@ import net.yura.mobile.gui.layout.BorderLayout;
 import net.yura.mobile.gui.layout.GridBagConstraints;
 import net.yura.mobile.gui.layout.GridBagLayout;
 import net.yura.mobile.gui.layout.XULLoader;
-import net.yura.mobile.gui.plaf.Style;
 import net.yura.mobile.io.kdom.Document;
 import net.yura.mobile.io.kdom.Element;
 import net.yura.mobile.io.kxml2.KXmlSerializer;
@@ -68,7 +67,7 @@ public class GameActivity extends Frame implements ActionListener {
     public static final Properties resb = CoreUtil.wrap(TranslationBundle.getBundle());
     public static final Border marble;
     static {
-        marble = new BackgroundBorder( Midlet.createImage("/marble.jpg") );
+        marble = new BackgroundBorder( Application.createImage("/marble.jpg") );
     }
 
     public static final String SAVE_EXTENSION = ".save";
@@ -429,8 +428,8 @@ public class GameActivity extends Frame implements ActionListener {
     public void setVisible(boolean b) {
     	super.setVisible(b);
 
-    	if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID || Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
-            Midlet.openURL("wakelock://" + b);
+    	if (Application.getPlatform() == Application.PLATFORM_ANDROID || Application.getPlatform() == Application.PLATFORM_IOS) {
+            Application.openURL("wakelock://" + b);
         }
 
         if (!b) {
@@ -463,14 +462,14 @@ public class GameActivity extends Frame implements ActionListener {
                 if (localGame) menu.add( savebutton );
 
                 // TODO make this work on other platforms
-                if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
                     menu.add(graphbutton);
                 }
 
                 if (localGame) menu.add( undobutton );
 
                 // TODO make this work on other platforms
-                if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
                     menu.add(options);
                 }
 
@@ -509,7 +508,7 @@ public class GameActivity extends Frame implements ActionListener {
                                     "?subject=" + Url.encode("Saved game")
                                     +"&attachment=" + Url.encode(filePath)
                                     +"&authority=" + Url.encode("net.yura.domination.fileprovider");
-                            Midlet.openURL(url);
+                            Application.openURL(url);
                         }
                         catch (InterruptedException interrupted) { } // for some reason we decided not do this action, ignore
                     }
@@ -602,10 +601,10 @@ public class GameActivity extends Frame implements ActionListener {
             // do not need to do anything
         }
         else if ("graph".equals(actionCommand)) {
-            Midlet.openURL("nativeNoResult://net.yura.domination.android.StatsActivity");
+            Application.openURL("nativeNoResult://net.yura.domination.android.StatsActivity");
         }
         else if ("options".equals(actionCommand)) {
-            Midlet.openURL("nativeNoResult://net.yura.domination.android.GamePreferenceActivity");
+            Application.openURL("nativeNoResult://net.yura.domination.android.GamePreferenceActivity");
         }
         else {
             throw new IllegalArgumentException("unknown command "+actionCommand);
@@ -1104,14 +1103,14 @@ public class GameActivity extends Frame implements ActionListener {
      * @see net.yura.lobby.mini.MiniLobbyClient#toast(java.lang.String)
      */
     static void toast(String message) {
-        if ( Display.getDisplay( Midlet.getMidlet() ).getCurrent() != null ) {
-            Midlet.openURL("toast://show?message="+Url.encode(message)+"&duration=SHORT");
+        if ( Display.getDisplay( Application.getInstance() ).getCurrent() != null ) {
+            Application.openURL("toast://show?message="+Url.encode(message)+"&duration=SHORT");
         }
     }
 
     public static XULLoader getPanel(String xmlfile, ActionListener al) {
 
-        InputStream data = Midlet.getResourceAsStream(xmlfile);
+        InputStream data = Application.getResourceAsStream(xmlfile);
         XULLoader loader;
         try {
             loader = XULLoader.load(data, al, resb);

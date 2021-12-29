@@ -26,10 +26,10 @@ import net.yura.grasshopper.SimpleBug;
 import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.lobby.model.Game;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.gui.plaf.Style;
@@ -41,7 +41,7 @@ import net.yura.util.Service;
 /**
  * This class is instantiated by the AndroidMEApp even if there is no AndroidMEActivity
  */
-public class DominationMain extends Midlet {
+public class DominationMain extends Application {
 
     private static final Logger logger = Logger.getLogger(DominationMain.class.getName());
 
@@ -93,7 +93,7 @@ public class DominationMain extends Midlet {
 
     public DominationMain() {
 
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+        if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
             Service.SERVICES_LOCATION = "assets/services/";
         }
 
@@ -212,7 +212,7 @@ public class DominationMain extends Midlet {
             } );
 
             // cant do this on J2SE, swing will print too much junk.
-            if (Midlet.getPlatform() != Midlet.PLATFORM_ME4SE) {
+            if (Application.getPlatform() != Application.PLATFORM_ME4SE) {
                 // if we want to see DEBUG, default is INFO
                 Logger.getLogger("").setLevel(java.util.logging.Level.ALL);
             }
@@ -256,7 +256,7 @@ public class DominationMain extends Midlet {
         SynthLookAndFeel synth = null;
 
         try {
-            if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+            if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
                 synth = (SynthLookAndFeel) Class.forName("net.yura.android.plaf.AndroidLookAndFeel").newInstance();
 
                 // small hack to center radiobutton icon (the default height is too big, we set it to the width so the icon is square)
@@ -266,7 +266,7 @@ public class DominationMain extends Midlet {
                     radioButtonStyle.addProperty(new CentreIcon(radioButtonIcon, radioButtonIcon.getIconWidth(), radioButtonIcon.getIconWidth()), "icon", Style.ALL);
                 }
             }
-            if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+            if (Application.getPlatform() == Application.PLATFORM_IOS) {
                 synth = (SynthLookAndFeel) Class.forName("net.yura.ios.plaf.IOSLookAndFeel").newInstance();
             }
         }
@@ -278,7 +278,7 @@ public class DominationMain extends Midlet {
             synth = new NimbusLookAndFeel();
         }
 
-        InputStream themeData = Midlet.getResourceAsStream("/dom_synth.xml");
+        InputStream themeData = Application.getResourceAsStream("/dom_synth.xml");
         try {
             synth.load(themeData);
         }
@@ -360,7 +360,7 @@ public class DominationMain extends Midlet {
 
             logger.info("UI QUIT");
 
-            Midlet.exit();
+            Application.exit();
         }
     }
 
@@ -431,7 +431,7 @@ public class DominationMain extends Midlet {
 	googlePlayGameServices = listener;
     }
     public static GooglePlayGameServices getGooglePlayGameServices() {
-	DominationMain main = (DominationMain)Midlet.getMidlet();
+	DominationMain main = (DominationMain) Application.getInstance();
         // main is only null if the app is in the process of shutting down.
 	return main == null ? null : main.googlePlayGameServices;
     }
@@ -450,7 +450,7 @@ public class DominationMain extends Midlet {
         nativeCallsCount++;
         url = url + (url.indexOf('?') >= 0 ? "&" : "?") + "requestCode=" + nativeCallsCount;
         nativeCalls.put(nativeCallsCount,listener);
-        Midlet.openURL(url);
+        Application.openURL(url);
     }
 
     public void onResult(int requestCode, int resultCode, Object obj) {
@@ -485,7 +485,7 @@ public class DominationMain extends Midlet {
 
     public void pushNotificationsToken(String token) {
 
-        if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+        if (Application.getPlatform() == Application.PLATFORM_IOS) {
             logger.info("Apple Push Token " + token);
             // we only request the token once we have connected
             adapter.lobby.mycom.setPushToken(PushLobbyClient.PUSH_SYSTEM_APN, token);

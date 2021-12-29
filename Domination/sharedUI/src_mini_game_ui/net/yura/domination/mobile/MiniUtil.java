@@ -15,7 +15,7 @@ import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.KeyEvent;
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.io.FileUtil;
@@ -23,8 +23,8 @@ import net.yura.mobile.io.FileUtil;
 public class MiniUtil {
 
     public static void showAbout() {
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
-            Midlet.openURL("nativeNoResult://net.yura.domination.android.AboutActivity");
+        if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+            Application.openURL("nativeNoResult://net.yura.domination.android.AboutActivity");
         }
         else {
             showPlatformIndependentAbout();
@@ -85,7 +85,7 @@ public class MiniUtil {
 
         String displayInfo;
 
-        if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+        if (Application.getPlatform() == Application.PLATFORM_IOS) {
             displayInfo = "<p>Screen scale: " + System.getProperty("display.scale") + "</p>";
         }
         else {

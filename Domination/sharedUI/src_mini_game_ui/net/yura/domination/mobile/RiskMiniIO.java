@@ -14,7 +14,7 @@ import javax.microedition.io.Connector;
 import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 
 /**
  * @author Yura Mamyrin
@@ -34,11 +34,11 @@ public class RiskMiniIO implements RiskIO {
     }
 
     public void openURL(URL url) throws Exception {
-        Midlet.openURL(url.toString());
+        Application.openURL(url.toString());
     }
 
     public void openDocs(String doc) throws Exception {
-        Midlet.openURL("file:///android_asset/" + doc );
+        Application.openURL("file:///android_asset/" + doc );
     }
 
     public InputStream loadGameFile(String file) throws Exception {

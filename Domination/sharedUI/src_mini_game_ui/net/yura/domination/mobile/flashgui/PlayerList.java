@@ -5,9 +5,9 @@ import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.mobile.PicturePanel;
 import net.yura.mobile.gui.ActionListener;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Graphics2D;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.List;
 import net.yura.mobile.gui.cellrenderer.DefaultListCellRenderer;
 import net.yura.domination.engine.core.Player;
@@ -38,10 +38,10 @@ public class PlayerList extends List {
             {
                 setName("ListRendererCollapsed");
                 padding = XULLoader.adjustSizeToDensity(4);
-                human = Midlet.createImage("/type_human.png");
-                ai_easy = Midlet.createImage("/type_ai_easy.png");
-                ai_average = Midlet.createImage("/type_ai_average.png");
-                ai_hard = Midlet.createImage("/type_ai_hard.png");
+                human = Application.createImage("/type_human.png");
+                ai_easy = Application.createImage("/type_ai_easy.png");
+                ai_average = Application.createImage("/type_ai_average.png");
+                ai_hard = Application.createImage("/type_ai_hard.png");
             }
             @Override
             public void setValue(Object obj) {
@@ -115,7 +115,7 @@ public class PlayerList extends List {
             @Override
             public void actionPerformed(String actionCommand) {
                 final Player player = (Player) getSelectedValue();
-                if (player != null && Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                if (player != null && Application.getPlatform() == Application.PLATFORM_ANDROID) {
                     DominationMain.openURL("native://net.yura.domination.android.ColorPickerActivity", new DominationMain.ActivityResultListener() {
                         public void onActivityResult(Object data) {
                             int color = (Integer) data;

@@ -22,11 +22,11 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.MapPanel;
 import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mobile.flashgui.DominationMain;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Font;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.KeyEvent;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.border.Border;
 import net.yura.mobile.gui.components.ImageView;
 import net.yura.mobile.gui.plaf.Style;
@@ -537,12 +537,12 @@ public class PicturePanel extends ImageView implements MapPanel {
 
         static Map<Integer,Image> icons = new HashMap();
         static {
-            icons.put(ColorUtil.RED,Midlet.createImage("/color_red.png"));
-            icons.put(ColorUtil.BLUE,Midlet.createImage("/color_blue.png"));
-            icons.put(ColorUtil.YELLOW,Midlet.createImage("/color_yellow.png"));
-            icons.put(ColorUtil.CYAN,Midlet.createImage("/color_cyan.png"));
-            icons.put(ColorUtil.GREEN,Midlet.createImage("/color_green.png"));
-            icons.put(ColorUtil.MAGENTA,Midlet.createImage("/color_magenta.png"));
+            icons.put(ColorUtil.RED, Application.createImage("/color_red.png"));
+            icons.put(ColorUtil.BLUE, Application.createImage("/color_blue.png"));
+            icons.put(ColorUtil.YELLOW, Application.createImage("/color_yellow.png"));
+            icons.put(ColorUtil.CYAN, Application.createImage("/color_cyan.png"));
+            icons.put(ColorUtil.GREEN, Application.createImage("/color_green.png"));
+            icons.put(ColorUtil.MAGENTA, Application.createImage("/color_magenta.png"));
         }
         public static Image getIconForColor(int color) {
             return DominationMain.getBoolean("color_blind",false)?icons.get(color):null;
@@ -567,7 +567,7 @@ public class PicturePanel extends ImageView implements MapPanel {
 
 
             // TODO any size fonts do not work on me4se!!
-            if (Midlet.getPlatform() != Midlet.PLATFORM_ME4SE) {
+            if (Application.getPlatform() != Application.PLATFORM_ME4SE) {
                 if (ballSize!=fontBallSize) {
                     String density = System.getProperty("display.scaledDensity"); // use scaledDensity, as in the FontManager scaledDensity is also used
                     float d = (density!=null)?Float.parseFloat(density):1.0F;

@@ -7,12 +7,11 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.Sprite;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.mapstore.MapRenderer;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.KeyEvent;
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.CheckBox;
 import net.yura.mobile.gui.components.Frame;
@@ -69,7 +68,7 @@ public class BattleDialog extends Frame implements ActionListener {
     }
 
     public static Sprite getSprite(String name,int cols,int rows) {
-        Image img = Midlet.createImage(name);
+        Image img = Application.createImage(name);
         try {
             int w = img.getWidth()/cols;
             int h = img.getHeight()/rows;

@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mapstore.gen.XMLMapAccess;
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.io.FileUtil;
 import net.yura.mobile.io.HTTPClient;
 import net.yura.mobile.io.ServiceLink.Task;
@@ -128,7 +128,7 @@ public class MapServerClient extends HTTPClient {
             // HACK!!! there is a massive bug in Android where if you dont do a extra read after reading all the data
             // HACK!!! your next http request will fail! http://code.google.com/p/android/issues/detail?id=7786
             // HACK!!! this bug is found on Android 1.6, it seems to be fixed on Android 2.3.3
-            if (Midlet.getPlatform()==Midlet.PLATFORM_ANDROID) {
+            if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
                 is.read();
             }
 

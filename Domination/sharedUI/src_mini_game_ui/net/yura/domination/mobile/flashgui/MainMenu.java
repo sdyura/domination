@@ -8,7 +8,7 @@ import net.yura.domination.mobile.MiniUtil;
 import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.DesktopPane;
-import net.yura.mobile.gui.Midlet;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.FileChooser;
@@ -53,7 +53,7 @@ public class MainMenu extends Frame implements ActionListener {
 	mainMenu = GameActivity.getPanel("/mainmenu.xml",this);
 
         Component quitButton = mainMenu.find("QuitButton");
-        if (quitButton != null && !"true".equals(System.getProperty("debug")) && Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+        if (quitButton != null && !"true".equals(System.getProperty("debug")) && Application.getPlatform() == Application.PLATFORM_IOS) {
             quitButton.setVisible(false);
         }
 
@@ -156,7 +156,7 @@ public class MainMenu extends Frame implements ActionListener {
                         +"&body=" + Url.encode(
                                 "\n\n\nDevice: "+System.getProperty("http.agent")+
                                 "\nID: "+MiniLobbyClient.getMyUUID()).replace("+", "%20");
-                Midlet.openURL(url);
+                Application.openURL(url);
             }
             else if ("signIn".equals(actionCommand)) {
         	DominationMain.getGooglePlayGameServices().beginUserInitiatedSignIn();

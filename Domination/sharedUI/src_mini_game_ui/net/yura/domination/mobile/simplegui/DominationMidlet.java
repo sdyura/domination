@@ -3,13 +3,13 @@ package net.yura.domination.mobile.simplegui;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mobile.RiskMiniIO;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.DesktopPane;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.plaf.LookAndFeel;
 import net.yura.mobile.gui.plaf.SynthLookAndFeel;
 import net.yura.util.Service;
 
-public class DominationMidlet extends Midlet {
+public class DominationMidlet extends Application {
 
     @Override
     public void initialize(DesktopPane rootpane) {
@@ -18,7 +18,7 @@ public class DominationMidlet extends Midlet {
 
         LookAndFeel lookandfeel=null;
         try {
-                if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
                         lookandfeel = (SynthLookAndFeel)Class.forName("net.yura.android.plaf.AndroidLookAndFeel").newInstance();
                 }
                 //else if (Midlet.getPlatform() == Midlet.PLATFORM_BLACKBERRY) {

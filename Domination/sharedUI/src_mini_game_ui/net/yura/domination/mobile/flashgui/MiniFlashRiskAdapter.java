@@ -9,8 +9,8 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.lobby.mini.MiniLobbyRisk;
 import net.yura.domination.mobile.flashgui.DominationMain.GooglePlayGameServices;
 import net.yura.mobile.gui.ActionListener;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.Icon;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.Menu;
@@ -52,10 +52,10 @@ public class MiniFlashRiskAdapter implements RiskListener {
             @Override
             public String getAppName() {
                 String appNamePrefix;
-                if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
                     appNamePrefix = "Android";
                 }
-                else if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+                else if (Application.getPlatform() == Application.PLATFORM_IOS) {
                     appNamePrefix = "iOS";
                 }
                 else {
@@ -69,7 +69,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
             }
             @Override
             public void connected(String username) {
-                DominationMain dmain = (DominationMain)Midlet.getMidlet();
+                DominationMain dmain = (DominationMain) Application.getInstance();
                 dmain.lobbyConnected(); // open any pending game
 
                 GooglePlayGameServices play = DominationMain.getGooglePlayGameServices();

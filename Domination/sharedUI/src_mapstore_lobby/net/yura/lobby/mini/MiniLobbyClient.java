@@ -26,8 +26,8 @@ import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
 import net.yura.lobby.model.Player;
 import net.yura.mobile.gui.ActionListener;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.DesktopPane;
-import net.yura.mobile.gui.Midlet;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.ComboBox;
 import net.yura.mobile.gui.components.Component;
@@ -78,7 +78,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         resBundle = game.getProperties();
 
         try {
-            loader = XULLoader.load( Midlet.getResourceAsStream("/ms_lobby.xml") , this, resBundle);
+            loader = XULLoader.load( Application.getResourceAsStream("/ms_lobby.xml") , this, resBundle);
         }
         catch(Exception ex) {
             throw new RuntimeException(ex);
@@ -448,7 +448,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
      * @see #connected()
      */
     private void requestNotificationAuthorization() {
-        if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+        if (Application.getPlatform() == Application.PLATFORM_IOS) {
             String iosNotificationSetting = System.getProperty("iosNotificationSetting");
 
             // the OS will only ever show this once, so we must make sure we only ever request it once
@@ -456,7 +456,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 OptionPane.showMessageDialog(new ActionListener() {
                     @java.lang.Override
                     public void actionPerformed(java.lang.String actionCommand) {
-                        Midlet.openURL("notify://requestAuthorization");
+                        Application.openURL("notify://requestAuthorization");
                     }
                 }, resBundle.getProperty("lobby.notification.authorization.request"), resBundle.getProperty("lobby.notification.authorization.title"), OptionPane.OK_OPTION);
             }
@@ -474,10 +474,10 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
      */
     public void connected() {
 
-        if (Midlet.getPlatform() == Midlet.PLATFORM_ANDROID) {
-            Midlet.openURL("nativeNoResult://net.yura.domination.android.push.PushActivity");
+        if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+            Application.openURL("nativeNoResult://net.yura.domination.android.push.PushActivity");
         }
-        else if (Midlet.getPlatform() == Midlet.PLATFORM_IOS) {
+        else if (Application.getPlatform() == Application.PLATFORM_IOS) {
 
             // TODO do we care? do we need to save this? what will we do with this next?
             mycom.addPushEventListener(new PushLobbyClient() {
@@ -492,7 +492,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
             // token can change at any time, so we need to keep asking for it when ever we connect
             // https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/HandlingRemoteNotifications.html#//apple_ref/doc/uid/TP40008194-CH6-SW3
-            Midlet.openURL("notify://getToken");
+            Application.openURL("notify://getToken");
         }
 
         mycom.getGameTypes();
@@ -803,7 +803,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         String options = game.getOptions();
 
         String icon = "icon"; // maps to R.drawable.icon
-        Midlet.openURL("notify://dummyServer" +
+        Application.openURL("notify://dummyServer" +
                 "?title="+Url.encode(title)+
                 "&message="+Url.encode(message)+
                 "&icon="+Url.encode(icon)+
@@ -817,9 +817,9 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
      * @see net.yura.domination.mobile.flashgui.GameActivity#toast(java.lang.String)
      */
     public static void toast(String message) {
-        if ( Display.getDisplay( Midlet.getMidlet() ).getCurrent() != null ) {
-            if (Midlet.getPlatform()==Midlet.PLATFORM_ANDROID) {
-                Midlet.openURL("toast://show?message="+Url.encode(message));
+        if ( Display.getDisplay( Application.getInstance() ).getCurrent() != null ) {
+            if (Application.getPlatform()== Application.PLATFORM_ANDROID) {
+                Application.openURL("toast://show?message="+Url.encode(message));
             }
             else {
                 DesktopPane.getDesktopPane().toast(message);
