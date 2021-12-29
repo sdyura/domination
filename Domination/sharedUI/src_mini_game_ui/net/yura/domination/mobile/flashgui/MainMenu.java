@@ -2,6 +2,8 @@ package net.yura.domination.mobile.flashgui;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Arrays;
+import java.io.File;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mobile.MiniUtil;
@@ -13,7 +15,10 @@ import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.FileChooser;
 import net.yura.mobile.gui.components.Frame;
+import net.yura.mobile.gui.components.Menu;
+import net.yura.mobile.gui.components.MenuBar;
 import net.yura.mobile.gui.components.OptionPane;
+import net.yura.mobile.gui.components.Panel;
 import net.yura.mobile.gui.components.ScrollPane;
 import net.yura.mobile.gui.components.Window;
 import net.yura.mobile.gui.layout.XULLoader;
@@ -101,12 +106,33 @@ public class MainMenu extends Frame implements ActionListener {
             }
             else if ("load game".equals(actionCommand)) {
 
-                // TODO using old SwingME file chooser, move to native android file picker.
-                // dir urls HAVE to start "file:///" and end with "/"
-                // but apart from that are not really real URLs as are not url encoded for things like spaces
-                chooser = new FileChooser();
-                chooser.setCurrentDirectory( FileUtil.ROOT_PREX + MiniUtil.getSaveGameDir() + "/" );
-                chooser.showDialog(this, "doLoad", resb.getProperty("mainmenu.loadgame.loadbutton") , resb.getProperty("mainmenu.loadgame.loadbutton") );
+                FileUtil fileSystemView = new FileUtil() {
+                    @Override
+                    public String getRoots() {
+                        return MiniUtil.getSaveGameDir() + "/";
+                    }
+                    @Override
+                    public java.util.Vector listFiles(String dir, int filter, boolean recent) {
+                        String[] saves = new File(dir).list();
+                        return RiskUtil.asVector(Arrays.asList(saves));
+                    }
+                };
+
+                chooser = new FileChooser(fileSystemView);
+
+                Panel contentPane = chooser.getContentPane();
+                ((Component)contentPane.getComponents().get(0)).setVisible(false);
+
+                MenuBar menuBar = chooser.getMenuBar();
+                for (int c = 0; c < menuBar.getComponentCount(); c++) {
+                    Component comp = (Component) menuBar.getItems().get(c);
+                    if (comp instanceof Menu) {
+                        menuBar.remove(comp);
+                        break;
+                    }
+                }
+
+                chooser.showDialog(this, "doLoad", resb.getProperty("mainmenu.loadgame.loadbutton"), resb.getProperty("mainmenu.loadgame.loadbutton"));
             }
             else if ("doLoad".equals(actionCommand)) {
 
@@ -114,7 +140,7 @@ public class MainMenu extends Frame implements ActionListener {
                 chooser = null;
 
                 if (file.endsWith( GameActivity.SAVE_EXTENSION )) {
-                    myrisk.parser("loadgame " + file.substring(FileUtil.ROOT_PREX.length()) );
+                    myrisk.parser("loadgame " + file);
                 }
                 // else ignore file
             }
