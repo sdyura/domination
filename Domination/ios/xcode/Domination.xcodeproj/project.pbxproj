@@ -54,6 +54,7 @@
 		9793DC7BCA03B1F0E1B02782 /* Domination.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Domination.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7A3E898974177A2A2F0C417 /* Domination-Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Domination-Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC4876D3960503C5F9FA285C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DE050EF827834BE60084C691 /* Domination.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Domination.entitlements; sourceTree = "<group>"; };
 		DE079D282678C41300CFBB43 /* maps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maps; path = ../../swingUI/game/Domination/maps; sourceTree = "<group>"; };
 		DE079D2A2678C45800CFBB43 /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../../swingUI/game/Domination/help; sourceTree = "<group>"; };
 		DE30C94E268FBDCE0018914C /* iosmeimg */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iosmeimg; path = ../../../iOSME/iosmeimg; sourceTree = "<group>"; };
@@ -126,6 +127,7 @@
 		4D85E57E486ED51FA34DE305 /* Domination */ = {
 			isa = PBXGroup;
 			children = (
+				DE050EF827834BE60084C691 /* Domination.entitlements */,
 				484E50E912C53A6976896EA4 /* Info.plist */,
 				583D44881E40B4B90048FF77 /* Assets.xcassets */,
 				583D44891E40B4B90048FF77 /* LaunchScreen.storyboard */,
@@ -330,6 +332,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${MOE_FRAMEWORK_PATH}",
@@ -350,7 +353,6 @@
 				SYMROOT = "$(SRCROOT)/../build/moe/xcodebuild/sym";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 			};
 			name = Release;
 		};
@@ -377,6 +379,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${MOE_FRAMEWORK_PATH}",
@@ -404,7 +407,6 @@
 				SDKROOT = iphoneos;
 				SYMROOT = "$(SRCROOT)/../build/moe/xcodebuild/sym";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 			};
 			name = Debug;
 		};
@@ -449,6 +451,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Domination/Domination.entitlements;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -488,6 +491,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Domination/Domination.entitlements;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
