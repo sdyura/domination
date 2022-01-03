@@ -56,9 +56,19 @@ public class DominationMain extends Application {
     /**
      * @see net.yura.domination.ui.flashgui.MainMenu#product
      */
-    public static final String product = "MiniGameGUI";
+    public static final String product;
     public static final String version;
     static {
+        if (Application.getPlatform() == Application.PLATFORM_IOS) {
+            product = "iOS-GUI";
+        }
+        else if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+            product = "AndroidGUI";
+        }
+        else {
+            product = "MiniGameGUI";
+        }
+
         String versionCode = System.getProperty("versionCode");
         version = versionCode != null ? versionCode : RiskUtil.RISK_VERSION;
     }
