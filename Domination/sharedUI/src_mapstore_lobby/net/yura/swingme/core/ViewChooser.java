@@ -12,7 +12,6 @@ import net.yura.mobile.gui.components.Panel;
 import net.yura.mobile.gui.layout.BorderLayout;
 import net.yura.mobile.gui.layout.BoxLayout;
 import net.yura.mobile.gui.layout.FlowLayout;
-import net.yura.mobile.gui.layout.Layout;
 import net.yura.mobile.util.Option;
 
 /**
@@ -27,11 +26,11 @@ public class ViewChooser extends Panel implements ActionListener {
 
     public ViewChooser(Option[] pp) {
         options = pp;
-        
+
         Button test = new Button("test");
         test.workoutPreferredSize();
 
-        setPreferredSize(10, test.getHeightWithBorder()); // some small size, but we will strech
+        setPreferredSize(10, test.getHeightWithBorder()); // some small size, but we will stretch
     }
 
     public void setStretchCombo(boolean stretch) {
@@ -92,7 +91,7 @@ public class ViewChooser extends Panel implements ActionListener {
                 combo.setSelectedItem(currentOption);
                 combo.workoutPreferredSize();
                 combo.addActionListener(this);
-                setLayout(stretchCombo ? (Layout) new BorderLayout() : new BoxLayout(Graphics.HCENTER));
+                setLayout(stretchCombo || combo.getWidthWithBorder() > width ? new BorderLayout() : new BoxLayout(Graphics.HCENTER));
                 insert(combo, 0);
                 // remove the rest
                 while (getComponentCount() > 1) {
