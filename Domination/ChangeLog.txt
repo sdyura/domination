@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	13
 
-	iOS:		1
+	iOS:		2
 	Android:	82
 	Flash GUI:	2
 	Swing GUI:	2
@@ -26,6 +26,9 @@ CURRENT VERSION:
 	MapEditor: can stretch imageMap when selecting new imagePic
 	MapEditor: hold down shift to scale added in "move all" mode
 	MapEditor: right click menu option to grow country area by 1px
+
+	iOS 2 System translations are used for standard actions
+	      UI fixes for languages with long text (ViewChooser and OptionPane)
 
 1.2.3 (19.11.2020)
 
