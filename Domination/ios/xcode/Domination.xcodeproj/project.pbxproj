@@ -214,10 +214,9 @@
 			};
 			buildConfigurationList = EE1B76AC2D4C44432A7FA818 /* Build configuration list for PBXProject "Domination" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
