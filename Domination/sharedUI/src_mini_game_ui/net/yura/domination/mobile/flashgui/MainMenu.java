@@ -114,13 +114,20 @@ public class MainMenu extends Frame implements ActionListener {
                     @Override
                     public java.util.Vector listFiles(String dir, int filter, boolean recent) {
                         String[] saves = new File(dir).list();
-                        return RiskUtil.asVector(Arrays.asList(saves));
+                        List<String> result = new java.util.Vector();
+                        for (int c = 0; c < saves.length; c++) {
+                            if (saves[c].endsWith(GameActivity.SAVE_EXTENSION)) {
+                                result.add(saves[c]);
+                            }
+                        }
+                        return RiskUtil.asVector(result);
                     }
                 };
 
                 chooser = new FileChooser(fileSystemView);
 
                 Panel contentPane = chooser.getContentPane();
+                // hide address bar
                 ((Component)contentPane.getComponents().get(0)).setVisible(false);
 
                 MenuBar menuBar = chooser.getMenuBar();

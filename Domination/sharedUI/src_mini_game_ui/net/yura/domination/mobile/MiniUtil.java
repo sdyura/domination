@@ -122,7 +122,11 @@ public class MiniUtil {
 
     public static String mapsdir = "file:///android_asset/maps/";
 
-    public static List getFileList(String string) {
+    /**
+     * Gets a list of files from the maps folder
+     * @param extension can be "map" or "cards"
+     */
+    public static List getFileList(String extension) {
         List result = new java.util.Vector();
 
         File externalMapDir = getExternalMapDir();
@@ -131,7 +135,7 @@ public class MiniUtil {
             if (list != null) {
                 for (int c = 0; c < list.length; c++) {
                     String file = list[c];
-                    if (file.endsWith("." + string)) {
+                    if (file.endsWith("." + extension)) {
                         result.add(file);
                     }
                 }
@@ -141,7 +145,7 @@ public class MiniUtil {
         Enumeration en = FileUtil.getDirectoryFiles(mapsdir);
         while (en.hasMoreElements()) {
             String file = (String)en.nextElement();
-            if (file.endsWith("."+string) && !result.contains(file)) {
+            if (file.endsWith("." + extension) && !result.contains(file)) {
                 result.add( file );
             }
         }
@@ -150,7 +154,7 @@ public class MiniUtil {
         String[] list = getSaveMapDir().list();
         for (int c=0;c<list.length;c++) {
             String file = list[c];
-            if (file.endsWith("."+string) && !result.contains(file)) {
+            if (file.endsWith("." + extension) && !result.contains(file)) {
                 result.add( file );
             }
         }
