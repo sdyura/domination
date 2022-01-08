@@ -122,6 +122,11 @@ public class MainMenu extends Frame implements ActionListener {
                         }
                         return RiskUtil.asVector(result);
                     }
+
+                    @java.lang.Override
+                    public void deleteFile(String path) {
+                        new File(path).delete();
+                    }
                 };
 
                 chooser = new FileChooser(fileSystemView);
