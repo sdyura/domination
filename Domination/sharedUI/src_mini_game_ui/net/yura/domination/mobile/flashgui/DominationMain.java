@@ -334,7 +334,7 @@ public class DominationMain extends Application {
         });
 
 
-        new Thread() {
+        new Thread("Update-Version-Check") {
             @Override
             public void run() {
 

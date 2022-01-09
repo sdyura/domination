@@ -329,7 +329,11 @@ public class RiskUtil {
                                         if ("files".equals(mode)) {
 
                                                 int space = input.indexOf(' ');
-                                            
+
+                                                if (space < 0) {
+                                                    throw new RuntimeException("invalid file " + input);
+                                                }
+
                                                 String fm = input.substring(0,space);
                                                 String val = input.substring(space+1);
 
@@ -341,7 +345,13 @@ public class RiskUtil {
                                                 break;
                                         }
                                         else if ("countries".equals(mode)) {
-                                            info.put("countries", Integer.parseInt(input.substring(0,input.indexOf(' '))));
+                                                int space = input.indexOf(' ');
+
+                                                if (space < 0) {
+                                                    throw new RuntimeException("invalid country " + input);
+                                                }
+
+                                                info.put("countries", Integer.parseInt(input.substring(0, space)));
                                         }
                                         else if ("missions".equals(mode)) {
 
@@ -399,6 +409,10 @@ public class RiskUtil {
                         else { // give up
                                 break;
                         }
+                }
+                catch (RuntimeException ex) {
+                    System.err.println("Error trying to load: " + fileName);
+                    throw ex;
                 }
                 finally {
                     if (bufferin!=null) {
