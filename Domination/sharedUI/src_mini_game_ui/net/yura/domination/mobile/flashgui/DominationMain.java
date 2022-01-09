@@ -159,6 +159,10 @@ public class DominationMain extends Application {
                     if ("java.net.AddressCache".equals(className) && "customTtl".equals(methodName)) {
                         return true;
                     }
+                    if ("java.util.prefs.FileSystemPreferences".equals(className) && "loadCache".equals(methodName)) {
+                        // Exception while reading cache: Attempt to invoke interface method 'java.lang.String org.w3c.dom.Element.getAttribute(java.lang.String)' on a null object reference
+                        return true;
+                    }
 
                     String message = record.getMessage();
                     if ("rto value is too small:0".equals(message) ||
