@@ -398,6 +398,12 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     public void sendChatMessage() {
+        // we cache the roomId of this chat, less chance we will disconnect and lose it before the message is sent
+        final int gameId = openGameId;
+        if (gameId == -1) {
+            throw new IllegalStateException("no game open");
+        }
+
         final TextField chatText = new TextField();
 
         StringBuilder messages = new StringBuilder();
@@ -410,16 +416,15 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             public void actionPerformed(String actionCommand) {
                 String message = chatText.getText();
                 if ("ok".equals(actionCommand) && !"".equals(message.trim())) {
-                    sendChatMessage(message);
+                    sendChatMessage(gameId, message);
                 }
             }
         }, new Object[] {messages.toString(), chatText}, resBundle.getProperty("lobby.chat") , OptionPane.OK_CANCEL_OPTION);
     }
 
-    public void sendChatMessage(String message) {
-        int gameId = openGameId;
+    public void sendChatMessage(int gameId, String message) {
         if (gameId == -1) {
-            throw new IllegalStateException("no game open");
+            throw new IllegalArgumentException("invalid gameId " + gameId);
         }
         mycom.sendChat(gameId, message);
     }
