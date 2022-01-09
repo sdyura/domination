@@ -364,6 +364,8 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 						}
 						catch(Throwable e) {
 							JOptionPane.showMessageDialog(window, "Unable to run lobby: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+                                                        // TODO when does this happen? why did we ignore this error?
+                                                        RiskUtil.printStackTrace(e);
 						}
 					}
 					break;
