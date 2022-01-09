@@ -2,7 +2,7 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.2.4
+	Risk Game:	1.2.5
 	 * Save:	8
 	 * Network:	13
 
@@ -14,8 +14,15 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
+1.2.5
 
-1.2.4
+	Fix for lobby failed to launch when javax.crypto.JceSecurity not found
+
+	iOS 2 System translations are used for standard actions
+	      UI fixes for languages with long text (ViewChooser and OptionPane)
+	      Can delete saved games with long press
+
+1.2.4 (25.10.2021) ### released for iOS on App Store for the first time ###
 
 	Started iOS version
 	Troop Strength view also shows enemies troop strength in red
@@ -26,9 +33,6 @@ CURRENT VERSION:
 	MapEditor: can stretch imageMap when selecting new imagePic
 	MapEditor: hold down shift to scale added in "move all" mode
 	MapEditor: right click menu option to grow country area by 1px
-
-	iOS 2 System translations are used for standard actions
-	      UI fixes for languages with long text (ViewChooser and OptionPane)
 
 1.2.3 (19.11.2020)
 
