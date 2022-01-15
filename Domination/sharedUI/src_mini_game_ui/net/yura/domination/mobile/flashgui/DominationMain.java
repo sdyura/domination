@@ -500,7 +500,16 @@ public class DominationMain extends Application {
     public void pushNotificationsToken(String token) {
 
         if (Application.getPlatform() == Application.PLATFORM_IOS) {
-            logger.info("Apple Push Token " + token);
+
+            String apsEnvironment = System.getProperty("aps-environment");
+
+            logger.info("Apple Push Token " + apsEnvironment + " " + token);
+
+            // if this is a dev build, this token will ONLY work on apples sandbox push server
+            if ("development".equals(apsEnvironment)) {
+                token = "sandbox-" + token;
+            }
+
             // we only request the token once we have connected
             adapter.lobby.mycom.setPushToken(PushLobbyClient.PUSH_SYSTEM_APN, token);
         }
