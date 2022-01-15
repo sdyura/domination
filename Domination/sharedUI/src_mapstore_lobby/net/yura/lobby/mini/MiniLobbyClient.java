@@ -53,9 +53,6 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     public static final String LOBBY_SERVER = "lobby.yura.net";
     //public static final String LOBBY_SERVER = "localhost";
 
-    public final static String EXTRA_GAME_ID = "net.yura.domination.GAME_ID";
-    public final static String EXTRA_GAME_OPTIONS = "net.yura.domination.GAME_OPTIONS";
-
     XULLoader loader;
     List gameList;
     Window adminPopup;
@@ -813,8 +810,8 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 "&message="+Url.encode(message)+
                 "&icon="+Url.encode(icon)+
                 "&onlyBackground="+onlyBackground+
-                "&"+Url.encode(EXTRA_GAME_ID)+"="+Url.encode(String.valueOf(gameId))+
-                "&"+Url.encode(EXTRA_GAME_OPTIONS)+"="+Url.encode(options));
+                "&"+Url.encode(PushLobbyClient.GAME_ID)+"="+Url.encode(String.valueOf(gameId))+
+                "&"+Url.encode(PushLobbyClient.OPTIONS)+"="+Url.encode(options));
                 // not used &num=4
     }
 

@@ -517,8 +517,8 @@ public class DominationMain extends Application {
 
     public void openNotification(Map params) {
 
-        String gameId = (String)params.get(MiniLobbyClient.EXTRA_GAME_ID);
-        String options = (String)params.get(MiniLobbyClient.EXTRA_GAME_OPTIONS);
+        String gameId = (String)params.get(PushLobbyClient.GAME_ID);
+        String options = (String)params.get(PushLobbyClient.OPTIONS);
 
         if (gameId != null) {
             Game game = new Game();

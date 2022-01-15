@@ -39,6 +39,7 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.domination.mobile.flashgui.MiniFlashRiskAdapter;
+import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.lobby.model.Game;
 
@@ -160,23 +161,25 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
     }
 
     private void handleIntent(Intent intent) {
-        String gameId = intent.getStringExtra(MiniLobbyClient.EXTRA_GAME_ID);
-        String options = intent.getStringExtra(MiniLobbyClient.EXTRA_GAME_OPTIONS);
+        String packageName = AndroidMeApp.getContext().getPackageName();
+
+        String gameId = intent.getStringExtra(packageName + "." + PushLobbyClient.GAME_ID);
+        String options = intent.getStringExtra(packageName + "." + PushLobbyClient.OPTIONS);
 
         DominationMain dmain = (DominationMain)AndroidMeApp.getMIDlet();
 
         if (gameId != null && dmain != null) {
 
             Map params = new HashMap();
-            params.put(MiniLobbyClient.EXTRA_GAME_ID, gameId);
-            params.put(MiniLobbyClient.EXTRA_GAME_OPTIONS, options);
+            params.put(PushLobbyClient.GAME_ID, gameId);
+            params.put(PushLobbyClient.OPTIONS, options);
 
             // use cross-platform method for opening a notification
             dmain.openNotification(params);
 
             // as we have handled this open game request, clear it
-            intent.removeExtra(MiniLobbyClient.EXTRA_GAME_ID);
-            intent.removeExtra(MiniLobbyClient.EXTRA_GAME_OPTIONS);
+            intent.removeExtra(packageName + "." + PushLobbyClient.GAME_ID);
+            intent.removeExtra(packageName + "." + PushLobbyClient.OPTIONS);
         }
     }
 

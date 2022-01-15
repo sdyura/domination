@@ -54,6 +54,16 @@ Desktop P2P:
     when people select a capital in network game other ppl can see when they select it in the console
     should be able to join a game at any stage and it should be fast
 
+iOS:
+
+    LOBBY: add support for sending apple push messages
+    do not delete .lobby uuid file if app data is cleared, and also keep it backed up - use apple keychain to save the lobby uuid as it stays when app is uninstalled
+    send email with info on lobby login - i think this is not possible
+    send screenshots back with grasshopper errors
+    Missing: stats graphs
+    Missing: settings screen (select language, color blind mode, etc)
+    Missing: select color for player
+
 Android:
 
     support push on "Amazon ADM", "Google FCM" and "Huawei HMS"
@@ -62,7 +72,6 @@ Android:
     fullscreen mode (including hiding the top action bar, the status bar and for nexus phones the navbar)
     load big maps without OutOfMemErrors - http://developer.android.com/training/displaying-bitmaps/load-bitmap.html
     ability to select number of armies to place on android (1 or 5 or 10 or 25 ...) or long press gives slider for number of troops to place
-    some way to del saved games when they are not needed any more
 
 BlackBerry:
 

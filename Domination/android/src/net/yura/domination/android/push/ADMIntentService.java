@@ -59,10 +59,10 @@ public class ADMIntentService extends GCMBaseIntentService {
         // notifies user
         Map<String, Object> extras = new HashMap();
         if (gameId != null) {
-            extras.put(MiniLobbyClient.EXTRA_GAME_ID, gameId);
+            extras.put(PushLobbyClient.GAME_ID, gameId);
         }
         if (options != null) {
-            extras.put(MiniLobbyClient.EXTRA_GAME_OPTIONS, options);
+            extras.put(PushLobbyClient.OPTIONS, options);
         }
         MIDlet.showNotification(context.getString(R.string.app_name), message, R.drawable.icon, -1, extras);
     }
