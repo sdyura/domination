@@ -1104,7 +1104,12 @@ public class GameActivity extends Frame implements ActionListener {
      */
     static void toast(String message) {
         if ( Display.getDisplay( Application.getInstance() ).getCurrent() != null ) {
-            Application.openURL("toast://show?message="+Url.encode(message)+"&duration=SHORT");
+            if (Application.getPlatform()== Application.PLATFORM_ANDROID) {
+                Application.openURL("toast://show?message="+Url.encode(message)+"&duration=SHORT");
+            }
+            else {
+                DesktopPane.getDesktopPane().toast(message);
+            }
         }
     }
 
