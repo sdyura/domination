@@ -115,7 +115,7 @@ public class MiniUtil {
                 displayInfo +
                 "<p>Locale: "+Locale.getDefault()+" use: "+resb.getLocale()+"</p>"+
                 "<p>Device: " + System.getProperty("microedition.platform") + "</p>"+
-                "<p>ExternalMapDir="+(externalMapDir == null ? "none" : "<a href=\""+externalMapDir.toURI()+"\">"+externalMapDir+"</a>")+"</p>"+
+                (externalMapDir == null ? "" : "<p>ExternalMapDir=<a href=\"" + externalMapDir.toURI() + "\">" + externalMapDir + "</a></p>") +
                 // e.g. file:///storage/emulated/0/Domination%20Maps/
                 "</html>";
     }
