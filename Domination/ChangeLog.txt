@@ -21,6 +21,7 @@ CURRENT VERSION:
 	iOS 2 System translations are used for standard actions
 	      UI fixes for languages with long text (ViewChooser and OptionPane)
 	      Can delete saved games with long press
+	      Online multiplayer works with Apple Push notifications
 
 1.2.4 (25.10.2021) ### released for iOS on App Store for the first time ###
 

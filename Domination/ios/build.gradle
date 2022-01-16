@@ -5,7 +5,7 @@
 buildscript {
     // Add central and local Maven repos
     repositories {
-        jcenter()
+        mavenCentral()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         mavenLocal()
     }
