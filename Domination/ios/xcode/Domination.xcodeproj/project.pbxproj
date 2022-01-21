@@ -520,7 +520,7 @@
 					"${MOE_OTHER_LDFLAGS}",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.moe.samples.Domination;
+				PRODUCT_BUNDLE_IDENTIFIER = net.yura.domination.test;
 				PRODUCT_NAME = "Domination-Test";
 				STRIP_STYLE = "non-global";
 			};
@@ -636,7 +636,7 @@
 					"${MOE_OTHER_LDFLAGS}",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.moe.samples.Domination;
+				PRODUCT_BUNDLE_IDENTIFIER = net.yura.domination.test;
 				PRODUCT_NAME = "Domination-Test";
 				STRIP_STYLE = "non-global";
 			};
