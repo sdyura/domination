@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	13
 
-	iOS:		2
+	iOS:		3
 	Android:	82
 	Flash GUI:	2
 	Swing GUI:	2
@@ -22,6 +22,7 @@ CURRENT VERSION:
 	      UI fixes for languages with long text (ViewChooser and OptionPane)
 	      Can delete saved games with long press
 	      Online multiplayer works with Apple Push notifications
+	iOS 3 Fixed: fails to load in languages: es, gl, nl, cs, sv
 
 1.2.4 (25.10.2021) ### released for iOS on App Store for the first time ###
 
