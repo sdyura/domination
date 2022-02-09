@@ -46,9 +46,25 @@ moe {
     }
 }
 
+// to disable proguard put -dontshrink in the config
 moeMainProGuard {
     appendCfgFile "../../iOSME/proguard.append.cfg"
 }
+moeTestProGuard {
+    appendCfgFile "../../iOSME/proguard.append.cfg"
+}
+
+/* for moe-1.9
+moeMainReleaseProGuard {
+    appendCfgFile "../../iOSME/proguard.append.cfg"
+}
+moeMainDebugProGuard {
+    appendCfgFile "../../iOSME/proguard.append.cfg"
+}
+moeTestDebugProGuard {
+    appendCfgFile "../../iOSME/proguard.append.cfg"
+}
+*/
 
 // Set dependencies
 dependencies {

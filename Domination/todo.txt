@@ -56,13 +56,14 @@ Desktop P2P:
 
 iOS:
 
-    LOBBY: add support for sending apple push messages
     do not delete .lobby uuid file if app data is cleared, and also keep it backed up - use apple keychain to save the lobby uuid as it stays when app is uninstalled
     send email with info on lobby login - i think this is not possible
     send screenshots back with grasshopper errors
-    Missing: stats graphs
-    Missing: settings screen (select language, color blind mode, etc)
     Missing: select color for player
+    Missing: settings screen (show dice, color blind mode, etc)
+    Missing: stats graphs
+         - https://github.com/core-plot/core-plot
+         - https://github.com/danielgindi/Charts
 
 Android:
 

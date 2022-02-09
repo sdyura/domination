@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Save:	8
 	 * Network:	13
 
-	iOS:		3
+	iOS:		4
 	Android:	82
 	Flash GUI:	2
 	Swing GUI:	2
@@ -18,11 +18,14 @@ CURRENT VERSION:
 
 	Fix for lobby failed to launch when javax.crypto.JceSecurity not found
 
+	iOS 4 Theme fix for disabled/secondary list foreground
+	      load text as utf-8 in webview
+	iOS 3 Fixed: fails to load in languages: es, gl, nl, cs, sv
 	iOS 2 System translations are used for standard actions
 	      UI fixes for languages with long text (ViewChooser and OptionPane)
 	      Can delete saved games with long press
 	      Online multiplayer works with Apple Push notifications
-	iOS 3 Fixed: fails to load in languages: es, gl, nl, cs, sv
+	iOS 1 local game fully playable, fix CIContext memory leak/crash
 
 1.2.4 (25.10.2021) ### released for iOS on App Store for the first time ###
 
