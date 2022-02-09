@@ -90,7 +90,7 @@
 	<code>
 	svn co https://svn.code.sf.net/p/domination/code/Domination<br>
 	</code>
-	<p>please use <a href="https://netbeans.org/downloads/">Netbeans</a>/<a href="http://ant.apache.org/">Ant</a> to build the project</p>
+<p>please use <a href="https://netbeans.org/downloads/">Netbeans</a>/<a href="http://ant.apache.org/">Ant</a> to build the project. From Netbeans <a href="images/how_to_open.png">open "swingUI" as the project</a>.</p>
 
 <!--
         <p>run compile.cmd to compile Risk and the other cmd
