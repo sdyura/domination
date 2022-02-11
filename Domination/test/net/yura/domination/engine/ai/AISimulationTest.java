@@ -10,8 +10,8 @@ import net.yura.domination.test.TestUtil;
 
 public class AISimulationTest extends TestCase {
 
-	private static boolean debug = false;
-	int state = 0;
+        private static final int NO_GAMES = 300;
+	private static final boolean debug = false;
 
 	int hard;
 	int easy;
@@ -21,11 +21,48 @@ public class AISimulationTest extends TestCase {
         @Override
         protected void setUp() throws Exception {
             super.setUp();
+            
+            hard = 0;
+            easy = 0;
+            avg = 0;
+            other = 0;
         }
 
-	public void test300games() throws Exception {
+	public void testDominationFixedGames() throws Exception {
+            playGames("domination fixed recycle");
+        }
+        public void testDominationIncreasingGames() throws Exception {
+            playGames("domination increasing recycle");
+        }
+        public void testDominationItalianGames() throws Exception {
+            playGames("domination italianlike recycle");
+        }
+
+
+        public void testCapitalFixedGames() throws Exception {
+            playGames("capital fixed recycle");
+        }
+        public void testCapitalIncreasingGames() throws Exception {
+            playGames("capital increasing recycle");
+        }
+        public void testCapitalItalianGames() throws Exception {
+            playGames("capital italianlike recycle");
+        }
+
+
+        public void testMissionFixedGames() throws Exception {
+            playGames("mission fixed recycle");
+        }
+        public void testMissionIncreasingGames() throws Exception {
+            playGames("mission increasing recycle");
+        }
+        public void testMissionItalianGames() throws Exception {
+            playGames("mission italianlike recycle");
+        }
+
+        public void playGames(String mode) throws Exception {
+        
                 final Risk risk = TestUtil.newRisk();
-                
 		risk.addRiskListener(new RiskAdapter() {
 
 		    public void sendMessage(String output, boolean redrawNeeded, boolean repaintNeeded) {
@@ -41,16 +78,14 @@ public class AISimulationTest extends TestCase {
 		    }
 
 		    public void noInput() {
-
 		    }
-
 		} );
 
                 long start = System.currentTimeMillis();
-		for (int i = 0; i < 300; i++) {
-			playGame(risk);
+		for (int i = 0; i < NO_GAMES; i++) {
+			playGame(risk, mode);
 		}
-		System.out.println("-- Wins --\neasy: " + easy + "\naverage: " + avg + "\nhard: " + hard + "\nother: " + other);
+		System.out.println("-- " + mode + " Wins --\neasy: " + easy + "\naverage: " + avg + "\nhard: " + hard + "\nother: " + other);
 		if (debug) {
 			System.out.println(System.currentTimeMillis()-start);
 		}
@@ -60,7 +95,7 @@ public class AISimulationTest extends TestCase {
 		risk.join();
 	}
 
-	private void playGame(Risk risk) throws InterruptedException {
+	private void playGame(Risk risk, String mode) throws InterruptedException {
 		risk.parser("closegame");
 		synchronized (risk) {
 			while (risk.getGame() != null) {
@@ -76,22 +111,29 @@ public class AISimulationTest extends TestCase {
 		risk.parser("newplayer ai average 4 4");
 		risk.parser("newplayer ai hard 5 5");
 		
-		risk.parser("startgame domination fixed recycle");
+		risk.parser("startgame " + mode);
 		
 		synchronized (risk) {
 			while (risk.getGame() == null || risk.getGame().getState() != RiskGame.STATE_GAME_OVER) {
 				risk.wait();
 			}
 			Player p = risk.getGame().getCurrentPlayer();
-			if (p.getType() == AIDomination.PLAYER_AI_AVERAGE) {
-				avg++;
-			} else if (p.getType() == AIDomination.PLAYER_AI_EASY) {
-				easy++;
-			} else if (p.getType() == AIDomination.PLAYER_AI_HARD) {
-				hard++;
-			} else {
-				other++;
-			}
+
+                        switch (p.getType()) {
+                            case AIDomination.PLAYER_AI_AVERAGE:
+                                avg++;
+                                break;
+                            case AIDomination.PLAYER_AI_EASY:
+                                easy++;
+                                break;
+                            case AIDomination.PLAYER_AI_HARD:
+                                hard++;
+                                break;
+                            default:
+                                other++;
+                                break;
+                        }
+
 			if (debug) {
 				System.out.println(p);
 			}
