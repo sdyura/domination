@@ -84,6 +84,11 @@ public class AISimulationTest extends TestCase {
                 long start = System.currentTimeMillis();
 		for (int i = 0; i < NO_GAMES; i++) {
 			playGame(risk, mode);
+                        
+                        // save the first game to a script
+                        //if (i==0) {
+                        //    net.yura.domination.engine.RiskUtil.saveGameLog(TestUtil.getScriptFile(mode), risk.getGame());
+                        //}
 		}
 		System.out.println("-- " + mode + " Wins --\neasy: " + easy + "\naverage: " + avg + "\nhard: " + hard + "\nother: " + other);
 		if (debug) {
@@ -96,47 +101,43 @@ public class AISimulationTest extends TestCase {
 	}
 
 	private void playGame(Risk risk, String mode) throws InterruptedException {
-		risk.parser("closegame");
-		synchronized (risk) {
-			while (risk.getGame() != null) {
-				risk.wait();
-			}
-		}
+		risk.parserAndWait("closegame");
 		risk.parser("newgame");
-		
+
 		risk.parser("newplayer ai easy 6 6");
 		risk.parser("newplayer ai average 2 2");
 		risk.parser("newplayer ai hard 1 1");
 		risk.parser("newplayer ai easy 3 3");
 		risk.parser("newplayer ai average 4 4");
 		risk.parser("newplayer ai hard 5 5");
-		
+
 		risk.parser("startgame " + mode);
-		
+
+                // wait for game to finish
 		synchronized (risk) {
 			while (risk.getGame() == null || risk.getGame().getState() != RiskGame.STATE_GAME_OVER) {
 				risk.wait();
 			}
-			Player p = risk.getGame().getCurrentPlayer();
+                }
 
-                        switch (p.getType()) {
-                            case AIDomination.PLAYER_AI_AVERAGE:
-                                avg++;
-                                break;
-                            case AIDomination.PLAYER_AI_EASY:
-                                easy++;
-                                break;
-                            case AIDomination.PLAYER_AI_HARD:
-                                hard++;
-                                break;
-                            default:
-                                other++;
-                                break;
-                        }
+                Player p = risk.getGame().getCurrentPlayer();
+                switch (p.getType()) {
+                    case AIDomination.PLAYER_AI_AVERAGE:
+                        avg++;
+                        break;
+                    case AIDomination.PLAYER_AI_EASY:
+                        easy++;
+                        break;
+                    case AIDomination.PLAYER_AI_HARD:
+                        hard++;
+                        break;
+                    default:
+                        other++;
+                        break;
+                }
 
-			if (debug) {
-				System.out.println(p);
-			}
-		}
+                if (debug) {
+                        System.out.println(p);
+                }
 	}
 }

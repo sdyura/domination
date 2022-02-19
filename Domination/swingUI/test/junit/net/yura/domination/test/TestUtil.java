@@ -4,6 +4,7 @@ import java.io.File;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.RiskGame;
+import net.yura.domination.guishared.RiskFileFilter;
 import net.yura.domination.guishared.RiskUIUtil;
 
 public class TestUtil {
@@ -30,5 +31,10 @@ public class TestUtil {
         setupMapsForTest();
 
         return new RiskGame();
+    }
+
+    public static File getScriptFile(String mode) {
+        File resFolder = new File("../../../res/test_scripts");
+        return new File(resFolder, mode.replace(' ', '-') + "." + RiskFileFilter.RISK_SCRIPT_FILES);
     }
 }

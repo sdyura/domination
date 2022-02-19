@@ -2532,8 +2532,11 @@ System.out.print(str+"]\n");
 				cardIndex = c;
                                 break;
 			}
-
 		}
+                
+                if (cardIndex == -1) {
+                    throw new IllegalArgumentException("card not found " + name);
+                }
 
                 // find the card and remove it
                 Card theCard = (Card)Cards.remove(cardIndex);

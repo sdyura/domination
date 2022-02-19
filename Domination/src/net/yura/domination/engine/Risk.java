@@ -43,6 +43,13 @@ import net.yura.mobile.util.Url;
  */
 public class Risk extends Thread {
 
+        public static final String STARTGAME_OPTION_MODE_DOMINATION = "domination";
+        public static final String STARTGAME_OPTION_MODE_CAPITAL = "capital";
+	public static final String STARTGAME_OPTION_MODE_SECRET_MISSION = "mission";
+	public static final String STARTGAME_OPTION_CARD_INCREASING_SET = "increasing";
+	public static final String STARTGAME_OPTION_CARD_FIXED_SET = "fixed";
+	public static final String STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET = "italianlike";
+
         private static final int DEFAULT_SHOW_DICE_SLEEP = 1000;
         private static final int DEFAULT_ROLL_DICE_SLEEP = 500;
 
@@ -415,7 +422,7 @@ public class Risk extends Thread {
 				}
 				else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "savegame filename"); }
 			}
-                        // REPLAY A GAME FROM THE GAME FILE
+                        // REPLAY A GAME FROM THE GAME COMMANDS
 			else if (input.equals("replay")) {
 				if ( StringT.hasMoreTokens()==false ) {
 				    if ( unlimitedLocalMode ) {
@@ -1214,22 +1221,22 @@ RiskUtil.printStackTrace(e);
 
 						while (StringT.hasMoreTokens()) {
 							String newOption = StringT.nextToken();
-							if ( newOption.equals("domination") ) {
+							if ( newOption.equals(STARTGAME_OPTION_MODE_DOMINATION) ) {
 								newgame_type = RiskGame.MODE_DOMINATION;
 							}
-							else if ( newOption.equals("capital") ) {
+							else if ( newOption.equals(STARTGAME_OPTION_MODE_CAPITAL) ) {
 								newgame_type = RiskGame.MODE_CAPITAL;
 							}
-							else if ( newOption.equals("mission") ) {
+							else if ( newOption.equals(STARTGAME_OPTION_MODE_SECRET_MISSION) ) {
 								newgame_type = RiskGame.MODE_SECRET_MISSION;
 							}
-							else if ( newOption.equals("increasing") ) {
+							else if ( newOption.equals(STARTGAME_OPTION_CARD_INCREASING_SET) ) {
 								newgame_cardType = RiskGame.CARD_INCREASING_SET;
 							}
-							else if ( newOption.equals("fixed") ) {
+							else if ( newOption.equals(STARTGAME_OPTION_CARD_FIXED_SET) ) {
 								newgame_cardType = RiskGame.CARD_FIXED_SET;
 							}
-							else if ( newOption.equals("italianlike") ) {
+							else if ( newOption.equals(STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET) ) {
 								newgame_cardType = RiskGame.CARD_ITALIANLIKE_SET;
                                                                 threeDice = true;
 							}
@@ -1323,28 +1330,22 @@ RiskUtil.printStackTrace(e);
                                             output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "startgame gametype cardtype (autoplaceall recycle)");
                                         }
 				}
-				// REPLAY A GAME
+				// REPLAY A GAME FROM SCRIPT FILE
 				else if (input.equals("play")) {
 
 					if (StringT.countTokens() >= 1) {
 						String filename = RiskUtil.getAtLeastOne(StringT);
 
 						try {
-
 							URL url;
-
 							// TODO dont think this can ever work as an applet anyway
 							//if (Risk.applet==null) {
-
 								url = (new File(filename)).toURI().toURL();
-
 							//}
 							//else {
 							//	url = new URL( net.yura.domination.engine.Risk.applet.getCodeBase() , filename );
 							//}
-
 							BufferedReader bufferin=new BufferedReader(new InputStreamReader(url.openStream()));
-
 
 							//create thread with bufferin
 							class Replay extends Thread {
@@ -1353,52 +1354,41 @@ RiskUtil.printStackTrace(e);
 							    private BufferedReader bufferin;
 
 							    public Replay(Risk r, BufferedReader in) {
-
+                                                                super("Domination-Replay");
 								risk=r;
 								bufferin=in;
-
 							    }
 
 							    public void run() {
-
+                                                                int line = 0;
 								try {
-
 								    String input = bufferin.readLine();
 								    while(input != null) {
-
+                                                                        line++;
 									//System.out.print(input+"\n");
-
 									risk.inGameParser(input);
 									input = bufferin.readLine();
-
 								    }
-
-								    bufferin.close();
-
 								}
 								catch(Exception error) {
-
-                                                                    RiskUtil.printStackTrace(error);
-
+                                                                    logger.log(Level.WARNING, "script error on line " + line, error);
 								}
+                                                                finally {
+                                                                    RiskUtil.close(bufferin);
+                                                                }
 
 								//set replay off
 								replay = false;
 								getInput();
 							    }
-
 							}
 
 							Thread replaythread = new Replay(this, bufferin);
-
 							//set boolean that replay is on
 							replay = true;
-
 							replaythread.start();
 
 							output="playing \""+filename+"\"";
-
-
 						}
 						catch(Exception error) {
 							output="unable to play \""+filename+"\" "+error;
@@ -1999,6 +1989,9 @@ RiskUtil.printStackTrace(e);
                             catch (IllegalArgumentException ex) {
                                 if (aiPlayer) {
                                     logger.log(Level.WARNING,"bad command from ai: \""+message+"\" player="+game.getCurrentPlayer()+" state="+game.getState(),ex);
+                                }
+                                if (replay) {
+                                    throw ex;
                                 }
                                 output=ex.getMessage();
                             }
