@@ -28,7 +28,7 @@ import net.yura.domination.engine.translation.TranslationBundle;
  * <p> Risk Game Main Class </p>
  * @author Yura Mamyrin
  */
-public class RiskGame implements Serializable { // transient
+public class RiskGame implements Serializable {
 
 	private static final long serialVersionUID = 8L;
 	public final static String SAVE_VERSION = String.valueOf(serialVersionUID);
@@ -50,21 +50,70 @@ public class RiskGame implements Serializable { // transient
 	public final static int STATE_SELECT_CAPITAL  = 9;
 	public final static int STATE_DEFEND_YOURSELF = 10;
 
-
 	public final static int MODE_DOMINATION     = 0;
+//	public final static int MODE_DOMINATION_2   = 1; // 2 player human domination, not used any more
 	public final static int MODE_CAPITAL        = 2;
 	public final static int MODE_SECRET_MISSION = 3;
-
 
 	public final static int CARD_INCREASING_SET = 0;
 	public final static int CARD_FIXED_SET = 1;
 	public final static int CARD_ITALIANLIKE_SET = 2;
 
         public final static int MAX_CARDS = 5;
+        public final static int DEFAULT_MINIMUM_NEW_ARMIES = 3;
 
-/*
+	private static String defaultMap;
+	private static String defaultCards;
 
-//	public final static int MODE_DOMINATION_2   = 1;
+
+
+
+	// ---------------------------------------
+	// THIS IS THE GAME INFO FOR Serialization
+	// ---------------------------------------
+
+	private Random r; // mmm, not sure where this should go, may stop cheeting when its here
+
+	// cant use URL as that stores full URL to the map file on the disk,
+	// and if the risk install dir changes the saves dont work
+	private String mapfile;
+	private String cardsfile;
+
+        private String ImagePic;
+	private String ImageMap;
+	private String previewPic;
+        private Map properties; // extra map settings that are not part of the game
+        
+        /**
+
+gameMode:
+0 - WORLD DOMINATION RISK	- 3 to 6 players
+//1 - WORLD DOMINATION RISK	- 2 player
+2 - CAPITAL RISK		- 3 to 6 players
+3 - SECRET MISSION RISK	- 3 to 6 players
+
+         */
+        private int gameMode;
+        private int cardMode;
+        private boolean recycleCards = false;
+        private int maxDefendDice;
+        private int minimumNewArmies = DEFAULT_MINIMUM_NEW_ARMIES;
+
+	private boolean runmaptest = false;
+        private Vector replayCommands;
+
+        // ----------- in play fields -----------
+
+	private Vector Players;
+	private Country[] Countries;
+	private Continent[] Continents;
+	private Vector Cards,usedCards;
+	private Vector Missions;
+
+	private Player currentPlayer;
+        private int setup;
+
+        /**
 
 gameState:
 
@@ -82,61 +131,12 @@ nogame	(-1 in gui)		(current possible commands are: newgame, loadgame, closegame
 7 - endturn			(current possible commands are: endgo)
 8 - game is over		(current possible commands are: continue)
 
-gameMode:
-0 - WORLD DOMINATION RISK	- 3 to 6 players
-//1 - WORLD DOMINATION RISK	- 2 player
-2 - CAPITAL RISK		- 3 to 6 players
-3 - SECRET MISSION RISK	- 3 to 6 players
-
-playerType:
-0 - human
-1 - AI (Easy)
-2 - AI (Hard)
-3 - AI (Crap)
-
-transient - A keyword in the Java programming language that indicates that a field is not part of the serialized form of an object. When an object is serialized, the values of its transient fields are not included in the serial representation, while the values of its non-transient fields are included.
-
-*/
-
-	private static String defaultMap;
-	private static String defaultCards;
-
-
-
-
-
-
-
-
-
-
-
-
-	// ---------------------------------------
-	// THIS IS THE GAME INFO FOR Serialization
-	// ---------------------------------------
-
-	private Random r; // mmm, not sure where this should go, may stop cheeting when its here
-
-	// cant use URL as that stores full URL to the map file on the disk,
-	// and if the risk install dir changes the saves dont work
-	private String mapfile;
-	private String cardsfile;
-	private int setup;
-
-	private Vector Players;
-	private Country[] Countries;
-	private Continent[] Continents;
-	private Vector Cards,usedCards;
-	private Vector Missions;
-
-	private Player currentPlayer;
+         */
 	private int gameState;
 	private int cardState;
 	private int mustmove;
 	private boolean capturedCountry;
 	private boolean tradeCap;
-	private int gameMode;
 
 	private Country attacker;
 	private Country defender;
@@ -144,21 +144,12 @@ transient - A keyword in the Java programming language that indicates that a fie
 	private int attackerDice;
 	private int defenderDice;
 
+        /**
+
+transient - A keyword in the Java programming language that indicates that a field is not part of the serialized form of an object. When an object is serialized, the values of its transient fields are not included in the serial representation, while the values of its non-transient fields are included.
+
+         */
 	private transient int battleRounds;
-
-	private String ImagePic;
-	private String ImageMap;
-	private String previewPic;
-
-        private Map properties;
-
-	private Vector replayCommands;
-	private int maxDefendDice;
-	private int cardMode;
-
-	private boolean runmaptest=false;
-	private boolean recycleCards=false;
-
 
 	/**
 	 * Creates a new RiskGame
@@ -260,7 +251,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * Starts the game Risk
 	 * @param mode This represents the moce of the game: normal, 2 player, capital or mission
 	 */
-	public void startGame(int mode, int card, boolean recycle, boolean threeDice) throws Exception {
+	public void startGame(int mode, int card, boolean recycle, boolean threeDefendDice, boolean minimumThreeArmies) throws Exception {
 
 		if (gameState==STATE_NEW_GAME) { //  && ((mapfile !=null && cardsfile !=null) || () )
 
@@ -268,7 +259,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 			cardMode=card;
 
 			recycleCards = recycle;
-                        maxDefendDice = threeDice?3:2;
+                        maxDefendDice = threeDefendDice ? 3 : 2;
+                        minimumNewArmies = minimumThreeArmies ? DEFAULT_MINIMUM_NEW_ARMIES : 0;
 
 			// 2 player human crap
 			//if ( gameMode==1 && ( !(((Player)Players.elementAt(0)).getType()==0) || !(((Player)Players.elementAt(1)).getType()==0) ) ) { return; }
@@ -466,12 +458,11 @@ transient - A keyword in the Java programming language that indicates that a fie
 				currentPlayer.nextTurn();
 
 				// add new armies for the Territories Owned
-				if ( currentPlayer.getNoTerritoriesOwned() < 9 ) {
-					currentPlayer.addArmies(3);
-				}
-				else {
-					currentPlayer.addArmies( currentPlayer.getNoTerritoriesOwned() / 3 );
-				}
+                                int extraArmies = currentPlayer.getNoTerritoriesOwned() / 3;
+                                if (extraArmies < minimumNewArmies) {
+                                        extraArmies = minimumNewArmies;
+                                }
+                                currentPlayer.addArmies(extraArmies);
 
 				// add new armies for the Continents Owned
 				for (int c=0; c< Continents.length ; c++) {
@@ -2731,7 +2722,24 @@ System.out.print(str+"]\n");
         else { return defender.getArmies(); }
     }
 
+    void setCardMode(int cardMode) {
+	this.cardMode = cardMode;
+    }
+
+    public Player getPlayer(String name) {
+        for (Player player: (List<Player>)Players) {
+            if (player.getName().equals(name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+
+        // this is a new field, if we dont have it saved, use the default
+        minimumNewArmies = DEFAULT_MINIMUM_NEW_ARMIES;
+        
     	in.defaultReadObject();
     	this.r = new Random();
     	if (this.mapfile != null && gameState != STATE_NEW_GAME) {
@@ -2748,18 +2756,5 @@ System.out.print(str+"]\n");
                 throw ex;
             }
     	}
-    }
-
-    void setCardMode(int cardMode) {
-		this.cardMode = cardMode;
-	}
-
-    public Player getPlayer(String name) {
-        for (Player player: (List<Player>)Players) {
-            if (player.getName().equals(name)) {
-                return player;
-            }
-        }
-        return null;
     }
 }

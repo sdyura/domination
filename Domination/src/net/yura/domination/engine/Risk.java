@@ -1216,6 +1216,7 @@ RiskUtil.printStackTrace(e);
 						boolean newgame_autoplaceall = false;
 						boolean newgame_recycle = false;
                                                 boolean threeDice = false;
+                                                boolean minimumThreeArmies = true;
 
 						String crap = null;
 
@@ -1239,6 +1240,7 @@ RiskUtil.printStackTrace(e);
 							else if ( newOption.equals(STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET) ) {
 								newgame_cardType = RiskGame.CARD_ITALIANLIKE_SET;
                                                                 threeDice = true;
+                                                                //minimumThreeArmies = false;
 							}
 							else if ( newOption.equals("autoplaceall") ) {
 								newgame_autoplaceall = true;
@@ -1258,7 +1260,7 @@ RiskUtil.printStackTrace(e);
                                                             autoplaceall = newgame_autoplaceall;
 
                                                             try {
-                                                                    game.startGame(newgame_type,newgame_cardType,newgame_recycle,threeDice);
+                                                                    game.startGame(newgame_type, newgame_cardType, newgame_recycle, threeDice, minimumThreeArmies);
                                                             }
                                                             catch (Exception e) {
                                                                     RiskUtil.printStackTrace(e);

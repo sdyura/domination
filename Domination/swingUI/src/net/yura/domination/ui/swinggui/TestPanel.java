@@ -421,7 +421,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
         abstract class ObjectTableModel extends AbstractTableModel {
 
-                private final String[] columnNames = { "Name", "Value" };
+                private final String[] columnNames = { "Name", "Type", "Value" };
                 private Field[] fields;
 
                 public int getColumnCount() {
@@ -460,7 +460,8 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         Object game = getObject();
                         switch(col) {
                                 case 0: return fields[row].getName();
-                                case 1: {
+                                case 1: return fields[row].getType().getName();
+                                case 2: {
                                     try {
                                         return String.valueOf( fields[row].get(game) );
                                     }
@@ -468,7 +469,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                                         return ex.toString();
                                     }
                                 }
-                                default: throw new RuntimeException();
+                                default: throw new IllegalArgumentException("bad col " + col);
                         }
                 }
 

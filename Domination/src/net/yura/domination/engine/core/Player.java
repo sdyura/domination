@@ -2,7 +2,6 @@
 
 package net.yura.domination.engine.core;
 
-//import java.awt.Color;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
@@ -11,7 +10,6 @@ import java.util.Vector;
  * <p> Risk Player </p>
  * @author Yura Mamyrin
  */
-
 public class Player implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,8 +17,8 @@ public class Player implements Serializable {
 	public final static int PLAYER_HUMAN   = 0;
 	public final static int PLAYER_AI_CRAP = 3;
 	public final static int PLAYER_AI_EASY = 1;
-	public final static int PLAYER_AI_HARD = 2;
 	public static final int PLAYER_AI_AVERAGE = 4;
+        public final static int PLAYER_AI_HARD = 2;
 
 
     private String name;
@@ -31,6 +29,16 @@ public class Player implements Serializable {
     private Vector playersEliminated;
     private Country capital;
     private Mission mission;
+    
+    /**
+
+playerType:
+0 - human
+1 - AI (Easy)
+2 - AI (Hard)
+3 - AI (Crap)
+
+     */
     private int type;
     private String address;
 
