@@ -422,13 +422,10 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * @return Player Returns the next player
 	 */
 	public Player endGo() {
-
-		if (gameState==STATE_END_TURN) {
-
+		if (gameState == STATE_END_TURN) {
 			//System.out.print("go ended\n"); // testing
 
 			// work out who is the next player
-
 			while (true) {
 
 				for (int c=0; c< Players.size() ; c++) {
@@ -447,12 +444,11 @@ transient - A keyword in the Java programming language that indicates that a fie
 											// && (currentPlayer.getType() != 3)
 
 				else if ( currentPlayer.getNoTerritoriesOwned() > 0       ) {break; }
-
 			}
 
 			//System.out.print("Curent Player: " + currentPlayer.getName() + "\n"); // testing
 
-			if ( getSetupDone() && !(gameMode==2 && currentPlayer.getCapital() == null) ) { // ie the initial setup has been compleated
+			if (getSetupDone() && !(gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null)) { // ie the initial setup has been compleated
 
 				workOutEndGoStats( currentPlayer );
 				currentPlayer.nextTurn();
@@ -466,30 +462,31 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 				// add new armies for the Continents Owned
 				for (int c=0; c< Continents.length ; c++) {
-
 					if ( Continents[c].isOwned(currentPlayer) ) {
 						currentPlayer.addArmies( Continents[c].getArmyValue() );
 					}
-
 				}
-
 			}
 
-			if (getSetupDone() && gameMode==2 && currentPlayer.getCapital() == null) { // capital risk setup not finished
-				gameState=STATE_SELECT_CAPITAL;
+			if (getSetupDone() && gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null) { // capital risk setup not finished
+				gameState = STATE_SELECT_CAPITAL;
 			}
-			else if ( canTrade()==false ) { // ie the initial setup has not been compleated or there are no cards that can be traded
-				gameState=STATE_PLACE_ARMIES;
+			else if (canTrade()) { // there are cards that can be traded
+                                gameState = STATE_TRADE_CARDS;
 			}
-			else { // there are cards that can be traded
-				gameState=STATE_TRADE_CARDS;
+			else if (currentPlayer.getExtraArmies() > 0) { // ie the initial setup has not been compleated or there are no cards that can be traded
+				gameState = STATE_PLACE_ARMIES;
 			}
+                        else {
+                                gameState = STATE_ATTACKING;
+                        }
+                        
+                        System.out.println("new game state " + gameState);
 
 			capturedCountry=false;
 			tradeCap=false;
 
 			return currentPlayer;
-
 		}
 		else {
 
