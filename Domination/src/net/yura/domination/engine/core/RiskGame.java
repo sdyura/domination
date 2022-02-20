@@ -481,7 +481,7 @@ transient - A keyword in the Java programming language that indicates that a fie
                                 gameState = STATE_ATTACKING;
                         }
                         
-                        System.out.println("new game state " + gameState);
+                        //System.out.println("new game state " + gameState);
 
 			capturedCountry=false;
 			tradeCap=false;
@@ -489,9 +489,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 			return currentPlayer;
 		}
 		else {
-
-			//System.out.println("lala "+gameState);
-
+			//System.out.println("wrong state for endgo " + gameState);
 			return null;
 		}
 	}
