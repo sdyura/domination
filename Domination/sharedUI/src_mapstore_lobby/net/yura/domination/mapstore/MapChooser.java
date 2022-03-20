@@ -380,7 +380,7 @@ public class MapChooser implements ActionListener,MapServerListener {
         String name = (String)info.get("name");
         if (name==null) {
             if (file.toLowerCase().endsWith(".map")) {
-                name = file.substring(0, file.length()-4);
+                name = RiskUtil.getFileNameWithoutExtension(file);
             }
             else {
                 name = file;

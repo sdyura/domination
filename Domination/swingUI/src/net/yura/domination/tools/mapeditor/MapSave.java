@@ -127,7 +127,8 @@ public class MapSave {
             buffer.append(n);
 
             String prv = myMap.getPreviewPic();
-            if (prv!=null) {
+            // only allow preview if the name matches the name of the map
+            if (prv != null && RiskUtil.getFileNameWithoutExtension(mapName).equals(RiskUtil.getFileNameWithoutExtension(prv))) {
                 buffer.append("prv ");
                 buffer.append(prv);
                 buffer.append(n);

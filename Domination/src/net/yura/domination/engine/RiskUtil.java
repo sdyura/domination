@@ -636,4 +636,14 @@ public class RiskUtil {
         }
         return text.toString();
     }
+
+    /**
+     * @see net.yura.domination.guishared.RiskFileFilter#getExtension(java.io.File)
+     * @see net.yura.domination.tools.mapeditor.MapsTools#getExtension(java.io.File)
+     */
+    public static String getFileNameWithoutExtension(String filename) {
+        int dotIndex = filename.lastIndexOf('.');
+        // if file starts with a dot, this is a hidden file, not an extension
+        return dotIndex > 0 ? filename.substring(0, dotIndex) : filename;
+    }
 }
