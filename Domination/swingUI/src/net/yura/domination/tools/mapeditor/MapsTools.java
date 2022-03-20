@@ -225,7 +225,7 @@ public class MapsTools {
     }
     
     
-        public static String doPost(String url, MultipartEntity requestContent) throws IOException {
+    public static String doPost(String url, MultipartEntity requestContent) throws IOException {
 
         	StringBuffer buffer = new StringBuffer();
 

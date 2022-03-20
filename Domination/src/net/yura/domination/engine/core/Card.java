@@ -8,10 +8,9 @@ import java.io.Serializable;
  * <p> Risk Card </p>
  * @author Yura Mamyrin
  */
-
 public class Card implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public final static String CAVALRY = "Cavalry";
     public final static String INFANTRY = "Infantry";
@@ -27,10 +26,8 @@ public class Card implements Serializable {
      * @param t the name of the country
      */
     public Card(String n, Country t) {
-
 	setName(n);
 	setCountry(t);
-
     }
 
     /**
@@ -42,15 +39,10 @@ public class Card implements Serializable {
     }
 
     public void setName(String n) {
-
 	if ( !n.equals(CAVALRY) && !n.equals(INFANTRY) && !n.equals(CANNON) && !n.equals(WILDCARD) ) {
-
 		throw new IllegalArgumentException("trying to make a card with an unknown type: "+n);
-
 	}
-
 	name = n;
-
     }
 
     /**
@@ -66,14 +58,10 @@ public class Card implements Serializable {
     }
 
     public String toString() {
-
-	if (country!=null) {
-
-		return name+" - "+country;
+	if (country != null) {
+		return name + " - " + country;
 	}
-
 	return name;
-
     }
 
     // used in the map Editor

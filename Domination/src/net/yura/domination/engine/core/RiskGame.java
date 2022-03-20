@@ -200,12 +200,13 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 	/**
 	 * This adds a player to the game
-	 * @param type Type of game (i.e World Domination, Secret Mission, Capital)
+	 * @param type Type of player e.g. {@link Player#PLAYER_HUMAN} {@link Player#PLAYER_AI_EASY} etc
 	 * @param name Name of player
 	 * @param color Color of player
+         * @param address the unique string representing this network address or location
 	 * @return boolean Returns true if the player is added, returns false if the player can't be added.
 	 */
-	public boolean addPlayer(int type, String name, int color, String a) {
+	public boolean addPlayer(int type, String name, int color, String address) {
 		if (gameState==STATE_NEW_GAME ) { // && !name.equals("neutral") && !(color==Color.gray)
 
 			for (int c=0; c< Players.size() ; c++) {
@@ -213,11 +214,11 @@ transient - A keyword in the Java programming language that indicates that a fie
 			}
 
 			//System.out.print("Player added. Type: " +type+ "\n"); // testing
-			Player player = new Player(type, name, color , a);
+			Player player = new Player(type, name, color , address);
 			Players.add(player);
 			return true;
 		}
-		else return false;
+		return false;
 	}
 
 	/**
@@ -249,7 +250,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 	/**
 	 * Starts the game Risk
-	 * @param mode This represents the moce of the game: normal, 2 player, capital or mission
+	 * @param mode This represents the Type of game (i.e World Domination, Secret Mission, Capital)
 	 */
 	public void startGame(int mode, int card, boolean recycle, boolean threeDefendDice, boolean minimumThreeArmies) throws Exception {
 

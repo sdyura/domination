@@ -91,7 +91,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
         private String fileName;
         private boolean usesDefaultCards;
         private File imgFile;
-        
+
 	private MapEditorPanel editPanel;
 	private JToolBar toolbar;
 	private MapEditorViews views;
@@ -612,7 +612,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		else if (a.getActionCommand().equals("play")) {
 			if ( checkMap() ) {
 				try {
-					myrisk.newMemoryGame(myMap,buildMapFile("mem.map", "mem.cards", "mem_map", "mem_pic"));
+					myrisk.newMemoryGame(myMap, MapSave.buildMapFile(myMap, "mem.map", "mem.cards", "mem_map", "mem_pic"));
                                         panel.showMapImage( new ImageIcon( editPanel.getImagePic().getScaledInstance(203,127, java.awt.Image.SCALE_SMOOTH ) ) );
                                         panel.setSelectedTab(GameTab.class);
 				}
@@ -1116,26 +1116,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		return editPanel.getImagePic();
 	}
 
-	public static String getStringForContinent(Continent c, RiskGame context) {
-
-		if (c == null) {
-			return "0";
-		}
-		if (c == RiskGame.ANY_CONTINENT) {
-			return "*";
-		}
-
-		Continent[] continents = context.getContinents();
-
-		for (int i = 0; i < continents.length; i++) {
-			if (continents[i] == c) {
-				return String.valueOf(i+1);
-			}
-		}
-
-		throw new RuntimeException();
-	}
-
         private boolean checkNewImageMap(BufferedImage map) {
                 int[] pixels = getAllPixels(map);
                 int badPixels = 0;
@@ -1272,12 +1252,21 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		}
                 
                 String warnings = "";
-                if (myMap.getCards().isEmpty()) {
+                List cards = myMap.getCards();
+                if (cards.isEmpty()) {
                     if (myMap.getMissions().isEmpty()) {
                         warnings = warnings + "\n* You have no cards and no missions";
                     }
                     else {
                         warnings = warnings + "*\n You have no cards";
+                    }
+                }
+                else if (strictcards) {
+                    for (int i = 0; i < cards.size(); i++) {
+                        Card c = (Card)cards.get(i);
+                        if (c.getCountry() != null && c.getCountry().getColor() != (i + 1)) {
+                            errors = errors + "\n* Strict cards missmatch with pos/id/color: " + c;
+                        }
                     }
                 }
 
@@ -1313,244 +1302,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
             pane.setMessage(string);
             JDialog dialog = pane.createDialog(c, UIManager.getString("OptionPane.messageDialogTitle") );
             dialog.setVisible(true);
-        }
-
-        // ####################################################### MAKE CARDS FILE
-        private String buildCardsFile(String cardsName) throws Exception {
-
-            String n = System.getProperty("line.separator");
-            
-	    StringBuffer cardsBuffer = new StringBuffer();
-
-	    cardsBuffer.append("; cards: ");
-	    cardsBuffer.append(cardsName);
-	    cardsBuffer.append(n);
-
-	    cardsBuffer.append("; Made with yura.net ");
-            cardsBuffer.append(RiskUtil.GAME_NAME);
-            cardsBuffer.append(" ");
-	    cardsBuffer.append(RiskUtil.RISK_VERSION);
-	    cardsBuffer.append(n);
-            
-            cardsBuffer.append("; OS: ");
-            cardsBuffer.append( RiskUIUtil.getOSString() );
-	    cardsBuffer.append(n);
-
-	    cardsBuffer.append(n);
-	    cardsBuffer.append("[cards]");
-	    cardsBuffer.append(n);
-
-	    List cards = myMap.getCards();
-
-            for (int i = 0; i < cards.size(); i++) {
-
-                Card c = (Card)cards.get(i);
-
-		cardsBuffer.append(c.getName());
-
-		if (c.getCountry()!=null) {
-
-			int color = c.getCountry().getColor();
-
-			if (strictcards && color != (i+1)) { throw new Exception("cards missmatch with pos/id/color: "+c); }
-
-			cardsBuffer.append(" ");
-			cardsBuffer.append( String.valueOf(color) );
-
-		}
-
-		cardsBuffer.append(n);
-	    }
-
-	    List missions = myMap.getMissions();
-
-	    if (missions.size()>0) {
-
-	    	cardsBuffer.append(n);
-	    	cardsBuffer.append("; destroy x occupy x x continents x x x");
-	    	cardsBuffer.append(n);
-	    	cardsBuffer.append("; destroy (Player) occupy (int int) continents (Continent Continent Continent)");
-	    	cardsBuffer.append(n);
-	    	cardsBuffer.append("[missions]");
-	    	cardsBuffer.append(n);
-
-		for (int i = 0; i < missions.size(); i++) {
-			Mission m = (Mission)missions.get(i);
-			cardsBuffer.append(getMissionString(m, myMap));
-			cardsBuffer.append(n);
-		}
-	    }
-
-            return cardsBuffer.toString();
-        }
-
-        private static String getMissionString(Mission m, RiskGame context) {
-            StringBuffer cardsBuffer = new StringBuffer();
-            
-            if (m.getPlayer()!=null) {
-                    cardsBuffer.append( m.getPlayer().getName().substring(6,7) ); // PLAYER1
-            }
-            else {
-                    cardsBuffer.append("0");
-            }
-
-            cardsBuffer.append("\t");
-            cardsBuffer.append(String.valueOf( m.getNoofcountries() ));
-            cardsBuffer.append(" ");
-            cardsBuffer.append(String.valueOf( m.getNoofarmies() ));
-            cardsBuffer.append("\t");
-            cardsBuffer.append( getStringForContinent(m.getContinent1(), context) );
-            cardsBuffer.append(" ");
-            cardsBuffer.append( getStringForContinent(m.getContinent2(), context) );
-            cardsBuffer.append(" ");
-            cardsBuffer.append( getStringForContinent(m.getContinent3(), context) );
-            cardsBuffer.append("\t");
-            cardsBuffer.append(m.getDiscription());
-            
-            return cardsBuffer.toString();
-        }
-
-        // ####################################################### MAKE MAP FILE
-        private String buildMapFile(String mapName, String cardsName, String imageMapName, String imagePicName) throws Exception {
-
-            String n = System.getProperty("line.separator");
-            
-            StringBuffer buffer = new StringBuffer();
-
-            buffer.append("; map: ");
-            buffer.append(mapName);
-            buffer.append(n);
-
-            buffer.append("; Made with yura.net ");
-            buffer.append(RiskUtil.GAME_NAME);
-            buffer.append(" ");
-	    buffer.append(RiskUtil.RISK_VERSION);
-            buffer.append(n);
-
-            buffer.append("; OS: ");
-            buffer.append( RiskUIUtil.getOSString() );
-            buffer.append(n);
-            buffer.append(n); // empty line
-
-//            String name = myMap.getMapName();
-//            if (name!=null) {
-//                buffer.append("name ");
-//                buffer.append(name);
-//                buffer.append(n);
-//            }
-//            int version = myMap.getVersion();
-//            if (version!=1) { // 1 is the default, we do not need to save that
-//                buffer.append("ver ");
-//                buffer.append(version);
-//                buffer.append(n);
-//            }
-//            if (name!=null || version!=1) {
-//                buffer.append(n); // in case we put a name or a version, add a extra empty line
-//            }
-
-            Map properties = myMap.getProperties();
-            if (!properties.isEmpty()) {
-                Iterator keyvals = properties.entrySet().iterator();
-                while (keyvals.hasNext()) {
-                    Map.Entry entry = (Map.Entry)keyvals.next();
-                    buffer.append( entry.getKey() );
-                    buffer.append(' ');
-                    buffer.append( entry.getValue() );
-                    buffer.append(n);
-                }
-                buffer.append(n);
-            }
-
-            buffer.append("[files]");
-            buffer.append(n);
-
-            buffer.append("pic ");
-            buffer.append(imagePicName);
-            buffer.append(n);
-            buffer.append("map ");
-            buffer.append(imageMapName);
-            buffer.append(n);
-            buffer.append("crd ");
-            buffer.append(cardsName);
-            buffer.append(n);
-
-            String prv = myMap.getPreviewPic();
-            if (prv!=null) {
-                buffer.append("prv ");
-                buffer.append(prv);
-                buffer.append(n);
-            }
-
-            buffer.append(n);
-            buffer.append("[continents]");
-            buffer.append(n);
-
-            Continent[] continents = myMap.getContinents();
-
-            for (int i = 0; i < continents.length; i++) {
-
-                Continent c = continents[i];
-
-                buffer.append(c.getIdString());
-                buffer.append(" ");
-                buffer.append(c.getArmyValue());
-                buffer.append(" ");
-		buffer.append( ColorUtil.getStringForColor( c.getColor() ) );
-                buffer.append(n);
-            }
-
-            buffer.append(n);
-            buffer.append("[countries]");
-            buffer.append(n);
-
-            Country[] countries = myMap.getCountries();
-
-            for (int i = 0; i < countries.length; i++) {
-
-                Country c = countries[i];
-
-                int color = c.getColor();
-
-		if (color != (i+1)) { throw new Exception("country missmatch with pos/id/color: "+c); }
-
-                buffer.append(String.valueOf(color));
-                buffer.append(" ");
-                buffer.append(c.getIdString());
-                buffer.append(" ");
-		buffer.append( getStringForContinent(c.getContinent(), myMap));
-                buffer.append(" ");
-		buffer.append( c.getX() );
-                buffer.append(" ");
-		buffer.append( c.getY() );
-                buffer.append(n);
-            }
-
-
-            buffer.append(n);
-            buffer.append("[borders]");
-            buffer.append(n);
-
-
-            for (int i = 0; i < countries.length; i++) {
-
-                Country c = countries[i];
-
-		buffer.append(String.valueOf(i+1));
-
-
-                List ney = c.getNeighbours();
-                for (int j = 0; j < ney.size(); j++) {
-
-                    Country n1 = (Country)ney.get(j);
-
-                    buffer.append(" ");
-		    buffer.append(String.valueOf( n1.getColor() ) );
-                }
-
-                buffer.append(n);
-
-            }
-            return buffer.toString();
         }
 
         // TODO really the net.yura.domination.mapstore.Map#getVersion() method should return a int
@@ -1614,35 +1365,20 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 			return false;
 		}
 	    }
-            
+
             if (usesDefaultCards && cardsSameAsDefaultRiskCards()) {
                 cardsName = MapsTools.DEFAULT_RISK_CARD_SET;
+                cardsFile = null;
             }
-            else {
-                String cardsBuffer = buildCardsFile(cardsName);
-                saveMap(cardsBuffer, new FileOutputStream(cardsFile));
-            }
-            
-	    String buffer = buildMapFile(mapName, cardsName, imageMapName, imagePicName);
-            saveMap(buffer, new FileOutputStream(mapFile));
 
-            saveImage( editPanel.getImageMap() , IMAGE_MAP_EXTENSION , imageMapFile );
-
-            if (doCopy) {
-                if (imgFile.equals( imagePicFile )) {
-                    // do nothing
-                    System.out.println("no change in pic, no save needed: "+imgFile);
-                }
-                else {
-                    RiskUtil.copy(imgFile, imagePicFile);
-                }
-            }
-            else {
-                saveImage( editPanel.getImagePic() , IMAGE_PIC_EXTENSION , imagePicFile );
-            }
+            MapSave.saveMapWithImages(myMap,
+                    mapFile, cardsFile, imageMapFile, imagePicFile,
+                    mapName, cardsName, imageMapName, imagePicName,
+                    doCopy ? null : editPanel.getImagePic(), IMAGE_PIC_EXTENSION, doCopy ? imgFile : null,
+                    editPanel.getImageMap(), IMAGE_MAP_EXTENSION);
 
             return true;
-	}
+        }
         
         private boolean cardsSameAsDefaultRiskCards() {
             try {
@@ -1658,7 +1394,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 for (int c = 0; c < myMap.getMissions().size(); c++) {
                     Mission m1 = (Mission)myMap.getMissions().get(c);
                     Mission m2 = (Mission)risk.getMissions().get(c);
-                    if (!getMissionString(m1, myMap).equals(getMissionString(m2, risk))) {
+                    if (!MapSave.getMissionString(m1, myMap).equals(MapSave.getMissionString(m2, risk))) {
                         return false;
                     }
                 }
@@ -1669,43 +1405,4 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 return false;
             }
         }
-
-        void saveImage(BufferedImage im, String formatName, File output) throws Exception {
-	    if ( !ImageIO.write( im , formatName , output ) ) {
-		// this should NEVER happen
-		throw new Exception("unable to save image files! "+output+" format="+formatName);
-	    }
-        }
-
-    private void saveMap(String text, OutputStream outputStream) throws IOException {
-            Writer output = null;
-	    try {
-
-                boolean utf8 = false;
-                for (int c=0,l=text.length();c<l;c++) {
-                    char ch = text.charAt(c);
-                    if (ch >= 256) {
-                        utf8 = true;
-                        break;
-                    }
-                }
-
-                if (utf8) {
-                    outputStream.write(0xEF);
-                    outputStream.write(0xBB);
-                    outputStream.write(0xBF);
-                    output = new BufferedWriter( new OutputStreamWriter(outputStream,"UTF-8") );
-                    output.write("; 1.1.0.7+ (UTF-8)");
-                    output.write( System.getProperty("line.separator") );
-                }
-                else {
-                    output = new BufferedWriter( new OutputStreamWriter(outputStream,"ISO-8859-1") );
-                }
-
-		output.write( text );
-            }
-	    finally {
-		if (output != null) output.close();
-	    }
-    }
 }

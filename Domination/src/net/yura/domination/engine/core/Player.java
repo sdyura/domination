@@ -14,14 +14,28 @@ public class Player implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+        public final static int PLAYER_NEUTRAL = -1;
 	public final static int PLAYER_HUMAN   = 0;
 	public final static int PLAYER_AI_CRAP = 3;
 	public final static int PLAYER_AI_EASY = 1;
-	public static final int PLAYER_AI_AVERAGE = 4;
+	public final static int PLAYER_AI_AVERAGE = 4;
         public final static int PLAYER_AI_HARD = 2;
 
-
     private String name;
+
+    /**
+        playerType:
+       -1 - neutral (does not received reinforcements)
+        0 - human
+        1 - AI (Easy)
+        2 - AI (Hard)
+        3 - AI (Crap) // never attacks
+        4 - AI (Average)
+        5 - AI (Test) {@link net.yura.domination.engine.ai.AITest}
+        6 - AI (Old) {@link net.yura.domination.engine.ai.old.AIHardOld}
+     */
+    private int type;
+    
     private int color;
     private int extraArmies;
     private Vector cardsOwned;
@@ -29,17 +43,6 @@ public class Player implements Serializable {
     private Vector playersEliminated;
     private Country capital;
     private Mission mission;
-    
-    /**
-
-playerType:
-0 - human
-1 - AI (Easy)
-2 - AI (Hard)
-3 - AI (Crap)
-
-     */
-    private int type;
     private String address;
 
     private Vector Statistics;
