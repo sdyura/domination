@@ -341,23 +341,22 @@ public class RiskGameTest extends TestCase {
         assertEquals(two_wildcards, instance.getTradeAbsValue(Card.INFANTRY, Card.WILDCARD, Card.WILDCARD, RiskGame.CARD_ITALIANLIKE_SET) );
         assertEquals(two_wildcards, instance.getTradeAbsValue(Card.CAVALRY, Card.WILDCARD, Card.WILDCARD, RiskGame.CARD_ITALIANLIKE_SET) );
     }
-    
-    
+
     public void testMinimumArmies() throws Exception {
 
         int noPlayers = 2;
         int noCountries = 6;
-        
+
         // for 2 players, minimum need 6 countries
         RiskGame instance = createBasicMap(noCountries);
-        
+
         addPlayers(instance, noPlayers);
 
         instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_ITALIANLIKE_SET, true, true, false);
         instance.setCurrentPlayer(0);
 
         assertEquals(RiskGame.STATE_PLACE_ARMIES, instance.getState());
-        
+
         // fill up all empty countries
         for (int i = 0; i < noCountries; i++) {
             assertFalse(instance.NoEmptyCountries());
@@ -369,7 +368,7 @@ public class RiskGameTest extends TestCase {
 
         //[A] [B] [A] [B] [A] [B]
         // 1   1   1   1   1   1
-        
+
         // each player now has 5 armies
         int armiesLeft = 0;
         for (int p = 0; p < noPlayers; p++) {
@@ -381,7 +380,7 @@ public class RiskGameTest extends TestCase {
             assertEquals(1, instance.placeArmy((Country)player.getTerritoriesOwned().get(0), 1));
             assertNotNull(instance.endGo());
         }
-        
+
         //[A] [B] [A] [B] [A] [B]
         // 6   6   1   1   1   1
 
@@ -389,7 +388,7 @@ public class RiskGameTest extends TestCase {
         Player player = instance.getCurrentPlayer();
         // we get 1 extra armie at the start of our turn 3 / 3
         assertEquals((noCountries / noPlayers) / 3, player.getExtraArmies());
-        
+
         Country[] countries = instance.getCountries();
 
         assertEquals(countries[0], (Country)player.getTerritoriesOwned().get(0));
@@ -407,21 +406,21 @@ public class RiskGameTest extends TestCase {
         }
         assertEquals(1, instance.moveArmies(countries[0].getArmies() - 1));
         assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
-        
+
         //[A] [A] [A] [B] [A] [B]
         // 1   6   1   1   1   1
-        
+
         assertTrue(instance.endAttack());
         assertEquals(RiskGame.STATE_FORTIFYING, instance.getState());
         assertTrue(instance.moveArmy(countries[1], countries[2], countries[1].getArmies() - 1));
-        
+
         //[A] [A] [A] [B] [A] [B]
         // 1   1   6   1   1   1
 
         assertEquals(RiskGame.STATE_END_TURN, instance.getState());
         player = instance.endGo();
         assertEquals(instance.getPlayers().get(1), player);
-        
+
         // as we dont have a min of 3 armies, and we only own 2 countries, we get no new armies!!!
         assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
         assertTrue(instance.endAttack());
@@ -433,27 +432,27 @@ public class RiskGameTest extends TestCase {
         assertEquals(RiskGame.STATE_PLACE_ARMIES, instance.getState());
         assertEquals(player.getNoTerritoriesOwned() / 3, player.getExtraArmies()); // 4 / 3 = 1
         assertEquals(1, instance.placeArmy(countries[4], player.getExtraArmies()));
-        
+
         //[A] [A] [A] [B] [A] [B]
         // 1   1   6   1   2   1
-        
+
         assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
         attack(instance, countries[2], countries[3]);
         assertEquals(1, instance.moveArmies(countries[2].getArmies() - 1));
-        
+
         //[A] [A] [A] [A] [A] [B]
         // 1   1   1   5   2   1
-        
+
         assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
         attack(instance, countries[4], countries[5]);
         assertEquals(2, instance.moveArmies(countries[4].getArmies() - 1));
-        
-        //[A] [A] [A] [A] [A] [B]
-        // 1   1   1   5   2   1
-        
+
+        //[A] [A] [A] [A] [A] [A]
+        // 1   1   1   5   1   1
+
         assertEquals(RiskGame.STATE_GAME_OVER, instance.getState());
     }
-    
+
     private void addPlayers(RiskGame instance, int noPlayers) {
         for (int p = 0; p < noPlayers; p++) {
             int color = ColorUtil.BLACK;
@@ -465,11 +464,11 @@ public class RiskGameTest extends TestCase {
                 case 4: color = ColorUtil.BLUE; break;
                 case 5: color = ColorUtil.YELLOW; break;
             }
-            
+
             instance.addPlayer(Player.PLAYER_HUMAN, "p" + (p + 1), color, "address12345");
         }
     }
-    
+
     private void attack(RiskGame instance, Country attacker, Country defender) {
         instance.attack(attacker, defender);
 
@@ -507,7 +506,7 @@ public class RiskGameTest extends TestCase {
                fail("unexpected result " + result[3]); 
         }
     }
-    
+
     private static int[] getDice(int count, int result) {
         int[] results = new int[count];
         for (int c = 0; c < count; c++) {
@@ -515,15 +514,15 @@ public class RiskGameTest extends TestCase {
         }
         return results;
     }
-    
+
     private RiskGame createBasicMap(int noCountries) throws Exception {
-        
+
         RiskGame map = TestUtil.newRiskGame();
         map.setupNewMap();
 
         Continent continent = new Continent("meow", "Meow", 5, 0);
         map.setContinents(new Continent[] { continent });
-        
+
         Country[] countries = new Country[noCountries];
         for (int c = 0; c < noCountries; c++) {
             countries[c] = new Country(c + 1, "meow" + c, "Meow " + c, continent, 50 + 50 * c, 50);
