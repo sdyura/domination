@@ -41,16 +41,16 @@ public class Country implements Serializable {
 	 * @param n the name of the country
 	 * @param c the name of the continent the country belongs to
 	 */
-	public Country (int p, String id, String n, Continent c, int a, int b) {
+	public Country (int color, String id, String name, Continent c, int x, int y) {
                 this();
 		idString        = id;
-		color		=p;
-		name		=n;
+		this.color	= color;
+		this.name	= name;
 		continent	=c;
 		owner		=null;
 		armies		=0;
-		x		=a;
-		y		=b;
+		this.x		= x;
+		this.y		= y;
 	}
 
 	public String getIdString() {

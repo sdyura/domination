@@ -478,8 +478,15 @@ transient - A keyword in the Java programming language that indicates that a fie
 			else if (currentPlayer.getExtraArmies() > 0) { // ie the initial setup has not been compleated or there are no cards that can be traded
 				gameState = STATE_PLACE_ARMIES;
 			}
-                        else {
+                        // last 3 states can ONLY happen in italian mode with no minimum armies enabled
+                        else if (canAttackOrMove(currentPlayer, true)) {
                                 gameState = STATE_ATTACKING;
+                        }
+                        else if (canAttackOrMove(currentPlayer, false)) {
+                                gameState = STATE_FORTIFYING;
+                        }
+                        else {
+                                gameState = STATE_END_TURN;
                         }
                         
                         //System.out.println("new game state " + gameState);
@@ -494,6 +501,29 @@ transient - A keyword in the Java programming language that indicates that a fie
 			return null;
 		}
 	}
+
+    public static boolean canAttackOrMove(Player player, boolean attack) {
+        
+        List t = player.getTerritoriesOwned();
+	List n;
+    	Country source,target;
+	for (int a = 0; a < t.size(); a++) {
+	    source = (Country)t.get(a);
+	    if (source.getArmies() > 1) {
+		n = source.getNeighbours();
+		for (int b = 0; b < n.size(); b++) {
+		    target = (Country)n.get(b);
+		    if (attack && target.getOwner() != player) {
+                        return true;
+		    }
+                    if (!attack && target.getOwner() == player) {
+                        return true;
+                    }
+		}
+	    }
+	}
+	return false;
+    }
 
 	/**
 	 * Trades a set of cards
@@ -763,7 +793,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * Places an army on the Country
 	 * @param t Country that the player wants to add armies to
 	 * @param n Number of armies the player wants to add to the country
-	 * @return boolean Returns true if the number of armies are added the country, returns false if the armies cannot be added to the territory
+	 * @return int Returns 1 if the number of armies are added the country, returns 0 if the armies cannot be added to the territory
 	 */
 	public int placeArmy(Country t, int n) {
 

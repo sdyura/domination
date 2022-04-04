@@ -422,10 +422,10 @@ public class RiskGameTest extends TestCase {
         assertEquals(instance.getPlayers().get(1), player);
 
         // as we dont have a min of 3 armies, and we only own 2 countries, we get no new armies!!!
-        assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
-        assertTrue(instance.endAttack());
-        assertEquals(RiskGame.STATE_FORTIFYING, instance.getState());
-        assertTrue(instance.noMove());
+        //assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
+        //assertTrue(instance.endAttack());
+        //assertEquals(RiskGame.STATE_FORTIFYING, instance.getState());
+        //assertTrue(instance.noMove());
         assertEquals(RiskGame.STATE_END_TURN, instance.getState());
         player = instance.endGo();
         assertEquals(instance.getPlayers().get(0), player);

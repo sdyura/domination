@@ -25,18 +25,16 @@ public class Continent implements Serializable {
 
 	/**
 	 * Creates a continent object
-	 * @param n the continent name
-	 * @param c the continent colour
-	 * @param noa the number of armies recieved when the whole continent is owned
+         * @param id unique string id of the continent, without spaces
+	 * @param name the continent name
+         * @param numberOfArmies the number of armies recieved when the whole continent is owned
+	 * @param color the continent colour
 	 */
-	public Continent(String id, String n, int noa, int c) {
-
+	public Continent(String id, String name, int numberOfArmies, int color) {
 		idString = id;
-
-		name		= n;
-		color		= c;
-		armyValue	= noa;
-
+		this.name	= name;
+		this.color	= color;
+		armyValue	= numberOfArmies;
 	}
 
 	public String toString() {
