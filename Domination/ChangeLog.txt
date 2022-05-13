@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.2.5
 
 	Fix for lobby failed to launch when javax.crypto.JceSecurity not found
+	New field in game for minimumNewArmies that can be set depending on the game options
 
 	iOS 4 Theme fix for disabled/secondary list foreground
 	      load text as utf-8 in webview

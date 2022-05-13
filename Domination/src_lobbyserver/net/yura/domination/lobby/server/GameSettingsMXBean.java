@@ -23,4 +23,7 @@ public interface GameSettingsMXBean {
     void saveGame(int id) throws Exception;
     void saveGameLog(int id) throws Exception;
     List<Integer> markFinished() throws Exception;
+    
+    int getMinAndroidVersion();
+    void setMinAndroidVersion(int minAndroidVersion);
 }

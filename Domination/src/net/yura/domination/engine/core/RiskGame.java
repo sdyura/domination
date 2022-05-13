@@ -33,6 +33,11 @@ public class RiskGame implements Serializable {
 	private static final long serialVersionUID = 8L;
 	public final static String SAVE_VERSION = String.valueOf(serialVersionUID);
 
+        /**
+         * this is the version of the engine of the game
+         * the "engine" describes how mutations happen to the model based on the commands
+         * if we change the action of a command we must increment this number
+         */
 	public final static String NETWORK_VERSION = "13";
 
 	public static int MAX_PLAYERS = 6; // can be changed in game.ini config
@@ -2765,7 +2770,7 @@ System.out.print(str+"]\n");
 
         // this is a new field, if we dont have it saved, use the default
         minimumNewArmies = DEFAULT_MINIMUM_NEW_ARMIES;
-        
+
     	in.defaultReadObject();
     	this.r = new Random();
     	if (this.mapfile != null && gameState != STATE_NEW_GAME) {

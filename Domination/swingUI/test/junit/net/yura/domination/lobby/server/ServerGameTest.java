@@ -8,12 +8,10 @@ import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.ui.simplegui.RiskGUI;
 import net.yura.lobby.server.LobbySession;
 import net.yura.lobby.server.ServerGame;
 import net.yura.lobby.server.ServerGameListener;
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.fail;
 
 public class ServerGameTest extends TestCase {
 
@@ -102,12 +100,10 @@ public class ServerGameTest extends TestCase {
 
         String[] players = new String[] {"bob1", "fred2"};
 
+        serverGame.setOptions(startGameOptions);
+        serverGame.startGame(players);
+
         Risk myrisk = ((ServerGameRisk)serverGame).myrisk;
-
-        //RiskGUI gui = new RiskGUI(myrisk);
-        //gui.setVisible(true);
-
-        serverGame.startGame(startGameOptions, players);
 
         assertEquals(5, myrisk.getGame().getPlayers().size());
 

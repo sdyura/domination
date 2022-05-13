@@ -68,6 +68,14 @@ public class GameSettings implements GameSettingsMXBean {
     public int getMaxMapCountries() {
         return mapMaxCountries;
     }
+    
+    private int minAndroidVersion = 61;
+    public int getMinAndroidVersion() {
+        return minAndroidVersion;
+    }
+    public void setMinAndroidVersion(int minAndroidVersion) {
+        this.minAndroidVersion = minAndroidVersion;
+    }
 
     public void updateMaps() {
 

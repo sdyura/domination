@@ -21,6 +21,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
+import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Country;
@@ -31,6 +32,8 @@ import net.yura.lobby.server.TurnBasedGame;
 import net.yura.mobile.util.Url;
 
 public class ServerGameRisk extends TurnBasedGame {
+
+        static final GameSettings settings;
 
 	ServerRisk myrisk;
 
@@ -76,8 +79,8 @@ public class ServerGameRisk extends TurnBasedGame {
                 }
             };
 
+            settings = new GameSettings(mapsDir);
             try {
-                GameSettings settings = new GameSettings(mapsDir);
                 MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
                 mbs.registerMBean(settings, new ObjectName("net.yura.domination:type=GameSettings") );
             }
@@ -87,21 +90,69 @@ public class ServerGameRisk extends TurnBasedGame {
         }
 
 	public ServerGameRisk() {
-		myrisk = new ServerRisk(this);
-		// POP UP DEBUG WINDOW
-		//Increment1Frame gui = new Increment1Frame( myrisk );
-		//RiskGUI gui = new RiskGUI( myrisk );
-        	//gui.setVisible(true);
 	}
+        
+        // officially released supported clients
+
+        /**
+         * pre Italian rule change version 3
+         */
+        private final String APP_IOS = "iOSDomination";
+        /**
+         * pre Italian rule change version 82
+         */
+        private final String APP_ANDROID = "AndroidDomination";
+        /**
+         * pre Italian rule change version 1.2.4
+         */
+        private final String APP_FLASH = "FlashDomination";
+        /**
+         * pre Italian rule change version 1.2.4
+         */
+        private final String APP_SWING = "SwingDomination";
 
         @Override
-        public void setId(int id) {
-            super.setId(id);
+        public boolean isSupportedClient(LobbySession session) {
+            String appNameVersion = session.getClientVersion();
+            int space = appNameVersion.indexOf(' '); // this space is added by Lobby server so should always be there
+            String appName = appNameVersion.substring(0, space);
+            String appVersion = appNameVersion.substring(space + 1, appNameVersion.length());
 
-            myrisk.setName("Domination-Game-"+id);
+            if (APP_ANDROID.equals(appName)) {
+                try {
+                    int androidVersion = Integer.parseInt(appVersion);
+                    if (androidVersion < settings.getMinAndroidVersion()) {
+                        return false;
+                    }
+                }
+                catch (NumberFormatException ex) {}
+            }
+
+            String[] options = startGameOptions.split("\\n");
+            String startGameCommand = options[4];
+            
+            if (startGameCommand.contains(Risk.STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET)) {
+                //TODO add checks when new rule is added
+            }
+
+            return true;
         }
 
-	public void startGame(String startGameOptions, String[] players) {
+        private void createGame() {
+            if (myrisk == null) {
+                myrisk = new ServerRisk(this);
+                myrisk.setName("Domination-Game-" + getId());
+
+                // POP UP DEBUG WINDOW
+                //Increment1Frame gui = new Increment1Frame( myrisk );
+                //RiskGUI gui = new RiskGUI( myrisk );
+                //gui.setVisible(true);
+            }
+        }
+
+        @Override
+	public void startGame(String[] players) {
+                createGame();
 		//System.out.println("\tNEW GAME STARTING FOR RISK: "+gameid);
 
 		//myguid = gameid;
@@ -189,18 +240,9 @@ public class ServerGameRisk extends TurnBasedGame {
                 }
 	}
 
-        public byte[] saveGameState() {
-            try {
-                ByteArrayOutputStream bout = new ByteArrayOutputStream();
-                myrisk.getGame().saveGame(bout); // TODO this is prob not very thread safe!!
-                return bout.toByteArray();
-            }
-            catch (IOException ex) {
-                throw new UncheckedIOException(ex);
-            }
-        }
-
+        @Override
 	public void loadGame(byte[] gameData) {
+            createGame();
             try {
                 ByteArrayInputStream in = new ByteArrayInputStream(gameData);
                 ObjectInputStream oin = new ObjectInputStream(in);
@@ -221,10 +263,24 @@ public class ServerGameRisk extends TurnBasedGame {
             }
 	}
 
+        @Override
+        public byte[] saveGameState() {
+            try {
+                ByteArrayOutputStream bout = new ByteArrayOutputStream();
+                myrisk.getGame().saveGame(bout); // TODO this is prob not very thread safe!!
+                return bout.toByteArray();
+            }
+            catch (IOException ex) {
+                throw new UncheckedIOException(ex);
+            }
+        }
+
+        @Override
 	public void destroyGame() {
 		myrisk.setKillFlag();
 	}
 
+        @Override
 	public void clientHasJoined(String username) {
 		sendObjectToClient(myrisk.getGame(), username);
 	}
@@ -244,6 +300,7 @@ public class ServerGameRisk extends TurnBasedGame {
         }
 
 	// get message from the user
+        @Override
 	public void stringFromPlayer(String username, String message) {
 		//System.out.print("\tGOTFROMCLIENT "+username+":"+message+"\n");
 		String address = getPlayerId(username);
@@ -284,6 +341,7 @@ public class ServerGameRisk extends TurnBasedGame {
 	}
 
 
+        @Override
 	public void doBasicGo(String username) {
 		String playerid = getPlayerId(username);
 		// this check is already done
