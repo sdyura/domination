@@ -1240,7 +1240,7 @@ RiskUtil.printStackTrace(e);
 							else if ( newOption.equals(STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET) ) {
 								newgame_cardType = RiskGame.CARD_ITALIANLIKE_SET;
                                                                 threeDice = true;
-                                                                //minimumThreeArmies = false;
+                                                                minimumThreeArmies = false;
 							}
 							else if ( newOption.equals("autoplaceall") ) {
 								newgame_autoplaceall = true;

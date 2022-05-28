@@ -38,7 +38,7 @@ public class RiskGame implements Serializable {
          * the "engine" describes how mutations happen to the model based on the commands
          * if we change the action of a command we must increment this number
          */
-	public final static String NETWORK_VERSION = "13";
+	public final static String NETWORK_VERSION = "14";
 
 	public static int MAX_PLAYERS = 6; // can be changed in game.ini config
 	public final static Continent ANY_CONTINENT = new Continent("any","any", 0, 0);
