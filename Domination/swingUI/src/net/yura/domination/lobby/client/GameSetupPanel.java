@@ -593,8 +593,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                     String[] split = message[c].split(RiskUtil.quote("\n"));
                     for (int i = 0; i < split.length; i++) {
                         if (split[i].length() > 50) {
-                            // swing will scale this pixel size, so it will not actually always be 200px
-                            message[c] = "<html><p style='width: 200px;'>" + message[c].replace("\n", "<br>");
+                            message[c] = "<html><p style='width: " + GraphicsUtil.scale(200) + "px;'>" + message[c].replace("\n", "<br>");
                             break;
                         }
                     }
