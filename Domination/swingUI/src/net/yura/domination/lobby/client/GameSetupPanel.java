@@ -291,10 +291,9 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                             map.getDescription()};
                                         }
 
-                                        int result = JOptionPane.showInternalConfirmDialog(GameSetupPanel.this, message, "Download?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, it.getIcon(203, 127, GameSetupPanel.this));
+                                        int result = showConfirmDialog(GameSetupPanel.this, message, "Download?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, it.getIcon(203, 127, GameSetupPanel.this));
 
                                         if (result == JOptionPane.OK_OPTION) {
-                                            
                                             downloading.add(it);
 
                                             GetMap.getMap(it.getID(), new Observer() {
@@ -581,7 +580,31 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 		mapList.setFixedCellHeight(GraphicsUtil.scale(33));
 	}
-        
+
+        public static int showConfirmDialog(Component parentComponent,
+                                        String[] message,
+                                        String title, int optionType,
+                                        int messageType, Icon icon) {
+
+            // if lines are too long they push the buttons off to the right and make them impossible to click
+            // using JTextArea to wrap the text pushes the button off the bottom and cut off.
+            for (int c = 0; c < message.length; c++) {
+                if (message[c].length() > 50) {
+                    String[] split = message[c].split(RiskUtil.quote("\n"));
+                    for (int i = 0; i < split.length; i++) {
+                        if (split[i].length() > 50) {
+                            // swing will scale this pixel size, so it will not actually always be 200px
+                            message[c] = "<html><p style='width: 200px;'>" + message[c].replace("\n", "<br>");
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // TODO document why we had to use Internal here
+            return JOptionPane.showInternalConfirmDialog(parentComponent, message, title, optionType, messageType, icon);
+        }
+
         private static int getIndexOfItem(JList list, Object obj) {
             ListModel model = list.getModel();
             for (int c = 0; c < model.getSize(); c++) {
