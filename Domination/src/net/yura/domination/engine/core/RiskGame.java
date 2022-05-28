@@ -347,7 +347,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 				((Player)Players.elementAt(c)).addArmies(armies);
 			}
 
-			gameState=STATE_PLACE_ARMIES;
+			gameState = STATE_PLACE_ARMIES;
 			capturedCountry=false;
 			tradeCap=false;
 		}
@@ -485,18 +485,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 			else if (canTrade()) { // there are cards that can be traded
                                 gameState = STATE_TRADE_CARDS;
 			}
-			else if (currentPlayer.getExtraArmies() > 0) { // ie the initial setup has not been compleated or there are no cards that can be traded
-				gameState = STATE_PLACE_ARMIES;
-			}
-                        // last 3 states can ONLY happen in italian mode with no minimum armies enabled
-                        else if (canAttackOrMove(currentPlayer, true)) {
-                                gameState = STATE_ATTACKING;
-                        }
-                        else if (canAttackOrMove(currentPlayer, false)) {
-                                gameState = STATE_FORTIFYING;
-                        }
                         else {
-                                gameState = STATE_END_TURN;
+                                goIntoPlaceArmiesState();
                         }
                         
                         //System.out.println("new game state " + gameState);
@@ -511,6 +501,26 @@ transient - A keyword in the Java programming language that indicates that a fie
 			return null;
 		}
 	}
+
+    /**
+     * in Italian mode, we may have no armies, so we need to handle going into other states too
+     */
+    private void goIntoPlaceArmiesState() {
+
+        if (currentPlayer.getExtraArmies() > 0) { // ie the initial setup has not been compleated or there are no cards that can be traded
+                gameState = STATE_PLACE_ARMIES;
+        }
+        // last 3 states can ONLY happen in italian mode with no minimum armies enabled
+        else if (canAttackOrMove(currentPlayer, true)) {
+                gameState = STATE_ATTACKING;
+        }
+        else if (canAttackOrMove(currentPlayer, false)) {
+                gameState = STATE_FORTIFYING;
+        }
+        else {
+                gameState = STATE_END_TURN;
+        }
+    }
 
     public static boolean canAttackOrMove(Player player, boolean attack) {
         
@@ -578,7 +588,7 @@ transient - A keyword in the Java programming language that indicates that a fie
         // if tradeCap you must trade to redude your cards to 4 or fewer cards
         // but once your hand is reduced to 4, 3 or 2 cards, you must stop trading
         if ( !canTrade() || (tradeCap && currentPlayer.getCards().size() < MAX_CARDS ) ) {
-            gameState=STATE_PLACE_ARMIES;
+            gameState = STATE_PLACE_ARMIES;
             tradeCap=false;
         }
 
@@ -787,10 +797,11 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 */
 	public boolean endTrade() {
             if (canEndTrade()) {
-                gameState=STATE_PLACE_ARMIES;
                 if (tradeCap) {
                     throw new RuntimeException("endTrade worked when tradeCap was true");
                 }
+
+                goIntoPlaceArmiesState();
                 return true;
             }
             return false;
@@ -861,25 +872,21 @@ transient - A keyword in the Java programming language that indicates that a fie
 			if (done==1) {
 
 				if (getSetupDone() ) { // ie the initial setup has been compleated
-					if ( currentPlayer.getExtraArmies()==0 ) { gameState=STATE_ATTACKING; }
-					else { gameState=STATE_PLACE_ARMIES; }
+					if (currentPlayer.getExtraArmies() != 0) { gameState = STATE_PLACE_ARMIES; }
+					else { gameState = STATE_ATTACKING; }
 				}
 				else { // initial setup is not compleated
 					if (currentPlayer.getExtraArmies()==0) {
 						setup++; // another player has finished initial setup
-
 					}
 
 					gameState=STATE_END_TURN;
-
 				}
 
 				if ( checkPlayerWon() ) {
 					done=2;
 				}
-
 			}
-
 		}
 		return done;
 	}
@@ -1510,9 +1517,9 @@ transient - A keyword in the Java programming language that indicates that a fie
 
                         gameMode=MODE_DOMINATION;
 
-			if (tradeCap==true) { gameState=STATE_TRADE_CARDS; }
-			else if ( currentPlayer.getExtraArmies()==0 ) { gameState=STATE_ATTACKING; }
-			else { gameState=STATE_PLACE_ARMIES; }
+			if (tradeCap == true) { gameState = STATE_TRADE_CARDS; }
+			else if (currentPlayer.getExtraArmies() != 0) { gameState = STATE_PLACE_ARMIES; }
+			else { gameState = STATE_ATTACKING; }
 
 			return true;
 
