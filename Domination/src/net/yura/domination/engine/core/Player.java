@@ -12,14 +12,14 @@ import java.util.Vector;
  */
 public class Player implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-        public final static int PLAYER_NEUTRAL = -1;
-	public final static int PLAYER_HUMAN   = 0;
-	public final static int PLAYER_AI_CRAP = 3;
-	public final static int PLAYER_AI_EASY = 1;
-	public final static int PLAYER_AI_AVERAGE = 4;
-        public final static int PLAYER_AI_HARD = 2;
+    public final static int PLAYER_NEUTRAL    = -1;
+    public final static int PLAYER_HUMAN      = 0;
+    public final static int PLAYER_AI_CRAP    = 3;
+    public final static int PLAYER_AI_EASY    = 1;
+    public final static int PLAYER_AI_AVERAGE = 4;
+    public final static int PLAYER_AI_HARD    = 2;
 
     private String name;
 
@@ -108,22 +108,16 @@ public class Player implements Serializable {
     }
 
     public List<Statistic> getStatistics() {
-		return Statistics;
-	}
+	return Statistics;
+    }
 
     public int getNoArmies() {
-
 	int n=0;
-
 	// add new armies for the Continents Owned
 	for (int c=0; c< territoriesOwned.size() ; c++) {
-
 	    n = n + ((Country)territoriesOwned.elementAt(c)).getArmies();
-
 	}
-
 	return n;
-
     }
 
     /**
@@ -232,34 +226,40 @@ public class Player implements Serializable {
         return c;
     }
 
-    public static final int noaFORcard = 2;
-
     /**
      * Trading in the cards, adds 2 extra armies to the first country that it owns on the cards and removing the cards from the player
      * @param card1 First card
      * @param card2 Second card
      * @param card3 Third card
      */
-    public void tradeInCards(Card card1, Card card2, Card card3) {
+    public int tradeInCards(Card card1, Card card2, Card card3, int numberOfArmiesForFirstCountry) {
 
-	// check if you should get extra armies on the territoriesOwned
-	if (territoriesOwned.contains( card1.getCountry() ) ) {
-	    ((Country)card1.getCountry()).addArmies(noaFORcard);
-	    currentStatistic.addReinforcements(noaFORcard);
-	}
-	else if (territoriesOwned.contains( card2.getCountry() ) ) {
-	    ((Country)card2.getCountry()).addArmies(noaFORcard);
-	    currentStatistic.addReinforcements(noaFORcard);
-	}
-	else if (territoriesOwned.contains( card3.getCountry() ) ) {
-	    ((Country)card3.getCountry()).addArmies(noaFORcard);
-	    currentStatistic.addReinforcements(noaFORcard);
-	}
+        boolean country1Owned = territoriesOwned.contains(card1.getCountry());
+        boolean country2Owned = territoriesOwned.contains(card2.getCountry());
+        boolean country3Owned = territoriesOwned.contains(card3.getCountry());
 
-	cardsOwned.remove(card1);
-	cardsOwned.remove(card2);
-	cardsOwned.remove(card3);
+        if (numberOfArmiesForFirstCountry != 0) {
+            // check if you should get extra armies on the territoriesOwned
+            if (country1Owned) {
+                card1.getCountry().addArmies(numberOfArmiesForFirstCountry);
+                currentStatistic.addReinforcements(numberOfArmiesForFirstCountry);
+            }
+            else if (country2Owned) {
+                card2.getCountry().addArmies(numberOfArmiesForFirstCountry);
+                currentStatistic.addReinforcements(numberOfArmiesForFirstCountry);
+            }
+            else if (country3Owned) {
+                card3.getCountry().addArmies(numberOfArmiesForFirstCountry);
+                currentStatistic.addReinforcements(numberOfArmiesForFirstCountry);
+            }
+        }
+
+	if (!cardsOwned.remove(card1) | !cardsOwned.remove(card2) | !cardsOwned.remove(card3)) {
+            throw new IllegalArgumentException("player does not have card");
+        }
 	cardsOwned.trimToSize();
+
+        return (country1Owned ? 1 : 0) + (country2Owned ? 1 : 0) + (country3Owned ? 1 : 0);
     }
 
 

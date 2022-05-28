@@ -66,6 +66,7 @@ public class RiskGame implements Serializable {
 
         public final static int MAX_CARDS = 5;
         public final static int DEFAULT_MINIMUM_NEW_ARMIES = 3;
+        public final static int DEFAULT_EXTRA_ARMIES_FOR_CARD = 2;
 
 	private static String defaultMap;
 	private static String defaultCards;
@@ -141,6 +142,10 @@ nogame	(-1 in gui)		(current possible commands are: newgame, loadgame, closegame
 	private int cardState;
 	private int mustmove;
 	private boolean capturedCountry;
+        
+        /**
+         * This is ONLY enabled for non Italian mode
+         */
 	private boolean tradeCap;
 
 	private Country attacker;
@@ -547,11 +552,18 @@ transient - A keyword in the Java programming language that indicates that a fie
 
         if (armies <= 0) return 0;
 
-        if (cardMode==CARD_INCREASING_SET) {
-            cardState=armies;
+        if (cardMode == CARD_INCREASING_SET) {
+            cardState = armies;
         }
 
-        currentPlayer.tradeInCards(card1, card2, card3);
+        boolean italianCardTradeRules = cardMode == CARD_ITALIANLIKE_SET && minimumNewArmies == 0;
+
+        // in italian rules, you can get extra 2 armies for EACH country, and can place them on ANY country you own.
+        int cardCountriesOwned = currentPlayer.tradeInCards(card1, card2, card3, italianCardTradeRules ? 0 : DEFAULT_EXTRA_ARMIES_FOR_CARD);
+
+        if (italianCardTradeRules) {
+            armies = armies + (cardCountriesOwned * DEFAULT_EXTRA_ARMIES_FOR_CARD);
+        }
 
         //Return the cards to the deck
         List used = getUsedCards();

@@ -282,7 +282,7 @@ public class CardsDialog extends Frame implements ActionListener {
                                     int y = getHeight()/2 - imgSize/2 - w/2;
                                     g.fillOval(x, y, w, w);
                                     g.setColor( ColorUtil.getTextColorFor(ownerColor) );
-                                    g.drawString("+"+Player.noaFORcard, x, y);
+                                    g.drawString("+" + RiskGame.DEFAULT_EXTRA_ARMIES_FOR_CARD, x, y);
                                 }
 			}
 
