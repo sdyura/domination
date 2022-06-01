@@ -5,6 +5,8 @@ package net.yura.domination.ui.swinggui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -64,13 +66,18 @@ public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
 
 	public void actionPerformed(ActionEvent a) {
             if (a.getActionCommand().equals("send")) {
+                
+                String recipient = "yura@yura.net";
+                String subject = RiskUtil.GAME_NAME + " " + RiskUtil.RISK_VERSION +" SwingGUI "+ TranslationBundle.getBundle().getLocale().toString() + " Suggestion";
+                String body = text.getText();
+
                 try {
                     // This code is a lot like the Alert Service in Lobby
                     Map<String, String> map = new HashMap();
-                    map.put("recipient", "yura@yura.net");
-                    map.put("subject", RiskUtil.GAME_NAME + " " + RiskUtil.RISK_VERSION +" SwingGUI "+ TranslationBundle.getBundle().getLocale().toString() + " Suggestion");
+                    map.put("recipient", recipient);
+                    map.put("subject", subject);
                     map.put("email", from.getText());
-                    map.put("text", text.getText());
+                    map.put("text", body);
                     map.put("OS", RiskUIUtil.getOSString());
                     map.put("lobbyID", net.yura.lobby.mini.MiniLobbyClient.getMyUUID());
                     map.put("env_report", "REMOTE_HOST,HTTP_USER_AGENT");
@@ -78,10 +85,32 @@ public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
                     JOptionPane.showMessageDialog(this, "SENT!");
                 }
                 catch (Throwable ex) {
+                    try {
+                        sendEmailWithNativeClient(recipient, subject, body);
+                        return;
+                    }
+                    catch (Throwable ex2) {
+                        RiskUtil.printStackTrace(ex2);
+                    }
+                    JOptionPane.showMessageDialog(this, "Error Sending: " + ex);
                     throw new RuntimeException("can not send", ex);
                 }
             }
 	}
+
+        public static void sendEmailWithNativeClient(String recipient, String subject, String body) throws Exception {
+            
+            body = body + "\n\n"
+                    + "OS: " + RiskUIUtil.getOSString() + "\n"
+                    + "ID: " + net.yura.lobby.mini.MiniLobbyClient.getMyUUID();
+
+            // for some reason + does not get decoded, so we set it back to a space
+            URL url = new URL("mailto:" + recipient
+                    + "?subject=" + RiskUtil.replaceAll(URLEncoder.encode(subject, "UTF-8"), "+", "%20")
+                    + "&body=" + RiskUtil.replaceAll(URLEncoder.encode(body, "UTF-8"), "+", "%20"));
+
+            RiskUtil.openURL(url);
+        }
 
 	public JToolBar getToolBar() {
 		return toolbar;
@@ -89,5 +118,4 @@ public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
 	public JMenu getMenu() {
 		return null;
 	}
-
 }

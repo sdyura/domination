@@ -450,30 +450,25 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                         map.put("recipient", to);
                     }
 
-                    net.yura.grasshopper.BugSubmitter.submitBug(map, from, subject, cause, RiskUtil.GAME_NAME,
+                    boolean success = net.yura.grasshopper.BugSubmitter.submitBug(map, from, subject, cause, RiskUtil.GAME_NAME,
                             RiskUtil.RISK_VERSION, TranslationBundle.getBundle().getLocale().toString()
                         );
-                    JOptionPane.showMessageDialog(this, "SENT!");
-                    // everything went well sending through grasshopper, we return
-                    return;
+                    
+                    if (success) {
+                        JOptionPane.showMessageDialog(this, "SENT!");
+                        // everything went well sending through grasshopper, we return
+                        return;
+                    }
                 }
             }
-            catch (Throwable th) { } // maybe Grasshopper.jar is missing
+            catch (Throwable th) { } // maybe Grasshopper.jar is missing or something else has gone very wrong
 
             // if for some reason we can not send with grasshopper, we fall back to client email
             try {
                 String text = (messageFromUser != null ? messageFromUser : "") + "\n\n\n" +
-                        debugTab.getDebugText() + "\n" +
-                        debugTab.getErrText() + "\n\n" +
-                        "OS: " + RiskUIUtil.getOSString() + "\n" +
-                        "ID: " + net.yura.lobby.mini.MiniLobbyClient.getMyUUID();
+                        debugTab.getDebugText() + "\n" + debugTab.getErrText();
 
-                // for some reason + does not get decoded, so we set it back to a space
-                URL url = new URL("mailto:yura@yura.net"+
-                        "?subject="+URLEncoder.encode(subject, "UTF-8").replace('+', ' ')+
-                        "&body="+URLEncoder.encode(text, "UTF-8").replace('+', ' '));
-
-                RiskUtil.openURL(url);
+                BugsPanel.sendEmailWithNativeClient("yura@yura.net", subject, text);
             }
             catch (Throwable th) {
                 JOptionPane.showMessageDialog(this, "Error opening native email: "+th);

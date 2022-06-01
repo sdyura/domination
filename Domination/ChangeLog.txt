@@ -3,8 +3,8 @@ Risk - Yura Mamyrin (yura@yura.net)
 CURRENT VERSION:
 
 	Risk Game:	1.2.5
-	 * Save:	8
 	 * Network:	14
+	 * Save:	8
 
 	iOS:		4
 	Android:	82
@@ -20,7 +20,7 @@ CURRENT VERSION:
 	New field in game for minimumNewArmies that can be set depending on the game options
 	New Italian rules: no minimum armies, if you have less than 3 counties, you get 0 armies
 	New Italian rules: during trade get 2 extra armies for each country, and can place them anywhere
-	New Italian rules: network play version now 14
+	New Italian rules: game engine/network play version now 14
 
 	iOS 4 Theme fix for disabled/secondary list foreground
 	      load text as utf-8 in webview
