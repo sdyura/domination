@@ -19,7 +19,7 @@ import net.yura.mobile.io.json.JSONWriter;
  */
 public class GooglePlusOne {
 
-    public static final Logger logger = Logger.getLogger(GooglePlusOne.class.getName());
+    private static final Logger logger = Logger.getLogger(GooglePlusOne.class.getName());
 
     public static final String URL = "https://clients6.google.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ";
 

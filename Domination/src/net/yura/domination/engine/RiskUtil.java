@@ -536,6 +536,10 @@ public class RiskUtil {
         return map instanceof java.util.Hashtable?(java.util.Hashtable)map:new java.util.Hashtable(map);
     }
 
+    /**
+     * TODO move this to use the java 1.5 method
+     * @see String#replace(java.lang.CharSequence, java.lang.CharSequence) 
+     */
     public static String replaceAll(String string, String notregex, String replacement) {
         return string.replaceAll( quote(notregex) , quoteReplacement(replacement));
     }

@@ -9,6 +9,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -28,6 +30,8 @@ import net.yura.grasshopper.BugSubmitter;
  */
 public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
 
+        private static final Logger logger = Logger.getLogger(BugsPanel.class.getName());
+    
 	private JToolBar toolbar;
 	private JTextArea text;
 	private JTextField from;
@@ -41,7 +45,7 @@ public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
 		toolbar.setRollover(true);
 		toolbar.setFloatable(false);
 
-		JButton send = new JButton("SEND MESSAGE");
+		JButton send = new JButton("\u2332 SEND MESSAGE");
 		send.setActionCommand("send");
 		send.addActionListener(this);
 		toolbar.add(send);
@@ -61,11 +65,10 @@ public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
 
 		add( top, BorderLayout.NORTH );
 		add( new JScrollPane(text) );
-
 	}
 
 	public void actionPerformed(ActionEvent a) {
-            if (a.getActionCommand().equals("send")) {
+            if ("send".equals(a.getActionCommand())) {
                 
                 String recipient = "yura@yura.net";
                 String subject = RiskUtil.GAME_NAME + " " + RiskUtil.RISK_VERSION +" SwingGUI "+ TranslationBundle.getBundle().getLocale().toString() + " Suggestion";
@@ -87,13 +90,15 @@ public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
                 catch (Throwable ex) {
                     try {
                         sendEmailWithNativeClient(recipient, subject, body);
-                        return;
+
+                        logger.log(Level.WARNING, "error with grasshopper doPost", ex);
                     }
                     catch (Throwable ex2) {
-                        RiskUtil.printStackTrace(ex2);
+                        JOptionPane.showMessageDialog(this, "Error Sending: " + ex + "\nPlease email " + recipient + " about this issue.");
+
+                        logger.log(Level.WARNING, "error with grasshopper doPost", ex);
+                        logger.log(Level.WARNING, "error with native mailto", ex2);
                     }
-                    JOptionPane.showMessageDialog(this, "Error Sending: " + ex);
-                    throw new RuntimeException("can not send", ex);
                 }
             }
 	}
