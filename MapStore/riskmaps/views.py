@@ -239,7 +239,7 @@ def upload_unauthorised_map(request):
             try:
                 import mechanize
                 br = mechanize.Browser()
-                r = br.open('http://yura.net/cgi-bin/TFmail.cgi', 'recipient=yura@yura.net&subject=NewMap&email=newmap@maps.yura.net&mapId=' + str(newMap.id) + '&mapName=' + newMap.name)
+                r = br.open('http://msg.yura.net/cgi-sys/FormMail.cgi', 'recipient=yura@yura.net&subject=NewMap&email=newmap@maps.yura.net&mapId=' + str(newMap.id) + '&mapName=' + newMap.name)
             except:
                 pass # Failed email is not a priority
 
