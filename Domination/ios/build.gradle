@@ -11,7 +11,7 @@ buildscript {
     }
     dependencies {
         // MOE plugin
-        classpath group: 'org.multi-os-engine', name: 'moe-gradle', version: '1.8.+'
+        classpath group: 'org.multi-os-engine', name: 'moe-gradle', version: '1.9.0'
     }
     // this is here to tell gradle to refresh the moe dependency in the event i am trying a snapshot
     // but this does not seem to work instead if the snapshot is sticky i need to go into Intelij/Android Studio
@@ -47,14 +47,6 @@ moe {
 }
 
 // to disable proguard put -dontshrink in the config
-moeMainProGuard {
-    appendCfgFile "../../iOSME/proguard.append.cfg"
-}
-moeTestProGuard {
-    appendCfgFile "../../iOSME/proguard.append.cfg"
-}
-
-/* for moe-1.9
 moeMainReleaseProGuard {
     appendCfgFile "../../iOSME/proguard.append.cfg"
 }
@@ -64,7 +56,6 @@ moeMainDebugProGuard {
 moeTestDebugProGuard {
     appendCfgFile "../../iOSME/proguard.append.cfg"
 }
-*/
 
 // Set dependencies
 dependencies {
