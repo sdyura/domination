@@ -328,21 +328,24 @@ public class CardsDialog extends Frame implements ActionListener {
                 public void fireActionPerformed() {
                     super.fireActionPerformed();
 
-                    if (!isSelected() && extraArmiesCard==this) {
-                        CardPanel newSelected=null;
-                        for (CardPanel cp: (List<CardPanel>)myCardsPanel.getComponents() ) {
-                            if ( cp.isSelected() && isOwnedPlayer(cp) ) {
-                                newSelected = cp;
-                                break;
+                    // in italian mode, the rules are different, we add 2 armies for each country owned, and the play can place them anywhere
+                    if (myrisk.getGame().getCardMode() != RiskGame.CARD_ITALIANLIKE_SET) {
+                        if (!isSelected() && extraArmiesCard == this) {
+                            CardPanel newSelected = null;
+                            for (CardPanel cp : (List<CardPanel>) myCardsPanel.getComponents()) {
+                                if (cp.isSelected() && isOwnedPlayer(cp)) {
+                                    newSelected = cp;
+                                    break;
+                                }
+                            }
+                            extraArmiesCard = newSelected;
+                            if (newSelected != null) {
+                                newSelected.repaint();
                             }
                         }
-                        extraArmiesCard = newSelected;
-                        if (extraArmiesCard!=null) {
-                            extraArmiesCard.repaint();
+                        else if (isSelected() && extraArmiesCard == null && isOwnedPlayer(this)) {
+                            extraArmiesCard = this;
                         }
-                    }
-                    else if (isSelected() && extraArmiesCard==null && isOwnedPlayer(this) ) {
-                        extraArmiesCard = this;
                     }
 
                     List<CardPanel> trades = getSelectedCards();
