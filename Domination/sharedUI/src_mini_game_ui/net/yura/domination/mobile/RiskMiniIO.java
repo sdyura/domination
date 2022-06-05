@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -15,6 +16,7 @@ import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.mobile.gui.Application;
+import net.yura.mobile.logging.Logger;
 
 /**
  * @author Yura Mamyrin
@@ -58,11 +60,18 @@ public class RiskMiniIO implements RiskIO {
     }
 
     public void renameMapFile(String oldName, String newName) {
-        File oldFile = new File(MiniUtil.getSaveMapDir(), oldName);
-        File newFile = new File(MiniUtil.getSaveMapDir(), newName);
-        RiskUtil.rename(oldFile, newFile);
+        File mapsDir = MiniUtil.getSaveMapDir();
+        File oldFile = new File(mapsDir, oldName);
+        File newFile = new File(mapsDir, newName);
+        try {
+            RiskUtil.rename(oldFile, newFile);
+        }
+        catch (RuntimeException ex) {
+            Logger.info("maps dir files list: " + Arrays.asList(mapsDir.list()));
+            throw ex;
+        }
     }
-    
+
     public boolean deleteMapFile(String mapUID) {
         File mapFile = new File(MiniUtil.getSaveMapDir(), mapUID);
         if (mapFile.exists()) {
@@ -70,5 +79,4 @@ public class RiskMiniIO implements RiskIO {
         }
         return false;
     }
-
 }
