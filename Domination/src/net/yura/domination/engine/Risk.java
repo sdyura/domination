@@ -1530,7 +1530,7 @@ RiskUtil.printStackTrace(e);
                                                             output = output+"\n"+ resb.getString("cards.italianlike");
 
                                                     }
-                                                    else {
+                                                    else { // CARD_INCREASING_SET
                                                             output = output+"\n"+ RiskUtil.replaceAll(resb.getString("cards.nexttrade"), "{0}", String.valueOf(getNewCardState()) );
                                                     }
 

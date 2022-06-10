@@ -2,10 +2,6 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 TODO:
 
-there are other Italian rules missing
- - no minimum of 3 new armies at the start of a turn
- - when trading cards, if you own the country on the card, you get 2 armies for ALL cards, and you can place them anywhere.
-
     add a ranking for the registered players to maintain the competition flavour in the game.
     if switching quickly between views in the MapStore, a thumb for a Category is the same as one of the maps, so it tries to download both, and save both to cache at the same time, causing a "[yura.net Cache] already has file" error
     in online play when the defender is not online, it should roll there dice anyway if they have auto-defend

@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		4
-	Android:	82
+	Android:	83
 	Flash GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -30,6 +30,8 @@ CURRENT VERSION:
 	      Can delete saved games with long press
 	      Online multiplayer works with Apple Push notifications
 	iOS 1 local game fully playable, fix CIContext memory leak/crash
+
+	Android 83 new Italian rules
 
 1.2.4 (25.10.2021) ### released for iOS on App Store for the first time ###
 
