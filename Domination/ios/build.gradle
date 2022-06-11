@@ -32,8 +32,6 @@ apply plugin: 'moe'
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-// Set maven repository
-
 // Exclude all files from Gradle's test runner
 test { exclude '**' }
 
@@ -55,6 +53,21 @@ moeMainDebugProGuard {
 }
 moeTestDebugProGuard {
     appendCfgFile "../../iOSME/proguard.append.cfg"
+}
+
+// this is needed for MOE 1.9.0 for building from Xcode to work
+// https://discuss.multi-os-engine.org/t/eerror-when-executing-in-xcode/2926/2
+project.afterEvaluate {
+    // Hack to work around errors relating to afterEvaluate
+    moeMainDebugIphoneosXcodeBuild.mustRunAfter noOp
+    moeMainDebugIphonesimulatorXcodeBuild.mustRunAfter noOp
+    moeMainReleaseIphoneosXcodeBuild.mustRunAfter noOp
+    moeMainReleaseIphonesimulatorXcodeBuild.mustRunAfter noOp
+}
+task noOp {
+    doLast {
+        println "NoOp"
+    }
 }
 
 // Set dependencies
