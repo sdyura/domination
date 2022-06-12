@@ -721,6 +721,7 @@ public class GameActivity extends Frame implements ActionListener {
                             break;
                     }
                     case RiskGame.STATE_GAME_OVER: {
+                            noteText = resb.getProperty("game.over");
 
                 	    checkIfPlayerUnlockedAchievement();
 
