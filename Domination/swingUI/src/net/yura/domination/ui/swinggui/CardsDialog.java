@@ -9,8 +9,10 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -86,37 +88,32 @@ public class CardsDialog extends JDialog {
 
         initGUI();
         pack();
-
     }
 
     /** This method is called from within the constructor to initialize the dialog. */
     private void initGUI() {
-
         setTitle(resb.getString("cards.title"));
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
 	getNum = new JLabel();
 	getNum.setText( getNumArmies() );
 
 	JTextArea note = new JTextArea(resb.getString("cards.note"));
-
         note.setLineWrap(true);
         note.setWrapStyleWord(true);
-
         note.setBackground(RiskUIUtil.getColorFromColorUIResource(getNum.getBackground()));
         note.setForeground(getNum.getForeground());
         note.setFont((new JLabel()).getFont());
         note.setEditable(false);
 	note.setOpaque(false);
-        note.setBorder(null); // for nimbus
+        note.setBorder(null); // for nimbus        
+        //int cols = GraphicsUtil.scale(190) / note.getFontMetrics(note.getFont()).charWidth('m');
+        //System.out.println("cols " + cols);
+        note.setColumns(15);
 
-	Dimension noteSize = GraphicsUtil.newDimension(180, 120);
-
-	note.setPreferredSize( noteSize );
-	note.setMinimumSize( noteSize );
-	note.setMaximumSize( noteSize );
-
+        // we need to trigger JTextArea to work out its height for JDialog.pack() to work
+        // we can pass any number as the height, it will get re-calculated
+        note.setSize(note.getPreferredSize());
 
 	JButton okButton = new JButton(resb.getString("cards.done"));
 	okButton.addActionListener(
@@ -161,25 +158,39 @@ public class CardsDialog extends JDialog {
 	TradePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(resb.getString("cards.trade")));
         setPanelSize(TradePanel, TradePlaneSize);
 
-	//CardsPlane.add(cards);
-
-	Dimension otherSize = GraphicsUtil.newDimension(200, 180);
-
-	JPanel other = new JPanel();
-	other.setPreferredSize( otherSize );
-	other.setMinimumSize( otherSize );
-	other.setMaximumSize( otherSize );
-
-	other.add(note);
-	other.add(getNum);
-	other.add(tradeButton);
-	other.add(okButton);
-
+	JPanel other = new JPanel(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new java.awt.Insets(3, 3, 3, 3);
         //c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.CENTER;
+        
+        c.gridx = 0; // col
+        c.gridy = 0; // row
+        c.gridwidth = 2; // width
+        c.gridheight = 1; // height
+	other.add(note, c);
+
+        c.gridx = 0; // col
+        c.gridy = 1; // row
+        c.gridwidth = 2; // width
+        c.gridheight = 1; // height
+	other.add(getNum, c);
+        
+        c.gridx = 0; // col
+        c.gridy = 2; // row
+        c.gridwidth = 1; // width
+        c.gridheight = 1; // height
+	other.add(tradeButton, c);
+        
+        c.gridx = 1; // col
+        c.gridy = 2; // row
+        c.gridwidth = 1; // width
+        c.gridheight = 1; // height
+	other.add(okButton, c);
+
+
+        getContentPane().setLayout(new GridBagLayout());
 
         c.gridx = 0; // col
         c.gridy = 0; // row
@@ -269,6 +280,7 @@ public class CardsDialog extends JDialog {
 	    g2.fillRect(0, 0, grayImage.getWidth(), grayImage.getHeight());
 
             g2.setFont(getFont());
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // this is NEEDED for mac or its REALLY ugly
 
 	    if (!(card.getName().equals("wildcard"))) {
 
@@ -316,7 +328,6 @@ public class CardsDialog extends JDialog {
 	    HighLight.filter( grayImage , highlightImage );
 
 	    g2.dispose();
-
 	}
 
 	public void paintComponent(Graphics g) {
@@ -325,14 +336,12 @@ public class CardsDialog extends JDialog {
 
 	    if (select) { g.drawImage( highlightImage ,0 ,0 ,this ); }
 	    else { g.drawImage( grayImage ,0 ,0 ,this ); }
-
 	}
 
 	public String getCardName() {
 
 	    if (!(card.getName().equals( Card.WILDCARD ))) { return ((Country)card.getCountry()).getColor()+""; }
 	    else { return card.getName(); }
-
 	}
 
 	//**********************************************************************
@@ -363,7 +372,6 @@ public class CardsDialog extends JDialog {
 	    TradePanel.validate();
 
 	    CardsPlane.validate();
-
 	}
 
 	public void mouseEntered(MouseEvent e) {
