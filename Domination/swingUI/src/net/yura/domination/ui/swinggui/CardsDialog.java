@@ -161,7 +161,7 @@ public class CardsDialog extends JDialog {
 	JPanel other = new JPanel(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new java.awt.Insets(3, 3, 3, 3);
+        c.insets = GraphicsUtil.newInsets(3, 3, 3, 3);
         //c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.CENTER;
         c.weightx = 1.0; // this is needed for the buttons on Linux, not sure why
