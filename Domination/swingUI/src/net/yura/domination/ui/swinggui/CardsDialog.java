@@ -164,7 +164,8 @@ public class CardsDialog extends JDialog {
         c.insets = new java.awt.Insets(3, 3, 3, 3);
         //c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.CENTER;
-        
+        c.weightx = 1.0; // this is needed for the buttons on Linux, not sure why
+
         c.gridx = 0; // col
         c.gridy = 0; // row
         c.gridwidth = 2; // width
@@ -176,20 +177,24 @@ public class CardsDialog extends JDialog {
         c.gridwidth = 2; // width
         c.gridheight = 1; // height
 	other.add(getNum, c);
-        
+
         c.gridx = 0; // col
         c.gridy = 2; // row
         c.gridwidth = 1; // width
         c.gridheight = 1; // height
+        c.anchor = GridBagConstraints.EAST;
 	other.add(tradeButton, c);
-        
+
         c.gridx = 1; // col
         c.gridy = 2; // row
         c.gridwidth = 1; // width
         c.gridheight = 1; // height
+        c.anchor = GridBagConstraints.WEST;
 	other.add(okButton, c);
 
 
+        c.anchor = GridBagConstraints.CENTER;
+        c.weightx = 0.0;
         getContentPane().setLayout(new GridBagLayout());
 
         c.gridx = 0; // col
