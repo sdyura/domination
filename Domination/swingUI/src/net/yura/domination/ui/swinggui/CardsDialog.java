@@ -107,9 +107,9 @@ public class CardsDialog extends JDialog {
         note.setEditable(false);
 	note.setOpaque(false);
         note.setBorder(null); // for nimbus        
-        //int cols = GraphicsUtil.scale(190) / note.getFontMetrics(note.getFont()).charWidth('m');
-        //System.out.println("cols " + cols);
-        note.setColumns(15);
+
+        // this is needed for windows, as the font is a lot thinner and 15em is too small
+        note.setColumns(GraphicsUtil.scale(190) / note.getFontMetrics(note.getFont()).charWidth('m')); // 15 or sometimes mores
 
         // we need to trigger JTextArea to work out its height for JDialog.pack() to work
         // we can pass any number as the height, it will get re-calculated
@@ -165,6 +165,7 @@ public class CardsDialog extends JDialog {
         //c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.CENTER;
         c.weightx = 1.0; // this is needed for the buttons on Linux, not sure why
+        c.weighty = 1.0;
 
         c.gridx = 0; // col
         c.gridy = 0; // row
@@ -213,6 +214,7 @@ public class CardsDialog extends JDialog {
         c.gridy = 1; // row
         c.gridwidth = 1; // width
         c.gridheight = 1; // height
+        c.fill = GridBagConstraints.BOTH;
         getContentPane().add(other, c);
 
         addWindowListener(
