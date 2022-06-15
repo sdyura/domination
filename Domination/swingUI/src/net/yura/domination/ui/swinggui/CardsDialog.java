@@ -177,6 +177,7 @@ public class CardsDialog extends JDialog {
         c.gridy = 1; // row
         c.gridwidth = 2; // width
         c.gridheight = 1; // height
+        c.anchor = GridBagConstraints.SOUTH;
 	other.add(getNum, c);
 
         c.gridx = 0; // col
