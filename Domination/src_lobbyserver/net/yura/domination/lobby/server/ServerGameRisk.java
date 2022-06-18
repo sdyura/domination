@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import net.yura.domination.engine.Risk;
@@ -96,18 +99,22 @@ public class ServerGameRisk extends TurnBasedGame {
 
         /**
          * pre Italian rule change version 3
+         * new Italian rules version 4
          */
         private final String APP_IOS = "iOSDomination";
         /**
          * pre Italian rule change version 82
+         * new Italian rules version 83
          */
         private final String APP_ANDROID = "AndroidDomination";
         /**
          * pre Italian rule change version 1.2.4
+         * new Italian rules version 1.2.5
          */
         private final String APP_FLASH = "FlashDomination";
         /**
          * pre Italian rule change version 1.2.4
+         * new Italian rules version 1.2.5
          */
         private final String APP_SWING = "SwingDomination";
 
@@ -118,24 +125,58 @@ public class ServerGameRisk extends TurnBasedGame {
             String appName = appNameVersion.substring(0, space);
             String appVersion = appNameVersion.substring(space + 1, appNameVersion.length());
 
-            if (APP_ANDROID.equals(appName)) {
-                try {
+            try {
+                if (APP_ANDROID.equals(appName)) {
                     int androidVersion = Integer.parseInt(appVersion);
                     if (androidVersion < settings.getMinAndroidVersion()) {
                         return false;
                     }
                 }
-                catch (NumberFormatException ex) {}
-            }
 
-            String[] options = startGameOptions.split("\\n");
-            String startGameCommand = options[4];
-            
-            if (startGameCommand.contains(Risk.STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET)) {
-                //TODO add checks when new rule is added
+                String[] options = startGameOptions.split("\\n");
+                String startGameCommand = options[4];
+
+                if (startGameCommand.contains(Risk.STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET)) {
+                    if (APP_IOS.equals(appName)) {
+                        int iosVersion = Integer.parseInt(appVersion);
+                        if (iosVersion < 4) {
+                            return false;
+                        }
+                    }
+                    else if (APP_ANDROID.equals(appName)) {
+                        int iosVersion = Integer.parseInt(appVersion);
+                        if (iosVersion < 83) {
+                            return false;
+                        }
+                    }
+                    else if (APP_FLASH.equals(appName) || APP_SWING.equals(appName)) {
+                        int[] versions  = Arrays.stream(appVersion.split(Pattern.quote("."))).mapToInt(Integer::parseInt).toArray();
+                        if (compare(versions, new int[] {1,2,5}) < 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (NumberFormatException ex) {
+                Logger.getLogger(ServerGameRisk.class.getName()).warning("strange version " + appNameVersion);
             }
 
             return true;
+        }
+
+        /**
+         * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+         */
+        public static int compare(int[] versions1, int[] versions2) {
+            for (int c = 0; c < versions1.length; c++) {
+                if (versions1[c] < versions2[c]) {
+                    return -1;
+                }
+                else if (versions1[c] > versions2[c]) {
+                    return 1;
+                }
+            }
+            return 0;
         }
 
         private void createGame() {
