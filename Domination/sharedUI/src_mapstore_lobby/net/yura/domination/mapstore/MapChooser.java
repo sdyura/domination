@@ -429,10 +429,15 @@ public class MapChooser implements ActionListener,MapServerListener {
                     for (int c = 0; c < localMaps.size(); c++) {
                         String file = (String) localMaps.get(c);
 
-                        // we create a Map object for every localy stored map
-                        Map map = createMap(file);
-
-                        riskmaps.add( map );
+                        // if one map is corrupted, we dont want to block all map loading
+                        try {
+                            // we create a Map object for every localy stored map
+                            Map map = createMap(file);
+                            riskmaps.add(map);
+                        }
+                        catch (Exception ex) {
+                            Logger.warn("error creating map: " + file, ex);
+                        }
                     }
 
                     // we want to sort by name for the local map list
