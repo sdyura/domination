@@ -566,7 +566,7 @@ transient - A keyword in the Java programming language that indicates that a fie
             cardState = armies;
         }
 
-        boolean italianCardTradeRules = cardMode == CARD_ITALIANLIKE_SET && minimumNewArmies == 0;
+        boolean italianCardTradeRules = cardMode == CARD_ITALIANLIKE_SET;
 
         // in italian rules, you can get extra 2 armies for EACH country, and can place them on ANY country you own.
         int cardCountriesOwned = currentPlayer.tradeInCards(card1, card2, card3, italianCardTradeRules ? 0 : DEFAULT_EXTRA_ARMIES_FOR_CARD);
