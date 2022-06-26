@@ -236,11 +236,13 @@ def upload_unauthorised_map(request):
             newMap.save()
             mapForm.save_m2m()
 
+            import logging
             try:
                 import mechanize
                 br = mechanize.Browser()
                 r = br.open('http://msg.yura.net/cgi-sys/FormMail.cgi', 'recipient=yura@yura.net&subject=NewMap&email=newmap@maps.yura.net&mapId=' + str(newMap.id) + '&mapName=' + newMap.name)
             except:
+                logging.exception("formmail error")
                 pass # Failed email is not a priority
 
             return redirect('/')

@@ -19,4 +19,4 @@ oauth2==1.5.167
 python-openid==2.2.5
 Pillow==6.2.2
 easy-thumbnails==1.0a21
-
+mechanize==0.2.5
