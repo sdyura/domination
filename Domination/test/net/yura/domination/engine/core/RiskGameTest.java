@@ -1,6 +1,5 @@
 package net.yura.domination.engine.core;
 
-import java.util.Arrays;
 import junit.framework.TestCase;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.test.TestUtil;
@@ -20,7 +19,7 @@ public class RiskGameTest extends TestCase {
 
         addPlayers(instance, noPlayers);
 
-        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_FIXED_SET, true, false, true);
+        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_FIXED_SET, true, true, false, true);
         assertEquals(2, instance.getMaxDefendDice());
         instance.setCurrentPlayer(0);
 
@@ -158,7 +157,7 @@ public class RiskGameTest extends TestCase {
 
         addPlayers(instance, noPlayers);
 
-        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_ITALIANLIKE_SET, true, true, false);
+        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_ITALIANLIKE_SET, true, false, true, false);
         assertEquals(3, instance.getMaxDefendDice());
         instance.setCurrentPlayer(0);
 

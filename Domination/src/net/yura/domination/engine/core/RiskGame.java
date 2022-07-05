@@ -64,7 +64,7 @@ public class RiskGame implements Serializable {
 	public final static int CARD_FIXED_SET = 1;
 	public final static int CARD_ITALIANLIKE_SET = 2;
 
-        public final static int MAX_CARDS = 5;
+        public final static int DEFAULT_MAX_CARDS = 5;
         public final static int DEFAULT_MINIMUM_NEW_ARMIES = 3;
         public final static int DEFAULT_EXTRA_ARMIES_FOR_CARD = 2;
 
@@ -104,6 +104,7 @@ gameMode:
         private boolean recycleCards = false;
         private int maxDefendDice;
         private int minimumNewArmies = DEFAULT_MINIMUM_NEW_ARMIES;
+        private int maxCardsPerPlayer = DEFAULT_MAX_CARDS;
 
 	private boolean runmaptest = false;
         private Vector replayCommands;
@@ -208,6 +209,10 @@ transient - A keyword in the Java programming language that indicates that a fie
 		return maxDefendDice;
 	}
 
+        public int getMaxCardsPerPlayer() {
+            return maxCardsPerPlayer;
+        }
+
 	/**
 	 * This adds a player to the game
 	 * @param type Type of player e.g. {@link Player#PLAYER_HUMAN} {@link Player#PLAYER_AI_EASY} etc
@@ -262,7 +267,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * Starts the game Risk
 	 * @param mode This represents the Type of game (i.e World Domination, Secret Mission, Capital)
 	 */
-	public void startGame(int mode, int card, boolean recycle, boolean threeDefendDice, boolean minimumThreeArmies) throws Exception {
+	public void startGame(int mode, int card, boolean recycle, boolean maxFiveCards, boolean threeDefendDice, boolean minimumThreeReinforcements) throws Exception {
 
 		if (gameState==STATE_NEW_GAME) { //  && ((mapfile !=null && cardsfile !=null) || () )
 
@@ -271,7 +276,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 			recycleCards = recycle;
                         maxDefendDice = threeDefendDice ? 3 : 2;
-                        minimumNewArmies = minimumThreeArmies ? DEFAULT_MINIMUM_NEW_ARMIES : 0;
+                        minimumNewArmies = minimumThreeReinforcements ? DEFAULT_MINIMUM_NEW_ARMIES : 0;
+                        maxCardsPerPlayer = maxFiveCards ? DEFAULT_MAX_CARDS: Integer.MAX_VALUE;
 
 			// 2 player human crap
 			//if ( gameMode==1 && ( !(((Player)Players.elementAt(0)).getType()==0) || !(((Player)Players.elementAt(1)).getType()==0) ) ) { return; }
@@ -555,8 +561,8 @@ transient - A keyword in the Java programming language that indicates that a fie
     public int trade(Card card1, Card card2, Card card3) {
         if (gameState!=STATE_TRADE_CARDS) return 0;
 
-        if (tradeCap && currentPlayer.getCards().size() < MAX_CARDS )
-            throw new RuntimeException("trying to do a trade when less then 5 cards and tradeCap is on");
+        if (tradeCap && currentPlayer.getCards().size() < maxCardsPerPlayer)
+            throw new RuntimeException("trying to do a trade when less then " + maxCardsPerPlayer + " cards and tradeCap is on");
 
         int armies = getTradeAbsValue( card1.getName(), card2.getName(), card3.getName(), cardMode);
 
@@ -587,7 +593,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 
         // if tradeCap you must trade to redude your cards to 4 or fewer cards
         // but once your hand is reduced to 4, 3 or 2 cards, you must stop trading
-        if ( !canTrade() || (tradeCap && currentPlayer.getCards().size() < MAX_CARDS ) ) {
+        if ( !canTrade() || (tradeCap && currentPlayer.getCards().size() < maxCardsPerPlayer) ) {
             gameState = STATE_PLACE_ARMIES;
             tradeCap=false;
         }
@@ -810,7 +816,7 @@ transient - A keyword in the Java programming language that indicates that a fie
         public boolean canEndTrade() {
 		if (gameState==STATE_TRADE_CARDS) {
                         //in italian rules there isn't a limit to the number of risk cards that you can hold in your hand.
-			if (cardMode == CARD_ITALIANLIKE_SET || currentPlayer.getCards().size() < MAX_CARDS) {
+			if (currentPlayer.getCards().size() < maxCardsPerPlayer) {
 				return true;
 			}
 		}
@@ -1083,7 +1089,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 					defender.getOwner().currentStatistic.addKill();
 					result[1]++;
 				}
-
 			}
 
 			// if all the armies have been defeated
@@ -1120,18 +1125,15 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 						//System.out.print("Hes got a card .. i must take it!\n");
 						currentPlayer.giveCard( lostPlayer.takeCard() );
-
 					}
 
                                         // in italian rules there is no limit to the number of cards you can hold
                                         // if winning the other players cards gives you 6 or more cards you must immediately trade
-					if ( cardMode!=CARD_ITALIANLIKE_SET && currentPlayer.getCards().size() > MAX_CARDS) {
+					if (currentPlayer.getCards().size() > maxCardsPerPlayer) {
 						// gameState=STATE_BATTLE_WON;
 						tradeCap=true;
 					}
-
 				}
-
 			}
 			else if (attacker.getArmies() == 1) {
 				gameState=STATE_ATTACKING;
@@ -1143,7 +1145,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 			defenderDice = 0;
 			attackerDice = 0;
 			result[0]=1;
-
 		}
 
 		return result;
@@ -2791,6 +2792,12 @@ System.out.print(str+"]\n");
         minimumNewArmies = DEFAULT_MINIMUM_NEW_ARMIES;
 
     	in.defaultReadObject();
+
+        // this is a new field, 0 is never a valid number, it must not have been set
+        if (maxCardsPerPlayer == 0) {
+            maxCardsPerPlayer = cardMode == CARD_ITALIANLIKE_SET ? Integer.MAX_VALUE : DEFAULT_MAX_CARDS;
+        }
+
     	this.r = new Random();
     	if (this.mapfile != null && gameState != STATE_NEW_GAME) {
             try {

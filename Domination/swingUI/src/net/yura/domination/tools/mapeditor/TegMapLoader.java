@@ -31,7 +31,7 @@ public class TegMapLoader {
         }
     }
     
-    public void load(File xmlfile,RiskGame map,MapEditor editor) throws Exception {
+    public void load(File xmlfile, RiskGame map, MapEditor editor) throws Exception {
 
         BufferedImage board=null,imgMap=null;
 
@@ -123,20 +123,18 @@ public class TegMapLoader {
         
         editor.setImagePic(board, null, false);
         editor.setImageMap(imgMap);
-        
     }
     
     
     int convertContinentId(int tegId) {
         switch(tegId) {
-            case 0: return 1;
-            case 1: return 0;
-            case 2: return 3;
-            case 3: return 5;
-            case 4: return 2;
-            case 5: return 4;
-            default: throw new RuntimeException("strange teg id "+tegId);
+            case 0: return 1; // South-America
+            case 1: return 0; // North-America
+            case 2: return 3; // Africa
+            case 3: return 5; // Australia/Oceania
+            case 4: return 2; // Europe
+            case 5: return 4; // Asia
+            default: throw new RuntimeException("strange teg id " + tegId);
         }
     }
-    
 }

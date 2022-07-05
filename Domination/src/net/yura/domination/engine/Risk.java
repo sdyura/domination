@@ -1213,6 +1213,7 @@ RiskUtil.printStackTrace(e);
 
 						int newgame_type = -1;
 						int newgame_cardType = -1;
+                                                boolean maxFiveCards = true;
 						boolean newgame_autoplaceall = false;
 						boolean newgame_recycle = false;
                                                 boolean threeDice = false;
@@ -1241,6 +1242,7 @@ RiskUtil.printStackTrace(e);
 								newgame_cardType = RiskGame.CARD_ITALIANLIKE_SET;
                                                                 threeDice = true;
                                                                 minimumThreeArmies = false;
+                                                                maxFiveCards = false;
 							}
 							else if ( newOption.equals("autoplaceall") ) {
 								newgame_autoplaceall = true;
@@ -1260,7 +1262,7 @@ RiskUtil.printStackTrace(e);
                                                             autoplaceall = newgame_autoplaceall;
 
                                                             try {
-                                                                    game.startGame(newgame_type, newgame_cardType, newgame_recycle, threeDice, minimumThreeArmies);
+                                                                    game.startGame(newgame_type, newgame_cardType, newgame_recycle, maxFiveCards, threeDice, minimumThreeArmies);
                                                             }
                                                             catch (Exception e) {
                                                                     RiskUtil.printStackTrace(e);

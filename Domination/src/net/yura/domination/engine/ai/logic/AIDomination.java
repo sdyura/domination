@@ -491,12 +491,12 @@ public class AIDomination extends AISubmissive {
 							&& gameState.me.playerValue < gameState.orderedPlayers.get(0).playerValue
 							&& shouldEndAttack
 							&& et.ps.armies > gameState.me.armies*.4
-						    && et.ps.armies - getCardEstimate(et.ps.p.getCards().size()) > (totalCards>RiskGame.MAX_CARDS?1:(gameState.me.playerValue/gameState.orderedPlayers.get(0).playerValue)) * getCardEstimate(player.getCards().size() + et.ps.p.getCards().size())) {
+						    && et.ps.armies - getCardEstimate(et.ps.p.getCards().size()) > (totalCards>RiskGame.DEFAULT_MAX_CARDS?1:(gameState.me.playerValue/gameState.orderedPlayers.get(0).playerValue)) * getCardEstimate(player.getCards().size() + et.ps.p.getCards().size())) {
 						toEliminate.remove(i--);
 						continue;
 					}
 					if ((et.ps.p.getCards().isEmpty() && gameState.orderedPlayers.get(0).playerValue > .7*gameState.me.playerValue)
-							|| (et.ps.p.getCards().size() > 2 && player.getCards().size() + et.ps.p.getCards().size() <= RiskGame.MAX_CARDS)) {
+							|| (et.ps.p.getCards().size() > 2 && player.getCards().size() + et.ps.p.getCards().size() <= RiskGame.DEFAULT_MAX_CARDS)) {
 						//don't consider in a second pass
 						toEliminate.remove(i--);
 					}
@@ -1645,7 +1645,7 @@ public class AIDomination extends AISubmissive {
 			boolean isTarget = gameState.targetPlayers.size() > 1 && gameState.targetPlayers.get(0) == player2;
 			double divisor = 1;
 			int cardCount = player2.getCards().size();
-			if ((!isIncreasingSet() || game.getNewCardState() < gameState.me.defenseValue/8) && (!attack || player2.getTerritoriesOwned().size() > 1) && !game.getCards().isEmpty() && cardCount < 3 && (game.getCardMode()==RiskGame.CARD_ITALIANLIKE_SET||(cardCount+player.getCards().size()<RiskGame.MAX_CARDS))) {
+			if ((!isIncreasingSet() || game.getNewCardState() < gameState.me.defenseValue/8) && (!attack || player2.getTerritoriesOwned().size() > 1) && !game.getCards().isEmpty() && cardCount < 3 && (cardCount+player.getCards().size() < game.getMaxCardsPerPlayer())) {
 				divisor+=(.5*Math.max(0, isIncreasingSet()?2:4 - cardCount));
 			}
 
@@ -2296,7 +2296,7 @@ public class AIDomination extends AISubmissive {
      */
     public String getTrade() {
     	if (!game.getTradeCap() && type != AIDomination.PLAYER_AI_EASY) {
-    		if (game.getCardMode() != RiskGame.CARD_ITALIANLIKE_SET && player.getCards().size() >= RiskGame.MAX_CARDS) {
+    		if (player.getCards().size() >= game.getMaxCardsPerPlayer()) {
     			return super.getTrade();
     		}
     		GameState gs = getGameState(player, true);
