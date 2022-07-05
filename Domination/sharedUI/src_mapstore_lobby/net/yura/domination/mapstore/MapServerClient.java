@@ -93,6 +93,7 @@ public class MapServerClient extends HTTPClient {
                     "Connection reset by peer".equals(ex.getMessage()) ||
                     "Connection reset".equals(ex.getMessage()) ||
                     "recvfrom failed: ETIMEDOUT (Connection timed out)".equals(ex.getMessage()) ||
+                    "recvfrom failed: ETIMEDOUT (Operation timed out)".equals(ex.getMessage()) ||
                     "recvfrom failed: ECONNRESET (Connection reset by peer)".equals(ex.getMessage()) ||
                     "Software caused connection abort".equals(ex.getMessage()) ||
                     "Software caused connection abort: recv failed".equals(ex.getMessage()) ||
