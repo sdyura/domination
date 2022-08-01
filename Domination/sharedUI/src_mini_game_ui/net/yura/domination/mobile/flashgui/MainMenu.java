@@ -194,7 +194,11 @@ public class MainMenu extends Frame implements ActionListener {
                         +"&body=" + Url.encode(
                                 "\n\n\nDevice: "+System.getProperty("http.agent")+
                                 "\nID: "+MiniLobbyClient.getMyUUID()).replace("+", "%20");
-                Application.openURL(url);
+                boolean success = Application.openURL(url);
+
+                if (!success) {
+                    OptionPane.showMessageDialog(null, "Please email yura@yura.net", "contact", OptionPane.INFORMATION_MESSAGE);
+                }
             }
             else if ("signIn".equals(actionCommand)) {
         	DominationMain.getGooglePlayGameServices().beginUserInitiatedSignIn();

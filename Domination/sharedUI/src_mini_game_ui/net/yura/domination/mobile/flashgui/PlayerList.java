@@ -108,44 +108,63 @@ public class PlayerList extends List {
                     
                     g.getGraphics().setStrokeWidth(oldStroke);
                 }
-
             }
         });
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(String actionCommand) {
                 final Player player = (Player) getSelectedValue();
-                if (player != null && Application.getPlatform() == Application.PLATFORM_ANDROID) {
-                    DominationMain.openURL("native://net.yura.domination.android.ColorPickerActivity", new DominationMain.ActivityResultListener() {
-                        public void onActivityResult(Object data) {
-                            int color = (Integer) data;
-                            if (player.getColor() != color) {
-                                Player playerWithColor = getPlayerByColor(color);
-                                if (playerWithColor == null) {
-                                    player.setColor(color);
-                                    PlayerList.this.repaint();
-                                    //risk.parser("delplayer "+player);
-                                    //risk.parser("newplayer "+risk.getType(player.getType())+" "+color+" "+player.getName());
-                                } else {
-                                    playerWithColor.setColor(player.getColor());
-                                    player.setColor(color);
-                                    PlayerList.this.repaint();
-                                    //risk.parser("delplayer "+player);
-                                    //risk.parser("delplayer "+playerWithColor);
-                                    //risk.parser("newplayer "+risk.getType(playerWithColor.getType())+" "+player.getColor()+" "+playerWithColor.getName());
-                                    //risk.parser("newplayer "+risk.getType(player.getType())+" "+color+" "+player.getName());
-                                }
+                if (player != null) {
+/*
+                    // ColorPickerActivity has too many problems, the size of the window is too random on too many devices
+                    if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                        DominationMain.openURL("native://net.yura.domination.android.ColorPickerActivity", new DominationMain.ActivityResultListener() {
+                            @Override
+                            public void onActivityResult(Object data) {
+                                int color = (Integer) data;
+                                setPlayerColor(player, color);
                             }
-                        }
 
+                            @Override
+                            public void onCanceled() {
+                                // dont care
+                            }
+                        });
+                    }
+*/
+                    final ColorPicker colorPicker = new ColorPicker();
+                    colorPicker.showDialog(new ActionListener() {
                         @Override
-                        public void onCanceled() {
-                            // dont care
+                        public void actionPerformed(String actionCommand) {
+                            if (ColorPicker.CMD_OK.equals(actionCommand)) {
+                                setPlayerColor(player, colorPicker.getSelectedColor());
+                            }
                         }
                     });
                 }
             }
         });
+    }
+
+    private void setPlayerColor(Player player, int color) {
+        if (player.getColor() != color) {
+            Player playerWithColor = getPlayerByColor(color);
+            if (playerWithColor == null) {
+                player.setColor(color);
+                repaint();
+                //risk.parser("delplayer "+player);
+                //risk.parser("newplayer "+risk.getType(player.getType())+" "+color+" "+player.getName());
+            }
+            else {
+                playerWithColor.setColor(player.getColor());
+                player.setColor(color);
+                repaint();
+                //risk.parser("delplayer "+player);
+                //risk.parser("delplayer "+playerWithColor);
+                //risk.parser("newplayer "+risk.getType(playerWithColor.getType())+" "+player.getColor()+" "+playerWithColor.getName());
+                //risk.parser("newplayer "+risk.getType(player.getType())+" "+color+" "+player.getName());
+            }
+        }
     }
 
     private Player getPlayerByColor(int color) {

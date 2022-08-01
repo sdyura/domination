@@ -15,34 +15,11 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.PicturePanel;
+import net.yura.domination.mobile.flashgui.ColorPicker.PlayerColor;
 import net.yura.mobile.gui.layout.XULLoader;
 import javax.microedition.lcdui.Image;
 
 public class ColorPickerActivity extends Activity {
-
-    enum PlayerColor {
-        PINK(Color.rgb(255, 175, 175), "pink"),
-        RED(Color.RED, "red"),
-        ORANGE(Color.rgb(255, 200, 0), "orange"),
-        YELLOW(Color.YELLOW, "yellow"),
-        GREEN(Color.GREEN, "green"),
-        CYAN(Color.CYAN, "cyan"),
-        BLUE(Color.BLUE, "blue"),
-        MAGENTA(Color.MAGENTA, "magenta"),
-
-        WHITE(Color.WHITE, "white"),
-        LTGRAY(Color.LTGRAY, "lightgray"),
-        //GRAY(Color.GRAY, "gray"),
-        DKGRAY(Color.DKGRAY, "darkgray"),
-        BLACK(Color.BLACK, "black");
-
-        public final int rgb;
-        public final String name;
-        PlayerColor(int rgb, String name) {
-            this.rgb = rgb;
-            this.name = name;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
