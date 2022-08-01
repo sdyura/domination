@@ -2,11 +2,11 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.2.5
+	Risk Game:	1.2.6
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		4
+	iOS:		5
 	Android:	83
 	Flash GUI:	2
 	Swing GUI:	2
@@ -14,7 +14,13 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.2.5
+1.2.6
+
+	New field in game engine for maxCardsPerPlayer
+
+	iOS 5 Can select player color
+
+1.2.5 (18.06.2022)
 
 	Fix for lobby failed to launch when javax.crypto.JceSecurity not found
 	New field in game for minimumNewArmies that can be set depending on the game options
@@ -24,6 +30,7 @@ CURRENT VERSION:
 
 	iOS 4 Theme fix for disabled/secondary list foreground
 	      load text as utf-8 in webview
+	      new Italian rules
 	iOS 3 Fixed: fails to load in languages: es, gl, nl, cs, sv
 	iOS 2 System translations are used for standard actions
 	      UI fixes for languages with long text (ViewChooser and OptionPane)
