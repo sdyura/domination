@@ -4,8 +4,10 @@ import java.util.Arrays;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.domination.mobile.PicturePanel;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.DesktopPane;
+import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.KeyEvent;
 import net.yura.mobile.gui.celleditor.TableCellEditor;
 import net.yura.mobile.gui.cellrenderer.ListCellRenderer;
@@ -15,6 +17,7 @@ import net.yura.mobile.gui.components.FileChooser;
 import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.Table;
 import net.yura.mobile.gui.layout.XULLoader;
+import javax.microedition.lcdui.Image;
 
 public class ColorPicker extends FileChooser.GridList implements ActionListener {
 
@@ -53,6 +56,10 @@ public class ColorPicker extends FileChooser.GridList implements ActionListener 
             PlayerColor playerColor = (PlayerColor)value;
             setBackground(playerColor.rgb);
             setToolTipText(playerColor.name);
+
+            Image image = PicturePanel.getIconForColor(playerColor.rgb);
+            setIcon(image == null ? null : new Icon(image));
+
             return this;
         }
 
