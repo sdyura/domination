@@ -102,9 +102,7 @@ public class ColorPicker extends FileChooser.GridList implements ActionListener 
     public void actionPerformed(String actionCommand) {
         dialog.setVisible(false);
         dialog = null;
-        if (!Frame.CMD_CLOSE.equals(actionCommand)) {
-            listener.actionPerformed(actionCommand);
-        }
+        listener.actionPerformed(actionCommand);
     }
 
     public void showDialog(ActionListener listener) {
@@ -119,7 +117,7 @@ public class ColorPicker extends FileChooser.GridList implements ActionListener 
         // this is needed so back button works on android
         Button cancel = new Button( (String)DesktopPane.get("cancelText") );
         cancel.setActionCommand(Frame.CMD_CLOSE);
-        cancel.addActionListener(this);
+        cancel.addActionListener(dialog.getTitlePane());
         cancel.setMnemonic(KeyEvent.KEY_END);
         dialog.addCommand(cancel);
 
