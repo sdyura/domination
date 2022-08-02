@@ -19,6 +19,7 @@ CURRENT VERSION:
 	New field in game engine for maxCardsPerPlayer
 
 	iOS 5 Can select player color
+	      Fixed - loading dialog has square around indeterminate progress bar
 
 1.2.5 (18.06.2022)
 

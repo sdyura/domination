@@ -20,7 +20,7 @@ public class LoadingScreen {
 
         if (instance == null) {
             instance = new Window();
-            instance.setName("Dialog");
+            instance.setName("OpaqueDialog");
 
             final ProgressBar bar = new ProgressBar();
             bar.setIndeterminate(true);
