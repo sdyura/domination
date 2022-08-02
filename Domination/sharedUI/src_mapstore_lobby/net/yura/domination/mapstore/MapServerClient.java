@@ -92,12 +92,15 @@ public class MapServerClient extends HTTPClient {
                    ("Connection timed out".equals(ex.getMessage()) ||
                     "Connection reset by peer".equals(ex.getMessage()) ||
                     "Connection reset".equals(ex.getMessage()) ||
+                    "Software caused connection abort".equals(ex.getMessage()) ||
+                    "Software caused connection abort: recv failed".equals(ex.getMessage()) ||
+                    "Network is unreachable (connect failed)".equals(ex.getMessage()) ||
                     "recvfrom failed: ETIMEDOUT (Connection timed out)".equals(ex.getMessage()) ||
                     "recvfrom failed: ETIMEDOUT (Operation timed out)".equals(ex.getMessage()) ||
                     "recvfrom failed: ECONNRESET (Connection reset by peer)".equals(ex.getMessage()) ||
-                    "Software caused connection abort".equals(ex.getMessage()) ||
-                    "Software caused connection abort: recv failed".equals(ex.getMessage()) ||
-                    "Network is unreachable (connect failed)".equals(ex.getMessage())
+                    "recvfrom failed: ENOTCONN (Socket is not connected)".equals(ex.getMessage()) || // iOS
+                    "recvfrom failed: EBADF (Bad file descriptor)".equals(ex.getMessage()) || // iOS
+                    "setsockopt failed: EINVAL (Invalid argument)".equals(ex.getMessage()) // iOS
                 ))) {
             level = Level.INFO;
         }
