@@ -61,14 +61,4 @@
 		</state>
 	</style>
 	<bind style="indeterminateSpinner" key="ProgressBar"/>
-
-	<style id="opaqueDialog">
-		<insets top="5" left="15" bottom="5" right="15"/>
-		<state>
-			<imagePainter path="/opaque_dialog.png" sourceInsets="10 10 10 10" paintCenter="false"/>
-			<color type="BORDERFILL" value="#ffffff"/>
-			<color type="FOREGROUND" value="#000000"/>
-		</state>
-	</style>
-	<bind style="opaqueDialog" key="OpaqueDialog"/>
 </synth>
