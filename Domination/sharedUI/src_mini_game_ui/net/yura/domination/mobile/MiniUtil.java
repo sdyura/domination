@@ -39,12 +39,16 @@ public class MiniUtil {
 
         Button credits = new Button(resb.getString("about.tab.credits"));
         credits.setActionCommand("credits");
+        credits.setName("SmallButton");
         Button license = new Button(resb.getString("about.tab.license"));
         license.setActionCommand("license");
+        license.setName("SmallButton");
         Button changelog = new Button(resb.getString("about.tab.changelog"));
         changelog.setActionCommand("changelog");
+        changelog.setName("SmallButton");
         Button ok = new Button(resb.getString("about.okbutton"));
         ok.setMnemonic( KeyEvent.KEY_END );
+        ok.setName("SmallButton");
 
         OptionPane.showOptionDialog(new ActionListener() {
             public void actionPerformed(String actionCommand) {

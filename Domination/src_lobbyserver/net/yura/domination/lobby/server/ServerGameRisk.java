@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Observer;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.management.MBeanServer;

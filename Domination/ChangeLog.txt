@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		5
-	Android:	83
+	Android:	84
 	Flash GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -20,6 +20,8 @@ CURRENT VERSION:
 
 	iOS 5 Can select player color
 	      Fixed - loading dialog has square around indeterminate progress bar
+
+	Android 84 fix for buttons being too wide and truncated in Lobby screen with large fonts
 
 1.2.5 (18.06.2022)
 

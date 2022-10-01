@@ -1014,6 +1014,9 @@ public class RiskUIUtil {
 		if (checkForNoSandbox()) {
 			// check for java bug with JFileChooser
 			try {
+                                // as a side effect this also causes any swing init warnings to happen before we start grasshopper (FontUtilities.getFont2D -> CFontManager.loadFonts -> CFontManager.getFontFamilyWithExtraTry)
+                                // e.g. Warning: the fonts "Times" and "Times" are not available for the Java logical font "Serif", which may have unexpected appearance or behavior. Re-enable the "Times" font to remove this warning.
+                                // it is VITAL that this warning happens before grasshopper init as it can cause grasshopper deadlocks
 				new JFileChooser();
 			}
 			catch (Throwable th) {

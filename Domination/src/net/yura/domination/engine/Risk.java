@@ -49,6 +49,8 @@ public class Risk extends Thread {
 	public static final String STARTGAME_OPTION_CARD_INCREASING_SET = "increasing";
 	public static final String STARTGAME_OPTION_CARD_FIXED_SET = "fixed";
 	public static final String STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET = "italianlike";
+        public static final String STARTGAME_OPTION_AUTO_PLACE_ALL = "autoplaceall";
+        public static final String STARTGAME_OPTION_RECYCLE_CARDS = "recycle";
 
         private static final int DEFAULT_SHOW_DICE_SLEEP = 1000;
         private static final int DEFAULT_ROLL_DICE_SLEEP = 500;
@@ -1244,10 +1246,10 @@ RiskUtil.printStackTrace(e);
                                                                 minimumThreeArmies = false;
                                                                 maxFiveCards = false;
 							}
-							else if ( newOption.equals("autoplaceall") ) {
+							else if ( newOption.equals(STARTGAME_OPTION_AUTO_PLACE_ALL) ) {
 								newgame_autoplaceall = true;
 							}
-							else if ( newOption.equals("recycle") ) {
+							else if ( newOption.equals(STARTGAME_OPTION_RECYCLE_CARDS) ) {
 								newgame_recycle = true;
 							}
 							else {
