@@ -80,7 +80,7 @@ public class GameSettings implements GameSettingsMXBean {
         this.minAndroidVersion = minAndroidVersion;
     }
 
-    public void updateMaps() {
+    public int updateMaps() {
 
         // TODO we are currently broken with map: "italia.map" as it clashes with map: "ITALIA.MAP.map"
         // this returns 2 results instead of 1 http://maps.yura.net/maps?format=xml&mapfile=italia.map
@@ -199,6 +199,7 @@ public class GameSettings implements GameSettingsMXBean {
         String oldOptionsString = lobby.getGameOptions(RiskUtil.GAME_NAME);
 
         List<String> oldOptions = new ArrayList<String>(Arrays.asList(oldOptionsString.split(",")));
+        int oldNoMaps = oldOptions.size();
         oldOptions.removeAll(gameOptions);
         
         logger.info("base list: " + oldOptions);
@@ -208,6 +209,7 @@ public class GameSettings implements GameSettingsMXBean {
         lobby.setGameOptions(RiskUtil.GAME_NAME, toOptionString(oldOptions));
 
         logger.info("updateMaps DONE");
+        return oldOptions.size() - oldNoMaps;
     }
 
     public void allowMap(String mapName) {

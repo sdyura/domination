@@ -16,7 +16,10 @@ public interface GameSettingsMXBean {
     void setMaxMapCountries(int max);
     int getMaxMapCountries();
 
-    void updateMaps();
+    /**
+     * @return number of new maps added
+     */
+    int updateMaps();
     void allowMap(String mapName);
     void disallowMap(String mapName);
 
