@@ -176,6 +176,9 @@ public class MapRenderer extends DefaultListCellRenderer {
         return padding*2 + Math.max(loading.getIconHeight(), getFont().getHeight()*TOTAL_LINES_OF_TEXT+gap );
     }
 
+    /**
+     * @see net.yura.lobby.mini.MiniLobbyClient#getLastLines(String, int)
+     */
     public static String getFirstLines(String input,int lines) {
         int lastchar=0;
         for (int c=0;c<lines;c++) {

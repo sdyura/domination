@@ -13,7 +13,7 @@
         <label alignment="center" i18n="true" name="Loading" property="valign=center" text="mapchooser.loading" visible="false" weightx="1" weighty="1"/>
         <label alignment="center" i18n="true" name="NoMatches" property="valign=center" text="mapchooser.no-matches" visible="false" weightx="1" weighty="1"/>
         <button action="loginGoogle" i18n="true" name="loginGoogle" text="lobby.loginGoogle" visible="false" weightx="1"/>
-        <list action="listSelect" name="ResultList" weightx="1" weighty="1">
+        <list action="listSelect" name="ResultList" visible="false" weightx="1" weighty="1">
             <popupmenu>
                 <menuitem action="flagGame" i18n="true" icon="/ms_flag.png" text="lobby.flagGame"/>
                 <menuitem action="renameGame" text="Rename Game"/>
@@ -21,19 +21,21 @@
                 <menuitem action="delGame" text="Del Game"/>
             </popupmenu>
         </list>
-        <panel columns="1" left="5" name="Error" right="5" visible="false" weightx="1" weighty="1">
-            <label weighty="1"/>
-            <textarea editable="false" font="Dialog bold" i18n="true" property="halign=center" text="mapchooser.error.title" weightx="1" wrap="true"/>
-            <textarea editable="false" i18n="true" property="halign=center" text="mapchooser.error.tip" wrap="true"/>
-            <label weighty="1"/>
+        <panel columns="2" gap="10" left="10" name="ConnectingPanel" right="10" top="10" weightx="1" weighty="1">
+            <label colspan="2" weighty="1"/>
+            <progressbar halign="right" property="indeterminate=true" weightx="1"/>
+            <label font="LARGE bold" i18n="true" text="lobby.connecting" weightx="1"/>
+            <label colspan="2" weighty="1"/>
+            <label alignment="center" colspan="2" name="ConnectLog" text=" " weightx="1" width="10"/>
+            <label colspan="2" weighty="1"/>
         </panel>
     </panel>
     <panel bottom="5" gap="5" left="5" right="5" top="5" weightx="1">
-        <button action="close" i18n="true" mnemonic="112" name="BackButton" text="lobby.back" type="cancel" weightx="1" property="plafname=SmallButton"/>
+        <button action="close" i18n="true" mnemonic="112" name="BackButton" property="plafname=SmallButton" text="lobby.back" type="cancel" weightx="1"/>
         <button action="login" text="Login" visible="false" weightx="1"/>
         <button action="register" text="Register" visible="false" weightx="1"/>
-        <button action="setnick" i18n="true" text="lobby.set-nick" weightx="2" property="plafname=SmallButton"/>
-        <button action="create" i18n="true" text="lobby.create-game" weightx="2" property="plafname=SmallButton"/>
-        <button action="chat" icon="/discord.png" weightx="1" property="plafname=SmallButton"/>
+        <button action="setnick" i18n="true" property="plafname=SmallButton" text="lobby.set-nick" weightx="2"/>
+        <button action="create" i18n="true" property="plafname=SmallButton" text="lobby.create-game" weightx="2"/>
+        <button action="chat" icon="/discord.png" property="plafname=SmallButton" weightx="1"/>
     </panel>
 </panel>

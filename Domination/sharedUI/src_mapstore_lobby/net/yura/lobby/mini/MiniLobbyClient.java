@@ -85,7 +85,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         GameRenderer r = new GameRenderer(this);
         gameList.setCellRenderer( r );
         gameList.setFixedCellHeight( Math.max( XULLoader.adjustSizeToDensity(50), r.getFixedCellHeight() ) );
-        gameList.setFixedCellWidth(10); // will streach
+        gameList.setFixedCellWidth(10); // will stretch
 
         ComboBox box = (ComboBox)loader.find("listView");
         ViewChooser viewChooser = new ViewChooser( (Option[])box.getItems().toArray(new Option[box.getItemCount()]) );
@@ -96,7 +96,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         viewChooser.setName(null);
 
         adminPopup = gameList.getPopupMenu();
-        gameList.setPopupMenu(null); // hide menu untill we have logged in and we know what items can be shown
+        gameList.setPopupMenu(null); // hide menu until we have logged in and we know what items can be shown
 
         String uuid = getMyUUID();
 
@@ -476,6 +476,10 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
      */
     public void connected() {
 
+        loader.find("ConnectingPanel").setVisible(false);
+        loader.find("ConnectLog").setValue(" ");
+        gameList.setVisible(true);
+
         if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
             Application.openURL("nativeNoResult://net.yura.domination.android.push.PushActivity");
         }
@@ -511,6 +515,12 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
     public void connecting(String message) {
         logger.info(message);
+
+        //TextArea connectLog = (TextArea)loader.find("ConnectLog");
+        //String fullLog = connectLog.getText();
+        //connectLog.setText(getLastLines(fullLog, 5) + message + "\n");
+
+        loader.find("ConnectLog").setValue(message);
     }
 
     public void error(String error) {
@@ -827,5 +837,18 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 DesktopPane.getDesktopPane().toast(message);
             }
         }
+    }
+
+    /**
+     * @see net.yura.domination.mapstore.MapRenderer#getFirstLines(String, int)
+     */
+    public static String getLastLines(String input, int lines) {
+        int firstChar = 0;
+        int currentEndOfLine = input.length();
+        for (int i = 0; i < lines; ++i) {
+            currentEndOfLine = input.lastIndexOf("\n", currentEndOfLine - 1);
+            firstChar = currentEndOfLine + 1;
+        }
+        return input.substring(firstChar, input.length());
     }
 }
