@@ -25,6 +25,7 @@ import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Component;
+import net.yura.mobile.gui.components.Label;
 import net.yura.mobile.gui.components.List;
 import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.gui.components.Panel;
@@ -734,6 +735,7 @@ public class MapChooser implements ActionListener,MapServerListener {
     }
 
     public void onXMLError(String error) {
+        ((Label)loader.find("errorMessage")).setText(error);
         show("Error");
     }
 
