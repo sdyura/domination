@@ -17,6 +17,8 @@ CURRENT VERSION:
 1.2.6
 
 	New field in game engine for maxCardsPerPlayer
+	Fix grasshopper error on java 1.8 on mac when appending to log from interrupted thread
+	Show connection errors in Lobby
 
 	iOS 5 Can select player color
 	      Fixed - loading dialog has square around indeterminate progress bar
