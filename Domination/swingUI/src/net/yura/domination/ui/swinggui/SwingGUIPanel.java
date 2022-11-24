@@ -1231,7 +1231,6 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
 				java.io.File file = fc.getSelectedFile();
 				String fileName = file.getAbsolutePath();
 
-				go("newgame");
 				go("play " + fileName);
 			}
 		}

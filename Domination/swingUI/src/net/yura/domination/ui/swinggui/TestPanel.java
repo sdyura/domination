@@ -397,6 +397,26 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 					default: throw new RuntimeException();
 				}
 			}
+
+                        @Override
+                        public boolean isCellEditable(int row, int col) {
+                            switch (col) {
+                                case 2:// command
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+
+                        @Override
+                        public void setValueAt(Object aValue, int row, int col) {
+                            if (col == 2) {
+                                myrisk.getGame().getCommands().set(row, aValue);
+                            }
+                            else {
+                                throw new RuntimeException();
+                            }
+                        }
 		};
 
 

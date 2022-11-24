@@ -151,13 +151,15 @@ public class RiskUtil {
         }
 
         public static void loadPlayers(Risk risk,Class uiclass) {
-            Properties playerSettings = getPlayerSettings(risk, uiclass);
-            for (int cc=1;cc<=RiskGame.MAX_PLAYERS;cc++) {
-                String name = playerSettings.getProperty("default.player"+cc+".name");
-                String color = playerSettings.getProperty("default.player"+cc+".color");
-                String type = playerSettings.getProperty("default.player"+cc+".type");
-                if (name != null && color != null && type != null && !"".equals(name) && !"".equals(color) && !"".equals(type)) {
-                    risk.parser("newplayer " + type + " " + color + " " + name);
+            if (!risk.isReplay()) {
+                Properties playerSettings = getPlayerSettings(risk, uiclass);
+                for (int cc=1;cc<=RiskGame.MAX_PLAYERS;cc++) {
+                    String name = playerSettings.getProperty("default.player"+cc+".name");
+                    String color = playerSettings.getProperty("default.player"+cc+".color");
+                    String type = playerSettings.getProperty("default.player"+cc+".type");
+                    if (name != null && color != null && type != null && !"".equals(name) && !"".equals(color) && !"".equals(type)) {
+                        risk.parser("newplayer " + type + " " + color + " " + name);
+                    }
                 }
             }
         }

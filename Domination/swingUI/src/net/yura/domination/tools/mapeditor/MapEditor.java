@@ -968,9 +968,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		}
 
 		try {
-
-			JFileChooser fc = new JFileChooser( new File(new URI(RiskUIUtil.mapsdir.toString())) );
-
                         String[] extensions = ImageIO.getReaderFormatNames();
                         final ArrayList list = new ArrayList();
                         for (int c=0;c<extensions.length;c++) {
@@ -984,7 +981,8 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                             list.remove("jpg");
                             list.remove("jpeg");
                         }
-                        
+
+			JFileChooser fc = new JFileChooser( new File(new URI(RiskUIUtil.mapsdir.toString())) );
                         fc.setFileFilter( new FileFilter() {
                             public boolean accept(File file) {
                                 if (file.isDirectory()) {

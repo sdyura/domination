@@ -438,13 +438,15 @@ public class Risk extends Thread {
 							//try{ Thread.sleep(1000); }
 							//catch(InterruptedException e){}
 						}
-						replay = false;
 						output="replay of game finished";
 					}
 					catch (Exception e) {
 						output="error with replay "+e;
 						RiskUtil.printStackTrace(e);
 					}
+                                        finally {
+						replay = false;
+                                        }
 				    }
 				    else {
 					output="can only replay local games";
@@ -488,7 +490,6 @@ public class Risk extends Thread {
                                 //if (game == null) {
 
                                         try {
-
                                                 // CREATE A GAME
                                                 game = new RiskGame();
 
@@ -672,7 +673,78 @@ RiskUtil.printStackTrace(e);
                         }
                         else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "killserver"); }
                 }
+                // REPLAY A GAME FROM SCRIPT FILE
+                else if (input.equals("play")) {
 
+                        if (StringT.countTokens() >= 1) {
+                                String filename = RiskUtil.getAtLeastOne(StringT);
+
+                                try {
+                                        URL url;
+                                        // TODO dont think this can ever work as an applet anyway
+                                        //if (Risk.applet==null) {
+                                                url = (new File(filename)).toURI().toURL();
+                                        //}
+                                        //else {
+                                        //	url = new URL( net.yura.domination.engine.Risk.applet.getCodeBase() , filename );
+                                        //}
+                                        BufferedReader bufferin=new BufferedReader(new InputStreamReader(url.openStream()));
+
+                                        //create thread with bufferin
+                                        class Replay extends Thread {
+
+                                            private Risk risk;
+                                            private BufferedReader bufferin;
+
+                                            public Replay(Risk r, BufferedReader in) {
+                                                super("Domination-Replay");
+                                                risk=r;
+                                                bufferin=in;
+                                            }
+
+                                            public void run() {
+                                                int line = 0;
+                                                try {
+                                                    String input = bufferin.readLine();
+                                                    while(input != null) {
+                                                        line++;
+                                                        //System.out.print(input+"\n");
+                                                        risk.inGameParser(input);
+                                                        input = bufferin.readLine();
+                                                    }
+                                                }
+                                                catch(Exception error) {
+                                                    logger.log(Level.WARNING, "script error on line " + line, error);
+                                                }
+                                                finally {
+                                                    RiskUtil.close(bufferin);
+                                                }
+
+                                                //set replay off
+                                                replay = false;
+                                                getInput();
+                                            }
+                                        }
+
+                                        Thread replaythread = new Replay(this, bufferin);
+                                        //set boolean that replay is on
+                                        replay = true;
+                                        
+                                        // create a new local game
+                                        game = new RiskGame();
+                                        unlimitedLocalMode = true;
+                                        controller.newGame(true);
+                                        setupPreviews( doesMapHaveMission() );
+                                        
+                                        replaythread.start();
+                                        output="playing \""+filename+"\"";
+                                }
+                                catch(Exception error) {
+                                        output="unable to play \""+filename+"\" "+error;
+                                }
+                        }
+                        else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "play filename"); }
+                }
                 else { // if there is no game and the command was unknown
                         output=resb.getString( "core.loadgame.nogame");
                 }
@@ -999,11 +1071,9 @@ RiskUtil.printStackTrace(e);
 			List p = game.getPlayers();
 
 			for (int c=0; c< p.size() ; c++) {
-
 				int i = RiskGame.getNumber( StringT.nextToken() );
 				((Player)p.get(c)).setMission( (Mission)m.get(i) );
 				m.remove(i);
-
 			}
 
 			output=null;
@@ -1336,72 +1406,6 @@ RiskUtil.printStackTrace(e);
                                             output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "startgame gametype cardtype (autoplaceall recycle)");
                                         }
 				}
-				// REPLAY A GAME FROM SCRIPT FILE
-				else if (input.equals("play")) {
-
-					if (StringT.countTokens() >= 1) {
-						String filename = RiskUtil.getAtLeastOne(StringT);
-
-						try {
-							URL url;
-							// TODO dont think this can ever work as an applet anyway
-							//if (Risk.applet==null) {
-								url = (new File(filename)).toURI().toURL();
-							//}
-							//else {
-							//	url = new URL( net.yura.domination.engine.Risk.applet.getCodeBase() , filename );
-							//}
-							BufferedReader bufferin=new BufferedReader(new InputStreamReader(url.openStream()));
-
-							//create thread with bufferin
-							class Replay extends Thread {
-
-							    private Risk risk;
-							    private BufferedReader bufferin;
-
-							    public Replay(Risk r, BufferedReader in) {
-                                                                super("Domination-Replay");
-								risk=r;
-								bufferin=in;
-							    }
-
-							    public void run() {
-                                                                int line = 0;
-								try {
-								    String input = bufferin.readLine();
-								    while(input != null) {
-                                                                        line++;
-									//System.out.print(input+"\n");
-									risk.inGameParser(input);
-									input = bufferin.readLine();
-								    }
-								}
-								catch(Exception error) {
-                                                                    logger.log(Level.WARNING, "script error on line " + line, error);
-								}
-                                                                finally {
-                                                                    RiskUtil.close(bufferin);
-                                                                }
-
-								//set replay off
-								replay = false;
-								getInput();
-							    }
-							}
-
-							Thread replaythread = new Replay(this, bufferin);
-							//set boolean that replay is on
-							replay = true;
-							replaythread.start();
-
-							output="playing \""+filename+"\"";
-						}
-						catch(Exception error) {
-							output="unable to play \""+filename+"\" "+error;
-						}
-					}
-					else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "play filename"); }
-				}
 				else { output=RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "newplayer, delplayer, startgame, choosemap, choosecards, info, autosetup"); }
                         }
                         else {
@@ -1438,11 +1442,8 @@ RiskUtil.printStackTrace(e);
                                         else {
                                             output = resb.getString( "core.undo.error.network");
                                         }
-
                                     }
                                     else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "undo"); }
-
-
                                 }
                                 else if (input.equals("showmission")) {
                                     if (StringT.hasMoreTokens()==false) {
@@ -1650,7 +1651,7 @@ RiskUtil.printStackTrace(e);
                                                             t=null;
                                                     }
 
-                                                    if ( t != null && num!=-1 && !( game.getGameMode() == 1 && t.getOwner() == null) && !( game.getGameMode() == 3 && t.getOwner() == null) ) {
+                                                    if ( t != null && num != -1 && !(game.getGameMode() == 1 && t.getOwner() == null) && !(game.getGameMode() == RiskGame.MODE_SECRET_MISSION && t.getOwner() == null)) {
 
                                                             int result = game.placeArmy(t, num);
 
@@ -2104,7 +2105,6 @@ RiskUtil.printStackTrace(e);
                 String output= RiskUtil.replaceAll( resb.getString( "core.choosemap.mapselected"), "{0}", filename);
 
                 controller.sendMessage(output, false , true);
-
             }
             else {
                 controller.startGame(unlimitedLocalMode);
@@ -2206,6 +2206,9 @@ RiskUtil.printStackTrace(e);
 	public void setReplay(boolean a) {
 		replay = a;
 	}
+        public boolean isReplay() {
+            return replay;
+        }
 
         final AIManager ai = new AIManager();
 

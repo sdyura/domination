@@ -486,9 +486,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		Component[] players = PlayersPanel.getComponents();
 
 		for (int c=0; c< players.length ; c++) {
-
 			PlayersPanel.remove(players[c]);
-
 		}
 
 		nothing.setVisible(false);
