@@ -19,6 +19,7 @@ CURRENT VERSION:
 	New field in game engine for maxCardsPerPlayer
 	Fix grasshopper error on java 1.8 on mac when appending to log from interrupted thread
 	Show connection errors in Lobby
+	Fix error in replay when user has made invalid commands (e.g. tried to place 10 armies when they only have 9)
 
 	iOS 5 Can select player color
 	      Fixed - loading dialog has square around indeterminate progress bar

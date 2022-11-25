@@ -434,9 +434,22 @@ public class Risk extends Thread {
 						game = new RiskGame();
 						replay = true;
 						for (Iterator e = replayCommands.iterator(); e.hasNext();) {
-							inGameParser( (String)e.next() );
-							//try{ Thread.sleep(1000); }
-							//catch(InterruptedException e){}
+                                                    String command = (String)e.next();
+                                                    try {
+							inGameParser(command);
+                                                    }
+                                                    catch (IllegalArgumentException error) {
+                                                        // sometimes the user may have typed an invalid command, dont kill the whole replay
+                                                        if (game.getCurrentPlayer() != null && game.getCurrentPlayer().getType() == Player.PLAYER_HUMAN) {
+                                                            logger.log(Level.INFO, "invalid human command: " + command, error);
+                                                        }
+                                                        // if the invlid command came from the AI, this is a very serious error and we want to stop
+                                                        else {
+                                                            throw error;
+                                                        }
+                                                    }
+                                                    //try{ Thread.sleep(1000); }
+                                                    //catch(InterruptedException e){}
 						}
 						output="replay of game finished";
 					}
