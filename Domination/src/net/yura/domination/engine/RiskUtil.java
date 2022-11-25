@@ -127,7 +127,11 @@ public class RiskUtil {
         public static void donate() throws Exception {
 		openURL(new URL("http://domination.sourceforge.net/donate.shtml"));
 	}
-        
+
+        public static void patreon() throws Exception {
+                openURL(new URL("http://domination.sourceforge.net/patreon.shtml"));
+        }
+
 	public static void donatePayPal() throws Exception {
 		openURL(new URL("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=yura%40yura%2enet&item_name="+GAME_NAME+"%20Donation&no_shipping=0&no_note=1&tax=0&currency_code=GBP&lc=GB&bn=PP%2dDonationsBF&charset=UTF%2d8"));
 	}
@@ -504,7 +508,7 @@ public class RiskUtil {
 
                         String v = newversion[0].substring(7, newversion[0].length() );
 
-                        if (!v.equals(RiskUtil.RISK_VERSION)) {
+                        if (!v.equals("1.2.5") && !v.equals(RiskUtil.RISK_VERSION)) {
                                 oldVersion = true;
 
                                 for (int c=1;c<newversion.length;c++) {
