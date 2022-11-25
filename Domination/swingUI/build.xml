@@ -93,6 +93,13 @@
 
 	<target name="classes" description="compiles all the classes">
 
+                <!--
+                    if no special config is set, ant will try and use
+                    /usr/local/opt/openjdk/bin/java
+                -->
+                <echo>Java/JVM version: ${ant.java.version}</echo>
+                <echo>Java/JVM detail version: ${java.version}</echo>
+
 		<mkdir dir="${dir.build.classes}"/>
                 <mkdir dir="${dir.dist}"/>
 

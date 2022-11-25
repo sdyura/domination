@@ -441,7 +441,7 @@ public class Risk extends Thread {
                                                     catch (IllegalArgumentException error) {
                                                         // sometimes the user may have typed an invalid command, dont kill the whole replay
                                                         if (game.getCurrentPlayer() != null && game.getCurrentPlayer().getType() == Player.PLAYER_HUMAN) {
-                                                            logger.log(Level.INFO, "invalid human command: " + command, error);
+                                                            logger.log(Level.INFO, "invalid replay user command: " + command, error);
                                                         }
                                                         // if the invlid command came from the AI, this is a very serious error and we want to stop
                                                         else {
