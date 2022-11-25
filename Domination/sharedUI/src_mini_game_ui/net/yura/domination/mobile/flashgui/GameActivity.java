@@ -318,7 +318,7 @@ public class GameActivity extends Frame implements ActionListener {
         @Override
         protected void workoutMinimumSize() {
             width = 10;
-            height = XULLoader.adjustSizeToDensity(3);
+            height = XULLoader.adjustSizeToDensity(5);
         }
     }
 
