@@ -23,7 +23,7 @@
         </list>
         <panel columns="2" gap="10" left="10" name="ConnectingPanel" right="10" top="10" weightx="1" weighty="1">
             <label colspan="2" weighty="1"/>
-            <progressbar halign="right" property="indeterminate=true" weightx="1"/>
+            <progressbar halign="right" property="indeterminate=true;plafname=IndeterminateSpinnerSmall" weightx="1"/>
             <label font="LARGE bold" i18n="true" text="lobby.connecting" weightx="1"/>
             <label colspan="2" weighty="1"/>
             <label alignment="center" colspan="2" name="ConnectLog" text=" " weightx="1" width="10"/>
