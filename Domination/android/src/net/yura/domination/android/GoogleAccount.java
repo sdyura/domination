@@ -93,7 +93,7 @@ public class GoogleAccount {
                 if (result == null || result.getStatus() != Status.RESULT_CANCELED && result.getStatus().getStatusCode() != CommonStatusCodes.ERROR) {
                     String message = result == null ? null : result.getStatus().getStatusMessage();
                     if (message == null || "".equals(message)) {
-                        message = "Failed to sign in";
+                        message = "Failed to sign in" + (result == null ? "" : ". " + CommonStatusCodes.getStatusCodeString(result.getStatus().getStatusCode()));
                     }
                     new AlertDialog.Builder(activity).setMessage(message)
                             .setNeutralButton(android.R.string.ok, null).show();
