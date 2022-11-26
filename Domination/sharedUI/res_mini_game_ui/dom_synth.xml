@@ -94,14 +94,18 @@
 
 	<style id="frameStyle">
 		<state>
-			<color value="#FFBDB5AD" type="BACKGROUND"/>
+			<color value="#FFE6E1DA" type="BACKGROUND"/>
 		</state>
 	</style>
 	<bind style="frameStyle" type="region" key="Frame"/>
 
+<!--
+	!!!! WARNING !!!! do NOT attempt to theme parts of the ListRenderer
+	as this will interfere with the native android theme and look like a mess!
+
     <style id="itemStyle">
         <state>
-            <color value="#FFE6E1DA" type="BACKGROUND"/>
+            <color value="#FFBDB5AD" type="BACKGROUND"/>
         </state>
 		<state value="FOCUSED">
 			<color value="#0000" type="BACKGROUND"/>
@@ -112,6 +116,7 @@
     </style>
     <bind style="itemStyle" type="region" key="ListRenderer"/>
 	<bind style="itemStyle" type="region" key="ListRendererCollapsed"/>
+-->
 
     <style id="view">
 	   <opaque value="false"/>
