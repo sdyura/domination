@@ -955,16 +955,8 @@ class ConsoleTab extends JPanel implements SwingGUITab, ActionListener {
 			cgo(input);
 		}
 		else if (a.getActionCommand().equals("run script")) {
-
-			JFileChooser fc = new JFileChooser();
-			RiskFileFilter filter = new RiskFileFilter(RiskFileFilter.RISK_SCRIPT_FILES);
-			fc.setFileFilter(filter);
-
-			int returnVal = fc.showOpenDialog( RiskUIUtil.findParentFrame(this) );
-			if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-				java.io.File file = fc.getSelectedFile();
-				// Write your code here what to do with selected file
-
+                        java.io.File file = RiskUIUtil.getFileOpenDialog(RiskUIUtil.findParentFrame(this), null, RiskFileFilter.RISK_SCRIPT_FILES);
+			if (file != null) {
 				try {
 					// Testing.append("Opening file: "+ file.getPath() +"\n");
 					// Testing.append("Running Script...\n");
@@ -981,14 +973,10 @@ class ConsoleTab extends JPanel implements SwingGUITab, ActionListener {
 					}
 					bufferin.close();
 					// Testing.append("Script end\n");
-
 				}
 				catch(Exception error) {
 					// Testing.append("Error: "+error.getMessage() + "\n");
 				}
-
-			} else {
-				// Write your code here what to do if user has canceled Open dialog
 			}
 		}
 		else if (a.getActionCommand().equals("save console")) {
@@ -1221,14 +1209,8 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
 	public void actionPerformed(ActionEvent a) {
 
 		if (a.getActionCommand().equals("play debug")) {
-
-			JFileChooser fc = new JFileChooser();
-			RiskFileFilter filter = new RiskFileFilter(RiskFileFilter.RISK_LOG_FILES);
-			fc.setFileFilter(filter);
-
-			int returnVal = fc.showOpenDialog( RiskUIUtil.findParentFrame(this) );
-			if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-				java.io.File file = fc.getSelectedFile();
+                        java.io.File file = RiskUIUtil.getFileOpenDialog(RiskUIUtil.findParentFrame(this), null, RiskFileFilter.RISK_LOG_FILES);
+			if (file != null) {
 				String fileName = file.getAbsolutePath();
 
 				go("play " + fileName);

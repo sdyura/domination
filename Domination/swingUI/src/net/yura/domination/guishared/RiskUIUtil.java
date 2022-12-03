@@ -474,32 +474,8 @@ public class RiskUIUtil {
          */
         public static String getNewMapsFileNoSandbox(Frame f, String extension) {
             File md = getFile(mapsdir);
-            RiskFileFilter filter = new RiskFileFilter(extension);
+            File file = getFileOpenDialog(f, md, extension);
 
-            java.io.File file;
-            
-            // JFileChooser on mac is really bad, but FileDialog uses the native picker
-            if (isMac()) {
-                file = getAWTFileDialogFile(f, md, filter, FileDialog.LOAD);
-            }
-            else {
-                JFileChooser fc = new JFileChooser(md);
-                fc.setFileFilter(filter);
-
-                int returnVal = fc.showOpenDialog(f);
-                if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-
-                    file = fc.getSelectedFile();
-                    // sometimes this is null, bug in java? fall back to FileDialog
-                    if (file == null) {
-                        file = getAWTFileDialogFile(f, md, filter, FileDialog.LOAD);
-                    }
-                }
-                else {
-                    file = null;
-                }
-            }
-            
             if (file == null) {
                 return null;
             }
@@ -508,11 +484,41 @@ public class RiskUIUtil {
             }
             return file.getPath();
         }
-        
+
+        public static File getFileOpenDialog(Frame parent, File directory, String extension) {
+            RiskFileFilter filter = new RiskFileFilter(extension);
+            java.io.File file;
+
+            // JFileChooser on mac is really bad, but FileDialog uses the native picker
+            if (isMac()) {
+                file = getAWTFileDialogFile(parent, directory, filter, FileDialog.LOAD);
+            }
+            else {
+                JFileChooser fc = new JFileChooser(directory);
+                fc.setFileFilter(filter);
+
+                int returnVal = fc.showOpenDialog(parent);
+                if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+                    file = fc.getSelectedFile();
+                    // sometimes this is null, bug in java? fall back to FileDialog
+                    if (file == null) {
+                        file = getAWTFileDialogFile(parent, directory, filter, FileDialog.LOAD);
+                    }
+                }
+                else {
+                    file = null;
+                }
+            }
+            return file;
+        }
+
         private static File getAWTFileDialogFile(Frame f, File md, FilenameFilter filter, int mode) {
             FileDialog fileDialog = new FileDialog(f);
             fileDialog.setMode(mode);
-            fileDialog.setDirectory(md.getAbsolutePath());
+            if (md != null) {
+                fileDialog.setDirectory(md.getAbsolutePath());
+            }
             fileDialog.setFilenameFilter(filter); // does nothing on windows
             fileDialog.setVisible(true);
             String filename = fileDialog.getFile();

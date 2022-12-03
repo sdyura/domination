@@ -722,7 +722,20 @@ RiskUtil.printStackTrace(e);
                                                     while(input != null) {
                                                         line++;
                                                         //System.out.print(input+"\n");
-                                                        risk.inGameParser(input);
+                                                        try {
+                                                            risk.inGameParser(input);
+                                                        }
+                                                        catch (IllegalArgumentException error) {
+                                                            // sometimes the user may have typed an invalid command, dont kill the whole replay
+                                                            if (game.getCurrentPlayer() != null && game.getCurrentPlayer().getType() == Player.PLAYER_HUMAN) {
+                                                                logger.log(Level.INFO, "invalid script user command on line: " + line + " input: " + input, error);
+                                                            }
+                                                            // if the invlid command came from the AI, this is a very serious error and we want to stop
+                                                            else {
+                                                                throw error;
+                                                            }
+                                                        }
+
                                                         input = bufferin.readLine();
                                                     }
                                                 }
