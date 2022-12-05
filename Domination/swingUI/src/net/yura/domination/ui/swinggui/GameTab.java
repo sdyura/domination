@@ -3,6 +3,7 @@ package net.yura.domination.ui.swinggui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -397,9 +398,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		roll2.addActionListener(this);
 		roll3.addActionListener(this);
 
-
-		gOptions.setEnabled(false);
-		gmOptions.setEnabled(false);
 		gmReplay.setEnabled(false);
 
 		gSaveGame.setEnabled(false);
@@ -514,18 +512,22 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		}
 		else if ("options".equals(actionCommand)) {
 
-			Object[] message = new Object[4];
-			message[0] = new JCheckBox("Auto End Go", swingGUIPanel.myrisk.getAutoEndGo());
-			message[1] = new JCheckBox("Auto Defend", swingGUIPanel.myrisk.getAutoDefend());
-
-                        message[2] = new JCheckBox("Show dice", Risk.isShowDice());
+			Component[] message = new Component[4];
+                        message[0] = new JCheckBox("Show dice", Risk.isShowDice());
                         
                         JSpinner aiwait = new JSpinner(new SpinnerNumberModel(AIManager.getWait(), 0, 10000, 100));
                         JPanel aiWaitPanel = new JPanel();
                         aiWaitPanel.add(new JLabel("AI wait time:"));
                         aiWaitPanel.add(aiwait);
                         aiWaitPanel.add(new JLabel("milliseconds"));
-			message[3] = aiWaitPanel;
+			message[1] = aiWaitPanel;
+
+			message[2] = new JCheckBox("Auto End Go", swingGUIPanel.myrisk.getAutoEndGo());
+			message[3] = new JCheckBox("Auto Defend", swingGUIPanel.myrisk.getAutoDefend());
+                        if (swingGUIPanel.gameState <= RiskGame.STATE_NEW_GAME) {
+                            message[2].setEnabled(false);
+                            message[3].setEnabled(false);
+                        }
 
 			int result = JOptionPane.showConfirmDialog(
 			    this,                             // the parent that the dialog blocks
@@ -536,18 +538,22 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			);
 
 			if (result == JOptionPane.OK_OPTION) {
-				AIManager.setWait(((Integer)aiwait.getValue()).intValue());
-				Risk.setShowDice(((JCheckBox)message[2]).isSelected());
+				Risk.setShowDice(((JCheckBox)message[0]).isSelected());
+                                AIManager.setWait(((Integer)aiwait.getValue()).intValue());
 
-                                boolean autodefend = (((JCheckBox)message[1]).isSelected());
-                                boolean autoendgo = (((JCheckBox)message[0]).isSelected());
-
-                                if (swingGUIPanel.myrisk.getAutoDefend() != autodefend) {
-                                    swingGUIPanel.myrisk.parser("autodefend " + (autodefend ? "on" : "off"));
+                                if (message[2].isEnabled()) {
+                                    boolean autoendgo = (((JCheckBox)message[2]).isSelected());
+                                    // "autoendgo on" may trigger the end of my go, so must be changed last
+                                    if (swingGUIPanel.myrisk.getAutoEndGo() != autoendgo) {
+                                        swingGUIPanel.myrisk.parser("autoendgo " + (autoendgo ? "on" : "off"));
+                                    }
                                 }
-                                // "autoendgo on" may trigger the end of my go, so must be changed last
-                                if (swingGUIPanel.myrisk.getAutoEndGo() != autoendgo) {
-                                    swingGUIPanel.myrisk.parser("autoendgo " + (autoendgo ? "on" : "off"));
+
+                                if (message[3].isEnabled()) {
+                                    boolean autodefend = (((JCheckBox)message[3]).isSelected());
+                                    if (swingGUIPanel.myrisk.getAutoDefend() != autodefend) {
+                                        swingGUIPanel.myrisk.parser("autodefend " + (autodefend ? "on" : "off"));
+                                    }
                                 }
 			}
 		}
@@ -572,7 +578,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			swingGUIPanel.actionPerformed(a);
 		}
 	}
-        
+
 	public void showMission() {
 		String mission = swingGUIPanel.myrisk.getHumanPlayerMission();
 		JOptionPane.showMessageDialog(this, resbundle.getString("swing.message.mission") + " " + mission, resbundle.getString("swing.title.mission"), JOptionPane.INFORMATION_MESSAGE,
@@ -614,8 +620,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		showCards.setEnabled(oneHuman != null);
                 
 		Undo.setEnabled(false);
-		gOptions.setEnabled(false);
-		gmOptions.setEnabled(false);
 		gmReplay.setEnabled(false);
 
 		// this is so close is not selected
@@ -745,9 +749,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
 		showMission.setEnabled(true);
 		showCards.setEnabled(true);
-
-		gOptions.setEnabled(true);
-		gmOptions.setEnabled(true);
 	}
 
 	public void newGame() {
@@ -803,8 +804,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                 gmSaveGame.setEnabled(false);
                 gmCloseGame.setEnabled(false);
 
-                gOptions.setEnabled(false);
-                gmOptions.setEnabled(false);
                 gmReplay.setEnabled(false);
 
                 remove(guiGame);
