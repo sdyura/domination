@@ -66,7 +66,6 @@ public class PlayGameTest extends TestCase {
             }
         });
 
-        risk.parserAndWait("newgame");
         risk.parserAndWait("play " + file.getPath()); // maybe getAbsolutePath() for full path
 
         // keep waiting untill we have a running game

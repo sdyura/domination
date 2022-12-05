@@ -338,7 +338,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 
 			if (gameMode==MODE_SECRET_MISSION && Missions.size() < Players.size() ) { return; }
 
-			int armies = ( 10 - Players.size() ) *  Math.round( Countries.length * 0.12f );
+			int armies = Math.max(1, 10 - Players.size()) *  Math.round( Countries.length * 0.12f );
 
 			// System.out.print("armies="+ armies +"\n");
 			//
