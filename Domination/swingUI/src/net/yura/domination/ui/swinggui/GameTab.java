@@ -16,6 +16,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,8 +50,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -1674,10 +1674,11 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
                         final JCheckBox threeDefendDice = new JCheckBox(resbundle.getString("newgame.threedefenderdice"));
 			GameOptionsButtons.add( threeDefendDice );
+                        threeDefendDice.setOpaque(false);
                         
-                        italian.addChangeListener(new ChangeListener() {
+                        italian.addItemListener(new ItemListener() {
                             @Override
-                            public void stateChanged(ChangeEvent e) {
+                            public void itemStateChanged(ItemEvent e) {
                                 threeDefendDice.setSelected(italian.isSelected());
                             }
                         });
