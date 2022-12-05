@@ -51,6 +51,8 @@ public class Risk extends Thread {
 	public static final String STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET = "italianlike";
         public static final String STARTGAME_OPTION_AUTO_PLACE_ALL = "autoplaceall";
         public static final String STARTGAME_OPTION_RECYCLE_CARDS = "recycle";
+        
+        public static final String STARTGAME_OPTION_DEFENDER_DICE = "defenderdice=";
 
         private static final int DEFAULT_SHOW_DICE_SLEEP = 1000;
         private static final int DEFAULT_ROLL_DICE_SLEEP = 500;
@@ -1289,8 +1291,13 @@ RiskUtil.printStackTrace(e);
 					if (StringT.hasMoreTokens()==false) {
 						if ( game.getPlayers().size() == 0) {
 						    if (!replay) {
-							for (int c=1;c<=RiskGame.MAX_PLAYERS;c++) {
-								parser("newplayer " + riskconfig.getProperty("default.player"+c+".type")+" "+ riskconfig.getProperty("default.player"+c+".color")+" "+ riskconfig.getProperty("default.player"+c+".name") );
+							for (int c = 1; c <= RiskGame.MAX_PLAYERS; c++) {
+                                                                String playerType = riskconfig.getProperty("default.player"+c+".type");
+                                                                String playerColor = riskconfig.getProperty("default.player"+c+".color");
+                                                                String playerName = riskconfig.getProperty("default.player"+c+".name");
+                                                                if (playerType != null && playerColor != null && playerName != null) {
+                                                                    parser("newplayer " + playerType + " " + playerColor + " " + playerName);
+                                                                }
 							}
 							output = resb.getString( "core.info.autosetup");
 						    }
@@ -1314,7 +1321,7 @@ RiskUtil.printStackTrace(e);
                                                 boolean maxFiveCards = true;
 						boolean newgame_autoplaceall = false;
 						boolean newgame_recycle = false;
-                                                boolean threeDice = false;
+                                                Integer defenderDice = null;
                                                 boolean minimumThreeArmies = true;
 
 						String crap = null;
@@ -1338,7 +1345,6 @@ RiskUtil.printStackTrace(e);
 							}
 							else if ( newOption.equals(STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET) ) {
 								newgame_cardType = RiskGame.CARD_ITALIANLIKE_SET;
-                                                                threeDice = true;
                                                                 minimumThreeArmies = false;
                                                                 maxFiveCards = false;
 							}
@@ -1348,19 +1354,25 @@ RiskUtil.printStackTrace(e);
 							else if ( newOption.equals(STARTGAME_OPTION_RECYCLE_CARDS) ) {
 								newgame_recycle = true;
 							}
+                                                        else if ( newOption.startsWith(STARTGAME_OPTION_DEFENDER_DICE) ) {
+                                                                defenderDice = Integer.parseInt(newOption.substring(STARTGAME_OPTION_DEFENDER_DICE.length()));
+                                                        }
 							else {
 								crap = newOption;
 							}
 						}
 
-                                                if (crap==null) {
+                                                if (crap == null) {
+                                                    
+                                                    defenderDice = defenderDice == null ? (newgame_cardType == RiskGame.CARD_ITALIANLIKE_SET ? 3 : 2) : defenderDice;
+                                                    
                                                     // checks all the options are correct to start a game
-                                                    if ( newgame_type!=-1 && newgame_cardType!=-1 && n>=2 && n<=RiskGame.MAX_PLAYERS) {
+                                                    if (newgame_type != -1 && newgame_cardType != -1 && n >= 2 && n <= RiskGame.MAX_PLAYERS && defenderDice >= 1 && defenderDice <= 3) {
 
                                                             autoplaceall = newgame_autoplaceall;
 
                                                             try {
-                                                                    game.startGame(newgame_type, newgame_cardType, newgame_recycle, maxFiveCards, threeDice, minimumThreeArmies);
+                                                                    game.startGame(newgame_type, newgame_cardType, newgame_recycle, maxFiveCards, defenderDice, minimumThreeArmies);
                                                             }
                                                             catch (Exception e) {
                                                                     RiskUtil.printStackTrace(e);

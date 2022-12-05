@@ -22,6 +22,7 @@ CURRENT VERSION:
 	Fix error in replay when user has made invalid commands (e.g. tried to place 10 armies when they only have 9)
 	SwingUI on macOS use native file chooser for selecting files (fix for Documents folder not showing files)
 	Game engine supports over 9 players if configured with "game.players.max" in game.ini
+	SwingGUI: can select 3 defending dice in any game mode
 
 	iOS 5 Can select player color
 	      Fixed - loading dialog has square around indeterminate progress bar

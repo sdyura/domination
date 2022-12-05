@@ -19,7 +19,7 @@ public class RiskGameTest extends TestCase {
 
         addPlayers(instance, noPlayers);
 
-        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_FIXED_SET, true, true, false, true);
+        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_FIXED_SET, true, true, 2, true);
         assertEquals(2, instance.getMaxDefendDice());
         instance.setCurrentPlayer(0);
 
@@ -157,7 +157,7 @@ public class RiskGameTest extends TestCase {
 
         addPlayers(instance, noPlayers);
 
-        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_ITALIANLIKE_SET, true, false, true, false);
+        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_ITALIANLIKE_SET, true, false, 3, false);
         assertEquals(3, instance.getMaxDefendDice());
         instance.setCurrentPlayer(0);
 

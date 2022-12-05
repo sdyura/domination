@@ -48,6 +48,8 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -1505,6 +1507,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
 
 		mapPic = new JLabel();
+                mapPic.setHorizontalAlignment(SwingConstants.CENTER);
 		mapPic.setBorder( BorderFactory.createLoweredBevelBorder() );
 		Dimension size = GraphicsUtil.newDimension(203, 127);
 		mapPic.setPreferredSize(size);
@@ -1634,7 +1637,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			final JRadioButton increasing = new JRadioButton(resbundle.getString("newgame.cardmode.increasing"), true);
 			final JRadioButton fixed = new JRadioButton(resbundle.getString("newgame.cardmode.fixed"));
                         final JRadioButton italian = new JRadioButton(resbundle.getString("newgame.cardmode.italianlike"));
-
+                        
 			increasing.setOpaque(false);
 			fixed.setOpaque(false);
                         italian.setOpaque(false);
@@ -1656,7 +1659,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                         cardsOptions.add( italian );
 
 			JPanel GameOptionsButtons = new JPanel();
-			GameOptionsButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+			GameOptionsButtons.setLayout(new javax.swing.BoxLayout(GameOptionsButtons, javax.swing.BoxLayout.Y_AXIS));
 			GameOptionsButtons.setBorder(javax.swing.BorderFactory.createTitledBorder(resbundle.getString("newgame.label.startgameoptions")));
 
 			AutoPlaceAll = new JCheckBox(resbundle.getString("newgame.autoplace"));
@@ -1669,6 +1672,16 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			recycle.setOpaque(false);
                         recycle.setSelected( "true".equals(swingGUIPanel.myrisk.getRiskConfig("default.recyclecards")) );
 
+                        final JCheckBox threeDefendDice = new JCheckBox(resbundle.getString("newgame.threedefenderdice"));
+			GameOptionsButtons.add( threeDefendDice );
+                        
+                        italian.addChangeListener(new ChangeListener() {
+                            @Override
+                            public void stateChanged(ChangeEvent e) {
+                                threeDefendDice.setSelected(italian.isSelected());
+                            }
+                        });
+                        
 			JButton startGame = new JButton(resbundle.getString("newgame.startgame"));
 
 			startGame.addActionListener(
@@ -1735,6 +1748,9 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 								else if (fixed.isSelected()) { type += " fixed"; }
                                                                 else { type += " italianlike"; }
 
+                                                                if (!italian.isSelected() && threeDefendDice.isSelected()) { type += " " + Risk.STARTGAME_OPTION_DEFENDER_DICE + "3"; }
+                                                                if (italian.isSelected() && !threeDefendDice.isSelected()) { type += " " + Risk.STARTGAME_OPTION_DEFENDER_DICE + "2"; }
+                                                                
 								swingGUIPanel.go("startgame " + type + (( AutoPlaceAll.isSelected() )?(" autoplaceall"):("")) + (( recycle.isSelected() )?(" recycle"):("")) );
 
 							}
@@ -1766,7 +1782,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			c.gridx = 0; // col
 			c.gridy = 2; // row
 			c.gridwidth = 1; // width
-			c.gridheight = 2; // height
+			c.gridheight = 1; // height
 			this.add(GameTypeButtons, c);
 
 
@@ -1794,9 +1810,9 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			c.gridheight = 1; // height
 			this.add(GameOptionsButtons, c);
 
-			c.gridx = 1; // col
+			c.gridx = 0; // col
 			c.gridy = 3; // row
-			c.gridwidth = 1; // width
+			c.gridwidth = 2; // width
 			c.gridheight = 1; // height
 			this.add(startGame, c);
 		}

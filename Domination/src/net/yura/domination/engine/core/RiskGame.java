@@ -267,7 +267,10 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * Starts the game Risk
 	 * @param mode This represents the Type of game (i.e World Domination, Secret Mission, Capital)
 	 */
-	public void startGame(int mode, int card, boolean recycle, boolean maxFiveCards, boolean threeDefendDice, boolean minimumThreeReinforcements) throws Exception {
+	public void startGame(int mode, int card, boolean recycle, boolean maxFiveCards, int maxDefendDice, boolean minimumThreeReinforcements) throws Exception {
+                if (maxDefendDice < 1 || maxDefendDice > 3) {
+                    throw new IllegalArgumentException("bad max defend dice " + maxDefendDice);
+                }
 
 		if (gameState==STATE_NEW_GAME) { //  && ((mapfile !=null && cardsfile !=null) || () )
 
@@ -275,7 +278,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 			cardMode=card;
 
 			recycleCards = recycle;
-                        maxDefendDice = threeDefendDice ? 3 : 2;
+                        this.maxDefendDice = maxDefendDice;
                         minimumNewArmies = minimumThreeReinforcements ? DEFAULT_MINIMUM_NEW_ARMIES : 0;
                         maxCardsPerPlayer = maxFiveCards ? DEFAULT_MAX_CARDS: Integer.MAX_VALUE;
 
