@@ -508,7 +508,7 @@ public class RiskUtil {
 
                         String v = newversion[0].substring(7, newversion[0].length() );
 
-                        if (!v.equals("1.2.5") && !v.equals(RiskUtil.RISK_VERSION)) {
+                        if (!v.equals(RiskUtil.RISK_VERSION)) {
                                 oldVersion = true;
 
                                 for (int c=1;c<newversion.length;c++) {

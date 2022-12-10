@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		5
+	iOS:		6
 	Android:	84
 	Flash GUI:	2
 	Swing GUI:	2
@@ -24,7 +24,7 @@ CURRENT VERSION:
 	Game engine supports over 9 players if configured with "game.players.max" in game.ini
 	SwingGUI: can select 3 defending dice in any game mode
 
-	iOS 5 Can select player color
+	iOS 6 Can select player color
 	      Fixed - loading dialog has square around indeterminate progress bar
 
 	Android 84 fix for buttons being too wide and truncated in Lobby screen with large fonts
