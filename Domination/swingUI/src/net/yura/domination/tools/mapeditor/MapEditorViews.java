@@ -494,6 +494,11 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
                     delIslands.addActionListener(this);
                     pop.add(delIslands);
 
+                    JMenuItem delPonds = new JMenuItem("Delete Ponds");
+                    delPonds.setActionCommand("delPonds");
+                    delPonds.addActionListener(this);
+                    pop.add(delPonds);
+
                     pop.show(c, x, y);
                 }
         }
@@ -529,6 +534,9 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
             }
             else if ("delIslands".equals(actionCommand)) {
                 editPanel.delIslands(selectedCountries);
+            }
+            else if ("delPonds".equals(actionCommand)) {
+                editPanel.delPonds(selectedCountries);
             }
             else {
                 System.err.println("unknown command " + actionCommand);

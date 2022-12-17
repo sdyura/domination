@@ -808,6 +808,110 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
             }
         }
 
+        public void delPonds(Collection<Country> countries) {
+            long startTime = System.currentTimeMillis();
+            
+            Set<Integer> findColors = new HashSet();
+            for (Country country : countries) {
+                Color color = new Color(country.getColor(),country.getColor(),country.getColor());
+                findColors.add(color.getRGB());
+            }
+
+            BufferedImage map = getImageMap();
+            int width = map.getWidth();
+            int[] pixels = map.getRGB(0,0,width,map.getHeight(),null,0,width);
+
+            // find possible start positions, when a white pixel is bellow a country pixel
+            Map<Integer,List<Integer>> colorToStartPositions = new HashMap();
+            for (int c = 0; c < (pixels.length - width); c++) {
+                if (findColors.contains(pixels[c])) {
+                    List<Integer> positions = colorToStartPositions.get( pixels[c] );
+                    if (positions==null) { positions = new ArrayList(); colorToStartPositions.put(pixels[c], positions); }
+                    
+                    // check if pixel bellow is white and then add it
+                    if (pixels[c + width] == 0xFFFFFFFF) {
+                        positions.add(c + width);
+                    }
+                }
+            }
+
+            Map<Integer, List<List<Integer>>> allPonds = new HashMap();
+            for (Map.Entry<Integer,List<Integer>> countryInfo:colorToStartPositions.entrySet()) {
+                int countryColor = countryInfo.getKey();
+                List<Integer> startPositions = countryInfo.getValue();
+                List<List<Integer>> ponds = new ArrayList();
+                outer: while (!startPositions.isEmpty()) {
+                    List<Integer> pond = new ArrayList();
+                    Stack<Integer> stack = new Stack();
+                    stack.push(startPositions.get(0) );
+                    while (!stack.isEmpty()) {
+                        int position = stack.pop();
+
+                        if (pixels[position] != 0xFFFFFFFF && pixels[position] != countryColor) { // we have found a bad color
+                            continue outer;
+                        }
+                        if (pixels[position] == 0xFFFFFFFF && !pond.contains(position)) {
+                            pond.add(position);
+
+                            startPositions.remove(Integer.valueOf(position));
+
+                            if (position < width) { // we are at the top edge
+                                continue outer;
+                            }
+                            else {
+                                stack.push(position - width); // top
+                            }
+
+                            if (position % width == 0) { // we are at the left edge
+                                continue outer;
+                            }
+                            else {
+                                stack.push(position - 1); // left
+                            }
+
+                            if ((position+1) % width == 0) { // we are at the right edge
+                                continue outer;
+                            }
+                            else {
+                                stack.push(position + 1); // right
+                            }
+
+                            if (position >= (pixels.length - width)) { // we are at the bottom edge
+                                continue outer;
+                            }
+                            else {
+                                stack.push(position + width); // bottom
+                            }
+                        }
+                    }
+                    
+                    ponds.add(pond);
+                }
+                
+                if (!ponds.isEmpty()) {
+                    allPonds.put(countryColor, ponds);
+                }
+            }
+            System.out.println("finished! took "+(System.currentTimeMillis()-startTime));
+
+            if (allPonds.isEmpty()) {
+                JOptionPane.showMessageDialog(this, MapEditor.getCountiresListMessage(countries) + "\nNo ponds found");
+            }
+            else {
+                for (Map.Entry<Integer, List<List<Integer>>> countryPonds: allPonds.entrySet()) {
+                    int countryColor = countryPonds.getKey();
+                    System.out.println("for country " + (countryColor & 0xFF) + " found " + countryPonds.getValue().size() + " ponds");
+                    for (List<Integer> ponds : countryPonds.getValue()) {
+                        for (int pos: ponds) {
+                            pixels[pos] = countryColor;
+                        }
+                    }
+                }
+                map.setRGB(0,0,width,map.getHeight(),pixels,0,width);
+                repaintSelected();
+            }
+        }
+
 	// #############################################################
 	// ###################### mouse ###########################
 	// ##################################################
