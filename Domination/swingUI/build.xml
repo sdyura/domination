@@ -294,7 +294,7 @@
 		unless="izpack.available">
 		<echo>
 The izPack installer is not available on your system.
-Get it from http://www.izforge.com/izpack/ if you want
+Get it from http://izpack.org/downloads/ if you want
 to create the graphical installer.
 create a local.properties file and 
 set "izpack-dist" to point to the izpack install dir
