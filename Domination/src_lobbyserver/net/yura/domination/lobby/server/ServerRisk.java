@@ -6,6 +6,13 @@ import net.yura.lobby.server.LobbyLogger;
 
 public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 
+        /**
+         * some games get into a stalemate where no one can win and it just goes back and forth with the AI
+         *
+         * biggest real game: at 30_000 commands the size of game was 1MB
+         */
+        private static final int MAX_GAME_COMMANDS = 50_000;
+    
 	ServerGameRisk sgr;
 	private boolean paused;
 	private boolean killflag;
@@ -76,7 +83,7 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 		//this.notify();
             
             // over 50,000 commands, the game must be stuck in a loop, kill the game
-            if (getGame().getCommands().size() > 50000) {
+            if (getGame().getCommands().size() > MAX_GAME_COMMANDS) {
                 sgr.gameFinished("Nobody");
             }
             else {

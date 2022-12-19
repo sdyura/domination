@@ -489,15 +489,15 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
                     smartDraw.addActionListener(this);
                     pop.add(smartDraw);
 
+                    JMenuItem delPonds = new JMenuItem("Fill Shapes/Holes");
+                    delPonds.setActionCommand("delPonds");
+                    delPonds.addActionListener(this);
+                    pop.add(delPonds);
+
                     JMenuItem delIslands = new JMenuItem("Delete Islands");
                     delIslands.setActionCommand("delIslands");
                     delIslands.addActionListener(this);
                     pop.add(delIslands);
-
-                    JMenuItem delPonds = new JMenuItem("Delete Ponds");
-                    delPonds.setActionCommand("delPonds");
-                    delPonds.addActionListener(this);
-                    pop.add(delPonds);
 
                     pop.show(c, x, y);
                 }
