@@ -6,8 +6,8 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		6
-	Android:	84
+	iOS:		7
+	Android:	85
 	Flash GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -16,8 +16,11 @@ CURRENT VERSION:
 
 1.2.7
 
-	SwingGUI: Fill Shapes right click option added to allow filling holes in countries
-	Fix for games over 1MB not loading
+	Fix for online games over 1MB not loading
+	Much faster startup time (6 seconds faster on mac)
+	MapEditor: Fill Shapes right click option added to allow filling holes in countries
+	SwingGUI: fix for online lobby sometimes not repainting when tabs switched
+	Lobby: when player resigns, the player is converted to easy AI instead of crap AI
 
 1.2.6 (17.12.2022)
 
