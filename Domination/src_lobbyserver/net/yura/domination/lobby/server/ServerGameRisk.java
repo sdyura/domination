@@ -433,7 +433,7 @@ public class ServerGameRisk extends TurnBasedGame {
                             throw new IllegalArgumentException("player with name already in game "+newName);
                         }
 
-                        sendRename(username,newName,myrisk.getAddress(),Player.PLAYER_AI_CRAP,true);
+                        sendRename(username,newName,myrisk.getAddress(),Player.PLAYER_AI_EASY,true);
 
                         if (aliveHumans==0) {
                             gameRemoved = gameFinished( whoHasMostPoints() );
