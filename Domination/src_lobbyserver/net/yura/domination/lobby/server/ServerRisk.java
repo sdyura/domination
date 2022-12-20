@@ -1,6 +1,7 @@
 package net.yura.domination.lobby.server;
 
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.lobby.server.LobbyLogger;
 
@@ -12,7 +13,9 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
          * biggest real game: at 30_000 commands the size of game was 1MB
          */
         private static final int MAX_GAME_COMMANDS = 50_000;
-    
+
+        private static final String RANDOM_ADDRESS = RiskUtil.createRandomUniqueAddress();
+
 	ServerGameRisk sgr;
 	private boolean paused;
 	private boolean killflag;
@@ -21,6 +24,9 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
 	public ServerRisk(ServerGameRisk a) {
 		super();
 		sgr = a;
+
+                // in the normal game this happens in the run() method as this is slow
+                myAddress = RANDOM_ADDRESS;
 	}
 
         public int getGameId() {

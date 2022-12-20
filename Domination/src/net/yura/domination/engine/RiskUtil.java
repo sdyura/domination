@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.PushbackInputStream;
+import java.net.InetAddress;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -429,7 +430,69 @@ public class RiskUtil {
 
             return info;
 	}
-        
+
+        /**
+         * WARNING!!! this method can take a long time!!! up to 6 seconds!
+         */
+        public static String createRandomUniqueAddress() {
+
+		String randomString = "#"+String.valueOf( Math.round(Math.random()*Long.MAX_VALUE) );
+
+		try {
+			//if (RiskUtil.checkForNoSandbox()) {
+                        try {
+				String hostname = InetAddress.getLocalHost().getHostName();
+				hostname = RiskUtil.replaceAll(hostname, " ", ""); // on Mac hostname can have a space
+				return hostname + randomString;
+			}
+			//else {
+                        catch(Throwable th) {
+				return "sandbox" + randomString;
+			}
+/*
+
+			//InetAddress localAddr = InetAddress.getLocalHost();
+
+			//myAddress = localAddr.getHostAddress();
+
+			myAddress=null;
+			Enumeration ifaces = NetworkInterface.getNetworkInterfaces();
+
+			search:
+			while (ifaces.hasMoreElements()) {
+				NetworkInterface ni = (NetworkInterface)ifaces.nextElement();
+				//System.out.println(ni.getName() + ":");
+
+				Enumeration addrs = ni.getInetAddresses();
+
+				while (addrs.hasMoreElements()) {
+					InetAddress ia = (InetAddress)addrs.nextElement();
+					//System.out.println(" " + ia.getHostAddress());
+
+
+					String tmpAddr = ia.getHostAddress();
+					if (!tmpAddr.equals("127.0.0.1")) {
+
+						myAddress = tmpAddr;
+						break search;
+
+					}
+
+
+				}
+			}
+
+			if (myAddress==null) {
+				throw new Exception("no IP found");
+			}
+*/
+
+		}
+		catch (Exception e) { // if network has not been setup
+			return "nonet" + randomString;
+		}
+        }
+
         /**
          * This is only non empty when loading from random file locations in the MapEditor
          */

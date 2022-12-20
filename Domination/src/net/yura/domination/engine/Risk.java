@@ -157,8 +157,6 @@ public class Risk extends Thread {
                 setShowDice(Boolean.parseBoolean(riskconfig.getProperty("game.dice.show", String.valueOf(isShowDice()))));
                 AIManager.setWait(Integer.parseInt(riskconfig.getProperty("ai.wait", String.valueOf(AIManager.getWait()))));
 		p2pPort = Integer.parseInt(riskconfig.getProperty("p2p.port", String.valueOf(p2pPort)));
-                
-                myAddress = createRandomUniqueAddress();
 
 		controller = new RiskController();
 
@@ -169,68 +167,6 @@ public class Risk extends Thread {
 		this();
 		RiskGame.setDefaultMapAndCards(b,c);
 	}
-
-        /**
-         * WARNING!!! this method can take a long time!!! up to 6 seconds!
-         */
-        static String createRandomUniqueAddress() {
-
-		String randomString = "#"+String.valueOf( Math.round(Math.random()*Long.MAX_VALUE) );
-
-		try {
-			//if (RiskUtil.checkForNoSandbox()) {
-                        try {
-				String hostname = InetAddress.getLocalHost().getHostName();
-				hostname = RiskUtil.replaceAll(hostname, " ", ""); // on Mac hostname can have a space
-				return hostname + randomString;
-			}
-			//else {
-                        catch(Throwable th) {
-				return "sandbox" + randomString;
-			}
-/*
-
-			//InetAddress localAddr = InetAddress.getLocalHost();
-
-			//myAddress = localAddr.getHostAddress();
-
-			myAddress=null;
-			Enumeration ifaces = NetworkInterface.getNetworkInterfaces();
-
-			search:
-			while (ifaces.hasMoreElements()) {
-				NetworkInterface ni = (NetworkInterface)ifaces.nextElement();
-				//System.out.println(ni.getName() + ":");
-
-				Enumeration addrs = ni.getInetAddresses();
-
-				while (addrs.hasMoreElements()) {
-					InetAddress ia = (InetAddress)addrs.nextElement();
-					//System.out.println(" " + ia.getHostAddress());
-
-
-					String tmpAddr = ia.getHostAddress();
-					if (!tmpAddr.equals("127.0.0.1")) {
-
-						myAddress = tmpAddr;
-						break search;
-
-					}
-
-
-				}
-			}
-
-			if (myAddress==null) {
-				throw new Exception("no IP found");
-			}
-*/
-
-		}
-		catch (Exception e) { // if network has not been setup
-			return "nonet" + randomString;
-		}
-        }
 
         public static void setShowDice(boolean show) {
             if (show) {
@@ -336,6 +272,9 @@ public class Risk extends Thread {
 
         boolean running = true;
 	public void run() {
+            // we do this in the background thread as this may be slow
+            myAddress = RiskUtil.createRandomUniqueAddress();
+            
             Runnable message=null;
             while (running) {
 		try {
@@ -2782,7 +2721,7 @@ RiskUtil.printStackTrace(e);
 
             // we want to do this last as this may take a long time
             if (createNewAddress) {
-                myAddress = createRandomUniqueAddress();
+                myAddress = RiskUtil.createRandomUniqueAddress();
             }
         }
 
