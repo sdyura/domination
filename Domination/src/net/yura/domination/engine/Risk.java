@@ -170,6 +170,9 @@ public class Risk extends Thread {
 		RiskGame.setDefaultMapAndCards(b,c);
 	}
 
+        /**
+         * WARNING!!! this method can take a long time!!! up to 6 seconds!
+         */
         static String createRandomUniqueAddress() {
 
 		String randomString = "#"+String.valueOf( Math.round(Math.random()*Long.MAX_VALUE) );
@@ -2752,31 +2755,36 @@ RiskUtil.printStackTrace(e);
 
         private synchronized void closeGame() {
 
+            boolean createNewAddress = false;
+
             // shutdown the network connection for this game
             if ( onlinePlayClient != null ) {
                 onlinePlayClient.closeGame();
                 onlinePlayClient = null;
 
                 // in case lobby had set us some other address we reset it
-                myAddress = createRandomUniqueAddress();
+                createNewAddress = true;
             }
 
             // if there are more commands for this game from the network we should clear them
             if (!inbox.isEmpty()) {
-                logger.log(Level.INFO,"clearing commands "+inbox);
+                logger.log(Level.INFO, "clearing commands " + inbox);
                 inbox.clear();
             }
 
             // shutdown the GUI for this game
-            if (game!=null) {
+            if (game != null) {
                 // does not work from here
                 closeBattle();
                 controller.closeGame();
                 game = null;
             }
 
+            // we want to do this last as this may take a long time
+            if (createNewAddress) {
+                myAddress = createRandomUniqueAddress();
+            }
         }
-
 
 	public void newMemoryGame(RiskGame g, String map) {
 
