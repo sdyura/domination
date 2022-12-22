@@ -22,6 +22,8 @@ CURRENT VERSION:
 	SwingGUI: fix for online lobby sometimes not repainting when tabs switched
 	Lobby: when player resigns, the player is converted to easy AI instead of crap AI
 
+	iOS 7 Fix crash in Image finalizer
+
 1.2.6 (17.12.2022)
 
 	New field in game engine for maxCardsPerPlayer
