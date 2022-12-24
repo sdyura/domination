@@ -15,6 +15,7 @@ public class FCMServerUtilities implements PushLobbyClient {
     static final Logger logger = Logger.getLogger(FCMServerUtilities.class.getName());
 
     public static void setup() {
+        logger.info("FCM setup - requesting token");
 
         // can not use this check as sometimes even if this is not SUCCESS, push still works fine
         //if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {

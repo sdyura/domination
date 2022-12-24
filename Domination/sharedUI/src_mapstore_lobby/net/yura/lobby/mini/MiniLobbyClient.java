@@ -519,7 +519,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     public void connecting(String message) {
-        logger.info(message);
+        logger.info("[MiniLobbyClient] " + message);
 
         //TextArea connectLog = (TextArea)loader.find("ConnectLog");
         //String fullLog = connectLog.getText();

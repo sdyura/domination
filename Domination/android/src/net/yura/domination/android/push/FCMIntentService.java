@@ -20,7 +20,7 @@ public class FCMIntentService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String registrationId) {
         try {
-            FCMServerUtilities.logger.info("Device registered: regId = " + registrationId);
+            FCMServerUtilities.logger.info("Device registered: FCM regId = " + registrationId);
             FCMRegistrar.setRegisteredOnServer(null);
             FCMServerUtilities.registerOnLobbyServer(registrationId);
         }
