@@ -463,6 +463,11 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 }, resBundle.getProperty("lobby.notification.authorization.request"), resBundle.getProperty("lobby.notification.authorization.title"), OptionPane.OK_OPTION);
             }
         }
+        else if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+            // creates Notification Channel
+            // on new version of android this prompts the user to allow notifications
+            Application.openURL("notify://requestAuthorization");
+        }
     }
 
     // WMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMW
