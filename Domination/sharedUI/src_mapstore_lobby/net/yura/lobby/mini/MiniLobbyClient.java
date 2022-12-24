@@ -446,7 +446,6 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     /**
-     * on Android showing notifications is a install time permission, so we do not need to ask
      * @see #connected()
      */
     private void requestNotificationAuthorization() {
@@ -465,7 +464,8 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         else if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
             // creates Notification Channel
-            // on new version of android this prompts the user to allow notifications
+            // on new version of android this prompts the user to allow notifications.
+            // On android this method can be called many times and it just updates the channel settings
             Application.openURL("notify://requestAuthorization");
         }
     }
