@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		7
+	iOS:		8
 	Android:	87
 	Flash GUI:	2
 	Swing GUI:	2
@@ -23,6 +23,7 @@ CURRENT VERSION:
 	Lobby: when player resigns, the player is converted to easy AI instead of crap AI
 
 	iOS 7 Fix crash in Image finalizer
+	iOS 8 Game settings added
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
 	Android 87 only ask for permission to enable notification when we need to

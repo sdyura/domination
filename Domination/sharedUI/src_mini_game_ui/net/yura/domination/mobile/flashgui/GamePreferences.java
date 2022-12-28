@@ -12,12 +12,12 @@ import net.yura.swingme.core.CoreUtil;
 import java.util.Map;
 import java.util.prefs.BackingStoreException;
 
-public class GamePreference implements ActionListener {
+public class GamePreferences implements ActionListener {
 
     private Properties resBundle = CoreUtil.wrap(TranslationBundle.getBundle());
     XULLoader loader;
 
-    public GamePreference() {
+    public GamePreferences() {
         try {
             loader = XULLoader.load(Application.getResourceAsStream("/preferences.xml") , this, resBundle);
         }
@@ -57,7 +57,7 @@ public class GamePreference implements ActionListener {
     }
 
     public static void showGamePreferences() {
-        GamePreference gp = new GamePreference();
+        GamePreferences gp = new GamePreferences();
         gp.loader.setFormData(CoreUtil.asHashtable(DominationMain.appPreferences));
         OptionPane.showOptionDialog(gp, gp.loader.getRoot(), gp.resBundle.getProperty("swing.menu.options"), OptionPane.OK_CANCEL_OPTION, OptionPane.PLAIN_MESSAGE, null, null, null);
     }

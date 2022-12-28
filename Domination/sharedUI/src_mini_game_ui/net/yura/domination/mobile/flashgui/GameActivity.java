@@ -604,7 +604,7 @@ public class GameActivity extends Frame implements ActionListener {
                 Application.openURL("nativeNoResult://net.yura.domination.android.GamePreferenceActivity");
             }
             else {
-                GamePreference.showGamePreferences();
+                GamePreferences.showGamePreferences();
             }
         }
         else {
