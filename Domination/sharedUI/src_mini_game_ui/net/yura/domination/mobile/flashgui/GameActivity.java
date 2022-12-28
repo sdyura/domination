@@ -468,11 +468,7 @@ public class GameActivity extends Frame implements ActionListener {
 
                 if (localGame) menu.add( undobutton );
 
-                // TODO make this work on other platforms
-                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
-                    menu.add(options);
-                }
-
+                menu.add(options);
                 menu.add( AutoEndGo );
                 menu.add( AutoDefend );
                 //menu.add( helpbutton );
@@ -604,7 +600,12 @@ public class GameActivity extends Frame implements ActionListener {
             Application.openURL("nativeNoResult://net.yura.domination.android.StatsActivity");
         }
         else if ("options".equals(actionCommand)) {
-            Application.openURL("nativeNoResult://net.yura.domination.android.GamePreferenceActivity");
+            if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                Application.openURL("nativeNoResult://net.yura.domination.android.GamePreferenceActivity");
+            }
+            else {
+                GamePreference.showGamePreferences();
+            }
         }
         else {
             throw new IllegalArgumentException("unknown command "+actionCommand);
