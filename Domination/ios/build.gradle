@@ -47,6 +47,10 @@ moe {
         mainScheme 'Domination'
         testScheme 'Domination-Test'
     }
+    // to run this do "./gradlew ios:moeNatJGen"
+    natjgen {
+        config='pods.nbc'
+    }
 }
 
 // to disable proguard put -dontshrink in the config
