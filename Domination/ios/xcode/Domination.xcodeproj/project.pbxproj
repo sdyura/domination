@@ -21,6 +21,19 @@
 		DE7C5DAD27230ADA000EB1FF /* gpl.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAC27230ADA000EB1FF /* gpl.txt */; };
 		DE7C5DAF27230B2E000EB1FF /* ChangeLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */; };
 		DE7E9AE22774A71400555709 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE7E9AE12774A71400555709 /* MessageUI.framework */; };
+		DEAA4E0C296385900000B66F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE7E9AE12774A71400555709 /* MessageUI.framework */; };
+		DEAA4E0D296385900000B66F /* Pods_Domination.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C0FF0A52B13E0866D81581 /* Pods_Domination.framework */; };
+		DEAA4E0F296385900000B66F /* iosmeimg in Resources */ = {isa = PBXBuildFile; fileRef = DE30C94E268FBDCE0018914C /* iosmeimg */; };
+		DEAA4E10296385900000B66F /* maps in Resources */ = {isa = PBXBuildFile; fileRef = DE079D282678C41300CFBB43 /* maps */; };
+		DEAA4E11296385900000B66F /* help in Resources */ = {isa = PBXBuildFile; fileRef = DE079D2A2678C45800CFBB43 /* help */; };
+		DEAA4E12296385900000B66F /* ChangeLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */; };
+		DEAA4E13296385900000B66F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DE050F532788EAE30084C691 /* Localizable.strings */; };
+		DEAA4E14296385900000B66F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 583D44881E40B4B90048FF77 /* Assets.xcassets */; };
+		DEAA4E15296385900000B66F /* Graphics in Resources */ = {isa = PBXBuildFile; fileRef = DE3135712684F4F400E558A3 /* Graphics */; };
+		DEAA4E16296385900000B66F /* gpl.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAC27230ADA000EB1FF /* gpl.txt */; };
+		DEAA4E17296385900000B66F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 583D44891E40B4B90048FF77 /* LaunchScreen.storyboard */; };
+		DEAA4E19296385900000B66F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC4876D3960503C5F9FA285C /* main.cpp */; };
+		DEAA4E1A296385900000B66F /* moe-main-interfaces.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB08A0C79A9F530D95B3E8B /* moe-main-interfaces.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +48,16 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		94EE0C6F67F900F4BD78BB4C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DEAA4E1B296385900000B66F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -89,6 +112,8 @@
 		DE7C5DAC27230ADA000EB1FF /* gpl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gpl.txt; path = ../../gpl.txt; sourceTree = "<group>"; };
 		DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ChangeLog.txt; path = ../../ChangeLog.txt; sourceTree = "<group>"; };
 		DE7E9AE12774A71400555709 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		DEAA4E20296385900000B66F /* Simple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEAA4E21296385900000B66F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Domination-Simple/Info.plist"; sourceTree = SOURCE_ROOT; };
 		F071580B939DF4A5D19AD0C3 /* Pods-Domination.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Domination.debug.xcconfig"; path = "Target Support Files/Pods-Domination/Pods-Domination.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +131,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DEAA4E0B296385900000B66F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEAA4E0C296385900000B66F /* MessageUI.framework in Frameworks */,
+				DEAA4E0D296385900000B66F /* Pods_Domination.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +182,7 @@
 				DE079D2A2678C45800CFBB43 /* help */,
 				DE079D282678C41300CFBB43 /* maps */,
 				4D85E57E486ED51FA34DE305 /* Domination */,
+				DEAA4E27296388B00000B66F /* Domination-Simple */,
 				73D1721AB6220D74E351DD53 /* Domination-Test */,
 				235E336D9FBC6ED908F4C9C7 /* Frameworks */,
 				ADBAFA50E5D6822524142090 /* Products */,
@@ -199,8 +234,17 @@
 			children = (
 				9793DC7BCA03B1F0E1B02782 /* Domination.app */,
 				B7A3E898974177A2A2F0C417 /* Domination-Test.app */,
+				DEAA4E20296385900000B66F /* Simple.app */,
 			);
 			path = Products;
+			sourceTree = "<group>";
+		};
+		DEAA4E27296388B00000B66F /* Domination-Simple */ = {
+			isa = PBXGroup;
+			children = (
+				DEAA4E21296385900000B66F /* Info.plist */,
+			);
+			path = "Domination-Simple";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +288,27 @@
 			name = Domination;
 			productName = Domination;
 			productReference = 9793DC7BCA03B1F0E1B02782 /* Domination.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DEAA4E08296385900000B66F /* Simple */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DEAA4E1D296385900000B66F /* Build configuration list for PBXNativeTarget "Simple" */;
+			buildPhases = (
+				DEAA4E09296385900000B66F /* [CP] Check Pods Manifest.lock */,
+				DEAA4E0A296385900000B66F /* Compile Sources (MOE) */,
+				DEAA4E0B296385900000B66F /* Frameworks */,
+				DEAA4E0E296385900000B66F /* Resources */,
+				DEAA4E18296385900000B66F /* Sources */,
+				DEAA4E1B296385900000B66F /* Embed Frameworks */,
+				DEAA4E1C296385900000B66F /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Simple;
+			productName = Domination;
+			productReference = DEAA4E20296385900000B66F /* Simple.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -291,6 +356,7 @@
 			projectRoot = "";
 			targets = (
 				1FD253CDC4B80AD0B7CECF92 /* Domination */,
+				DEAA4E08296385900000B66F /* Simple */,
 				088AE52DA4AF76BC466B1DD6 /* Domination-Test */,
 			);
 		};
@@ -310,6 +376,22 @@
 				DE3135722684F4F400E558A3 /* Graphics in Resources */,
 				DE7C5DAD27230ADA000EB1FF /* gpl.txt in Resources */,
 				583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DEAA4E0E296385900000B66F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEAA4E0F296385900000B66F /* iosmeimg in Resources */,
+				DEAA4E10296385900000B66F /* maps in Resources */,
+				DEAA4E11296385900000B66F /* help in Resources */,
+				DEAA4E12296385900000B66F /* ChangeLog.txt in Resources */,
+				DEAA4E13296385900000B66F /* Localizable.strings in Resources */,
+				DEAA4E14296385900000B66F /* Assets.xcassets in Resources */,
+				DEAA4E15296385900000B66F /* Graphics in Resources */,
+				DEAA4E16296385900000B66F /* gpl.txt in Resources */,
+				DEAA4E17296385900000B66F /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +432,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "set -e\n\nexport MOE_BUILD_SOURCE_SET=\"test\"\nexport MOE_BUILD_MODE=\"$(echo $CONFIGURATION | tr '[:upper:]' '[:lower:]')\"\n\n# Check project directory\nif [ ! -d \"$MOE_PROJECT_DIR\" ]; then\n    echo \"$0:$LINENO:1: error: 'MOE_PROJECT_DIR' doesn't point to a directory!\"; exit 1;\nfi\ncd \"$MOE_PROJECT_DIR\"\n\n# Export JAVA_HOME\nif [ -z \"$JAVA_HOME\" ]; then\n    if [ -z \"$MOE_JAVA_VERSION_OVERRIDE\" ]; then\n        export JAVA_HOME=$(/usr/libexec/java_home)\n    else\n        export JAVA_HOME=$(/usr/libexec/java_home -v \"$MOE_JAVA_VERSION_OVERRIDE\")\n    fi\nfi\necho $JAVA_HOME\n\n# Utility function for finding the Gradle implementation\nfunction findGradle {\n    CD=\"$PWD\"\n    while [ \"$CD\" != \"\" ]; do\n        echo \"Looking for gradlew in $CD\"\n        if [ -x \"$CD/gradlew\" ]; then\n            GRADLE_EXEC=$CD/gradlew\n            return 0\n        fi\n        CD=\"${CD%/*}\"\n    done\n\n    echo \"Checking with 'which'\"\n    GRADLE_EXEC=$(which 'gradle')\n\n    if [ \"$GRADLE_EXEC\" = \"\" ]; then\n        echo \"Failed to locate 'gradle' executable!\"\n        exit 1\n    fi\n}\n\n# Build project with Gradle\nif [ -z \"$MOE_GRADLE_EXTERNAL_BUILD\" ]; then\n    findGradle\n    \"$GRADLE_EXEC\" --no-daemon moeXcodeInternal -s\nfi\n\n# Check output directory\nif [ ! -d \"${MOE_PROJECT_BUILD_DIR}\" ]; then\n    echo \"$0:$LINENO:1: error: 'MOE_PROJECT_BUILD_DIR' doesn't point to a directory!\"; exit 1;\nfi\n\n# Copy some resources\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/resources/${MOE_BUILD_MODE}/application.jar\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\ncp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/startup-provider/${MOE_BUILD_MODE}/preregister.txt\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [ \"${MOE_BUILD_SOURCE_SET}\" == \"test\" ]; then\n    cp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/test-provider/${MOE_BUILD_MODE}/classlist.txt\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nfi\n\n# Copy android CA certificates on demand\nif [ \"${MOE_COPY_ANDROID_CACERTS}\" == \"YES\" ]; then\n    rm -rf \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\n    mkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\n    unzip \"${MOE_SDK_PATH}/sdk/moe-core-certificates.zip\" -d \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\nfi\n\n# Copy and sign MOE framework\nrsync -av --filter \"- CVS/\" --filter \"- .svn/\" --filter \"- .git/\" --filter \"- .hg/\" --filter \"- Headers\" --filter \"- PrivateHeaders\" --filter \"- Modules\" \\\n    \"${MOE_FRAMEWORK_PATH}/MOE.framework\" \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/\"\nif [ \"${ARCHS}\" == \"arm64\" ] || [ \"${ARCHS}\" == \"x86_64\" ]; then\n    lipo -thin \"${ARCHS}\" -output \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MOE.framework/MOE\" \"${MOE_FRAMEWORK_PATH}/MOE.framework/MOE\"\nfi\nif [ -n \"${EXPANDED_CODE_SIGN_IDENTITY}\" -a \"${CODE_SIGNING_REQUIRED}\" != \"NO\" -a \"${CODE_SIGNING_ALLOWED}\" != \"NO\" ]; then\n    /usr/bin/codesign --force --sign $EXPANDED_CODE_SIGN_IDENTITY $OTHER_CODE_SIGN_FLAGS \\\n        --preserve-metadata=identifier,entitlements \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MOE.framework\"\nfi\n";
+		};
+		DEAA4E09296385900000B66F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Domination-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEAA4E0A296385900000B66F /* Compile Sources (MOE) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Compile Sources (MOE)";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "set -e\n\nexport MOE_BUILD_SOURCE_SET=\"main\"\nexport MOE_BUILD_MODE=\"$(echo $CONFIGURATION | tr '[:upper:]' '[:lower:]')\"\n\n# Check project directory\nif [ ! -d \"$MOE_PROJECT_DIR\" ]; then\n    echo \"$0:$LINENO:1: error: 'MOE_PROJECT_DIR' doesn't point to a directory!\"; exit 1;\nfi\ncd \"$MOE_PROJECT_DIR\"\n\n# Export JAVA_HOME\nif [ -z \"$JAVA_HOME\" ]; then\n    if [ -z \"$MOE_JAVA_VERSION_OVERRIDE\" ]; then\n        export JAVA_HOME=$(/usr/libexec/java_home)\n    else\n        export JAVA_HOME=$(/usr/libexec/java_home -v \"$MOE_JAVA_VERSION_OVERRIDE\")\n    fi\nfi\necho $JAVA_HOME\n\n# Utility function for finding the Gradle implementation\nfunction findGradle {\n    CD=\"$PWD\"\n    while [ \"$CD\" != \"\" ]; do\n        echo \"Looking for gradlew in $CD\"\n        if [ -x \"$CD/gradlew\" ]; then\n            GRADLE_EXEC=$CD/gradlew\n            return 0\n        fi\n        CD=\"${CD%/*}\"\n    done\n\n    echo \"Checking with 'which'\"\n    GRADLE_EXEC=$(which 'gradle')\n\n    if [ \"$GRADLE_EXEC\" = \"\" ]; then\n        echo \"Failed to locate 'gradle' executable!\"\n        exit 1\n    fi\n}\n\n# Build project with Gradle\nif [ -z \"$MOE_GRADLE_EXTERNAL_BUILD\" ]; then\n    findGradle\n    \"$GRADLE_EXEC\" --no-daemon moeXcodeInternal -s\nfi\n\n# Check output directory\nif [ ! -d \"${MOE_PROJECT_BUILD_DIR}\" ]; then\n    echo \"$0:$LINENO:1: error: 'MOE_PROJECT_BUILD_DIR' doesn't point to a directory!\"; exit 1;\nfi\n\n# Copy some resources\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/resources/${MOE_BUILD_MODE}/application.jar\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\ncp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/startup-provider/${MOE_BUILD_MODE}/preregister.txt\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [ \"${MOE_BUILD_SOURCE_SET}\" == \"test\" ]; then\n    cp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/test-provider/${MOE_BUILD_MODE}/classlist.txt\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nfi\n\n# Copy android CA certificates on demand\nif [ \"${MOE_COPY_ANDROID_CACERTS}\" == \"YES\" ]; then\n    rm -rf \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\n    mkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\n    unzip \"${MOE_SDK_PATH}/sdk/moe-core-certificates.zip\" -d \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\nfi\n\n# Copy and sign MOE framework\nrsync -av --filter \"- CVS/\" --filter \"- .svn/\" --filter \"- .git/\" --filter \"- .hg/\" --filter \"- Headers\" --filter \"- PrivateHeaders\" --filter \"- Modules\" \\\n    \"${MOE_FRAMEWORK_PATH}/MOE.framework\" \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/\"\nif [ \"${ARCHS}\" == \"arm64\" ] || [ \"${ARCHS}\" == \"x86_64\" ]; then\n    lipo -thin \"${ARCHS}\" -output \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MOE.framework/MOE\" \"${MOE_FRAMEWORK_PATH}/MOE.framework/MOE\"\nfi\nif [ -n \"${EXPANDED_CODE_SIGN_IDENTITY}\" -a \"${CODE_SIGNING_REQUIRED}\" != \"NO\" -a \"${CODE_SIGNING_ALLOWED}\" != \"NO\" ]; then\n    /usr/bin/codesign --force --sign $EXPANDED_CODE_SIGN_IDENTITY $OTHER_CODE_SIGN_FLAGS \\\n        --preserve-metadata=identifier,entitlements \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MOE.framework\"\nfi\n";
+		};
+		DEAA4E1C296385900000B66F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Domination/Pods-Domination-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Domination/Pods-Domination-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		E52E5CBAB73480A5652ABDAF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -408,6 +544,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				583D44871E40B4910048FF77 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DEAA4E18296385900000B66F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEAA4E19296385900000B66F /* main.cpp in Sources */,
+				DEAA4E1A296385900000B66F /* moe-main-interfaces.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +811,88 @@
 			};
 			name = Release;
 		};
+		DEAA4E1E296385900000B66F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F071580B939DF4A5D19AD0C3 /* Pods-Domination.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Domination/Domination.entitlements;
+				CURRENT_PROJECT_VERSION = 8;
+				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"${MOE_FRAMEWORK_PATH}",
+				);
+				INFOPLIST_FILE = "Domination-Simple/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 8.0;
+				MOE_COPY_ANDROID_CACERTS = NO;
+				MOE_FRAMEWORK_PATH = "${MOE_SDK_PATH}/sdk/${PLATFORM_NAME}";
+				MOE_JAVA_VERSION_OVERRIDE = "";
+				MOE_OTHER_LDFLAGS = "${MOE_SECT_OAT} ${MOE_SECT_ART} ${MOE_SEGPROT} ${MOE_PAGEZERO} ${MOE_CUSTOM_OTHER_LDFLAGS} -lc++ -framework MOE";
+				MOE_PAGEZERO = "";
+				"MOE_PAGEZERO[arch=x86_64]" = "-pagezero_size 4096";
+				MOE_PROJECT_BUILD_DIR = "${MOE_PROJECT_DIR}/build";
+				MOE_PROJECT_DIR = "${SRCROOT}/../";
+				MOE_SDK_PATH = "${MOE_PROJECT_BUILD_DIR}/moe/sdk";
+				MOE_SECT_ART = "-sectcreate __ARTDATA __artdata \"${MOE_PROJECT_BUILD_DIR}/moe/main/xcode/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/${arch}.art\"";
+				MOE_SECT_OAT = "-sectcreate __OATDATA __oatdata \"${MOE_PROJECT_BUILD_DIR}/moe/main/xcode/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/${arch}.oat\"";
+				MOE_SEGPROT = "-segprot __OATDATA rx rx -segprot __ARTDATA rw rw";
+				"MOE_SEGPROT[arch=x86_64]" = "-segprot __OATDATA rwx rx -segprot __ARTDATA rwx rw";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"${MOE_OTHER_LDFLAGS}",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.yura.domination.simple;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		DEAA4E1F296385900000B66F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DA3DEECF48379DC73773A7E /* Pods-Domination.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Domination/Domination.entitlements;
+				CURRENT_PROJECT_VERSION = 8;
+				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"${MOE_FRAMEWORK_PATH}",
+				);
+				INFOPLIST_FILE = "Domination-Simple/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 8.0;
+				MOE_COPY_ANDROID_CACERTS = NO;
+				MOE_FRAMEWORK_PATH = "${MOE_SDK_PATH}/sdk/${PLATFORM_NAME}";
+				MOE_JAVA_VERSION_OVERRIDE = "";
+				MOE_OTHER_LDFLAGS = "${MOE_SECT_OAT} ${MOE_SECT_ART} ${MOE_SEGPROT} ${MOE_PAGEZERO} ${MOE_CUSTOM_OTHER_LDFLAGS} -lc++ -framework MOE";
+				MOE_PAGEZERO = "";
+				"MOE_PAGEZERO[arch=x86_64]" = "-pagezero_size 4096";
+				MOE_PROJECT_BUILD_DIR = "${MOE_PROJECT_DIR}/build";
+				MOE_PROJECT_DIR = "${SRCROOT}/../";
+				MOE_SDK_PATH = "${MOE_PROJECT_BUILD_DIR}/moe/sdk";
+				MOE_SECT_ART = "-sectcreate __ARTDATA __artdata \"${MOE_PROJECT_BUILD_DIR}/moe/main/xcode/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/${arch}.art\"";
+				MOE_SECT_OAT = "-sectcreate __OATDATA __oatdata \"${MOE_PROJECT_BUILD_DIR}/moe/main/xcode/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/${arch}.oat\"";
+				MOE_SEGPROT = "-segprot __OATDATA rx rx -segprot __ARTDATA rw rw";
+				"MOE_SEGPROT[arch=x86_64]" = "-segprot __OATDATA rwx rx -segprot __ARTDATA rwx rw";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"${MOE_OTHER_LDFLAGS}",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.yura.domination.simple;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
 		F165540EA3FA664BCB7E045F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -719,6 +946,15 @@
 			buildConfigurations = (
 				A9CF19AFEA2E428EF8C4641D /* Debug */,
 				D335F904856886D63C757B1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DEAA4E1D296385900000B66F /* Build configuration list for PBXNativeTarget "Simple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEAA4E1E296385900000B66F /* Debug */,
+				DEAA4E1F296385900000B66F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
