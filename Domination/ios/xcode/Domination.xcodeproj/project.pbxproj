@@ -12,6 +12,7 @@
 		583D44871E40B4910048FF77 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 583D44861E40B4910048FF77 /* main.cpp */; };
 		583D448A1E40B4B90048FF77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 583D44881E40B4B90048FF77 /* Assets.xcassets */; };
 		583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 583D44891E40B4B90048FF77 /* LaunchScreen.storyboard */; };
+		BD473EE73F32A0B01719CDA7 /* Pods_Domination.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C0FF0A52B13E0866D81581 /* Pods_Domination.framework */; };
 		DE050F552788EAE30084C691 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DE050F532788EAE30084C691 /* Localizable.strings */; };
 		DE079D292678C41300CFBB43 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = DE079D282678C41300CFBB43 /* maps */; };
 		DE079D2B2678C45800CFBB43 /* help in Resources */ = {isa = PBXBuildFile; fileRef = DE079D2A2678C45800CFBB43 /* help */; };
@@ -47,7 +48,9 @@
 
 /* Begin PBXFileReference section */
 		196A02442E4F584ABA797266 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Domination-Test/Info.plist"; sourceTree = SOURCE_ROOT; };
+		1DA3DEECF48379DC73773A7E /* Pods-Domination.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Domination.release.xcconfig"; path = "Target Support Files/Pods-Domination/Pods-Domination.release.xcconfig"; sourceTree = "<group>"; };
 		1EB08A0C79A9F530D95B3E8B /* moe-main-interfaces.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "moe-main-interfaces.m"; path = "../build/moe/main/ui-headers/moe-main-interfaces.m"; sourceTree = "<group>"; };
+		40C0FF0A52B13E0866D81581 /* Pods_Domination.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Domination.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		484E50E912C53A6976896EA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Domination/Info.plist; sourceTree = SOURCE_ROOT; };
 		583D44861E40B4910048FF77 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		583D44881E40B4B90048FF77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -86,6 +89,7 @@
 		DE7C5DAC27230ADA000EB1FF /* gpl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gpl.txt; path = ../../gpl.txt; sourceTree = "<group>"; };
 		DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ChangeLog.txt; path = ../../ChangeLog.txt; sourceTree = "<group>"; };
 		DE7E9AE12774A71400555709 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		F071580B939DF4A5D19AD0C3 /* Pods-Domination.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Domination.debug.xcconfig"; path = "Target Support Files/Pods-Domination/Pods-Domination.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE7E9AE22774A71400555709 /* MessageUI.framework in Frameworks */,
+				BD473EE73F32A0B01719CDA7 /* Pods_Domination.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,10 +120,20 @@
 			name = "Multi-OS Engine";
 			sourceTree = "<group>";
 		};
+		1650B59507F55461C3DFD6F2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F071580B939DF4A5D19AD0C3 /* Pods-Domination.debug.xcconfig */,
+				1DA3DEECF48379DC73773A7E /* Pods-Domination.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		235E336D9FBC6ED908F4C9C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				DE7E9AE12774A71400555709 /* MessageUI.framework */,
+				40C0FF0A52B13E0866D81581 /* Pods_Domination.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -137,6 +152,7 @@
 				235E336D9FBC6ED908F4C9C7 /* Frameworks */,
 				ADBAFA50E5D6822524142090 /* Products */,
 				11236C66490972FB1EA3F4E7 /* Multi-OS Engine */,
+				1650B59507F55461C3DFD6F2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -213,11 +229,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA9CF15504AD1A14A9232F71 /* Build configuration list for PBXNativeTarget "Domination" */;
 			buildPhases = (
+				F9AD0CD76838F57218ADBF8A /* [CP] Check Pods Manifest.lock */,
 				4241AE1906862286C246DE16 /* Compile Sources (MOE) */,
 				A2BC52023A389D56ABDD2BFB /* Frameworks */,
 				B839CFB9915E7C1F867A9156 /* Resources */,
 				18E494547B5B55FA84151043 /* Sources */,
 				059D4793969FAA098EC55C20 /* Embed Frameworks */,
+				E52E5CBAB73480A5652ABDAF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -332,6 +350,46 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "set -e\n\nexport MOE_BUILD_SOURCE_SET=\"test\"\nexport MOE_BUILD_MODE=\"$(echo $CONFIGURATION | tr '[:upper:]' '[:lower:]')\"\n\n# Check project directory\nif [ ! -d \"$MOE_PROJECT_DIR\" ]; then\n    echo \"$0:$LINENO:1: error: 'MOE_PROJECT_DIR' doesn't point to a directory!\"; exit 1;\nfi\ncd \"$MOE_PROJECT_DIR\"\n\n# Export JAVA_HOME\nif [ -z \"$JAVA_HOME\" ]; then\n    if [ -z \"$MOE_JAVA_VERSION_OVERRIDE\" ]; then\n        export JAVA_HOME=$(/usr/libexec/java_home)\n    else\n        export JAVA_HOME=$(/usr/libexec/java_home -v \"$MOE_JAVA_VERSION_OVERRIDE\")\n    fi\nfi\necho $JAVA_HOME\n\n# Utility function for finding the Gradle implementation\nfunction findGradle {\n    CD=\"$PWD\"\n    while [ \"$CD\" != \"\" ]; do\n        echo \"Looking for gradlew in $CD\"\n        if [ -x \"$CD/gradlew\" ]; then\n            GRADLE_EXEC=$CD/gradlew\n            return 0\n        fi\n        CD=\"${CD%/*}\"\n    done\n\n    echo \"Checking with 'which'\"\n    GRADLE_EXEC=$(which 'gradle')\n\n    if [ \"$GRADLE_EXEC\" = \"\" ]; then\n        echo \"Failed to locate 'gradle' executable!\"\n        exit 1\n    fi\n}\n\n# Build project with Gradle\nif [ -z \"$MOE_GRADLE_EXTERNAL_BUILD\" ]; then\n    findGradle\n    \"$GRADLE_EXEC\" --no-daemon moeXcodeInternal -s\nfi\n\n# Check output directory\nif [ ! -d \"${MOE_PROJECT_BUILD_DIR}\" ]; then\n    echo \"$0:$LINENO:1: error: 'MOE_PROJECT_BUILD_DIR' doesn't point to a directory!\"; exit 1;\nfi\n\n# Copy some resources\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/resources/${MOE_BUILD_MODE}/application.jar\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\ncp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/startup-provider/${MOE_BUILD_MODE}/preregister.txt\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [ \"${MOE_BUILD_SOURCE_SET}\" == \"test\" ]; then\n    cp \"${MOE_PROJECT_BUILD_DIR}/moe/${MOE_BUILD_SOURCE_SET}/test-provider/${MOE_BUILD_MODE}/classlist.txt\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nfi\n\n# Copy android CA certificates on demand\nif [ \"${MOE_COPY_ANDROID_CACERTS}\" == \"YES\" ]; then\n    rm -rf \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\n    mkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\n    unzip \"${MOE_SDK_PATH}/sdk/moe-core-certificates.zip\" -d \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/android_root/etc/security/cacerts\"\nfi\n\n# Copy and sign MOE framework\nrsync -av --filter \"- CVS/\" --filter \"- .svn/\" --filter \"- .git/\" --filter \"- .hg/\" --filter \"- Headers\" --filter \"- PrivateHeaders\" --filter \"- Modules\" \\\n    \"${MOE_FRAMEWORK_PATH}/MOE.framework\" \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/\"\nif [ \"${ARCHS}\" == \"arm64\" ] || [ \"${ARCHS}\" == \"x86_64\" ]; then\n    lipo -thin \"${ARCHS}\" -output \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MOE.framework/MOE\" \"${MOE_FRAMEWORK_PATH}/MOE.framework/MOE\"\nfi\nif [ -n \"${EXPANDED_CODE_SIGN_IDENTITY}\" -a \"${CODE_SIGNING_REQUIRED}\" != \"NO\" -a \"${CODE_SIGNING_ALLOWED}\" != \"NO\" ]; then\n    /usr/bin/codesign --force --sign $EXPANDED_CODE_SIGN_IDENTITY $OTHER_CODE_SIGN_FLAGS \\\n        --preserve-metadata=identifier,entitlements \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MOE.framework\"\nfi\n";
+		};
+		E52E5CBAB73480A5652ABDAF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Domination/Pods-Domination-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Domination/Pods-Domination-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9AD0CD76838F57218ADBF8A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Domination-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -528,6 +586,7 @@
 		};
 		A9CF19AFEA2E428EF8C4641D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F071580B939DF4A5D19AD0C3 /* Pods-Domination.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -535,8 +594,6 @@
 				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
-				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${MOE_FRAMEWORK_PATH}",
@@ -570,6 +627,7 @@
 		};
 		D335F904856886D63C757B1A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DA3DEECF48379DC73773A7E /* Pods-Domination.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -577,8 +635,6 @@
 				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
-				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${MOE_FRAMEWORK_PATH}",

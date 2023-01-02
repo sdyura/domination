@@ -41,6 +41,11 @@ moe {
         project 'xcode/Domination.xcodeproj'
         mainTarget = 'Domination'
         testTarget = 'Domination-Test'
+
+        // Uncomment and change these settings if you are working with a Xcode workspace
+        workspace 'xcode/Domination.xcworkspace'
+        mainScheme 'Domination'
+        testScheme 'Domination-Test'
     }
 }
 
