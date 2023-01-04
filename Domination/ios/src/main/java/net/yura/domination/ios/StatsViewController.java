@@ -30,6 +30,7 @@ import org.moe.samples.simplechart.charts.ChartYAxis;
 import org.moe.samples.simplechart.charts.LineChartData;
 import org.moe.samples.simplechart.charts.LineChartDataSet;
 import org.moe.samples.simplechart.charts.LineChartView;
+import org.moe.samples.simplechart.charts.enums.XAxisLabelPosition;
 import org.moe.samples.simplechart.charts.protocol.ChartViewDelegate;
 import java.util.Collections;
 import java.util.List;
@@ -103,6 +104,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         xAxis.setGridLineDashLengths(arrayOfFloats(10.0f, 10.0f));
         xAxis.setGridLineDashPhase(0f);
         xAxis.setLabelTextColor(UIColor.whiteColor());
+        xAxis.setLabelPosition(XAxisLabelPosition.Bottom);
         xAxis.setAxisMinimum(0d);
         xAxis.setGranularity(1D);
         xAxis.setLabelCount(25);
