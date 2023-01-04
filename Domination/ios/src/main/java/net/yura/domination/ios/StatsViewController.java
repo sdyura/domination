@@ -4,9 +4,9 @@ import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.core.StatType;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.domination.mobile.PicturePanel;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.Application;
-
 import apple.foundation.NSArray;
 import apple.foundation.NSMutableArray;
 import apple.foundation.NSNumber;
@@ -31,11 +31,11 @@ import org.moe.samples.simplechart.charts.LineChartData;
 import org.moe.samples.simplechart.charts.LineChartDataSet;
 import org.moe.samples.simplechart.charts.LineChartView;
 import org.moe.samples.simplechart.charts.protocol.ChartViewDelegate;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
 
 @org.moe.natj.general.ann.Runtime(ObjCRuntime.class)
 @ObjCClassName("StatsViewController")
@@ -104,19 +104,20 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         xAxis.setGridLineDashPhase(0f);
         xAxis.setLabelTextColor(UIColor.whiteColor());
         xAxis.setAxisMinimum(0d);
+        xAxis.setGranularity(1D);
+        xAxis.setLabelCount(25);
 
         ChartYAxis yAxis = chartView.leftAxis();
-        //leftAxis.removeAllLimitLines();
-        //leftAxis.addLimitLine(ll1);
-        //leftAxis.addLimitLine(ll2);
-        //leftAxis.setAxisMaximum(2.0);
         yAxis.setAxisMinimum(0.0);
         yAxis.setGridLineDashLengths(arrayOfFloats(5.0f, 5.0f));
         yAxis.setDrawZeroLineEnabled(false);
         yAxis.setDrawLimitLinesBehindDataEnabled(true);
         yAxis.setLabelTextColor(UIColor.whiteColor());
+        yAxis.setGranularity(1D);
+        yAxis.setLabelCount(25);
 
         chartView.rightAxis().setEnabled(false);
+        chartView.setAutoScaleMinMaxEnabled(true);
 
         setData(StatType.ARMIES);
     }
@@ -138,14 +139,20 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         UIColor playerColor = Graphics.getColor(player.getColor());
         double[] stats = player.getStatistics(statType);
 
+        Image img = PicturePanel.getIconForColor(player.getColor());
+        // TODO we need to scale this image
+
         NSMutableArray<ChartDataEntry> values = (NSMutableArray<ChartDataEntry>)NSMutableArray.arrayWithCapacity(stats.length);
         for (int i = 0; i < stats.length; ++i) {
-            values.add(ChartDataEntry.alloc().initWithXY(i, stats[i]));
+            ChartDataEntry entry = ChartDataEntry.alloc().initWithXY(i + 1, stats[i]);
+            if (img != null) {
+                entry.setIcon(img.getUIImage());
+            }
+            values.add(entry);
         }
 
         LineChartDataSet set1 = LineChartDataSet.alloc().initWithEntriesLabel(values, player.getName());
 
-        set1.setLineDashLengths(arrayOfFloats(5.0f, 2.5f));
         set1.setHighlightLineDashLengths(arrayOfFloats(5.0f, 2.5f));
         set1.setColor(playerColor);
         set1.setCircleColor(playerColor);
@@ -153,7 +160,10 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         set1.setCircleRadius(3.0);
         set1.setDrawCircleHoleEnabled(false);
         set1.setValueFont(UIFont.systemFontOfSize(9.f));
-        set1.setFormLineDashLengths(arrayOfFloats(5.0f, 2.5f));
+        set1.setDrawIconsEnabled(img != null);
+        set1.setDrawValuesEnabled(false);
+
+        //set1.setFormLineDashLengths(arrayOfFloats(5.0f, 2.5f));
         set1.setFormLineWidth(1.0);
         set1.setFormSize(15.0);
 
