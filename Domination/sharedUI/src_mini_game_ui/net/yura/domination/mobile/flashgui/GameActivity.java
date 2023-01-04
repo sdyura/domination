@@ -462,7 +462,7 @@ public class GameActivity extends Frame implements ActionListener {
                 if (localGame) menu.add( savebutton );
 
                 // TODO make this work on other platforms
-                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID || Application.getPlatform() == Application.PLATFORM_IOS) {
                     menu.add(graphbutton);
                 }
 
@@ -597,7 +597,12 @@ public class GameActivity extends Frame implements ActionListener {
             // do not need to do anything
         }
         else if ("graph".equals(actionCommand)) {
-            Application.openURL("nativeNoResult://net.yura.domination.android.StatsActivity");
+            if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                Application.openURL("nativeNoResult://net.yura.domination.android.StatsActivity");
+            }
+            else if (Application.getPlatform() == Application.PLATFORM_IOS) {
+                Application.openURL("native://net.yura.domination.ios.StatsViewController");
+            }
         }
         else if ("options".equals(actionCommand)) {
             if (Application.getPlatform() == Application.PLATFORM_ANDROID) {

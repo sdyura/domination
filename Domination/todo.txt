@@ -56,9 +56,11 @@ Desktop P2P:
 
 iOS:
 
+    don't show yura.net mobile loading... screen at startup, maybe just show logo
     do not delete .lobby uuid file if app data is cleared, and also keep it backed up - use apple keychain to save the lobby uuid as it stays when app is uninstalled
     send email with info on lobby login - i think this is not possible
     Missing: stats graphs
+         - https://github.com/multi-os-engine/moe-samples-java/tree/moe-master/SimpleChart
          - https://github.com/core-plot/core-plot
          - https://github.com/danielgindi/Charts
 
