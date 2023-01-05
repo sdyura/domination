@@ -3,6 +3,7 @@ package net.yura.domination.engine.ai;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Logger;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.util.Service;
@@ -36,6 +37,10 @@ public class AIManager {
             catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
+        }
+
+        if (ais.isEmpty()) {
+            Logger.getLogger(AIManager.class.getName()).info("NO AIs FOUND!!!!");
         }
     }
 
@@ -78,7 +83,7 @@ public class AIManager {
                     default: throw new IllegalStateException("AI error: unknown state "+ game.getState() );
             }
 
-            if (output==null) { throw new NullPointerException("AI ERROR!"); }
+            if (output == null) { throw new NullPointerException("AI ERROR! output is null"); }
 
             return output;
     }
@@ -89,7 +94,7 @@ public class AIManager {
                 return ai.getType();
             }
         }
-        throw new IllegalArgumentException("unknown command "+command);
+        throw new IllegalArgumentException("unknown command: '" + command + "' not found in " + ais);
     }
 
     public String getCommandFromType(int type) {

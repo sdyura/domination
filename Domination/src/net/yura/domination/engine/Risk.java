@@ -2118,6 +2118,7 @@ RiskUtil.printStackTrace(e);
                     return ai.getTypeFromCommand(aiType);
                 }
                 catch (IllegalArgumentException ex) {
+                    logger.log(Level.INFO, "can not find ai", ex);
                     return -1;
                 }
             }

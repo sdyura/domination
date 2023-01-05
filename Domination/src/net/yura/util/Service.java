@@ -3,6 +3,8 @@ package net.yura.util;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * After the Service class from Sun and the Apache project.
@@ -88,8 +90,7 @@ public class Service {
         }
       }
     } catch (IOException ioe) {
-      //ioe.printStackTrace();
-      // ignore exception
+      Logger.getLogger(Service.class.getName()).log(Level.INFO, "io error get services", ioe);
     }
     return providers.iterator();
   }
