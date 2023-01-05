@@ -103,10 +103,6 @@ public class DominationMain extends Application {
 
     public DominationMain() {
 
-        if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
-            Service.SERVICES_LOCATION = "assets/services/";
-        }
-
         // IO depends on this, so we need to do this first
         RiskUtil.streamOpener = new RiskMiniIO();
 

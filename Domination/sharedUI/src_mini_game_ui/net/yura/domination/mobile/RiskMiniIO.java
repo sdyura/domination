@@ -17,11 +17,19 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.mobile.gui.Application;
 import net.yura.mobile.logging.Logger;
+import net.yura.util.Service;
 
 /**
  * @author Yura Mamyrin
  */
 public class RiskMiniIO implements RiskIO {
+
+    static {
+        // hack for AI to work on android
+        if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+            Service.SERVICES_LOCATION = "assets/services/";
+        }
+    }
 
     public InputStream openStream(String name) throws IOException {
         return Connector.openInputStream("file:///android_asset/"+name);

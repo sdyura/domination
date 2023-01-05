@@ -14,8 +14,6 @@ public class DominationMidlet extends Application {
     @Override
     public void initialize(DesktopPane rootpane) {
 
-        Service.SERVICES_LOCATION = "assets/services/";
-
         LookAndFeel lookandfeel=null;
         try {
                 if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
