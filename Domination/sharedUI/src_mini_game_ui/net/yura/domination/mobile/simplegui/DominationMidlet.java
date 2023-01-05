@@ -48,26 +48,10 @@ public class DominationMidlet extends Application {
 
         mainMenu.setMaximum(true);
         mainMenu.setVisible(true);
-
-        try {
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            RiskUtil.printStackTrace(e);
-        }
-
-        risk.parser("newgame");
-        risk.parser("newplayer ai hard blue bob");
-        risk.parser("newplayer ai hard red fred");
-        risk.parser("newplayer ai hard green greg");
-        risk.parser("startgame domination increasing");
-
     }
 
     @Override
     public DesktopPane makeNewRootPane() {
         return new DesktopPane(this, -1, null);
     }
-
 }

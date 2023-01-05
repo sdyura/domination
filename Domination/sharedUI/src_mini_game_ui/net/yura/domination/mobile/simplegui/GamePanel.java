@@ -24,74 +24,74 @@ public class GamePanel extends Panel {
     public GamePanel(Risk trisk,final PicturePanel pp) {
         risk = trisk;
 
-                    setLayout(new FlowLayout());
+        setLayout(new FlowLayout());
 
-                    Label mapLookLabel = new Label("Map Look:");
+        Label mapLookLabel = new Label("Map Look:");
 
-                    mapViewComboBox = new ComboBox();
-                    Button closegame = new Button("closegame");
-                    Button about = new Button("About");
+        mapViewComboBox = new ComboBox();
+        Button closegame = new Button("closegame");
+        Button about = new Button("About");
 
-                    //JButton leave = new JButton("leave");
+        //JButton leave = new JButton("leave");
 
-                    mapViewComboBox.setPreferredSize(150 , 20);
+        mapViewComboBox.setPreferredSize(150 , 20);
 
-                    mapViewComboBox.addItem("Continents");
-                    mapViewComboBox.addItem("Ownership");
-                    mapViewComboBox.addItem("Border Threat");
-                    mapViewComboBox.addItem("Risk Card Ownership");
-                    mapViewComboBox.addItem("Troop Strength");
-                    mapViewComboBox.addItem("Connected Empire");
+        mapViewComboBox.addItem("Continents");
+        mapViewComboBox.addItem("Ownership");
+        mapViewComboBox.addItem("Border Threat");
+        mapViewComboBox.addItem("Risk Card Ownership");
+        mapViewComboBox.addItem("Troop Strength");
+        mapViewComboBox.addItem("Connected Empire");
 
-                    mapViewComboBox.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(String a) {
-                                pp.repaintCountries( getMapView() );
-                                pp.repaint();
-                            }
-                        }
-                    );
+        mapViewComboBox.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(String a) {
+                    pp.repaintCountries( getMapView() );
+                    pp.repaint();
+                }
+            }
+        );
 
-                    Label playersLabel = new Label("Players:");
+        Label playersLabel = new Label("Players:");
 
-                    Panel players = new PlayersPanel();
+        Panel players = new PlayersPanel();
 
-                    players.setBorder(new LineBorder(0xFF000000,1));
+        players.setBorder(new LineBorder(0xFF000000,1));
 
-                    players.setPreferredSize(120 , 20);
+        players.setPreferredSize(120 , 20);
 
-                    closegame.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(String a) {
-                                risk.parser("closegame");
-                            }
-                        }
-                    );
+        closegame.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(String a) {
+                    risk.parser("closegame");
+                }
+            }
+        );
 
-                    //leave.addActionListener(
-                    //              new ActionListener() {
-                    //                      public void actionPerformed(ActionEvent a) {
-                    //                              go("leave");
-                    //                      }
-                    //              }
-                    //);
+        //leave.addActionListener(
+        //              new ActionListener() {
+        //                      public void actionPerformed(ActionEvent a) {
+        //                              go("leave");
+        //                      }
+        //              }
+        //);
 
-                    about.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(String a) {
-                                MiniUtil.showAbout();
-                            }
-                        }
-                    );
+        about.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(String a) {
+                    MiniUtil.showAbout();
+                }
+            }
+        );
 
-                    setPreferredSize(PicturePanel.PP_X , 30);
+        setPreferredSize(PicturePanel.PP_X , 30);
 
-                    add(mapLookLabel);
-                    add(mapViewComboBox);
-                    add(playersLabel);
-                    add(players);
-                    add(closegame);
-                    add(about);
+        add(mapLookLabel);
+        add(mapViewComboBox);
+        add(playersLabel);
+        add(players);
+        add(closegame);
+        add(about);
     }
 
     public int getMapView() {

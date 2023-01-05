@@ -7,6 +7,7 @@ import javax.microedition.lcdui.Graphics;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.mobile.MiniUtil;
 import net.yura.domination.mobile.PicturePanel;
 import net.yura.mobile.gui.ActionListener;
@@ -14,6 +15,7 @@ import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.KeyEvent;
 import net.yura.mobile.gui.border.LineBorder;
 import net.yura.mobile.gui.components.Button;
+import net.yura.mobile.gui.components.CheckBox;
 import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.Label;
 import net.yura.mobile.gui.components.Menu;
@@ -36,6 +38,7 @@ public class GameFrame extends Frame {
     //private StyledDocument doc;
     private TextField Command;
     private Button Submit;
+    private CheckBox autoPlay;
     private PicturePanel pp;
 
     private Label statusBar;
@@ -176,6 +179,9 @@ public class GameFrame extends Frame {
                             Command.requestFocusInWindow();
                             statusBar.setText("Done... Ready");
 
+                            if (s == RiskGame.STATE_GAME_OVER && autoPlay.isSelected()) {
+                                risk.parser("closegame");
+                            }
                     }
 
                     /**
@@ -186,7 +192,6 @@ public class GameFrame extends Frame {
                             statusBar.setText("Working...");
                             Submit.setFocusable(false);
                             Command.setFocusable(false);
-
                     }
 
                     /**
@@ -196,7 +201,6 @@ public class GameFrame extends Frame {
 
                             gameStatus.setText(state);
                             gameStatus.repaint();
-
                     }
 
                     /**
@@ -230,6 +234,10 @@ public class GameFrame extends Frame {
 
                             guiMain.revalidate();
                             guiMain.repaint();
+                            
+                            if (autoPlay.isSelected()) {
+                                autoPlay();
+                            }
                     }
 
             };
@@ -491,13 +499,16 @@ public class GameFrame extends Frame {
                             });
             menuFile.add(saveFile);
 
+            autoPlay = new CheckBox("AutoPlay", true);
+            menuFile.add(autoPlay);
+            
             // create Exit menu item
             Button fileExit = new Button("Exit");
             fileExit.setMnemonic('E');
             fileExit.addActionListener(
                             new ActionListener() {
                                     public void actionPerformed(String e) {
-                                            System.exit(0);
+                                            exitForm();
                                     }
                             });
             menuFile.add(fileExit);
@@ -520,16 +531,29 @@ public class GameFrame extends Frame {
 
             pack();
             */
-    }
 
-    /** Exit the Application */
+            // same as in SwingGUIPanel
+            net.yura.domination.engine.ai.AIManager.setWait(5);
+            
+            if (autoPlay.isSelected()) {
+                autoPlay();
+            }
+    }
 
     /**
      * Closes the GUI
+     * Exit the Application
      */
     private void exitForm() {
-
             System.exit(0);
+    }
+    
+    private void autoPlay() {
+        risk.parser("newgame");
+        risk.parser("newplayer ai hard blue bob");
+        risk.parser("newplayer ai hard red fred");
+        risk.parser("newplayer ai hard green greg");
+        risk.parser("startgame domination increasing");
     }
 
     /**
@@ -539,7 +563,7 @@ public class GameFrame extends Frame {
     public void go(String input) {
 
             if (input.equals("exit") ) {
-                    System.exit(0);
+                    exitForm();
             }
             else if (input.equals("help") ) {
                     Commands();
@@ -604,7 +628,6 @@ public class GameFrame extends Frame {
 
             //RiskUIUtil.openAbout(RiskGUI.this,product, version);
         MiniUtil.showAbout();
-
     }
 
 
