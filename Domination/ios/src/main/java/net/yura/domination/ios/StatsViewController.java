@@ -40,7 +40,7 @@ import javax.microedition.lcdui.Image;
 
 @org.moe.natj.general.ann.Runtime(ObjCRuntime.class)
 @ObjCClassName("StatsViewController")
-@RegisterOnStartup
+//@RegisterOnStartup
 public class StatsViewController extends UIViewController implements ChartViewDelegate {
 
     private final ResourceBundle resb = TranslationBundle.getBundle();
