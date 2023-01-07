@@ -195,6 +195,8 @@ public class CardsDialog extends Frame implements ActionListener {
 
 
 	public void setup(Player player, boolean ct) {
+                setTitle(resb.getProperty("cards.title") + " - " + player.getName());
+
                 this.player = player;
                 tradeButton.setVisible(ct);
 

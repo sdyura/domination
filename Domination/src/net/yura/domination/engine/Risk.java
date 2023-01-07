@@ -2661,20 +2661,20 @@ RiskUtil.printStackTrace(e);
             Player human1 = null, human2 = null;
             boolean tooMany1 = false, tooMany2 = false;
             for (Player player : players) {
-                if (player.getType() == Player.PLAYER_HUMAN) {
-                    if (human1 == null) {
-                        human1 = player;
+                if (player.isAlive()) {
+                    if (player.getType() == Player.PLAYER_HUMAN) {
+                        if (human1 == null) {
+                            human1 = player;
+                        } else {
+                            tooMany1 = true;
+                        }
                     }
-                    else {
-                        tooMany1 = true;
-                    }
-                }
-                if (myAddress.equals(player.getAddress())) {
-                    if (human2 == null) {
-                        human2 = player;
-                    }
-                    else {
-                        tooMany2 = true;
+                    if (myAddress.equals(player.getAddress())) {
+                        if (human2 == null) {
+                            human2 = player;
+                        } else {
+                            tooMany2 = true;
+                        }
                     }
                 }
             }
