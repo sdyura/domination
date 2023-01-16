@@ -337,7 +337,9 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             final Game game = (Game) gameList.getSelectedValue();
             if (game != null) { // can only be null if there are no games in the list
                 final List players = new List(new java.util.Vector(game.getPlayers()));
-                players.setSelectedIndex(0); // select a default
+                if (players.getSize() > 0) {
+                    players.setSelectedIndex(0); // select a default
+                }
 
                 OptionPane.showOptionDialog(new ActionListener() {
                     public void actionPerformed(String actionCommand) {
@@ -352,7 +354,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                             mycom.sendAdminCommand(ProtoLobby.REQUEST_FLAG_USER, request);
                         }
                     }
-                }, players, resBundle.getProperty("lobby.flagPlayer"), OptionPane.YES_NO_OPTION,
+                }, new Object[] {game.getName(), players}, resBundle.getProperty("lobby.flagPlayer"), OptionPane.YES_NO_OPTION,
                 OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), null, null);
             }
         }
