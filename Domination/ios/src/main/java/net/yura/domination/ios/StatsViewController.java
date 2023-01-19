@@ -8,21 +8,25 @@ import net.yura.domination.mobile.PicturePanel;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.Application;
 import apple.foundation.NSArray;
+import apple.foundation.NSDictionary;
 import apple.foundation.NSMutableArray;
 import apple.foundation.NSNumber;
+import apple.foundation.NSProcessInfo;
+import apple.foundation.struct.NSOperatingSystemVersion;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
 import org.moe.natj.general.Pointer;
 import org.moe.natj.general.ann.NFloat;
 import org.moe.natj.general.ann.Owned;
-import org.moe.natj.general.ann.RegisterOnStartup;
 import org.moe.natj.objc.ObjCRuntime;
 import org.moe.natj.objc.ann.IBOutlet;
 import org.moe.natj.objc.ann.ObjCClassName;
 import org.moe.natj.objc.ann.Property;
 import org.moe.natj.objc.ann.Selector;
+import apple.uikit.UINavigationBarAppearance;
 import apple.uikit.UIScreen;
 import apple.uikit.UIViewController;
+import apple.uikit.c.UIKit;
 import org.moe.samples.simplechart.charts.ChartDataEntry;
 import org.moe.samples.simplechart.charts.ChartViewBase;
 import org.moe.samples.simplechart.charts.ChartXAxis;
@@ -40,8 +44,12 @@ import javax.microedition.lcdui.Image;
 
 @org.moe.natj.general.ann.Runtime(ObjCRuntime.class)
 @ObjCClassName("StatsViewController")
-//@RegisterOnStartup
 public class StatsViewController extends UIViewController implements ChartViewDelegate {
+
+    /**
+     * This is when apple introduced dark mode/theme and all methods related to it.
+     */
+    private static final NSOperatingSystemVersion IOS_13 = new NSOperatingSystemVersion(13, 0, 0);
 
     private final ResourceBundle resb = TranslationBundle.getBundle();
 
@@ -69,6 +77,17 @@ public class StatsViewController extends UIViewController implements ChartViewDe
     public void viewWillAppear(boolean animated) {
         super.viewWillAppear(animated);
         navigationController().setNavigationBarHidden(false);
+
+        // this does not seem to do anything :-( (and crashes on older phones)
+        //setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark);
+
+        // HACK force title Foreground to be white when we use the new transparent NavigationBar of iOS 13
+        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_13)) {
+            UINavigationBarAppearance appearance = UINavigationBarAppearance.alloc().init();
+            appearance.configureWithTransparentBackground();
+            appearance.setTitleTextAttributes((NSDictionary<String, ?>) NSDictionary.dictionaryWithObjectForKey(UIColor.whiteColor(), UIKit.NSForegroundColorAttributeName()));
+            navigationItem().setScrollEdgeAppearance(appearance);
+        }
     }
 
     @Property
