@@ -94,18 +94,8 @@ public class StatsViewController extends UIViewController implements ChartViewDe
     @Override
     public void viewWillAppear(boolean animated) {
         super.viewWillAppear(animated);
+
         navigationController().setNavigationBarHidden(false);
-
-        // this does not seem to do anything :-( (and crashes on older phones)
-        //setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark);
-
-        // HACK force title Foreground to be white when we use the new transparent NavigationBar of iOS 13
-        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_13)) {
-            UINavigationBarAppearance appearance = UINavigationBarAppearance.alloc().init();
-            appearance.configureWithTransparentBackground();
-            appearance.setTitleTextAttributes((NSDictionary<String, ?>) NSDictionary.dictionaryWithObjectForKey(UIColor.whiteColor(), UIKit.NSForegroundColorAttributeName()));
-            navigationItem().setScrollEdgeAppearance(appearance);
-        }
     }
 
     @Property
@@ -127,6 +117,17 @@ public class StatsViewController extends UIViewController implements ChartViewDe
     @SuppressWarnings("unchecked")
     public void viewDidLoad() {
         super.viewDidLoad();
+
+        // this does not seem to do anything :-( (and crashes on older phones)
+        //setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark);
+
+        // HACK force title Foreground to be white when we use the new transparent NavigationBar of iOS 13
+        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_13)) {
+            UINavigationBarAppearance appearance = UINavigationBarAppearance.alloc().init();
+            appearance.configureWithTransparentBackground();
+            appearance.setTitleTextAttributes((NSDictionary<String, ?>) NSDictionary.dictionaryWithObjectForKey(UIColor.whiteColor(), UIKit.NSForegroundColorAttributeName()));
+            navigationItem().setScrollEdgeAppearance(appearance);
+        }
 
         if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_14)) {
             NSMutableArray<UIAction> items = (NSMutableArray<UIAction>) NSMutableArray.arrayWithCapacity(StatType.values().length);
@@ -172,6 +173,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         chartView.setDelegate(this);
         view().addSubview(chartView);
 
+        chartView.setBackgroundColor(UIColor.blackColor());
         chartView.legend().setTextColor(UIColor.whiteColor());
         chartView.setDragEnabled(true);
         chartView.setScaleEnabled(true);
