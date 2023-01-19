@@ -7,26 +7,39 @@ import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.PicturePanel;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.Application;
+import apple.coregraphics.c.CoreGraphics;
 import apple.foundation.NSArray;
 import apple.foundation.NSDictionary;
 import apple.foundation.NSMutableArray;
 import apple.foundation.NSNumber;
 import apple.foundation.NSProcessInfo;
 import apple.foundation.struct.NSOperatingSystemVersion;
+import apple.uikit.UIAction;
+import apple.uikit.UIBarButtonItem;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
 import org.moe.natj.general.Pointer;
 import org.moe.natj.general.ann.NFloat;
 import org.moe.natj.general.ann.Owned;
 import org.moe.natj.objc.ObjCRuntime;
+import org.moe.natj.objc.SEL;
 import org.moe.natj.objc.ann.IBOutlet;
 import org.moe.natj.objc.ann.ObjCClassName;
 import org.moe.natj.objc.ann.Property;
 import org.moe.natj.objc.ann.Selector;
+import apple.uikit.UIImage;
+import apple.uikit.UIMenu;
 import apple.uikit.UINavigationBarAppearance;
+import apple.uikit.UIPickerView;
 import apple.uikit.UIScreen;
+import apple.uikit.UITextField;
+import apple.uikit.UIToolbar;
 import apple.uikit.UIViewController;
 import apple.uikit.c.UIKit;
+import apple.uikit.enums.UIBarButtonItemStyle;
+import apple.uikit.enums.UIBarButtonSystemItem;
+import apple.uikit.protocol.UIPickerViewDataSource;
+import apple.uikit.protocol.UIPickerViewDelegate;
 import org.moe.samples.simplechart.charts.ChartDataEntry;
 import org.moe.samples.simplechart.charts.ChartViewBase;
 import org.moe.samples.simplechart.charts.ChartXAxis;
@@ -44,12 +57,17 @@ import javax.microedition.lcdui.Image;
 
 @org.moe.natj.general.ann.Runtime(ObjCRuntime.class)
 @ObjCClassName("StatsViewController")
-public class StatsViewController extends UIViewController implements ChartViewDelegate {
+public class StatsViewController extends UIViewController implements ChartViewDelegate, UIAction.Block_actionWithTitleImageIdentifierHandler, UIPickerViewDataSource, UIPickerViewDelegate {
 
     /**
      * This is when apple introduced dark mode/theme and all methods related to it.
      */
     private static final NSOperatingSystemVersion IOS_13 = new NSOperatingSystemVersion(13, 0, 0);
+
+    /**
+     * This is when apple introduced simple overflow menus
+     */
+    private static final NSOperatingSystemVersion IOS_14 = new NSOperatingSystemVersion(14, 0, 0);
 
     private final ResourceBundle resb = TranslationBundle.getBundle();
 
@@ -102,10 +120,51 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         this.lineChartView = lineChartView;
     }
 
+    private UIPickerView picker;
+    private UITextField pickerViewTextField;
+
     @Override
     @SuppressWarnings("unchecked")
     public void viewDidLoad() {
         super.viewDidLoad();
+
+        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_14)) {
+            NSMutableArray<UIAction> items = (NSMutableArray<UIAction>) NSMutableArray.arrayWithCapacity(StatType.values().length);
+            for (StatType statType : StatType.values()) {
+                // UIAction is iOS 13, though does not actually seem to work in iOS 13
+                items.add(UIAction.actionWithTitleImageIdentifierHandler(
+                        resb.getString("swing.toolbar." + statType.getName()),
+                        null,
+                        statType.name(),
+                        this
+                ));
+            }
+            // initWithImageMenu is iOS 14 ("ellipsis" was added in iOS 13)
+            navigationItem().setRightBarButtonItem(UIBarButtonItem.alloc().initWithImageMenu(UIImage.systemImageNamed("ellipsis"), UIMenu.menuWithChildren(items)));
+        }
+        else {
+            // from: https://jslim.net/blog/2013/10/16/bring-up-uipickerview-when-clicked-on-uibutton/
+
+            picker = UIPickerView.alloc().init();
+            picker.setDataSource(this);
+            picker.setDelegate(this);
+
+            pickerViewTextField = UITextField.alloc().initWithFrame(CoreGraphics.CGRectZero());
+            view().addSubview(pickerViewTextField);
+            pickerViewTextField.setInputView(picker);
+
+            // add a toolbar with Cancel & Done button
+            UIToolbar toolBar = UIToolbar.alloc().init();
+            UIBarButtonItem doneButton = UIBarButtonItem.alloc().initWithBarButtonSystemItemTargetAction(UIBarButtonSystemItem.Done, this, new SEL("doneTouched:"));
+            UIBarButtonItem cancelButton = UIBarButtonItem.alloc().initWithBarButtonSystemItemTargetAction(UIBarButtonSystemItem.Cancel, this, new SEL("cancelTouched:"));
+
+            // the middle button is to make the Done button align to right
+            toolBar.setItems((NSArray<UIBarButtonItem>)NSArray.arrayWithObjects(cancelButton, UIBarButtonItem.alloc().initWithBarButtonSystemItemTargetAction(UIBarButtonSystemItem.FlexibleSpace, null, null), doneButton, null));
+            toolBar.sizeToFit();
+            pickerViewTextField.setInputAccessoryView(toolBar);
+
+            navigationItem().setRightBarButtonItem(UIBarButtonItem.alloc().initWithTitleStyleTargetAction("\u22EF", UIBarButtonItemStyle.Plain, this, new SEL("buttonClicked:")));
+        }
 
         setLineChartView(LineChartView.alloc().initWithFrame(UIScreen.mainScreen().bounds()));
 
@@ -140,7 +199,44 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         chartView.rightAxis().setEnabled(false);
         chartView.setAutoScaleMinMaxEnabled(true);
 
-        setData(StatType.ARMIES);
+        setData(StatType.COUNTRIES);
+    }
+
+    @Override
+    public void call_actionWithTitleImageIdentifierHandler(UIAction action) {
+        setData(StatType.valueOf(action.identifier()));
+    }
+
+    @Selector("buttonClicked:")
+    public void buttonClicked() {
+        pickerViewTextField.becomeFirstResponder();
+    }
+
+    @Selector("doneTouched:")
+    public void doneTouched() {
+        pickerViewTextField.resignFirstResponder();
+
+        setData(StatType.values()[(int)picker.selectedRowInComponent(0)]);
+    }
+
+    @Selector("cancelTouched:")
+    public void cancelTouched() {
+        pickerViewTextField.resignFirstResponder();
+    }
+
+    @Override
+    public long numberOfComponentsInPickerView(UIPickerView pickerView) {
+        return 1;
+    }
+
+    @Override
+    public long pickerViewNumberOfRowsInComponent(UIPickerView pickerView, long component) {
+        return StatType.values().length;
+    }
+
+    @Override
+    public String pickerViewTitleForRowForComponent(UIPickerView pickerView, long row, long component) {
+        return resb.getString("swing.toolbar." + StatType.values()[(int)row].getName());
     }
 
     private void setData(StatType statType) {
