@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		9
+	iOS:		10
 	Android:	87
 	Flash GUI:	2
 	Swing GUI:	2
@@ -24,7 +24,8 @@ CURRENT VERSION:
 
 	iOS 7 Fix crash in Image finalizer
 	iOS 8 Game settings added
-	iOS 9 maybe fixed crash with WeakReference
+	iOS 9 fixed crash with MOE WeakReference (Invalid object 0x0)
+	iOS 10 show player name in player color picker
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
 	Android 87 only ask for permission to enable notification when we need to

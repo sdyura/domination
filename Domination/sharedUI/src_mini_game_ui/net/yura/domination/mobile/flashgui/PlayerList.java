@@ -140,7 +140,7 @@ public class PlayerList extends List {
                                 setPlayerColor(player, colorPicker.getSelectedColor());
                             }
                         }
-                    });
+                    }, player.getName());
                 }
             }
         });

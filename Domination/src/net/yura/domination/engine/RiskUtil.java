@@ -597,8 +597,8 @@ public class RiskUtil {
         return oldVersion;
     }
 
-    public static java.util.Vector asVector(java.util.List list) {
-        return list instanceof java.util.Vector?(java.util.Vector)list:new java.util.Vector(list);
+    public static java.util.Vector asVector(java.util.Collection list) {
+        return list instanceof java.util.Vector ? (java.util.Vector)list : new java.util.Vector(list);
     }
 
     public static java.util.Hashtable asHashtable(Map map) {

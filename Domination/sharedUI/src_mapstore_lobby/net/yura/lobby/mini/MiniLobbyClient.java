@@ -336,7 +336,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         else if ("flagGame".equals(actionCommand)) {
             final Game game = (Game) gameList.getSelectedValue();
             if (game != null) { // can only be null if there are no games in the list
-                final List players = new List(new java.util.Vector(game.getPlayers()));
+                final List players = new List(RiskUtil.asVector(game.getPlayers()));
                 if (players.getSize() > 0) {
                     players.setSelectedIndex(0); // select a default
                 }

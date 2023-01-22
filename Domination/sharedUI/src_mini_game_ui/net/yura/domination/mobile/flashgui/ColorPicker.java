@@ -105,11 +105,11 @@ public class ColorPicker extends FileChooser.GridList implements ActionListener 
         listener.actionPerformed(actionCommand);
     }
 
-    public void showDialog(ActionListener listener) {
+    public void showDialog(ActionListener listener, String name) {
         this.listener = listener;
 
         dialog = new Frame();
-        dialog.setTitle(TranslationBundle.getBundle().getString("newgame.label.color"));
+        dialog.setTitle(TranslationBundle.getBundle().getString("newgame.label.color") + " - " + name);
         dialog.setCloseOnFocusLost(true);
         dialog.setName("Dialog");
         dialog.getTitlePane().setName("InternalFrameTitlePane");
