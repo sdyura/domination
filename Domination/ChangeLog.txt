@@ -24,7 +24,7 @@ CURRENT VERSION:
 
 	iOS 7 Fix crash in Image finalizer
 	iOS 8 Game settings added
-	iOS 9 fixed crash with MOE WeakReference (Invalid object 0x0)
+	iOS 9 workaround for crash with MOE WeakReference (Invalid object 0x0)
 	iOS 10 show player name in player color picker
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE

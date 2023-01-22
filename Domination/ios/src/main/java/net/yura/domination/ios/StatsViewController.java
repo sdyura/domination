@@ -91,13 +91,6 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         return game == null ? Collections.EMPTY_LIST : game.getPlayersStats();
     }
 
-    @Override
-    public void viewWillAppear(boolean animated) {
-        super.viewWillAppear(animated);
-
-        navigationController().setNavigationBarHidden(false);
-    }
-
     @Property
     @IBOutlet
     @Selector("lineChartView")
@@ -215,6 +208,13 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         super.viewSafeAreaInsetsDidChange();
         UIEdgeInsets safeAreaInsets = view().safeAreaInsets(); // {64, 0, 0, 0}
         lineChartView.setExtraTopOffset(safeAreaInsets.top());
+    }
+
+    @Override
+    public void viewWillAppear(boolean animated) {
+        super.viewWillAppear(animated);
+
+        navigationController().setNavigationBarHidden(false);
     }
 
     @Override
