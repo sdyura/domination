@@ -31,7 +31,6 @@ import apple.uikit.UIImage;
 import apple.uikit.UIMenu;
 import apple.uikit.UINavigationBarAppearance;
 import apple.uikit.UIPickerView;
-import apple.uikit.UIScreen;
 import apple.uikit.UITextField;
 import apple.uikit.UIToolbar;
 import apple.uikit.UIViewController;
@@ -40,6 +39,7 @@ import apple.uikit.enums.UIBarButtonItemStyle;
 import apple.uikit.enums.UIBarButtonSystemItem;
 import apple.uikit.protocol.UIPickerViewDataSource;
 import apple.uikit.protocol.UIPickerViewDelegate;
+import apple.uikit.struct.UIEdgeInsets;
 import org.moe.samples.simplechart.charts.ChartDataEntry;
 import org.moe.samples.simplechart.charts.ChartViewBase;
 import org.moe.samples.simplechart.charts.ChartXAxis;
@@ -167,11 +167,17 @@ public class StatsViewController extends UIViewController implements ChartViewDe
             navigationItem().setRightBarButtonItem(UIBarButtonItem.alloc().initWithTitleStyleTargetAction("\u22EF", UIBarButtonItemStyle.Plain, this, new SEL("buttonClicked:")));
         }
 
-        setLineChartView(LineChartView.alloc().initWithFrame(UIScreen.mainScreen().bounds()));
+        setLineChartView(LineChartView.alloc().init());
 
         final LineChartView chartView = getLineChartView();
         chartView.setDelegate(this);
         view().addSubview(chartView);
+
+        chartView.setTranslatesAutoresizingMaskIntoConstraints(false);
+        chartView.bottomAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().bottomAnchor()).setActive(true);
+        chartView.topAnchor().constraintEqualToAnchor(view().topAnchor()).setActive(true); // for top we setExtraTopOffset instead
+        chartView.rightAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().rightAnchor()).setActive(true);
+        chartView.leftAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().leftAnchor()).setActive(true);
 
         chartView.setBackgroundColor(UIColor.blackColor());
         chartView.legend().setTextColor(UIColor.whiteColor());
@@ -202,6 +208,13 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         chartView.setAutoScaleMinMaxEnabled(true);
 
         setData(StatType.COUNTRIES);
+    }
+
+    @Override
+    public void viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange();
+        UIEdgeInsets safeAreaInsets = view().safeAreaInsets(); // {64, 0, 0, 0}
+        lineChartView.setExtraTopOffset(safeAreaInsets.top());
     }
 
     @Override
