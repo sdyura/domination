@@ -9,7 +9,6 @@ import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.Application;
 import apple.coregraphics.c.CoreGraphics;
 import apple.foundation.NSArray;
-import apple.foundation.NSDictionary;
 import apple.foundation.NSMutableArray;
 import apple.foundation.NSNumber;
 import apple.foundation.NSProcessInfo;
@@ -29,14 +28,14 @@ import org.moe.natj.objc.ann.Property;
 import org.moe.natj.objc.ann.Selector;
 import apple.uikit.UIImage;
 import apple.uikit.UIMenu;
-import apple.uikit.UINavigationBarAppearance;
+import apple.uikit.UINavigationController;
 import apple.uikit.UIPickerView;
 import apple.uikit.UITextField;
 import apple.uikit.UIToolbar;
 import apple.uikit.UIViewController;
-import apple.uikit.c.UIKit;
 import apple.uikit.enums.UIBarButtonItemStyle;
 import apple.uikit.enums.UIBarButtonSystemItem;
+import apple.uikit.enums.UIUserInterfaceStyle;
 import apple.uikit.protocol.UIPickerViewDataSource;
 import apple.uikit.protocol.UIPickerViewDelegate;
 import apple.uikit.struct.UIEdgeInsets;
@@ -68,6 +67,8 @@ public class StatsViewController extends UIViewController implements ChartViewDe
      * This is when apple introduced simple overflow menus
      */
     private static final NSOperatingSystemVersion IOS_14 = new NSOperatingSystemVersion(14, 0, 0);
+
+    private long oldUserInterfaceStyle;
 
     private final ResourceBundle resb = TranslationBundle.getBundle();
 
@@ -111,17 +112,6 @@ public class StatsViewController extends UIViewController implements ChartViewDe
     public void viewDidLoad() {
         super.viewDidLoad();
 
-        // this does not seem to do anything :-( (and crashes on older phones)
-        //setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark);
-
-        // HACK force title Foreground to be white when we use the new transparent NavigationBar of iOS 13
-        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_13)) {
-            UINavigationBarAppearance appearance = UINavigationBarAppearance.alloc().init();
-            appearance.configureWithTransparentBackground();
-            appearance.setTitleTextAttributes((NSDictionary<String, ?>) NSDictionary.dictionaryWithObjectForKey(UIColor.whiteColor(), UIKit.NSForegroundColorAttributeName()));
-            navigationItem().setScrollEdgeAppearance(appearance);
-        }
-
         if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_14)) {
             NSMutableArray<UIAction> items = (NSMutableArray<UIAction>) NSMutableArray.arrayWithCapacity(StatType.values().length);
             for (StatType statType : StatType.values()) {
@@ -157,7 +147,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
             toolBar.sizeToFit();
             pickerViewTextField.setInputAccessoryView(toolBar);
 
-            navigationItem().setRightBarButtonItem(UIBarButtonItem.alloc().initWithTitleStyleTargetAction("\u22EF", UIBarButtonItemStyle.Plain, this, new SEL("buttonClicked:")));
+            navigationItem().setRightBarButtonItem(UIBarButtonItem.alloc().initWithTitleStyleTargetAction("\u22EF", UIBarButtonItemStyle.Plain, this, new SEL("optionsMenuClicked:")));
         }
 
         setLineChartView(LineChartView.alloc().init());
@@ -213,8 +203,26 @@ public class StatsViewController extends UIViewController implements ChartViewDe
     @Override
     public void viewWillAppear(boolean animated) {
         super.viewWillAppear(animated);
+        UINavigationController navigationController = navigationController();
 
-        navigationController().setNavigationBarHidden(false);
+        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_13)) {
+            // we want to force dark mode as the stats screen is with a black background anyway
+            oldUserInterfaceStyle = navigationController.overrideUserInterfaceStyle();
+            navigationController.setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark);
+            // we will set it back to default in viewWillDisappear
+        }
+
+        // here navigationController gets status bar color from child
+        navigationController.setNavigationBarHidden(false);
+        // here navigationController gets status bar color from itself
+    }
+
+    @Override
+    public void viewWillDisappear(boolean animated) {
+        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_13)) {
+            navigationController().setOverrideUserInterfaceStyle(oldUserInterfaceStyle);
+        }
+        super.viewWillDisappear(animated);
     }
 
     @Override
@@ -222,8 +230,8 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         setData(StatType.valueOf(action.identifier()));
     }
 
-    @Selector("buttonClicked:")
-    public void buttonClicked() {
+    @Selector("optionsMenuClicked:")
+    public void optionsMenuClicked() {
         pickerViewTextField.becomeFirstResponder();
     }
 
