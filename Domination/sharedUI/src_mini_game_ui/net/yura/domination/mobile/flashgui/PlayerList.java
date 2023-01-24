@@ -47,6 +47,7 @@ public class PlayerList extends List {
             public void setValue(Object obj) {
                 Player player = (Player) obj;
                 setBackground(player.getColor());
+                setToolTipText(player.getName());
                 playerType = player.getType();
             }
 
