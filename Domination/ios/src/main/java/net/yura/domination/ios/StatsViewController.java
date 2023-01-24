@@ -22,9 +22,7 @@ import org.moe.natj.general.ann.NFloat;
 import org.moe.natj.general.ann.Owned;
 import org.moe.natj.objc.ObjCRuntime;
 import org.moe.natj.objc.SEL;
-import org.moe.natj.objc.ann.IBOutlet;
 import org.moe.natj.objc.ann.ObjCClassName;
-import org.moe.natj.objc.ann.Property;
 import org.moe.natj.objc.ann.Selector;
 import apple.uikit.UIImage;
 import apple.uikit.UIMenu;
@@ -92,18 +90,6 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         return game == null ? Collections.EMPTY_LIST : game.getPlayersStats();
     }
 
-    @Property
-    @IBOutlet
-    @Selector("lineChartView")
-    public LineChartView getLineChartView() {
-        return lineChartView;
-    }
-
-    @Selector("setLineChartView:")
-    public void setLineChartView(LineChartView lineChartView) {
-        this.lineChartView = lineChartView;
-    }
-
     private UIPickerView picker;
     private UITextField pickerViewTextField;
 
@@ -150,26 +136,24 @@ public class StatsViewController extends UIViewController implements ChartViewDe
             navigationItem().setRightBarButtonItem(UIBarButtonItem.alloc().initWithTitleStyleTargetAction("\u22EF", UIBarButtonItemStyle.Plain, this, new SEL("optionsMenuClicked:")));
         }
 
-        setLineChartView(LineChartView.alloc().init());
+        lineChartView = LineChartView.alloc().init();
+        lineChartView.setDelegate(this);
+        view().addSubview(lineChartView);
 
-        final LineChartView chartView = getLineChartView();
-        chartView.setDelegate(this);
-        view().addSubview(chartView);
+        lineChartView.setTranslatesAutoresizingMaskIntoConstraints(false);
+        lineChartView.bottomAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().bottomAnchor()).setActive(true);
+        lineChartView.topAnchor().constraintEqualToAnchor(view().topAnchor()).setActive(true); // for top we setExtraTopOffset instead
+        lineChartView.rightAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().rightAnchor()).setActive(true);
+        lineChartView.leftAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().leftAnchor()).setActive(true);
 
-        chartView.setTranslatesAutoresizingMaskIntoConstraints(false);
-        chartView.bottomAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().bottomAnchor()).setActive(true);
-        chartView.topAnchor().constraintEqualToAnchor(view().topAnchor()).setActive(true); // for top we setExtraTopOffset instead
-        chartView.rightAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().rightAnchor()).setActive(true);
-        chartView.leftAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().leftAnchor()).setActive(true);
+        lineChartView.setBackgroundColor(UIColor.blackColor());
+        lineChartView.legend().setTextColor(UIColor.whiteColor());
+        lineChartView.setDragEnabled(true);
+        lineChartView.setScaleEnabled(true);
+        lineChartView.setPinchZoomEnabled(true);
+        lineChartView.setDrawGridBackgroundEnabled(false);
 
-        chartView.setBackgroundColor(UIColor.blackColor());
-        chartView.legend().setTextColor(UIColor.whiteColor());
-        chartView.setDragEnabled(true);
-        chartView.setScaleEnabled(true);
-        chartView.setPinchZoomEnabled(true);
-        chartView.setDrawGridBackgroundEnabled(false);
-
-        ChartXAxis xAxis = chartView.xAxis();
+        ChartXAxis xAxis = lineChartView.xAxis();
         xAxis.setGridLineDashLengths(arrayOfFloats(10.0f, 10.0f));
         xAxis.setGridLineDashPhase(0f);
         xAxis.setLabelTextColor(UIColor.whiteColor());
@@ -178,7 +162,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         xAxis.setGranularity(1D);
         xAxis.setLabelCount(25);
 
-        ChartYAxis yAxis = chartView.leftAxis();
+        ChartYAxis yAxis = lineChartView.leftAxis();
         yAxis.setAxisMinimum(0.0);
         yAxis.setGridLineDashLengths(arrayOfFloats(5.0f, 5.0f));
         yAxis.setDrawZeroLineEnabled(false);
@@ -187,10 +171,8 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         yAxis.setGranularity(1D);
         yAxis.setLabelCount(25);
 
-        chartView.rightAxis().setEnabled(false);
-        chartView.setAutoScaleMinMaxEnabled(true);
-
-        setData(StatType.COUNTRIES);
+        lineChartView.rightAxis().setEnabled(false);
+        lineChartView.setAutoScaleMinMaxEnabled(true);
     }
 
     @Override
@@ -215,6 +197,9 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         // here navigationController gets status bar color from child
         navigationController.setNavigationBarHidden(false);
         // here navigationController gets status bar color from itself
+
+        // we need to call this AFTER we set style to Dark, otherwise sometimes on iPhone SE device the title color is wrong
+        setData(StatType.COUNTRIES);
     }
 
     @Override
@@ -271,7 +256,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
             dataSets.add(getLineChartDataSet(player, statType));
         }
         LineChartData data = LineChartData.alloc().initWithDataSets(dataSets);
-        getLineChartView().setData(data);
+        lineChartView.setData(data);
     }
 
     private LineChartDataSet getLineChartDataSet(Player player, StatType statType) {
