@@ -19,7 +19,7 @@ TODO:
     make a map file a zip of jar file that holds all the map images and stuff
     the undo button should be disabled at the start of the players go i.e. when there is nothing to undo..?
     option to have the just-defeated country the default attacker for the next attack.
-    option to Attack untill "n" armies left / untill you only have "n" more armies than the defender;
+    option to Attack until "n" armies left / until you only have "n" more armies than the defender;
     add gpl info to all the java files
 
 Desktop:
@@ -33,7 +33,7 @@ Desktop:
     MapEditor - when you zoom with the mouse wheel, it should center the map on where the mouse it
     redo graph to use doubles instead of ints for scale
     should let u stop a game if it is in replay mode
-    put in a pause finction, maybe when FlashGUI menu is open
+    put in a pause function, maybe when FlashGUI menu is open
     ADD replay to FlashGUI, MAYBE
     After a game is over over, I always wanted to see a time lapsed replay of the game... like a .gif made from still shots after each move so you could see how the game progressed.
     MapEditor - beside a circle brush - it would be nice to have the alternative to draw lines also, because is easier then to follow borders. or draw shape?!
@@ -59,10 +59,6 @@ iOS:
     don't show yura.net mobile loading... screen at startup, maybe just show logo
     do not delete .lobby uuid file if app data is cleared, and also keep it backed up - use apple keychain to save the lobby uuid as it stays when app is uninstalled
     send email with info on lobby login - i think this is not possible
-    Missing: stats graphs
-         - https://github.com/multi-os-engine/moe-samples-java/tree/moe-master/SimpleChart
-         - https://github.com/core-plot/core-plot
-         - https://github.com/danielgindi/Charts
 
 Android:
 

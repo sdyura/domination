@@ -1,5 +1,6 @@
 package net.yura.domination.ios;
 
+import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.core.StatType;
@@ -307,12 +308,24 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         String note = statType == StatType.CARDS ? " (" + player.getCards().size() + ")" : "";
         LineChartDataSet set1 = LineChartDataSet.alloc().initWithEntriesLabel(values, player.getName() + note);
 
+        if (player.getColor() == ColorUtil.BLACK) {
+            set1.setColor(UIColor.whiteColor());
+            set1.setCircleColor(UIColor.whiteColor());
+            set1.setCircleRadius(5.0);
+            set1.setDrawCircleHoleEnabled(true);
+            set1.setCircleHoleRadius(3.0);
+            set1.setCircleHoleColor(playerColor);
+            set1.setLineDashLengths(arrayOfFloats(5.0f, 2.5f));
+        }
+        else {
+            set1.setColor(playerColor);
+            set1.setCircleColor(playerColor);
+            set1.setCircleRadius(3.0);
+            set1.setDrawCircleHoleEnabled(false);
+        }
+
         set1.setHighlightLineDashLengths(arrayOfFloats(5.0f, 2.5f));
-        set1.setColor(playerColor);
-        set1.setCircleColor(playerColor);
         set1.setLineWidth(1.0);
-        set1.setCircleRadius(3.0);
-        set1.setDrawCircleHoleEnabled(false);
         set1.setValueFont(UIFont.systemFontOfSize(9.f));
         set1.setDrawIconsEnabled(img != null);
         set1.setDrawValuesEnabled(false);
