@@ -8,6 +8,8 @@ import net.yura.domination.mobile.PicturePanel;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.Application;
 import apple.coregraphics.c.CoreGraphics;
+import apple.coregraphics.struct.CGRect;
+import apple.coregraphics.struct.CGSize;
 import apple.foundation.NSArray;
 import apple.foundation.NSMutableArray;
 import apple.foundation.NSNumber;
@@ -24,6 +26,9 @@ import org.moe.natj.objc.ObjCRuntime;
 import org.moe.natj.objc.SEL;
 import org.moe.natj.objc.ann.ObjCClassName;
 import org.moe.natj.objc.ann.Selector;
+import apple.uikit.UIGraphicsImageRenderer;
+import apple.uikit.UIGraphicsImageRendererContext;
+import apple.uikit.UIGraphicsImageRendererFormat;
 import apple.uikit.UIImage;
 import apple.uikit.UIMenu;
 import apple.uikit.UINavigationController;
@@ -65,6 +70,8 @@ public class StatsViewController extends UIViewController implements ChartViewDe
      * This is when apple introduced simple overflow menus
      */
     private static final NSOperatingSystemVersion IOS_14 = new NSOperatingSystemVersion(14, 0, 0);
+
+    private static final double ICON_SIZE = 16;
 
     private long oldUserInterfaceStyle;
 
@@ -264,19 +271,41 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         UIColor playerColor = Graphics.getColor(player.getColor());
         double[] stats = player.getStatistics(statType);
 
-        Image img = PicturePanel.getIconForColor(player.getColor());
-        // TODO we need to scale this image
+        final Image img = PicturePanel.getIconForColor(player.getColor());
+        UIImage icon = null;
 
-        NSMutableArray<ChartDataEntry> values = (NSMutableArray<ChartDataEntry>)NSMutableArray.arrayWithCapacity(stats.length);
-        for (int i = 0; i < stats.length; ++i) {
-            ChartDataEntry entry = ChartDataEntry.alloc().initWithXY(i + 1, stats[i]);
-            if (img != null) {
-                entry.setIcon(img.getUIImage());
+        if (img != null) {
+            if (img.getWidth() > ICON_SIZE && img.getHeight() > ICON_SIZE) {
+                double scale = Math.max(ICON_SIZE / img.getWidth(), ICON_SIZE / img.getHeight());
+                icon = imageScaledToSize(img.getUIImage(), (int)(img.getWidth() * scale), (int)(img.getHeight() * scale));
             }
-            values.add(entry);
+            else {
+                icon = img.getUIImage();
+            }
         }
 
-        LineChartDataSet set1 = LineChartDataSet.alloc().initWithEntriesLabel(values, player.getName());
+        NSMutableArray<ChartDataEntry> values = (NSMutableArray<ChartDataEntry>)NSMutableArray.arrayWithCapacity(stats.length);
+        double newPoint=0;
+        for (int i = 0; i < stats.length; ++i) {
+
+            if (statType.isSummable()) {
+                newPoint += stats[i];
+            }
+            else {
+                newPoint = stats[i];
+            }
+
+            if (!Double.isNaN(newPoint)) { // can not be set for dice, if no dice results are present for a turn
+                ChartDataEntry entry = ChartDataEntry.alloc().initWithXY(i + 1, newPoint);
+                if (icon != null) {
+                    entry.setIcon(icon);
+                }
+                values.add(entry);
+            }
+        }
+
+        String note = statType == StatType.CARDS ? " (" + player.getCards().size() + ")" : "";
+        LineChartDataSet set1 = LineChartDataSet.alloc().initWithEntriesLabel(values, player.getName() + note);
 
         set1.setHighlightLineDashLengths(arrayOfFloats(5.0f, 2.5f));
         set1.setColor(playerColor);
@@ -293,6 +322,20 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         set1.setFormSize(15.0);
 
         return set1;
+    }
+
+    private static UIImage imageScaledToSize(UIImage img, int width, int height) {
+        UIGraphicsImageRendererFormat format = UIGraphicsImageRendererFormat.alloc().init();
+        format.setScale(img.scale());
+        format.setOpaque(false);
+        CGSize newSize = new CGSize(width, height);
+        UIGraphicsImageRenderer render = UIGraphicsImageRenderer.alloc().initWithSizeFormat(newSize, format);
+        return render.imageWithActions(new UIGraphicsImageRenderer.Block_imageWithActions() {
+            @Override
+            public void call_imageWithActions(UIGraphicsImageRendererContext rendererContext) {
+                img.drawInRect(new CGRect(CoreGraphics.CGPointZero(), newSize));
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
