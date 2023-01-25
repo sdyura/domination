@@ -40,7 +40,14 @@ public class StatsActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         setTitle( resb.getString("swing.tab.statistics") );
-        showGraph( StatType.COUNTRIES );
+
+        String graph = getIntent().getData() == null ? null : getIntent().getData().getQueryParameter("graph");
+        if (graph != null) {
+            showGraph(StatType.valueOf(graph));
+        }
+        else {
+            showGraph(StatType.COUNTRIES);
+        }
 
         // hack to always show the overflow menu, as users are not finding it
         // from https://stackoverflow.com/a/11438245/15542109

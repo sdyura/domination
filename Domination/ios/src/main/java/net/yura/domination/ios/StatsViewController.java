@@ -74,6 +74,8 @@ public class StatsViewController extends UIViewController implements ChartViewDe
 
     private static final double ICON_SIZE = 16;
 
+    private StatType initialView = StatType.COUNTRIES;
+
     private long oldUserInterfaceStyle;
 
     private final ResourceBundle resb = TranslationBundle.getBundle();
@@ -100,6 +102,10 @@ public class StatsViewController extends UIViewController implements ChartViewDe
 
     private UIPickerView picker;
     private UITextField pickerViewTextField;
+
+    public void setGraph(String graph) {
+        initialView = StatType.valueOf(graph);
+    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -169,6 +175,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         xAxis.setAxisMinimum(0d);
         xAxis.setGranularity(1D);
         xAxis.setLabelCount(25);
+        // TODO we want to add a label to the axis chartXAxisLabel: "Turn Number"
 
         ChartYAxis yAxis = lineChartView.leftAxis();
         yAxis.setAxisMinimum(0.0);
@@ -207,7 +214,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         // here navigationController gets status bar color from itself
 
         // we need to call this AFTER we set style to Dark, otherwise sometimes on iPhone SE device the title color is wrong
-        setData(StatType.COUNTRIES);
+        setData(initialView);
     }
 
     @Override

@@ -21,6 +21,7 @@ import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.Panel;
+import net.yura.mobile.gui.components.TextPane;
 import net.yura.mobile.gui.layout.BoxLayout;
 import net.yura.mobile.gui.layout.XULLoader;
 import net.yura.mobile.util.Properties;
@@ -81,6 +82,10 @@ public class CardsDialog extends Frame implements ActionListener {
 
 		tradeButton = (Button)loader.find("tradeButton");
 
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID || Application.getPlatform() == Application.PLATFORM_IOS) {
+                    TextPane cardsNote = (TextPane)loader.find("CardsNote");
+                    cardsNote.setText("<html>" + cardsNote.getText() + " <a href=\"graph\">" + resb.getString("game.button.statistics") + "</a>");
+                }
 	}
 
         public void setupNumArmies() {
@@ -186,6 +191,14 @@ public class CardsDialog extends Frame implements ActionListener {
 
                 revalidate();
                 repaint();
+            }
+        }
+        else if ("graph".equals(actionCommand)) {
+            if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                Application.openURL("nativeNoResult://net.yura.domination.android.StatsActivity?graph=CARDS");
+            }
+            else if (Application.getPlatform() == Application.PLATFORM_IOS) {
+                Application.openURL("native://net.yura.domination.ios.StatsViewController?graph=CARDS");
             }
         }
         else {
