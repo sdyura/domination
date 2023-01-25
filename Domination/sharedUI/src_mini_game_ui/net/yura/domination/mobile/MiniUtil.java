@@ -67,7 +67,7 @@ public class MiniUtil {
                     OptionPane.showMessageDialog(null,"Unable to open info: "+e.getMessage(),"Error", OptionPane.ERROR_MESSAGE);
                 }
             }
-        } ,text,resb.getString("about.title"), 0, OptionPane.INFORMATION_MESSAGE,
+        } ,text, "\ud83c\uddfa\ud83c\udde6 \ud83c\udff3\ufe0f\u200d\ud83c\udf08 " + resb.getString("about.title") + " \ud83c\udff3\ufe0f\u200d\ud83c\udf08 \ud83c\uddfa\ud83c\udde6", 0, OptionPane.INFORMATION_MESSAGE,
         null, new Button[] {credits,license,changelog,ok} , ok);
 
     }
