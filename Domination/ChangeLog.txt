@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		10
+	iOS:		11
 	Android:	87
 	Flash GUI:	2
 	Swing GUI:	2
@@ -27,6 +27,8 @@ CURRENT VERSION:
 	iOS 9 workaround for crash with MOE WeakReference (Invalid object 0x0)
 	iOS 10 show player name in player color picker
 	       Stats graphs added
+	iOS 11 When mission game is over show mission of who won, even if they are AI
+	       If only 1 human player left in the game, show spectators all their info
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
 	Android 87 only ask for permission to enable notification when we need to
