@@ -58,6 +58,9 @@ import java.util.ResourceBundle;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
+/**
+ * info about Charts versions: https://github.com/CocoaPods/Specs/tree/master/Specs/5/1/e/Charts
+ */
 @org.moe.natj.general.ann.Runtime(ObjCRuntime.class)
 @ObjCClassName("StatsViewController")
 public class StatsViewController extends UIViewController implements ChartViewDelegate, UIAction.Block_actionWithTitleImageIdentifierHandler, UIPickerViewDataSource, UIPickerViewDelegate {

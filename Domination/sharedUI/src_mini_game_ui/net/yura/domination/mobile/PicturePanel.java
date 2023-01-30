@@ -400,7 +400,7 @@ public class PicturePanel extends ImageView implements MapPanel {
                         RiskGame game = myrisk.getGame();
                         int state = game.getState();
 
-                        if (state==RiskGame.STATE_TRADE_CARDS && myrisk.showHumanPlayerThereInfo()) {
+                        if (state==RiskGame.STATE_TRADE_CARDS && myrisk.showHumanCurrentPlayerInfo()) {
                             Player me = myrisk.getGame().getCurrentPlayer();
                             List<Card> cards = new ArrayList(me.getCards()); // new array to avoid ConcurrentModificationException
                             for (Card card:cards) {
@@ -822,7 +822,7 @@ public class PicturePanel extends ImageView implements MapPanel {
 
                         boolean mine = game.getCountryInt(c+1).getOwner() == game.getCurrentPlayer();
 
-                        if (myrisk.showHumanPlayerThereInfo()) {
+                        if (myrisk.showHumanCurrentPlayerInfo()) {
                                 List cards = myrisk.getCurrentCards();
                                 for (int j = 0; j < cards.size() ; j++) {
                                         if ( ((Card)cards.get(j)).getCountry() == game.getCountryInt(c+1) ) {

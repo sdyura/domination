@@ -12,6 +12,7 @@ import net.yura.mobile.gui.components.Component;
  */
 public class ImageManager {
 
+    // TODO this is NOT thread safe!?!??! and yet we call this class for multiple threads?!?!
     public final WeakHashMap images = new WeakHashMap();
     public final int w,h;
 
@@ -48,11 +49,13 @@ public class ImageManager {
                 icon.setImage(img);
             }
             else {
+                System.out.println("ERROR: got null responce for key: " + key);
                 images.remove(key); // we got a responce but there was some error and no image
             }
         }
         else {
-            System.out.println("gotImg, but have no icon " + key);
+            // TODO this seems to happen??!?!?
+            System.out.println("ERROR: gotImg, but have no LazyIcon for key: " + key + " in " + images);
         }
     }
 

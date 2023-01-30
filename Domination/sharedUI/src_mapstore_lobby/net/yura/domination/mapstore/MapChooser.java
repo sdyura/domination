@@ -65,9 +65,9 @@ public class MapChooser implements ActionListener,MapServerListener {
     private static final String PREVIEW_FILE_PREFIX = "preview/";
 
     // these are both weak caches, they only keep a object if someone else holds it or a key
-    private static ImageManager iconCache = new ImageManager( XULLoader.adjustSizeToDensity(150),XULLoader.adjustSizeToDensity(94) ); // 150x94
+    private static final ImageManager iconCache = new ImageManager( XULLoader.adjustSizeToDensity(150),XULLoader.adjustSizeToDensity(94) ); // 150x94
     // needs to be synchronizedMap or we get endless loop in WeakHashMap: http://www.adam-bien.com/roller/abien/entry/endless_loops_in_unsychronized_weakhashmap
-    private static java.util.Map mapCache = Collections.synchronizedMap(new WeakHashMap());
+    private static final java.util.Map mapCache = Collections.synchronizedMap(new WeakHashMap());
     private static Cache repo;
     static {
         try {
@@ -184,6 +184,9 @@ public class MapChooser implements ActionListener,MapServerListener {
         client=null;
     }
 
+    /**
+     * WARNING! this method can get called from multiple threads at the same time! (main thread + RiskMap-Executor-Thread)
+     */
     public static Icon getLocalIconForMap(Map map) {
         Icon icon = getIconForMapOrCategory(map, null, map.getPreviewUrl(), null);
         if (icon == null) {
@@ -221,7 +224,8 @@ public class MapChooser implements ActionListener,MapServerListener {
     }
 
     /**
-     * @param key can be a Map or a Category
+     * WARNING! this method can get called from multiple threads at the same time! (main thread + RiskMap-Executor-Thread)
+     * @param key can be a {@link Map} or a {@link Category}
      */
     public static Icon getIconForMapOrCategory(Object key,String context,String iconUrl,MapServerClient c) {
         Icon aicon = iconCache.get( key );
@@ -360,8 +364,10 @@ public class MapChooser implements ActionListener,MapServerListener {
         mapCache.remove(mapUID);
     }
 
-    // this may be called from 2 threads at the same time
-    // e.g. MapUpdateService.init and MapChooser.actionPerformed."local".run
+    /**
+     * WARNING! this may be called from 2 threads at the same time
+     * e.g. MapUpdateService.init and MapChooser.actionPerformed."local".run
+     */
     public static Map createMap(String file) {
 
         WeakReference wr = (WeakReference)mapCache.get(file);

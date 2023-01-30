@@ -126,5 +126,4 @@ public class Cache {
         File file = getFileName(key);
         return file.exists();
     }
-
 }

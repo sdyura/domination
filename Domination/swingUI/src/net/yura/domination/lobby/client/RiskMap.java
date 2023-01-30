@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,14 @@ import net.yura.swing.GraphicsUtil;
 public class RiskMap {
 
     private static final Logger logger = Logger.getLogger(RiskMap.class.getName());
-    private static ExecutorService executor = Executors.newFixedThreadPool(4);
+    private static ExecutorService executor = Executors.newFixedThreadPool(4, new ThreadFactory() {
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread thread = new Thread(r);
+            thread.setName("RiskMap-Executor-" + thread.getName());
+            return thread;
+        }
+    });
     private static java.util.Map<String, RiskMap> mapUIDToIcon = new WeakHashMap();
 
     private java.util.Map<Long, Icon> iconMap = new HashMap();
@@ -79,6 +87,8 @@ public class RiskMap {
                                                 setImage(img._image);
                                             }
                                             else {
+                                                // TODO this is still happening??? but why?
+                                                // createMap is called from 2 threads, can it return the bad image?
                                                 logger.log(Level.INFO, "NO ICON FOR LOCAL MAP " + mapUID);
                                             }
                                         }

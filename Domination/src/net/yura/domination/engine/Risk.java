@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.StringReader;
 import java.net.ConnectException;
-import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Iterator;
@@ -984,7 +983,7 @@ RiskUtil.printStackTrace(e);
 
 				((Player)game.getCurrentPlayer()).giveCard( card );
 
-				if ( showHumanPlayerThereInfo() ) {
+				if ( showHumanCurrentPlayerInfo() ) {
 
 					String cardName;
 
@@ -1430,7 +1429,7 @@ RiskUtil.printStackTrace(e);
 
                                             // only show to the right player!
 
-                                            if ( showHumanPlayerThereInfo() ) {
+                                            if ( showHumanCurrentPlayerInfo() ) {
                                                     output = resb.getString( "core.showmission.mission") + " " + getHumanPlayerMission();
                                             }
                                             else { output=resb.getString( "core.showmission.error"); }
@@ -1485,7 +1484,7 @@ RiskUtil.printStackTrace(e);
                                 else if (input.equals("showcards")) {
                                     if (StringT.hasMoreTokens()==false) {
 
-                                            if ( showHumanPlayerThereInfo() ) {
+                                            if ( showHumanCurrentPlayerInfo() ) {
 
                                                     List c = ((Player)game.getCurrentPlayer()).getCards();
 
@@ -1909,7 +1908,7 @@ RiskUtil.printStackTrace(e);
                                                     }
 
                                                     if ( t != null && game.setCapital(t) ) {
-                                                            if ( showHumanPlayerThereInfo() ) {
+                                                            if ( showHumanCurrentPlayerInfo() ) {
                                                                     output=RiskUtil.replaceAll(resb.getString( "core.capital.selected"), "{0}", t.getName()); // Display
                                                             }
                                                             else {
@@ -2141,8 +2140,16 @@ RiskUtil.printStackTrace(e);
 		return game.getState()==RiskGame.STATE_GAME_OVER || ( (p != null) && ( p.getType()==Player.PLAYER_HUMAN ) && ( unlimitedLocalMode || myAddress.equals( p.getAddress() ) ) );
 	}
 
-        public boolean showHumanPlayerThereInfo() {
-            return showHumanPlayerThereInfo( game.getCurrentPlayer() );
+        /**
+         * @return true if the secret information of the current player can be shown in the UI
+         */
+        public boolean showHumanCurrentPlayerInfo() {
+            Player currentPlayer = game.getCurrentPlayer();
+            if (showHumanPlayerThereInfo(currentPlayer)) {
+                return true;
+            }
+            // if there is only one human left in this game, we can show their info to everyone
+            return getSingleLocalHumanPlayer() == currentPlayer;
         }
 
 	/**
@@ -2457,7 +2464,7 @@ RiskUtil.printStackTrace(e);
                     if (human != null) {
                         return human.getMission().getDiscription();
                     }
-                    // else it MUST be our turn
+                    // else it MUST be our turn (or game over)
                     return game.getCurrentPlayer().getMission().getDiscription();
                 default:
                     return resb.getString( "core.mission.error.cantshow");
@@ -2653,7 +2660,7 @@ RiskUtil.printStackTrace(e);
 
         public Player getSingleLocalHumanPlayer() {
             RiskGame game = getGame();
-            if (game == null) {
+            if (game == null || game.getState() == RiskGame.STATE_GAME_OVER) {
                 return null;
             }
             List<Player> players = game.getPlayers();
@@ -2686,8 +2693,6 @@ RiskUtil.printStackTrace(e);
             }
             return null;
         }
-
-
 
 	public void showMessageDialog(String a) {
 		controller.showMessageDialog(a);

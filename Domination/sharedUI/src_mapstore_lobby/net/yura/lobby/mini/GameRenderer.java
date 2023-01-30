@@ -138,7 +138,7 @@ public class GameRenderer extends DefaultListCellRenderer {
         }
 
         // draw lock for private games
-        if (gameState == Game.STATE_CAN_JOIN && game.getMagicWord() != null) {
+        if ((gameState == Game.STATE_CAN_JOIN || gameState == Game.STATE_CAN_LEAVE) && game.getMagicWord() != null) {
             int wh = privateGame.getIconHeight();
             privateGame.paintIcon(this, g, actionx-wh-padding, (getHeight()-wh)/2);
         }

@@ -550,7 +550,7 @@ public class GameActivity extends Frame implements ActionListener {
                     new Element("p",
                             status
                     ),
-                    myrisk.showHumanPlayerThereInfo()?
+                    myrisk.showHumanCurrentPlayerInfo()?
                         new Element("p",
                                 new Element("b",
                                         missionTitle
