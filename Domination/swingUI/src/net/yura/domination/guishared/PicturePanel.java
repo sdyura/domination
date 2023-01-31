@@ -269,7 +269,7 @@ public class PicturePanel extends JPanel implements MapPanel {
                                 drawHighLightImage(g2, cc);
                         }
 
-                        if (myrisk.getGame().getState()==RiskGame.STATE_TRADE_CARDS && myrisk.showHumanPlayerThereInfo()) {
+                        if (myrisk.getGame().getState()==RiskGame.STATE_TRADE_CARDS && myrisk.showHumanCurrentPlayerInfo()) {
                             Player me = myrisk.getGame().getCurrentPlayer();
                             List<Card> cards = me.getCards();
                             for (Card card:cards) {
@@ -296,13 +296,10 @@ public class PicturePanel extends JPanel implements MapPanel {
 				g2.setColor( Color.black );
 				tl.draw( g2, offset + (float)1, offset + tl.getAscent() );
 			}
-
-
 		}
 
 	    }
 	    catch(Exception e) { } // an excpetion here really does not matter
-
 	}
 
 	private int getDrawImageX(double ratio) {
@@ -363,16 +360,12 @@ public class PicturePanel extends JPanel implements MapPanel {
 					g2.fillPolygon( makeArrow( game.getAttacker().getX(), ((Country)game.getAttacker()).getY(), ((Country)game.getDefender()).getX()-map.length, ((Country)game.getDefender()).getY(), BALL_SIZE ));
 					g2.fillPolygon( makeArrow( game.getAttacker().getX()+map.length, ((Country)game.getAttacker()).getY(), ((Country)game.getDefender()).getX(), ((Country)game.getDefender()).getY(), BALL_SIZE ));
 				}
-
 			}
 			else {
-
 				g2.fillPolygon( makeArrow( ((Country)game.getAttacker()).getX(), ((Country)game.getAttacker()).getY(), ((Country)game.getDefender()).getX(), ((Country)game.getDefender()).getY(), BALL_SIZE ));
-
 			}
 
 			//g2.setStroke(new BasicStroke(1));
-
 		}
 
                 if (oldState != state) { // if the state has changed!!!
@@ -420,9 +413,7 @@ public class PicturePanel extends JPanel implements MapPanel {
                                 int h2 = g2.getFontMetrics().getAscent()*2/5 ;
 
                                 g2.drawString( String.valueOf( noa ) , x-w2, y+h2 );
-
                         }
-
                 }
 
 		if (game.getGameMode() == RiskGame.MODE_CAPITAL && game.getSetupDone() && state !=RiskGame.STATE_SELECT_CAPITAL ) {
@@ -463,13 +454,10 @@ public class PicturePanel extends JPanel implements MapPanel {
                                         int size = BALL_SIZE + (stroke*2);
 					ellipse2.setFrame( x-(size/2) , y-(size/2) , size-1, size-1);
 					g2.draw(ellipse2);
-
 				}
-
 			}
 			g2.setStroke(old);
 		}
-
 	}
 
         BallWorld ballWorld;
@@ -590,9 +578,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 
 		}
 
-
 		return arrow;
-
 	}
 
 	/**
@@ -609,6 +595,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 		{ Graphics zg = tempimg.getGraphics(); zg.drawImage(original ,0 ,0 ,this); zg.dispose(); }
 
 		List allConnectedEmpires=null;
+                boolean showHumanCurrentPlayerInfo=false;
 
 		if (view == VIEW_CONNECTED_EMPIRE) {
 
@@ -620,6 +607,9 @@ public class PicturePanel extends JPanel implements MapPanel {
 				allConnectedEmpires.addAll( game.getConnectedEmpire( (Player)players.get(c) ) );
 			}
 		}
+                else if (view == VIEW_CARD_OWNERSHIP) {
+                    showHumanCurrentPlayerInfo = myrisk.showHumanCurrentPlayerInfo();
+                }
 
 		for (int c=0; c < countryImages.length ; c++) {
 
@@ -630,7 +620,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 				val = new Color(0,true);
 		    }
 		    else if (view == VIEW_OWNERSHIP) {
-
 
 				if ( ((Country)game.getCountryInt( c+1 )).getOwner() != null ) {
 					val = new Color( ((Player)((Country)game.getCountryInt( c+1 )).getOwner()).getColor() );
@@ -673,17 +662,20 @@ public class PicturePanel extends JPanel implements MapPanel {
 
                         boolean mine = game.getCountryInt(c+1).getOwner() == game.getCurrentPlayer();
 
-                        if (myrisk.showHumanPlayerThereInfo()) {
+                        if (showHumanCurrentPlayerInfo) {
                                 List cards = myrisk.getCurrentCards();
                                 for (int j = 0; j < cards.size() ; j++) {
                                         if ( ((Card)cards.get(j)).getCountry() == game.getCountryInt(c+1) ) {
                                                 val = mine?Color.BLUE:Color.YELLOW;
                                         }
                                 }
+                                if (val == null) {
+                                        val = mine?Color.DARK_GRAY:Color.LIGHT_GRAY;
+                                }
                         }
-
-                        if (val == null) {
-                                val = mine?Color.DARK_GRAY:Color.LIGHT_GRAY;
+                        else {
+                            // disable whole view
+                            val = Color.LIGHT_GRAY;
                         }
 
                         val = new Color(val.getRed(), val.getGreen(), val.getBlue(), 100);
@@ -714,12 +706,10 @@ public class PicturePanel extends JPanel implements MapPanel {
 				if ( thecountry.getOwner() == null ) {
 
 					val = Color.LIGHT_GRAY;
-
 				}
 				else if ( allConnectedEmpires.contains( thecountry ) ) {
 
 					val = new Color( ((Player)thecountry.getOwner()).getColor() );
-
 				}
 				else {
 					val = Color.DARK_GRAY;
@@ -766,14 +756,12 @@ public class PicturePanel extends JPanel implements MapPanel {
 			if (view == VIEW_CONTINENTS) {
 
 				tempg.drawImage( ci.getSourceImage() ,0,0,this );
-
 			}
 			else {
 
 				tempg.drawImage( ci.getGrayImage(), 0, 0, this);
 				tempg.setColor( val );
 				tempg.fillRect(0,0,w,h);
-
 			}
 
 			tempg.dispose();
@@ -792,11 +780,9 @@ public class PicturePanel extends JPanel implements MapPanel {
 					}
 				}
 			}
-
 		    }
 
 		    if (view != VIEW_CONTINENTS) { Graphics zg = tempimg.getGraphics(); zg.drawImage(normalB ,x1 ,y1 ,this); zg.dispose(); }
-
 		}
 
 		BufferedImage newback = img;

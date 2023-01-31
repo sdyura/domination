@@ -2149,7 +2149,17 @@ RiskUtil.printStackTrace(e);
                 return true;
             }
             // if there is only one human left in this game, we can show their info to everyone
-            return getSingleLocalHumanPlayer() == currentPlayer;
+            if (getSingleLocalHumanPlayer() == currentPlayer) {
+                return true;
+            }
+
+            for (Player player : (List<Player>)game.getPlayers()) {
+                if (player.getType() == Player.PLAYER_HUMAN && player.isAlive()) {
+                    return false;
+                }
+            }
+            // all humans are dead
+            return true;
         }
 
 	/**

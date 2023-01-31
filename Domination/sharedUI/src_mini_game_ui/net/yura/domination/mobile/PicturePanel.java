@@ -758,6 +758,7 @@ public class PicturePanel extends ImageView implements MapPanel {
                 zg.drawImage(img ,0 ,0, 0 );
 
                 List allConnectedEmpires=null;
+                boolean showHumanCurrentPlayerInfo=false;
 
                 if (view == VIEW_CONNECTED_EMPIRE) {
 
@@ -769,17 +770,18 @@ public class PicturePanel extends ImageView implements MapPanel {
                                 allConnectedEmpires.addAll( game.getConnectedEmpire( (Player)players.get(c) ) );
                         }
                 }
+                else if (view == VIEW_CARD_OWNERSHIP) {
+                    showHumanCurrentPlayerInfo = myrisk.showHumanCurrentPlayerInfo();
+                }
 
                 for (int c=0; c < countryImages.length ; c++) {
 
                     int val=0;
 
                     if (view == VIEW_CONTINENTS) {
-
                                 val = 0x00000000;
                     }
                     else if (view == VIEW_OWNERSHIP) {
-
 
                                 if ( ((Country)game.getCountryInt( c+1 )).getOwner() != null ) {
                                         val = ((Player)((Country)game.getCountryInt( c+1 )).getOwner()).getColor();
@@ -822,17 +824,20 @@ public class PicturePanel extends ImageView implements MapPanel {
 
                         boolean mine = game.getCountryInt(c+1).getOwner() == game.getCurrentPlayer();
 
-                        if (myrisk.showHumanCurrentPlayerInfo()) {
+                        if (showHumanCurrentPlayerInfo) {
                                 List cards = myrisk.getCurrentCards();
                                 for (int j = 0; j < cards.size() ; j++) {
                                         if ( ((Card)cards.get(j)).getCountry() == game.getCountryInt(c+1) ) {
                                                 val = mine?BLUE:YELLOW;
                                         }
                                 }
+                                if (val == 0) {
+                                    val = mine?DARK_GRAY:LIGHT_GRAY;
+                                }
                         }
-
-                        if (val == 0) {
-                                val = mine?DARK_GRAY:LIGHT_GRAY;
+                        else {
+                            // disable the whole view
+                            val = LIGHT_GRAY;
                         }
 
                         val = colorWithAlpha(val, 100);
