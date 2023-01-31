@@ -532,7 +532,7 @@ public class ServerGameRisk extends TurnBasedGame {
 	public void getInputFromSomeone() {
             Player player = myrisk.getGame().getCurrentPlayer();
             // Player should never be null, but better not to crash here
-            String username = (player != null && player.getType() == Player.PLAYER_HUMAN) ? player.getName() : null;
+            String username = (player != null && player.getType() == Player.PLAYER_HUMAN && myrisk.getGame().getState() != RiskGame.STATE_GAME_OVER) ? player.getName() : null;
 
             // we tell TurnBasedGame who we expect a command from
             // if this person does not give us a command, TurnBasedGame will call doBasicGo()
