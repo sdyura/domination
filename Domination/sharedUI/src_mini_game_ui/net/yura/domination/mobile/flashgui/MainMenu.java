@@ -48,7 +48,7 @@ public class MainMenu extends Frame implements ActionListener {
 
         setMaximum(true);
 
-        setBorder(GameActivity.marble);
+        setBorder(new BackgroundBorder( Application.createImage("/war_blood.png") ));
         setBackground( 0x00FFFFFF );
     }
 
