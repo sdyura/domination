@@ -437,30 +437,9 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		}
 		else if ("continents".equals(actionCommand)) {
 
-			StringBuffer buffer = new StringBuffer();
-			buffer.append("<html><table>");
+                        String continentsHTML = RiskUtil.asHTML(swingGUIPanel.myrisk.getGame().getContinents());
 
-			Continent[] continents = swingGUIPanel.myrisk.getGame().getContinents();
-
-			for (int c=0;c<continents.length;c++) {
-
-				Continent continent = continents[c];
-
-				buffer.append("<tr style=\"background-color: ");
-				buffer.append(ColorUtil.getHexForColor(continent.getColor()));
-				buffer.append("; color:");
-				buffer.append(ColorUtil.getHexForColor(ColorUtil.getTextColorFor(continent.getColor())));
-				buffer.append("\"><td>");
-				buffer.append(continent.getName());
-				buffer.append("</td><td> - </td><td>");
-				buffer.append(continent.getArmyValue());
-				buffer.append("</td></tr>");
-
-			}
-
-			buffer.append("</table></html>");
-
-			JOptionPane.showMessageDialog(this, buffer.toString(), resbundle.getString("swing.button.continents"), JOptionPane.PLAIN_MESSAGE );
+			JOptionPane.showMessageDialog(this, continentsHTML, resbundle.getString("swing.button.continents"), JOptionPane.PLAIN_MESSAGE );
 
 		}
 		else if ("roll 1".equals(actionCommand)) {

@@ -28,7 +28,8 @@ CURRENT VERSION:
 	iOS 10 show player name in player color picker
 	       Stats graphs added
 	iOS 11 When mission game is over show mission of who won, even if they are AI
-	       If only 1 human player left in the game, show spectators all their info
+	       If only 1 human player left in the game, show spectators all the game info
+	       Show continents reinforcements value in help screen
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
 	Android 87 only ask for permission to enable notification when we need to

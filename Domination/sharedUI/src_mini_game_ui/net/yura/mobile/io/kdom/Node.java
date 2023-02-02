@@ -85,7 +85,7 @@ public class Node { //implements XmlIO{
             type = TEXT;
         }
         else {
-            throw new RuntimeException();
+            throw new IllegalArgumentException("unknown type " + child.getClass() + " " + child);
         }
         addChild(type, child);
     }

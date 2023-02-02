@@ -27,6 +27,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.MapTranslator;
@@ -595,6 +596,38 @@ public class RiskUtil {
 
     public static boolean isOldVersion() {
         return oldVersion;
+    }
+
+    public static String asHTML(Continent[] continents) {
+/*
+            for (Continent continent:continents) {
+                Element tr;
+                table.addChild(tr = new Element("tr",
+                        new Element("td",continent.getName()),
+                        new Element("td"," - "),
+                        new Element("td",String.valueOf(continent.getArmyValue()))
+                ));
+                tr.setAttribute(null, "style", "background-color:"+ ColorUtil.getHexForColor(continent.getColor())+"; color:"+ColorUtil.getHexForColor(ColorUtil.getTextColorFor(continent.getColor()))+";" );
+            }
+*/
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("<html><table>");
+
+        for (int c = 0; c < continents.length; c++) {
+            Continent continent = continents[c];
+
+            buffer.append("<tr style=\"background-color: ");
+            buffer.append(ColorUtil.getHexForColor(continent.getColor()));
+            buffer.append("; color:");
+            buffer.append(ColorUtil.getHexForColor(ColorUtil.getTextColorFor(continent.getColor())));
+            buffer.append("\"><td>");
+            buffer.append(continent.getName());
+            buffer.append("</td><td> - </td><td>");
+            buffer.append(continent.getArmyValue());
+            buffer.append("</td></tr>");
+        }
+        buffer.append("</table></html>");
+        return buffer.toString();
     }
 
     public static java.util.Vector asVector(java.util.Collection list) {

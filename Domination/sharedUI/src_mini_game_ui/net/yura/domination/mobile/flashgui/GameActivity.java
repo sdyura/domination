@@ -46,6 +46,7 @@ import net.yura.mobile.gui.components.Window;
 import net.yura.mobile.gui.layout.BorderLayout;
 import net.yura.mobile.gui.layout.GridBagConstraints;
 import net.yura.mobile.gui.layout.GridBagLayout;
+import net.yura.mobile.gui.layout.XHTMLLoader;
 import net.yura.mobile.gui.layout.XULLoader;
 import net.yura.mobile.io.kdom.Document;
 import net.yura.mobile.io.kdom.Element;
@@ -543,9 +544,7 @@ public class GameActivity extends Frame implements ActionListener {
         else if ("mission".equals(actionCommand)) {
 
             String missionTitle = resb.getProperty("core.showmission.mission");
-
             //String html = "<html><p>" + status + "</p><p><b>" +missionTitle + "</b><br/>"+ mission + "</p></html>";
-
             Element html = new Element("html",
                     new Element("p",
                             status
@@ -563,30 +562,23 @@ public class GameActivity extends Frame implements ActionListener {
                         )
             );
 
-/* TODO, this does not work in android
-            Element table;
-            new Element("b",
-                    resb.getString("swing.button.continents")
-            ),
-            table = new Element("table")
-            Continent[] continents = myrisk.getGame().getContinents();
-            for (Continent continent:continents) {
-                Element tr;
-                table.addChild(tr = new Element("tr",
-                        new Element("td",continent.getName()),
-                        new Element("td"," - "),
-                        new Element("td",String.valueOf(continent.getArmyValue()))
-                ));
-                tr.setAttribute(null, "style", "background-color:"+ColorUtil.getHexForColor(continent.getColor())+"; color:"+ColorUtil.getHexForColor(ColorUtil.getTextColorFor(continent.getColor()))+";" );
+            Object message;
+            // TODO unlike Swing, Android does not support <table> html tag or style in its text components
+            if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                message = toString(html);
             }
-*/
+            else {
+                Component continentsPanel = XHTMLLoader.load(RiskUtil.asHTML(myrisk.getGame().getContinents()), this);
+                message = new Object[] { toString(html), "<html><b>" +  resb.getString("swing.button.continents") + "</b></html>", continentsPanel };
+            }
+
             Button ok = new Button( (String)DesktopPane.get("okText") );
             ok.setActionCommand("dismissInfo");
             Button help = new Button( resb.getProperty("game.menu.manual") );
             help.setActionCommand("help");
 
             OptionPane.showOptionDialog(this,
-                    toString(html),
+                    message,
                     resb.getProperty("swing.menu.help"),
                     0,
                     OptionPane.INFORMATION_MESSAGE,
