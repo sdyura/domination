@@ -4,12 +4,14 @@ import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.TextArea;
 import net.yura.mobile.gui.layout.XULLoader;
+import net.yura.mobile.gui.plaf.Style;
 
 public class MultilineButton extends Button {
 
     // TODO this is kind of specific to Domination main menu
     private final int maxWidth = XULLoader.adjustSizeToDensity(110);
     private final int maxLines = 2;
+    private final int pressedOffset = XULLoader.adjustSizeToDensity(2);
 
     private int[] lineBreaks = null;
 
@@ -52,6 +54,10 @@ public class MultilineButton extends Button {
     protected void paintText(Graphics2D g, int x, int y, int textWidth, int availableTextWidth) {
         g.setColor(getForeground());
         g.setFont(getFont());
+        if ((getCurrentState() & Style.FOCUSED) != 0) {
+            x = x + pressedOffset;
+            y = y + pressedOffset;
+        }
 
         int lineHeight = super.getTextHeight(string);
         int start = 0;
