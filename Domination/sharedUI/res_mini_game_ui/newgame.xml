@@ -54,7 +54,7 @@
         </panel>
     </panel>
     <panel bottom="5" gap="5" left="5" right="5" top="5">
-        <button action="closegame" i18n="true" name="cancelButton" text="newgame.cancel" type="cancel" weightx="1" width="1"/>
-        <button action="startgame" i18n="true" name="startButton" text="newgame.startgame" weightx="1" width="1"/>
+        <button action="closegame" i18n="true" name="cancelButton" text="newgame.cancel" type="cancel" weightx="1" width="1" property="plafname=SmallButton"/>
+        <button action="startgame" i18n="true" name="startButton" text="newgame.startgame" weightx="1" width="1" property="plafname=SmallButton"/>
     </panel>
 </panel>
