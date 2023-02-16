@@ -2,6 +2,7 @@ package net.yura.domination.mobile.flashgui;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -234,9 +235,14 @@ public class DominationMain extends Application {
         }
 
         if (appPreferences != null) {
+            String shouldDifferentiateWithoutColor = System.getProperty("shouldDifferentiateWithoutColor");
+            if ("true".equalsIgnoreCase(shouldDifferentiateWithoutColor) && !containsKey("color_blind")) {
+                appPreferences.putBoolean("color_blind", true);
+            }
+
             AIManager.setWait( appPreferences.getInt("ai_wait", AIManager.getWait()) );
             String lang = appPreferences.get("lang", null);
-            if (lang!=null) {
+            if (lang != null) {
                 TranslationBundle.setLanguage(lang);
             }
             Risk.setShowDice(appPreferences.getBoolean(SHOW_DICE_KEY, DEFAULT_SHOW_DICE));
@@ -428,6 +434,14 @@ public class DominationMain extends Application {
         return accounts;
     }
 
+    private static boolean containsKey(String key) {
+        try {
+            return Arrays.asList(appPreferences.keys()).contains((String)key);
+        }
+        catch (Exception ex) {
+            return false;
+        }
+    }
     private static void flushPreferences() {
         try {
             appPreferences.flush();
