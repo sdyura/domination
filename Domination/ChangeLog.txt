@@ -27,7 +27,8 @@ CURRENT VERSION:
 	iOS 9 workaround for crash with MOE WeakReference (Invalid object 0x0)
 	iOS 10 show player name in player color picker
 	       Stats graphs added
-	iOS 11 When mission game is over show mission of who won, even if they are AI
+	iOS 11 New Mobile UI designed by Andry Green
+	       When mission game is over show mission of who won, even if they are AI
 	       If only 1 human player left in the game, show spectators all the game info
 	       Show continents reinforcements value in help screen
 
