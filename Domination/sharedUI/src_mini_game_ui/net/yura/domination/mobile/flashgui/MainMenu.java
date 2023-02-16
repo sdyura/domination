@@ -11,6 +11,7 @@ import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Application;
+import net.yura.mobile.gui.border.Border;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.FileChooser;
@@ -39,6 +40,11 @@ public class MainMenu extends Frame implements ActionListener {
     // main menu res
     FileChooser chooser;
 
+    public static final Border background;
+    static {
+        background = new BackgroundBorder(Application.createImage("/war_blood.png"));
+    }
+
     public MainMenu(Risk risk,MiniFlashRiskAdapter controller) {
         myrisk = risk;
         this.controller = controller;
@@ -48,7 +54,7 @@ public class MainMenu extends Frame implements ActionListener {
 
         setMaximum(true);
 
-        setBorder(new BackgroundBorder( Application.createImage("/war_blood.png") ));
+        setBorder(background);
         setBackground( 0x00FFFFFF );
     }
 

@@ -134,6 +134,14 @@
     </style>
     <bind style="transPanel" type="region" key="TransPanel"/>
 
+	<style id="newGamePanel">
+		<state>
+			<color value="#BBFFFFFF" type="BACKGROUND"/>
+		</state>
+	</style>
+	<bind style="newGamePanel" type="region" key="NewGamePanel"/>
+
+
     <style id="actionbarMenuButton">
 	   <state>
 	      <imagePainter method="buttonBackground" path="/menu_button.9.png" />

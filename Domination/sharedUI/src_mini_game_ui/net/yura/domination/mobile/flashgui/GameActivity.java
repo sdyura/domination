@@ -31,7 +31,6 @@ import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.KeyEvent;
 import net.yura.mobile.gui.Application;
-import net.yura.mobile.gui.border.Border;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.CheckBox;
 import net.yura.mobile.gui.components.Component;
@@ -66,10 +65,6 @@ public class GameActivity extends Frame implements ActionListener {
     public static final Logger logger = Logger.getLogger( GameActivity.class.getName() );
 
     public static final Properties resb = CoreUtil.wrap(TranslationBundle.getBundle());
-    public static final Border marble;
-    static {
-        marble = new BackgroundBorder( Application.createImage("/marble.jpg") );
-    }
 
     public static final String SAVE_EXTENSION = ".save";
 
@@ -94,7 +89,7 @@ public class GameActivity extends Frame implements ActionListener {
 
         setUndecorated(true);
 
-        setBorder(marble);
+        setBorder(MainMenu.background);
         setBackground( 0x00FFFFFF );
 
 

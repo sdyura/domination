@@ -56,7 +56,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
         this.controller = controller;
         setMaximum(true);
 
-        setBorder(GameActivity.marble);
+        setBorder(MainMenu.background);
         setBackground( 0x00FFFFFF );
 
         String[] ais = myrisk.getAICommands();
