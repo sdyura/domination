@@ -180,18 +180,14 @@
     <bind style="spinner" key="Spinner"/>
 
 
-    <style id="mainButton">
+    <style id="tankButton">
 	<state>
-	    <imagePainter path="/button.9.png" />
-	</state>
-	<state value="FOCUSED">
-	    <imagePainter path="/button_focus.9.png" />
-	</state>
-        <state value="FOCUSED AND SELECTED"> 
-	    <imagePainter path="/button_pressed.9.png" />
+	    <font name="PROPORTIONAL" size="MEDIUM" style="BOLD"/>
+	    <color type="FOREGROUND" value="#ffffff"/>
+	    <property key="margin" type="integer" value="0"/>
 	</state>
     </style>
-    <bind style="mainButton" type="region" key="MainButton"/>
+    <bind style="tankButton" type="region" key="TankButton"/>
 
 
     <style id="goButton">
