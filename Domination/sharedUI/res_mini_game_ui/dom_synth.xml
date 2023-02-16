@@ -168,6 +168,7 @@
       <imageIcon id="icon_left_highlight" path="/spinner.png" x="0" y="50" width="25" height="25"/>
       <imageIcon id="icon_right_highlight" path="/spinner.png" x="0" y="75" width="25" height="25"/>
       <state>
+        <property key="margin" type="integer" value="0"/>
         <property key="iconLeft" value="icon_left_normal"/>
         <property key="iconRight" value="icon_right_normal"/>
       </state>
