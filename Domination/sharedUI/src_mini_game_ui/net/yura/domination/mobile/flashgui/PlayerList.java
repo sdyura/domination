@@ -36,7 +36,7 @@ public class PlayerList extends List {
             int playerType;
             Image human,ai_easy,ai_average,ai_hard;
             {
-                setName("ListRendererCollapsed");
+                setName("PlayerListRenderer"); // ListRendererCollapsed
                 padding = XULLoader.adjustSizeToDensity(4);
                 human = Application.createImage("/type_human.png");
                 ai_easy = Application.createImage("/type_ai_easy.png");
