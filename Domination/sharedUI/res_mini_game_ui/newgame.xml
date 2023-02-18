@@ -15,15 +15,14 @@
             <checkbox i18n="true" name="recycle" selected="true" text="newgame.recycle" width="10"/>
         </panel>
         <panel columns="2" property="plafname=NewGamePanel" right="3" rowspan="2" width="30">
-            <label i18n="true" text="newgame.player.type.easyai" weightx="1" width="10"/>
+            <label i18n="true" text="newgame.player.type.easyai" weightx="1" weighty="1" width="10"/>
             <spinbox end="1" maximum="5" minimum="0" name="easyAI" start="1" text="2"/>
-            <label i18n="true" name="averageAIlabel" text="newgame.player.type.averageai" width="10"/>
+            <label i18n="true" name="averageAIlabel" text="newgame.player.type.averageai" weighty="1" width="10"/>
             <spinbox end="1" maximum="5" minimum="0" name="averageAI" start="1" text="2"/>
-            <label i18n="true" text="newgame.player.type.hardai" width="10"/>
+            <label i18n="true" text="newgame.player.type.hardai" weighty="1" width="10"/>
             <spinbox end="1" maximum="5" minimum="0" name="hardAI" start="1" text="0"/>
-            <label i18n="true" text="newgame.player.type.human" width="10"/>
+            <label i18n="true" text="newgame.player.type.human" weighty="1" width="10"/>
             <spinbox end="1" maximum="6" minimum="1" name="human" start="1" text="2"/>
-            <button action="customPlayers" colspan="2" text="Custom Players" visible="false"/>
         </panel>
         <panel columns="1" property="plafname=NewGamePanel">
             <checkbox action="increasing" group="CardType" i18n="true" selected="true" text="newgame.cardmode.increasing" weightx="1" width="10"/>
@@ -54,7 +53,7 @@
         </panel>
     </panel>
     <panel bottom="5" gap="5" left="5" right="5" top="5">
-        <button action="closegame" i18n="true" name="cancelButton" text="newgame.cancel" type="cancel" weightx="1" width="1" property="plafname=SmallButton"/>
-        <button action="startgame" i18n="true" name="startButton" text="newgame.startgame" weightx="1" width="1" property="plafname=SmallButton"/>
+        <button action="closegame" i18n="true" name="cancelButton" property="plafname=SmallButton" text="newgame.cancel" type="cancel" weightx="1" width="1"/>
+        <button action="startgame" i18n="true" name="startButton" property="plafname=SmallButton" text="newgame.startgame" weightx="1" width="1"/>
     </panel>
 </panel>

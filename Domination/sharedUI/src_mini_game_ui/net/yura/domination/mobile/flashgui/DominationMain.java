@@ -275,12 +275,14 @@ public class DominationMain extends Application {
             if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
                 synth = (SynthLookAndFeel) Class.forName("net.yura.android.plaf.AndroidLookAndFeel").newInstance();
 
+                // This hack does not seem to be needed (tested on API-22 emulator) and in fact makes things look worse
+                // need to work out what android OS actually needs this hack and enable it ONLY for that version of android
                 // small hack to center radiobutton icon (the default height is too big, we set it to the width so the icon is square)
-                Style radioButtonStyle = synth.getStyle("RadioButton");
-                Icon radioButtonIcon = (Icon) radioButtonStyle.getProperty("icon", Style.ALL);
-                if (radioButtonIcon != null) {
-                    radioButtonStyle.addProperty(new CentreIcon(radioButtonIcon, radioButtonIcon.getIconWidth(), radioButtonIcon.getIconWidth()), "icon", Style.ALL);
-                }
+                //Style radioButtonStyle = synth.getStyle("RadioButton");
+                //Icon radioButtonIcon = (Icon) radioButtonStyle.getProperty("icon", Style.ALL);
+                //if (radioButtonIcon != null) {
+                //    radioButtonStyle.addProperty(new CentreIcon(radioButtonIcon, radioButtonIcon.getIconWidth(), radioButtonIcon.getIconWidth()), "icon", Style.ALL);
+                //}
             }
             if (Application.getPlatform() == Application.PLATFORM_IOS) {
                 synth = (SynthLookAndFeel) Class.forName("net.yura.ios.plaf.IOSLookAndFeel").newInstance();
