@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		11
+	iOS:		12
 	Android:	87
 	Flash GUI:	2
 	Swing GUI:	2
@@ -31,9 +31,12 @@ CURRENT VERSION:
 	       When mission game is over show mission of who won, even if they are AI
 	       If only 1 human player left in the game, show spectators all the game info
 	       Show continents reinforcements value in help screen
+	iOS 12 automatically enable color blind mode when shouldDifferentiateWithoutColor is on
+	       support for iOS 'Dynamic Type' automatic font size
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
-	Android 87 only ask for permission to enable notification when we need to
+	Android 87 new UI in main menu and game setup screen
+		   only ask for permission to enable notification when we need to
 
 1.2.6 (17.12.2022)
 

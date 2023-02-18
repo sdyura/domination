@@ -37,6 +37,8 @@ public class MainMenu extends Frame implements ActionListener {
     public Risk myrisk;
     MiniFlashRiskAdapter controller;
 
+    XULLoader mainMenu;
+
     // main menu res
     FileChooser chooser;
 
@@ -58,15 +60,8 @@ public class MainMenu extends Frame implements ActionListener {
         setBackground( 0x00FFFFFF );
     }
 
-    XULLoader mainMenu;
     public void openMainMenu() {
-
 	mainMenu = GameActivity.getPanel("/mainmenu.xml",this);
-
-        Component quitButton = mainMenu.find("QuitButton");
-        if (quitButton != null && !"true".equals(System.getProperty("debug")) && Application.getPlatform() == Application.PLATFORM_IOS) {
-            quitButton.setVisible(false);
-        }
 
         setContentPane( new ScrollPane( mainMenu.getRoot() ) );
         revalidate();
