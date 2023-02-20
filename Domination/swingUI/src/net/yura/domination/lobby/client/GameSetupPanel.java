@@ -341,10 +341,10 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 
 
 
-		human = new JSpinner( new SpinnerNumberModel(2,1,6,1) );
-		aiaverage = new JSpinner( new SpinnerNumberModel(0,0,6,1) );
-		aieasy = new JSpinner( new SpinnerNumberModel(2,0,6,1) );
-		aihard = new JSpinner( new SpinnerNumberModel(2,0,6,1) );
+		human = new JSpinner( new SpinnerNumberModel(2,2,6,1) );
+		aiaverage = new JSpinner( new SpinnerNumberModel(0,0,4,1) );
+		aieasy = new JSpinner( new SpinnerNumberModel(2,0,4,1) );
+		aihard = new JSpinner( new SpinnerNumberModel(2,0,4,1) );
 
 
 		JComponent playernum = new JPanel(new GridBagLayout());
