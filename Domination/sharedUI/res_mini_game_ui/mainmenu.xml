@@ -10,4 +10,5 @@
     <button action="feedback" i18n="true" icon="/tank6_black.png" mnemonic="70" property="class=net.yura.swingme.core.MultilineButton;plafname=TankButton;hTextPos=center;rolloverIcon=/tank6_black_pressed.png" text="mainmenu.feedback"/>
     <button action="showAchievements" i18n="true" icon="/achievements.png" name="showAchievements" property="plafname=IconButton;margin=10" tooltip="mainmenu.showAchievements" visible="false"/>
     <button action="donate" icon="/donate.png" name="donateButton" property="plafname=DonateButton;margin=5"/>
+    <button action="quit" i18n="true" mnemonic="27" text="mainmenu.quit" visible="false"/>
 </panel>
