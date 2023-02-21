@@ -63,7 +63,7 @@ public class MainMenu extends Frame implements ActionListener {
     public void openMainMenu() {
 	mainMenu = GameActivity.getPanel("/mainmenu.xml",this);
 
-        setContentPane( new ScrollPane( mainMenu.getRoot() ) );
+        setContentPane((Panel) mainMenu.getRoot());
         revalidate();
 
         setVisible(true);
