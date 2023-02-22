@@ -39,7 +39,7 @@ import apple.uikit.UIToolbar;
 import apple.uikit.UIViewController;
 import apple.uikit.enums.UIBarButtonItemStyle;
 import apple.uikit.enums.UIBarButtonSystemItem;
-import apple.uikit.enums.UIUserInterfaceStyle;
+import apple.uikit.enums.UIBarStyle;
 import apple.uikit.protocol.UIPickerViewDataSource;
 import apple.uikit.protocol.UIPickerViewDelegate;
 import apple.uikit.struct.UIEdgeInsets;
@@ -66,11 +66,6 @@ import javax.microedition.lcdui.Image;
 public class StatsViewController extends UIViewController implements ChartViewDelegate, UIAction.Block_actionWithTitleImageIdentifierHandler, UIPickerViewDataSource, UIPickerViewDelegate {
 
     /**
-     * This is when apple introduced dark mode/theme and all methods related to it.
-     */
-    private static final NSOperatingSystemVersion IOS_13 = new NSOperatingSystemVersion(13, 0, 0);
-
-    /**
      * This is when apple introduced simple overflow menus
      */
     private static final NSOperatingSystemVersion IOS_14 = new NSOperatingSystemVersion(14, 0, 0);
@@ -79,7 +74,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
 
     private StatType initialView = StatType.COUNTRIES;
 
-    private long oldUserInterfaceStyle;
+    private long oldBarStyle;
 
     private final ResourceBundle resb = TranslationBundle.getBundle();
 
@@ -210,12 +205,14 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         super.viewWillAppear(animated);
         UINavigationController navigationController = navigationController();
 
-        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_13)) {
-            // we want to force dark mode as the stats screen is with a black background anyway
-            oldUserInterfaceStyle = navigationController.overrideUserInterfaceStyle();
-            navigationController.setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark);
-            // we will set it back to default in viewWillDisappear
-        }
+        // even though this is a newer API, it does not seem to always work
+        // on iPhone SE, it works the first time, but the 2nd time you launch this controller the title color is wrong?!
+        // This issue ONLY happens on a real device a
+        // nd not on the simulator?!
+        //navigationController.setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark); // API ONLY iOS 13
+
+        oldBarStyle = navigationController.navigationBar().barStyle();
+        navigationController.navigationBar().setBarStyle(UIBarStyle.Black);
 
         // here navigationController gets status bar color from child
         navigationController.setNavigationBarHidden(false);
@@ -224,9 +221,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
 
     @Override
     public void viewWillDisappear(boolean animated) {
-        if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_13)) {
-            navigationController().setOverrideUserInterfaceStyle(oldUserInterfaceStyle);
-        }
+        navigationController().navigationBar().setBarStyle(oldBarStyle);
         super.viewWillDisappear(animated);
     }
 
