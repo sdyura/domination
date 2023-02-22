@@ -191,6 +191,11 @@ public class StatsViewController extends UIViewController implements ChartViewDe
 
         lineChartView.rightAxis().setEnabled(false);
         lineChartView.setAutoScaleMinMaxEnabled(true);
+
+        // we HAVE to call this here, otherwise we may end up calling it too many times
+        // as apple will call viewWillAppear multiple times as the view comes in and out of view
+        // such as when you swipe to go back then change your mind and we do NOT want to keep resetting the graph
+        setData(initialView);
     }
 
     @Override
@@ -215,9 +220,6 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         // here navigationController gets status bar color from child
         navigationController.setNavigationBarHidden(false);
         // here navigationController gets status bar color from itself
-
-        // we need to call this AFTER we set style to Dark, otherwise sometimes on iPhone SE device the title color is wrong
-        setData(initialView);
     }
 
     @Override
