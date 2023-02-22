@@ -375,6 +375,9 @@ public class MapServerClient extends HTTPClient {
             try {
                 out = RiskUtil.streamOpener.saveMapFile(saveToDiskName);
                 saveFile(is, out);
+
+                logger.info("save file successful for " + url + " to " + saveToDiskName);
+
                 if (fileName.endsWith(".map")) {
                     java.util.Map info = RiskUtil.loadInfo(saveToDiskName, false);
 
