@@ -33,6 +33,7 @@ CURRENT VERSION:
 	       Show continents reinforcements value in help screen
 	iOS 12 automatically enable color blind mode when shouldDifferentiateWithoutColor is on
 	       support for iOS 'Dynamic Type' automatic font size
+	       fix for continents table not working for some maps like 'Deutsches_Reich_1871.map'
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
 	Android 87 new UI in main menu and game setup screen
