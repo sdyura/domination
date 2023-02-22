@@ -207,8 +207,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
 
         // even though this is a newer API, it does not seem to always work
         // on iPhone SE, it works the first time, but the 2nd time you launch this controller the title color is wrong?!
-        // This issue ONLY happens on a real device a
-        // nd not on the simulator?!
+        // This issue ONLY happens on a real device and not on the simulator?!
         //navigationController.setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark); // API ONLY iOS 13
 
         oldBarStyle = navigationController.navigationBar().barStyle();
