@@ -620,12 +620,19 @@ public class DominationMain extends Application {
                     risk.parserAndWait("savegame " + DominationMain.getAutoSaveFile() + ".part");
                     // if we may have closed the game while also closing the activity
                     // the save probably failed, and the rename will fail for sure.
+
+                    // if we have run out of disk space, nothing we can do
+                    if (!tempSaveFile.exists() && MiniUtil.getSaveGameDir().getUsableSpace() < 1000) {
+                        return;
+                    }
+
+                    // check AGAIN in case something changed while we were saving
                     if (shouldSaveGame()) {
                         RiskUtil.rename(tempSaveFile, autoSaveFile);
                     }
                 }
             }
-            catch (Exception ex) {
+            catch (Throwable ex) {
                 logger.log(Level.WARNING, "onSaveInstanceState AUTOSAVE Error", ex);
             }
         }
