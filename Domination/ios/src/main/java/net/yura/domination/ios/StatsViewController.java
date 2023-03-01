@@ -5,6 +5,7 @@ import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.core.StatType;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.domination.mobile.MiniUtil;
 import net.yura.domination.mobile.PicturePanel;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.Application;
@@ -311,8 +312,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
             }
         }
 
-        String note = statType == StatType.CARDS ? " (" + player.getCards().size() + ")" : "";
-        LineChartDataSet set1 = LineChartDataSet.alloc().initWithEntriesLabel(values, player.getName() + note);
+        LineChartDataSet set1 = LineChartDataSet.alloc().initWithEntriesLabel(values, MiniUtil.getStatsLabel(statType, player));
 
         if (player.getColor() == ColorUtil.BLACK) {
             set1.setColor(UIColor.whiteColor());

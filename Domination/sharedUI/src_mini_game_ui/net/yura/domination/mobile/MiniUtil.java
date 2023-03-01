@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
+import net.yura.domination.engine.core.StatType;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.ActionListener;
@@ -122,6 +124,20 @@ public class MiniUtil {
                 (externalMapDir == null ? "" : "<p>ExternalMapDir=<a href=\"" + externalMapDir.toURI() + "\">" + externalMapDir + "</a></p>") +
                 // e.g. file:///storage/emulated/0/Domination%20Maps/
                 "</html>";
+    }
+
+    public static String getStatsLabel(StatType statType, Player player) {
+        String note;
+        if (statType == StatType.COUNTRIES) {
+            note = " (" + player.getNoTerritoriesOwned() + ")";
+        }
+        else if (statType == StatType.CARDS) {
+            note = " (" + player.getCards().size() + ")";
+        }
+        else {
+            note = "";
+        }
+        return player.getName() + note;
     }
 
     public static String mapsdir = "file:///android_asset/maps/";

@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import net.yura.android.AndroidMeApp;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
+import net.yura.domination.mobile.MiniUtil;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -85,7 +86,7 @@ public class StatsActivity extends Activity {
     public void showGraph(StatType statType) {
         setTitle(resb.getString("swing.tab.statistics") + " - "
                 + resb.getString("swing.toolbar." + statType.getName()));
-        
+
         GraphicalView gview = ChartFactory.getLineChartView(this, getDataset(statType), getRenderer());
         setContentView(gview);
     }
@@ -94,6 +95,19 @@ public class StatsActivity extends Activity {
         XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
         renderer.setLegendTextSize(XULLoader.adjustSizeToDensity((int)renderer.getLegendTextSize()));
         renderer.setLabelsTextSize(XULLoader.adjustSizeToDensity((int)renderer.getLabelsTextSize()));
+
+        // is not smart, starts showing labels like 0.5
+        //renderer.setXLabels(25);
+        //renderer.setYLabels(25);
+
+        // make sure legend does not overlap labels
+        int[] margins = renderer.getMargins();
+        renderer.setMargins(new int[] {
+                XULLoader.adjustSizeToDensity(margins[0]),
+                XULLoader.adjustSizeToDensity(margins[1]),
+                XULLoader.adjustSizeToDensity(margins[2]),
+                XULLoader.adjustSizeToDensity(margins[3])
+        });
 
         List<Player> players = getPlayersStats();
 
@@ -114,7 +128,7 @@ public class StatsActivity extends Activity {
         //draw each player graph.
         for (Player p : players) {
 
-            CategorySeries series = new CategorySeries( p.getName() );
+            CategorySeries series = new CategorySeries(MiniUtil.getStatsLabel(statType, p));
 
             double[] PointToDraw = p.getStatistics(statType);
 
