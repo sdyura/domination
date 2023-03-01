@@ -12,6 +12,7 @@ public class J2SELogger extends net.yura.mobile.logging.Logger {
 
     public static void setupLogging() {
         net.yura.mobile.logging.Logger.setLogger(new J2SELogger());
+        logger.setLevel(getLevel(net.yura.mobile.logging.Logger.getLevel()));
     }
 
     protected synchronized void log(String message, int level) {

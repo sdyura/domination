@@ -587,7 +587,6 @@ public class DominationMain extends Application {
     protected void pauseApp() {
         super.pauseApp();
 
-        logger.info("[GameActivity] onPause");
         // if everything is shut down and there is no current game
         // make sure we clean up so no game is loaded on next start
 
@@ -596,18 +595,17 @@ public class DominationMain extends Application {
         if ( !shouldSaveGame() ) {
             File file = getAutoSaveFile();
             if (file.exists()) {
-                logger.info("[GameActivity] DELETING AUTOSAVE");
+                logger.info("[DominationMain] DELETING AUTOSAVE");
                 file.delete();
             }
         }
     }
 
     public void saveState() {
-        logger.info("[GameActivity] onSaveInstanceState");
         // if the system wants to kill our activity we need to save the game if we have one
 
         if (shouldSaveGame()) {
-            logger.info("[GameActivity] SAVING TO AUTOSAVE");
+            logger.info("[DominationMain] SAVING TO AUTOSAVE");
             // in game thread, we do not want to do it there as we will not know when its finished
             //getRisk().parser("savegame "+getAutoSaveFileURL());
 
