@@ -18,7 +18,10 @@ public class J2SELogger extends net.yura.mobile.logging.Logger {
     }
 
     public static void setupLogging() {
+        // we need to get then reset the level as the net.yura.mobile.logging.Logger constructor resets the value
+        int level = net.yura.mobile.logging.Logger.getLevel();
         net.yura.mobile.logging.Logger.setLogger(new J2SELogger());
+        net.yura.mobile.logging.Logger.setLevel(level);
     }
 
     protected synchronized void log(String message, int level) {
