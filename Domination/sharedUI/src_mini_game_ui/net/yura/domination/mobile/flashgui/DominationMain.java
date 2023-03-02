@@ -238,6 +238,13 @@ public class DominationMain extends Application {
             String shouldDifferentiateWithoutColor = System.getProperty("shouldDifferentiateWithoutColor");
             if ("true".equalsIgnoreCase(shouldDifferentiateWithoutColor) && !containsKey("color_blind")) {
                 appPreferences.putBoolean("color_blind", true);
+                // on android this does nothing unless we call flushPreferences :-(
+                // on all other OSs it sets the property in memory and does not persist it
+                // on android this will only work the first time, if the user
+                // changes the setting, it will not update in the game after the first time
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                    flushPreferences();
+                }
             }
 
             AIManager.setWait( appPreferences.getInt("ai_wait", AIManager.getWait()) );

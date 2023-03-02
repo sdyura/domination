@@ -360,7 +360,7 @@ public class GameActivity extends Frame implements ActionListener {
                         (error ? " TWO ERRORS!!" : "") +
                         "\nThis may be caused by your operator or wifi re-compressing or changing the images," +
                         "Please try and re-download this map on a different wifi network." +
-                        "\n If this does not help then please email a screenshot of this error to: yura@yura.net\n";
+                        "\nIf this does not help then please email a screenshot of this error to: yura@yura.net\n";
             }
 
             TextArea ta = new TextArea(text);
