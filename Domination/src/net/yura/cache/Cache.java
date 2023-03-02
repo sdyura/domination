@@ -86,7 +86,9 @@ public class Cache {
                 }
 
                 Level level  = Level.WARNING;
-                if (ex instanceof IOException && "write failed: ENOSPC (No space left on device)".equals(ex.getMessage())) {
+                // open failed: ENOSPC (No space left on device)
+                // write failed: ENOSPC (No space left on device)
+                if (ex instanceof IOException && "failed: ENOSPC (No space left on device)".equals(ex.getMessage())) {
                     level = Level.INFO;
                 }
 
