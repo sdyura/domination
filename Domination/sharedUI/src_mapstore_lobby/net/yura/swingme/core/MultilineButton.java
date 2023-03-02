@@ -9,8 +9,11 @@ import net.yura.mobile.gui.plaf.Style;
 public class MultilineButton extends Button {
 
     // TODO this is kind of specific to Domination main menu
-    private final int maxWidth = XULLoader.adjustSizeToDensity(110);
-    private final int maxLines = 2;
+    /**
+     * this is NOT the same as {@link #getMaxWidth()} as that is the components max width.
+     */
+    private final int maxTextLabelWidth = XULLoader.adjustSizeToDensity(110);
+    private final int maxNoLines = 2;
     private final int pressedOffset = XULLoader.adjustSizeToDensity(2);
 
     private int[] lineBreaks = null;
@@ -79,12 +82,12 @@ public class MultilineButton extends Button {
     }
 
     private int getNoLines() {
-        return Math.min(lineBreaks.length + 1, maxLines);
+        return Math.min(lineBreaks.length + 1, maxNoLines);
     }
 
     private void setupLineBreaks() {
         if (lineBreaks == null) {
-            lineBreaks = TextArea.getLines(string, font, 0, maxWidth, maxWidth);
+            lineBreaks = TextArea.getLines(string, font, 0, maxTextLabelWidth, maxTextLabelWidth);
         }
     }
 }
