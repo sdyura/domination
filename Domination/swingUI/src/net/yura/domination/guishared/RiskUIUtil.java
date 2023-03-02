@@ -702,6 +702,9 @@ public class RiskUIUtil {
 		if (checkForNoSandbox()) {
 			home = System.getProperty("java.home");
 			cpu = System.getProperty("sun.cpu.isalist");
+                        if (cpu == null) {
+                            cpu = "?";
+                        }
 			environment = System.getProperty("java.runtime.name") + " ("+ System.getProperty("java.runtime.version") +")";
 			info = System.getProperty("java.vm.info");
 
