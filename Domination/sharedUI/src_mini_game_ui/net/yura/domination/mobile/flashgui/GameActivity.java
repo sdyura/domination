@@ -358,7 +358,9 @@ public class GameActivity extends Frame implements ActionListener {
                 text = "Error loading map: " + mapFile + " " + ex +
                         (ex.getCause() != null ? " " + ex.getCause() : "") +
                         (error ? " TWO ERRORS!!" : "") +
-                        " Please email a screenshot to: yura@yura.net";
+                        "\nThis may be caused by your operator or wifi re-compressing or changing the images," +
+                        "Please try and re-download this map on a different wifi network." +
+                        "\n If this does not help then please email a screenshot of this error to: yura@yura.net\n";
             }
 
             TextArea ta = new TextArea(text);
