@@ -10,9 +10,15 @@ public class J2SELogger extends net.yura.mobile.logging.Logger {
 
     static final Logger logger = Logger.getLogger(net.yura.mobile.logging.Logger.class.getName());
 
+    static {
+        // we already check the level when we log in the SwingME Logger
+        // so if we want the java Logger to respect the level of the SwingME logger
+        // we tell the java logger to always log everything
+        logger.setLevel(Level.ALL);
+    }
+
     public static void setupLogging() {
         net.yura.mobile.logging.Logger.setLogger(new J2SELogger());
-        logger.setLevel(getLevel(net.yura.mobile.logging.Logger.getLevel()));
     }
 
     protected synchronized void log(String message, int level) {
