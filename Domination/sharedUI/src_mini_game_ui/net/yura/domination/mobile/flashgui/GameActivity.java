@@ -90,8 +90,8 @@ public class GameActivity extends Frame implements ActionListener {
         setUndecorated(true);
 
         setBorder(MainMenu.background);
-        setBackground( 0x00FFFFFF );
-
+        setBackground(0x00FFFFFF);
+        setForeground(0xFFFFFFFF); // we want all text to be white as we are setting a dark background
 
 
         pp = new PicturePanel(myrisk);
