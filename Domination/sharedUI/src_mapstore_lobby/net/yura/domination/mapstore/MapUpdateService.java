@@ -98,6 +98,7 @@ public class MapUpdateService extends Observable {
 // we print this just in case we get any errors so we know what we sent
 logger.fine("URL: " + url + " payload: " + payload);
 
+        InputStreamReader re = null;
         try {
             URLConnection conn = new URL(url).openConnection();
             conn.setDoOutput(true);
@@ -105,9 +106,8 @@ logger.fine("URL: " + url + " payload: " + payload);
             wr.write( payload.toString() );
             wr.close();
 
-            InputStreamReader re = new InputStreamReader(conn.getInputStream(), "UTF-8");
+            re = new InputStreamReader(conn.getInputStream(), "UTF-8");
             Task task = (Task)new XMLMapAccess().load(re);
-            re.close();
 
 //logger.info("got: " + task);
             
@@ -117,6 +117,9 @@ logger.fine("URL: " + url + " payload: " + payload);
         catch (Throwable ex) {
             logger.log(Level.INFO, "error in getting map metadata", ex);
             return Collections.EMPTY_LIST;
+        }
+        finally {
+            RiskUtil.close(re);
         }
     }
 
