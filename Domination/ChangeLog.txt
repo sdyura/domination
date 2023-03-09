@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		12
+	iOS:		13
 	Android:	88
 	Game GUI:	2
 	Swing GUI:	2
@@ -14,7 +14,7 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.2.7
+1.2.7 (20.12.2022)
 
 	Fix for online games over 1MB not loading
 	Much faster startup time (6 seconds faster on mac)
@@ -34,6 +34,8 @@ CURRENT VERSION:
 	iOS 12 automatically enable color blind mode when shouldDifferentiateWithoutColor is on
 	       support for iOS 'Dynamic Type' automatic font size
 	       fix for continents table not working for some maps like 'Deutsches_Reich_1871.map'
+	       Fix for title color in stats screen being wrong on Theo's iPhone
+	iOS 13 Tap on StatusBar to scrollToTop added
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
 	Android 87 new UI in main menu and game setup screen
@@ -493,7 +495,7 @@ Risk 1.0.9.8 (07.10.2008)
 	better applet errors in the map editor and message tool
 	network update on different default maps
 
-Risk 1.0.9.7 (06.05.2008)
+Risk 1.0.9.7 (06.05.2008) ### released under the Domination name for the first time ###
 
 	Game Name externalized
 	fixed - closegame BattleDialog paintComponent hasArmiesInt NullPointerException

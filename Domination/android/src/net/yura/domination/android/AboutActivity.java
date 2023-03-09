@@ -53,7 +53,7 @@ public class AboutActivity extends Activity implements TabHost.TabContentFactory
                             startActivity(intent);
                         }
                         catch (Exception ex) {
-                            Logger.getLogger("").log(Level.INFO,"cant open " + url, ex);
+                            Logger.getLogger(AboutActivity.class.getName()).log(Level.INFO,"cant open " + url, ex);
                         }
                         return true;
                     }
@@ -84,5 +84,4 @@ public class AboutActivity extends Activity implements TabHost.TabContentFactory
         }
         return webView;
     }
-
 }
