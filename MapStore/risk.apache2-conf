@@ -9,7 +9,7 @@
 		AllowOverride None
 
                 RewriteEngine on
-                RewriteRule storage/(.*?\.map)$ /count?url=$1 [L]
+                RewriteRule storage/(.*?\.map)$ /count?url=$1 [B,L]
 	</Directory>
 	
 	ErrorLog /var/log/apache2/risk-error.log
