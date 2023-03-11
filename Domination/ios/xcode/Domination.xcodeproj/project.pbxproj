@@ -34,19 +34,10 @@
 		DEAA4E17296385900000B66F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 583D44891E40B4B90048FF77 /* LaunchScreen.storyboard */; };
 		DEAA4E19296385900000B66F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC4876D3960503C5F9FA285C /* main.cpp */; };
 		DEAA4E1A296385900000B66F /* moe-main-interfaces.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB08A0C79A9F530D95B3E8B /* moe-main-interfaces.m */; };
+		DEDE4FE229BCF5770041E9A8 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDE4FE129BCF5770041E9A8 /* Charts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		059D4793969FAA098EC55C20 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		94EE0C6F67F900F4BD78BB4C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -114,6 +105,7 @@
 		DE7E9AE12774A71400555709 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		DEAA4E20296385900000B66F /* Simple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEAA4E21296385900000B66F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Domination-Simple/Info.plist"; sourceTree = SOURCE_ROOT; };
+		DEDE4FE129BCF5770041E9A8 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F071580B939DF4A5D19AD0C3 /* Pods-Domination.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Domination.debug.xcconfig"; path = "Target Support Files/Pods-Domination/Pods-Domination.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEDE4FE229BCF5770041E9A8 /* Charts.framework in Frameworks */,
 				DE7E9AE22774A71400555709 /* MessageUI.framework in Frameworks */,
 				BD473EE73F32A0B01719CDA7 /* Pods_Domination.framework in Frameworks */,
 			);
@@ -166,6 +159,7 @@
 		235E336D9FBC6ED908F4C9C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DEDE4FE129BCF5770041E9A8 /* Charts.framework */,
 				DE7E9AE12774A71400555709 /* MessageUI.framework */,
 				40C0FF0A52B13E0866D81581 /* Pods_Domination.framework */,
 			);
@@ -278,7 +272,6 @@
 				A2BC52023A389D56ABDD2BFB /* Frameworks */,
 				B839CFB9915E7C1F867A9156 /* Resources */,
 				18E494547B5B55FA84151043 /* Sources */,
-				059D4793969FAA098EC55C20 /* Embed Frameworks */,
 				E52E5CBAB73480A5652ABDAF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -733,7 +726,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F071580B939DF4A5D19AD0C3 /* Pods-Domination.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Domination/Domination.entitlements;
 				CURRENT_PROJECT_VERSION = 13;
@@ -774,7 +766,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1DA3DEECF48379DC73773A7E /* Pods-Domination.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Domination/Domination.entitlements;
 				CURRENT_PROJECT_VERSION = 13;

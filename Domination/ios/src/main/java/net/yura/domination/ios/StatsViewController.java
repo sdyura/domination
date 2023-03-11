@@ -149,6 +149,8 @@ public class StatsViewController extends UIViewController implements ChartViewDe
             navigationItem().setRightBarButtonItem(UIBarButtonItem.alloc().initWithTitleStyleTargetAction("\u22EF", UIBarButtonItemStyle.Plain, this, new SEL("optionsMenuClicked:")));
         }
 
+        // This seems to crash on some Simulators???? but works on real device
+        // https://github.com/multi-os-engine/multi-os-engine/issues/190
         lineChartView = LineChartView.alloc().init();
         lineChartView.setDelegate(this);
         view().addSubview(lineChartView);
