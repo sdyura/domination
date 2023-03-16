@@ -70,7 +70,7 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
      */
     @Override
     protected void onSingleCreate() {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         DominationMain.appPreferences = new AndroidPreferences(preferences);
         System.setProperty("debug", String.valueOf(BuildConfig.DEBUG)); // Temp hack to get around http://b.android.com/52962
         super.onSingleCreate();
@@ -129,21 +129,23 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
         }
 
         // enable full screen if needed
-        if (preferences.getBoolean("fullscreen", getDefaultFullScreen(this))) {
-            setGameFullscreen(true);
-        }
+        checkIfFullScreenNeeded();
 
         // keep enabling full screen as android seems to always want to come out of this mode
-        // Yuck, Android development is truly horrendous
+        // https://stackoverflow.com/a/24004866 "Yuck, Android development is truly horrendous"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
                 @Override
                 public void onSystemUiVisibilityChange(int visibility) {
-                    if (preferences.getBoolean("fullscreen", getDefaultFullScreen(GameActivity.this))) {
-                        setGameFullscreen(true);
-                    }
+                    checkIfFullScreenNeeded();
                 }
             });
+        }
+    }
+
+    private void checkIfFullScreenNeeded() {
+        if (DominationMain.appPreferences.getBoolean("fullscreen", getDefaultFullScreen(this))) {
+            setGameFullscreen(true);
         }
     }
 
@@ -247,6 +249,8 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             // sometimes cancelAll throws a SecurityException, internet says just add try/catch
             logger.log(Level.WARNING, "error in onResume", ex);
         }
+
+        checkIfFullScreenNeeded();
     }
 
     @Override
