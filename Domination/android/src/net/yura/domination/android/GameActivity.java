@@ -379,21 +379,26 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ResourceBundle resb = TranslationBundle.getBundle();
-                    new AlertDialog.Builder(GameActivity.this)
-                    .setTitle(resb.getString("achievement.achievementUnlocked"))
-                    .setMessage(resb.getString("achievement.signInToSave"))
-                    .setPositiveButton(resb.getString("achievement.signInToSave.ok"), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            beginUserInitiatedSignIn();
-                        }
-                     })
-                    .setNegativeButton(resb.getString("achievement.signInToSave.cancel"), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // do nothing
-                        }
-                     })
-                     .show();
+                    try {
+                        ResourceBundle resb = TranslationBundle.getBundle();
+                        new AlertDialog.Builder(GameActivity.this)
+                                .setTitle(resb.getString("achievement.achievementUnlocked"))
+                                .setMessage(resb.getString("achievement.signInToSave"))
+                                .setPositiveButton(resb.getString("achievement.signInToSave.ok"), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        beginUserInitiatedSignIn();
+                                    }
+                                })
+                                .setNegativeButton(resb.getString("achievement.signInToSave.cancel"), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .show();
+                    }
+                    catch (Throwable th) {
+                        logger.log(Level.WARNING, "error showing Achievement Unlocked UI", th);
+                    }
                 }
             });
         }
