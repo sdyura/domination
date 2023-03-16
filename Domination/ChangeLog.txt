@@ -36,12 +36,14 @@ CURRENT VERSION:
 	       fix for continents table not working for some maps like 'Deutsches_Reich_1871.map'
 	       Fix for title color in stats screen being wrong on Theo's iPhone
 	iOS 13 Tap on StatusBar to scrollToTop added
+	       Fix crash for sharing saved game file on iPad (popoverPresentationController)
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
 	Android 87 new UI in main menu and game setup screen
 		   only ask for permission to enable notification when we need to
 	Android 88 fix: back button on main menu works again
 		   Stats: show current value for countries and cards
+		   Fullscreen mode works better by hiding nav bar
 
 1.2.6 (17.12.2022)
 

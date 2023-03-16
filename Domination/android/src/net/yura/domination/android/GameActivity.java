@@ -30,6 +30,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import net.yura.android.AndroidMeActivity;
 import net.yura.android.AndroidMeApp;
@@ -68,7 +70,7 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
      */
     @Override
     protected void onSingleCreate() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         DominationMain.appPreferences = new AndroidPreferences(preferences);
         System.setProperty("debug", String.valueOf(BuildConfig.DEBUG)); // Temp hack to get around http://b.android.com/52962
         super.onSingleCreate();
@@ -106,10 +108,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
         googleAccount.addSignInListener(this);
         googleAccount.addSignInListener(realTimeMultiplayer);
 
-        if (preferences.getBoolean("fullscreen", getDefaultFullScreen(this))) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
             TheBackupAgent.backup(this);
         }
@@ -128,6 +126,41 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
         }
         catch (Throwable th) {
             logger.log(Level.INFO, "can not check for updates", th);
+        }
+
+        // enable full screen if needed
+        if (preferences.getBoolean("fullscreen", getDefaultFullScreen(this))) {
+            setGameFullscreen(true);
+        }
+
+        // keep enabling full screen as android seems to always want to come out of this mode
+        // Yuck, Android development is truly horrendous
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+                @Override
+                public void onSystemUiVisibilityChange(int visibility) {
+                    if (preferences.getBoolean("fullscreen", getDefaultFullScreen(GameActivity.this))) {
+                        setGameFullscreen(true);
+                    }
+                }
+            });
+        }
+    }
+
+    public static void setGameFullscreen(boolean fullscreen) {
+        Window window = AndroidMeActivity.DEFAULT_ACTIVITY.getWindow();
+        if (fullscreen) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+                window.getDecorView().setSystemUiVisibility(uiOptions);
+            }
+        }
+        else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                window.getDecorView().setSystemUiVisibility(0);
+            }
         }
     }
 

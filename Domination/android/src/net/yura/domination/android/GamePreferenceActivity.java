@@ -84,12 +84,7 @@ public class GamePreferenceActivity extends PreferenceActivity {
         fullscreen.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if ((Boolean)newValue) {
-                    AndroidMeActivity.DEFAULT_ACTIVITY.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
-                else {
-                    AndroidMeActivity.DEFAULT_ACTIVITY.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
+                GameActivity.setGameFullscreen((Boolean)newValue);
                 return true;
             }
         });

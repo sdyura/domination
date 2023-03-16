@@ -846,10 +846,14 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         throw new IllegalStateException(openGameId + " not found in " + games);
     }
 
+    /**
+     * This method is NOT currently used, so we do not need to implement it.
+     * All messages come into {@link #incomingChat(String, String)}
+     */
+    public void privateMessage(String fromwho, String message) { }
     public void ping(long time) { }
     public void addPlayer(Player player) { }
     public void removePlayer(String player) { }
-    public void privateMessage(String fromwho, String message) { }
     public void setUserInfo(String user,java.util.List info) { }
 
     /**
