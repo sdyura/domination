@@ -28,6 +28,7 @@ import net.yura.lobby.model.Player;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.DesktopPane;
+import net.yura.mobile.gui.KeyEvent;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.ComboBox;
 import net.yura.mobile.gui.components.Component;
@@ -341,21 +342,54 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                     players.setSelectedIndex(0); // select a default
                 }
 
-                OptionPane.showOptionDialog(new ActionListener() {
-                    public void actionPerformed(String actionCommand) {
-                        if ("yes".equals(actionCommand)) {
-                            Player player = (Player)players.getSelectedValue();
-                            Map request = new HashMap();
-                            request.put("game_id", game.getId());
-                            request.put("message", game.getName());
+                if (playerType >= Player.PLAYER_ADMIN) {
+
+                    Button flagButton = new Button("set flagged");
+                    flagButton.setActionCommand("flag");
+                    Button clearButton = new Button("clear name");
+                    clearButton.setActionCommand("clear");
+                    Button cancel = new Button("Cancel");
+                    cancel.setActionCommand("cancel");
+                    cancel.setMnemonic(KeyEvent.KEY_SOFTKEY2);
+
+                    OptionPane.showOptionDialog(new ActionListener() {
+                        public void actionPerformed(String actionCommand) {
+                            Player player = (Player) players.getSelectedValue();
                             if (player != null) {
-                                request.put("username", player.getName());
+                                if ("flag".equals(actionCommand)) {
+                                    Map request = new HashMap();
+                                    request.put("username", player.getName());
+                                    request.put("userType", Player.PLAYER_FLAGGED);
+                                    mycom.sendAdminCommand(ProtoLobby.REQUEST_SET_USER_TYPE, request);
+                                }
+                                else if ("clear".equals(actionCommand)) {
+                                    Map request = new HashMap();
+                                    request.put("oldName", player.getName());
+                                    request.put("newName", "");
+                                    mycom.sendAdminCommand(ProtoLobby.REQUEST_RENAME_USER, request);
+                                }
                             }
-                            mycom.sendAdminCommand(ProtoLobby.REQUEST_FLAG_USER, request);
                         }
-                    }
-                }, new Object[] {game.getName(), players}, resBundle.getProperty("lobby.flagPlayer"), OptionPane.YES_NO_OPTION,
-                OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), null, null);
+                    }, new Object[] {game.getName(), players}, resBundle.getProperty("lobby.flagPlayer"), -1,
+                    OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), new Button[] {flagButton, clearButton, cancel}, null);
+                }
+                else {
+                    OptionPane.showOptionDialog(new ActionListener() {
+                        public void actionPerformed(String actionCommand) {
+                            if ("yes".equals(actionCommand)) {
+                                Player player = (Player) players.getSelectedValue();
+                                Map request = new HashMap();
+                                request.put("game_id", game.getId());
+                                request.put("message", game.getName());
+                                if (player != null) {
+                                    request.put("username", player.getName());
+                                }
+                                mycom.sendAdminCommand(ProtoLobby.REQUEST_FLAG_USER, request);
+                            }
+                        }
+                    }, new Object[] {game.getName(), players}, resBundle.getProperty("lobby.flagPlayer"), OptionPane.YES_NO_OPTION,
+                    OptionPane.QUESTION_MESSAGE, loader.loadIcon("/ms_flag.png"), null, null);
+                }
             }
         }
         else if ("delGame".equals(actionCommand)) {

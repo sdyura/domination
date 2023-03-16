@@ -17,6 +17,7 @@ import net.yura.mobile.io.json.JSONWriter;
 /**
  * http://www.tomanthony.co.uk/blog/google_plus_one_button_seo_count_api/
  */
+@Deprecated
 public class GooglePlusOne {
 
     private static final Logger logger = Logger.getLogger(GooglePlusOne.class.getName());

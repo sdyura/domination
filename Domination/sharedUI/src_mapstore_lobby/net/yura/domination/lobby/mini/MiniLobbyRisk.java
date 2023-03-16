@@ -75,7 +75,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
                         lobby.mycom.playGame(game.getId());
                     }
                     else {
-                        lobby.error("map download failed " + mapUID);
+                        lobby.error("map download failed for: " + mapUID);
                     }
                 }
             });
