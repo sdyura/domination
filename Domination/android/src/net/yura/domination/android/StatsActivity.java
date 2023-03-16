@@ -31,6 +31,9 @@ public class StatsActivity extends Activity {
     
     List<Player> getPlayersStats() {
         DominationMain dmain = (DominationMain)AndroidMeApp.getMIDlet();
+        if (dmain == null) {
+            return Collections.emptyList();
+        }
         RiskGame game = dmain.risk.getGame();
         // if we open the stats activity at the same time as closing the game, avoid throwing a error
         return game==null?Collections.EMPTY_LIST:game.getPlayersStats();
