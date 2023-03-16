@@ -27,7 +27,7 @@ import net.yura.mobile.gui.layout.XULLoader;
 
 public class StatsActivity extends Activity {
 
-    private ResourceBundle resb = TranslationBundle.getBundle();
+    private ResourceBundle resb;
     
     List<Player> getPlayersStats() {
         DominationMain dmain = (DominationMain)AndroidMeApp.getMIDlet();
@@ -39,6 +39,8 @@ public class StatsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        resb = TranslationBundle.getBundle();
         
         setTitle( resb.getString("swing.tab.statistics") );
 
