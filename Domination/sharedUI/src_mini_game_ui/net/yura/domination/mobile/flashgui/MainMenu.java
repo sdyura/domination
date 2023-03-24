@@ -115,7 +115,7 @@ public class MainMenu extends Frame implements ActionListener {
                         String[] saves = new File(dir).list();
                         List<String> result = new java.util.Vector();
                         for (int c = 0; c < saves.length; c++) {
-                            if (saves[c].endsWith(GameWindow.SAVE_EXTENSION)) {
+                            if (saves[c].endsWith(DominationMain.SAVE_EXTENSION)) {
                                 result.add(saves[c]);
                             }
                         }
@@ -150,7 +150,7 @@ public class MainMenu extends Frame implements ActionListener {
                 String file = chooser.getSelectedFile();
                 chooser = null;
 
-                if (file.endsWith( GameWindow.SAVE_EXTENSION )) {
+                if (file.endsWith( DominationMain.SAVE_EXTENSION )) {
                     myrisk.parser("loadgame " + file);
                 }
                 // else ignore file

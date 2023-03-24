@@ -66,8 +66,6 @@ public class GameWindow extends Frame implements ActionListener {
 
     public static final Properties resb = CoreUtil.wrap(TranslationBundle.getBundle());
 
-    public static final String SAVE_EXTENSION = ".save";
-
     Risk myrisk;
     PicturePanel pp;
     ViewChooser mapViewControl;
@@ -490,7 +488,7 @@ public class GameWindow extends Frame implements ActionListener {
             OptionPane.showOptionDialog(new ActionListener() {
                 public void actionPerformed(String actionCommand) {
                     String name = RiskUtil.replaceAll(RiskUtil.replaceAll(saveText.getText(), "/", "-"),"\\","-");
-                    String filePath = new File(MiniUtil.getSaveGameDir(), name + SAVE_EXTENSION).toString();
+                    String filePath = new File(MiniUtil.getSaveGameDir(), name + DominationMain.SAVE_EXTENSION).toString();
                     if ("ok".equals(actionCommand)) {
                         go("savegame " + filePath);
                     }

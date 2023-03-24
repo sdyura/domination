@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.microedition.lcdui.Display;
 import net.yura.domination.engine.RiskUtil;
-import net.yura.domination.mobile.flashgui.GameWindow;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.LobbyClient;
 import net.yura.lobby.client.LobbyCom;
@@ -879,7 +878,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     /**
-     * @see GameWindow#toast(java.lang.String)
+     * @see net.yura.domination.mobile.flashgui.GameWindow#toast(java.lang.String)
      */
     public static void toast(String message) {
         if ( Display.getDisplay( Application.getInstance() ).getCurrent() != null ) {

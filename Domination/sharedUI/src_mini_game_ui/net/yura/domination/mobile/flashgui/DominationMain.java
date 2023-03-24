@@ -46,6 +46,8 @@ public class DominationMain extends Application {
 
     private static final Logger logger = Logger.getLogger(DominationMain.class.getName());
 
+    public static final String SAVE_EXTENSION = ".save";
+
     public static final boolean DEFAULT_SHOW_DICE = true;
     public static final String SHOW_DICE_KEY = "show_dice";
 
