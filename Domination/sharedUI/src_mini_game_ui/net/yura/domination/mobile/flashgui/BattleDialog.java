@@ -24,7 +24,7 @@ import net.yura.mobile.util.Properties;
  */
 public class BattleDialog extends Frame implements ActionListener {
 
-    Properties resb = GameActivity.resb;
+    Properties resb = GameWindow.resb;
     
     Risk myrisk;
     Sprite red_dice,blue_dice;
@@ -100,7 +100,7 @@ public class BattleDialog extends Frame implements ActionListener {
                 go("retreat");
             }
             else {
-                GameActivity.showClosePrompt(myrisk);
+                GameWindow.showClosePrompt(myrisk);
             }
         }
     }

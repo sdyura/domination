@@ -26,7 +26,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
     private Risk myRisk;
     private MainMenu mainmenu;
     private GameSetup gameSetup;
-    private GameActivity gameFrame;
+    private GameWindow gameFrame;
 
     public MiniLobbyClient lobby;
 
@@ -129,7 +129,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
     }
     void addExtraButtons(Menu menu) {
         if (amOnlinePlayer()) {
-            Button button = new Button( GameActivity.resb.getString("lobby.resign"), new Icon("/ic_menu_exit.png") );
+            Button button = new Button( GameWindow.resb.getString("lobby.resign"), new Icon("/ic_menu_exit.png") );
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(String actionCommand) {
                     lobby.resignPrompt();
@@ -138,7 +138,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
             menu.add(button);
         }
         if (lobby != null) {
-            Button button = new Button(GameActivity.resb.getString("lobby.chat"), new Icon("/ic_menu_chat.png"));
+            Button button = new Button(GameWindow.resb.getString("lobby.chat"), new Icon("/ic_menu_chat.png"));
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(String actionCommand) {
                     lobby.sendChatMessage();
@@ -189,7 +189,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
             gameSetup = new GameSetup(myRisk,this);
         }
         else if ("game".equals(what)) {
-            gameFrame = new GameActivity(myRisk,this);
+            gameFrame = new GameWindow(myRisk,this);
         }
         else {
             throw new IllegalArgumentException("unknown "+what);

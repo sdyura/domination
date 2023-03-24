@@ -37,7 +37,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
     private final int[] compTypes;
 
     // shares res
-    Properties resb = GameActivity.resb;
+    Properties resb = GameWindow.resb;
     public Risk myrisk;
     MiniFlashRiskAdapter controller;
 
@@ -269,7 +269,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
         localgame = islocalgame;
         this.allowedMaps = allowedMaps;
 
-        newgame = GameActivity.getPanel("/newgame.xml",this);
+        newgame = GameWindow.getPanel("/newgame.xml",this);
 
         if (gameName!=null) {
             TextComponent tc = (TextComponent)newgame.find("GameName");

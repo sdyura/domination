@@ -32,7 +32,7 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
 
     Font font;
     
-    Properties resb = GameActivity.resb;
+    Properties resb = GameWindow.resb;
     
     Risk myrisk;
     Slider slider;

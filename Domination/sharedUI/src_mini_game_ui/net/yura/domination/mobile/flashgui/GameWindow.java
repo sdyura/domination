@@ -60,9 +60,9 @@ import net.yura.swingme.core.ViewChooser;
 /**
  * @author Yura
  */
-public class GameActivity extends Frame implements ActionListener {
+public class GameWindow extends Frame implements ActionListener {
 
-    public static final Logger logger = Logger.getLogger( GameActivity.class.getName() );
+    public static final Logger logger = Logger.getLogger( GameWindow.class.getName() );
 
     public static final Properties resb = CoreUtil.wrap(TranslationBundle.getBundle());
 
@@ -82,7 +82,7 @@ public class GameActivity extends Frame implements ActionListener {
     Menu menu;
     MiniFlashRiskAdapter controller;
 
-    public GameActivity(Risk risk,MiniFlashRiskAdapter controller) {
+    public GameWindow(Risk risk, MiniFlashRiskAdapter controller) {
         myrisk = risk;
         this.controller = controller;
         setMaximum(true);
@@ -304,12 +304,11 @@ public class GameActivity extends Frame implements ActionListener {
 
             int x=0;
             for (int c=0; c < colors.length ; c++) {
-                    g.setColor( PicturePanel.colorWithAlpha(colors[c],100) );
-                    int ww = c==0?width-(w*(colors.length-1)):w;
+                    g.setColor(PicturePanel.colorWithAlpha(colors[c], 150));
+                    int ww = c==0 ? width-(w*(colors.length-1)) : w;
                     g.fillRect( x , 0 , ww , height);
                     x = x + ww;
             }
-
         }
         @Override
         protected void workoutMinimumSize() {

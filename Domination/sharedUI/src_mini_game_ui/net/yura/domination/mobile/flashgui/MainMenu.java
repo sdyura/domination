@@ -2,7 +2,6 @@ package net.yura.domination.mobile.flashgui;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Arrays;
 import java.io.File;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
@@ -20,7 +19,6 @@ import net.yura.mobile.gui.components.Menu;
 import net.yura.mobile.gui.components.MenuBar;
 import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.gui.components.Panel;
-import net.yura.mobile.gui.components.ScrollPane;
 import net.yura.mobile.gui.components.Window;
 import net.yura.mobile.gui.layout.XULLoader;
 import net.yura.mobile.io.FileUtil;
@@ -33,7 +31,7 @@ import net.yura.mobile.util.Url;
 public class MainMenu extends Frame implements ActionListener {
 
     // shares res
-    Properties resb = GameActivity.resb;
+    Properties resb = GameWindow.resb;
     public Risk myrisk;
     MiniFlashRiskAdapter controller;
 
@@ -61,7 +59,7 @@ public class MainMenu extends Frame implements ActionListener {
     }
 
     public void openMainMenu() {
-	mainMenu = GameActivity.getPanel("/mainmenu.xml",this);
+	mainMenu = GameWindow.getPanel("/mainmenu.xml",this);
 
         setContentPane((Panel) mainMenu.getRoot());
         revalidate();
@@ -117,7 +115,7 @@ public class MainMenu extends Frame implements ActionListener {
                         String[] saves = new File(dir).list();
                         List<String> result = new java.util.Vector();
                         for (int c = 0; c < saves.length; c++) {
-                            if (saves[c].endsWith(GameActivity.SAVE_EXTENSION)) {
+                            if (saves[c].endsWith(GameWindow.SAVE_EXTENSION)) {
                                 result.add(saves[c]);
                             }
                         }
@@ -152,7 +150,7 @@ public class MainMenu extends Frame implements ActionListener {
                 String file = chooser.getSelectedFile();
                 chooser = null;
 
-                if (file.endsWith( GameActivity.SAVE_EXTENSION )) {
+                if (file.endsWith( GameWindow.SAVE_EXTENSION )) {
                     myrisk.parser("loadgame " + file);
                 }
                 // else ignore file
