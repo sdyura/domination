@@ -29,6 +29,7 @@ import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.KeyEvent;
+import net.yura.mobile.gui.cellrenderer.DefaultListCellRenderer;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.ComboBox;
 import net.yura.mobile.gui.components.Component;
@@ -338,6 +339,16 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             final Game game = (Game) gameList.getSelectedValue();
             if (game != null) { // can only be null if there are no games in the list
                 final List players = new List(RiskUtil.asVector(game.getPlayers()));
+                if (playerType >= Player.PLAYER_ADMIN) {
+                    players.setCellRenderer(new DefaultListCellRenderer() {
+                        @Override
+                        public Component getListCellRendererComponent(Component listOrTable, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                            Component c = super.getListCellRendererComponent(listOrTable, null, index, isSelected, cellHasFocus);
+                            setText(GameRenderer.toAdminString((Player) value));
+                            return c;
+                        }
+                    });
+                }
                 if (players.getSize() > 0) {
                     players.setSelectedIndex(0); // select a default
                 }

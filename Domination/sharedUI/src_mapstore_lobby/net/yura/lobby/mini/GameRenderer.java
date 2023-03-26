@@ -1,11 +1,15 @@
 package net.yura.lobby.mini;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.microedition.lcdui.Graphics;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.lobby.model.Game;
+import net.yura.lobby.model.Player;
 import net.yura.lobby.util.TimeoutUtil;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
@@ -61,13 +65,43 @@ public class GameRenderer extends DefaultListCellRenderer {
             line1 = TimeoutUtil.formatPeriod( time )+" "+ line1;
         }
 
-        line2 = game.getPlayers() + " " + game.getName();
+        if (lobby.playerType >= Player.PLAYER_ADMIN) {
+            String players = ((Collection<Player>)game.getPlayers()).stream()
+                    .map(new Function<Player, String>() {
+                        @Override
+                        public String apply(Player player) {
+                            return toAdminString(player);
+                        }
+                    })
+                    .collect(Collectors.joining(", ", "[", "]"));
+            line2 = players + " " + game.getName();
+        }
+        else {
+            line2 = game.getPlayers() + " " + game.getName();
+        }
 
         setVerticalTextPosition( "".equals(line2) ? Graphics.VCENTER : Graphics.TOP);
 
         part2 = game.getNumOfPlayers()+"/"+game.getMaxPlayers();
 
         return c;
+    }
+
+    public static String toAdminString(Player player) {
+        String icon;
+        switch (player.getType()) {
+            case Player.PLAYER_GOD: icon = "\uD83D\uDD34"; break; // red
+            case Player.PLAYER_ADMIN: icon = "\uD83D\uDFE3"; break; // magenta
+            case Player.PLAYER_MODERATOR: icon = "\uD83D\uDD35"; break; // blue
+            case Player.PLAYER_SUBSCRIBER: icon = "\uD83D\uDFE2"; break; // green
+            case Player.PLAYER_NORMAL: icon = "\uD83D\uDFE1"; break; // yellow
+
+            case Player.PLAYER_FLAGGED: icon = "\uD83D\uDEA9"; break; // red flag
+            case Player.PLAYER_BLOCKED: icon = "\u26D4"; break; // blocked
+
+            default: icon = "\u26AA"; break; // Player.PLAYER_GUEST // white
+        }
+        return icon + player.getName();
     }
 
     public int getFixedCellHeight() {
