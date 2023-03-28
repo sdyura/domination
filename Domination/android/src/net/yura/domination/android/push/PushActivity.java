@@ -25,7 +25,9 @@ public class PushActivity extends Activity {
 	}
 
         try {
-            //ADMServerUtilities.setup();
+            if (ADMServerUtilities.IS_ADM_AVAILABLE) {
+                //ADMServerUtilities.setup();
+            }
         }
         catch (Throwable th) {
             ADMServerUtilities.logger.log(Level.WARNING, "ADM fail", th);

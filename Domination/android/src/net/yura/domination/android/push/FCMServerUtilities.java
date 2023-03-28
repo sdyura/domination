@@ -56,7 +56,7 @@ public class FCMServerUtilities implements PushLobbyClient {
                         // Get new Instance ID token
                         String token = task.getResult();
 
-                        if (FCMRegistrar.isRegisteredOnServer(token)) {
+                        if (PushRegistrar.isRegisteredOnServer(token)) {
                             logger.info("FCM Already registered");
                         }
                         else {
@@ -79,7 +79,7 @@ public class FCMServerUtilities implements PushLobbyClient {
                         }
 
                         logger.info("FCM Device unregistered");
-                        if (FCMRegistrar.isRegisteredOnServer(null)) {
+                        if (PushRegistrar.isRegisteredOnServer(null)) {
                             FCMServerUtilities.unregisterOnLobbyServer();
                         }
                         else {
@@ -119,6 +119,6 @@ public class FCMServerUtilities implements PushLobbyClient {
 
     @Override
     public void registerDone() {
-        FCMRegistrar.setRegisteredOnServer(token);
+        PushRegistrar.setRegisteredOnServer(token);
     }
 }

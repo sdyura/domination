@@ -1,44 +1,52 @@
 package net.yura.domination.android.push;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import javax.microedition.midlet.MIDlet;
-import net.yura.android.AndroidMeApp;
 import net.yura.domination.R;
 import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.gcm.GCMBaseIntentService;
-import com.google.android.gcm.GCMRegistrar;
+import com.amazon.device.messaging.ADMMessageHandlerJobBase;
 
 /**
+ *
+ * com.amazon.device.messaging.ADMMessageHandlerJobBase For handling messages on the latest Fire devices
+ * com.amazon.device.messaging.ADMMessageHandlerBase 	For handling messages on older Fire devices
+ *
  * @see com.google.android.gcm.demo.app.GCMIntentService
  */
-public class ADMIntentService extends GCMBaseIntentService {
+public class ADMIntentService extends ADMMessageHandlerJobBase {
 
     public ADMIntentService() {
-        super(AndroidMeApp.getContext().getString(R.string.app_id));
+        super(); // AndroidMeApp.getContext().getString(R.string.app_id)
     }
 
     @Override
     protected void onRegistered(Context context, String registrationId) {
         ADMServerUtilities.logger.info("Device registered: regId = "+registrationId);
-        ADMServerUtilities.registerOnLobbyServer(context, registrationId);
+        ADMServerUtilities.registerOnLobbyServer(registrationId);
     }
 
     @Override
     protected void onUnregistered(Context context, String registrationId) {
-        ADMServerUtilities.logger.info("Device unregistered");
-        if (GCMRegistrar.isRegisteredOnServer(context)) {
-            ADMServerUtilities.unregisterOnLobbyServer(context, registrationId);
-        } else {
+        ADMServerUtilities.logger.info("Device unregistered = " + registrationId);
+        if (PushRegistrar.isRegisteredOnServer(registrationId)) {
+            ADMServerUtilities.unregisterOnLobbyServer();
+        }
+        else {
             // This callback results from the call to unregister made on
             // ServerUtilities when the registration to the server failed.
             ADMServerUtilities.logger.info("Ignoring unregister callback");
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected void onRegistrationError(final Context context, final String string) {
+        ADMServerUtilities.logger.info("ADMMessageHandlerJobBase:onRegistrationError " + string);
     }
 
     /**
@@ -68,22 +76,22 @@ public class ADMIntentService extends GCMBaseIntentService {
     }
 
     @Override
-    protected void onDeletedMessages(Context context, int total) {
-        String message = "Received deleted messages notification "+total;
-        ADMServerUtilities.logger.info(message);
-        // notifies user
-        MIDlet.showNotification(context.getString(R.string.app_name), message, R.drawable.icon, -1, Collections.EMPTY_MAP);
+    protected void onSubscribe(final Context context, final String topic) {
+        ADMServerUtilities.logger.info("onSubscribe: " + topic);
     }
 
     @Override
-    public void onError(Context context, String errorId) {
-        ADMServerUtilities.logger.info("Received error: "+errorId);
+    protected void onSubscribeError(final Context context, final String topic, final String errorId) {
+        ADMServerUtilities.logger.info("onSubscribeError: errorId: " + errorId + " topic: " + topic);
     }
 
     @Override
-    protected boolean onRecoverableError(Context context, String errorId) {
-        // log message
-        ADMServerUtilities.logger.info("Received recoverable error: "+errorId);
-        return super.onRecoverableError(context, errorId);
+    protected void onUnsubscribe(final Context context, final String topic) {
+        ADMServerUtilities.logger.info("onUnsubscribe: " + topic);
+    }
+
+    @Override
+    protected void onUnsubscribeError(final Context context, final String topic, final String errorId) {
+        ADMServerUtilities.logger.info("onUnsubscribeError: errorId: " + errorId + " topic: " + topic);
     }
 }

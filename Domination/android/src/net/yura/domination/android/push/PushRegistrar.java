@@ -9,7 +9,7 @@ import java.util.prefs.Preferences;
 /**
  * @see com.google.android.gcm.GCMRegistrar
  */
-public class FCMRegistrar {
+public class PushRegistrar {
 
     public static final long DEFAULT_ON_SERVER_LIFESPAN_MS = 604800000L; // 7 days
 

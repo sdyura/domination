@@ -1,10 +1,8 @@
 package net.yura.domination.android.push;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import android.content.Context;
-import com.google.android.gcm.GCMRegistrar;
-import net.yura.domination.R;
+import com.amazon.device.messaging.ADM;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.PushLobbyClient;
 
@@ -12,71 +10,94 @@ public class ADMServerUtilities implements PushLobbyClient {
 
     static final Logger logger = Logger.getLogger(ADMServerUtilities.class.getName());
 
-    public static void setup() {
-        try {
-            Context context = net.yura.android.AndroidMeApp.getContext();
+    public static final String ADM_CLASSNAME = "com.amazon.device.messaging.ADM";
+    public static final String ADMV2_HANDLER = "com.amazon.device.messaging.ADMMessageHandlerJobBase";
 
-            GCMRegistrar.checkDevice(context);
-            GCMRegistrar.checkManifest(context);
-            final String regId = GCMRegistrar.getRegistrationId(context);
-            if (regId.equals("")) {
-                GCMRegistrar.register(context, context.getString(R.string.app_id));
+    public static final boolean IS_ADM_AVAILABLE;
+    public static final boolean IS_ADM_V2;
+
+    private static boolean isClassAvailable(final String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    static {
+        IS_ADM_AVAILABLE = isClassAvailable(ADM_CLASSNAME);
+        IS_ADM_V2 = IS_ADM_AVAILABLE ? isClassAvailable(ADMV2_HANDLER) : false;
+    }
+
+    /**
+     * Register the app with ADM and send the registration ID to your server
+     */
+    private void register() {
+        Context context = net.yura.android.AndroidMeApp.getContext();
+
+        final ADM adm = new ADM(context);
+        if (adm.isSupported()) {
+            if(adm.getRegistrationId() == null) {
+                adm.startRegister();
             }
             else {
-                if (GCMRegistrar.isRegisteredOnServer(context)) {
+                /* Send the registration ID for this app instance to your server. */
+                /* This is a redundancy since this should already have been performed at registration time from the onRegister() callback */
+                /* but we do it because our python server doesn't save registration IDs. */
+
+                if (PushRegistrar.isRegisteredOnServer(adm.getRegistrationId())) {
                     logger.info("Already registered");
                 }
                 else {
-                    ADMServerUtilities.registerOnLobbyServer(context, regId);
-
-                    // TODO if we FAIL at registering on our server then call
-                    // GCMRegistrar.unregister(context);
-                    // currently can not tell
+                    ADMServerUtilities.registerOnLobbyServer(adm.getRegistrationId());
                 }
             }
-        }
-        catch (UnsupportedOperationException th) {
-            logger.log(Level.INFO, "gmc unsupported", th);
         }
     }
 
     /**
+     * Unregister the app with ADM.
+     * Your server will get notified from the SampleADMMessageHandler:onUnregistered() callback
+     *
      * @see ADMIntentService#onUnregistered(Context, String)
      */
-    public static void delete() {
+    private void unregister() {
         Context context = net.yura.android.AndroidMeApp.getContext();
-        GCMRegistrar.unregister(context);
+
+        final ADM adm = new ADM(context);
+        if (adm.isSupported()) {
+            if(adm.getRegistrationId() != null) {
+                adm.startUnregister();
+            }
+        }
+
+        PushRegistrar.setRegisteredOnServer(null);
     }
 
-
-
-
-
-    public static void registerOnLobbyServer(Context context, String registrationId) {
+    public static void registerOnLobbyServer(String registrationId) {
         Connection con = PushActivity.getLobbyConnection();
         if (con != null) {
-            con.addPushEventListener(new ADMServerUtilities(context));
+            con.addPushEventListener(new ADMServerUtilities(registrationId));
             con.setPushToken(PUSH_SYSTEM_ADM, registrationId);
         }
     }
 
-    public static void unregisterOnLobbyServer(Context context, String registrationId) {
+    public static void unregisterOnLobbyServer() {
         Connection con = PushActivity.getLobbyConnection();
         if (con != null) {
-            con.addPushEventListener(new ADMServerUtilities(context));
+            con.addPushEventListener(new ADMServerUtilities(null));
             con.setPushToken(PUSH_SYSTEM_ADM, null);
         }
     }
 
-
-
-    private Context context;
-    public ADMServerUtilities(Context context) {
-        this.context = context;
+    private String token;
+    public ADMServerUtilities(String token) {
+        this.token = token;
     }
 
     @Override
     public void registerDone() {
-        GCMRegistrar.setRegisteredOnServer(context, true);
+        PushRegistrar.setRegisteredOnServer(token);
     }
 }

@@ -21,7 +21,7 @@ public class FCMIntentService extends FirebaseMessagingService {
     public void onNewToken(@NonNull String registrationId) {
         try {
             FCMServerUtilities.logger.info("Device registered: FCM regId = " + registrationId);
-            FCMRegistrar.setRegisteredOnServer(null);
+            PushRegistrar.setRegisteredOnServer(null);
             FCMServerUtilities.registerOnLobbyServer(registrationId);
         }
         catch (Exception ex) {

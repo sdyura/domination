@@ -64,8 +64,11 @@
 		<category android:name="net.yura.domination" />
 	    </intent-filter>
 	</receiver>
-	<service android:name="net.yura.domination.android.push.ADMIntentService" />
-
+	<service android:name="net.yura.domination.android.push.ADMLegacyIntentService"
+            android:exported="false"/>
+	<service android:name="net.yura.domination.android.push.ADMIntentService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
 	<service android:name="net.yura.domination.android.push.FCMIntentService"
             android:exported="false">
