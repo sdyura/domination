@@ -13,10 +13,12 @@ import apple.coregraphics.c.CoreGraphics;
 import apple.coregraphics.struct.CGRect;
 import apple.coregraphics.struct.CGSize;
 import apple.foundation.NSArray;
+import apple.foundation.NSDictionary;
 import apple.foundation.NSMutableArray;
 import apple.foundation.NSNumber;
 import apple.foundation.NSProcessInfo;
 import apple.foundation.struct.NSOperatingSystemVersion;
+import apple.uikit.NSLayoutConstraint;
 import apple.uikit.UIAction;
 import apple.uikit.UIBarButtonItem;
 import apple.uikit.UIColor;
@@ -156,10 +158,24 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         view().addSubview(lineChartView);
 
         lineChartView.setTranslatesAutoresizingMaskIntoConstraints(false);
-        lineChartView.bottomAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().bottomAnchor()).setActive(true);
-        lineChartView.topAnchor().constraintEqualToAnchor(view().topAnchor()).setActive(true); // for top we setExtraTopOffset instead
-        lineChartView.rightAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().rightAnchor()).setActive(true);
-        lineChartView.leftAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().leftAnchor()).setActive(true);
+
+        try {
+            lineChartView.bottomAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().bottomAnchor()).setActive(true);
+            lineChartView.topAnchor().constraintEqualToAnchor(view().topAnchor()).setActive(true); // for top we setExtraTopOffset instead
+            lineChartView.rightAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().rightAnchor()).setActive(true);
+            lineChartView.leftAnchor().constraintEqualToAnchor(view().safeAreaLayoutGuide().leftAnchor()).setActive(true);
+        }
+        catch (Throwable th) {
+            // fallback for older iOS 9
+            // from: https://github.com/multi-os-engine/moe-samples-java/blob/moe-master/Planets/ios/src/main/java/org/moe/samples/planets/ios/PlanetsController.java
+            NSDictionary views = NSDictionary.dictionaryWithObjectForKey(lineChartView, "renderer");
+            NSArray constrs = NSLayoutConstraint.constraintsWithVisualFormatOptionsMetricsViews(
+                    "|-0-[renderer]-0-|", 0, (NSDictionary<String, Object>) NSDictionary.dictionary(), views);
+            view().addConstraints(constrs);
+            constrs = NSLayoutConstraint.constraintsWithVisualFormatOptionsMetricsViews(
+                    "V:|-0-[renderer]-0-|", 0, (NSDictionary<String, Object>) NSDictionary.dictionary(), views);
+            view().addConstraints(constrs);
+        }
 
         lineChartView.setBackgroundColor(UIColor.blackColor());
         lineChartView.legend().setTextColor(UIColor.whiteColor());
