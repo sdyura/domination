@@ -11,20 +11,19 @@ import net.yura.mobile.gui.components.Component;
 public class BackgroundBorder implements Border {
 
     Image img;
-    
+
     public BackgroundBorder(Image i) {
         img = i;
     }
-    
-    public void paintBorder(Component cmpnt, Graphics2D g, int w, int h) {
 
-        double s = Math.max(h/(double)img.getHeight(),w/(double)img.getWidth());
-        
-        int dw = (int) (img.getWidth() * s);
-        int dh = (int) (img.getHeight()* s);
+    public void paintBorder(Component cmpnt, Graphics2D g, int w, int h) {
+        double s = Math.max(h / (double) img.getHeight(), w / (double) img.getWidth());
+
+        // need to round up or we may end up not covering the bottom row of pixels
+        int dw = (int) Math.ceil(img.getWidth() * s);
+        int dh = (int) Math.ceil(img.getHeight() * s);
 
         g.drawScaledImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
-        
     }
 
     public int getTop() {
@@ -46,5 +45,4 @@ public class BackgroundBorder implements Border {
     public boolean isBorderOpaque() {
         return true;
     }
-    
 }
