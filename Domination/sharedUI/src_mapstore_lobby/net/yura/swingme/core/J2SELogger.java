@@ -32,14 +32,17 @@ public class J2SELogger extends net.yura.mobile.logging.Logger {
         logger.log(getLevel(level), error, throwable);
     }
 
+    /**
+     * @see net.yura.grasshopper.ConsoleHandler#getAndroidLevel(java.util.logging.Level)
+     */
     private static Level getLevel(int level) {
         switch (level) {
-            case net.yura.mobile.logging.Logger.DEBUG: return Level.FINE;
-            case net.yura.mobile.logging.Logger.INFO: return Level.INFO;
-            case net.yura.mobile.logging.Logger.WARN: return Level.WARNING;
-            case net.yura.mobile.logging.Logger.ERROR: return Level.SEVERE;
+            case net.yura.mobile.logging.Logger.DEBUG: return Level.FINE; // android:Debug
+            case net.yura.mobile.logging.Logger.INFO: return Level.INFO; // android:Info
+            case net.yura.mobile.logging.Logger.WARN: return Level.WARNING; // android:Warn
+            case net.yura.mobile.logging.Logger.ERROR: return Level.SEVERE; // android:Error
             // TODO can not log as this level, it just means OFF or if we can we should make a new Level for it like ASSERT
-            case net.yura.mobile.logging.Logger.FATAL: return Level.SEVERE;
+            case net.yura.mobile.logging.Logger.FATAL: return Level.SEVERE; // android:Error (or should this be android:Assert)
             default: throw new IllegalArgumentException("level: "+level);
         }
     }

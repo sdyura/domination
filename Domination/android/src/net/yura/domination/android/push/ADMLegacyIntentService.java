@@ -11,7 +11,7 @@ import javax.microedition.midlet.MIDlet;
 
 public class ADMLegacyIntentService extends ADMMessageHandlerBase {
 
-    protected ADMLegacyIntentService() {
+    public ADMLegacyIntentService() {
         super(ADMLegacyIntentService.class.getName());
     }
 
