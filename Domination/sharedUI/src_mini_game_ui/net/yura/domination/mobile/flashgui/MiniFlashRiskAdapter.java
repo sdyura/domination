@@ -332,20 +332,18 @@ public class MiniFlashRiskAdapter implements RiskListener {
     BattleDialog battle;
     @Override
     public void openBattle(int c1num, int c2num) {
+        Image c1img = gameFrame.pp.getCountryImage(c1num);
+        Image c2img = gameFrame.pp.getCountryImage(c2num);
 
         if (battle == null) {
             battle = new BattleDialog(myRisk);
         }
 
-        Image c1img = gameFrame.pp.getCountryImage(c1num);
-        Image c2img = gameFrame.pp.getCountryImage(c2num);
-
-        battle.setup(c1num, c2num,c1img,c2img);
+        battle.setup(c1num, c2num, c1img, c2img);
 
         // TODO: move main map to centre on where battle is happening
 
         battle.setVisible(true);
-
     }
 
     @Override
