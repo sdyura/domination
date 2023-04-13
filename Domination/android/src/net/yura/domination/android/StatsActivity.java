@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.yura.android.AndroidMeApp;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -43,16 +45,15 @@ public class StatsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        resb = TranslationBundle.getBundle();
-        
-        setTitle( resb.getString("swing.tab.statistics") );
-
-        String graph = getIntent().getData() == null ? null : getIntent().getData().getQueryParameter("graph");
-        if (graph != null) {
-            showGraph(StatType.valueOf(graph));
+        try {
+            resb = TranslationBundle.getBundle();
+            setTitle(resb.getString("swing.tab.statistics"));
+            String graph = getIntent().getData() == null ? null : getIntent().getData().getQueryParameter("graph");
+            showGraph(graph != null ? StatType.valueOf(graph) : StatType.COUNTRIES);
         }
-        else {
-            showGraph(StatType.COUNTRIES);
+        catch (Throwable th) {
+            // it does not make any sense, but we seem to be getting crashes here
+            Logger.getLogger(StatsActivity.class.getName()).log(Level.WARNING, "crash in StatsActivity onCreate", th);
         }
 
         // hack to always show the overflow menu, as users are not finding it
