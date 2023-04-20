@@ -371,12 +371,18 @@ public class MapServerClient extends HTTPClient {
             String fileName = getPath(mapContext, url);
             String saveToDiskName = fileName + ".part";
 
-            OutputStream out = null;
             try {
-                out = RiskUtil.streamOpener.saveMapFile(saveToDiskName);
-                saveFile(is, out);
+                OutputStream out = RiskUtil.streamOpener.saveMapFile(saveToDiskName);
+                long fileSize;
+                try {
+                    fileSize = saveFile(is, out);
+                }
+                finally {
+                    FileUtil.close(is);
+                    FileUtil.close(out);
+                }
 
-                logger.info("save file successful for " + url + " to " + saveToDiskName);
+                logger.info("save file successful for " + url + " to " + saveToDiskName + " (" + fileSize + " bytes)");
 
                 if (fileName.endsWith(".map")) {
                     java.util.Map info = RiskUtil.loadInfo(saveToDiskName, false);
@@ -405,10 +411,7 @@ public class MapServerClient extends HTTPClient {
                 error = true;
                 throw ex; // throwing here will call ignoreErrorInDownload -> gotResponse
             }
-            finally {
-                FileUtil.close(is);
-                FileUtil.close(out);
-            }
+
             // only call gotResponse when everything is finished and went ok and we didnt throw any exceptions
             gotResponse(url);
         }
@@ -435,13 +438,16 @@ public class MapServerClient extends HTTPClient {
     }
 
 
-    private static void saveFile(InputStream is, OutputStream out) throws IOException {
+    private static long saveFile(InputStream is, OutputStream out) throws IOException {
         int COPY_BLOCK_SIZE=1024;
         byte[] data = new byte[COPY_BLOCK_SIZE];
+        long total = 0;
         int i = 0;
         while( ( i = is.read(data,0,COPY_BLOCK_SIZE ) ) != -1  ) {
             out.write(data,0,i);
+            total = total + i;
         }
+        return total;
     }
 
     public static String getURL(String context, String path) {
