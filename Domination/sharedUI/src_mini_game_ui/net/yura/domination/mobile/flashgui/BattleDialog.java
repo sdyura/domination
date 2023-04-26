@@ -572,6 +572,4 @@ public class BattleDialog extends Frame implements ActionListener {
             }
         }
     }
-
 }
-

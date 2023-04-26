@@ -106,7 +106,7 @@ public class PicturePanel extends ImageView implements MapPanel {
                 if (DesktopPane.isAccurate(this.x, x, dp.inaccuracy) && DesktopPane.isAccurate(this.y, y, dp.inaccuracy)) {
                     if (type == DesktopPane.RELEASED) {
                         if (ml!=null) {
-                            ml.click(x,y);
+                            ml.click(x,y, keys.isDownKey(KeyEvent.KEY_RIGHT_CLICK));
                         }
 
                         if (myrisk.getGame().getState() == RiskGame.STATE_GAME_OVER ) {
@@ -118,12 +118,11 @@ public class PicturePanel extends ImageView implements MapPanel {
                                 stopAni();
                             }
                         }
-
                     }
                 }
                 else {
-                    x=-1000;
-                    y=-1000;
+                    this.x=-1000;
+                    this.y=-1000;
                 }
             }
         }

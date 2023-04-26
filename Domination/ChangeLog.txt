@@ -6,8 +6,8 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		13
-	Android:	88
+	iOS:		15
+	Android:	89
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -41,6 +41,7 @@ CURRENT VERSION:
 	       Fix for crashes on iOS 9
 	iOS 14 Fix for iOS 9 with scale 2 not loading 9-patches
 	       Fix for disabled color in lists
+	iOS 15 long press to place 10 troops
 
 	Android 86 fix for notifications missing FLAG_IMMUTABLE
 	Android 87 new UI in main menu and game setup screen
@@ -48,6 +49,7 @@ CURRENT VERSION:
 	Android 88 fix: back button on main menu works again
 		   Stats: show current value for countries and cards
 		   Fullscreen mode works better by hiding nav bar
+	Android 89 long press to place 10 troops
 
 1.2.6 (17.12.2022)
 

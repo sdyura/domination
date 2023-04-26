@@ -884,6 +884,9 @@ public class GameFrame extends JFrame implements KeyListener {
 		movedialog.setup(tacmove,       min,      src, des, c1img, c2img, country1, country2, new Color( color ) );
 	}
 
+        /**
+         * @see net.yura.domination.mobile.flashgui.GameWindow#mapClick(int[], boolean)
+         */
         public void mapClick(final int[] countries,MouseEvent e) {
 
             Object oldnote = note;

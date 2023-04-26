@@ -1,5 +1,5 @@
 package net.yura.domination.mobile;
 
 public interface MouseListener {
-    void click(int x,int y);
+    void click(int x, int y, boolean rightClick);
 }

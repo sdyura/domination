@@ -248,7 +248,7 @@ public class RiskGUI extends JFrame implements MouseInputListener {
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		c.insets = new java.awt.Insets(3, 3, 3, 3);
+		c.insets = GraphicsUtil.newInsets(3, 3, 3, 3);
 
 		Dimension ppSize = GraphicsUtil.newDimension(PicturePanel.PP_X, PicturePanel.PP_Y);
 

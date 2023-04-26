@@ -97,14 +97,15 @@ public class GameWindow extends Frame implements ActionListener {
         final MapMouseListener mml = new MapMouseListener(myrisk, pp);
         pp.addMouseListener(
             new MouseListener() {
-                public void click(int x,int y) {
+                @Override
+                public void click(int x,int y, boolean rightClick) {
                     if (gameState == RiskGame.STATE_TRADE_CARDS) {
                         openCards();
                     }
                     else {
                         int[] countries = mml.mouseReleased(x, y, gameState);
-                        if (countries!=null) {
-                            mapClick(countries);
+                        if (countries != null) {
+                            mapClick(countries, rightClick);
                         }
                     }
                 }
@@ -1012,17 +1013,19 @@ public class GameWindow extends Frame implements ActionListener {
 
     private MoveDialog tacMove;
 
-    public void mapClick(int[] countries) {
+    /**
+     * @see net.yura.domination.ui.flashgui.GameFrame#mapClick(int[], java.awt.event.MouseEvent)
+     */
+    public void mapClick(int[] countries, boolean rightClick) {
 
         if (gameState == RiskGame.STATE_PLACE_ARMIES) {
-            if (countries.length==1) {
-                //if ( e.getModifiers() == java.awt.event.InputEvent.BUTTON1_MASK ) {
+            if (countries.length == 1) {
+                if (rightClick) {
+                    go( "placearmies " + countries[0] + " 10" );
+                }
+                else {
                     go( "placearmies " + countries[0] + " 1" );
-                //}
-                //else {
-                // TODO: make a method for adding 10 armies at a time
-                //    go( "placearmies " + countries[0] + " 10" );
-                //}
+                }
             }
         }
         else if (gameState == RiskGame.STATE_ATTACKING) {
@@ -1037,7 +1040,6 @@ public class GameWindow extends Frame implements ActionListener {
                 go("attack " + countries[0] + " " + countries[1]);
                 note.setText(" "); // HACK: go sets the note to "please wait" so now we want to clear it
             }
-
         }
         else if (gameState == RiskGame.STATE_FORTIFYING) {
             if (countries.length==0) {
@@ -1075,7 +1077,6 @@ public class GameWindow extends Frame implements ActionListener {
             note.setText( resb.getProperty("game.note.happyok") );
             setGoButtonText( resb.getProperty("game.button.go.ok") );
         }
-
     }
 
     public int getMapView() {

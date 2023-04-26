@@ -76,7 +76,6 @@ public class MapMouseListener {
                         pp.repaint();
                         return new int[] { pixColor };
                 }
-
         }
         else if (gameState == RiskGame.STATE_SELECT_CAPITAL) {
 
@@ -138,7 +137,5 @@ public class MapMouseListener {
                 pp.setHighLight(cc);
                 pp.repaint();
         }
-
     }
-
 }
