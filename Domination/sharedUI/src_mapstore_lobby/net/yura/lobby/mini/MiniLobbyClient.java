@@ -629,6 +629,10 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 logger.info("ignore GameType: "+gametype);
             }
         }
+
+        if (theGameType == null) {
+            error("Unable to find GameType in: " + gametypes);
+        }
     }
 
     private java.util.List games = Collections.synchronizedList( new ArrayList() );
