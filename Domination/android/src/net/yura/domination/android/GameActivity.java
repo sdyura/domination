@@ -37,6 +37,7 @@ import net.yura.android.AndroidMeActivity;
 import net.yura.android.AndroidMeApp;
 import net.yura.android.AndroidPreferences;
 import net.yura.domination.BuildConfig;
+import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
@@ -130,6 +131,12 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
 
         // enable full screen if needed
         checkIfFullScreenNeeded();
+
+        // make the navigation bar black
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setNavigationBarColor(ColorUtil.BLACK);
+        }
 
         // keep enabling full screen as android seems to always want to come out of this mode
         // https://stackoverflow.com/a/24004866 "Yuck, Android development is truly horrendous"
