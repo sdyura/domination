@@ -129,15 +129,16 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             logger.log(Level.INFO, "can not check for updates", th);
         }
 
-        // enable full screen if needed
-        checkIfFullScreenNeeded();
-
-        // make the navigation bar black
+        // make the navigation bar BLACK (the default seems to be white on some phones, e.g Samsung Galaxy S9)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // it seems this flag is ALSO needed for when we swap from normal to fullscreen mode
+            // otherwise the very first time we go into fullscreen we will get a black bar at the bottom
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setNavigationBarColor(ColorUtil.BLACK);
         }
 
+        // enable full screen if needed
+        checkIfFullScreenNeeded();
         // keep enabling full screen as android seems to always want to come out of this mode
         // https://stackoverflow.com/a/24004866 "Yuck, Android development is truly horrendous"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
