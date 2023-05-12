@@ -185,7 +185,8 @@ public class MainMenu extends Frame implements ActionListener {
                 OptionPane.showMessageDialog(null,"not done yet","Error", OptionPane.ERROR_MESSAGE);
             }
             else if ("feedback".equals(actionCommand)) {
-                String url = "mailto:yura@yura.net" +
+                String email = "yura@yura.net";
+                String url = "mailto:" + email +
                         "?subject=" + Url.encode(
                                 RiskUtil.GAME_NAME+" "+RiskUtil.RISK_VERSION+" "+
                                 DominationMain.product+" "+DominationMain.version+" "+
@@ -193,10 +194,14 @@ public class MainMenu extends Frame implements ActionListener {
                         +"&body=" + Url.encode(
                                 "\n\n\nDevice: "+System.getProperty("http.agent")+
                                 "\nID: "+MiniLobbyClient.getMyUUID()).replace("+", "%20");
-                boolean success = Application.openURL(url);
 
-                if (!success) {
-                    OptionPane.showMessageDialog(null, "Please email yura@yura.net", "contact", OptionPane.INFORMATION_MESSAGE);
+                try {
+                    // boolean success = Application.openURL(url);
+                    // we do not want to trigger grasshopper when there is no mail app
+                    Application.getInstance().platformRequest(url);
+                }
+                catch (Exception ex) {
+                    OptionPane.showMessageDialog(null, "Please email " + email, "contact", OptionPane.INFORMATION_MESSAGE);
                 }
             }
             else if ("signIn".equals(actionCommand)) {
