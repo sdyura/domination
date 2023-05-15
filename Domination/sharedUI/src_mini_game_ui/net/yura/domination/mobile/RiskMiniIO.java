@@ -44,11 +44,18 @@ public class RiskMiniIO implements RiskIO {
     }
 
     public void openURL(URL url) throws Exception {
-        Application.openURL(url.toString());
+        // TODO should we be using this method? maybe we should just call platformRequest
+        boolean success = Application.openURL(url.toString());
+        if (!success) {
+            throw new Exception("unable to open url: " + url);
+        }
     }
 
     public void openDocs(String doc) throws Exception {
-        Application.openURL("file:///android_asset/" + doc );
+        boolean success = Application.openURL("file:///android_asset/" + doc );
+        if (!success) {
+            throw new Exception("unable to open doc: " + doc);
+        }
     }
 
     public InputStream loadGameFile(String file) throws Exception {

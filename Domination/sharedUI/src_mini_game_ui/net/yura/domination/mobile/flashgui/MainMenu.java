@@ -196,6 +196,7 @@ public class MainMenu extends Frame implements ActionListener {
                                 "\nID: "+MiniLobbyClient.getMyUUID()).replace("+", "%20");
 
                 try {
+                    //RiskUtil.openURL(url);
                     // boolean success = Application.openURL(url);
                     // we do not want to trigger grasshopper when there is no mail app
                     Application.getInstance().platformRequest(url);
