@@ -779,7 +779,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
     }
 
     public void messageForGame(int gameid, Object message) {
-        if (gameid==openGameId) {
+        if (gameid == openGameId) {
             if (message instanceof String) {
                 String string = (String)message;
                 if (string.equals("LOBBY_GAMEOVER")) {
@@ -798,7 +798,13 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                     game.objectForGame(object);
                 }
                 catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    throw new RuntimeException("objectForGame error for game: " + gameid, ex);
+                }
+                catch (StackOverflowError error) {
+                    // this happens on large maps on android, so far i have not found a way round this
+                    logger.log(Level.WARNING, "objectForGame error for game: " + gameid, error);
+                    error("device unable to open large game " + gameid + ": " + error);
+                    closeGame();
                 }
             }
             else {
