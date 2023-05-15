@@ -177,9 +177,15 @@ public class DominationMain extends Application {
                         "mkdir failed: EEXIST (File exists) : /data/user/0/net.yura.domination/cache/WebView/Crash Reports".equals(message) ||
                         "mkdir failed: EEXIST (File exists) : /data/data/net.yura.domination/cache/WebView/Crash Reports".equals(message) ||
                         "stat failed: ENOENT (No such file or directory) : /data/data/net.yura.domination/files/assetpacks".equals(message) ||
-                        "stat failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/files/assetpacks".equals(message)) {
+                        "stat failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/files/assetpacks".equals(message) ||
+                        "org.json.JSONException: No value for veux".equals(message) ||      // error in miui
+                        "org.json.JSONException: No value for joyeuse".equals(message) ||   // error in miui
+                        "org.json.JSONException: No value for spes".equals(message) ||      // error in miui
+                        "org.json.JSONException: No value for galahad".equals(message)      // error in miui
+                    ) {
                         return true;
                     }
+
                     if (message != null && (
                             message.startsWith("remove failed: ENOENT (No such file or directory) : /data/data/net.yura.domination/files/.java/.userPrefs/net/yura/domination/mobile/flashgui/prefs-") || // then some random GUID
                             message.startsWith("remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/files/.java/.userPrefs/net/yura/domination/mobile/flashgui/prefs-"))) { // then some random GUID

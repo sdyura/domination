@@ -362,7 +362,7 @@ public class GameWindow extends Frame implements ActionListener {
             }
 
             TextArea ta = new TextArea(text);
-            ta.setName("Label"); // we want a normal label theme, but a disabled TextArea theme
+            ta.setName("Label"); // we want a normal label theme, NOT a disabled TextArea theme
             ta.setLineWrap(true);
             ta.setFocusable(false);
 
