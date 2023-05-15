@@ -68,7 +68,17 @@ public class MapUpdateService extends Observable {
             
             if (theMaps.size()==1) {
                 Map remoteMap = (Map)theMaps.get(0);
-                if (remoteMap.needsUpdate(MapChooser.createMap(uid).getVersion())) { // versions do not match, and update is needed
+
+                boolean needsUpdate;
+                try {
+                    needsUpdate = remoteMap.needsUpdate(MapChooser.createMap(uid).getVersion());
+                }
+                catch (Exception ex) {
+                    logger.log(Level.WARNING, "error loading version info from local map: " + uid, ex);
+                    needsUpdate = true;
+                }
+
+                if (needsUpdate) { // versions do not match, and update is needed
                     mapsToUpdate.add(remoteMap);
                     notifyListeners();
                     //client.downloadMap( MapChooser.getURL(MapChooser.getContext(url), themap.mapUrl ) ); // download 
