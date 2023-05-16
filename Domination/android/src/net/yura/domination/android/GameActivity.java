@@ -187,6 +187,9 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             dmain.setGooglePlayGameServices(this);
         }
 
+        // TODO this code sometimes causes ANRs, so should be moved to a background thread
+        // this code is only here as we USED to save the list to the dmain object, but we do NOT do that any more
+        // so it should be moved out of here
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ECLAIR) {
             AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
             Account[] accounts = manager.getAccounts();

@@ -50,6 +50,7 @@ CURRENT VERSION:
 		   Stats: show current value for countries and cards
 		   Fullscreen mode works better by hiding nav bar
 	Android 89 long press to place 10 troops
+	Android 90 better error messages when error loading map
 
 1.2.6 (17.12.2022)
 

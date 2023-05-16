@@ -82,7 +82,7 @@ public class RiskMiniIO implements RiskIO {
             RiskUtil.rename(oldFile, newFile);
         }
         catch (RuntimeException ex) {
-            Logger.info("maps dir files list: " + Arrays.asList(mapsDir.list()));
+            Logger.info("maps dir: " + mapsDir + " files list: " + Arrays.asList(mapsDir.list()));
             throw ex;
         }
     }
