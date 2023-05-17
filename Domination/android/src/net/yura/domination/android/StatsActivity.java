@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.yura.android.AndroidMeApp;
+import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.mobile.MiniUtil;
@@ -36,9 +37,15 @@ public class StatsActivity extends Activity {
         if (dmain == null) {
             return Collections.emptyList();
         }
-        RiskGame game = dmain.risk.getGame();
+        // TODO we may have just been started, and so the Risk object is not created yet, and even if it has, the autosave is still not loaded
+        // so do not show anything for now, and the user can go back to the main activity and then re-launch the stats if they need to
+        Risk r = dmain.risk;
+        if (r == null) {
+            return Collections.emptyList();
+        }
         // if we open the stats activity at the same time as closing the game, avoid throwing a error
-        return game==null?Collections.EMPTY_LIST:game.getPlayersStats();
+        RiskGame game = r.getGame();
+        return game == null ? Collections.<Player>emptyList() : (List<Player>)game.getPlayersStats();
     }
 
     @Override
