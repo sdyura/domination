@@ -45,8 +45,10 @@ public class FCMServerUtilities implements PushLobbyClient {
 
                             if (exception != null && "TOO_MANY_REGISTRATIONS".equals(exception.getMessage())) {
                                 if (net.yura.android.AndroidMeActivity.DEFAULT_ACTIVITY != null) {
-                                    javax.microedition.midlet.MIDlet.showToast("FCM Error: TOO_MANY_REGISTRATIONS, try uninstalling some apps for notifications to work", Toast.LENGTH_LONG);
+                                    javax.microedition.midlet.MIDlet.showToast("FCM Error: TOO_MANY_REGISTRATIONS, try uninstalling some apps for notifications to work or reset the device to factory settings", Toast.LENGTH_LONG);
                                 }
+                                // nothing we can do about this, and this error happens on too many devices, even  during play store review
+                                level = Level.INFO;
                             }
 
                             logger.log(level, "Fetching FCM registration token failed", exception);

@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		15
-	Android:	90
+	Android:	91
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
