@@ -162,6 +162,17 @@ public class DominationMain extends Application {
                         // Exception while reading cache: Attempt to invoke interface method 'java.lang.String org.w3c.dom.Element.getAttribute(java.lang.String)' on a null object reference
                         return true;
                     }
+                    if ("android.util.MiuiMultiWindowUtils".equals(className) && "initFreeFormResolutionArgsOfDevice".equals(methodName)) {
+                        // there is a printStackTrace() call in MiuiMultiWindowUtils that spits out lots and lots of errors
+                        // org.json.JSONException: No value for surya
+                        // org.json.JSONException: No value for fleur
+                        // org.json.JSONException: No value for spesn
+                        // org.json.JSONException: No value for veux
+                        // org.json.JSONException: No value for joyeuse
+                        // org.json.JSONException: No value for spes
+                        // org.json.JSONException: No value for galahad
+                        return true;
+                    }
 
                     String message = record.getMessage();
                     if ("rto value is too small:0".equals(message) ||
@@ -177,11 +188,7 @@ public class DominationMain extends Application {
                         "mkdir failed: EEXIST (File exists) : /data/user/0/net.yura.domination/cache/WebView/Crash Reports".equals(message) ||
                         "mkdir failed: EEXIST (File exists) : /data/data/net.yura.domination/cache/WebView/Crash Reports".equals(message) ||
                         "stat failed: ENOENT (No such file or directory) : /data/data/net.yura.domination/files/assetpacks".equals(message) ||
-                        "stat failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/files/assetpacks".equals(message) ||
-                        "org.json.JSONException: No value for veux".equals(message) ||      // error in miui
-                        "org.json.JSONException: No value for joyeuse".equals(message) ||   // error in miui
-                        "org.json.JSONException: No value for spes".equals(message) ||      // error in miui
-                        "org.json.JSONException: No value for galahad".equals(message)      // error in miui
+                        "stat failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/files/assetpacks".equals(message)
                     ) {
                         return true;
                     }
