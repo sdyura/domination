@@ -24,6 +24,7 @@ import net.yura.grasshopper.ApplicationInfoProvider;
 import net.yura.grasshopper.BugSubmitter;
 import net.yura.grasshopper.LogList;
 import net.yura.grasshopper.SimpleBug;
+import net.yura.grasshopper.StdOutErrLevel;
 import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.lobby.model.Game;
@@ -162,7 +163,7 @@ public class DominationMain extends Application {
                         // Exception while reading cache: Attempt to invoke interface method 'java.lang.String org.w3c.dom.Element.getAttribute(java.lang.String)' on a null object reference
                         return true;
                     }
-                    if ("android.util.MiuiMultiWindowUtils".equals(className) && "initFreeFormResolutionArgsOfDevice".equals(methodName)) {
+                    if (record.getLevel() == StdOutErrLevel.STDERR && "android.util.MiuiMultiWindowUtils".equals(className) && "initFreeFormResolutionArgsOfDevice".equals(methodName)) {
                         // there is a printStackTrace() call in MiuiMultiWindowUtils that spits out lots and lots of errors
                         // org.json.JSONException: No value for surya
                         // org.json.JSONException: No value for fleur
@@ -171,6 +172,10 @@ public class DominationMain extends Application {
                         // org.json.JSONException: No value for joyeuse
                         // org.json.JSONException: No value for spes
                         // org.json.JSONException: No value for galahad
+                        return true;
+                    }
+                    if (record.getLevel() == StdOutErrLevel.STDERR && "android.view.ViewRootImpl".equals(className) && "getHostVisibility".equals(methodName)) {
+                        // for unknown crazy reasons some version of android 9 api-28 (samsung SM-A530W) dumps the stack in this method
                         return true;
                     }
 
