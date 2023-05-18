@@ -65,5 +65,4 @@ public class AIHardOld implements AI {
     public String getAutoDefendString() {
         return current.getAutoDefendString();
     }
-
 }

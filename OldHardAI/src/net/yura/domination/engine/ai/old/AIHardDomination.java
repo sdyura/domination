@@ -2,6 +2,7 @@
 
 package net.yura.domination.engine.ai.old;
 
+import java.util.List;
 import java.util.Vector;
 import net.yura.domination.engine.ai.AITest;
 import net.yura.domination.engine.core.Continent;
@@ -181,7 +182,6 @@ public class AIHardDomination extends AITest {
 		   }
 
 		return output;
-
     }
 
     public String getBattleWon() {
@@ -206,7 +206,6 @@ public class AIHardDomination extends AITest {
 	      output="move all";
 
 	return output;
-
     }
 
     public String getTacMove() {
@@ -261,7 +260,6 @@ public class AIHardDomination extends AITest {
 		    }
 
 		return output;
-
     }
 
     public String getAttack() {
@@ -270,7 +268,7 @@ public class AIHardDomination extends AITest {
 	Vector n;
 	boolean chosen = false;
 	Continent[] cont = game.getContinents();
-	Vector options = new Vector();
+	List options = new Vector();
 	Attack temp=null;
 	Attack move=null;
 
@@ -291,7 +289,7 @@ public class AIHardDomination extends AITest {
 		}
 	    }
 	}  */
-	options = findAttackableNeighbors(t,2);
+	options = findAttackableNeighbors(player,2);
 
 	//System.out.println("--< " + player.getName() + " >---");	
 	Player[] playersGreatestToLeast = OrderPlayers(player);  
@@ -351,14 +349,13 @@ public class AIHardDomination extends AITest {
 			}
 		}  */
 		if (options.size() > 0) {
-			move = (Attack) options.elementAt( (int)Math.round(Math.random() * (options.size()-1) ) );
+			move = (Attack) options.get( (int)Math.round(Math.random() * (options.size()-1) ) );
 			output = move.toString();
 			complex = true;
 			if (cont[i] == move.destination.getContinent()){
 				//System.out.println("Attempting to take over " + cont[i].getName() + ": " + move.toString() );   //Testing
 			}
 		}
-		
 	    }
 	}
 
@@ -408,7 +405,7 @@ public class AIHardDomination extends AITest {
 			}  */
 			options = filterAttacks(options,1);
 			if (options.size() > 0) {
-				move = (Attack) options.elementAt( (int)Math.round(Math.random() * (options.size()-1) ) );
+				move = (Attack) options.get( (int)Math.round(Math.random() * (options.size()-1) ) );
 				output = move.toString();
 			}
 		}
@@ -484,7 +481,7 @@ public class AIHardDomination extends AITest {
 			 options = targetTerritories( ((Player)cankill.elementAt(i)).getTerritoriesOwned()  );
 			 options = filterAttacks(options, -2);
 			 if (options.size() > 0) {
-				move = (Attack) options.elementAt( (int)Math.round(Math.random() * (options.size()-1) ) );
+				move = (Attack) options.get( (int)Math.round(Math.random() * (options.size()-1) ) );
 				output = move.toString();
 				//System.out.println("Targeting player: " + ((Player)cankill.elementAt(i)).getName() + " - " + output); //TESTING
 			}
@@ -497,7 +494,6 @@ public class AIHardDomination extends AITest {
 		   //System.out.println("Final Choice: " + output);
 
 		return output;
-
     }
 
     public String getRoll() {
@@ -529,7 +525,6 @@ public class AIHardDomination extends AITest {
 		}
 
 		return output;
-
     }
 
 
@@ -558,7 +553,6 @@ public class AIHardDomination extends AITest {
 	else {
 	   return false;
 	}
-
     }
 
     /**
@@ -609,14 +603,15 @@ public class AIHardDomination extends AITest {
      */
     public Country check1(Country b) {
 
-      Vector neighbours = b.getNeighbours();
-      Country c = null;
+        Vector neighbours = b.getNeighbours();
+        Country c = null;
 
-      for (int i=0; i<neighbours.size(); i++) {
-         if ( ownsNeighbours( (Country)neighbours.elementAt(i)) == false && ((Country)neighbours.elementAt(i)).getOwner() == player)
-              return (Country)neighbours.elementAt(i);
-      }
-     return c;
+        for (int i = 0; i < neighbours.size(); i++) {
+            if (ownsNeighbours((Country) neighbours.elementAt(i)) == false && ((Country) neighbours.elementAt(i)).getOwner() == player) {
+                return (Country) neighbours.elementAt(i);
+            }
+        }
+        return c;
     }
 
     /**
@@ -626,14 +621,15 @@ public class AIHardDomination extends AITest {
      */
     public boolean check2(Country b) {
 
-      Vector neighbours = b.getNeighbours();
-      Country c = null;
+        Vector neighbours = b.getNeighbours();
+        Country c = null;
 
-      for (int i=0; i<neighbours.size(); i++) {
-         if ( ownsNeighbours( (Country)neighbours.elementAt(i)) == false && ((Country)neighbours.elementAt(i)).getOwner() == player)
-              return true;
-      }
-     return false;
+        for (int i = 0; i < neighbours.size(); i++) {
+            if (ownsNeighbours((Country) neighbours.elementAt(i)) == false && ((Country) neighbours.elementAt(i)).getOwner() == player) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -643,24 +639,24 @@ public class AIHardDomination extends AITest {
      * @return String name if a move to block the opponent is required/possible, else returns null
      */
     public String blockOpponent(Player p) {
-       Continent[] continents = game.getContinents();
-       Vector players = game.getPlayers();
+        Continent[] continents = game.getContinents();
+        Vector players = game.getPlayers();
 
-       for (int i=0; i<players.size(); i++) {
-          for (int j=0; j<continents.length; j++) {
-              if ( almostOwned((Player) players.elementAt(i), continents[j] ) == true
-                   && continents[j].isOwned( (Player)players.elementAt(i) ) == false
-                   && (Player) players.elementAt(i) != p ) {
-                        Vector v = continents[j].getTerritoriesContained();
-                        for (int k=0; k<v.size(); k++) {
-                             if ( ((Country) v.elementAt(k)).getOwner() == null) {
-                                 return ((Country) v.elementAt(k)).getColor()+"";
-                             }
+        for (int i = 0; i < players.size(); i++) {
+            for (int j = 0; j < continents.length; j++) {
+                if (almostOwned((Player) players.elementAt(i), continents[j]) == true
+                        && continents[j].isOwned((Player) players.elementAt(i)) == false
+                        && (Player) players.elementAt(i) != p) {
+                    Vector v = continents[j].getTerritoriesContained();
+                    for (int k = 0; k < v.size(); k++) {
+                        if (((Country) v.elementAt(k)).getOwner() == null) {
+                            return ((Country) v.elementAt(k)).getColor() + "";
                         }
-              }
-          }
-       }
-    return null;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -669,24 +665,24 @@ public class AIHardDomination extends AITest {
      * @return String name if a move to block the opponent is required/possible, else returns null
      */
     public String keepBlocking(Player p) {
-       Continent[] continents = game.getContinents();
-       Vector players = game.getPlayers();
+        Continent[] continents = game.getContinents();
+        Vector players = game.getPlayers();
 
-       for (int i=0; i<players.size(); i++) {
-          for (int j=0; j<continents.length; j++) {
-              if ( almostOwned((Player) players.elementAt(i), continents[j]) == true
-                   && continents[j].isOwned((Player) players.elementAt(i)) == false
-                   && (Player) players.elementAt(i) != p ) {
-                        Vector v = continents[j].getTerritoriesContained();
-                        for (int k=0; k<v.size(); k++) {
-                             if ( ((Country) v.elementAt(k)).getOwner() == p && ((Country) v.elementAt(k)).getArmies() < 5) {
-                                 return ((Country) v.elementAt(k)).getColor()+"";
-                             }
+        for (int i=0; i<players.size(); i++) {
+            for (int j = 0; j < continents.length; j++) {
+                if (almostOwned((Player) players.elementAt(i), continents[j]) == true
+                        && continents[j].isOwned((Player) players.elementAt(i)) == false
+                        && (Player) players.elementAt(i) != p) {
+                    Vector v = continents[j].getTerritoriesContained();
+                    for (int k = 0; k < v.size(); k++) {
+                        if (((Country) v.elementAt(k)).getOwner() == p && ((Country) v.elementAt(k)).getArmies() < 5) {
+                            return ((Country) v.elementAt(k)).getColor() + "";
                         }
-              }
-          }
-       }
-    return null;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -749,16 +745,9 @@ public class AIHardDomination extends AITest {
 	    if ( ((Country)territoriesContained.elementAt(c)).getOwner() == p ) {
 		ownedByPlayer++;
 	    }
-
 	}
 
-	if ( ownedByPlayer>=(territoriesContained.size()-2) ) {
-	    return true;
-	}
-	else {
-	   return false;
-	}
-
+        return ownedByPlayer >= (territoriesContained.size() - 2);
     }
 
     /**
@@ -778,7 +767,7 @@ public class AIHardDomination extends AITest {
         if (count == neighbours.size())
             return true;
 
-    return false;
+        return false;
     }
 
     /**
@@ -846,7 +835,6 @@ public class AIHardDomination extends AITest {
 		}
     	}
     	return continentsToBreak;
-    	
     }
 
     /**
@@ -904,7 +892,6 @@ public class AIHardDomination extends AITest {
     	}
     
     	return false;
-    
     }
     
     public String NextToEnemyToEliminate() {
@@ -968,7 +955,7 @@ public class AIHardDomination extends AITest {
      * @return Vector of attacks with specified advantage
      *******************/
 
-    public Vector filterAttacks(Vector options, int advantage){
+    public Vector filterAttacks(List options, int advantage){
 	Attack temp = null;
 	Vector moves = new Vector();
 	for(int j=0; j<options.size(); j++){
@@ -979,5 +966,4 @@ public class AIHardDomination extends AITest {
 	}
 	return moves;
     }
-    
 }
