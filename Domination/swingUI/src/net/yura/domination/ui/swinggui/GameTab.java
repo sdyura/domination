@@ -60,7 +60,6 @@ import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
-import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.BadgeButton;
@@ -1842,13 +1841,17 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                             };
                         }
 
-			for (int c=1; c<=RiskGame.MAX_PLAYERS; c++) {
+			for (int c = 1; c <= RiskGame.MAX_PLAYERS; c++) {
                             String name = settings.getProperty("default.player"+c+".name");
                             String color = settings.getProperty("default.player"+c+".color");
                             String type = settings.getProperty("default.player"+c+".type");
                             if (name != null && color != null && type != null && !"".equals(name) && !"".equals(color) && !"".equals(type)) {
                                 try {
-                                    ((DefaultTableModel)dataModel).addRow( new Object[] {name , findColor( ColorUtil.getColor( color ) ), findType( swingGUIPanel.myrisk.getType( type ) ) } );
+                                    int playerTypeInt = swingGUIPanel.myrisk.getType(type);
+                                    if (playerTypeInt == -1) {
+                                        throw new IllegalArgumentException("unrecognized player type: '" + type + "'");
+                                    }
+                                    ((DefaultTableModel)dataModel).addRow( new Object[] {name, findColor( ColorUtil.getColor(color)), findType(playerTypeInt) } );
                                 }
                                 catch (Exception ex) {
                                     System.err.println("unable to add player "+name+" "+color+" "+type);

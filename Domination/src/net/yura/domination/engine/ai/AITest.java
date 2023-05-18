@@ -33,7 +33,6 @@ public class AITest extends AISubmissive {
 	    if (source == null || destination == null) { return ""; }
 	    return "attack " + source.getColor() + " " + destination.getColor();
 	}
-
     }
 
     public String getPlaceArmies() {
@@ -84,8 +83,6 @@ public class AITest extends AISubmissive {
 	return "endattack";
     }
 
-
-
     public String getRoll() {
 	    int n=((Country)game.getAttacker()).getArmies() - 1;
 	    if (n > 3) {
@@ -93,7 +90,6 @@ public class AITest extends AISubmissive {
 	    }
 	    return "roll "+n;
     }
-
 
     /******************
      * Helper Methods *
@@ -124,10 +120,9 @@ public class AITest extends AISubmissive {
     	return null;
     }
 
-
     /************
      * @name findAttackableNeighbors
-     * @param t Vector of teritories
+     * @param player the player who's TerritoriesOwned we will use to attack
      * @param ratio - threshold of attack to defence armies to filter out
      * @return a Vector of possible attacks for a given list of territories
      * 	where the ratio of source/target armies is above ratio
