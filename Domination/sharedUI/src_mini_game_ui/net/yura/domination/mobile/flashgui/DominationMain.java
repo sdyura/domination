@@ -163,15 +163,12 @@ public class DominationMain extends Application {
                         // Exception while reading cache: Attempt to invoke interface method 'java.lang.String org.w3c.dom.Element.getAttribute(java.lang.String)' on a null object reference
                         return true;
                     }
-                    if (record.getLevel() == StdOutErrLevel.STDERR && "android.util.MiuiMultiWindowUtils".equals(className) && "initFreeFormResolutionArgsOfDevice".equals(methodName)) {
+                    if (record.getLevel() == StdOutErrLevel.STDERR && "android.util.MiuiMultiWindowUtils".equals(className)) {
                         // there is a printStackTrace() call in MiuiMultiWindowUtils that spits out lots and lots of errors
-                        // org.json.JSONException: No value for surya
-                        // org.json.JSONException: No value for fleur
-                        // org.json.JSONException: No value for spesn
-                        // org.json.JSONException: No value for veux
-                        // org.json.JSONException: No value for joyeuse
-                        // org.json.JSONException: No value for spes
-                        // org.json.JSONException: No value for galahad
+                        // "initFreeFormResolutionArgsOfDevice".equals(methodName) "org.json.JSONException: No value for galahad"
+                        // "org.json.JSONException: No value for veux" "org.json.JSONException: No value for joyeuse" "org.json.JSONException: No value for spes"
+                        // "org.json.JSONException: No value for surya" "org.json.JSONException: No value for spesn" "org.json.JSONException: No value for fleur"
+                        // "getRamFromProcMv".equals(methodName) "java.io.FileNotFoundException: proc/mv: open failed: EACCES (Permission denied)"
                         return true;
                     }
                     if (record.getLevel() == StdOutErrLevel.STDERR && "android.view.ViewRootImpl".equals(className) && "getHostVisibility".equals(methodName)) {

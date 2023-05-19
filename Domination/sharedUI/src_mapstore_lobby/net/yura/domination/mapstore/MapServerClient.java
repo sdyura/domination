@@ -223,6 +223,8 @@ public class MapServerClient extends HTTPClient {
         else {
             logger.warning("[MapServerClient] unknown type "+request.type);
         }
+
+        logger.info("Finished Request: " + request);
     }
 
     private static int getRating(Map map, java.util.Map<String,Integer> ratings) {

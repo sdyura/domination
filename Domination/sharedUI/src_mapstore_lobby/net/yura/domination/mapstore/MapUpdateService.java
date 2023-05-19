@@ -108,9 +108,10 @@ public class MapUpdateService extends Observable {
 // we print this just in case we get any errors so we know what we sent
 logger.fine("URL: " + url + " payload: " + payload);
 
+        URLConnection conn = null;
         InputStreamReader re = null;
         try {
-            URLConnection conn = new URL(url).openConnection();
+            conn = new URL(url).openConnection();
             conn.setDoOutput(true);
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             wr.write( payload.toString() );
@@ -130,6 +131,8 @@ logger.fine("URL: " + url + " payload: " + payload);
         }
         finally {
             RiskUtil.close(re);
+            // according to the javadoc this is not needed
+            //if (conn != null) { ((HttpURLConnection)conn).disconnect(); }
         }
     }
 

@@ -85,13 +85,13 @@ public class RiskUtil {
 	public static void close(Closeable obj) {
 	    try {
 	        if (obj != null) {
-                obj.close();
+                    obj.close();
+                }
+            }
+            catch (Exception ex) {
+                logger.info("not able to close " + obj);
             }
         }
-        catch (Exception ex) {
-            logger.info("not able to close " + obj);
-        }
-    }
 
 	public static InputStream openMapStream(String a) throws IOException {
             if (a == null) {

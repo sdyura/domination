@@ -261,7 +261,7 @@ public class RiskGameTest extends TestCase {
         System.out.println("map " + toString(instance.getCountries()));
     }
 
-    private void addPlayers(RiskGame instance, int noPlayers) {
+    public static void addPlayers(RiskGame instance, int noPlayers) {
         for (int p = 0; p < noPlayers; p++) {
             int color = ColorUtil.BLACK;
             switch (p) {
