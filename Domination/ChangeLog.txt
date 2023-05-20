@@ -51,6 +51,7 @@ CURRENT VERSION:
 		   Fullscreen mode works better by hiding nav bar
 	Android 89 long press to place 10 troops
 	Android 90 better error messages when error loading map
+	Android 91 fixed: nullpointer when sending android push token too early before handshake done
 
 1.2.6 (17.12.2022)
 
