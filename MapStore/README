@@ -5,6 +5,11 @@ Installation:
 # make sure apache 2 is installed
 sudo apt install apache2
 sudo apt install libapache2-mod-wsgi
+
+# if this is no longer available, manually install with
+sudo dpkg -i lib/python-is-python2_2.7.17-4_all.deb
+sudo dpkg -i lib/libapache2-mod-wsgi_4.6.8-1ubuntu3.1_amd64.deb 
+
 sudo a2enmod rewrite
 
 # we need to get all the extras for Django
