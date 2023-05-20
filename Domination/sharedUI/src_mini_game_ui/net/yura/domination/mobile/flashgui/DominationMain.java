@@ -175,6 +175,10 @@ public class DominationMain extends Application {
                         // for unknown crazy reasons some version of android 9 api-28 (samsung SM-A530W) dumps the stack in this method
                         return true;
                     }
+                    if (record.getLevel() == StdOutErrLevel.STDERR && "android.widget.directwriting.DirectWritingServiceBinder".equals(className) && "isBindableEditText".equals(methodName)) {
+                        // java.lang.NullPointerException: Attempt to invoke interface method 'boolean android.widget.directwriting.IDirectWritingService.onBoundedEditTextChanged(android.os.Bundle)' on a null object reference
+                        return true;
+                    }
 
                     String message = record.getMessage();
                     if ("rto value is too small:0".equals(message) ||
