@@ -2,6 +2,7 @@ package net.yura.domination.android.push;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import android.os.Build;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,6 +18,11 @@ public class FCMServerUtilities implements PushLobbyClient {
     public static void setup() {
         logger.info("FCM setup - requesting token");
 
+        // Firebase does not support anything less then API-14
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            logger.info("Firebase does not support push notifications on API < 14");
+            return;
+        }
         // can not use this check as sometimes even if this is not SUCCESS, push still works fine
         //if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
 

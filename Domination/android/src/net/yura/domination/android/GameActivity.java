@@ -43,7 +43,6 @@ import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.domination.mobile.flashgui.MiniFlashRiskAdapter;
 import net.yura.lobby.client.PushLobbyClient;
-import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.lobby.model.Game;
 
 public class GameActivity extends AndroidMeActivity implements GoogleAccount.SignInListener,DominationMain.GooglePlayGameServices {

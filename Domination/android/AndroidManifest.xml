@@ -110,6 +110,12 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
+        <!-- on older versions of android this crashes and pulls the whole app down with it -->
+        <provider
+            android:name = "com.google.firebase.provider.FirebaseInitProvider"
+            android:enabled="@bool/enable_firebase"
+        />
+
     </application>
 
 </manifest>
