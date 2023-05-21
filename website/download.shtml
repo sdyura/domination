@@ -50,7 +50,9 @@
         <a href="http://prdownloads.sourceforge.net/domination/Domination_1.2.7.zip?download">Domination game zip file</a> 8.1MB
 	(pre 10.5 Mac OS and any other OS that runs Java 1.5+)<br><br>
 
-	<a href="http://prdownloads.sourceforge.net/domination/Domination_88.apk?download">Android Domination apk</a> 6.2MB<br>
+	<!-- tested on Android API-15, but probably works on 14 -->
+	<a href="http://prdownloads.sourceforge.net/domination/Domination_88.apk?download">Domination v88 apk</a> 6.2MB - Android version 4+ (api14+)<br>
+	<a href="http://prdownloads.sourceforge.net/domination/Domination_76.apk?download">Domination v76 apk</a> 5.2MB - Old Android version 1-3 (api4-api13)<br>
 
 <!-- TODO
         <a href="http://prdownloads.sourceforge.net/domination/backup_of_Domination_1.0.9.8.zip?download">Domination

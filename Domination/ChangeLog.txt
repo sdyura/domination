@@ -118,6 +118,10 @@ CURRENT VERSION:
 	Android 81 Fixed: Font size in Stats Activty are tiny
 		   Fixed: FCM nullpointer error in onNewToken
 	Android 79 FCM added so push notifications work again
+		   NO LONGER SUPPORTS ANDROID VERSION 1 to 3 (api4-api13), ONLY ANDROID 4+ (api14+)
+
+	############################################################################################
+
 	Android 76 Fix for maps not loading on some Samsung devices
 		   Fix notifications not being shown because no channel
 	Android 68 can delete maps
