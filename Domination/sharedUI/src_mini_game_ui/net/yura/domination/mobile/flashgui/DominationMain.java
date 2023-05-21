@@ -34,11 +34,9 @@ import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.components.Component;
 import net.yura.mobile.gui.components.OptionPane;
-import net.yura.mobile.gui.plaf.Style;
 import net.yura.mobile.gui.plaf.SynthLookAndFeel;
 import net.yura.mobile.gui.plaf.nimbus.NimbusLookAndFeel;
 import net.yura.swingme.core.J2SELogger;
-import net.yura.util.Service;
 
 /**
  * This class is instantiated by the AndroidMEApp even if there is no AndroidMEActivity
@@ -105,6 +103,10 @@ public class DominationMain extends Application {
 	void gameStarted(int id);
     }
 
+    /**
+     * setup logging ONLY, do NOT do anything else as we may have not setup things
+     * from {@link net.yura.domination.android.GameActivity#onSingleCreate()} yet
+     */
     public DominationMain() {
 
         // IO depends on this, so we need to do this first
@@ -115,6 +117,7 @@ public class DominationMain extends Application {
         //Risk.RISK_VERSION = versionName!=null ? versionName : "?me4se?";
 
         try {
+            // TODO TranslationBundle.getBundle().getLocale().toString() MAY BE WRONG, WE MAY HAVE A CUSTOM LOCALE SETTING!!
             SimpleBug.initLogFile(RiskUtil.GAME_NAME + " " + product, version, TranslationBundle.getBundle().getLocale().toString());
             BugSubmitter.setApplicationInfoProvider( new ApplicationInfoProvider() {
                 /**
@@ -216,84 +219,11 @@ public class DominationMain extends Application {
         }
 
         J2SELogger.setupLogging();
-
-        if ( "true".equals( System.getProperty("debug") ) ) {
-
-            // MWMWMWMWMWMWMWMWMWMWMWM ONLY DEBUG MWMWMMWMWMWMWMWMWMWMWMWMWM
-
-            Logger.getLogger("").addHandler( new Handler() {
-                boolean open;
-                @Override
-                public void publish(LogRecord record) {
-                    if (record.getLevel().intValue() >= Level.WARNING.intValue()) {
-                        if (!open) {
-                            open = true;
-                            try {
-                                // TODO this does not work if the theme is not set yet, it will just throw an exception
-                                OptionPane.showMessageDialog(null, record.getMessage()+" "+record.getThrown(), "WARN", OptionPane.WARNING_MESSAGE);
-                            }
-                            catch(Exception ex) {
-                                RiskUtil.printStackTrace(ex);
-                            }
-                        }
-                    }
-                }
-
-                @Override public void flush() { }
-                @Override public void close() { }
-            } );
-
-            // cant do this on J2SE, swing will print too much junk.
-            if (Application.getPlatform() != Application.PLATFORM_ME4SE) {
-                // if we want to see DEBUG, default is INFO
-                Logger.getLogger("").setLevel(java.util.logging.Level.ALL);
-            }
-
-            // so we do not need to wait for AI while testing
-            net.yura.domination.engine.ai.AIManager.setWait(5);
-
-            // MWMWMWMWMWMWMWMWMWMWM END ONLY DEBUG MWMWMMWMWMWMWMWMWMWMWMWM
-        }
-
-        if (appPreferences != null) {
-            String shouldDifferentiateWithoutColor = System.getProperty("shouldDifferentiateWithoutColor");
-            if ("true".equalsIgnoreCase(shouldDifferentiateWithoutColor) && !containsKey("color_blind")) {
-                appPreferences.putBoolean("color_blind", true);
-                // on android this does nothing unless we call flushPreferences :-(
-                // on all other OSs it sets the property in memory and does not persist it
-                // on android this will only work the first time, if the user
-                // changes the setting, it will not update in the game after the first time
-                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
-                    flushPreferences();
-                }
-            }
-
-            AIManager.setWait( appPreferences.getInt("ai_wait", AIManager.getWait()) );
-            String lang = appPreferences.get("lang", null);
-            if (lang != null) {
-                TranslationBundle.setLanguage(lang);
-            }
-            Risk.setShowDice(appPreferences.getBoolean(SHOW_DICE_KEY, DEFAULT_SHOW_DICE));
-        }
-        else {
-            System.out.println("can not load appPreferences as it is NULL!");
-        }
     }
 
-/*
-    @Override
-    protected void destroyApp(boolean arg0) throws javax.microedition.midlet.MIDletStateChangeException {
-
-        if (risk.getGame()!=null) {
-            risk.parser("savegame auto.save");
-        }
-        risk.kill();
-        try { risk.join(); } catch (InterruptedException e) { } // wait for game thread to die 
-
-        super.destroyApp(arg0);
-    }
-*/
-
+    /**
+     * This is called AFTER {@link net.yura.domination.android.GameActivity#onSingleCreate()}
+     */
     @Override
     public void initialize(DesktopPane rootpane) {
 
@@ -340,6 +270,74 @@ public class DominationMain extends Application {
         MapChooser.loadThemeExtension(); // this has theme elements used inside AND outside of the MapChooser
 
 
+
+        if ( "true".equals( System.getProperty("debug") ) ) {
+
+            // MWMWMWMWMWMWMWMWMWMWMWM ONLY DEBUG MWMWMMWMWMWMWMWMWMWMWMWMWM
+
+            // this can only work AFTER the setLookAndFeel is called, as before it will fail with no theme
+            Logger.getLogger("").addHandler( new Handler() {
+                boolean open;
+                @Override
+                public void publish(LogRecord record) {
+                    if (record.getLevel().intValue() >= Level.WARNING.intValue()) {
+                        if (!open) {
+                            open = true;
+                            try {
+                                // TODO this does not work if the theme is not set yet, it will just throw an exception
+                                OptionPane.showMessageDialog(null, record.getMessage()+" "+record.getThrown(), "WARN", OptionPane.WARNING_MESSAGE);
+                            }
+                            catch(Exception ex) {
+                                RiskUtil.printStackTrace(ex);
+                            }
+                        }
+                    }
+                }
+
+                @Override public void flush() { }
+                @Override public void close() { }
+            } );
+
+            // cant do this on J2SE, swing will print too much junk.
+            if (Application.getPlatform() != Application.PLATFORM_ME4SE) {
+                // if we want to see DEBUG, default is INFO
+                Logger.getLogger("").setLevel(java.util.logging.Level.ALL);
+            }
+
+            // so we do not need to wait for AI while testing
+            net.yura.domination.engine.ai.AIManager.setWait(5);
+
+            // MWMWMWMWMWMWMWMWMWMWM END ONLY DEBUG MWMWMMWMWMWMWMWMWMWMWMWM
+        }
+
+        if (appPreferences != null) {
+
+            if (Application.getPlatform() == Application.PLATFORM_ANDROID && !"net.yura.android.AndroidPreferences".equals(appPreferences.getClass().getName())) {
+                logger.warning("wrong Preferences class " + appPreferences.getClass());
+            }
+
+            String shouldDifferentiateWithoutColor = System.getProperty("shouldDifferentiateWithoutColor");
+            if ("true".equalsIgnoreCase(shouldDifferentiateWithoutColor) && !containsKey("color_blind")) {
+                appPreferences.putBoolean("color_blind", true);
+                // on android this does nothing unless we call flushPreferences :-(
+                // on all other OSs it sets the property in memory and does not persist it
+                // on android this will only work the first time, if the user
+                // changes the setting, it will not update in the game after the first time
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                    flushPreferences();
+                }
+            }
+
+            AIManager.setWait( appPreferences.getInt("ai_wait", AIManager.getWait()) );
+            String lang = appPreferences.get("lang", null);
+            if (lang != null) {
+                TranslationBundle.setLanguage(lang);
+            }
+            Risk.setShowDice(appPreferences.getBoolean(SHOW_DICE_KEY, DEFAULT_SHOW_DICE));
+        }
+        else {
+            System.out.println("can not load appPreferences as it is NULL!");
+        }
 
         risk = new Risk();
         adapter = new MiniFlashRiskAdapter(risk);
@@ -398,6 +396,20 @@ public class DominationMain extends Application {
 //            RiskUtil.printStackTrace(ex);
 //        }
     }
+
+/*
+    @Override
+    protected void destroyApp(boolean arg0) throws javax.microedition.midlet.MIDletStateChangeException {
+
+        if (risk.getGame()!=null) {
+            risk.parser("savegame auto.save");
+        }
+        risk.kill();
+        try { risk.join(); } catch (InterruptedException e) { } // wait for game thread to die
+
+        super.destroyApp(arg0);
+    }
+*/
 
     public static void quit() {
         // HACK: if the user hits quit 2 times in a row,
