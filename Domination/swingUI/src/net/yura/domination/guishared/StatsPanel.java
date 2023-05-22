@@ -5,6 +5,7 @@ package net.yura.domination.guishared;
 import net.yura.swing.GraphicsUtil;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -12,6 +13,7 @@ import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.plaf.UIResource;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.StatType;
@@ -35,7 +37,17 @@ public class StatsPanel extends JPanel {
 	//setPreferredSize(size);
 	//setMinimumSize(size);
 	//setMaximumSize(size);
-        setFont(getFont().deriveFont((float) (getFont().getSize() * GraphicsUtil.scale)));
+
+        Font font = getFont();
+        Font newFont = font.deriveFont((float) (font.getSize() * GraphicsUtil.scale));
+        if (newFont instanceof UIResource) {
+            // for some crazy reason, on mac, deriveFont returns a UIResource, even though it specifically should not
+            // as UIResource causes the font to be reset on theme changes, we want to avoid this if possible
+            System.out.println("ERROR: deriveFont returned a UIResource " + newFont);
+            newFont = new Font(font.getName(), font.getStyle(), (int)(font.getSize2D() * GraphicsUtil.scale));
+        }
+        
+        setFont(newFont);
     }
 
     public void paintComponent(Graphics g) {
