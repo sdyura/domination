@@ -222,6 +222,8 @@ public class StatsPanel extends JPanel {
             g.setColor(color);
         }
 
-	g.drawString(p.getName(),x,y);
+        String playerName = p.getName();
+        int textWidth = g.getFontMetrics().stringWidth(playerName);
+	g.drawString(playerName, Math.min(x, (int)(getWidth() * GraphicsUtil.scale) - textWidth), y);
     }
 }
