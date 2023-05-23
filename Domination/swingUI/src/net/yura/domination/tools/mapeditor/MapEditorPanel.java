@@ -922,11 +922,11 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
     public void mouseWheelMoved(MouseWheelEvent e) {
         Point point = e.getPoint();
-        
+
 	if (e.getWheelRotation() < 0) {
 	    editor.zoom(true, point);
 	}
-	else {
+	else if (e.getWheelRotation() > 0) {
 	    editor.zoom(false, point);
 	}
     }
