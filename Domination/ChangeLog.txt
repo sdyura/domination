@@ -2,7 +2,7 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.2.7
+	Risk Game:	1.2.8
 	 * Network:	14
 	 * Save:	8
 
@@ -13,6 +13,10 @@ CURRENT VERSION:
 	Simple GUI:	2
 	Increment1GUI:	2
 	CommandLine:	2
+
+1.2.8
+
+	better zoom in map editor
 
 1.2.7 (20.12.2022)
 

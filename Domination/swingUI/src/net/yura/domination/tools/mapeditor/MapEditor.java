@@ -75,8 +75,8 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 
 	private final static String IMAGE_MAP_EXTENSION;
 	private final static String IMAGE_PIC_EXTENSION = "png";
-	private final static int ZOOM_MAX = 8;
-	private final static int ZOOM_MIN = 1;
+	private final static float ZOOM_MAX = 8f;
+	private final static float ZOOM_MIN = 0.25f;
 
 	private Risk myrisk;
 	private RiskGame myMap;
@@ -112,7 +112,6 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 	private JButton zoomin;
 	private JButton zoomout;
 	private JTextField zoom;
-	private int zoomint;
 
 	// force cards to be in the same order as countries
 	// right now risk does NOT require this
@@ -1064,7 +1063,25 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 Dimension size1 = editPanel.getPreferredSize();
                 Rectangle rect = editPanel.getVisibleRect();
             
-		setZoom(in ? (zoomint + 1) : (zoomint - 1));
+                float oldZoom = editPanel.getZoom();
+                float newZoom;
+                if (in) {
+                    if (oldZoom < 1f) {
+                        newZoom = oldZoom * 2f;
+                    }
+                    else {
+                        newZoom = oldZoom + 1f;
+                    }
+                }
+                else {
+                    if (oldZoom > 1f) {
+                        newZoom = oldZoom - 1f;
+                    }
+                    else {
+                        newZoom = oldZoom / 2f;
+                    }
+                }
+		setZoom(newZoom);
                 
                 Dimension size2 = editPanel.getPreferredSize();
                 if (!size1.equals(size2)) {
@@ -1077,19 +1094,17 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 }
 	}
 
-	private void setZoom(int a) {
+	private void setZoom(float zoom) {
 
-		if (a<ZOOM_MIN || a>ZOOM_MAX) { return; }
+		if (zoom < ZOOM_MIN || zoom > ZOOM_MAX) { return; }
 
-		zoomint = a;
+		zoomout.setEnabled( !(zoom == ZOOM_MIN) );
 
-		zoomout.setEnabled( !(a==ZOOM_MIN) );
+		zoomin.setEnabled( !(zoom == ZOOM_MAX) );
 
-		zoomin.setEnabled( !(a==ZOOM_MAX) );
+		this.zoom.setText(zoom + "x");
 
-		zoom.setText(zoomint+"x");
-
-		editPanel.zoom(a);
+		editPanel.zoom(zoom);
 	}
 
 	public void showError(Throwable ex) {

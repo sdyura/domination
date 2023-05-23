@@ -71,7 +71,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	private int mode;
 	private int brush = DEFAULT_BRUSH_SIZE;
 	private float alpha;
-        private int zoom;
+        private float zoom = 1f;
 	private MapEditor editor;
         private ListSelectionListener selectionListener;
         private int smartDrawTolerance = 20;
@@ -111,13 +111,13 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		return pic;
 	}
 
-	public void zoom(int a) {
+	public void zoom(float a) {
 
 	    zoom = a;
 
 	    if (pic!=null) {
 
-		Dimension size = new Dimension(pic.getWidth()*zoom, pic.getHeight()*zoom);
+		Dimension size = new Dimension((int)(pic.getWidth() * zoom), (int)(pic.getHeight() * zoom));
 
 		setPreferredSize(size);
 		setMinimumSize(size);
@@ -127,6 +127,9 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		repaint();
 	    }
 	}
+        public float getZoom() {
+            return zoom;
+        }
 
 	public void setImagePic(BufferedImage a,boolean checkmap) {
 		pic = a;
@@ -531,7 +534,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 	if (myMap!=null) {
 
-            Country mynode = getCountryAt(x/zoom,y/zoom);
+            Country mynode = getCountryAt((int)(x / zoom),(int)(y / zoom));
 
 	    if (mynode!=null) {
 
@@ -623,7 +626,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	}
 
 	public Point getPointOnImage(MouseEvent e) {
-		return new Point( e.getX()/zoom,e.getY()/zoom );
+		return new Point((int)(e.getX() / zoom),(int)(e.getY() / zoom));
 	}
 
         public void autodraw(Collection<Country> countries, boolean dots) {
@@ -1154,7 +1157,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 				drawLine(dragpoint, end, draw);
 
                                 if (draw) {
-                                    repaint(zoom * drawRect.x - 3, zoom * drawRect.y - 3, zoom * drawRect.width + 6, zoom * drawRect.height + 6);
+                                    repaint((int)(zoom * drawRect.x - 3), (int)(zoom * drawRect.y - 3), (int)(zoom * drawRect.width + 6), (int)(zoom * drawRect.height + 6));
                                 }
                                 else {
                                      // Only repaint the area where we have drawn something (or the draw is very slow on OS X)
@@ -1163,7 +1166,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                                     rect.add(new Rectangle(end.x - halfBrush, end.y - halfBrush, brush, brush));
                                     rect.grow(3, 3);
                                     // multiply by zoom to go from image coordinates to screen coordinates
-                                    repaint(zoom * rect.x, zoom * rect.y, zoom * rect.width, zoom * rect.height);
+                                    repaint((int)(zoom * rect.x), (int)(zoom * rect.y), (int)(zoom * rect.width), (int)(zoom * rect.height));
                                 }
 			}
 
