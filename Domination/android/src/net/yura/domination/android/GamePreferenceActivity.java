@@ -10,6 +10,7 @@ import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
+import net.yura.mobile.logging.Logger;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +26,6 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.WindowManager;
 
 public class GamePreferenceActivity extends PreferenceActivity {
 
@@ -79,7 +79,7 @@ public class GamePreferenceActivity extends PreferenceActivity {
         CheckBoxPreference fullscreen = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
         fullscreen.setTitle( resb.getString("game.menu.fullscreen") );
         fullscreen.setKey("fullscreen");
-        fullscreen.setDefaultValue(GameActivity.getDefaultFullScreen(AndroidMeActivity.DEFAULT_ACTIVITY));
+        fullscreen.setDefaultValue(GameActivity.getDefaultFullScreen(context));
         inlinePrefCat.addPreference(fullscreen);
         fullscreen.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -193,10 +193,14 @@ public class GamePreferenceActivity extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setPreferenceScreen( makePreferenceScreen(getPreferenceManager(),getActivity()) );
+            try {
+                setPreferenceScreen(makePreferenceScreen(getPreferenceManager(), getActivity()));
+            }
+            catch (Exception ex) {
+                Logger.warn("can not start GamePreferenceFragment", ex);
+            }
         }
     }
-
 
     public static class IntListPreference extends ListPreference {
 
