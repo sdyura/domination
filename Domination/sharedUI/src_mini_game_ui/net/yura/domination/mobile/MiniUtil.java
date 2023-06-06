@@ -140,7 +140,7 @@ public class MiniUtil {
         return player.getName() + note;
     }
 
-    public static String mapsdir = "file:///android_asset/maps/";
+    public static final String mapsdir = "file:///android_asset/maps/";
 
     /**
      * Gets a list of files from the maps folder
@@ -201,10 +201,12 @@ public class MiniUtil {
             File userMaps = MiniUtil.getSaveMapDir();
             File newFile = new File(userMaps, name);
             return new FileInputStream(newFile);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             try {
                 return FileUtil.getInputStreamFromFileConnector(mapsdir + name);
-            } catch (Exception ex2) {
+            }
+            catch (Exception ex2) {
                 IOException exception = new IOException(ex2.toString());
                 exception.initCause(ex); // in android 1.6
                 throw exception;
@@ -234,7 +236,7 @@ public class MiniUtil {
     private static File mapsDir;
     public static File getSaveMapDir() {
 
-        if (mapsDir!=null) {
+        if (mapsDir != null) {
             return mapsDir;
         }
 

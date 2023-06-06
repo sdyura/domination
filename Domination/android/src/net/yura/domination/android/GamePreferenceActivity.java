@@ -6,14 +6,17 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import net.yura.android.AndroidMeActivity;
+import net.yura.android.AndroidMeApp;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
+import net.yura.mobile.gui.Application;
 import net.yura.mobile.logging.Logger;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -129,18 +132,19 @@ public class GamePreferenceActivity extends PreferenceActivity {
         lang.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                setSummary(lang,String.valueOf(newValue));
+                setSummary(lang, String.valueOf(newValue));
                 scheduleRestart();
                 return true;
             }
         });
         inlinePrefCat.addPreference(lang);
-        setSummary(lang, TranslationBundle.getBundle().getLocale().toString());
+        String languageSummary = TranslationBundle.getBundle().getLocale().toString();
+        setSummary(lang, "".equals(languageSummary) ? "default (English)" : languageSummary); // english is the default
 
         return root;
     }
 
-    private static void setSummary(ListPreference prefs,String value) {
+    private static void setSummary(ListPreference prefs, String value) {
 	int index = prefs.findIndexOfValue(value);
 	if (index >= 0) {
 	    prefs.setSummary( prefs.getEntries()[index] );
@@ -159,24 +163,39 @@ public class GamePreferenceActivity extends PreferenceActivity {
             @Override
             public void run() {
 
-                Activity activity = AndroidMeActivity.DEFAULT_ACTIVITY;
-                Intent i = activity.getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage( activity.getBaseContext().getPackageName() );
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                activity.startActivity(i);
-                android.os.Process.killProcess(android.os.Process.myPid());
+                if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P) {
 
-                /*
-                // another way of restarting the app, not sure what is better.
-                Activity activity = AndroidMeActivity.DEFAULT_ACTIVITY;
-                android.app.PendingIntent intent = android.app.PendingIntent.getActivity(activity.getBaseContext(), 0, new Intent(activity.getIntent()), activity.getIntent().getFlags());
-                android.app.AlarmManager manager = (android.app.AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
-                manager.set(AlarmManager.RTC, System.currentTimeMillis() + 500, intent);
-                System.exit(2);
-                */
+                    // HACK, for unknown reasons android has stopped calling onSaveInstanceState
+                    Application.getInstance().saveState();
+
+                    // works with Android > 10 from https://stackoverflow.com/a/71392776
+                    Context ctx = AndroidMeApp.getContext();
+                    PackageManager pm = ctx.getPackageManager();
+                    Intent intent = pm.getLaunchIntentForPackage(ctx.getPackageName());
+                    Intent mainIntent = Intent.makeRestartActivityTask(intent.getComponent());
+                    ctx.startActivity(mainIntent);
+                    //Runtime.getRuntime().exit(0); // this is actually the same thing as System.exit
+                    System.exit(0);
+                }
+                else {
+                    Activity activity = AndroidMeActivity.DEFAULT_ACTIVITY;
+                    Intent i = activity.getBaseContext().getPackageManager()
+                            .getLaunchIntentForPackage(activity.getBaseContext().getPackageName());
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activity.startActivity(i);
+                    android.os.Process.killProcess(android.os.Process.myPid());
+
+                    /*
+                    // another way of restarting the app, not sure what is better.
+                    Activity activity = AndroidMeActivity.DEFAULT_ACTIVITY;
+                    android.app.PendingIntent intent = android.app.PendingIntent.getActivity(activity.getBaseContext(), 0, new Intent(activity.getIntent()), activity.getIntent().getFlags());
+                    android.app.AlarmManager manager = (android.app.AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
+                    manager.set(AlarmManager.RTC, System.currentTimeMillis() + 500, intent);
+                    System.exit(2);
+                    */
+                }
             }
         }, 500);
-
     }
     /*
     // Called only on Honeycomb and later

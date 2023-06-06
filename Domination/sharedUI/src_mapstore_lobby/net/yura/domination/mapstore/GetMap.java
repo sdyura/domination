@@ -18,6 +18,14 @@ public class GetMap extends Observable implements MapServerListener {
      */
     private GetMap() { }
 
+    // TODO this can get called, while another is still running
+    // steps:
+    // 1: user clicks on the game to see it
+    // 2: map starts to download, but takes a while
+    // 3: user clicks back, closes the lobby
+    // 4: user reopens the lobby
+    // 5: user clicks open same game, and same map starts downloading
+    // 6: both maps finish downloading and crash during file rename
     public static void getMap(String filename, Observer gml) {
         GetMap get = new GetMap();
         get.filename = filename;

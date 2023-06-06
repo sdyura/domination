@@ -54,20 +54,20 @@ public class MapServerClient extends HTTPClient {
         headers.put("Pragma", "no-cache");
     }
 
-    MapServerListener chooser;
+    MapServerListener listener;
     List downloads = new Vector();
 
     class ServerRequest extends Request {
 	public int type;
     }
-    
-    public MapServerClient(MapServerListener aThis) {
+
+    public MapServerClient(MapServerListener listener) {
         super(4);
-        chooser = aThis;
+        this.listener = listener;
     }
 
     public void kill() {
-        chooser = null;
+        listener = null;
         if (downloads.isEmpty()) {
             super.kill();
         }
@@ -75,7 +75,7 @@ public class MapServerClient extends HTTPClient {
 
     protected void onError(Request r, int responseCode, Hashtable headers, Exception ex) {
 	ServerRequest request = (ServerRequest)r;
-        MapServerListener ch = this.chooser;
+        MapServerListener ch = this.listener;
 
         if (request.type == REQUEST_TYPE_MAP && ((MapDownload) request.id).ignoreErrorInDownload(request.url, responseCode)) {
             logger.info("skipped "+request);
@@ -124,7 +124,7 @@ public class MapServerClient extends HTTPClient {
 
     protected void onResult(Request r, int responseCode, Hashtable headers, InputStream is, long length) throws Exception {
 	ServerRequest request = (ServerRequest)r;
-        MapServerListener ch = this.chooser;
+        MapServerListener ch = this.listener;
 
         if (request.type == REQUEST_TYPE_XML) {
             XMLMapAccess access = new XMLMapAccess();
@@ -342,7 +342,7 @@ public class MapServerClient extends HTTPClient {
                     if (!error) {
                         // rename all .part to there normal names
                         // go backwards so we get to the .map file last
-                        for (int c=fileNames.size()-1;c>=0;c--) {
+                        for (int c = fileNames.size() - 1; c >= 0; c--) {
                             String fileName = (String)fileNames.get(c);
                             RiskUtil.streamOpener.renameMapFile(fileName + ".part", fileName);
                         }
@@ -350,17 +350,18 @@ public class MapServerClient extends HTTPClient {
                         MapChooser.clearFromCache(mapUID);
                         MapUpdateService.getInstance().downloadFinished(mapUID);
 
-                        MapServerListener ch = chooser; // avoid null pointers, take a copy
-                        if (ch!=null) {
+                        MapServerListener ch = listener; // avoid null pointers, take a copy
+                        if (ch != null) {
                             ch.downloadFinished(mapUID);
                         }
                     }
                 }
                 catch (Exception ex) {
+                    // TODO happens when 2 GetMap classes run at the same time for the same map
                     logger.log(Level.WARNING, "rename error! map=" + mapUID + " context=" + mapContext + " url=" + url + " files=" + fileNames, ex);
                 }
 
-                if (chooser==null) {
+                if (listener == null) {
                     kill();
                 }
             }

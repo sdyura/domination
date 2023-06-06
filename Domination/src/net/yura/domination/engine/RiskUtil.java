@@ -529,6 +529,13 @@ public class RiskUtil {
             if (!parent.isDirectory() && !parent.mkdirs()) { // if it does not exist and i cant make it
                 throw new RuntimeException("can not create dir "+parent);
             }
+
+            // we always save new data into new files
+            // even though many examples show this, it is not needed
+            //if (!outFile.createNewFile()) {
+            //    logger.info("WARNING! getOutputStream " + outFile + " createNewFile returned false!");
+            //}
+
             return new FileOutputStream( outFile );
         }
 
@@ -541,7 +548,7 @@ public class RiskUtil {
                     copy(oldFile, newFile);
                     if (!oldFile.delete()) {
                         // this is not so bad, but still very strange
-                        System.err.println("can not del source file: "+oldFile);
+                        logger.warning("can not del source file: " + oldFile);
                     }
                 }
                 catch(Exception ex) {
@@ -699,8 +706,7 @@ public class RiskUtil {
                     //if directory not exists, create it
                     if(!dest.exists()){
                        dest.mkdir();
-                       System.out.println("Directory copied from " 
-                                  + src + "  to " + dest);
+                       logger.info("Directory copied from " + src + "  to " + dest);
                     }
      
                     //list all the directory contents
@@ -730,7 +736,7 @@ public class RiskUtil {
      
                     in.close();
                     out.close();
-                    System.out.println("File copied from " + src + " to " + dest);
+                    logger.info("File copied from " + src + " to " + dest);
             }
     }
 
