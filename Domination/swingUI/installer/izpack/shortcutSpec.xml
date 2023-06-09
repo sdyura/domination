@@ -26,7 +26,7 @@
 	</shortcut>
 
 	<shortcut
-		name="Swing GUI (@game.name@ IDE and Map Editor)"
+		name="Swing GUI (Map Editor and @game.name@ IDE)"
 		programGroup="yes"
 		desktop="no"
 		applications="no"
