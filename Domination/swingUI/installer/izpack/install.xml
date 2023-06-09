@@ -104,7 +104,7 @@
 		<panel classname="InstallPanel"/>
 		<panel classname="ShortcutPanel">
                     <os family="windows"/>
-                    <os family="unix"/>
+                    <os family="linux"/><!-- we HAVE to use 'linux' here, as 'unix' also includes 'mac' -->
 		</panel>
 		<panel classname="FinishPanel"/>
 	</panels>
