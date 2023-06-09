@@ -688,9 +688,9 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                         }
 
                         // clear from cache to make sure we are loading the newest version of this maps data
-                        net.yura.domination.mapstore.MapChooser.clearFromCache(fileName);
+                        net.yura.domination.mapstore.MapPreview.clearFromCache(fileName);
 
-                        map2 = net.yura.domination.mapstore.MapChooser.createMap(fileName);
+                        map2 = net.yura.domination.mapstore.MapPreview.createMap(fileName);
                         
                         map2.setDateAdded( String.valueOf( System.currentTimeMillis() ) ); // todays date
                         

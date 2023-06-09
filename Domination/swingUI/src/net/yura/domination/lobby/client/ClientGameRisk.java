@@ -21,7 +21,7 @@ import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.ui.flashgui.FlashRiskAdapter;
 import net.yura.domination.ui.flashgui.GameFrame;
 import net.yura.lobby.client.LobbyClientGUI;
@@ -122,7 +122,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
                 String mapUID = OnlineUtil.getMapNameFromLobbyStartGameOption(game.getOptions());
 
                 // its annoying if the game opens, but we can not actually display anything as we have no map
-                if (!MapChooser.haveLocalMap(mapUID)) {
+                if (!MapPreview.haveLocalMap(mapUID)) {
                     throw new UnsupportedOperationException("Lobby Client does not support downloading map: " + mapUID);
                 }
 

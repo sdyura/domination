@@ -71,7 +71,7 @@ public class MapUpdateService extends Observable {
 
                 boolean needsUpdate;
                 try {
-                    needsUpdate = remoteMap.needsUpdate(MapChooser.createMap(uid).getVersion());
+                    needsUpdate = remoteMap.needsUpdate(MapPreview.createMap(uid).getVersion());
                 }
                 catch (Exception ex) {
                     logger.log(Level.WARNING, "error loading version info from local map: " + uid, ex);

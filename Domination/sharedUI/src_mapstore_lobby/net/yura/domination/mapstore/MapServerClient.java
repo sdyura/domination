@@ -347,7 +347,7 @@ public class MapServerClient extends HTTPClient {
                             RiskUtil.streamOpener.renameMapFile(fileName + ".part", fileName);
                         }
 
-                        MapChooser.clearFromCache(mapUID);
+                        MapPreview.clearFromCache(mapUID);
                         MapUpdateService.getInstance().downloadFinished(mapUID);
 
                         MapServerListener ch = listener; // avoid null pointers, take a copy
@@ -424,7 +424,7 @@ public class MapServerClient extends HTTPClient {
             String fileName = getPath(mapContext, url);
 
             // only ignore server 404 errors, this happens when maps link to bundled cards files.
-            boolean ignoreError = responseCode == 404 && MapChooser.fileExists(fileName);
+            boolean ignoreError = responseCode == 404 && MapPreview.fileExists(fileName);
 
             if (ignoreError) {
                 // we got a error, but we already have this file, so ignore the error

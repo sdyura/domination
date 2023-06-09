@@ -14,6 +14,7 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mapstore.Map;
 import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.MapServerListener;
 import net.yura.domination.mapstore.MapUpdateService;
@@ -64,7 +65,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
         // TODO check if we are already in the process of downloading this map
 
         // check if we have this map already & if we need to do a update for the map
-        if (MapChooser.haveLocalMap(mapUID) && !MapUpdateService.getInstance().contains(mapUID)) {
+        if (MapPreview.haveLocalMap(mapUID) && !MapUpdateService.getInstance().contains(mapUID)) {
             lobby.mycom.playGame(game.getId());
         }
         else {
@@ -161,8 +162,8 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
         //      MapUID -> LazyIcon  {@link MapChooser#iconCache} (MiniLobbyRisk.mapServerClient.gotResultMaps -> MapChooser.getRemoteImage -> MapChooser.gotImg)
 
         // if local map
-        if (MapChooser.haveLocalMap(mapUID)) {
-            return MapChooser.getLocalIconForMap(MapChooser.createMap(mapUID));
+        if (MapPreview.haveLocalMap(mapUID)) {
+            return MapChooser.getLocalIconForMap(MapPreview.createMap(mapUID));
         }
 
         if (mapServerClient == null) {

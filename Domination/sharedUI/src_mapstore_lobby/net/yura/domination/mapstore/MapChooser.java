@@ -1,19 +1,15 @@
 package net.yura.domination.mapstore;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-import java.util.WeakHashMap;
 import javax.microedition.lcdui.Image;
-import net.yura.cache.Cache;
 import net.yura.domination.ImageManager;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
@@ -37,7 +33,6 @@ import net.yura.mobile.gui.plaf.SynthLookAndFeel;
 import net.yura.mobile.io.ClipboardManager;
 import net.yura.mobile.io.FileUtil;
 import net.yura.mobile.logging.Logger;
-import net.yura.mobile.util.ImageUtil;
 import net.yura.mobile.util.Properties;
 import net.yura.mobile.util.Url;
 import net.yura.swingme.core.CoreUtil;
@@ -62,21 +57,8 @@ public class MapChooser implements ActionListener,MapServerListener {
     public static final String MAP_PAGE=SERVER_URL+"maps?format=xml&version="+Url.encode( RiskUtil.RISK_VERSION );
     public static final String CATEGORIES_PAGE=SERVER_URL+"categories?format=xml&version="+Url.encode( RiskUtil.RISK_VERSION );
 
-    private static final String PREVIEW_FILE_PREFIX = "preview/";
-
-    // these are both weak caches, they only keep a object if someone else holds it or a key
+    // this is a weak cache, it only keep a object if someone else holds it or a key
     private static final ImageManager iconCache = new ImageManager( XULLoader.adjustSizeToDensity(150),XULLoader.adjustSizeToDensity(94) ); // 150x94
-    // needs to be synchronizedMap or we get endless loop in WeakHashMap: http://www.adam-bien.com/roller/abien/entry/endless_loops_in_unsychronized_weakhashmap
-    private static final java.util.Map mapCache = Collections.synchronizedMap(new WeakHashMap());
-    private static Cache repo;
-    static {
-        try {
-            repo = new Cache("net.yura.domination");
-        }
-        catch (Throwable ex) {
-            System.err.println("[MapChooser] no cache: "+ex);
-        }
-    }
 
     private Properties resBundle = CoreUtil.wrap(TranslationBundle.getBundle());
 
@@ -208,7 +190,7 @@ public class MapChooser implements ActionListener,MapServerListener {
      * @return true if icon is in the cache, or false and {@see MapServerListener#publishImg(java.lang.Object)} will be called later.
      */
     public static boolean getRemoteImage(Object key, String url, MapServerClient c) {
-        InputStream in = repo != null ? repo.get(url) : null;
+        InputStream in = MapPreview.getRemoteMapPreview(url);
         if (in != null) {
             try {
                 gotImg(key, in);
@@ -240,52 +222,9 @@ public class MapChooser implements ActionListener,MapServerListener {
             }
             // if this is a locale file
             else {
-                InputStream in;
+                InputStream in = MapPreview.getLocalMapPreview(url);
 
-                if (url.startsWith(PREVIEW_FILE_PREFIX)) {
-                    in = null;
-                    try {
-                        in = RiskUtil.openMapStream(url);
-                        
-                        if (in == null) {
-                            throw new IllegalStateException("local preview stream null " + url);
-                        }
-                    }
-                    catch (Exception ex) {
-                        Logger.warn("cant open " + url, ex);
-                    }
-                }
-                else {
-                    in = repo!=null ? repo.get(url) : null;
-
-                    if (in==null) {
-                        try {
-                            System.out.println("[MapChooser] ### Going to re-encode img: "+url);
-                            InputStream min = RiskUtil.openMapStream(url);
-                            Image img = MapChooser.createImage(min);
-                            img = ImageUtil.scaleImage(img, 150, 94);
-                            ByteArrayOutputStream out = new ByteArrayOutputStream();
-                            ImageUtil.saveImage(img, out);
-                            img = null; // drop the small image as soon as we can
-                            byte[] bytes = out.toByteArray();
-                            out = null; // drop the OutputStream as soon as we can
-                            if (bytes.length == 0) {
-                                throw new IllegalStateException("img failed to save " + url);
-                            }
-                            cache(url,bytes);
-                            // TODO we should only cache if we are sure it can be opened as a image
-                            in = new ByteArrayInputStream(bytes);
-                        }
-                        catch (OutOfMemoryError err) { // what can we do?
-                            Logger.info("cant resize " + url, err);
-                        }
-                        catch (Exception ex) {
-                            Logger.warn("cant resize " + url, ex);
-                        }
-                    }
-                }
-
-                if (in!=null) {
+                if (in != null) {
                     gotImg(key, in);
                 }
             }
@@ -324,96 +263,13 @@ public class MapChooser implements ActionListener,MapServerListener {
         }
 
         // only cache if publish works fine
-        cache(url, data);
+        MapPreview.cache(url, data);
     }
 
     public void publishImg(Object key) {
             if (client!=null) { // if we have shut down, dont need to do anything
                 list.repaint();
             }
-    }
-
-    private static void cache(String url,byte[] data) {
-        if (repo!=null && !repo.containsKey( url ) ) {
-            repo.put( url , data );
-        }
-    }
-
-    public static boolean haveLocalMap(String mapUID) {
-        if (mapCache.containsKey(mapUID)) {
-            return true;
-        }
-        return fileExists(mapUID);
-    }
-
-    public static boolean fileExists(String fileUID) {
-
-        InputStream file=null;
-        try {
-            file = RiskUtil.openMapStream(fileUID);
-        }
-        catch (Exception ex) { } // not found?
-        finally{
-            FileUtil.close(file);
-        }
-
-        return (file != null); // we already have this file
-    }
-
-    public static void clearFromCache(String mapUID) {
-        mapCache.remove(mapUID);
-    }
-
-    /**
-     * WARNING! this may be called from 2 threads at the same time
-     * e.g. MapUpdateService.init and MapChooser.actionPerformed."local".run
-     */
-    public static Map createMap(String file) {
-
-        WeakReference wr = (WeakReference)mapCache.get(file);
-        if (wr!=null) {
-            Map map = (Map)wr.get();
-            if (map!=null) {
-                return map;
-            }
-        }
-
-
-        java.util.Map info = RiskUtil.loadInfo(file, false);
-
-        Map map = new Map();
-        map.setMapUrl( file );
-
-        String name = (String)info.get("name");
-        if (name==null) {
-            if (file.toLowerCase().endsWith(".map")) {
-                name = RiskUtil.getFileNameWithoutExtension(file);
-            }
-            else {
-                name = file;
-            }
-        }
-        map.setName(name);
-        map.setDescription( (String)info.get("comment") );
-
-        String prv = (String)info.get("prv");
-        if (prv!=null) {
-            prv = PREVIEW_FILE_PREFIX+prv;
-            if (!fileExists(prv)) {
-                prv=null;
-            }
-        }
-
-        if (prv==null) {
-            prv = (String)info.get("pic");
-        }
-        map.setPreviewUrl( prv );
-
-        map.setVersion( (String)info.get("ver") );
-
-        mapCache.put(file, new WeakReference(map));
-
-        return map;
     }
 
     public static String getFileUID(String mapUrl) {
@@ -439,7 +295,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                         // if one map is corrupted, we dont want to block all map loading
                         try {
                             // we create a Map object for every localy stored map
-                            Map map = createMap(file);
+                            Map map = MapPreview.createMap(file);
                             riskmaps.add(map);
                         }
                         catch (Exception ex) {
@@ -583,7 +439,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                                 RiskUtil.streamOpener.deleteMapFile(mapFile);
                                 RiskUtil.streamOpener.deleteMapFile(picFile);
                                 if (prvFile != null) {
-                                    RiskUtil.streamOpener.deleteMapFile(PREVIEW_FILE_PREFIX + prvFile);
+                                    RiskUtil.streamOpener.deleteMapFile(MapPreview.PREVIEW_FILE_PREFIX + prvFile);
                                 }
                                 if (!"risk.cards".equals(cardsFile) && !"nomission.cards".equals(cardsFile)) {
                                     RiskUtil.streamOpener.deleteMapFile(cardsFile);
@@ -666,7 +522,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                 String imap = (String)info.get("map");
                 String prv = (String)info.get("prv");
 
-                if ( !fileExists(pic) || !fileExists(crd) || !fileExists(imap) || (prv!=null && !fileExists(PREVIEW_FILE_PREFIX+prv)) ) {
+                if ( !MapPreview.fileExists(pic) || !MapPreview.fileExists(crd) || !MapPreview.fileExists(imap) || (prv!=null && !MapPreview.fileExists(MapPreview.PREVIEW_FILE_PREFIX + prv)) ) {
                     // we are missing a file, need to re-download this map
 
                     client.downloadMap( getURL(context, map.mapUrl ) );

@@ -12,6 +12,7 @@ import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.mapstore.BadgeButton;
 import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapUpdateService;
 import net.yura.domination.mobile.MiniUtil;
 import net.yura.mobile.gui.ActionListener;
@@ -515,7 +516,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
         }
 */
         // crazy 1 liner
-        ((Label)newgame.find("MapImg")).setIcon( MapChooser.getLocalIconForMap( MapChooser.createMap( mapFile ) ) );
+        ((Label)newgame.find("MapImg")).setIcon( MapChooser.getLocalIconForMap( MapPreview.createMap( mapFile ) ) );
         
         revalidate();
         repaint();

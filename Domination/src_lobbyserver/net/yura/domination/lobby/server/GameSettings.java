@@ -19,6 +19,7 @@ import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.mapstore.Map;
 import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.MapServerListener;
 import net.yura.domination.mapstore.MapUpdateService;
@@ -116,7 +117,7 @@ public class GameSettings implements GameSettingsMXBean {
         final List<String> mapsToDownload = new ArrayList();
         for (Map map : serverMaps) {
             String mapName = MapChooser.getFileUID( map.getMapUrl() );
-            if (!localMaps.contains(mapName) || map.needsUpdate(MapChooser.createMap(mapName).getVersion())) {
+            if (!localMaps.contains(mapName) || map.needsUpdate(MapPreview.createMap(mapName).getVersion())) {
                 mapsToDownload.add(MapChooser.getURL(MapChooser.getContext(MapChooser.MAP_PAGE), map.getMapUrl()));
             }
         }

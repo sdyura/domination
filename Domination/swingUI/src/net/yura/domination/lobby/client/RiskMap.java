@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -23,6 +24,7 @@ import javax.swing.Icon;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mapstore.Map;
 import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapUpdateService;
 import net.yura.swing.GraphicsUtil;
 
@@ -79,16 +81,16 @@ public class RiskMap {
                                     try {
                                         if (isLocalMap()) {
                                             //PicturePanel.getImage(RiskGame) can also get a icon, but MapChooser caches the small preview
-                                            map = MapChooser.createMap(mapUID);
-                                            net.yura.mobile.gui.Icon icon = MapChooser.getLocalIconForMap(map);
-                                            javax.microedition.lcdui.Image img = icon.getImage();
-                                            // img can be null if we failed to load the image because of OutOfMemoryError
-                                            if (img != null) {
-                                                setImage(img._image);
+                                            map = MapPreview.createMap(mapUID);
+
+                                            // we used to call getLocalIconForMap, but it is NOT thread safe so we should NOT use it
+                                            InputStream in = MapPreview.getLocalMapPreview(map.getPreviewUrl());
+
+                                            // in can be null if we failed to load the image because of OutOfMemoryError
+                                            if (in != null) {
+                                                setImage(ImageIO.read(in));
                                             }
                                             else {
-                                                // TODO this is still happening??? but why?
-                                                // createMap is called from 2 threads, can it return the bad image?
                                                 logger.log(Level.INFO, "NO ICON FOR LOCAL MAP " + mapUID);
                                             }
                                         }
@@ -145,7 +147,7 @@ public class RiskMap {
 
     public boolean isLocalMap() {
         // map.getMapUrl().lastIndexOf('/') < 0 this is not a good check, as remote file does not always need to have a /
-        return MapChooser.haveLocalMap(mapUID) && !MapUpdateService.getInstance().contains(mapUID);
+        return MapPreview.haveLocalMap(mapUID) && !MapUpdateService.getInstance().contains(mapUID);
         // OR in applet mode, but we dont care any more as no one uses applets.
     }
 

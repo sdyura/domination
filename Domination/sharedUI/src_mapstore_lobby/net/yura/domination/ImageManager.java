@@ -1,5 +1,7 @@
 package net.yura.domination;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.WeakHashMap;
 import javax.microedition.lcdui.Image;
 import net.yura.mobile.gui.Graphics2D;
@@ -12,22 +14,22 @@ import net.yura.mobile.gui.components.Component;
  */
 public class ImageManager {
 
-    // TODO this is NOT thread safe!?!??! and yet we call this class for multiple threads?!?!
-    public final WeakHashMap images = new WeakHashMap();
-    public final int w,h;
+    // this can get called from multiple threads, and WeakHashMap is NOT thread-safe
+    public final Map images = Collections.synchronizedMap(new WeakHashMap());
+    public final int w, h;
 
-    public ImageManager(int width,int height) {
-        w=width;
-        h=height;
+    public ImageManager(int width, int height) {
+        w = width;
+        h = height;
     }
 
-    public void put(Object key,LazyIcon icon) {
+    private void put(Object key, LazyIcon icon) {
         images.put(key, icon);
     }
     public LazyIcon get(Object key) {
         LazyIcon icon = (LazyIcon)images.get(key);
         // if we found it, it may be using a different key, just to make sure, put it back with this key
-        if (icon!=null) {
+        if (icon != null) {
             put(key, icon);
         }
         return icon;
@@ -36,15 +38,15 @@ public class ImageManager {
     /**
      * limitation: a key can ONLY have 1 size of icon for it
      */
-    public LazyIcon newIcon(Object key) {
-        LazyIcon icon = new LazyIcon( w,h );
+    public Icon newIcon(Object key) {
+        LazyIcon icon = new LazyIcon(w, h);
         put(key, icon);
         return icon;
     }
 
     public void gotImg(Object key, Image img) {
         LazyIcon icon = get( key );
-        if (icon!=null) {
+        if (icon != null) {
             if (img!=null) {
                 icon.setImage(img);
             }
@@ -54,11 +56,14 @@ public class ImageManager {
             }
         }
         else {
-            // TODO this seems to happen??!?!?
             System.out.println("ERROR: gotImg, but have no LazyIcon for key: " + key + " in " + images);
+            Thread.dumpStack();
         }
     }
 
+    /**
+     * just like ImageIcon, but the image is drawn scaled to fit the whole icon size
+     */
     public static class LazyIcon extends Icon {
 
         Image img;
@@ -71,14 +76,14 @@ public class ImageManager {
             this.img = img;
         }
 
-        public void paintIcon(Component c, Graphics2D g, int x, int y) {
-            if (img!=null) {
-                g.drawScaledImage(img, x, y, width, height);
-            }
-        }
-
         public Image getImage() {
             return img;
+        }
+        
+        public void paintIcon(Component c, Graphics2D g, int x, int y) {
+            if (img != null) {
+                g.drawScaledImage(img, x, y, width, height);
+            }
         }
     }
 }
