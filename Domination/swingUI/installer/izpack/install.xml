@@ -102,10 +102,7 @@
 		<panel classname="TargetPanel"/><!-- installation path -->
 		<panel classname="PacksPanel"/>
 		<panel classname="InstallPanel"/>
-		<panel classname="ShortcutPanel">
-                    <os family="windows"/>
-                    <os family="linux"/><!-- we HAVE to use 'linux' here, as 'unix' also includes 'mac' -->
-		</panel>
+		<panel classname="ShortcutPanel" condition="!izpack.macinstall"/>
 		<panel classname="FinishPanel"/>
 	</panels>
 
