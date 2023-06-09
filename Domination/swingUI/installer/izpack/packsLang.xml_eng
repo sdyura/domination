@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
 <!-- The English langpack for the Risk installer -->
-<langpack>
+<izpack:langpack version="5.0"
+                 xmlns:izpack="http://izpack.org/schema/langpack"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://izpack.org/schema/langpack http://izpack.org/schema/5.0/izpack-langpack-5.0.xsd">
+
 	<str id="package.base" txt="Risk base files" />
 	<str id="package.base.description" txt="Contains all the files and maps required to run the game" />
 
@@ -9,5 +13,5 @@
 
 	<str id="package.source" txt="Sources" />
 	<str id="package.source.description" txt="The java source files" />
-</langpack>
 
+</izpack:langpack>

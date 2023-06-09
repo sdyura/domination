@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
 <!-- The Galician langpack for the Risk installer -->
-<langpack>
+<izpack:langpack version="5.0"
+                 xmlns:izpack="http://izpack.org/schema/langpack"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://izpack.org/schema/langpack http://izpack.org/schema/5.0/izpack-langpack-5.0.xsd">
+
 	<str id="package.base" txt="Arquivos básicos do Risk" />
 	<str id="package.base.description" txt="Contén tódolos arquivos e mapas requiridos para inicia-lo xogo" />
 
@@ -9,5 +13,5 @@
 
 	<str id="package.source" txt="Fontes de Código" />
 	<str id="package.source.description" txt="Os arquivos de código java" />
-</langpack>
 
+</izpack:langpack>

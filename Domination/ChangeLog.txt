@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.2.8
 
 	better zoom in map editor
+	izpack 5 installer fixed to put windows shortcuts
 
 1.2.7 (20.12.2022)
 
