@@ -102,7 +102,10 @@
 		<panel classname="TargetPanel"/><!-- installation path -->
 		<panel classname="PacksPanel"/>
 		<panel classname="InstallPanel"/>
-		<panel classname="ShortcutPanel"/>
+		<panel classname="ShortcutPanel">
+                    <os family="windows"/>
+                    <os family="unix"/>
+		</panel>
 		<panel classname="FinishPanel"/>
 	</panels>
 
