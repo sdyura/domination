@@ -39,6 +39,22 @@ public class MapServerClient extends HTTPClient {
 
     public static final Logger logger = Logger.getLogger(MapServerClient.class.getName());
 
+    // Nathans server
+    //public static final String SERVER_URL="http://maps.domination.yura.net/xml/"
+    //public static final String MAP_PAGE=SERVER_URL+"maps.dot";
+    //public static final String CATEGORIES_PAGE=SERVER_URL+"categories.dot";
+
+    // yura test server
+    //public static final String SERVER_URL="http://domination.sf.net/maps2/maps/";
+    //public static final String MAP_PAGE=SERVER_URL+"";
+    //public static final String CATEGORIES_PAGE=SERVER_URL+"maps.xml";
+
+    // theos server
+    public static final String SERVER_URL="http://maps.yura.net/";
+    public static final String MAP_PAGE=SERVER_URL+"maps?format=xml&version="+Url.encode( RiskUtil.RISK_VERSION );
+    public static final String CATEGORIES_PAGE=SERVER_URL+"categories?format=xml&version="+Url.encode( RiskUtil.RISK_VERSION );
+
+
     static final int REQUEST_TYPE_XML = 1;
     static final int REQUEST_TYPE_MAP = 2;
     static final int REQUEST_TYPE_IMG = 3;
@@ -193,7 +209,7 @@ public class MapServerClient extends HTTPClient {
             ((MapDownload)request.id).gotRes(request.url, is );
         }
         else if (request.type == REQUEST_TYPE_IMG) {
-            MapChooser.gotImgFromServer(request.id, request.url, SystemUtil.getData(is, (int)length), ch );
+            MapPreview.gotImgFromServer(request.id, request.url, SystemUtil.getData(is, (int)length), ch );
         }
         else if (request.type == REQUEST_TYPE_PLUS) {
             Object[] tmp = (Object[])request.id;

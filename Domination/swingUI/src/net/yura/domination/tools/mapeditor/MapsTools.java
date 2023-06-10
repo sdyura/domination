@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mapstore.Map;
-import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.gen.XMLMapAccess;
 import net.yura.mobile.io.ServiceLink.Task;
 import net.yura.mobile.io.UTF8InputStreamReader;
@@ -172,7 +172,7 @@ public class MapsTools {
                 
                 requestContent.addPart("mapZipFile", new FileBody(zipFile));
 
-                return doPost( MapChooser.SERVER_URL+"upload-unauthorised", requestContent );
+                return doPost(MapServerClient.SERVER_URL+"upload-unauthorised", requestContent);
 
             }
             catch (Exception ex) {
@@ -258,7 +258,7 @@ public class MapsTools {
         
     public static List getCategories() {
         try {
-            URLConnection conn = new URL( MapChooser.CATEGORIES_PAGE ).openConnection();
+            URLConnection conn = new URL( MapServerClient.CATEGORIES_PAGE ).openConnection();
             XMLMapAccess access = new XMLMapAccess();
             InputStream in = conn.getInputStream();
             net.yura.mobile.io.ServiceLink.Task result = (net.yura.mobile.io.ServiceLink.Task)access.load( new UTF8InputStreamReader( in ) );

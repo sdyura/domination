@@ -516,7 +516,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
         }
 */
         // crazy 1 liner
-        ((Label)newgame.find("MapImg")).setIcon( MapChooser.getLocalIconForMap( MapPreview.createMap( mapFile ) ) );
+        ((Label)newgame.find("MapImg")).setIcon( MapPreview.getLocalIconForMap( MapPreview.createMap( mapFile ) ) );
         
         revalidate();
         repaint();

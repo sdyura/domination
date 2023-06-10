@@ -17,6 +17,7 @@ import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.MapUpdateService;
 import net.yura.domination.mobile.MiniUtil;
 import net.yura.domination.mobile.RiskMiniIO;
@@ -389,7 +390,7 @@ public class DominationMain extends Application {
                 // TODO check game version for non-PlayStore game
                 //RiskUtil.getNewVersionCheck() is not good enough for android as uses RiskUtil.RISK_VERSION
 
-                MapUpdateService.getInstance().init( MiniUtil.getFileList("map"), MapChooser.MAP_PAGE );
+                MapUpdateService.getInstance().init( MiniUtil.getFileList("map"), MapServerClient.MAP_PAGE );
             }
         }.start();
 

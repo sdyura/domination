@@ -32,13 +32,13 @@ public class GetMap extends Observable implements MapServerListener {
         get.addObserver(gml);
         get.client = new MapServerClient(get);
         get.client.start();
-        get.client.makeRequestXML(MapChooser.MAP_PAGE, "mapfile", filename);
+        get.client.makeRequestXML(MapServerClient.MAP_PAGE, "mapfile", filename);
     }
 
     public void gotResultMaps(String url, List maps) {
         if (maps.size() == 1) {
             Map themap = (Map)maps.get(0);
-            client.downloadMap(MapChooser.getURL(MapChooser.getContext(url), themap.mapUrl));
+            client.downloadMap(MapPreview.getURL(MapPreview.getContext(url), themap.mapUrl));
         }
         else {
             String error = "wrong number of maps on server: " + maps.size() + " for map: " + filename;

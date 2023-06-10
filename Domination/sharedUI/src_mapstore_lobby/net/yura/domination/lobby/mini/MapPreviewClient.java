@@ -2,7 +2,6 @@ package net.yura.domination.lobby.mini;
 
 import java.util.List;
 import net.yura.domination.mapstore.Map;
-import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.MapServerListener;
@@ -38,7 +37,7 @@ public abstract class MapPreviewClient implements MapServerListener {
         if (MapPreview.haveLocalMap(mapUID)) {
             Map map = MapPreview.createMap(mapUID);
             publishMap(map);
-            return MapChooser.getLocalIconForMap(map);
+            return MapPreview.getLocalIconForMap(map);
         }
 
         if (mapServerClient == null) {
@@ -46,7 +45,7 @@ public abstract class MapPreviewClient implements MapServerListener {
             mapServerClient.start();
         }
 
-        return MapChooser.getRemoteIconForMap(mapUID, mapServerClient);
+        return MapPreview.getRemoteIconForMap(mapUID, mapServerClient);
     }
 
     public void shutdown() {
@@ -76,7 +75,7 @@ public abstract class MapPreviewClient implements MapServerListener {
         publishMap(map);
 
         Object mapUIDkey = MapPreview.getFileUID(map.getMapUrl());
-        boolean fromCache = MapChooser.getRemoteImage(mapUIDkey, MapChooser.getURL(url, map.getPreviewUrl()), mapServerClient);
+        boolean fromCache = MapPreview.getRemoteImage(mapUIDkey, MapPreview.getURL(url, map.getPreviewUrl()), mapServerClient);
 
         if (fromCache) {
             publishImg(mapUIDkey);

@@ -20,7 +20,7 @@ import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.MapPanel;
-import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.DesktopPane;
@@ -152,8 +152,8 @@ public class PicturePanel extends ImageView implements MapPanel {
                 }
 
                 memoryLoad(
-                        MapChooser.createImage(RiskUtil.openMapStream(game.getImageMap()) ),
-                        MapChooser.createImage(RiskUtil.openMapStream(game.getImagePic()) )
+                        MapPreview.createImage(RiskUtil.openMapStream(game.getImageMap()) ),
+                        MapPreview.createImage(RiskUtil.openMapStream(game.getImagePic()) )
                         );
 
         }

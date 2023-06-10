@@ -104,7 +104,7 @@ public class MapRenderer extends DefaultListCellRenderer {
         //iconUrl = "http://www.imagegenerator.net/clippy/image.php?question="+map.getName();
 
         if (iconUrl!=null) {
-            setIcon( MapChooser.getIconForMapOrCategory(value,context,iconUrl,chooser.client) );
+            setIcon( MapPreview.getIconForMapOrCategory(value,context,iconUrl,chooser.client) );
         }
         else {
             System.out.println("[MapRenderer] No PreviewUrl for map or category: "+value);

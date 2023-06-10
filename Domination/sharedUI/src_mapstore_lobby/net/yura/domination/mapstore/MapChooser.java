@@ -1,7 +1,5 @@
 package net.yura.domination.mapstore;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,8 +7,6 @@ import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-import javax.microedition.lcdui.Image;
-import net.yura.domination.ImageManager;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
@@ -31,35 +27,14 @@ import net.yura.mobile.gui.layout.XULLoader;
 import net.yura.mobile.gui.plaf.LookAndFeel;
 import net.yura.mobile.gui.plaf.SynthLookAndFeel;
 import net.yura.mobile.io.ClipboardManager;
-import net.yura.mobile.io.FileUtil;
 import net.yura.mobile.logging.Logger;
 import net.yura.mobile.util.Properties;
-import net.yura.mobile.util.Url;
 import net.yura.swingme.core.CoreUtil;
 
 /**
  * @author Yura Mamyrin
  */
 public class MapChooser implements ActionListener,MapServerListener {
-
-    // Nathans server
-    //public static final String SERVER_URL="http://maps.domination.yura.net/xml/"
-    //public static final String MAP_PAGE=SERVER_URL+"maps.dot";
-    //public static final String CATEGORIES_PAGE=SERVER_URL+"categories.dot";
-
-    // yura test server
-    //public static final String SERVER_URL="http://domination.sf.net/maps2/maps/";
-    //public static final String MAP_PAGE=SERVER_URL+"";
-    //public static final String CATEGORIES_PAGE=SERVER_URL+"maps.xml";
-
-    // theos server
-    public static final String SERVER_URL="http://maps.yura.net/";
-    public static final String MAP_PAGE=SERVER_URL+"maps?format=xml&version="+Url.encode( RiskUtil.RISK_VERSION );
-    public static final String CATEGORIES_PAGE=SERVER_URL+"categories?format=xml&version="+Url.encode( RiskUtil.RISK_VERSION );
-
-    // TODO this should NOT be here, it is used by both lobby client AND the MapChooser, and so is not specific to the MapChooser.
-    // this is a weak cache, it only keep a object if someone else holds it or a key
-    private static final ImageManager iconCache = new ImageManager( XULLoader.adjustSizeToDensity(150),XULLoader.adjustSizeToDensity(94) ); // 150x94
 
     private Properties resBundle = CoreUtil.wrap(TranslationBundle.getBundle());
 
@@ -167,106 +142,6 @@ public class MapChooser implements ActionListener,MapServerListener {
         client=null;
     }
 
-    /**
-     * WARNING! this method can get called from multiple threads at the same time! (main thread + RiskMap-Executor-Thread)
-     */
-    public static Icon getLocalIconForMap(Map map) {
-        Icon icon = getIconForMapOrCategory(map, null, map.getPreviewUrl(), null);
-        if (icon == null) {
-            throw new RuntimeException("could not find local icon for " + map + " " + map.getPreviewUrl());
-        }
-        return icon;
-    }
-
-    public static Icon getRemoteIconForMap(String mapUID, MapServerClient mapServerClient) {
-        Icon aicon = iconCache.get(mapUID);
-        if (aicon == null) {
-            aicon = iconCache.newIcon(mapUID);
-            mapServerClient.makeRequestXML(MapChooser.MAP_PAGE, "mapfile", mapUID);
-        }
-        return aicon;
-    }
-
-    /**
-     * @return true if icon is in the cache, or false and {@see MapServerListener#publishImg(java.lang.Object)} will be called later.
-     */
-    public static boolean getRemoteImage(Object key, String url, MapServerClient c) {
-        InputStream in = MapPreview.getRemoteMapPreview(url);
-        if (in != null) {
-            try {
-                gotImg(key, in);
-                return true;
-            }
-            catch (Exception ex) {
-                Logger.warn("can not load image in cache " + key + " " + url, ex);
-            }
-        }
-        // can be null when shut down
-        if (c != null) c.getImage(url, key);
-        return false;
-    }
-
-    /**
-     * WARNING! this method can get called from multiple threads at the same time! (main thread + RiskMap-Executor-Thread)
-     * @param key can be a {@link Map} or a {@link Category}
-     */
-    public static Icon getIconForMapOrCategory(Object key,String context,String iconUrl,MapServerClient c) {
-        Icon aicon = iconCache.get( key );
-        if (aicon == null) {
-            aicon = iconCache.newIcon(key);
-
-            String url = getURL(context, iconUrl);
-
-            // if this is a remote file (starts with http:// or https://)
-            if (url.indexOf("://") > 0) {
-                getRemoteImage(key, url, c);
-            }
-            // if this is a locale file
-            else {
-                InputStream in = MapPreview.getLocalMapPreview(url);
-
-                if (in != null) {
-                    gotImg(key, in);
-                }
-            }
-        }
-        return aicon;
-    }
-
-    private static void gotImg(Object obj,InputStream in) {
-        try {
-            Image img = MapChooser.createImage(in);
-            iconCache.gotImg(obj, img);
-        }
-        catch (OutOfMemoryError err) {
-            Logger.info("cant load " + obj, err); // nothing we can do here
-        }
-        catch (Exception ex) {
-            throw new RuntimeException("failed to decode img "+obj, ex);
-        }
-    }
-
-    public static void gotImgFromServer(Object obj,String url, byte[] data,MapServerListener msl) {
-        try {
-            gotImg(obj, new ByteArrayInputStream(data) );
-
-            if (msl!=null) {
-                msl.publishImg(obj);
-            }
-        }
-        catch (RuntimeException ex) {
-            // there was some error with this image
-            //ImageManager.gotImg(obj, null); // clear the lazy image, so we can try again
-            // not needed as its a week ref and will clear soon enough anyway
-
-            System.err.println("error in image from server with url: "+url);
-            throw ex;
-        }
-
-        // only cache if publish works fine
-        MapPreview.cache(url, data);
-    }
-
     public void publishImg(Object key) {
             if (client!=null) { // if we have shut down, dont need to do anything
                 list.repaint();
@@ -275,7 +150,7 @@ public class MapChooser implements ActionListener,MapServerListener {
 
 
     void makeRequestForMap(String key, String value) {
-        client.makeRequestXML(MAP_PAGE, key, value);
+        client.makeRequestXML(MapServerClient.MAP_PAGE, key, value);
     }
 
     public void actionPerformed(String actionCommand) {
@@ -316,7 +191,7 @@ public class MapChooser implements ActionListener,MapServerListener {
         else if ("catagories".equals(actionCommand)) {
             mainCatList(actionCommand);
 
-            client.makeRequestXML( CATEGORIES_PAGE , (String)null, (String)null);
+            client.makeRequestXML( MapServerClient.CATEGORIES_PAGE , (String)null, (String)null);
         }
         else if ("top25".equals(actionCommand)) {
             mainCatList(actionCommand);
@@ -343,7 +218,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                 // take a copy of the update vector so if we do update, they dont just disappear from screen
                 // otherwise we may get array index out of bounds, as the list is updated during paint
                 // also after updating, we may want to actaully select the map
-                setListData(MAP_PAGE, new java.util.Vector(mapsToUpdate));
+                setListData(MapServerClient.MAP_PAGE, new java.util.Vector(mapsToUpdate));
             }
         }
         else if ("updateall".equals(actionCommand)) {
@@ -395,10 +270,10 @@ public class MapChooser implements ActionListener,MapServerListener {
             if (value instanceof Map) {
                 Map map = (Map)value;
                 if (map.getAuthorId() == null) {
-                    client.makeRequestMap(MAP_PAGE, MapPreview.getFileUID(map.getMapUrl()), new Observer() {
+                    client.makeRequestMap(MapServerClient.MAP_PAGE, MapPreview.getFileUID(map.getMapUrl()), new Observer() {
                         public void update(Observable o, Object map) {
                             if (map != null) {
-                                client.makeRequestXML(MAP_PAGE, "author", ((Map)map).getAuthorId());
+                                client.makeRequestXML(MapServerClient.MAP_PAGE, "author", ((Map)map).getAuthorId());
                             }
                             else {
                                 setListData(null, null);
@@ -425,7 +300,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                 if (localMaps.contains(mapUID)) {
                     // we check with the server to see if this map can be deleted
                     // TODO this means we are unable to delete any maps when we are not connected to the internet
-                    client.makeRequestMap(MAP_PAGE, mapUID, new Observer() {
+                    client.makeRequestMap(MapServerClient.MAP_PAGE, mapUID, new Observer() {
                         public void update(Observable o, Object map) {
                             if (map != null) {
                                 java.util.Map mapinfo = RiskUtil.loadInfo(mapUID, false);
@@ -509,7 +384,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                 if (map.needsUpdate(ver)) {
                     // update needed!!!
 
-                    client.downloadMap( getURL(context, map.mapUrl ) );
+                    client.downloadMap( MapPreview.getURL(context, map.mapUrl ) );
                     list.repaint();
                     return;
                 }
@@ -522,7 +397,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                 if ( !MapPreview.fileExists(pic) || !MapPreview.fileExists(crd) || !MapPreview.fileExists(imap) || (prv!=null && !MapPreview.fileExists(MapPreview.PREVIEW_FILE_PREFIX + prv)) ) {
                     // we are missing a file, need to re-download this map
 
-                    client.downloadMap( getURL(context, map.mapUrl ) );
+                    client.downloadMap( MapPreview.getURL(context, map.mapUrl ) );
                     list.repaint();
                     return;
 
@@ -532,7 +407,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                 chosenMap(fileUID);
             }
             else {
-                client.downloadMap( getURL(context, map.mapUrl ) );
+                client.downloadMap( MapPreview.getURL(context, map.mapUrl ) );
                 list.repaint();
             }
         }
@@ -544,20 +419,6 @@ public class MapChooser implements ActionListener,MapServerListener {
     private void chosenMap(String mapName) {
         selectedMap = mapName;
         al.actionPerformed(null);
-    }
-
-    public static String getURL(String context,String mapUrl) {
-
-        if (mapUrl.indexOf(':')<0 && context!=null) { // we do not have a full URL, so we pre-pend the context
-            if (mapUrl.startsWith("/")) {
-                mapUrl = context.substring(0, context.indexOf('/', "http://.".length()) ) + mapUrl;
-            }
-            else {
-                mapUrl = context + mapUrl;
-            }
-        }
-
-        return mapUrl;
     }
 
     public void mainCatList(String actionCommand) {
@@ -625,18 +486,8 @@ public class MapChooser implements ActionListener,MapServerListener {
         //}
     }
 
-    public static String getContext(String url) {
-        if (url!=null) {
-            int i = url.lastIndexOf('/');
-            if (i> "http://.".length() ) {
-                url = url.substring(0, i+1);
-            }
-        }
-        return url;
-    }
-
     private void setListData(String url,java.util.List items) {
-        ((MapRenderer) list.getCellRenderer()).setContext(getContext(url));
+        ((MapRenderer) list.getCellRenderer()).setContext(MapPreview.getContext(url));
 
         java.util.Vector result;
         if (items == null) {
@@ -701,21 +552,5 @@ public class MapChooser implements ActionListener,MapServerListener {
         }
 
         return MapUpdateService.getInstance().mapsToUpdate.contains(map);
-    }
-
-    /**
-     * @see net.yura.domination.engine.RiskUIUtil#read(java.io.InputStream)
-     */
-    public static Image createImage(InputStream in) throws IOException {
-        try {
-            Image img = Image.createImage(in);
-            if (img==null) {
-                throw new IOException("Image.createImage returned null");
-            }
-            return img;
-        }
-        finally {
-            FileUtil.close(in);
-        }
     }
 }

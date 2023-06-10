@@ -60,7 +60,7 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.swing.BrowserLauncher;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
-import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.MapUpdateService;
 
 /**
@@ -876,7 +876,7 @@ public class RiskUIUtil {
 
                         try {
                             //check for map updates
-                            MapUpdateService.getInstance().init( getFileList("map"), MapChooser.MAP_PAGE );
+                            MapUpdateService.getInstance().init( getFileList("map"), MapServerClient.MAP_PAGE );
                         }
                         catch (Throwable th) {
                             RiskUtil.printStackTrace(th);

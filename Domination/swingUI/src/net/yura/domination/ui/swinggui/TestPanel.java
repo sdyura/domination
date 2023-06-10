@@ -35,8 +35,8 @@ import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.PicturePanel;
 import net.yura.domination.mapstore.Map;
-import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mapstore.MapPreview;
+import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.MapUpdateService;
 import net.yura.domination.tools.mapeditor.MapsTools;
 import net.yura.domination.ui.flashgui.MainMenu;
@@ -568,7 +568,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		}
                 else if ("checkMapServer".equals(command)) {
                     // get all maps
-                    List<Map> maps = MapUpdateService.getMaps(MapChooser.MAP_PAGE,Collections.EMPTY_LIST);
+                    List<Map> maps = MapUpdateService.getMaps(MapServerClient.MAP_PAGE,Collections.EMPTY_LIST);
                     if (maps.isEmpty()) {
                         JOptionPane.showMessageDialog(this, "ERROR: No maps found on server!");
                         return;

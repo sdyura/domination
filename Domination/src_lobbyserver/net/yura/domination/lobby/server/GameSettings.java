@@ -18,7 +18,6 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.mapstore.Map;
-import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.MapServerListener;
@@ -94,7 +93,7 @@ public class GameSettings implements GameSettingsMXBean {
         }
 
         // get list of all maps from the server
-        List<Map> serverMaps = MapUpdateService.getMaps(MapChooser.MAP_PAGE,Collections.EMPTY_LIST);
+        List<Map> serverMaps = MapUpdateService.getMaps(MapServerClient.MAP_PAGE,Collections.EMPTY_LIST);
         if (serverMaps.isEmpty()) {
             throw new IllegalStateException("no maps");
         }
@@ -116,9 +115,9 @@ public class GameSettings implements GameSettingsMXBean {
         // decide what maps should be downloaded
         final List<String> mapsToDownload = new ArrayList();
         for (Map map : serverMaps) {
-            String mapName = MapChooser.getFileUID( map.getMapUrl() );
+            String mapName = MapPreview.getFileUID( map.getMapUrl() );
             if (!localMaps.contains(mapName) || map.needsUpdate(MapPreview.createMap(mapName).getVersion())) {
-                mapsToDownload.add(MapChooser.getURL(MapChooser.getContext(MapChooser.MAP_PAGE), map.getMapUrl()));
+                mapsToDownload.add(MapPreview.getURL(MapPreview.getContext(MapServerClient.MAP_PAGE), map.getMapUrl()));
             }
         }
 
@@ -185,7 +184,7 @@ public class GameSettings implements GameSettingsMXBean {
 
         // find the maps that are smaller then max resolution
         for (Map map : serverMaps) {
-            String mapName = MapChooser.getFileUID(map.getMapUrl());
+            String mapName = MapPreview.getFileUID(map.getMapUrl());
             int numCountries = (Integer) RiskUtil.loadInfo(mapName, false).get("countries");
             if (map.getMapWidth() <= mapMaxRes && map.getMapHeight() <= mapMaxRes && numCountries <= mapMaxCountries) {
                 gameOptions.add(encode(mapName));

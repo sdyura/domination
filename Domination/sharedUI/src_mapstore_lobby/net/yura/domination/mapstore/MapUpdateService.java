@@ -168,7 +168,7 @@ logger.fine("URL: " + url + " payload: " + payload);
             names = new String[] {uid};
         }
         // TODO: This still does not catch the case when the map on the server has a space in it.
-        List maps = getMaps(MapChooser.MAP_PAGE,Arrays.asList(names));
+        List maps = getMaps(MapServerClient.MAP_PAGE,Arrays.asList(names));
         return maps.size()>0 ? (Map)maps.get(0) : null;
     }
 
