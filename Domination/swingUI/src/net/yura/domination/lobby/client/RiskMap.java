@@ -2,28 +2,17 @@ package net.yura.domination.lobby.client;
 
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.WeakHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.lobby.mini.MapPreviewClient;
 import net.yura.domination.mapstore.Map;
-import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapUpdateService;
 import net.yura.swing.GraphicsUtil;
@@ -35,28 +24,45 @@ import net.yura.swing.GraphicsUtil;
 public class RiskMap {
 
     private static final Logger logger = Logger.getLogger(RiskMap.class.getName());
-    private static ExecutorService executor = Executors.newFixedThreadPool(4, new ThreadFactory() {
-        @Override
-        public Thread newThread(Runnable r) {
-            Thread thread = new Thread(r);
-            thread.setName("RiskMap-Executor-" + thread.getName());
-            return thread;
-        }
-    });
-    private static java.util.Map<String, RiskMap> mapUIDToIcon = new WeakHashMap();
 
-    private java.util.Map<Long, Icon> iconMap = new HashMap();
+    // TODO we create this, but never shut it down!!
+    private static MapPreviewClient mapPreviewClient = new MapPreviewClient() {
+        @Override
+        public void publishMap(Map map) {
+            String mapUID = MapPreview.getFileUID(map.getMapUrl());
+            RiskMap riskMap = getMapIcon(mapUID);
+            riskMap.lazyMapMetadata = map;
+        }
+
+        @Override
+        public void publishImg(String mapUID) {
+            RiskMap riskMap = getMapIcon(mapUID);
+            // warning, items can be added to list while this is being called
+            // we can NOT use new java for loop as it will throw ConcurrentModificationException
+            for (int c = 0; c < riskMap.components.size(); c++) {
+                riskMap.components.get(c).repaint();
+            }
+            riskMap.components = null;
+        }
+    };
+
+    // by default WeakHashMap is not thread safe
+    private static java.util.Map<String, RiskMap> mapUIDToIcon = Collections.synchronizedMap(new WeakHashMap());
+
+    private final String mapUID;
+
+    // lazy loaded fields
+    private Map lazyMapMetadata;
+    private net.yura.mobile.gui.Icon lazyMapIcon;
+    private String[] lazyMapMissions;
+
+    private final java.util.Map<Long, Icon> swingIconMap = new HashMap();
     private List<Component> components = new ArrayList();
-    private Image image;
-    private String mapUID;
-    private Map map;
-    private AtomicBoolean requestMade = new AtomicBoolean();
-    private String[] missions;
 
     private RiskMap(String mapUID) {
         this.mapUID = mapUID;
     }
-    
+
     public static RiskMap getMapIcon(final String mapUID) {
         RiskMap icon  = mapUIDToIcon.get(mapUID);
         if (icon == null) {
@@ -66,64 +72,23 @@ public class RiskMap {
         return icon;
     }
 
+    /**
+     * @param comp can be either the component with the icon, or the list itself in the case of a renderer
+     */
     public Icon getIcon(int w, int h, Component comp) {
         final int width = GraphicsUtil.scale(w);
         final int height = GraphicsUtil.scale(h);
         long id = ByteBuffer.allocate(8).putInt(width).putInt(height).getLong(0);
-        Icon icon = iconMap.get(id);
+        Icon icon = swingIconMap.get(id);
         if (icon == null) {
             icon = new Icon() {
                 public void paintIcon(Component c, Graphics g, int x, int y) {
-                    if (image == null) {
-                        if (!requestMade.getAndSet(true)) {
-                            executor.submit(new Runnable() {
-                                public void run() {
-                                    try {
-                                        if (isLocalMap()) {
-                                            //PicturePanel.getImage(RiskGame) can also get a icon, but MapChooser caches the small preview
-                                            map = MapPreview.createMap(mapUID);
-
-                                            // we used to call getLocalIconForMap, but it is NOT thread safe so we should NOT use it
-                                            InputStream in = MapPreview.getLocalMapPreview(map.getPreviewUrl());
-
-                                            // in can be null if we failed to load the image because of OutOfMemoryError
-                                            if (in != null) {
-                                                setImage(ImageIO.read(in));
-                                            }
-                                            else {
-                                                logger.log(Level.INFO, "NO ICON FOR LOCAL MAP " + mapUID);
-                                            }
-                                        }
-                                        else {
-                                            map = MapUpdateService.getOnlineMap(mapUID);
-                                            // map is null if we can not connect to the server to get it
-                                            if (map != null) {
-                                                try {
-                                                    setImage(ImageIO.read(new URL(new URL(MapChooser.MAP_PAGE), map.getPreviewUrl())));
-                                                }
-                                                catch (IOException ex) { // javax.imageio.IIOException: Error reading PNG image data
-                                                    // we may have bad network
-                                                    if (ex.getCause() instanceof SocketException || ex.getCause() instanceof SocketTimeoutException) {
-                                                        logger.log(Level.INFO, "network error getting preview for " + mapUID);
-                                                    }
-                                                    else {
-                                                        throw ex;
-                                                    }
-                                                }
-                                            }
-                                            else {
-                                                logger.log(Level.INFO, "no online map found " + mapUID);
-                                            }
-                                        }
-                                    }
-                                    catch (Throwable ex) {
-                                        logger.log(Level.WARNING, "failed to get " + mapUID, ex);
-                                    }
-                                }
-                            });
-                        }
-                    } else {
-                        g.drawImage(image, x, y, width, height, c);
+                    if (lazyMapIcon == null) {
+                        lazyMapIcon = mapPreviewClient.getIconForMap(mapUID);
+                    }
+                    javax.microedition.lcdui.Image img = lazyMapIcon.getImage();
+                    if (img != null) { // the icon has been loaded, so we can draw it
+                        g.drawImage(img._image, x, y, width, height, c);
                     }
                 }
 
@@ -135,7 +100,7 @@ public class RiskMap {
                     return height;
                 }
             };
-            iconMap.put(id, icon);
+            swingIconMap.put(id, icon);
         }
 
         List<Component> comps = components;
@@ -151,19 +116,9 @@ public class RiskMap {
         // OR in applet mode, but we dont care any more as no one uses applets.
     }
 
-    private void setImage(Image icon) {
-        image = icon;
-        // warning, items can be added to list while this is being called
-        // we can NOT use new java for loop as it will throw ConcurrentModificationException
-        for (int c = 0; c < components.size(); c++) {
-            components.get(c).repaint();
-        }
-        components = null;
-    }
-
     @Override
     public String toString() {
-        return map == null ? mapUID : map.getName();
+        return lazyMapMetadata == null ? mapUID : lazyMapMetadata.getName();
     }
 
     public String getID() {
@@ -171,28 +126,28 @@ public class RiskMap {
     }
 
     public String[] getMissions() {
-        if (missions != null) {
-            return missions;
+        if (lazyMapMissions != null) {
+            return lazyMapMissions;
         }
 
         java.util.Map mapinfo = RiskUtil.loadInfo(mapUID, false);
         String cardsFile = (String) mapinfo.get("crd");
         if (cardsFile != null) {
             java.util.Map cardsinfo = RiskUtil.loadInfo(cardsFile, true);
-            missions = (String[]) cardsinfo.get("missions");
+            lazyMapMissions = (String[]) cardsinfo.get("missions");
         }
         else {
             logger.warning("no crd file in " + mapUID);
             // should not happen
-            missions = new String[0];
+            lazyMapMissions = new String[0];
         }
-        return missions;
+        return lazyMapMissions;
     }
     
     /**
      * @Nullable: This method may or may not return a MapStore.Map object, it depends on if the icon has been requested and returned.
      */
     Map getMap() {
-        return map;
+        return lazyMapMetadata;
     }
 }

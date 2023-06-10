@@ -57,6 +57,7 @@ public class MapChooser implements ActionListener,MapServerListener {
     public static final String MAP_PAGE=SERVER_URL+"maps?format=xml&version="+Url.encode( RiskUtil.RISK_VERSION );
     public static final String CATEGORIES_PAGE=SERVER_URL+"categories?format=xml&version="+Url.encode( RiskUtil.RISK_VERSION );
 
+    // TODO this should NOT be here, it is used by both lobby client AND the MapChooser, and so is not specific to the MapChooser.
     // this is a weak cache, it only keep a object if someone else holds it or a key
     private static final ImageManager iconCache = new ImageManager( XULLoader.adjustSizeToDensity(150),XULLoader.adjustSizeToDensity(94) ); // 150x94
 
@@ -272,10 +273,6 @@ public class MapChooser implements ActionListener,MapServerListener {
             }
     }
 
-    public static String getFileUID(String mapUrl) {
-            int i = mapUrl.lastIndexOf('/');
-            return (i>=0)?mapUrl.substring(i+1):mapUrl;
-    }
 
     void makeRequestForMap(String key, String value) {
         client.makeRequestXML(MAP_PAGE, key, value);
@@ -398,7 +395,7 @@ public class MapChooser implements ActionListener,MapServerListener {
             if (value instanceof Map) {
                 Map map = (Map)value;
                 if (map.getAuthorId() == null) {
-                    client.makeRequestMap(MAP_PAGE, getFileUID(map.getMapUrl()), new Observer() {
+                    client.makeRequestMap(MAP_PAGE, MapPreview.getFileUID(map.getMapUrl()), new Observer() {
                         public void update(Observable o, Object map) {
                             if (map != null) {
                                 client.makeRequestXML(MAP_PAGE, "author", ((Map)map).getAuthorId());
@@ -424,7 +421,7 @@ public class MapChooser implements ActionListener,MapServerListener {
             Object value = list.getSelectedValue();
             if (value instanceof Map) {
                 Map map = (Map)value;
-                final String mapUID = getFileUID(map.getMapUrl());
+                final String mapUID = MapPreview.getFileUID(map.getMapUrl());
                 if (localMaps.contains(mapUID)) {
                     // we check with the server to see if this map can be deleted
                     // TODO this means we are unable to delete any maps when we are not connected to the internet
@@ -493,7 +490,7 @@ public class MapChooser implements ActionListener,MapServerListener {
     }
 
     public void click(Map map) {
-        String fileUID = getFileUID( map.getMapUrl() );
+        String fileUID = MapPreview.getFileUID( map.getMapUrl() );
 
         String context = ((MapRenderer)list.getCellRenderer()).getContext();
 
@@ -652,7 +649,7 @@ public class MapChooser implements ActionListener,MapServerListener {
             result = new java.util.Vector();
             for (Object item : items) {
                 if (item instanceof Map) {
-                    if (allowedMaps.contains(getFileUID(((Map) item).getMapUrl()))) {
+                    if (allowedMaps.contains(MapPreview.getFileUID(((Map) item).getMapUrl()))) {
                         result.add(item);
                     }
                 }
@@ -696,7 +693,7 @@ public class MapChooser implements ActionListener,MapServerListener {
 
     public boolean willDownload(Map map) {
 
-        String mapUID = MapChooser.getFileUID( map.getMapUrl() );
+        String mapUID = MapPreview.getFileUID( map.getMapUrl() );
 
         // if we dont have a local file with the same uid
         if (!localMaps.contains(mapUID)) {

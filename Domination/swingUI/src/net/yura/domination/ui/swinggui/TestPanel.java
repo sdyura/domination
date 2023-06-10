@@ -36,6 +36,7 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.PicturePanel;
 import net.yura.domination.mapstore.Map;
 import net.yura.domination.mapstore.MapChooser;
+import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapUpdateService;
 import net.yura.domination.tools.mapeditor.MapsTools;
 import net.yura.domination.ui.flashgui.MainMenu;
@@ -577,7 +578,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                     Set<String> errors = new HashSet();
                     String longestMapName = RiskGame.getDefaultMap();
                     for (Map map: maps) {
-                        String filename = MapChooser.getFileUID( map.getMapUrl() );
+                        String filename = MapPreview.getFileUID( map.getMapUrl() );
                         if (filename.length() > longestMapName.length()) {
                             longestMapName = filename;
                         }

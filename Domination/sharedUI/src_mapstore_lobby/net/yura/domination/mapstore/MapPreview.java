@@ -174,4 +174,9 @@ public class MapPreview {
 
         return in;
     }
+
+    public static String getFileUID(String mapUrl) {
+        int i = mapUrl.lastIndexOf('/');
+        return (i >= 0) ? mapUrl.substring(i + 1) : mapUrl;
+    }
 }

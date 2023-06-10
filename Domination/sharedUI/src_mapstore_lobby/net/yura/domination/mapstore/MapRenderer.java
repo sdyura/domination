@@ -143,7 +143,7 @@ public class MapRenderer extends DefaultListCellRenderer {
 
             int gap = XULLoader.adjustSizeToDensity(5);
 
-            String mapUID = MapChooser.getFileUID( map.getMapUrl() );
+            String mapUID = MapPreview.getFileUID( map.getMapUrl() );
 
             if ( chooser.client.isDownloading( mapUID ) ) { // we need to check for this first as we may have it and also be updating it
 

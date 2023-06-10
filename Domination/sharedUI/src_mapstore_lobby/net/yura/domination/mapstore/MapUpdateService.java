@@ -59,7 +59,7 @@ public class MapUpdateService extends Observable {
 
             for (int i=0;i<gotMaps.size();i++) {
                 Map themap = (Map)gotMaps.get(i);
-                String mapUID = MapChooser.getFileUID( themap.getMapUrl() );
+                String mapUID = MapPreview.getFileUID( themap.getMapUrl() );
                 if (mapUID.equals( uid )) { // we found the map
                     theMaps.add(themap);
                     // we do NOT break, just in case there is more then one
@@ -143,7 +143,7 @@ logger.fine("URL: " + url + " payload: " + payload);
     private int getIndexOfMap(String mapUID) {
         for (int c = 0; c < mapsToUpdate.size(); c++) {
             Map map = (Map) mapsToUpdate.get(c);
-            String amapUID = MapChooser.getFileUID(map.getMapUrl());
+            String amapUID = MapPreview.getFileUID(map.getMapUrl());
             if (mapUID.equals(amapUID)) {
                 return c;
             }

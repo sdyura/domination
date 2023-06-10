@@ -164,7 +164,7 @@ public class MapServerClient extends HTTPClient {
                         if (request.params != null && "PLUS_RATINGS".equals(request.params.get("sort")) && list.size() > 0) {
                             List<String> urls = new ArrayList(list.size());
                             for (Map map : list) {
-                                String fileUID = MapChooser.getFileUID( map.getMapUrl() );
+                                String fileUID = MapPreview.getFileUID( map.getMapUrl() );
                                 urls.add(RATE_URL+Url.encode(fileUID));
                             }
                             ServerRequest request1 = new ServerRequest();
@@ -228,7 +228,7 @@ public class MapServerClient extends HTTPClient {
     }
 
     private static int getRating(Map map, java.util.Map<String,Integer> ratings) {
-        Integer rating = ratings.get(MapChooser.getFileUID(map.getMapUrl()));
+        Integer rating = ratings.get(MapPreview.getFileUID(map.getMapUrl()));
         return rating == null ? 0 : rating;
     }
 
@@ -296,7 +296,7 @@ public class MapServerClient extends HTTPClient {
 
         MapDownload(String url) {
 
-            mapUID = MapChooser.getFileUID(url);
+            mapUID = MapPreview.getFileUID(url);
 
             mapContext = url.substring(0, url.length() - mapUID.length() );
 
