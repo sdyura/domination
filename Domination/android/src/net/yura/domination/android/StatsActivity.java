@@ -1,12 +1,16 @@
 package net.yura.domination.android;
 
 import java.lang.reflect.Field;
+import java.text.ChoiceFormat;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.yura.android.AndroidMeApp;
+import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -16,7 +20,6 @@ import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import android.app.Activity;
@@ -29,6 +32,16 @@ import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.mobile.gui.layout.XULLoader;
 
 public class StatsActivity extends Activity {
+
+    static Map<Integer, String> icons = new HashMap();
+    static {
+        icons.put(ColorUtil.RED, "\u0fd6");
+        icons.put(ColorUtil.BLUE, "\u262f");
+        icons.put(ColorUtil.YELLOW, "\u262c");
+        icons.put(ColorUtil.CYAN, "\u2721");
+        icons.put(ColorUtil.GREEN, "\u262a");
+        icons.put(ColorUtil.MAGENTA, "\u271d");
+    }
 
     private ResourceBundle resb;
     
@@ -95,7 +108,7 @@ public class StatsActivity extends Activity {
         showGraph(StatType.fromOrdinal(id));
         return true;
     }
-    
+
     public void showGraph(StatType statType) {
         setTitle(resb.getString("swing.tab.statistics") + " - "
                 + resb.getString("swing.toolbar." + statType.getName()));
@@ -125,11 +138,24 @@ public class StatsActivity extends Activity {
         List<Player> players = getPlayersStats();
 
         for (Player p : players) {
-            SimpleSeriesRenderer r = new XYSeriesRenderer();
+            XYSeriesRenderer r = new XYSeriesRenderer();
+            r.setShowLegendItem(true);
             r.setColor( p.getColor() );
+
+            String icon = getIcon(p);
+            if (icon != null) {
+                r.setDisplayChartValues(true);
+                r.setChartValuesFormat(new ChoiceFormat(new double[]{0}, new String[]{icon}));
+                r.setChartValuesTextSize(XULLoader.adjustSizeToDensity((int)r.getChartValuesTextSize()));
+            }
+
             renderer.addSeriesRenderer(r);
         }
         return renderer;
+    }
+
+    private String getIcon(Player p) {
+        return DominationMain.getBoolean("color_blind",false) ? icons.get(p.getColor()) : null;
     }
 
     public XYMultipleSeriesDataset getDataset(StatType statType) {
@@ -141,7 +167,8 @@ public class StatsActivity extends Activity {
         //draw each player graph.
         for (Player p : players) {
 
-            CategorySeries series = new CategorySeries(MiniUtil.getStatsLabel(statType, p));
+            String icon = getIcon(p);
+            CategorySeries series = new CategorySeries((icon == null ? "" : icon) + MiniUtil.getStatsLabel(statType, p));
 
             double[] PointToDraw = p.getStatistics(statType);
 
@@ -163,7 +190,7 @@ public class StatsActivity extends Activity {
 
             dataset.addSeries(series.toXYSeries());
         }
-        
+
         return dataset;
     }
 }
