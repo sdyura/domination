@@ -16,13 +16,17 @@ import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.mobile.MiniUtil;
 import net.yura.domination.mobile.flashgui.DominationMain;
-import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.LineChart;
+import org.achartengine.chart.XYChart;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import android.app.Activity;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +39,7 @@ public class StatsActivity extends Activity {
 
     static Map<Integer, String> icons = new HashMap();
     static {
+        // from: https://en.wikipedia.org/wiki/Religious_and_political_symbols_in_Unicode
         icons.put(ColorUtil.RED, "\u0fd6");
         icons.put(ColorUtil.BLUE, "\u262f");
         icons.put(ColorUtil.YELLOW, "\u262c");
@@ -113,7 +118,18 @@ public class StatsActivity extends Activity {
         setTitle(resb.getString("swing.tab.statistics") + " - "
                 + resb.getString("swing.toolbar." + statType.getName()));
 
-        GraphicalView gview = ChartFactory.getLineChartView(this, getDataset(statType), getRenderer());
+        //GraphicalView gview = ChartFactory.getLineChartView(this, getDataset(statType), getRenderer());
+
+        XYChart chart = new LineChart(getDataset(statType), getRenderer()) {
+            @Override
+            protected void drawChartValuesText(Canvas canvas, XYSeries series, XYSeriesRenderer renderer, Paint paint, List<Float> points, int seriesIndex, int startIndex) {
+                // the default for some strange reason seems to be STROKE for text
+                paint.setStyle(Paint.Style.FILL_AND_STROKE);
+                super.drawChartValuesText(canvas, series, renderer, paint, points, seriesIndex, startIndex);
+            }
+        };
+        GraphicalView gview = new GraphicalView(this, chart);
+
         setContentView(gview);
     }
 
@@ -142,7 +158,7 @@ public class StatsActivity extends Activity {
             r.setShowLegendItem(true);
             r.setColor( p.getColor() );
 
-            String icon = getIcon(p);
+            final String icon = getIcon(p);
             if (icon != null) {
                 r.setDisplayChartValues(true);
                 r.setChartValuesFormat(new ChoiceFormat(new double[]{0}, new String[]{icon}));
@@ -154,7 +170,7 @@ public class StatsActivity extends Activity {
         return renderer;
     }
 
-    private String getIcon(Player p) {
+    private static String getIcon(Player p) {
         return DominationMain.getBoolean("color_blind",false) ? icons.get(p.getColor()) : null;
     }
 

@@ -62,6 +62,7 @@ CURRENT VERSION:
 		   Fixed: Firebase causes crash on older versions of android
 	Android 92 fixed: crash in Preferences being opened when main activity is closed
 	Android 92 fixed: when language is changed, reload the app to the same game
+	Android 93 Show color blind icons in stats graph
 
 1.2.6 (17.12.2022)
 
