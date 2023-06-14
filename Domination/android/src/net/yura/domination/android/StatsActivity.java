@@ -42,7 +42,6 @@ public class StatsActivity extends Activity {
     static {
         // from: https://en.wikipedia.org/wiki/Religious_and_political_symbols_in_Unicode
         // TODO maybe should check with Paint.hasGlyph
-        Paint paint = new Paint();
         boolean unicode7 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
         icons.put(ColorUtil.RED, unicode7 ? "\u0fd6" : "\u534d");
         icons.put(ColorUtil.BLUE, unicode7 ? "\u262f" : "\u25d0"); // "\ud83d\udd04" = blue refresh emoji
