@@ -27,6 +27,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,12 +41,15 @@ public class StatsActivity extends Activity {
     static Map<Integer, String> icons = new HashMap();
     static {
         // from: https://en.wikipedia.org/wiki/Religious_and_political_symbols_in_Unicode
-        icons.put(ColorUtil.RED, "\u0fd6");
-        icons.put(ColorUtil.BLUE, "\u262f");
-        icons.put(ColorUtil.YELLOW, "\u262c");
-        icons.put(ColorUtil.CYAN, "\u2721");
-        icons.put(ColorUtil.GREEN, "\u262a");
-        icons.put(ColorUtil.MAGENTA, "\u271d");
+        // TODO maybe should check with Paint.hasGlyph
+        Paint paint = new Paint();
+        boolean unicode7 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
+        icons.put(ColorUtil.RED, unicode7 ? "\u0fd6" : "\u534d");
+        icons.put(ColorUtil.BLUE, unicode7 ? "\u262f" : "\ud83d\udd04");
+        icons.put(ColorUtil.YELLOW, unicode7 ? "\u262c" : "\ud83d\udd31");
+        icons.put(ColorUtil.CYAN, "\u2721"); // works on old android
+        icons.put(ColorUtil.GREEN, unicode7 ? "\u262a" : "\ud83c\udf18");
+        icons.put(ColorUtil.MAGENTA, "\u271d"); // works on old android
     }
 
     private ResourceBundle resb;
