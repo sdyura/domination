@@ -45,7 +45,7 @@ public class StatsActivity extends Activity {
         Paint paint = new Paint();
         boolean unicode7 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
         icons.put(ColorUtil.RED, unicode7 ? "\u0fd6" : "\u534d");
-        icons.put(ColorUtil.BLUE, unicode7 ? "\u262f" : "\ud83d\udd04");
+        icons.put(ColorUtil.BLUE, unicode7 ? "\u262f" : "\u25d0"); // "\ud83d\udd04" = blue refresh emoji
         icons.put(ColorUtil.YELLOW, unicode7 ? "\u262c" : "\ud83d\udd31");
         icons.put(ColorUtil.CYAN, "\u2721"); // works on old android
         icons.put(ColorUtil.GREEN, unicode7 ? "\u262a" : "\u2768\u200E\u066d"); // "\ud83c\udf18" = emoji moon "\u2605" = unicode star
