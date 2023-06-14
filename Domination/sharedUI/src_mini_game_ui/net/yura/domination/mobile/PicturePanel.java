@@ -543,6 +543,10 @@ public class PicturePanel extends ImageView implements MapPanel {
             icons.put(ColorUtil.GREEN, Application.createImage("/color_green.png"));
             icons.put(ColorUtil.MAGENTA, Application.createImage("/color_magenta.png"));
         }
+
+        /**
+         * @see net.yura.domination.android.StatsActivity#getIcon(Player)
+         */
         public static Image getIconForColor(int color) {
             return DominationMain.getBoolean("color_blind",false)?icons.get(color):null;
         }

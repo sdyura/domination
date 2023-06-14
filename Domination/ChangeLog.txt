@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		15
-	Android:	92
+	Android:	93
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -28,41 +28,42 @@ CURRENT VERSION:
 	SwingGUI: fix for online lobby sometimes not repainting when tabs switched
 	Lobby: when player resigns, the player is converted to easy AI instead of crap AI
 
-	iOS 7 Fix crash in Image finalizer
-	iOS 8 Game settings added
-	iOS 9 workaround for crash with MOE WeakReference (Invalid object 0x0)
-	iOS 10 show player name in player color picker
-	       Stats graphs added
-	iOS 11 New Mobile UI designed by Andry Green
-	       When mission game is over show mission of who won, even if they are AI
-	       If only 1 human player left in the game, show spectators all the game info
-	       Show continents reinforcements value in help screen
-	iOS 12 automatically enable color blind mode when shouldDifferentiateWithoutColor is on
-	       support for iOS 'Dynamic Type' automatic font size
-	       fix for continents table not working for some maps like 'Deutsches_Reich_1871.map'
-	       Fix for title color in stats screen being wrong on Theo's iPhone
+	iOS 15 long press to place 10 troops
+	iOS 14 Fix for iOS 9 with scale 2 not loading 9-patches
+	       Fix for disabled color in lists
 	iOS 13 Tap on StatusBar to scrollToTop added
 	       Fix crash for sharing saved game file on iPad (popoverPresentationController)
 	       Fix for white line at bottom of screen on iPhone 11 Pro
 	       Fix for crashes on iOS 9
-	iOS 14 Fix for iOS 9 with scale 2 not loading 9-patches
-	       Fix for disabled color in lists
-	iOS 15 long press to place 10 troops
+	iOS 12 automatically enable color blind mode when shouldDifferentiateWithoutColor is on
+	       support for iOS 'Dynamic Type' automatic font size
+	       fix for continents table not working for some maps like 'Deutsches_Reich_1871.map'
+	       Fix for title color in stats screen being wrong on Theo's iPhone
+	iOS 11 New Mobile UI designed by Andry Green
+	       When mission game is over show mission of who won, even if they are AI
+	       If only 1 human player left in the game, show spectators all the game info
+	       Show continents reinforcements value in help screen
+	iOS 10 show player name in player color picker
+	       Stats graphs added
+	iOS 9 workaround for crash with MOE WeakReference (Invalid object 0x0)
+	iOS 8 Game settings added
+	iOS 7 Fix crash in Image finalizer
 
-	Android 86 fix for notifications missing FLAG_IMMUTABLE
-	Android 87 new UI in main menu and game setup screen
-		   only ask for permission to enable notification when we need to
-	Android 88 fix: back button on main menu works again
-		   Stats: show current value for countries and cards
-		   Fullscreen mode works better by hiding nav bar
-	Android 89 long press to place 10 troops
-	Android 90 better error messages when error loading map
+	Android 93 Show color blind icons in stats graph
+		   Stats graphs have 0.01 offset so lines do not overlap
+	Android 92 fixed: when language is changed, reload the app to the same game
+		   fixed: crash in Preferences being opened when main activity is closed
 	Android 91 fixed: nullpointer when sending android push token too early before handshake done
 		   Fixed: game does not remember when user disables showing dice results
 		   Fixed: Firebase causes crash on older versions of android
-	Android 92 fixed: crash in Preferences being opened when main activity is closed
-	Android 92 fixed: when language is changed, reload the app to the same game
-	Android 93 Show color blind icons in stats graph
+	Android 90 better error messages when error loading map
+	Android 89 long press to place 10 troops
+	Android 88 fix: back button on main menu works again
+		   Stats: show current value for countries and cards
+		   Fullscreen mode works better by hiding nav bar
+	Android 87 new UI in main menu and game setup screen
+		   only ask for permission to enable notification when we need to
+	Android 86 fix for notifications missing FLAG_IMMUTABLE
 
 1.2.6 (17.12.2022)
 

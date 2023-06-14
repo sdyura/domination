@@ -148,6 +148,32 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                 }
             });
         }
+
+        DominationMain application = (DominationMain)AndroidMeApp.getMIDlet();
+        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
+            application.setGooglePlayGameServices(this);
+        }
+
+        new Thread("DominationMain.setAccounts") {
+            @Override
+            public void run() {
+                // this code sometimes causes ANRs, so should be in a background thread
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ECLAIR) {
+                    AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+                    Account[] accounts = manager.getAccounts();
+                    List<String> emails = new ArrayList();
+                    for (Account account: accounts) {
+                        String name = account.name;
+                        if (name !=null && name.indexOf('@') > 0) {
+                            emails.add(name);
+                        }
+                    }
+                    DominationMain.setAccounts(emails);
+                }
+            }
+        }.start();
+
+        handleIntent(getIntent());
     }
 
     private void checkIfFullScreenNeeded() {
@@ -171,38 +197,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                 window.getDecorView().setSystemUiVisibility(0);
             }
         }
-    }
-
-    /**
-     * This method is called only once ever for the entire app.
-     */
-    @Override
-    public void onMidletStarted() {
-        DominationMain dmain = (DominationMain)AndroidMeApp.getMIDlet();
-
-        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
-            // TODO WE ARE LEAKING THE ACTIVITY HERE!!!
-            // an Activity can be created and destroyed by the system when it feels like it
-            dmain.setGooglePlayGameServices(this);
-        }
-
-        // TODO this code sometimes causes ANRs, so should be moved to a background thread
-        // this code is only here as we USED to save the list to the dmain object, but we do NOT do that any more
-        // so it should be moved out of here
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ECLAIR) {
-            AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
-            Account[] accounts = manager.getAccounts();
-            List<String> emails = new ArrayList();
-            for (Account account: accounts) {
-                String name = account.name;
-                if (name !=null && name.indexOf('@') > 0) {
-                    emails.add(name);
-                }
-            }
-            DominationMain.setAccounts(emails);
-        }
-
-        handleIntent(getIntent());
     }
 
     private void handleIntent(Intent intent) {

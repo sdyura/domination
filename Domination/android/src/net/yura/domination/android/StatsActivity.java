@@ -170,6 +170,9 @@ public class StatsActivity extends Activity {
         return renderer;
     }
 
+    /**
+     * @see net.yura.domination.mobile.PicturePanel#getIconForColor(int)
+     */
     private static String getIcon(Player p) {
         return DominationMain.getBoolean("color_blind",false) ? icons.get(p.getColor()) : null;
     }
@@ -181,7 +184,9 @@ public class StatsActivity extends Activity {
         List<Player> players = getPlayersStats();
 
         //draw each player graph.
-        for (Player p : players) {
+        for (int c = 0; c < players.size(); c++) {
+            Player p = players.get(c);
+            double playerOffset = (c / 100.0);
 
             String icon = getIcon(p);
             CategorySeries series = new CategorySeries((icon == null ? "" : icon) + MiniUtil.getStatsLabel(statType, p));
@@ -190,7 +195,7 @@ public class StatsActivity extends Activity {
 
             double newPoint=0;
 
-            series.add( newPoint ); // everything starts from 0
+            series.add( newPoint + playerOffset ); // everything starts from 0
 
             for (double aPointToDraw : PointToDraw) {
 
@@ -201,7 +206,7 @@ public class StatsActivity extends Activity {
                     newPoint = aPointToDraw;
                 }
 
-                series.add( newPoint );
+                series.add( newPoint + playerOffset );
             }
 
             dataset.addSeries(series.toXYSeries());
