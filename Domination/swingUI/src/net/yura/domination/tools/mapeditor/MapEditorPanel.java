@@ -359,7 +359,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                     }
             }
 
-            drawRect = selected == null ? null : new Rectangle(startX - 1, startY - 1, endX - startX + 3, endY - startY + 3);
+            drawRect = startX == Integer.MAX_VALUE || endX == Integer.MIN_VALUE || startY == Integer.MAX_VALUE || endY == Integer.MIN_VALUE ? null : new Rectangle(startX - 1, startY - 1, endX - startX + 3, endY - startY + 3);
             drawImage.setRGB(0,0,width,height,pixels2,0,width);
             repaint();
         }
@@ -595,7 +595,13 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                     g1.setColor(Color.RED);
                     g2.setColor( new Color(selected.getColor(),selected.getColor(),selected.getColor()) );
 
-                    drawRect.add(new Rectangle(a.x - brush / 2 -1, a.y - brush / 2 - 1, brush + 2, brush + 2));
+                    Rectangle rectA = new Rectangle(a.x - brush / 2 -1, a.y - brush / 2 - 1, brush + 2, brush + 2);
+                    if (drawRect == null) {
+                        drawRect = rectA;
+                    }
+                    else {
+                        drawRect.add(rectA);
+                    }
                     drawRect.add(new Rectangle(b.x - brush / 2 -1, b.y - brush / 2 - 1, brush + 2, brush + 2));
                 }
                 else {

@@ -19,6 +19,7 @@ CURRENT VERSION:
 	better zoom in map editor
 	izpack 5 installer fixed to put windows shortcuts
 	Fixed: Lobby Game Setup screen some map previews not loading
+	Fixed: Map Editor stuck and slow when drawing first country
 
 1.2.7 (20.12.2022)
 
