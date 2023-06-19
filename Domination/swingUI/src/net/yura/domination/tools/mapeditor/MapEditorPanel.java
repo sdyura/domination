@@ -573,7 +573,11 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
     }
 
 	public void drawLine(Point a,Point b,boolean draw) {
-
+            
+                if (!box.contains(a) && !box.contains(b)) {
+                    return;
+                }
+            
                 // this fixes a really odd bug with drawing lines on indexed images
                 if (a.y>b.y) {
 
@@ -1113,7 +1117,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 		if (mode == MODE_MOVE) {
 
-			if (xdrag && box!=null && selected!=null && box.contains(point.x,point.y)) {
+			if (xdrag && box != null && selected != null && box.contains(point)) {
 
 				selected.setX(point.x);
 				selected.setY(point.y);
@@ -1163,7 +1167,6 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 			if (
 				( (e.getModifiers() & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK) ||
 				( (e.getModifiers() & MouseEvent.BUTTON3_MASK) == MouseEvent.BUTTON3_MASK)
-
 			) {
                                 boolean draw = selected != null && (e.getModifiers() & MouseEvent.BUTTON1_MASK) == MouseEvent.BUTTON1_MASK;
 				drawLine(dragpoint, end, draw);
