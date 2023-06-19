@@ -139,20 +139,26 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 			//JOptionPane.showMessageDialog(this,"Only Risk 1.0.9.5+ supports any size maps!\nfor older version use: width="+PicturePanel.PP_X+" height="+PicturePanel.PP_Y);
 		}
 
-                if (checkmap && (pic.getWidth()!=map.getWidth() || pic.getHeight()!=map.getHeight())) {
+                if (checkmap && (pic.getWidth() != map.getWidth() || pic.getHeight() != map.getHeight())) {
 
-                        String[] options = {"Stretch", "Resize", "No"};
-			int result = JOptionPane.showOptionDialog(this,
-				"This ImagePic does not match the ImageMap size!\n"
-			      + "ImagePic: "+pic.getWidth()+"x"+pic.getHeight()+"\n"
-			      + "ImageMap: "+map.getWidth()+"x"+map.getHeight()+"\n"
-			      + "They should match for the game to work!\n"      
-			      + "would you like to update the ImageMap size?",
-				"?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                        // if we have no countires yet (this is a brand new map) then ignore this warnning
+                        if (myMap.getCountries().length == 0) {
+                            resizeAndSetImageMap(map, false);
+                        }
+                        else {
+                            String[] options = {"Stretch", "Resize", "No"};
+                            int result = JOptionPane.showOptionDialog(this,
+                                    "This ImagePic does not match the ImageMap size!\n"
+                                  + "ImagePic: "+pic.getWidth()+"x"+pic.getHeight()+"\n"
+                                  + "ImageMap: "+map.getWidth()+"x"+map.getHeight()+"\n"
+                                  + "They should match for the game to work!\n"      
+                                  + "would you like to update the ImageMap size?",
+                                    "?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-			if (result == JOptionPane.YES_OPTION || result == JOptionPane.NO_OPTION) { 
-				resizeAndSetImageMap(map, result == JOptionPane.YES_OPTION);
-			}
+                            if (result == JOptionPane.YES_OPTION || result == JOptionPane.NO_OPTION) { 
+                                    resizeAndSetImageMap(map, result == JOptionPane.YES_OPTION);
+                            }
+                        }
                 }
 
 		zoom(zoom);
