@@ -24,9 +24,11 @@
 
 <h3>Support:</h3>
 
-<p>
-<a href="https://www.patreon.com/bePatron?u=11130257" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
-</p>
+
+<!-- from: https://www.patreon.com/dashboard/widgets -->
+<div style="width: 176px;overflow:hidden">
+<a href="https://www.patreon.com/bePatron?u=11130257" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js" charset="UTF-8"></script>
+</div>
 
 <p>
 <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://domination.sourceforge.net/"></a>
@@ -133,7 +135,9 @@
 
 
 <p><a href="http://sf.net/projects/domination/">Domination Project Page on SourceForge</a></p>
+<!--
 <p><a href="http://freshmeat.net/projects/domination">Domination Project Page on Freshmeat</a> <a href="http://freshmeat.net/projects/risk">R</a></p>
+-->
 <p><a href="http://lobby.sf.net/">Lobby Web Site on SourceForge</a></p>
 <p><a href="http://sf.net/projects/lobby/">Lobby Project Page on SourceForge</a></p>
 
