@@ -53,7 +53,7 @@
 <h3>Play:</h3>
 
 <p style="white-space:nowrap">
-<a href="download.shtml"><img alt="Download" src="https://img.shields.io/sourceforge/dt/domination.svg" ><img src="images/platforms/mac.png" width="24" height="24" alt="Mac"><img src="images/platforms/windows.png" width="24" height="24" alt="Windows"><img src="images/platforms/linux.png" width="24" height="24" alt="Linux"></a><br>
+<a href="download.shtml"><img src="images/platforms/mac.png" width="24" height="24" alt="Mac"><img src="images/platforms/windows.png" width="24" height="24" alt="Windows"><img src="images/platforms/linux.png" width="24" height="24" alt="Linux"><img alt="Download" src="https://img.shields.io/sourceforge/dt/domination.svg" ></a><br>
 </p>
 
 
@@ -103,11 +103,21 @@
 <h3>Share:</h3>
 
 
-<p>
+<!--
 <g:plusone href="http://domination.sourceforge.net/"></g:plusone>
+-->
 
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v17.0" nonce="6qLXPOfO"></script>
+<div style="height: 20px;display: inline-block;padding: 1px 12px 1px 12px;background-color: #fff;border-radius: 9999px;">
+<div class="fb-share-button" data-href="https://www.facebook.com/DominationRisk/" data-layout="" data-size=""><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FDominationRisk%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+</div>
+
+<!--
 <div class="fb-like" data-href="http://www.facebook.com/BubbleandSpice" data-send="false" data-layout="button_count" data-width="150" data-show-faces="true"></div>
+-->
 
+<p>
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 </p>
