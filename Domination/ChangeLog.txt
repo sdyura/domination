@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.2.8
 
 	better zoom in map editor
+	Fix for windows exe stubs not working on java 17
 	izpack 5 installer fixed to put windows shortcuts
 	Fixed: Lobby Game Setup screen some map previews not loading
 	Fixed: Map Editor stuck and slow when drawing first country

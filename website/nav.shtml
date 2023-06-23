@@ -74,6 +74,16 @@
 <a href="https://play.google.com/store/apps/details?id=net.yura.domination"><img src="images/android_app_on_play_logo_small.png" alt="Android App on Google Play" width="129" height="45"></a>
 </p>
 
+
+<p>
+<a href="https://support.microsoft.com/en-us/windows/install-mobile-apps-and-the-amazon-appstore-on-windows-f8d0abb5-44ad-47d8-b9fb-ad6b1459ff6c" target=”_blank”>
+    <img src="images/windows-subsystem-for-android.png" width="32" height="39" alt="Windows Subsystem For Android" title="Windows Subsystem For Android"/></a>
+    
+<a href="https://apps.microsoft.com/store/detail/XPDCFHCCXQDKBM?launch=true&mode=mini">
+	<img src="https://get.microsoft.com/images/en-GB%20dark.svg"/>
+</a>
+</p>
+
 <p>
 <a href="applet/flashDomination.jnlp"><img src="images/webstart.png" alt="Launches Flash GUI Domination" height="23" width="88"></a>
 </p>
@@ -131,7 +141,7 @@
 <center>
 
 
-<p><a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=79448&amp;type=2" alt="SourceForge.net Logo" border="0" /></a></p>
+<p><a href="http://sourceforge.net"><img src="https://sourceforge.net/sflogo.php?group_id=79448&amp;type=2" alt="SourceForge.net Logo" border="0" /></a></p>
 <p>copyright 2003-2023 <a href="http://yura.net/">yura.net</a></p>
 
 
