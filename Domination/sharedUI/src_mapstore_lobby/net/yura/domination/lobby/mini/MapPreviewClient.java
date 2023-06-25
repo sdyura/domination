@@ -37,7 +37,9 @@ public abstract class MapPreviewClient implements MapServerListener {
         if (MapPreview.haveLocalMap(mapUID)) {
             Map map = MapPreview.createMap(mapUID);
             publishMap(map);
-            return MapPreview.getLocalIconForMap(map);
+            Icon icon = MapPreview.getLocalIconForMap(map);
+            publishImg(mapUID);
+            return icon;
         }
 
         if (mapServerClient == null) {
@@ -87,7 +89,7 @@ public abstract class MapPreviewClient implements MapServerListener {
     public void downloadFinished(String mapUID) { }
     public void onDownloadError(String string) { }
     
-    public void publishImg(Object key) {
+    public final void publishImg(Object key) {
         publishImg((String)key);
     }
 }
