@@ -2,7 +2,7 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.2.8
+	Risk Game:	1.2.9
 	 * Network:	14
 	 * Save:	8
 
@@ -14,7 +14,11 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.2.8
+1.2.9
+
+	Fixed: on macOS High Sierra, java 1.8, mouseClicked does not get called most of the time
+
+1.2.8 (23.06.2023)
 
 	better zoom in map editor
 	Fix for windows exe stubs not working on java 17

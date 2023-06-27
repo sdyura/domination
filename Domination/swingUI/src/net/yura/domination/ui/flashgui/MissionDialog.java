@@ -107,8 +107,10 @@ public class MissionDialog extends JDialog implements MouseListener {
 	//                     MouseListener Interface
 	//**********************************************************************
 
+        /**
+         * WARNING! This method does not work on macOS High Sierra, java 1.8
+         */
 	public void mouseClicked(MouseEvent e) {
-	    exitForm();
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -121,5 +123,6 @@ public class MissionDialog extends JDialog implements MouseListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
+            exitForm();
 	}
 }

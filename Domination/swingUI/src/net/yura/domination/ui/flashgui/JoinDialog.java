@@ -179,6 +179,9 @@ public class JoinDialog extends JDialog implements MouseInputListener {
 	//                     MouseListener Interface
 	//**********************************************************************
 
+        /**
+         * WARNING! This method does not work on macOS High Sierra, java 1.8
+         */
 	public void mouseClicked(MouseEvent e) {
 	}
 

@@ -106,6 +106,9 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 	missionsList = new JList( new MissionsListModel() );
 
         MouseListener clicky = new MouseAdapter() {
+            /**
+             * TODO!!!!!!! this method does not work on macOS High Sierra, java 1.8
+             */
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     //int index = ((JList)e.getSource()).locationToIndex(e.getPoint());

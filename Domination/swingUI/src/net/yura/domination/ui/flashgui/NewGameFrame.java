@@ -911,7 +911,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 * Applies the correct command to the button pressed
 	 * @param e The MouseEvent Object
 	 */
-	public void mouseClicked(MouseEvent e) {
+	public void mouseReleased(MouseEvent e) {
 
 		if (e.getSource()==colorChooser) {
 
@@ -931,7 +931,11 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	public void mouseEntered(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}
 	public void mousePressed(MouseEvent e) {}
-	public void mouseReleased(MouseEvent e) {}
+        
+        /**
+         * WARNING! This method does not work on macOS High Sierra, java 1.8
+         */
+	public void mouseClicked(MouseEvent e) {}
 
 
 	/**

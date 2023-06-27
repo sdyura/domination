@@ -219,8 +219,10 @@ public void mouseDragged(MouseEvent e){
 public void mouseMoved(MouseEvent e){}
 public void mouseExited(MouseEvent e){}   
 public void mouseEntered(MouseEvent e){}
+/**
+ * WARNING! This method does not work on macOS High Sierra, java 1.8
+ */
 public void mouseClicked(MouseEvent e){}
-
 
 
 }

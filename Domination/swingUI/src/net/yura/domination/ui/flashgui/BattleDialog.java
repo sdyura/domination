@@ -659,8 +659,8 @@ public class BattleDialog extends JDialog implements MouseListener {
 	/**
 	 * Works out where the mouse was clicked
 	 * @param e A mouse event
-	 */
-	public void mouseClicked(MouseEvent e) {
+	 */        
+        public void mouseReleased(MouseEvent e) {
 		int click=insideButton(e.getX(),e.getY());
 		if (max != 0) {
                     if (canRetreat) {
@@ -683,6 +683,8 @@ public class BattleDialog extends JDialog implements MouseListener {
 
 	public void mousePressed(MouseEvent e) { }
 
-	public void mouseReleased(MouseEvent e) { }
-
+        /**
+         * WARNING! This method does not work on macOS High Sierra, java 1.8
+         */
+	public void mouseClicked(MouseEvent e) { }
 }

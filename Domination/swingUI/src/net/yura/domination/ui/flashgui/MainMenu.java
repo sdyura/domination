@@ -246,6 +246,9 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	//                     MouseListener Interface
 	//**********************************************************************
 
+        /**
+         * WARNING! This method does not work on macOS High Sierra, java 1.8
+         */
 	public void mouseClicked(MouseEvent e) { }
 
 	public void mouseEntered(MouseEvent e) { }

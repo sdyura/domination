@@ -356,7 +356,7 @@ public class CardsDialog extends JDialog {
 	//                     MouseListener Interface
 	//**********************************************************************
 
-	public void mouseClicked(MouseEvent e) {
+	public void mouseReleased(MouseEvent e) {
 
 	    if ( this.getParent() == CardsPanel ) {
 		if (TradePanel.getComponentCount() < 3) {
@@ -395,7 +395,10 @@ public class CardsDialog extends JDialog {
 	public void mousePressed(MouseEvent e) {
 	}
 
-	public void mouseReleased(MouseEvent e) {
+        /**
+         * WARNING! This method does not work on macOS High Sierra, java 1.8
+         */
+	public void mouseClicked(MouseEvent e) {
 	}
     }
 

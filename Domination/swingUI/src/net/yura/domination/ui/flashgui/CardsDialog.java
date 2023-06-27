@@ -416,8 +416,8 @@ public class CardsDialog extends JDialog {
 		 * Works out what has been clicked
 		 * @param e A mouse event
 		 */
-		public void mouseClicked(MouseEvent e) {
-
+		public void mouseReleased(MouseEvent e) {
+                    
 			if ( this.getParent() == myCardsPanel ) {
 				if (TradePanel.getComponentCount() < 3) { myCardsPanel.remove(this); select=false; TradePanel.add(this); }
 				if (TradePanel.getComponentCount() == 3 && canTrade && myrisk.canTrade( ((CardPanel)TradePanel.getComponent(0)).getCardName() , ((CardPanel)TradePanel.getComponent(1)).getCardName(), ((CardPanel)TradePanel.getComponent(2)).getCardName() ) ) { tradeButton.setEnabled(true); }
@@ -456,7 +456,10 @@ public class CardsDialog extends JDialog {
 		public void mousePressed(MouseEvent e) {
 		}
 
-		public void mouseReleased(MouseEvent e) {
+                /**
+                 * WARNING! This method does not work on macOS High Sierra, java 1.8
+                 */
+		public void mouseClicked(MouseEvent e) {
 		}
 
 	}

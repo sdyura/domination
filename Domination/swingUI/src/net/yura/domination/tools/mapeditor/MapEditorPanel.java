@@ -947,6 +947,9 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	}
     }
 
+        /**
+         * TODO!!!!!!! this method does not work on macOS High Sierra, java 1.8
+         */
 	public void mouseClicked(MouseEvent e) {
 
 		if (myMap!=null) {
