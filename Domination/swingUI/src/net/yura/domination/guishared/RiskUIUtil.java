@@ -10,6 +10,7 @@ import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
@@ -170,6 +171,25 @@ public class RiskUIUtil {
 
     private static Map UIImagesReferences = new HashMap();
 
+    public static Image getUIImageNew(Class cls, String name) {
+        Image img = getUIImage(cls, name);
+
+        int dot = name.lastIndexOf('.');
+        if (dot > 0) {
+            String scale2x = name.substring(0, dot) + "@2x" + name.substring(dot);
+            try {
+                Image img2x = getUIImage(cls, scale2x);
+                Image[] imgList = new Image[] {img, img2x};
+                return GraphicsUtil.newBaseMultiResolutionImage(imgList);
+            }
+            catch (Throwable ex) {
+                // failed to create MultiResolutionImage
+            }
+        }
+
+        return img;
+    }
+    
     public static BufferedImage getUIImage(Class c,String name) {
 		try {
 			String id = c+" - "+name;

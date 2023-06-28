@@ -16,7 +16,9 @@ CURRENT VERSION:
 
 1.2.9
 
+	Hi-resolution support for image assets in main game UI
 	Fixed: on macOS High Sierra, java 1.8, mouseClicked does not get called most of the time
+	Fixed: map filename is shown sometimes instead of proper name in lobby game setup
 
 1.2.8 (23.06.2023)
 

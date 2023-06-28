@@ -9,14 +9,21 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Polygon;
+import java.awt.Toolkit;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
 import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
+import java.util.List;
 import javax.swing.plaf.basic.BasicGraphicsUtils;
 
 public class GraphicsUtil {
@@ -161,5 +168,43 @@ public class GraphicsUtil {
         }
         catch (Throwable th) { }
         return 1;
+    }
+
+    /**
+     * A version of BufferedImage.getSubimage that works on ALL image types, not just BufferedImage
+     * 
+     * @see BufferedImage#getSubimage(int, int, int, int) 
+     */
+    public static Image getSubimage(Image img, int x, int y, int width, int height) {
+        if (img instanceof BufferedImage) {
+            return ((BufferedImage)img).getSubimage(x, y, width, height);
+        }
+
+        try {
+            Class multiResolutionImageClass = Class.forName("java.awt.image.MultiResolutionImage");
+            if (multiResolutionImageClass.isInstance(img)) {
+                int baseWidth = img.getWidth(null);
+                List<Image> images = (List<Image>)multiResolutionImageClass.getMethod("getResolutionVariants").invoke(img);
+                Image[] scaledImages = new Image[images.size()];
+                for (int c = 0; c < images.size(); c++) {
+                    Image i = images.get(c);
+                    double scale = i.getWidth(null) / (double)baseWidth;
+                    scaledImages[c] = getSubimage(i, (int)(x * scale), (int)(y * scale), (int)(width * scale), (int)(height * scale));
+                }
+                return newBaseMultiResolutionImage(scaledImages);
+            }
+        }
+        catch (Throwable ex) {
+            // failed to handle MultiResolutionImage
+        }
+
+        ImageFilter filter = new CropImageFilter(x, y, width, height);
+        ImageProducer prod = new FilteredImageSource(img.getSource(), filter);
+        return Toolkit.getDefaultToolkit().createImage(prod);
+    }
+    
+    public static Image newBaseMultiResolutionImage(Image[] images) throws Exception {
+        Class baseMultiResolutionImageClass = Class.forName("java.awt.image.BaseMultiResolutionImage");
+        return (Image)baseMultiResolutionImageClass.getConstructor(images.getClass()).newInstance((Object)images);
     }
 }
