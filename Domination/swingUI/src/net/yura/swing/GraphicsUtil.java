@@ -176,10 +176,6 @@ public class GraphicsUtil {
      * @see BufferedImage#getSubimage(int, int, int, int) 
      */
     public static Image getSubimage(Image img, int x, int y, int width, int height) {
-        if (img instanceof BufferedImage) {
-            return ((BufferedImage)img).getSubimage(x, y, width, height);
-        }
-
         try {
             Class multiResolutionImageClass = Class.forName("java.awt.image.MultiResolutionImage");
             if (multiResolutionImageClass.isInstance(img)) {
@@ -189,7 +185,8 @@ public class GraphicsUtil {
                 for (int c = 0; c < images.size(); c++) {
                     Image i = images.get(c);
                     double scale = i.getWidth(null) / (double)baseWidth;
-                    scaledImages[c] = getSubimage(i, (int)(x * scale), (int)(y * scale), (int)(width * scale), (int)(height * scale));
+                    // can not use recursion here as some images return themselves as a variant
+                    scaledImages[c] = getSubimageImpl(i, (int)(x * scale), (int)(y * scale), (int)(width * scale), (int)(height * scale));
                 }
                 return newBaseMultiResolutionImage(scaledImages);
             }
@@ -198,11 +195,19 @@ public class GraphicsUtil {
             // failed to handle MultiResolutionImage
         }
 
+        return getSubimageImpl(img, x, y, width, height);
+    }
+
+    private static Image getSubimageImpl(Image img, int x, int y, int width, int height) {
+        if (img instanceof BufferedImage) {
+            return ((BufferedImage)img).getSubimage(x, y, width, height);
+        }
+        
         ImageFilter filter = new CropImageFilter(x, y, width, height);
         ImageProducer prod = new FilteredImageSource(img.getSource(), filter);
         return Toolkit.getDefaultToolkit().createImage(prod);
     }
-    
+
     public static Image newBaseMultiResolutionImage(Image[] images) throws Exception {
         Class baseMultiResolutionImageClass = Class.forName("java.awt.image.BaseMultiResolutionImage");
         return (Image)baseMultiResolutionImageClass.getConstructor(images.getClass()).newInstance((Object)images);
