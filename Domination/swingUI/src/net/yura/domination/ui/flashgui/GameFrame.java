@@ -140,7 +140,7 @@ public class GameFrame extends JFrame implements KeyListener {
 
                 resb = TranslationBundle.getBundle();
                 boolean i18n = !new Locale("").getLanguage().equals(resb.getLocale().getLanguage()) && !new Locale("en").getLanguage().equals(resb.getLocale().getLanguage());
-                gameImg = RiskUIUtil.getUIImageNew(this.getClass(), i18n ? "game_i18n.jpg" : "game.jpg");
+                gameImg = RiskUIUtil.getUIImage(this.getClass(), i18n ? "game_i18n.jpg" : "game.jpg");
 
 		initGUI();
 

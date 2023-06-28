@@ -14,8 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.util.ResourceBundle;
 import javax.swing.JDialog;
 import net.yura.domination.engine.Risk;
@@ -30,7 +30,7 @@ import net.yura.domination.engine.translation.TranslationBundle;
 public class JoinDialog extends JDialog implements MouseInputListener {
 
 	private Risk myrisk;
-	private BufferedImage joingame;
+	private Image joingame;
 	private JTextField serverField;
 	private ResourceBundle resb;
 

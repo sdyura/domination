@@ -2,9 +2,7 @@
 
 package net.yura.domination.ui.flashgui;
 
-import java.awt.Frame;
 import javax.swing.JApplet;
-import javax.swing.SwingUtilities;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
@@ -12,7 +10,6 @@ import net.yura.domination.engine.translation.TranslationBundle;
 /**
  * @author Yura Mamyrin
  */
-
 public class FlashGUIApplet extends JApplet {
 
 	public void init() {

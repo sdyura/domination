@@ -8,12 +8,12 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -43,8 +43,8 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	private final static String product = "GameGUI for " + RiskUtil.GAME_NAME;
 	private final static String version = "2";
 
-	private BufferedImage MenuImage;
-	private BufferedImage Server;
+	private Image MenuImage;
+	private Image Server;
 	private Risk myrisk;
 	private FlashRiskAdapter fra;
 	private boolean serverRunning;
@@ -85,7 +85,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 		MenuImage = RiskUIUtil.getUIImage(this.getClass(),"menu.jpg");
 
-		Server = MenuImage.getSubimage(400, 490, 60, 60);
+		Server = GraphicsUtil.getSubimage(MenuImage, 400, 490, 60, 60);
 
 		Dimension menuSize = GraphicsUtil.newDimension(400, 550);
 

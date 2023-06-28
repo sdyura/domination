@@ -61,7 +61,7 @@ import net.yura.domination.engine.translation.TranslationBundle;
  */
 public class NewGameFrame extends JFrame implements ActionListener,MouseListener,KeyListener {
 
-	private BufferedImage newgame;
+	private Image newgame;
 	private Risk myrisk;
 	private boolean localgame;
 	private JLabel mapPic;
@@ -178,12 +178,12 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		int h=32;
 
 		chooseMap = new BadgeButton(resb.getString("newgame.choosemap"));
-		sortOutButton( chooseMap , newgame.getSubimage(54, 191, w, h) , newgame.getSubimage(700, 105, w, h) , newgame.getSubimage(700, 137, w, h) );
+		sortOutButton( chooseMap , GraphicsUtil.getSubimage(newgame, 54, 191, w, h) , GraphicsUtil.getSubimage(newgame, 700, 105, w, h) , GraphicsUtil.getSubimage(newgame, 700, 137, w, h) );
 		chooseMap.addActionListener( this );
 		GraphicsUtil.setBounds(chooseMap, 54, 192, w, h);
 
 		defaultMap = new JButton(resb.getString("newgame.defaultmap"));
-		sortOutButton( defaultMap , newgame.getSubimage(159, 192, w, h) , newgame.getSubimage(700, 169, w, h) , newgame.getSubimage(700, 201, w, h) );
+		sortOutButton( defaultMap , GraphicsUtil.getSubimage(newgame, 159, 192, w, h) , GraphicsUtil.getSubimage(newgame, 700, 169, w, h) , GraphicsUtil.getSubimage(newgame, 700, 201, w, h) );
 		defaultMap.addActionListener( this );
 		GraphicsUtil.setBounds(defaultMap, 159, 192, 93, 32);
 
@@ -194,12 +194,12 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		GraphicsUtil.setBounds(cardsFile, 54, 260, 200, 27);
 
 		chooseCards = new JButton(resb.getString("newgame.choosecards"));
-		sortOutButton( chooseCards , newgame.getSubimage(54, 191, w, h) , newgame.getSubimage(700, 105, w, h) , newgame.getSubimage(700, 137, w, h) );
+		sortOutButton( chooseCards , GraphicsUtil.getSubimage(newgame, 54, 191, w, h) , GraphicsUtil.getSubimage(newgame, 700, 105, w, h) , GraphicsUtil.getSubimage(newgame, 700, 137, w, h) );
 		chooseCards.addActionListener( this );
 		GraphicsUtil.setBounds(chooseCards, 54, 301, 93, 32);
 
 		defaultCards = new JButton(resb.getString("newgame.defaultcards"));
-		sortOutButton( defaultCards , newgame.getSubimage(159, 192, w, h) , newgame.getSubimage(700, 169, w, h) , newgame.getSubimage(700, 201, w, h) );
+		sortOutButton( defaultCards , GraphicsUtil.getSubimage(newgame, 159, 192, w, h) , GraphicsUtil.getSubimage(newgame, 700, 169, w, h) , GraphicsUtil.getSubimage(newgame, 700, 201, w, h) );
 		defaultCards.addActionListener( this );
 		GraphicsUtil.setBounds(defaultCards, 159, 301, 93, 32);
 
@@ -275,7 +275,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		h=31;
 
 		resetplayers = new JButton(resb.getString("newgame.resetplayers"));
-		sortOutButton( resetplayers , newgame.getSubimage(705, 488, w, h) , newgame.getSubimage(700, 357, w, h) , newgame.getSubimage(700, 388, w, h) );
+		sortOutButton( resetplayers , GraphicsUtil.getSubimage(newgame, 705, 488, w, h) , GraphicsUtil.getSubimage(newgame, 700, 357, w, h) , GraphicsUtil.getSubimage(newgame, 700, 388, w, h) );
 		GraphicsUtil.setBounds(resetplayers, 437, 268, 115, 31);
 		resetplayers.addActionListener( this );
 
@@ -327,27 +327,27 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		thecolor = Color.black;
 
 		playerColor = new JToggleButton("");
-		sortOutButton( playerColor , newgame.getSubimage(793, 105, 19, 19) , newgame.getSubimage(793, 125, 19, 19) , newgame.getSubimage(793, 145, 19, 19) );
+		sortOutButton( playerColor , GraphicsUtil.getSubimage(newgame, 793, 105, 19, 19) , GraphicsUtil.getSubimage(newgame, 793, 125, 19, 19) , GraphicsUtil.getSubimage(newgame, 793, 145, 19, 19) );
 		playerColor.addActionListener( this );
 		GraphicsUtil.setBounds(playerColor, 475, 370, 25, 25);
 
 		addplayer = new JButton(resb.getString("newgame.addplayer"));
-		sortOutButton( addplayer , newgame.getSubimage(437, 413, w, h) , newgame.getSubimage(700, 419, w, h) , newgame.getSubimage(700, 450, w, h) );
+		sortOutButton( addplayer , GraphicsUtil.getSubimage(newgame, 437, 413, w, h) , GraphicsUtil.getSubimage(newgame, 700, 419, w, h) , GraphicsUtil.getSubimage(newgame, 700, 450, w, h) );
 		addplayer.addActionListener( this );
 		GraphicsUtil.setBounds(addplayer, 437, 413, 115, 31);
 
 		cancel = new JButton(resb.getString("newgame.cancel"));
-		sortOutButton( cancel , newgame.getSubimage(41, 528, w, h) , newgame.getSubimage(700, 233, w, h) , newgame.getSubimage(700, 264, w, h) );
+		sortOutButton( cancel , GraphicsUtil.getSubimage(newgame, 41, 528, w, h) , GraphicsUtil.getSubimage(newgame, 700, 233, w, h) , GraphicsUtil.getSubimage(newgame, 700, 264, w, h) );
 		cancel.addActionListener( this );
 		GraphicsUtil.setBounds(cancel, 41, 528, 115, 31);
 
 		help = new JButton(); // 335 528
-		sortOutButton( help , newgame.getSubimage(781, 526, 30 , 30) , newgame.getSubimage(794, 171, 30 , 30) , newgame.getSubimage(794, 202, 30 , 30) );
+		sortOutButton( help , GraphicsUtil.getSubimage(newgame, 781, 526, 30 , 30) , GraphicsUtil.getSubimage(newgame, 794, 171, 30 , 30) , GraphicsUtil.getSubimage(newgame, 794, 202, 30 , 30) );
 		help.addActionListener( this );
 		GraphicsUtil.setBounds(help, 335, 529, 30, 30); // should be 528
 
 		start = new JButton(resb.getString("newgame.startgame"));
-		sortOutButton( start , newgame.getSubimage(544, 528, w, h) , newgame.getSubimage(700, 295, w, h) , newgame.getSubimage(700, 326, w, h) );
+		sortOutButton( start , GraphicsUtil.getSubimage(newgame, 544, 528, w, h) , GraphicsUtil.getSubimage(newgame, 700, 295, w, h) , GraphicsUtil.getSubimage(newgame, 700, 326, w, h) );
 		start.addActionListener( this );
 		GraphicsUtil.setBounds(start, 544, 528, 115, 31);
 
@@ -667,19 +667,19 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			BufferedImage remove3 = new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_RGB );
 
 			Graphics g1 = remove1.getGraphics();
-			g1.drawImage( newgame.getSubimage(700, 525, w, h) ,0 ,0, this);
+			g1.drawImage( GraphicsUtil.getSubimage(newgame, 700, 525, w, h) ,0 ,0, this);
 			g1.setColor( new Color(c.getRed(),c.getGreen(), c.getBlue(), 50) );
 			g1.fillRect(0,0,w,h);
 			g1.dispose();
 
 			Graphics g2 = remove2.getGraphics();
-			g2.drawImage( newgame.getSubimage(700, 550, w, h) ,0 ,0, this);
+			g2.drawImage( GraphicsUtil.getSubimage(newgame, 700, 550, w, h) ,0 ,0, this);
 			g2.setColor( new Color(c.getRed(),c.getGreen(), c.getBlue(), 50) );
 			g2.fillRect(0,0,w,h);
 			g2.dispose();
 
 			Graphics g3 = remove3.getGraphics();
-			g3.drawImage( newgame.getSubimage(700, 575, w, h) ,0 ,0, this);
+			g3.drawImage( GraphicsUtil.getSubimage(newgame, 700, 575, w, h) ,0 ,0, this);
 			g3.setColor( new Color(c.getRed(),c.getGreen(), c.getBlue(), 50) );
 			g3.fillRect(0,0,w,h);
 			g3.dispose();

@@ -4,9 +4,9 @@ package net.yura.domination.ui.flashgui;
 
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
@@ -23,7 +23,6 @@ import net.yura.domination.engine.translation.TranslationBundle;
  * <p> Statistics Dialog for FlashGUI </p>
  * @author Yura Mamyrin
  */
-
 public class StatsDialog extends JDialog implements ActionListener {
 
         // we can only have 12 stats with the current UI, there is a total of 14, so we skip a couple
@@ -43,7 +42,7 @@ public class StatsDialog extends JDialog implements ActionListener {
             StatType.CARDS,
             StatType.DICE};
 
-        private BufferedImage Back;
+        private Image Back;
 	private Risk myrisk;
 	private StatsPanel graph;
 	private java.util.ResourceBundle resb;
@@ -71,10 +70,10 @@ public class StatsDialog extends JDialog implements ActionListener {
 
 		JPanel thisgraph = new JPanel();
                 thisgraph.setBorder( new FlashBorder(
-                        Back.getSubimage(100, 0, 740, 50),
-                        Back.getSubimage(0, 0, 50, 400),
-                        Back.getSubimage(100, 182, 740, 150),
-                        Back.getSubimage(50, 0, 50, 400)
+                        GraphicsUtil.getSubimage(Back, 100, 0, 740, 50),
+                        GraphicsUtil.getSubimage(Back, 0, 0, 50, 400),
+                        GraphicsUtil.getSubimage(Back, 100, 182, 740, 150),
+                        GraphicsUtil.getSubimage(Back, 50, 0, 50, 400)
                         ) );
 
 		Dimension d = GraphicsUtil.newDimension(740, 600);
@@ -153,7 +152,7 @@ public class StatsDialog extends JDialog implements ActionListener {
                 GraphicsUtil.setBounds(statbutton, x, y, w, h);
                 group.add(statbutton);
 
-                NewGameFrame.sortOutButton( statbutton, Back.getSubimage(x+100,y-433+165,w,h), Back.getSubimage(x+100,y-433,w,h), Back.getSubimage(x+100,y-433+66,w,h) );
+                NewGameFrame.sortOutButton( statbutton, GraphicsUtil.getSubimage(Back, x+100,y-433+165,w,h), GraphicsUtil.getSubimage(Back, x+100,y-433,w,h), GraphicsUtil.getSubimage(Back, x+100,y-433+66,w,h) );
 
                 return statbutton;
         }

@@ -49,14 +49,14 @@ public class CardsDialog extends JDialog {
 	private JPanel TradePanel;
 	private JScrollPane CardsPlane;
 
-	private BufferedImage Cards;
-	private BufferedImage Back;
+	private Image Cards;
+	private Image Back;
 	private PicturePanel pp;
 
-	private BufferedImage Infantry;
-	private BufferedImage Cavalry;
-	private BufferedImage Artillery;
-	private BufferedImage Wildcard;
+	private Image Infantry;
+	private Image Cavalry;
+	private Image Artillery;
+	private Image Wildcard;
 	private JButton tradeButton;
 	private boolean canTrade;
 
@@ -75,12 +75,12 @@ public class CardsDialog extends JDialog {
 
 		Cards = RiskUIUtil.getUIImage(this.getClass(),"cards.jpg");
 
-		Back = Cards.getSubimage(0, 0, 630, 500);
+		Back = GraphicsUtil.getSubimage(Cards, 0, 0, 630, 500);
 
-		Wildcard = Cards.getSubimage(630, 0, 50, 145);
-		Cavalry = Cards.getSubimage(630, 145, 50, 70);
-		Infantry = Cards.getSubimage(630, 215, 50, 70);
-		Artillery = Cards.getSubimage(630, 285, 70, 50);
+		Wildcard = GraphicsUtil.getSubimage(Cards, 630, 0, 50, 145);
+		Cavalry = GraphicsUtil.getSubimage(Cards, 630, 145, 50, 70);
+		Infantry = GraphicsUtil.getSubimage(Cards, 630, 215, 50, 70);
+		Artillery = GraphicsUtil.getSubimage(Cards, 630, 285, 70, 50);
 
 		initGUI();
 
@@ -139,7 +139,7 @@ public class CardsDialog extends JDialog {
 		TradePanel.setLayout(GraphicsUtil.newFlowLayout(java.awt.FlowLayout.LEFT));
 		TradePanel.setOpaque(false);
 
-		tradeButton = GameFrame.makeRiskButton(Cards.getSubimage(396, 420, 88, 31), Cards.getSubimage(630, 335, 88, 31), Cards.getSubimage(630, 366, 88, 31), Cards.getSubimage(630, 397, 88, 31));
+		tradeButton = GameFrame.makeRiskButton(GraphicsUtil.getSubimage(Cards, 396, 420, 88, 31), GraphicsUtil.getSubimage(Cards, 630, 335, 88, 31), GraphicsUtil.getSubimage(Cards, 630, 366, 88, 31), GraphicsUtil.getSubimage(Cards, 630, 397, 88, 31));
 		tradeButton.setText(resb.getString("cards.trade"));
 		GraphicsUtil.setBounds(tradeButton, 396, 420, 88, 31);
 
@@ -159,7 +159,7 @@ public class CardsDialog extends JDialog {
                 note.setBackground(new Color(0, 0, 0, 0));
                 note.setForeground(Color.BLACK);
 
-		JButton okButton = GameFrame.makeRiskButton(Cards.getSubimage(500, 420, 88, 31), Cards.getSubimage(630, 428, 88, 31), Cards.getSubimage(630, 459, 88, 31), Cards.getSubimage(500, 420, 88, 31));
+		JButton okButton = GameFrame.makeRiskButton(GraphicsUtil.getSubimage(Cards, 500, 420, 88, 31), GraphicsUtil.getSubimage(Cards, 630, 428, 88, 31), GraphicsUtil.getSubimage(Cards, 630, 459, 88, 31), GraphicsUtil.getSubimage(Cards, 500, 420, 88, 31));
 		okButton.setText(resb.getString("cards.done"));
 		GraphicsUtil.setBounds(okButton, 500, 420, 88, 31);
 

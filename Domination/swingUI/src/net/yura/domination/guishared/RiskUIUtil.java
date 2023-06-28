@@ -171,26 +171,28 @@ public class RiskUIUtil {
 
     private static Map UIImagesReferences = new HashMap();
 
-    public static Image getUIImageNew(Class cls, String name) {
-        Image img = getUIImage(cls, name);
+    public static Image getUIImage(Class cls, String name) {
+        Image img = getUIImageCached(cls, name);
 
-        int dot = name.lastIndexOf('.');
-        if (dot > 0) {
-            String scale2x = name.substring(0, dot) + "@2x" + name.substring(dot);
-            try {
-                Image img2x = getUIImage(cls, scale2x);
-                Image[] imgList = new Image[] {img, img2x};
-                return GraphicsUtil.newBaseMultiResolutionImage(imgList);
-            }
-            catch (Throwable ex) {
-                // failed to create MultiResolutionImage
+        if (GraphicsUtil.density > 1) {
+            int dot = name.lastIndexOf('.');
+            if (dot > 0) {
+                String scale2x = name.substring(0, dot) + "@2x" + name.substring(dot);
+                try {
+                    Image img2x = getUIImageCached(cls, scale2x);
+                    Image[] imgList = new Image[] {img, img2x};
+                    return GraphicsUtil.newBaseMultiResolutionImage(imgList);
+                }
+                catch (Throwable ex) {
+                    // failed to create MultiResolutionImage
+                }
             }
         }
 
         return img;
     }
     
-    public static BufferedImage getUIImage(Class c,String name) {
+    private static BufferedImage getUIImageCached(Class c,String name) {
 		try {
 			String id = c+" - "+name;
 			WeakReference wr = (WeakReference)UIImagesReferences.get(id);

@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -32,8 +33,8 @@ public class MoveDialog extends JDialog {
 	private GameFrame gui;
 	private boolean tacmove;
 
-	private BufferedImage Move;
-	private BufferedImage MoveBack;
+	private Image Move;
+	private Image MoveBack;
 
 	private BufferedImage c1img;
 	private BufferedImage c2img;
@@ -64,7 +65,7 @@ public class MoveDialog extends JDialog {
 		super(parent, modal);
 		gui = (GameFrame)parent;
 		Move = RiskUIUtil.getUIImage(this.getClass(),"move.jpg");
-		MoveBack = Move.getSubimage(0, 0, 480, 330);
+		MoveBack = GraphicsUtil.getSubimage(Move, 0, 0, 480, 330);
 		initGUI();
 		setResizable(false);
 		pack();
@@ -94,17 +95,17 @@ public class MoveDialog extends JDialog {
 		int h=31;
 
 		cancel = new JButton(resb.getString("move.cancel"));
-		NewGameFrame.sortOutButton( cancel, Move.getSubimage(484, 5, w, h), Move.getSubimage(480, 72, w, h) ,Move.getSubimage(480, 41, w, h) );
+		NewGameFrame.sortOutButton( cancel, GraphicsUtil.getSubimage(Move, 484, 5, w, h), GraphicsUtil.getSubimage(Move, 480, 72, w, h) ,GraphicsUtil.getSubimage(Move, 480, 41, w, h) );
 		GraphicsUtil.setBounds(cancel, 50, 250, w, h);
 		cancel.setActionCommand("cancel");
 
 		JButton moveall = new JButton(resb.getString("move.moveall"));
-		NewGameFrame.sortOutButton( moveall, Move.getSubimage(196, 250, w, h) ,Move.getSubimage(480, 134, w, h), Move.getSubimage(480, 103, w, h) );
+		NewGameFrame.sortOutButton( moveall, GraphicsUtil.getSubimage(Move, 196, 250, w, h) ,GraphicsUtil.getSubimage(Move, 480, 134, w, h), GraphicsUtil.getSubimage(Move, 480, 103, w, h) );
 		GraphicsUtil.setBounds(moveall, 196, 250, w, h);
 		moveall.setActionCommand("all");
 
 		JButton moveButton = new JButton(resb.getString("move.move"));
-		NewGameFrame.sortOutButton(moveButton, Move.getSubimage(342, 250, w, h), Move.getSubimage(480, 196, w, h), Move.getSubimage(480, 165, w, h) );
+		NewGameFrame.sortOutButton(moveButton, GraphicsUtil.getSubimage(Move, 342, 250, w, h), GraphicsUtil.getSubimage(Move, 480, 196, w, h), GraphicsUtil.getSubimage(Move, 480, 165, w, h) );
 		GraphicsUtil.setBounds(moveButton, 343, 250, w, h);
 		moveButton.setActionCommand("move");
 
@@ -114,12 +115,12 @@ public class MoveDialog extends JDialog {
 		h=25;
 
 		JButton b1 = new JButton(resb.getString("move.min"));
-		NewGameFrame.sortOutButton( b1, Move.getSubimage(25, 192, w, h), Move.getSubimage(480, 252, w, h), Move.getSubimage(515, 252, w, h) );
+		NewGameFrame.sortOutButton( b1, GraphicsUtil.getSubimage(Move, 25, 192, w, h), GraphicsUtil.getSubimage(Move, 480, 252, w, h), GraphicsUtil.getSubimage(Move, 515, 252, w, h) );
 		GraphicsUtil.setBounds(b1, 25, 192, w, h);
 		b1.setActionCommand("b1");
 
 		JButton b4 = new JButton(resb.getString("move.max"));
-		NewGameFrame.sortOutButton( b4, Move.getSubimage(25, 192, w, h), Move.getSubimage(480, 252, w, h), Move.getSubimage(515, 252, w, h) );
+		NewGameFrame.sortOutButton( b4, GraphicsUtil.getSubimage(Move, 25, 192, w, h), GraphicsUtil.getSubimage(Move, 480, 252, w, h), GraphicsUtil.getSubimage(Move, 515, 252, w, h) );
 		GraphicsUtil.setBounds(b4, 420, 192, w, h);
 		b4.setActionCommand("b4");
 
@@ -129,12 +130,12 @@ public class MoveDialog extends JDialog {
 		h=25;
 
 		JButton b2 = new JButton(resb.getString("move.minus"));
-		NewGameFrame.sortOutButton( b2, Move.getSubimage(60, 192, w, h), Move.getSubimage(480, 227, w, h), Move.getSubimage(505, 227, w, h) );
+		NewGameFrame.sortOutButton( b2, GraphicsUtil.getSubimage(Move, 60, 192, w, h), GraphicsUtil.getSubimage(Move, 480, 227, w, h), GraphicsUtil.getSubimage(Move, 505, 227, w, h) );
 		GraphicsUtil.setBounds(b2, 60, 192, w, h);
 		b2.setActionCommand("b2");
 
 		JButton b3 = new JButton(resb.getString("move.plus"));
-		NewGameFrame.sortOutButton( b3, Move.getSubimage(60, 192, w, h), Move.getSubimage(480, 227, w, h), Move.getSubimage(505, 227, w, h) );
+		NewGameFrame.sortOutButton( b3, GraphicsUtil.getSubimage(Move, 60, 192, w, h), GraphicsUtil.getSubimage(Move, 480, 227, w, h), GraphicsUtil.getSubimage(Move, 505, 227, w, h) );
 		GraphicsUtil.setBounds(b3, 395, 192, w, h);
 		b3.setActionCommand("b3");
 
@@ -288,7 +289,7 @@ public class MoveDialog extends JDialog {
 			GraphicsUtil.drawImage(g, MoveBack, 0, 0, this);
 
 			if (tacmove) {
-				GraphicsUtil.drawImage(g, Move.getSubimage(480, 0, 98, 41), 46, 245, this);
+				GraphicsUtil.drawImage(g, GraphicsUtil.getSubimage(Move, 480, 0, 98, 41), 46, 245, this);
 			}
 
 			paintMove(g, 

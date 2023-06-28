@@ -47,10 +47,10 @@ public class CardsDialog extends JDialog {
     private JPanel CardsPanel;
     private JPanel TradePanel;
     private JScrollPane CardsPlane;
-    private BufferedImage Infantry;
-    private BufferedImage Cavalry;
-    private BufferedImage Artillery;
-    private BufferedImage Wildcard;
+    private Image Infantry;
+    private Image Cavalry;
+    private Image Artillery;
+    private Image Wildcard;
     private JButton tradeButton;
     private boolean canTrade;
     private JLabel getNum;

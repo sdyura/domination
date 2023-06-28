@@ -7,10 +7,10 @@ import java.awt.Graphics2D;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -22,7 +22,7 @@ import net.yura.swing.GraphicsUtil;
  */
 public class MissionDialog extends JDialog implements MouseListener {
 
-    private BufferedImage mission;
+    private Image mission;
     private String text;
 
     /**

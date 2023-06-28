@@ -5,6 +5,7 @@ package net.yura.domination.ui.flashgui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -39,8 +40,8 @@ public class BattleDialog extends JDialog implements MouseListener {
 	private int c1num;
 	private int c2num;
 
-	private BufferedImage Battle;
-	private BufferedImage Back;
+	private Image Battle;
+	private Image Back;
 
 	private JButton button;
 	private JButton retreat;
@@ -63,8 +64,8 @@ public class BattleDialog extends JDialog implements MouseListener {
 	private int noda,nodd;
         private boolean spinA,spinD;
 
-	private BufferedImage[] attackerSpins;
-	private BufferedImage[] defenderSpins;
+	private Image[] attackerSpins;
+	private Image[] defenderSpins;
 
 	private java.util.ResourceBundle resb;
 	private JPanel battle;
@@ -85,7 +86,7 @@ public class BattleDialog extends JDialog implements MouseListener {
 
 		Battle = RiskUIUtil.getUIImage(this.getClass(),"battle.jpg");
 
-		Back = Battle.getSubimage(0, 0, 480, 350);
+		Back = GraphicsUtil.getSubimage(Battle, 0, 0, 480, 350);
 
                 int x=580;
                 int i=0;
@@ -94,21 +95,21 @@ public class BattleDialog extends JDialog implements MouseListener {
 
 		attackerSpins = new BufferedImage[6];
 
-		attackerSpins[0] = Battle.getSubimage(x, h*i++, w, h);
-		attackerSpins[1] = Battle.getSubimage(x, h*i++, w, h);
-		attackerSpins[2] = Battle.getSubimage(x, h*i++, w, h);
-		attackerSpins[3] = Battle.getSubimage(x, h*i++, w, h);
-		attackerSpins[4] = Battle.getSubimage(x, h*i++, w, h);
-		attackerSpins[5] = Battle.getSubimage(x, h*i++, w, h);
+		attackerSpins[0] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		attackerSpins[1] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		attackerSpins[2] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		attackerSpins[3] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		attackerSpins[4] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		attackerSpins[5] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
 
 		defenderSpins = new BufferedImage[6];
 
-		defenderSpins[0] = Battle.getSubimage(x, h*i++, w, h);
-		defenderSpins[1] = Battle.getSubimage(x, h*i++, w, h);
-		defenderSpins[2] = Battle.getSubimage(x, h*i++, w, h);
-		defenderSpins[3] = Battle.getSubimage(x, h*i++, w, h);
-		defenderSpins[4] = Battle.getSubimage(x, h*i++, w, h);
-		defenderSpins[5] = Battle.getSubimage(x, h*i++, w, h);
+		defenderSpins[0] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		defenderSpins[1] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		defenderSpins[2] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		defenderSpins[3] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		defenderSpins[4] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
+		defenderSpins[5] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
 
 		initGUI();
 		pack();
@@ -133,16 +134,16 @@ public class BattleDialog extends JDialog implements MouseListener {
 		int w=88;
 		int h=31;
 
-		button = GameFrame.makeRiskButton( Battle.getSubimage(196, 270, w, h), Battle.getSubimage(481, 242, w, h), Battle.getSubimage(481, 210, w, h), Battle.getSubimage(481, 274, w, h) );
+		button = GameFrame.makeRiskButton( GraphicsUtil.getSubimage(Battle, 196, 270, w, h), GraphicsUtil.getSubimage(Battle, 481, 242, w, h), GraphicsUtil.getSubimage(Battle, 481, 210, w, h), GraphicsUtil.getSubimage(Battle, 481, 274, w, h) );
 		button.setText(resb.getString("battle.roll"));
 		GraphicsUtil.setBounds(button, 196, 270, 88, 31);
 
-		retreat = GameFrame.makeRiskButton( Battle.getSubimage(487, 110, w, h), Battle.getSubimage(481, 178, w, h), Battle.getSubimage(481, 146, w, h), Battle.getSubimage(487, 110, w, h) );
+		retreat = GameFrame.makeRiskButton( GraphicsUtil.getSubimage(Battle, 487, 110, w, h), GraphicsUtil.getSubimage(Battle, 481, 178, w, h), GraphicsUtil.getSubimage(Battle, 481, 146, w, h), GraphicsUtil.getSubimage(Battle, 487, 110, w, h) );
 		retreat.setText(resb.getString("battle.retreat"));
 		GraphicsUtil.setBounds(retreat, 342, 270, 88, 31);
 
                 annihilate = new JToggleButton(resb.getString("battle.annihilate"));
-                NewGameFrame.sortOutButton( annihilate, Battle.getSubimage(485, 5, w, h), Battle.getSubimage(481, 73, w, h), Battle.getSubimage(481, 41, w, h) );
+                NewGameFrame.sortOutButton( annihilate, GraphicsUtil.getSubimage(Battle, 485, 5, w, h), GraphicsUtil.getSubimage(Battle, 481, 73, w, h), GraphicsUtil.getSubimage(Battle, 481, 41, w, h) );
 		GraphicsUtil.setBounds(annihilate, 50, 270, 88, 31);
 
 		button.addActionListener(
@@ -340,8 +341,8 @@ public class BattleDialog extends JDialog implements MouseListener {
 			GraphicsUtil.drawImage(g, Back ,0 ,0 ,this);
 
 			if (canRetreat) {
-				GraphicsUtil.drawImage(g, Battle.getSubimage(481, 105, 98, 40), 336, 265, this); // retreat
-                                GraphicsUtil.drawImage(g, Battle.getSubimage(481, 0, 98, 40), 46, 265, this); // annihilate
+				GraphicsUtil.drawImage(g, GraphicsUtil.getSubimage(Battle, 481, 105, 98, 40), 336, 265, this); // retreat
+                                GraphicsUtil.drawImage(g, GraphicsUtil.getSubimage(Battle, 481, 0, 98, 40), 46, 265, this); // annihilate
 			}
 
                         MoveDialog.paintMove(g,
@@ -372,10 +373,10 @@ public class BattleDialog extends JDialog implements MouseListener {
                 deadDiceD = myrisk.getGame().getMaxDefendDice();
             }
 
-            BufferedImage liveA = Battle.getSubimage(MINI_DICE_X, MINI_DICE_Y, MINI_DICE_WIDTH, MINI_DICE_HEIGHT);
-            BufferedImage liveD = Battle.getSubimage(MINI_DICE_X, MINI_DICE_Y+MINI_DICE_HEIGHT, MINI_DICE_WIDTH, MINI_DICE_HEIGHT);
-            BufferedImage deadA = Battle.getSubimage(MINI_DICE_X+MINI_DICE_WIDTH, MINI_DICE_Y, MINI_DICE_WIDTH, MINI_DICE_HEIGHT);
-            BufferedImage deadD = Battle.getSubimage(MINI_DICE_X+MINI_DICE_WIDTH, MINI_DICE_Y+MINI_DICE_HEIGHT, MINI_DICE_WIDTH, MINI_DICE_HEIGHT);
+            Image liveA = GraphicsUtil.getSubimage(Battle, MINI_DICE_X, MINI_DICE_Y, MINI_DICE_WIDTH, MINI_DICE_HEIGHT);
+            Image liveD = GraphicsUtil.getSubimage(Battle, MINI_DICE_X, MINI_DICE_Y+MINI_DICE_HEIGHT, MINI_DICE_WIDTH, MINI_DICE_HEIGHT);
+            Image deadA = GraphicsUtil.getSubimage(Battle, MINI_DICE_X+MINI_DICE_WIDTH, MINI_DICE_Y, MINI_DICE_WIDTH, MINI_DICE_HEIGHT);
+            Image deadD = GraphicsUtil.getSubimage(Battle, MINI_DICE_X+MINI_DICE_WIDTH, MINI_DICE_Y+MINI_DICE_HEIGHT, MINI_DICE_WIDTH, MINI_DICE_HEIGHT);
 
             // if we need input
             if (max != 0) {
@@ -569,10 +570,10 @@ public class BattleDialog extends JDialog implements MouseListener {
                 g.translate(GraphicsUtil.scale(dx), GraphicsUtil.scale(dy));
 
 		if (isAttacker) {
-			GraphicsUtil.drawImage(g, Battle.getSubimage(MINI_DICE_X, MINI_DICE_Y, MINI_DICE_WIDTH, MINI_DICE_HEIGHT), 0, 0, this);
+			GraphicsUtil.drawImage(g, GraphicsUtil.getSubimage(Battle, MINI_DICE_X, MINI_DICE_Y, MINI_DICE_WIDTH, MINI_DICE_HEIGHT), 0, 0, this);
 		}
 		else {
-			GraphicsUtil.drawImage(g, Battle.getSubimage(MINI_DICE_X, MINI_DICE_Y+MINI_DICE_HEIGHT, MINI_DICE_WIDTH, MINI_DICE_HEIGHT), 0, 0, this);
+			GraphicsUtil.drawImage(g, GraphicsUtil.getSubimage(Battle, MINI_DICE_X, MINI_DICE_Y+MINI_DICE_HEIGHT, MINI_DICE_WIDTH, MINI_DICE_HEIGHT), 0, 0, this);
 		}
 
 		int size=3;

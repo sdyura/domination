@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Frame;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,12 +56,12 @@ public class FlashMiniLobby {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(wrapper);
 
-        BufferedImage img = RiskUIUtil.getUIImage(this.getClass(),"graph.jpg");
+        Image img = RiskUIUtil.getUIImage(this.getClass(),"graph.jpg");
         panel.setBorder( new FlashBorder(
-                    img.getSubimage(100, 0, 740, 50),
-                    img.getSubimage(0, 0, 50, 400),
-                    img.getSubimage(100, 350, 740, 50), //img.getSubimage(100, 332, 740, 68),
-                    img.getSubimage(50, 0, 50, 400)
+                    GraphicsUtil.getSubimage(img, 100, 0, 740, 50),
+                    GraphicsUtil.getSubimage(img, 0, 0, 50, 400),
+                    GraphicsUtil.getSubimage(img, 100, 350, 740, 50), //img.getSubimage(100, 332, 740, 68),
+                    GraphicsUtil.getSubimage(img, 50, 0, 50, 400)
                 ) );
 
         root.setContentPane(panel);
