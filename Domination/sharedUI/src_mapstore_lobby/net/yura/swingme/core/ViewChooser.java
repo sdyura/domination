@@ -3,6 +3,7 @@ package net.yura.swingme.core;
 import java.util.Arrays;
 import java.util.List;
 import javax.microedition.lcdui.Graphics;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.ButtonGroup;
@@ -87,7 +88,7 @@ public class ViewChooser extends Panel implements ActionListener {
                 }
             }
             else {
-                ComboBox combo = new ComboBox(RiskUtil.asVector(Arrays.asList(options)));
+                ComboBox combo = new ComboBox(JavaCompatUtil.asVector(Arrays.asList(options)));
                 combo.setSelectedItem(currentOption);
                 combo.workoutPreferredSize();
                 combo.addActionListener(this);

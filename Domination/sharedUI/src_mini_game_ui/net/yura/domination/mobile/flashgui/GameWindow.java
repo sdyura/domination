@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
@@ -489,7 +490,7 @@ public class GameWindow extends Frame implements ActionListener {
 
             OptionPane.showOptionDialog(new ActionListener() {
                 public void actionPerformed(String actionCommand) {
-                    String name = RiskUtil.replaceAll(RiskUtil.replaceAll(saveText.getText(), "/", "-"),"\\","-");
+                    String name = JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(saveText.getText(), "/", "-"),"\\","-");
                     String filePath = new File(MiniUtil.getSaveGameDir(), name + DominationMain.SAVE_EXTENSION).toString();
                     if ("ok".equals(actionCommand)) {
                         go("savegame " + filePath);
@@ -944,7 +945,7 @@ public class GameWindow extends Frame implements ActionListener {
     */
     public String getArmiesLeftText() {
             int l = myrisk.getGame().getCurrentPlayer().getExtraArmies();
-            return RiskUtil.replaceAll( resb.getString("game.note.armiesleft"),"{0}", String.valueOf(l));
+            return JavaCompatUtil.replaceAll( resb.getString("game.note.armiesleft"),"{0}", String.valueOf(l));
     }
 
     private void goOn() {

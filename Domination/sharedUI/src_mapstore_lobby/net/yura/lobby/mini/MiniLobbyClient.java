@@ -15,6 +15,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.microedition.lcdui.Display;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.LobbyClient;
@@ -338,7 +339,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         else if ("flagGame".equals(actionCommand)) {
             final Game game = (Game) gameList.getSelectedValue();
             if (game != null) { // can only be null if there are no games in the list
-                final List players = new List(RiskUtil.asVector(game.getPlayers()));
+                final List players = new List(JavaCompatUtil.asVector(game.getPlayers()));
                 if (playerType >= Player.PLAYER_ADMIN) {
                     players.setCellRenderer(new DefaultListCellRenderer() {
                         @Override
@@ -604,7 +605,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             }
         }
 
-        toast(RiskUtil.replaceAll(resBundle.getString("lobby.logged-in-as"), "{0}", name)); // "You are logged in as: "+name
+        toast(JavaCompatUtil.replaceAll(resBundle.getString("lobby.logged-in-as"), "{0}", name)); // "You are logged in as: "+name
         game.connected(name);
     }
     public String whoAmI() {
@@ -710,7 +711,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         int visIndex = gameList.getFirstVisibleIndex();
         Object visItem = (visIndex>=0&&visIndex<gameList.getSize())?gameList.getElementAt(visIndex):null;
 
-        gameList.setListData( RiskUtil.asVector( newGameList ) );
+        gameList.setListData(JavaCompatUtil.asVector( newGameList ) );
 
         if (update) {
             if (selected!=null) {

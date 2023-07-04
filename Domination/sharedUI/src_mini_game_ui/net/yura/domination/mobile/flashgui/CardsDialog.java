@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Card;
@@ -124,7 +125,7 @@ public class CardsDialog extends Frame implements ActionListener {
                 }
 
                 if (trade > 0) {
-                    text= RiskUtil.replaceAll(resb.getString("cards.nexttrade"), "{0}", String.valueOf( trade ) );
+                    text= JavaCompatUtil.replaceAll(resb.getString("cards.nexttrade"), "{0}", String.valueOf( trade ) );
                 }
                 else if(cardsMode==RiskGame.CARD_FIXED_SET) {
                     text= resb.getString("cards.fixed");
@@ -134,7 +135,7 @@ public class CardsDialog extends Frame implements ActionListener {
 	        }
             }
             else {
-		 text= RiskUtil.replaceAll(resb.getString("cards.nexttrade"), "{0}", String.valueOf( myrisk.getNewCardState() ) );
+		 text= JavaCompatUtil.replaceAll(resb.getString("cards.nexttrade"), "{0}", String.valueOf( myrisk.getNewCardState() ) );
             }
 
             NumArmies.setValue( text );

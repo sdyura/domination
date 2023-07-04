@@ -18,6 +18,7 @@ import net.yura.mobile.gui.components.Frame;
 import net.yura.mobile.gui.components.Table;
 import net.yura.mobile.gui.layout.XULLoader;
 import javax.microedition.lcdui.Image;
+import net.yura.domination.engine.JavaCompatUtil;
 
 public class ColorPicker extends FileChooser.GridList implements ActionListener {
 
@@ -85,7 +86,7 @@ public class ColorPicker extends FileChooser.GridList implements ActionListener 
     public ColorPicker() {
         super(XULLoader.adjustSizeToDensity(75));
         setPreferredSize(XULLoader.adjustSizeToDensity(75) * 4, -1);
-        setListData(RiskUtil.asVector(Arrays.asList(PlayerColor.values())));
+        setListData(JavaCompatUtil.asVector(Arrays.asList(PlayerColor.values())));
         setDefaultRenderer(PlayerColor.class, new ColorButton());
         ColorButton button = new ColorButton();
         button.addActionListener(this);

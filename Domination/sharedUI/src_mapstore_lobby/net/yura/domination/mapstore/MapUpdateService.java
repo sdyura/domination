@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mapstore.gen.XMLMapAccess;
 import net.yura.mobile.gui.Font;
@@ -162,7 +163,7 @@ logger.fine("URL: " + url + " payload: " + payload);
     public static Map getOnlineMap(String uid) {
         String[] names;
         if (uid.indexOf(' ') >= 0) {
-            names = new String[] {uid, RiskUtil.replaceAll(uid, " ", "")};
+            names = new String[] {uid, JavaCompatUtil.replaceAll(uid, " ", "")};
         }
         else {
             names = new String[] {uid};

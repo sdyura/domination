@@ -3,6 +3,7 @@ package net.yura.domination.mobile.flashgui;
 import java.util.List;
 import java.util.Locale;
 import java.io.File;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.mobile.MiniUtil;
@@ -119,7 +120,7 @@ public class MainMenu extends Frame implements ActionListener {
                                 result.add(saves[c]);
                             }
                         }
-                        return RiskUtil.asVector(result);
+                        return JavaCompatUtil.asVector(result);
                     }
 
                     @java.lang.Override

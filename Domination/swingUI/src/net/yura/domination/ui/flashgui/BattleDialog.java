@@ -93,7 +93,7 @@ public class BattleDialog extends JDialog implements MouseListener {
 		int w=29;
 		int h=29;
 
-		attackerSpins = new BufferedImage[6];
+		attackerSpins = new Image[6];
 
 		attackerSpins[0] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
 		attackerSpins[1] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
@@ -102,7 +102,7 @@ public class BattleDialog extends JDialog implements MouseListener {
 		attackerSpins[4] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
 		attackerSpins[5] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
 
-		defenderSpins = new BufferedImage[6];
+		defenderSpins = new Image[6];
 
 		defenderSpins[0] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);
 		defenderSpins[1] = GraphicsUtil.getSubimage(Battle, x, h*i++, w, h);

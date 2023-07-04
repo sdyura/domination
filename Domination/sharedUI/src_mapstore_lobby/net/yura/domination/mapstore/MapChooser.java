@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
@@ -494,7 +495,7 @@ public class MapChooser implements ActionListener,MapServerListener {
             result = new java.util.Vector(0);
         }
         else if (allowedMaps == null) {
-            result = RiskUtil.asVector(items);
+            result = JavaCompatUtil.asVector(items);
         }
         else {
             result = new java.util.Vector();
