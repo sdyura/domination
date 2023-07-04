@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -111,8 +112,8 @@ public class BugsPanel extends JPanel implements ActionListener, SwingGUITab {
 
             // for some reason + does not get decoded, so we set it back to a space
             URL url = new URL("mailto:" + recipient
-                    + "?subject=" + RiskUtil.replaceAll(URLEncoder.encode(subject, "UTF-8"), "+", "%20")
-                    + "&body=" + RiskUtil.replaceAll(URLEncoder.encode(body, "UTF-8"), "+", "%20"));
+                    + "?subject=" + JavaCompatUtil.replaceAll(URLEncoder.encode(subject, "UTF-8"), "+", "%20")
+                    + "&body=" + JavaCompatUtil.replaceAll(URLEncoder.encode(body, "UTF-8"), "+", "%20"));
 
             RiskUtil.openURL(url);
         }

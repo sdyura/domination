@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import net.yura.domination.engine.RiskController;
+import net.yura.domination.engine.RiskUtil;
 
 /**
  * <p> Chat Area </p>
@@ -26,7 +27,7 @@ public class ChatArea extends Thread {
     public ChatArea(RiskController g,int port) throws Exception {
 	gui = g;
 
-        InetAddress iaddr = InetAddress.getLocalHost();
+        InetAddress iaddr = RiskUtil.getLocalHost();
 
 	serverSocket = new ServerSocket(port);
 

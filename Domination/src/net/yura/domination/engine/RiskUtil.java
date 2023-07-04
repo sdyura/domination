@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.io.PushbackInputStream;
 import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -442,8 +443,8 @@ public class RiskUtil {
 		try {
 			//if (RiskUtil.checkForNoSandbox()) {
                         try {
-				String hostname = InetAddress.getLocalHost().getHostName();
-				hostname = RiskUtil.replaceAll(hostname, " ", ""); // on Mac hostname can have a space
+				String hostname = getLocalHost().getHostName();
+				hostname = JavaCompatUtil.replaceAll(hostname, " ", ""); // on Mac hostname can have a space
 				return hostname + randomString;
 			}
 			//else {
@@ -492,6 +493,20 @@ public class RiskUtil {
 		catch (Exception e) { // if network has not been setup
 			return "nonet" + randomString;
 		}
+        }
+        
+        private static InetAddress localHost;
+        /**
+         * WARNING! this method can take a LONG time on macOS!
+         */
+        public static InetAddress getLocalHost() throws UnknownHostException {
+            if (localHost == null) {
+                // on macOS this method can take a long time
+                long start = System.currentTimeMillis();
+                localHost = InetAddress.getLocalHost();
+                System.out.println("getLocalHost took " + (System.currentTimeMillis() - start) + "milliseconds");
+            }
+            return localHost;
         }
 
         /**
@@ -637,68 +652,6 @@ public class RiskUtil {
         return buffer.toString();
     }
 
-    public static java.util.Vector asVector(java.util.Collection list) {
-        return list instanceof java.util.Vector ? (java.util.Vector)list : new java.util.Vector(list);
-    }
-
-    public static java.util.Hashtable asHashtable(Map map) {
-        return map instanceof java.util.Hashtable?(java.util.Hashtable)map:new java.util.Hashtable(map);
-    }
-
-    /**
-     * TODO move this to use the java 1.5 method
-     * @see String#replace(java.lang.CharSequence, java.lang.CharSequence) 
-     */
-    public static String replaceAll(String string, String notregex, String replacement) {
-        return string.replaceAll( quote(notregex) , quoteReplacement(replacement));
-    }
-
-    /**
-     * @see java.util.regex.Pattern#quote(java.lang.String)
-     */
-    public static String quote(String s) {
-        int slashEIndex = s.indexOf("\\E");
-        if (slashEIndex == -1)
-            return "\\Q" + s + "\\E";
-
-        StringBuilder sb = new StringBuilder(s.length() * 2);
-        sb.append("\\Q");
-        slashEIndex = 0;
-        int current = 0;
-        while ((slashEIndex = s.indexOf("\\E", current)) != -1) {
-            sb.append(s.substring(current, slashEIndex));
-            current = slashEIndex + 2;
-            sb.append("\\E\\\\E\\Q");
-        }
-        sb.append(s.substring(current, s.length()));
-        sb.append("\\E");
-        return sb.toString();
-    }
-
-    /**
-     * @see java.util.regex.Matcher#quoteReplacement(java.lang.String)
-     */
-    public static String quoteReplacement(String s) {
-        if ((s.indexOf('\\') == -1) && (s.indexOf('$') == -1))
-            return s;
-        StringBuffer sb = new StringBuffer();
-        for (int i=0; i<s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '\\') {
-                sb.append('\\'); sb.append('\\');
-            } else if (c == '$') {
-                sb.append('\\'); sb.append('$');
-            } else {
-                sb.append(c);
-            }
-        }
-        return sb.toString();
-    }
-
-    
-    
-    
-    
     public static void copy(File src, File dest) throws IOException {
      
             if(src.isDirectory()){

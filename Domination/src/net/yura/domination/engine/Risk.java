@@ -335,7 +335,7 @@ public class Risk extends Thread {
                                     output=resb.getString("core.close.closed");
 				}
 				else {
-                                    output=RiskUtil.replaceAll( resb.getString( "core.error.syntax"), "{0}", "closegame");
+                                    output=JavaCompatUtil.replaceAll( resb.getString( "core.error.syntax"), "{0}", "closegame");
                                 }
 			}
 			// SAVE GAME
@@ -365,7 +365,7 @@ public class Risk extends Thread {
 					output = resb.getString( "core.save.error.unable" );
 				    }
 				}
-				else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "savegame filename"); }
+				else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "savegame filename"); }
 			}
                         // REPLAY A GAME FROM THE GAME COMMANDS
 			else if (input.equals("replay")) {
@@ -408,7 +408,7 @@ public class Risk extends Thread {
 					output="can only replay local games";
 				    }
 				}
-				else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "replay"); }
+				else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "replay"); }
 			}
                         else if ( onlinePlayClient == null ) {
                                 inGameParser( myAddress+" "+message );
@@ -467,7 +467,7 @@ RiskUtil.printStackTrace(e);
                                 //	output=resb.getString( "core.newgame.alreadyloaded");
                                 //}
                         }
-                        else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "newgame"); }
+                        else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "newgame"); }
                 }
                 // LOAD GAME
                 else if (input.equals("loadgame")) {
@@ -514,7 +514,7 @@ RiskUtil.printStackTrace(e);
                                 //	output=resb.getString( "core.newgame.alreadyloaded");
                                 //}
                         }
-                        else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "loadgame filename"); }
+                        else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "loadgame filename"); }
                 }
                 else if (input.equals("join")) {
 
@@ -572,7 +572,7 @@ RiskUtil.printStackTrace(e);
                                 //	output=resb.getString( "core.join.error.001");
                                 //}
                         }
-                        else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "join server"); }
+                        else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "join server"); }
                 }
                 // NEW SERVER
                 else if (input.equals("startserver")) {
@@ -598,7 +598,7 @@ RiskUtil.printStackTrace(e);
                                         output=resb.getString( "core.startserver.error");
                                 }
                         }
-                        else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "startserver"); }
+                        else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "startserver"); }
                 }
                 // KILL SERVER
                 else if (input.equals("killserver")) {
@@ -627,7 +627,7 @@ RiskUtil.printStackTrace(e);
                                         output=resb.getString( "core.killserver.noserver");
                                 }
                         }
-                        else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "killserver"); }
+                        else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "killserver"); }
                 }
                 // REPLAY A GAME FROM SCRIPT FILE
                 else if (input.equals("play")) {
@@ -712,7 +712,7 @@ RiskUtil.printStackTrace(e);
                                         output="unable to play \""+filename+"\" "+error;
                                 }
                         }
-                        else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "play filename"); }
+                        else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "play filename"); }
                 }
                 else { // if there is no game and the command was unknown
                         output=resb.getString( "core.loadgame.nogame");
@@ -860,7 +860,7 @@ RiskUtil.printStackTrace(e);
 			int result[] = game.battle( att, def );
 
 			if ( result[0]==1 ) {
-				output = output + RiskUtil.replaceAll(RiskUtil.replaceAll(resb.getString( "core.dice.result")
+				output = output + JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(resb.getString( "core.dice.result")
 									, "{0}", String.valueOf(result[2]) ) //defeated
 									, "{1}", String.valueOf(result[1]) );//lost
 
@@ -872,7 +872,7 @@ RiskUtil.printStackTrace(e);
 
 					if (n > 0) {
 						if (n > 3) { n=3; }
-						output=output + RiskUtil.replaceAll(resb.getString( "core.dice.attackagain"), "{0}", "" + n);
+						output=output + JavaCompatUtil.replaceAll(resb.getString( "core.dice.attackagain"), "{0}", "" + n);
 
 //						Player attackingPlayer = ((Country)game.getAttacker()).getOwner();
 //
@@ -910,7 +910,7 @@ RiskUtil.printStackTrace(e);
 						int ma = game.moveArmies( noa );
 
 						//Moved {0} armies to captured country.
-						output=output + RiskUtil.replaceAll(resb.getString( "core.dice.armiesmoved"), "{0}", String.valueOf(noa) );
+						output=output + JavaCompatUtil.replaceAll(resb.getString( "core.dice.armiesmoved"), "{0}", String.valueOf(noa) );
 
 						if (ma==2) {
 
@@ -921,7 +921,7 @@ RiskUtil.printStackTrace(e);
 					}
 					else {
 						//How many armies do you wish to move? ({0} to {1})
-						output=output + RiskUtil.replaceAll(RiskUtil.replaceAll(resb.getString( "core.dice.howmanyarmies")
+						output=output + JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(resb.getString( "core.dice.howmanyarmies")
 								, "{0}", String.valueOf(result[4]) )
 								, "{1}", String.valueOf(result[5]) );
 					}
@@ -962,7 +962,7 @@ RiskUtil.printStackTrace(e);
 			//	controller.startGame(true);
 			//}
 
-			output=RiskUtil.replaceAll(resb.getString( "core.player.randomselected"), "{0}", p.getName());
+			output=JavaCompatUtil.replaceAll(resb.getString( "core.player.randomselected"), "{0}", p.getName());
 
 			if ( game.getGameMode()==RiskGame.MODE_SECRET_MISSION || autoplaceall==true ) {
 				needInput=false;
@@ -1000,7 +1000,7 @@ RiskUtil.printStackTrace(e);
 
 			Player newplayer = game.endGo();
 
-			output = RiskUtil.replaceAll(resb.getString( "core.player.newselected"), "{0}", newplayer.getName());
+			output = JavaCompatUtil.replaceAll(resb.getString( "core.player.newselected"), "{0}", newplayer.getName());
 
 			// this is not a bug! (Easter egg)
 			if ( unlimitedLocalMode && game.getSetupDone() && newplayer.getName().equals("Theo")) { newplayer.addArmies( newplayer.getExtraArmies() ); }
@@ -1011,7 +1011,7 @@ RiskUtil.printStackTrace(e);
 
 			Country c = game.getCountryInt( Integer.parseInt( StringT.nextToken() ) );
 			game.placeArmy( c ,1);
-			controller.sendMessage( RiskUtil.replaceAll( resb.getString( "core.place.oneplacedin"), "{0}", c.getName()) , false, false); // Display
+			controller.sendMessage(JavaCompatUtil.replaceAll( resb.getString( "core.place.oneplacedin"), "{0}", c.getName()) , false, false); // Display
 			output=resb.getString( "core.place.autoplaceok");
 		}
 		else if (Addr.equals("PLACEALL")) { // a server command
@@ -1020,7 +1020,7 @@ RiskUtil.printStackTrace(e);
 
 				Country t = game.getCountryInt( Integer.parseInt( StringT.nextToken() ) );
 				game.placeArmy( t ,1);
-				controller.sendMessage( RiskUtil.replaceAll(RiskUtil.replaceAll( resb.getString("core.place.getcountry")
+				controller.sendMessage(JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll( resb.getString("core.place.getcountry")
 						, "{0}", ((Player)game.getCurrentPlayer()).getName())
 						, "{1}", t.getName()) // Display
 						, false, false);
@@ -1032,7 +1032,7 @@ RiskUtil.printStackTrace(e);
 
 			controller.sendMessage("Auto place all successful.", false, false);
 			//New player selected: {0}.
-			output= RiskUtil.replaceAll( resb.getString( "core.player.newselected"), "{0}", ((Player)game.getCurrentPlayer()).getName());
+			output= JavaCompatUtil.replaceAll( resb.getString( "core.player.newselected"), "{0}", ((Player)game.getCurrentPlayer()).getName());
 		}
 		else if (Addr.equals("MISSION")) { // a server command
 
@@ -1132,7 +1132,7 @@ RiskUtil.printStackTrace(e);
                                                 output = null; // we have nothing to output now
 
 					}
-					else  { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "choosemap filename"); }
+					else  { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "choosemap filename"); }
 
 				}
 				else if (input.equals("choosecards")) {
@@ -1146,13 +1146,13 @@ RiskUtil.printStackTrace(e);
 
 							controller.showCardsFile( game.getCardsFile() , yesmissions );
 							//New cards file selected: "{0}"
-							output=RiskUtil.replaceAll(resb.getString( "core.choosecards.chosen"), "{0}", filename);
+							output=JavaCompatUtil.replaceAll(resb.getString( "core.choosecards.chosen"), "{0}", filename);
 						}
 						catch (Exception e) {
 							output=resb.getString( "core.choosecards.error.unable");
 						}
 					}
-					else  { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "choosecards filename"); }
+					else  { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "choosecards filename"); }
 
 				}
 				else if (input.equals("newplayer")) {
@@ -1177,7 +1177,7 @@ RiskUtil.printStackTrace(e);
 
 						if ( color != 0 && t != -1 && !name.equals("") && (   (  unlimitedLocalMode && game.addPlayer(t, name, color, "LOCALGAME" ) ) || ( !unlimitedLocalMode && game.addPlayer(t, name, color, Addr)    )    ) ) {
 							//New player created, name: {0} color: {1}
-							output=RiskUtil.replaceAll(RiskUtil.replaceAll( resb.getString("core.newplayer.created")
+							output=JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll( resb.getString("core.newplayer.created")
 										, "{0}", name)
 										, "{1}", c);
 
@@ -1190,7 +1190,7 @@ RiskUtil.printStackTrace(e);
 
 
 					}
-					else  { output=RiskUtil.replaceAll( resb.getString( "core.error.syntax"), "{0}", "newplayer type (skill) color name"); }
+					else  { output=JavaCompatUtil.replaceAll( resb.getString( "core.error.syntax"), "{0}", "newplayer type (skill) color name"); }
 
 				}
 				else if (input.equals("delplayer")) {
@@ -1200,11 +1200,11 @@ RiskUtil.printStackTrace(e);
 
 						if ( game.delPlayer(name) ) {
 							controller.delPlayer(name);
-							output=RiskUtil.replaceAll(resb.getString( "core.delplayer.deleted"), "{0}", name);
+							output=JavaCompatUtil.replaceAll(resb.getString( "core.delplayer.deleted"), "{0}", name);
 						}
 						else { output=resb.getString( "core.delplayer.error.unable"); }
 					}
-					else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "delplayer name"); }
+					else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "delplayer name"); }
 
 				}
 				else if (input.equals("info")) {
@@ -1225,7 +1225,7 @@ RiskUtil.printStackTrace(e);
 						output = output + resb.getString( "core.info.cardsfile") + " "+ game.getCardsFile() ;
 
 					}
-					else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "info"); }
+					else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "info"); }
 
 				}
 				else if (input.equals("autosetup")) {
@@ -1250,7 +1250,7 @@ RiskUtil.printStackTrace(e);
 							output = resb.getString( "core.info.autosetup.error");
 						}
 					}
-					else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autosetup"); }
+					else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autosetup"); }
 				}
 				else if (input.equals("startgame")) {
 					if (StringT.countTokens() >= 2 && StringT.countTokens() <= 4) {
@@ -1382,10 +1382,10 @@ RiskUtil.printStackTrace(e);
                                                 }
 					}
 					else {
-                                            output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "startgame gametype cardtype (autoplaceall recycle)");
+                                            output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "startgame gametype cardtype (autoplaceall recycle)");
                                         }
 				}
-				else { output=RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "newplayer, delplayer, startgame, choosemap, choosecards, info, autosetup"); }
+				else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "newplayer, delplayer, startgame, choosemap, choosecards, info, autosetup"); }
                         }
                         else {
                             boolean aiPlayer = game.getCurrentPlayer().getType()!=Player.PLAYER_HUMAN;
@@ -1422,7 +1422,7 @@ RiskUtil.printStackTrace(e);
                                             output = resb.getString( "core.undo.error.network");
                                         }
                                     }
-                                    else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "undo"); }
+                                    else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "undo"); }
                                 }
                                 else if (input.equals("showmission")) {
                                     if (StringT.hasMoreTokens()==false) {
@@ -1434,7 +1434,7 @@ RiskUtil.printStackTrace(e);
                                             }
                                             else { output=resb.getString( "core.showmission.error"); }
                                     }
-                                    else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "showmission"); }
+                                    else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "showmission"); }
                                 }
                                 else if (input.equals("showarmies")) {
                                     if (StringT.hasMoreTokens()==false) {
@@ -1458,7 +1458,7 @@ RiskUtil.printStackTrace(e);
                                                                             for (int a=0; a< players.size() ; a++) {
 
                                                                                     if ( ((Player)players.get(a)).getCapital() != null && ((Player)players.get(a)).getCapital() == v[c] ) {
-                                                                                            output = output + " " + RiskUtil.replaceAll( resb.getString( "core.showarmies.captial")
+                                                                                            output = output + " " + JavaCompatUtil.replaceAll( resb.getString( "core.showarmies.captial")
                                                                                                                     , "{0}", ((Player)players.get(a)).getName());
                                                                                     }
 
@@ -1478,7 +1478,7 @@ RiskUtil.printStackTrace(e);
                                             }
                                             else { output=resb.getString( "core.showarmies.error.unable"); }
                                     }
-                                    else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "showarmies"); }
+                                    else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "showarmies"); }
                                 }
 
                                 else if (input.equals("showcards")) {
@@ -1515,13 +1515,13 @@ RiskUtil.printStackTrace(e);
 
                                                     }
                                                     else { // CARD_INCREASING_SET
-                                                            output = output+"\n"+ RiskUtil.replaceAll(resb.getString("cards.nexttrade"), "{0}", String.valueOf(getNewCardState()) );
+                                                            output = output+"\n"+ JavaCompatUtil.replaceAll(resb.getString("cards.nexttrade"), "{0}", String.valueOf(getNewCardState()) );
                                                     }
 
                                             }
                                             else { output=resb.getString( "core.showcards.error.unable"); }
                                     }
-                                    else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "showcards"); }
+                                    else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "showcards"); }
                                 }
                                 else if (input.equals("autoendgo")) {
                                     if (StringT.hasMoreTokens()==false) {
@@ -1533,23 +1533,23 @@ RiskUtil.printStackTrace(e);
                                             else {
                                                     strSelected = "core.autoendgo.off";
                                             }
-                                            output = RiskUtil.replaceAll(resb.getString( "core.autoendgo.setto"), "{0}", resb.getString( strSelected));
+                                            output = JavaCompatUtil.replaceAll(resb.getString( "core.autoendgo.setto"), "{0}", resb.getString( strSelected));
                                     }
                                     else if (StringT.countTokens() == 1) {
 
                                             String option = StringT.nextToken();
                                             if (option.equals("on") ) {
                                                     game.getCurrentPlayer().setAutoEndGo(true);
-                                                    output = RiskUtil.replaceAll(resb.getString( "core.autoendgo.setto"), "{0}", resb.getString( "core.autoendgo.on"));
+                                                    output = JavaCompatUtil.replaceAll(resb.getString( "core.autoendgo.setto"), "{0}", resb.getString( "core.autoendgo.on"));
                                             }
                                             else if (option.equals("off") ) {
                                                     game.getCurrentPlayer().setAutoEndGo(false);
-                                                    output = RiskUtil.replaceAll(resb.getString( "core.autoendgo.setto"), "{0}", resb.getString( "core.autoendgo.off"));
+                                                    output = JavaCompatUtil.replaceAll(resb.getString( "core.autoendgo.setto"), "{0}", resb.getString( "core.autoendgo.off"));
                                             }
-                                            else { output=RiskUtil.replaceAll(resb.getString( "core.autoendgo.error.unknown"), "{0}", option); }
+                                            else { output=JavaCompatUtil.replaceAll(resb.getString( "core.autoendgo.error.unknown"), "{0}", option); }
 
                                     }
-                                    else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autoendgo on/off"); }
+                                    else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autoendgo on/off"); }
                                 }
                                 else if (input.equals("autodefend")) {
                                     if (StringT.hasMoreTokens()==false) {
@@ -1561,23 +1561,23 @@ RiskUtil.printStackTrace(e);
                                             else {
                                                     strSelected = "core.autodefend.on";
                                             }
-                                            output = RiskUtil.replaceAll(resb.getString( "core.autodefend.setto"), "{0}", resb.getString( strSelected));
+                                            output = JavaCompatUtil.replaceAll(resb.getString( "core.autodefend.setto"), "{0}", resb.getString( strSelected));
                                     }
                                     else if (StringT.countTokens() == 1) {
 
                                             String option = StringT.nextToken();
                                             if (option.equals("on") ) {
                                                     game.getCurrentPlayer().setAutoDefend(true);
-                                                    output = RiskUtil.replaceAll(resb.getString( "core.autodefend.setto"), "{0}", resb.getString( "core.autodefend.on"));
+                                                    output = JavaCompatUtil.replaceAll(resb.getString( "core.autodefend.setto"), "{0}", resb.getString( "core.autodefend.on"));
                                             }
                                             else if (option.equals("off") ) {
                                                     game.getCurrentPlayer().setAutoDefend(false);
-                                                    output = RiskUtil.replaceAll(resb.getString( "core.autodefend.setto"), "{0}", resb.getString( "core.autodefend.off"));
+                                                    output = JavaCompatUtil.replaceAll(resb.getString( "core.autodefend.setto"), "{0}", resb.getString( "core.autodefend.off"));
                                             }
-                                            else { output=RiskUtil.replaceAll(resb.getString( "core.autodefend.error.unknown"), "{0}", option); }
+                                            else { output=JavaCompatUtil.replaceAll(resb.getString( "core.autodefend.error.unknown"), "{0}", option); }
 
                                     }
-                                    else { output=RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autodefend on/off"); }
+                                    else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autodefend on/off"); }
                                 }
                                 else if (game.getState()==RiskGame.STATE_TRADE_CARDS) {
 
@@ -1593,11 +1593,11 @@ RiskUtil.printStackTrace(e);
                                                     }
 
                                                     if ( noa != 0 ) { // if the trade WAS SUCCESSFUL
-                                                            output=RiskUtil.replaceAll(resb.getString( "core.trade.traded"), "{0}", "" + noa);
+                                                            output=JavaCompatUtil.replaceAll(resb.getString( "core.trade.traded"), "{0}", "" + noa);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.trade.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "trade card card card")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "trade card card card")); }
                                     }
                                     else if (input.equals("endtrade")) {
                                             if (StringT.hasMoreTokens()==false) {
@@ -1607,10 +1607,10 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.trade.end.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "endtrade")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "endtrade")); }
                                     }
                                     else {
-                                        throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "showcards, trade"+(game.canEndTrade()?", endtrade":"") ));
+                                        throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "showcards, trade"+(game.canEndTrade()?", endtrade":"") ));
                                     }
                                 }
                                 else if (game.getState()==RiskGame.STATE_PLACE_ARMIES) {
@@ -1636,7 +1636,7 @@ RiskUtil.printStackTrace(e);
 
                                                             if (result!=0) {
                                                                     //{0} new army placed in: {1}
-                                                                    output = RiskUtil.replaceAll( RiskUtil.replaceAll(resb.getString( "core.place.placed")
+                                                                    output = JavaCompatUtil.replaceAll( JavaCompatUtil.replaceAll(resb.getString( "core.place.placed")
                                                                             , "{0}", String.valueOf(num) )
                                                                             , "{1}", t.getName() ); // Display
 
@@ -1649,7 +1649,7 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.place.error.invalid")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "placearmies country number")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "placearmies country number")); }
                                     }
                                     else if (input.equals("autoplace")) {
                                             if (!StringT.hasMoreTokens()) {
@@ -1659,9 +1659,9 @@ RiskUtil.printStackTrace(e);
                                                         needInput=false;
                                                         output = null;
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autoplace")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autoplace")); }
                                     }
-                                    else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "showarmies, placearmies, autoplace")); }
+                                    else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "showarmies, placearmies, autoplace")); }
                                 }
                                 else if (game.getState()==RiskGame.STATE_ATTACKING) {
 
@@ -1696,7 +1696,7 @@ RiskUtil.printStackTrace(e);
 
                                                     if ( a ) {
                                                             //Attack {0} ({1}) with {2} ({3}). (You can use up to {4} dice to attack)
-                                                            output = RiskUtil.replaceAll(RiskUtil.replaceAll(RiskUtil.replaceAll(RiskUtil.replaceAll(RiskUtil.replaceAll(resb.getString( "core.attack.attacking")
+                                                            output = JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(resb.getString( "core.attack.attacking")
                                                                                     , "{0}", country2.getName()) // Display
                                                                                     , "{1}", "" + country2.getArmies())
                                                                                     , "{2}", country1.getName()) // Display
@@ -1713,7 +1713,7 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.attack.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "attack country country")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "attack country country")); }
                                     }
                                     else if (input.equals("endattack")) {
                                             if (StringT.hasMoreTokens()==false) {
@@ -1722,9 +1722,9 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.attack.end.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "endattack")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "endattack")); }
                                     }
-                                    else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "attack, endattack")); }
+                                    else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "attack, endattack")); }
                                 }
                                 else if (game.getState()==RiskGame.STATE_ROLLING) {
 
@@ -1745,7 +1745,7 @@ RiskUtil.printStackTrace(e);
                                                             int n = game.getNoDefendDice();
 
                                                             //Rolled attacking dice, {0} defend yourself! (you can use up to {1} dice to defend)
-                                                            output = RiskUtil.replaceAll(RiskUtil.replaceAll(resb.getString( "core.roll.rolled")
+                                                            output = JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(resb.getString( "core.roll.rolled")
                                                                                     , "{0}", ((Player)game.getCurrentPlayer()).getName())
                                                                                     , "{1}", "" + n);
 
@@ -1758,7 +1758,7 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.roll.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "roll number")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "roll number")); }
                                     }
                                     else if (input.equals("retreat")) {
                                             if (StringT.hasMoreTokens()==false) {
@@ -1768,9 +1768,9 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.retreat.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "retreat")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "retreat")); }
                                     }
-                                    else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "roll, retreat")); }
+                                    else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "roll, retreat")); }
                                 }
                                 else if (game.getState()==RiskGame.STATE_BATTLE_WON) {
 
@@ -1791,7 +1791,7 @@ RiskUtil.printStackTrace(e);
 
                                                     if ( mov != 0 ) {
                                                             //Moved {0} armies to captured country.
-                                                            output = RiskUtil.replaceAll(resb.getString( "core.move.moved"), "{0}", "" + noa);
+                                                            output = JavaCompatUtil.replaceAll(resb.getString( "core.move.moved"), "{0}", "" + noa);
 
                                                             if (mov == 2) {
                                                                     output=output + whoWon();
@@ -1799,9 +1799,9 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.move.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "move number")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "move number")); }
                                     }
-                                    else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "move")); }
+                                    else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "move")); }
                                 }
                                 else if (game.getState()==RiskGame.STATE_FORTIFYING) {
 
@@ -1836,14 +1836,14 @@ RiskUtil.printStackTrace(e);
 
                                                     if ( game.moveArmy(country1, country2, noa) ) {
                                                             //Moved {0} armies from {1} to {2}.
-                                                            output = RiskUtil.replaceAll(RiskUtil.replaceAll(RiskUtil.replaceAll(resb.getString( "core.tacmove.movedfromto")
+                                                            output = JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(JavaCompatUtil.replaceAll(resb.getString( "core.tacmove.movedfromto")
                                                                             , "{0}", "" + noa)
                                                                             , "{1}", country1.getName()) // Display
                                                                             , "{2}", country2.getName()); // Display
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.tacmove.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "movearmies country country number")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "movearmies country country number")); }
                                     }
                                     else if (input.equals("nomove")) {
                                             if (StringT.hasMoreTokens()==false) {
@@ -1852,9 +1852,9 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.tacmove.no.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "nomove")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "nomove")); }
                                     }
-                                    else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "movearmies, nomove")); }
+                                    else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "movearmies, nomove")); }
                                 }
                                 else if (game.getState()==RiskGame.STATE_END_TURN) {
 
@@ -1868,9 +1868,9 @@ RiskUtil.printStackTrace(e);
                                                     DoEndGo();
 
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "endgo")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "endgo")); }
                                     }
-                                    else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "emdgo")); }
+                                    else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "emdgo")); }
                                 }
                                 else if (game.getState()==RiskGame.STATE_GAME_OVER) {
 
@@ -1884,11 +1884,11 @@ RiskUtil.printStackTrace(e);
                                                             throw new IllegalArgumentException(resb.getString( "core.continue.error.unable"));
                                                     }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "continue")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "continue")); }
                                     }
                                     else {
                                             //The game is over. {0} won! (current possible commands are: continue)
-                                            throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.gameover.won"), "{0}", game.getCurrentPlayer().getName()));
+                                            throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.gameover.won"), "{0}", game.getCurrentPlayer().getName()));
                                     }
                                 }
                                 else if (game.getState()==RiskGame.STATE_SELECT_CAPITAL) {
@@ -1909,7 +1909,7 @@ RiskUtil.printStackTrace(e);
 
                                                     if ( t != null && game.setCapital(t) ) {
                                                             if ( showHumanCurrentPlayerInfo() ) {
-                                                                    output=RiskUtil.replaceAll(resb.getString( "core.capital.selected"), "{0}", t.getName()); // Display
+                                                                    output=JavaCompatUtil.replaceAll(resb.getString( "core.capital.selected"), "{0}", t.getName()); // Display
                                                             }
                                                             else {
                                                                     output=resb.getString( "core.capital.hasbeenselected");
@@ -1917,9 +1917,9 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.capital.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "capital country")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "capital country")); }
                                     }
-                                    else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "capital")); }
+                                    else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "capital")); }
                                 }
                                 else if (game.getState()==RiskGame.STATE_DEFEND_YOURSELF) {
 
@@ -1966,9 +1966,9 @@ RiskUtil.printStackTrace(e);
                                                     }
                                                     else { throw new IllegalArgumentException(resb.getString( "core.roll.error.unable")); }
                                             }
-                                            else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "roll number")); }
+                                            else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "roll number")); }
                                     }
-                                    else { throw new IllegalArgumentException(RiskUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "roll")); }
+                                    else { throw new IllegalArgumentException(JavaCompatUtil.replaceAll(resb.getString( "core.error.incorrect"), "{0}", "roll")); }
                                 }
                                 else { throw new IllegalStateException(resb.getString( "core.error.unknownstate")); }
                             }
@@ -2042,11 +2042,11 @@ RiskUtil.printStackTrace(e);
                         updateBattleState();
 
 			if (game.getState()==RiskGame.STATE_TRADE_CARDS) {
-				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.newarmies"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + "") , false, false);
+				controller.sendMessage(JavaCompatUtil.replaceAll(resb.getString( "core.input.newarmies"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + "") , false, false);
 				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
 			}
 			else if (game.getState()==RiskGame.STATE_PLACE_ARMIES) {
-				controller.sendMessage( RiskUtil.replaceAll(resb.getString( "core.input.armiesleft"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + ""), false, false);
+				controller.sendMessage(JavaCompatUtil.replaceAll(resb.getString( "core.input.armiesleft"), "{0}", ((Player)game.getCurrentPlayer()).getExtraArmies() + ""), false, false);
 				//controller.armiesLeft( ((Player)game.getCurrentPlayer()).getExtraArmies() , game.NoEmptyCountries() );
 			}
 
@@ -2081,7 +2081,7 @@ RiskUtil.printStackTrace(e);
                 setupPreviews(yesmissions);
 
                 //New map file selected: "{0}" (cards have been reset to the default for this map)
-                String output= RiskUtil.replaceAll( resb.getString( "core.choosemap.mapselected"), "{0}", filename);
+                String output= JavaCompatUtil.replaceAll( resb.getString( "core.choosemap.mapselected"), "{0}", filename);
 
                 controller.sendMessage(output, false , true);
             }
@@ -2225,11 +2225,11 @@ RiskUtil.printStackTrace(e);
 	public String whoWon() {
 		Player winner = getWinner();
 		String text = System.getProperty("line.separator") +
-			RiskUtil.replaceAll(resb.getString("core.whowon.hehaswon"), "{0}", winner.getName());
+			JavaCompatUtil.replaceAll(resb.getString("core.whowon.hehaswon"), "{0}", winner.getName());
 		if ( game.getGameMode() == RiskGame.MODE_SECRET_MISSION ) {
 			//There mission was: {0}
 			text=text + System.getProperty("line.separator") +
-				RiskUtil.replaceAll(resb.getString( "core.whowon.mission"), "{0}", winner.getMission().getDiscription());
+				JavaCompatUtil.replaceAll(resb.getString( "core.whowon.mission"), "{0}", winner.getMission().getDiscription());
 		}
 		return text;
 	}
@@ -2258,7 +2258,7 @@ RiskUtil.printStackTrace(e);
                             strId = "core.help.move.ai."+ai.getCommandFromType(type);
                         }
                         try {
-                            help = RiskUtil.replaceAll(resb.getString(strId), "{0}", game.getCurrentPlayer().getName()) +" ";
+                            help = JavaCompatUtil.replaceAll(resb.getString(strId), "{0}", game.getCurrentPlayer().getName()) +" ";
                         }
                         catch (MissingResourceException ex) {
                             // fallback just in case we dont have a string
@@ -2303,7 +2303,7 @@ RiskUtil.printStackTrace(e);
 			//the game is over, {0} has won! close the game to create a new one
 			Player winrar = game.getCurrentPlayer();
                         // winner should never be null, but its better not to crash if it is
-			help = RiskUtil.replaceAll(resb.getString( "core.help.gameover"), "{0}", winrar==null ? "null" : winrar.getName());
+			help = JavaCompatUtil.replaceAll(resb.getString( "core.help.gameover"), "{0}", winrar==null ? "null" : winrar.getName());
 		}
 		else if (game.getState()==RiskGame.STATE_SELECT_CAPITAL) {
 			help = help + resb.getString( "core.help.selectcapital");

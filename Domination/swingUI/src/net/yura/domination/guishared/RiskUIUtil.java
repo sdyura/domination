@@ -54,6 +54,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskUtil;
@@ -554,7 +555,7 @@ public class RiskUIUtil {
 
             List namesvector = getFileList(a);
 
-            JComboBox combobox = new JComboBox( RiskUtil.asVector(namesvector) );
+            JComboBox combobox = new JComboBox( JavaCompatUtil.asVector(namesvector) );
 
             // Messages
             Object[] message = new Object[] {
@@ -732,7 +733,8 @@ public class RiskUIUtil {
 
 			// we CAN do this outside the sandbox, but for some reason it promps the webstart
 			try {
-				netInfo = InetAddress.getLocalHost().getHostAddress() + " (" + InetAddress.getLocalHost().getHostName() +")" ;
+                                InetAddress localAddress = RiskUtil.getLocalHost();
+				netInfo = localAddress.getHostAddress() + " (" + localAddress.getHostName() +")" ;
 			}
 			catch (UnknownHostException e) {
 				netInfo = resb.getString("about.nonetwork");
@@ -772,7 +774,7 @@ public class RiskUIUtil {
 		}
 		catch(HeadlessException ex) {
 			displayInfo = ex.getMessage();
-			if (displayInfo != null) displayInfo = RiskUtil.replaceAll(displayInfo, "\n", " ");
+			if (displayInfo != null) displayInfo = JavaCompatUtil.replaceAll(displayInfo, "\n", " ");
 		}
 
 		return		" " + RiskUtil.RISK_VERSION + " (save: " + RiskGame.SAVE_VERSION + " network: "+RiskGame.NETWORK_VERSION+") " + (RiskUtil.isOldVersion()?"OLD VERSION":"") + "\n" +
@@ -804,7 +806,7 @@ public class RiskUIUtil {
 
 
 	public static void openAbout(Frame frame,String product,String version) {
-		AboutDialog aboutDialog = new AboutDialog( frame , true, product, version);
+		AboutDialog aboutDialog = new AboutDialog( frame, true, product, version);
 		Dimension frameSize = frame.getSize();
 		Dimension aboutSize = aboutDialog.getSize();
 		int x = frame.getLocation().x + (frameSize.width - aboutSize.width) / 2;
@@ -876,7 +878,7 @@ public class RiskUIUtil {
                         if (v != null) {
                             ResourceBundle resb = TranslationBundle.getBundle();
 
-                            v = RiskUtil.replaceAll(resb.getString("mainmenu.new-version.text"), "{0}", RiskUtil.GAME_NAME) + " "+v;
+                            v = JavaCompatUtil.replaceAll(resb.getString("mainmenu.new-version.text"), "{0}", RiskUtil.GAME_NAME) + " "+v;
 
                             String link = getURL(v);
                             if (link!=null) {

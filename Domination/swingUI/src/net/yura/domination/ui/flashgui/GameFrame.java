@@ -39,6 +39,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputAdapter;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
@@ -770,7 +771,7 @@ public class GameFrame extends JFrame implements KeyListener {
 
         public String getArmiesLeftText() {
                 int l = myrisk.getGame().getCurrentPlayer().getExtraArmies();
-                return RiskUtil.replaceAll( resb.getString("game.note.armiesleft"),"{0}", String.valueOf(l));
+                return JavaCompatUtil.replaceAll( resb.getString("game.note.armiesleft"),"{0}", String.valueOf(l));
         }
 
 	/**

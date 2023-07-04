@@ -50,6 +50,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
@@ -717,7 +718,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                     JTextField mapName = new JTextField( map2.getName() );
                     JTextField authorEmail = new JTextField( map2.getAuthorId() ); // TODO using email as ID!!!
 
-                    JList list = new JList( RiskUtil.asVector(categories) );
+                    JList list = new JList( JavaCompatUtil.asVector(categories) );
                     
                     String version = String.valueOf( myMap.getVersion() );
 

@@ -24,6 +24,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.table.AbstractTableModel;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -339,7 +340,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                                 map.put("newAddress", address);
                                 
                                 // this will only change the local state, there is no way to send this out to all in a network game
-                                myrisk.parserFromNetwork("RENAME "+Url.toQueryString(RiskUtil.asHashtable(map)) );
+                                myrisk.parserFromNetwork("RENAME "+Url.toQueryString(JavaCompatUtil.asHashtable(map)) );
                             }
                             catch (Exception ex) {
                                 System.out.println("error "+ex);
@@ -583,7 +584,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                             longestMapName = filename;
                         }
 
-                        String fileUID = RiskUtil.replaceAll(filename," ","").toLowerCase();
+                        String fileUID = JavaCompatUtil.replaceAll(filename," ","").toLowerCase();
                         if (!MapsTools.isValidName(filename) || ids.contains(fileUID)) {
                             errors.add(filename);
                         }

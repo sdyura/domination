@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +49,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -224,6 +223,20 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 		gmAbout.setActionCommand("about");
 		gmAbout.addActionListener( this );
 		gHelp.add(gmAbout);
+
+                try {                    
+                    if (java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.valueOf("APP_ABOUT"))) {
+                        JavaCompatUtil.setLambda(java.awt.Desktop.getDesktop(), "setAboutHandler", "java.awt.desktop.AboutHandler", new Runnable() {
+                            @Override
+                            public void run() {
+                                openAbout();
+                            }
+                        });
+                    }
+                }
+                catch(Throwable th) {
+                    // ignore
+                }
 
 		gMenuBar.add(gHelp);
 

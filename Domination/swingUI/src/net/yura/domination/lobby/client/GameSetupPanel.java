@@ -54,6 +54,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
@@ -590,7 +591,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
             // using JTextArea to wrap the text pushes the button off the bottom and cut off.
             for (int c = 0; c < message.length; c++) {
                 if (message[c].length() > 50) {
-                    String[] split = message[c].split(RiskUtil.quote("\n"));
+                    String[] split = message[c].split(JavaCompatUtil.quote("\n"));
                     for (int i = 0; i < split.length; i++) {
                         if (split[i].length() > 50) {
                             message[c] = "<html><p style='width: " + GraphicsUtil.scale(200) + "px;'>" + message[c].replace("\n", "<br>");

@@ -16,12 +16,27 @@ import net.yura.domination.guishared.AboutDialog;
 public class SwingGUIFrame {
 
 	public static void main(final String[] argv) {
+            
+                // sets label in top left of menu bar
+                System.setProperty( "apple.awt.application.name", SwingGUIPanel.product );
+                
+                // supports macOS dark mode, this does NOT currently work
+                //System.setProperty( "apple.awt.application.appearance", "system" );
+            
 		RiskUIUtil.parseArgs(argv);
+
+                // always use the system menu bar for menus on macOS
+                System.setProperty("apple.laf.useScreenMenuBar", "true");
 
                 final Risk r = new Risk();
 		SwingGUIPanel sg = new SwingGUIPanel( r );
 
 		final JFrame gui = new JFrame();
+                // old docs: https://developer.apple.com/library/archive/technotes/tn2007/tn2196.html
+                //gui.getRootPane().putClientProperty("apple.awt.brushMetalLook", true);
+
+                // get rid of line between title bar and jtoolbar
+                gui.getRootPane().putClientProperty( "apple.awt.transparentTitleBar", true);
 
 		gui.setContentPane( sg );
                 gui.setJMenuBar( sg.getJMenuBar() );

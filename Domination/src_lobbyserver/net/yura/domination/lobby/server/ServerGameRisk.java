@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskUtil;
@@ -474,7 +475,7 @@ public class ServerGameRisk extends TurnBasedGame {
             map.put("newName", newName);
             map.put("newAddress", newAddress);
             map.put("newType", newType);
-            myrisk.addPlayerCommandToInbox("RENAME", Url.toQueryString(RiskUtil.asHashtable(map)) );
+            myrisk.addPlayerCommandToInbox("RENAME", Url.toQueryString(JavaCompatUtil.asHashtable(map)) );
 
 // TODO remove when no more <= 45 clients
             if (doLegacySend) {

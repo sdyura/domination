@@ -19,6 +19,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import net.yura.domination.engine.ColorUtil;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskObjectOutputStream;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.MapTranslator;
@@ -1976,11 +1977,11 @@ transient - A keyword in the Java programming language that indicates that a fie
                                             String newkey = "{"+oldkey+"}";
                                             if (description.indexOf(newkey) >= 0) {
                                                 // DefaultCards_XX.properties uses this format
-                                                description = RiskUtil.replaceAll(description, newkey, name );
+                                                description = JavaCompatUtil.replaceAll(description, newkey, name );
                                             }
                                             else if (description.indexOf(oldkey) >= 0) {
                                                 // many maps still have this format for missions
-                                                description = RiskUtil.replaceAll(description, oldkey, name );
+                                                description = JavaCompatUtil.replaceAll(description, oldkey, name );
                                             }
                                             else {
                                                 System.err.println("newkey: "+newkey+" and oldkey: "+oldkey+" not found in mission: "+description);

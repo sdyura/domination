@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -133,8 +134,8 @@ public class CommandText extends Thread {
 	    else if (input.equals("about")) {
 		System.out.print("Command Line for Risk, version: "+version+"\nMade by Yura Mamyrin (yura@yura.net)\n");
 
-                String[] info1 = TranslationBundle.getBundle().getString("about.infopanel").split(RiskUtil.quote("\n"));
-                String[] info2 = RiskUIUtil.getSystemInfoText().split(RiskUtil.quote("\n"));
+                String[] info1 = TranslationBundle.getBundle().getString("about.infopanel").split(JavaCompatUtil.quote("\n"));
+                String[] info2 = RiskUIUtil.getSystemInfoText().split(JavaCompatUtil.quote("\n"));
                 
                 for (int line = 0; line < info1.length && line < info2.length; line++) {
                     System.out.print(info1[line]+" - " + info2[line] + "\n");

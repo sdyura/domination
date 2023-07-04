@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RootPaneContainer;
 import javax.swing.event.MouseInputListener;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
@@ -374,7 +375,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 					break;
 				}
 				case MainMenu.BUTTON_ABOUT: {
-					RiskUIUtil.openAbout(window, product, version);
+					openAbout();
 					break;
 				}
 				case MainMenu.BUTTON_EXIT: {
@@ -394,6 +395,10 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 		}
 	}//private void activateButton(int thebutton)
+        
+        void openAbout() {
+            RiskUIUtil.openAbout(window, product, version);
+        }
 
 	/**
 	 * Checks if highlighting is needed
@@ -592,6 +597,11 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	 * @param argv
 	 */
 	public static void main(String[] argv) {
+
+                // we HAVE to set this before any swing components are created
+                System.setProperty( "apple.awt.application.name", RiskUtil.GAME_NAME);
+
+                // we do this before graasshopper init as we set the app locale here
 		RiskUIUtil.parseArgs(argv);
 
                 try {
@@ -600,10 +610,37 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 catch(Throwable th) {
                     System.out.println("Grasshopper not loaded " + th);
                 }
-                
-                Risk risk = new Risk();
-		newMainMenuFrame(risk, JFrame.EXIT_ON_CLOSE );
 
+                Risk risk = new Risk();
+		final MainMenu mainMneu = newMainMenuFrame(risk, JFrame.EXIT_ON_CLOSE );
+
+                try {
+                    // as we still release for java 1.5+ use reflection to call this
+                    //Desktop desktop = Desktop.getDesktop();
+                    //if (desktop.isSupported(Desktop.Action.APP_ABOUT)) {
+                    //    desktop.setAboutHandler(new AboutHandler() {
+                    //        @Override
+                    //        public void handleAbout(AboutEvent e) {
+                    //            mainMneu.openAbout();
+                    //        }
+                    //    });
+                    //}
+                    
+                    // we can NOT make a local variable 'desktop' as this will fail on java 1.5 NoClassDefFoundError
+                    //java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+                    if (java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.valueOf("APP_ABOUT"))) {
+                        JavaCompatUtil.setLambda(java.awt.Desktop.getDesktop(), "setAboutHandler", "java.awt.desktop.AboutHandler", new Runnable() {
+                            @Override
+                            public void run() {
+                                mainMneu.openAbout();
+                            }
+                        });
+                    }
+                }
+                catch(Throwable th) {
+                    // ignore
+                }
+                
                 RiskUIUtil.openFile(argv, risk);
 
 		RiskUIUtil.checkForUpdates(risk);

@@ -17,6 +17,14 @@
         <property file="local.properties" />
 
 	<property name="game.version" value="1.2.9"/>
+
+        <!--
+            For releasing we want to be compatible wth as many versions of java as possible
+            as the game requires little system resources and can run on very old computers
+            to support java 1.5 we MUST build wth java 1.8, java 9 can ONLY build for java 1.6+.
+
+            For development you can put any value here, if you use jdk 17 then put 17
+        -->
         <property name="source.version" value="1.5"/>
 
         <!-- -->

@@ -43,7 +43,7 @@ public class OnlineUtil {
         }
 
         public static String getMapNameFromLobbyStartGameOption(String options) {
-            String[] lines = options.split( RiskUtil.quote("\n") );
+            String[] lines = options.split(JavaCompatUtil.quote("\n") );
             String choosemap = lines[3];
             return choosemap.substring( "choosemap ".length() ).intern();
         }
@@ -53,7 +53,7 @@ public class OnlineUtil {
          * @see net.yura.domination.lobby.server.ServerGameRisk#startGame(java.lang.String, java.lang.String[])
          */
         public static String getGameDescriptionFromLobbyStartGameOption(String options) {
-            String[] lines = options.split( RiskUtil.quote("\n") );
+            String[] lines = options.split(JavaCompatUtil.quote("\n") );
             int aiTotal=0;
             for (int c=0;c<3;c++) {
                 aiTotal = aiTotal + Integer.parseInt(lines[c]);
