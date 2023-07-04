@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.MediaTracker;
 import java.awt.Polygon;
 import java.awt.Toolkit;
 import java.awt.font.FontRenderContext;
@@ -172,10 +173,11 @@ public class GraphicsUtil {
 
     /**
      * A version of BufferedImage.getSubimage that works on ALL image types, not just BufferedImage
-     * 
-     * @see BufferedImage#getSubimage(int, int, int, int) 
+     *
+     * @see sun.awt.image.MultiResolutionToolkitImage
      */
     public static Image getSubimage(Image img, int x, int y, int width, int height) {
+        // java 9+ (works for both toolkit images and custom loaded BaseMultiResolutionImage)
         try {
             Class multiResolutionImageClass = Class.forName("java.awt.image.MultiResolutionImage");
             if (multiResolutionImageClass.isInstance(img)) {
@@ -194,22 +196,67 @@ public class GraphicsUtil {
         catch (Throwable ex) {
             // failed to handle MultiResolutionImage
         }
-
+/*
+        // this works, but ONLY on macOS when using specific image names '@2x' and loading with Toolkit.getImage
+        // java 8
+        try {
+            Class multiResolutionImageClass = Class.forName("sun.awt.image.MultiResolutionImage");
+            if (multiResolutionImageClass.isInstance(img)) {
+                int baseWidth = img.getWidth(null);
+                List<Image> images = (List<Image>)multiResolutionImageClass.getMethod("getResolutionVariants").invoke(img);
+                Image[] scaledImages = new Image[images.size()];
+                for (int c = 0; c < images.size(); c++) {
+                    // sometimes images.get(0) == img, we dont want to get stuck recursive, so we call getSubimageFilter directly
+                    Image i = images.get(c);
+                    double scale = i.getWidth(null) / (double)baseWidth;
+                    scaledImages[c] = getSubimageImpl(i, (int)(x * scale), (int)(y * scale), (int)(width * scale), (int)(height * scale));
+                }
+                Class baseMultiResolutionImageClass = Class.forName("sun.awt.image.MultiResolutionToolkitImage");
+                return (Image)baseMultiResolutionImageClass.getConstructor(Image.class, Image.class).newInstance(scaledImages[0], scaledImages[1]);
+            }
+        }
+        catch (Throwable ex) {
+            // failed to handle MultiResolutionImage
+        }
+*/
         return getSubimageImpl(img, x, y, width, height);
     }
 
+    /**
+     * @see BufferedImage#getSubimage(int, int, int, int)
+     */
     private static Image getSubimageImpl(Image img, int x, int y, int width, int height) {
         if (img instanceof BufferedImage) {
             return ((BufferedImage)img).getSubimage(x, y, width, height);
         }
-        
+
         ImageFilter filter = new CropImageFilter(x, y, width, height);
         ImageProducer prod = new FilteredImageSource(img.getSource(), filter);
-        return Toolkit.getDefaultToolkit().createImage(prod);
+        Image croppedImg = Toolkit.getDefaultToolkit().createImage(prod);
+
+        // for unknown crazy reasons, this is needed or image has width and height as -1
+        waitForImage(croppedImg);
+
+        return croppedImg;
     }
 
+    /**
+     * only works on java 9+ otherwise throws Exception
+     */
     public static Image newBaseMultiResolutionImage(Image[] images) throws Exception {
         Class baseMultiResolutionImageClass = Class.forName("java.awt.image.BaseMultiResolutionImage");
         return (Image)baseMultiResolutionImageClass.getConstructor(images.getClass()).newInstance((Object)images);
+    }
+
+    private static MediaTracker mediaTracker = new MediaTracker( new Component(){} );
+    public static void waitForImage(Image img) {
+        mediaTracker.addImage(img, 1);
+        try {
+            mediaTracker.waitForID(1);
+        }
+        catch(InterruptedException e) {
+            System.out.println("Loading of the image was interrupted" );
+        }
+        mediaTracker.removeImage(img);
     }
 }

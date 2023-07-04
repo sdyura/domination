@@ -173,6 +173,34 @@ public class RiskUIUtil {
     private static Map UIImagesReferences = new HashMap();
 
     public static Image getUIImage(Class cls, String name) {
+/*
+        // this can return a MultiResolutionImage
+        // but it uses OS secific filenames, so on macOS it loads @2x images, but not on windows :-(
+        Image img = Toolkit.getDefaultToolkit().getImage(cls.getResource(name));
+        GraphicsUtil.waitForImage(img);
+
+        // only added in java 9
+        try {
+            Class multiResolutionImageClass = Class.forName("java.awt.image.MultiResolutionImage");
+            if (multiResolutionImageClass.isInstance(img)) {
+                System.out.println("YAY! we got a MultiResolutionImage " + name + " " + img);
+                return img;
+            }
+        }
+        catch (Throwable ex) { }
+
+        // this is in java 8
+        try {
+            Class multiResolutionImageClass = Class.forName("sun.awt.image.MultiResolutionImage");
+            if (multiResolutionImageClass.isInstance(img)) {
+                System.out.println("YAY! we got a MultiResolutionImage (java 8) " + name + " " + img);
+                return img;
+            }
+        }
+        catch (Throwable ex) { }
+*/
+
+        // this code will work on all OSs, tested on macOS and windows
         Image img = getUIImageCached(cls, name);
 
         if (GraphicsUtil.density > 1) {
@@ -192,7 +220,7 @@ public class RiskUIUtil {
 
         return img;
     }
-    
+
     private static BufferedImage getUIImageCached(Class c,String name) {
 		try {
 			String id = c+" - "+name;
