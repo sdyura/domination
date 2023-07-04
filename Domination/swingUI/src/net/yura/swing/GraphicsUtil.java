@@ -196,9 +196,8 @@ public class GraphicsUtil {
         catch (Throwable ex) {
             // failed to handle MultiResolutionImage
         }
-/*
-        // this works, but ONLY on macOS when using specific image names '@2x' and loading with Toolkit.getImage
-        // java 8
+
+        // java 8, ONLY on macOS when using specific image names '@2x' and loading with Toolkit.getImage
         try {
             Class multiResolutionImageClass = Class.forName("sun.awt.image.MultiResolutionImage");
             if (multiResolutionImageClass.isInstance(img)) {
@@ -218,7 +217,7 @@ public class GraphicsUtil {
         catch (Throwable ex) {
             // failed to handle MultiResolutionImage
         }
-*/
+
         return getSubimageImpl(img, x, y, width, height);
     }
 

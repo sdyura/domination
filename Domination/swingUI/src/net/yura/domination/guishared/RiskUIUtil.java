@@ -179,7 +179,7 @@ public class RiskUIUtil {
         Image img = Toolkit.getDefaultToolkit().getImage(cls.getResource(name));
         GraphicsUtil.waitForImage(img);
 
-        // only added in java 9
+        // java 9+
         try {
             Class multiResolutionImageClass = Class.forName("java.awt.image.MultiResolutionImage");
             if (multiResolutionImageClass.isInstance(img)) {
@@ -188,17 +188,22 @@ public class RiskUIUtil {
             }
         }
         catch (Throwable ex) { }
-
-        // this is in java 8
+*/
+        // java 8 (this is the ONLY way to load MultiResolutionImage on java8) and only works on mac
         try {
-            Class multiResolutionImageClass = Class.forName("sun.awt.image.MultiResolutionImage");
-            if (multiResolutionImageClass.isInstance(img)) {
-                System.out.println("YAY! we got a MultiResolutionImage (java 8) " + name + " " + img);
-                return img;
+            if (isMac() && GraphicsUtil.density > 1) {
+                Class multiResolutionImageClass = Class.forName("sun.awt.image.MultiResolutionImage");
+
+                Image img = Toolkit.getDefaultToolkit().getImage(cls.getResource(name));
+                GraphicsUtil.waitForImage(img);
+
+                //if (multiResolutionImageClass.isInstance(img)) {
+                    return img;
+                //}
             }
         }
         catch (Throwable ex) { }
-*/
+
 
         // this code will work on all OSs, tested on macOS and windows
         Image img = getUIImageCached(cls, name);
