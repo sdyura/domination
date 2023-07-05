@@ -395,7 +395,7 @@ public class ServerGameRisk extends TurnBasedGame {
 
         @Override
 	public boolean playerResigns(String username) {
-            boolean gameRemoved = false;
+		boolean gameRemoved = false;
 
 		String playerid = getPlayerId(username);
 
@@ -427,17 +427,20 @@ public class ServerGameRisk extends TurnBasedGame {
                             }
                         }
 
-                        if(thePlayer==null) { // this should never happen
-                            throw new IllegalArgumentException("can not find player "+username);
+                        if(thePlayer == null) { // this should never happen
+                            throw new IllegalArgumentException("can not find player " + username);
                         }
-                        if (oldPlayer!=null) { // this should never happen
-                            throw new IllegalArgumentException("player with name already in game "+newName);
+                        if (oldPlayer != null) { // this should never happen
+                            throw new IllegalArgumentException("player with name already in game " + newName);
                         }
 
-                        sendRename(username,newName,myrisk.getAddress(),Player.PLAYER_AI_EASY,true);
+                        // only rename the resigned player if they are alive, if they are dead, no point
+                        if (thePlayer.isAlive()) {
+                            sendRename(username,newName,myrisk.getAddress(),Player.PLAYER_AI_EASY,true);
+                        }
 
-                        if (aliveHumans==0) {
-                            gameRemoved = gameFinished( whoHasMostPoints() );
+                        if (aliveHumans == 0) {
+                            gameRemoved = gameFinished(whoHasMostPoints());
 
                             // We have no humans and no ais, (we only have resigned human, crap/submissive ais)
                             // so we must pause the game or it will get stuck in a loop of placing armies and
@@ -450,7 +453,7 @@ public class ServerGameRisk extends TurnBasedGame {
                             // TODO in LobbyClientGUI it is possible to re-join a game at this stage, and the game
                             // will still be paused so it will not actually do anything, then again, if the TurnBasedGame.finished
                             // flag is set, the game will get destroyed when all human players are not watching it anyway
-                            if (aliveAIs==0) {
+                            if (aliveAIs == 0) {
                                 myrisk.setPaued(true);
                             }
                         }
