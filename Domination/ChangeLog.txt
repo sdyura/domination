@@ -61,6 +61,7 @@ CURRENT VERSION:
 
 	Android 93 Show color blind icons in stats graph
 		   Stats graphs have 0.01 offset so lines do not overlap
+		   fix for time not shown in notifications
 	Android 92 fixed: when language is changed, reload the app to the same game
 		   fixed: crash in Preferences being opened when main activity is closed
 	Android 91 fixed: nullpointer when sending android push token too early before handshake done
