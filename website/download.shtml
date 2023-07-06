@@ -50,7 +50,7 @@
         <a href="http://prdownloads.sourceforge.net/domination/Domination_1.2.8.zip?download">Domination game zip file</a> 8.1MB
 	(pre 10.5 Mac OS and any other OS that runs Java 1.5+)<br><br>
 
-	<a href="http://prdownloads.sourceforge.net/domination/Domination_91.apk?download">Android Domination apk</a> 6.2MB<br>
+	<a href="http://prdownloads.sourceforge.net/domination/Domination_93.apk?download">Android Domination apk</a> 6.2MB<br>
 
 <!-- TODO
         <a href="http://prdownloads.sourceforge.net/domination/backup_of_Domination_1.0.9.8.zip?download">Domination
@@ -108,7 +108,13 @@
 	svn co https://svn.code.sf.net/p/swingme/code/AndroidME<br>
 	</code>
 
-	<p>please use <a href="https://developer.android.com/studio/archive">Android Studio 3.2.1</a>/<a href="http://developer.android.com/sdk/installing/studio-build.html">Gradle</a> to build the project</p>
+	<p>Please use <a href="https://developer.android.com/studio/archive">Android Studio 3.2.1</a>/<a href="http://developer.android.com/sdk/installing/studio-build.html">Gradle</a> to build the project</p>
+
+        <p>iOS setup: you will need to have <a href="https://cocoapods.org/">cocoapods</a> installed and
+            run "pod install" from 'Domination/ios/xcode'
+            then you will need to revert the 'ChartDataSet.swift' file.
+        </p>
+
 
 <h3>Other projects used by Domination</h3>
 
