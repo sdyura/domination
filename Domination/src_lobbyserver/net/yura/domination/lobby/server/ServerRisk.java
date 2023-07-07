@@ -11,6 +11,8 @@ public class ServerRisk extends Risk implements LobbyLogger.LobbyGameThread {
          * some games get into a stalemate where no one can win and it just goes back and forth with the AI
          *
          * biggest real game: at 30_000 commands the size of game was 1MB
+         * 
+         * Magic vs ponty played to 50,000 commands on a real game
          */
         private static final int MAX_GAME_COMMANDS = 50_000;
 

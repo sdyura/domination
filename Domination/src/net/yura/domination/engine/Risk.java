@@ -504,7 +504,7 @@ RiskUtil.printStackTrace(e);
                                                 }
                                         }
                                         catch (Throwable ex) {
-                                                logger.log(Level.WARNING,"error loading game from file: "+filename,ex);
+                                                logger.log(filename.endsWith(".save") ? Level.WARNING : Level.INFO,"error loading game from file: "+filename,ex);
 
                                                 output=resb.getString( "core.loadgame.error.load")+" "+ex;
                                                 showMessageDialog(output);
