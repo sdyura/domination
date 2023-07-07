@@ -205,25 +205,27 @@ public class PicturePanel extends JPanel implements MapPanel {
 
 			// System.out.print( "Country: "+ (c+1) +" X1: "+ x1 +" Y1: "+y1 +" Width: "+ w +" Height: "+ h +"\n");
 
-			BufferedImage source = original.getSubimage(x1, y1, w, h);
+                        try {
+                            BufferedImage source = original.getSubimage(x1, y1, w, h);
 
-			BufferedImage gray = new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_BYTE_GRAY );
+                            BufferedImage gray = new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_BYTE_GRAY);
 
-			//Gray.filter(source , gray);
-                        { Graphics zg = gray.getGraphics(); zg.drawImage(source, 0, 0, this); zg.dispose(); }
+                            //Gray.filter(source , gray);
+                            { Graphics zg = gray.getGraphics(); zg.drawImage(source, 0, 0, this); zg.dispose(); }
 
-			cci.setSourceImage(source);
-			cci.setGrayImage(gray);
+                            cci.setSourceImage(source);
+                            cci.setGrayImage(gray);
 
-			cci.setNormalImage( new BufferedImage( w ,h, java.awt.image.BufferedImage.TYPE_INT_ARGB ) );
-			cci.setHighLightImage( new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_ARGB ) );
+                            cci.setNormalImage(new BufferedImage( w ,h, java.awt.image.BufferedImage.TYPE_INT_ARGB));
+                            cci.setHighLightImage(new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_ARGB));
 
-			cci.setTemp1( new BufferedImage( w ,h, java.awt.image.BufferedImage.TYPE_INT_RGB ) );
-			cci.setTemp2( new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_RGB ) );
+                            cci.setTemp1(new BufferedImage( w ,h, java.awt.image.BufferedImage.TYPE_INT_RGB));
+                            cci.setTemp2(new BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_RGB));
+                        }
+                        catch (RuntimeException ex) {
+                            throw new IllegalStateException("Error in Map: " + ((cci.getWidth() < 0 || cci.getHeight() < 0) ? "CountryNotFound" : "Error creating CountryImages") + " index=" + c + " color=" + (c + 1) + " " + cci, ex);
+                        }
 		}
-
-
-
 	}
 
 	/**
@@ -1054,6 +1056,11 @@ public class PicturePanel extends JPanel implements MapPanel {
 		public int getHeight() {
 			return (y2-y1+1);
 		}
+                
+                @Override
+                public String toString() {
+                    return "CountryImage{x1=" + x1 + ", y1=" + y1 + ", x2=" + x2 + ", y2=" + y2 + ", w=" + getWidth() + ", h=" + getHeight() + ", highlight=" + (color == null ? "none" : ColorUtil.getStringForColor(color.getRGB())) + '}';
+                }
 	}
 
 	/**
