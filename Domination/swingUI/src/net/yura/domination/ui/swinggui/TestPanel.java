@@ -306,9 +306,10 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         @Override
                         public boolean isCellEditable(int row, int col) {
                             switch (col) {
-                                case 0:// name
-                                case 2:// type
-                                case 9:// address
+                                case 0: // name
+                                case 2: // type
+                                case 9: // address
+                                case 3: // extra armies
                                     return true;
                                 default:
                                     return false;
@@ -320,30 +321,40 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                             Player player = (Player)myrisk.getGame().getPlayers().elementAt(row);
 
                             try {
-                                String name = col==0?String.valueOf(aValue):player.getName();
-                                if (name.equals("")) {
-                                    throw new IllegalArgumentException("no empty name");
+                                if (col == 3) {
+                                    int newExtraArmiesValue = Integer.parseInt(String.valueOf(aValue));
+                                    if (newExtraArmiesValue < 0) {
+                                        throw new IllegalArgumentException("ExtraArmies can not be negative: " + newExtraArmiesValue);
+                                    }
+                                    player.addArmies(newExtraArmiesValue - player.getExtraArmies());
                                 }
-                                int type = col==2?myrisk.getType(String.valueOf(aValue)):player.getType();
-                                if (type == -1) {
-                                    throw new IllegalArgumentException("bad type "+aValue);
-                                }
-                                String address = col==9?String.valueOf(aValue):player.getAddress();
-                                if (address.equals("")) {
-                                    throw new IllegalArgumentException("no empty address");
-                                }
-
-                                HashMap map = new HashMap();
-                                map.put("oldName", player.getName());
-                                map.put("newName", name);
-                                map.put("newType", type);
-                                map.put("newAddress", address);
+                                else {
                                 
-                                // this will only change the local state, there is no way to send this out to all in a network game
-                                myrisk.parserFromNetwork("RENAME "+Url.toQueryString(JavaCompatUtil.asHashtable(map)) );
+                                    String name = col==0?String.valueOf(aValue):player.getName();
+                                    if (name.equals("")) {
+                                        throw new IllegalArgumentException("no empty name");
+                                    }
+                                    int type = col==2?myrisk.getType(String.valueOf(aValue)):player.getType();
+                                    if (type == -1) {
+                                        throw new IllegalArgumentException("bad type "+aValue);
+                                    }
+                                    String address = col==9?String.valueOf(aValue):player.getAddress();
+                                    if (address.equals("")) {
+                                        throw new IllegalArgumentException("no empty address");
+                                    }
+
+                                    HashMap map = new HashMap();
+                                    map.put("oldName", player.getName());
+                                    map.put("newName", name);
+                                    map.put("newType", type);
+                                    map.put("newAddress", address);
+
+                                    // this will only change the local state, there is no way to send this out to all in a network game
+                                    myrisk.parserFromNetwork("RENAME "+Url.toQueryString(JavaCompatUtil.asHashtable(map)) );
+                                }
                             }
                             catch (Exception ex) {
-                                System.out.println("error "+ex);
+                                System.out.println("error " + ex);
                             }
                         }
 		};
