@@ -729,6 +729,9 @@ public class RiskUIUtil {
                 return fileName;
 	}
 
+        /**
+         * TODO what do we do if the path is already a folder or is in a folder that does not exist??
+         */
 	public static void saveFile(String name,RiskGame obj) throws Exception {
 		// it is impossible for a applet to get here
 		if (webstart!=null) {

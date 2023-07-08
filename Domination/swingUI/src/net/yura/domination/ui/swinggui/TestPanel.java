@@ -28,7 +28,6 @@ import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
-import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Country;
@@ -76,7 +75,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		toolbar.setRollover(true);
 		toolbar.setFloatable(false);
 
-		JButton refresh = new JButton("Refresh");
+		JButton refresh = new JButton("\ud83d\udd04 Refresh");
 		refresh.setActionCommand("refresh");
 		refresh.addActionListener(this);
 		toolbar.add(refresh);
@@ -544,16 +543,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                 String command = a.getActionCommand();
 
 		if ("refresh".equals(command)) {
-
-			countriesModel.fireTableDataChanged();
-			continentsModel.fireTableDataChanged();
-			cardsModel.fireTableDataChanged();
-                        cardsModel2.fireTableDataChanged();
-			playersModel.fireTableDataChanged();
-                        gameInfo.fireTableDataChanged();
-                        commands.fireTableDataChanged();
-
-			repaint();
+                        refresh();
 		}
 		else if ("flash".equals(command)) {
 			MainMenu.newMainMenuFrame( myrisk, JFrame.DISPOSE_ON_CLOSE );
@@ -619,8 +609,22 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 			throw new RuntimeException("TestTab: unknown command found: "+command);
 		}
 	}
+        
+        private void refresh() {
+                countriesModel.fireTableDataChanged();
+                continentsModel.fireTableDataChanged();
+                cardsModel.fireTableDataChanged();
+                cardsModel2.fireTableDataChanged();
+                playersModel.fireTableDataChanged();
+                gameInfo.fireTableDataChanged();
+                commands.fireTableDataChanged();
+
+                repaint();
+        }
 
 	public JToolBar getToolBar() {
+                refresh();
+            
 		return toolbar;
 	}
 
