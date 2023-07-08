@@ -61,6 +61,9 @@ public class ChatServerThread extends Thread {
 
 			String hello = inChat.readLine(); // "10 myID#123456 default.map"
 			int index = hello.indexOf(' ');
+                        if (index < 0) {
+                            throw new IllegalStateException("malformed hello command: " + hello);
+                        }
 			String version = hello.substring(0,index);
                         
                         if (!RiskGame.NETWORK_VERSION.equals(version)) {
@@ -106,7 +109,6 @@ public class ChatServerThread extends Thread {
 
 			inChat.close();
 			outChat.close();
-
 		}
 		catch (IOException e) {
                        //System.out.println("ChatServerThread IOException: "+

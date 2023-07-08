@@ -2670,7 +2670,7 @@ RiskUtil.printStackTrace(e);
 
         public Player getSingleLocalHumanPlayer() {
             RiskGame game = getGame();
-            if (game == null || game.getState() == RiskGame.STATE_GAME_OVER) {
+            if (game == null || game.getState() == RiskGame.STATE_NEW_GAME || game.getState() == RiskGame.STATE_GAME_OVER) {
                 return null;
             }
             List<Player> players = game.getPlayers();
