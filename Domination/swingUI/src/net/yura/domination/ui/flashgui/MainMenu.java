@@ -166,10 +166,10 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 			else if (highlightButton==BUTTON_LOADGAME) {
 				GraphicsUtil.drawImage(g, MenuImage, 57, 279, 187, 329,	400, 100, 530, 150, this);
 			}
-			else if (highlightButton==BUTTON_HELP) {
+			else if (highlightButton==BUTTON_JOIN) {
 				GraphicsUtil.drawImage(g, MenuImage, 212, 279, 342, 329,	400, 150, 530, 200, this);
 			}
-			else if (highlightButton==BUTTON_JOIN) {
+			else if (highlightButton==BUTTON_HELP) {
 				GraphicsUtil.drawImage(g, MenuImage, 57, 339, 187, 389,	400, 200, 530, 250, this);
 			}
 			else if (highlightButton==BUTTON_ABOUT) {
@@ -189,10 +189,10 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 			else if (button==BUTTON_LOADGAME) {
 				GraphicsUtil.drawImage(g, MenuImage, 57, 279, 187, 329,	530, 100, 660, 150, this);
 			}
-			else if (button==BUTTON_HELP) {
+			else if (button==BUTTON_JOIN) {
 				GraphicsUtil.drawImage(g, MenuImage, 212, 279, 342, 329,	530, 150, 660, 200, this);
 			}
-			else if (button==BUTTON_JOIN) {
+			else if (button==BUTTON_HELP) {
 				GraphicsUtil.drawImage(g, MenuImage, 57, 339, 187, 389,	530, 200, 660, 250, this);
 			}
 			else if (button==BUTTON_ABOUT) {
@@ -227,9 +227,9 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
                         GraphicsUtil.drawStringCenteredAt(g2, resBundle.getString("mainmenu.loadgame"), 'L', 122, 309);
 
-                        GraphicsUtil.drawStringCenteredAt(g2, resBundle.getString("mainmenu.help"), 'H', 277, 309);
+                        GraphicsUtil.drawStringCenteredAt(g2, resBundle.getString("mainmenu.joingame"), 'J', 277, 309);
 
-                        GraphicsUtil.drawStringCenteredAt(g2, resBundle.getString("mainmenu.joingame"), 'J', 122, 369);
+                        GraphicsUtil.drawStringCenteredAt(g2, resBundle.getString("mainmenu.help"), 'H', 122, 369);
 
                         GraphicsUtil.drawStringCenteredAt(g2, resBundle.getString("mainmenu.about"), 'A', 277, 369);
 
@@ -467,10 +467,10 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 			return BUTTON_LOADGAME;
 		}
 		if (GraphicsUtil.insideButton(x, y, 220, 289, W, H)) {
-			return BUTTON_HELP;
+			return BUTTON_JOIN;
 		}
 		if (GraphicsUtil.insideButton(x, y, 65, 350, W, H)) {
-			return BUTTON_JOIN;
+			return BUTTON_HELP;
 		}
 		if (GraphicsUtil.insideButton(x, y, 220, 350, W, H)) {
 			return BUTTON_ABOUT;
@@ -532,7 +532,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 			//join game
 			case KeyEvent.VK_J:
-				activateButton( MainMenu.BUTTON_JOIN);
+				activateButton(MainMenu.BUTTON_JOIN);
 				break;
 
 			//about
@@ -547,7 +547,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 			//help
 			case KeyEvent.VK_H:
-				activateButton( MainMenu.BUTTON_HELP);
+				activateButton(MainMenu.BUTTON_HELP);
 				break;
 
 			// lobby
