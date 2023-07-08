@@ -1721,6 +1721,12 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
 								if (localGame) {
 
+                                                                    // as we are using the startgame button, we want to clear any current players from the game object
+                                                                    List gamePlayers = swingGUIPanel.myrisk.getGame().getPlayers();
+                                                                    for (int c = 0; c < gamePlayers.size(); c++) {
+                                                                            swingGUIPanel.go("delplayer " + ((Player)gamePlayers.get(c)).getName());
+                                                                    }
+
                                                                     List playerStrings = new ArrayList();
 
 								    for (int c=0; c < players.getRowCount(); c++) {
@@ -1732,7 +1738,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                                                                         playerStrings.add( new String[] {name,color,type} );
 
 									swingGUIPanel.go("newplayer "+type+" "+color+" "+name );
-
 								    }
 
                                                                     RiskUtil.savePlayers(playerStrings, SwingGUIPanel.class);
@@ -1752,12 +1757,10 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                                                                 if (italian.isSelected() && !threeDefendDice.isSelected()) { type += " " + Risk.STARTGAME_OPTION_DEFENDER_DICE + "2"; }
                                                                 
 								swingGUIPanel.go("startgame " + type + (( AutoPlaceAll.isSelected() )?(" autoplaceall"):("")) + (( recycle.isSelected() )?(" recycle"):("")) );
-
 							}
 							else {
 								swingGUIPanel.showError(error);
 							}
-
 						}
 					}
 			);
