@@ -546,7 +546,13 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         refresh();
 		}
 		else if ("flash".equals(command)) {
-			MainMenu.newMainMenuFrame( myrisk, JFrame.DISPOSE_ON_CLOSE );
+                        if (myrisk.getGame() == null) {
+                            // launching the main GameGUI only works with no game currently open
+                            MainMenu.newMainMenuFrame( myrisk, JFrame.DISPOSE_ON_CLOSE );
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(this, "Please close the current game first.");
+                        }
 		}
 		else if ("allcards".equals(command)) {
 
