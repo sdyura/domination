@@ -17,6 +17,8 @@ CURRENT VERSION:
 1.2.9
 
 	Hi-resolution support for image assets in main game UI
+	SwingGUI Testing tab: you can edit the number of extra armies at the start of each turn
+	SwingGUI Testing tab: auto refresh when opening the testing tab
 	macOS app menu 'About' and 'Settings' work correctly on java 9+
 	macOS SwingGUI use system menu even if launched using jar or command file
 	Fixed: on macOS High Sierra, java 1.8, mouseClicked does not get called most of the time

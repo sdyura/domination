@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -87,7 +88,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
 		toolbar.addSeparator();
 
-		JButton flash = new JButton("Run FlashGUI with current backend");
+		JButton flash = new JButton("Run main GameGUI with current backend");
 		flash.setActionCommand("flash");
 		flash.addActionListener(this);
 		toolbar.add(flash);
@@ -495,7 +496,11 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                                 case 1: return fields[row].getType().getName();
                                 case 2: {
                                     try {
-                                        return String.valueOf( fields[row].get(game) );
+                                        Object value = fields[row].get(game);
+                                        if (value instanceof Object[]) {
+                                            return String.valueOf(Arrays.asList((Object[]) value));
+                                        }
+                                        return String.valueOf(value);
                                     }
                                     catch (Exception ex){
                                         return ex.toString();
