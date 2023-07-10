@@ -368,7 +368,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
                 commands = new AbstractTableModel() {
 
-			private final String[] columnNames = { "No", "Player", "Command"};
+			private final String[] columnNames = { "No", "Online Player", "Command"};
 
 			public int getColumnCount() {
 				return columnNames.length;
