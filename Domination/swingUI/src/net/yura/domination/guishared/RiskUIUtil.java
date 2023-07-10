@@ -197,9 +197,13 @@ public class RiskUIUtil {
                 Image img = Toolkit.getDefaultToolkit().getImage(cls.getResource(name));
                 GraphicsUtil.waitForImage(img);
 
-                //if (multiResolutionImageClass.isInstance(img)) {
+                // we ONLY want to use this if we HAVE to.
+                // some images returned by this method do not draw first time,
+                // even though getWidth/getHeight seems to be returning correctly
+                // e.g. in SwingGUI 'all cards' dialog, "infantry.gif" does not draw first time
+                if (multiResolutionImageClass.isInstance(img)) {
                     return img;
-                //}
+                }
             }
         }
         catch (Throwable ex) { }
