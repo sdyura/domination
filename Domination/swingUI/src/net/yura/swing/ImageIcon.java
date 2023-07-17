@@ -67,8 +67,30 @@ public class ImageIcon extends javax.swing.ImageIcon {
         // * aimated (SwingUtilities.doesIconReferenceImage in JLabel needs to return true)
         if (GraphicsUtil.scale(getIconWidth()) != getIconWidth()) {
             original = getImage();
+            
+            int newWidth = GraphicsUtil.scale(getIconWidth());
+            int newHeight = GraphicsUtil.scale(getIconHeight());
+            
+            try {
+                Class multiResolutionImageClass = Class.forName("java.awt.image.MultiResolutionImage");
+                if (multiResolutionImageClass.isInstance(original)) {
+                    Image image = (Image)multiResolutionImageClass.getMethod("getResolutionVariant", double.class, double.class).invoke(original, newWidth, newHeight);
+                    if (newWidth == image.getWidth(null)) {
+                        setImage(image);
+                    }
+                    else {
+                        setImage(image.getScaledInstance(newWidth, newHeight, image instanceof BufferedImage ? Image.SCALE_SMOOTH : Image.SCALE_DEFAULT));                        
+                    }
+                    // success!!
+                    return;
+                }
+            }
+            catch (Throwable th) {
+                // ignore and fallback
+            }
+            
             // only scale default and fst work for animated gifs
-            setImage(original.getScaledInstance(GraphicsUtil.scale(getIconWidth()), GraphicsUtil.scale(getIconHeight()), original instanceof BufferedImage ? Image.SCALE_SMOOTH : Image.SCALE_DEFAULT));
+            setImage(original.getScaledInstance(newWidth, newHeight, original instanceof BufferedImage ? Image.SCALE_SMOOTH : Image.SCALE_DEFAULT));
         }
     }
 }
