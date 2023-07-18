@@ -1,10 +1,11 @@
 package net.yura.lobby.mini;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.microedition.lcdui.Graphics;
 import net.yura.domination.engine.ColorUtil;
@@ -66,14 +67,13 @@ public class GameRenderer extends DefaultListCellRenderer {
         }
 
         if (lobby.playerType >= Player.PLAYER_ADMIN) {
-            String players = ((Collection<Player>)game.getPlayers()).stream()
-                    .map(new Function<Player, String>() {
-                        @Override
-                        public String apply(Player player) {
-                            return toAdminString(player);
-                        }
-                    })
-                    .collect(Collectors.joining(", ", "[", "]"));
+
+            List<String> playerStrings = new ArrayList();
+            for (Player player : (Collection<Player>)game.getPlayers()) {
+                playerStrings.add(toAdminString(player));
+            }
+            String players = playerStrings.toString();
+            
             line2 = players + " " + game.getName();
         }
         else {
