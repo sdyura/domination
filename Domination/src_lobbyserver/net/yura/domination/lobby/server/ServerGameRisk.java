@@ -434,9 +434,12 @@ public class ServerGameRisk extends TurnBasedGame {
                             throw new IllegalArgumentException("player with name already in game " + newName);
                         }
 
-                        // only rename the resigned player if they are alive, if they are dead, no point
-                        if (thePlayer.isAlive()) {
-                            sendRename(username,newName,myrisk.getAddress(),Player.PLAYER_AI_EASY,true);
+                        // only rename the resigned player if they are alive and game not over.
+                        // If they are dead, or if game over in domination mode or ai has won, no point.
+                        // if game over and mode is mission or capital, the winner may choose to continue the game, so resign the player.
+                        if (thePlayer.isAlive() && !(myrisk.getGame().getState() == RiskGame.STATE_GAME_OVER && (myrisk.getGame().getGameMode() == RiskGame.MODE_DOMINATION || myrisk.getWinner().getType() != Player.PLAYER_HUMAN))) {
+
+                                sendRename(username, newName, myrisk.getAddress(), Player.PLAYER_AI_EASY, true);
                         }
 
                         if (aliveHumans == 0) {
