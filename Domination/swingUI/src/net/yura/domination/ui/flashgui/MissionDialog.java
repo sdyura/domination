@@ -34,7 +34,10 @@ public class MissionDialog extends JDialog implements MouseListener {
         super(parent, modal);
 	mission = RiskUIUtil.getUIImage(this.getClass(),"mission.jpg");
         initGUI();
-	setResizable(false);
+
+        //setResizable(false);
+        RiskUIUtil.setMinimumSize(this, GraphicsUtil.newDimension(150, 230));
+
         pack();
     }
 
@@ -54,6 +57,16 @@ public class MissionDialog extends JDialog implements MouseListener {
 	missionpanel.setMaximumSize(d);
 	missionpanel.addMouseListener(this);
 
+        // 150 x 230
+        int side = 40;
+        missionpanel.setBorder( new FlashBorder(
+            GraphicsUtil.getSubimage(mission, 0, 0, 150, 60),
+            GraphicsUtil.getSubimage(mission, 0, 60, side, 230 -60 -40),
+            GraphicsUtil.getSubimage(mission, 0, 230 - 40, 150, 40),
+            GraphicsUtil.getSubimage(mission, 150 - side, 60, side, 230 -60 -40)
+            ) );
+        
+        
 	getContentPane().add(missionpanel);
 
         addWindowListener(
@@ -83,9 +96,13 @@ public class MissionDialog extends JDialog implements MouseListener {
      * Paints graphic
      * @param g Graphics
      */
-	public void paintComponent(Graphics g) {
+	public void paintChildren(Graphics g) {
 
-	    GraphicsUtil.drawImage(g, mission, 0, 0, this);
+	    //GraphicsUtil.drawImage(g, mission, 0, 0, this);
+
+            GraphicsUtil.drawImage(g, mission,
+                    40, 60, unscale(getWidth()) -40, unscale(getHeight()) -40,
+                    40, 60, 150 -40, 230 -40, this);
 
 	    Graphics2D g2 = (Graphics2D)g;
 
@@ -99,8 +116,15 @@ public class MissionDialog extends JDialog implements MouseListener {
             g.setFont(font);
             g2.setColor( GameFrame.UI_COLOR );
 
-            GraphicsUtil.drawStringCenteredAt(g, text, 75, 70, 100);
+            GraphicsUtil.drawStringCenteredAt(g, text, unscale(getWidth() / 2), 70, unscale(getWidth()) - 50);
 	}
+
+        /**
+         * @see GraphicsUtil#scale(int)
+         */
+        private int unscale(int size) {
+            return (int) (size * GraphicsUtil.scale / GraphicsUtil.density);
+        }
     }
 
 	//**********************************************************************

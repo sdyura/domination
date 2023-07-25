@@ -30,12 +30,12 @@ import javax.swing.plaf.basic.BasicGraphicsUtils;
 public class GraphicsUtil {
 
     /**
-     * how many pixels there are in 1 device independent pixel
+     * how many swing pixels there are in 1 device independent pixel
      */
     public static final double density = getDisplayDensity();
 
     /**
-     * how many sub-pixels there are in 1 pixel
+     * how many sub-pixels there are in 1 swing pixel
      */
     public static final double scale = getScale();
 
