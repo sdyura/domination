@@ -123,7 +123,7 @@ public class MissionDialog extends JDialog implements MouseListener {
          * @see GraphicsUtil#scale(int)
          */
         private int unscale(int size) {
-            return (int) (size * GraphicsUtil.scale / GraphicsUtil.density);
+            return (int) Math.ceil(size * GraphicsUtil.scale / GraphicsUtil.density);
         }
     }
 

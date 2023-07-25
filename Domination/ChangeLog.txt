@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.2.9
 
 	Hi-resolution support for image assets in main game UI
+	GameGUI: mission dialog can be resized
 	SwingGUI Testing tab: you can edit the number of extra armies at the start of each turn
 	SwingGUI Testing tab: auto refresh when opening the testing tab
 	macOS app menu 'About' and 'Settings' work correctly on java 9+
