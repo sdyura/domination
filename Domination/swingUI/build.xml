@@ -205,7 +205,7 @@
 		<copy todir="${dir.build.game}">
 			<!-- Apple OS X Launcher files, these are binary files and can not be filtered -->
 			<fileset dir="${basedir}/res/scripts" includes="*.app/**,*.exe"/>
-			<fileset dir="${basedir}/res/scripts" defaultexcludes="no" includes="._*"/>
+			<fileset dir="${basedir}/res/scripts" defaultexcludes="no" includes="**/._*"/>
 		</copy>
 
 		<!-- sadly this is lost when the files are added to the zip file, so is useless
@@ -243,7 +243,7 @@
 
 		<zip destfile="${dir.dist}/${game.name}_${game.version}.zip">
  			<zipfileset dir="${dir.build.game}" prefix="${game.name}" excludes="*.sh,**/universalJavaApplicationStub,mac.command"/>
-			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="._*" defaultexcludes="no"/>
+			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="**/._*" defaultexcludes="no"/>
 			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="*.sh,**/universalJavaApplicationStub" filemode="755"/>
 		</zip>
 	</target>
