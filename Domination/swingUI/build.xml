@@ -210,7 +210,7 @@
 
 		<!-- sadly this is lost when the files are added to the zip file, so is useless
 		<attrib hidden="true">
-			<fileset dir="${dir.build.game}" defaultexcludes="no" includes="._*"/>
+			<fileset dir="${dir.build.game}" defaultexcludes="no" includes="**/._*"/>
 		</attrib>
 		-->
 
@@ -243,8 +243,9 @@
 
 		<zip destfile="${dir.dist}/${game.name}_${game.version}.zip">
  			<zipfileset dir="${dir.build.game}" prefix="${game.name}" excludes="*.sh,**/universalJavaApplicationStub,mac.command"/>
-			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="**/._*" defaultexcludes="no"/>
 			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="*.sh,**/universalJavaApplicationStub" filemode="755"/>
+                        <!-- we HAVE to add these last, or when they get extracted on macOS they will not get merged -->
+			<zipfileset dir="${dir.build.game}" prefix="${game.name}" includes="**/._*" defaultexcludes="no"/>
 		</zip>
 	</target>
 
