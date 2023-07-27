@@ -22,6 +22,8 @@ CURRENT VERSION:
 	SwingGUI Testing tab: auto refresh when opening the testing tab
 	macOS app menu 'About' and 'Settings' work correctly on java 9+
 	macOS SwingGUI use system menu even if launched using jar or command file
+	macOS fix: do not require Rosetta2 to run on arm64 mac
+	macOS fix: fix for SwingGUI not painting on startup on java19/macOS/arm64
 	Fixed: on macOS High Sierra, java 1.8, mouseClicked does not get called most of the time
 	Fixed: map filename is shown sometimes instead of proper name in lobby game setup
 

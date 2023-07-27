@@ -1303,6 +1303,8 @@ public class RiskUIUtil {
 
     public static void setMinimumSize(Window window, Dimension size) {
         try {
+            // this method can be buggy on windows when scale is not 1
+            // https://stackoverflow.com/questions/67504604/inconsistent-beahaviour-with-jframess-setminimumsize-and-manully-dragging-when
             window.setMinimumSize(size);
         }
         catch(NoSuchMethodError ex) {

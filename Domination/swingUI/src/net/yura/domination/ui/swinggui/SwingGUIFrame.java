@@ -59,6 +59,10 @@ public class SwingGUIFrame {
 
                         gui.setVisible(true);
 
+                        // dirty hack, for JDK19 on MacOS Arm64
+                        // for some reason without this, the main window SOMETIEMS does not repaint.
+                        gui.paint(gui.getGraphics());
+
                         RiskUIUtil.openFile(argv,r);
                     }
                 });
