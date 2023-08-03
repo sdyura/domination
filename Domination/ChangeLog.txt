@@ -14,7 +14,7 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.2.9
+1.2.9 (04.08.2023) (svn rev 2470)
 
 	Hi-resolution support for image assets in main game UI
 	GameGUI: mission dialog can be resized
@@ -27,13 +27,19 @@ CURRENT VERSION:
 	Fixed: on macOS High Sierra, java 1.8, mouseClicked does not get called most of the time
 	Fixed: map filename is shown sometimes instead of proper name in lobby game setup
 
-1.2.8 (23.06.2023)
+1.2.8 (23.06.2023) (svn rev 2433)
 
 	better zoom in map editor
 	Fix for windows exe stubs not working on java 17
 	izpack 5 installer fixed to put windows shortcuts
 	Fixed: Lobby Game Setup screen some map previews not loading
 	Fixed: Map Editor stuck and slow when drawing first country
+
+	iOS 15 long press to place 10 troops
+
+	Android 93 Show color blind icons in stats graph
+		   Stats graphs have 0.01 offset so lines do not overlap
+		   fix for time not shown in notifications
 
 1.2.7 (20.12.2022)
 
@@ -43,7 +49,6 @@ CURRENT VERSION:
 	SwingGUI: fix for online lobby sometimes not repainting when tabs switched
 	Lobby: when player resigns, the player is converted to easy AI instead of crap AI
 
-	iOS 15 long press to place 10 troops
 	iOS 14 Fix for iOS 9 with scale 2 not loading 9-patches
 	       Fix for disabled color in lists
 	iOS 13 Tap on StatusBar to scrollToTop added
@@ -64,9 +69,6 @@ CURRENT VERSION:
 	iOS 8 Game settings added
 	iOS 7 Fix crash in Image finalizer
 
-	Android 93 Show color blind icons in stats graph
-		   Stats graphs have 0.01 offset so lines do not overlap
-		   fix for time not shown in notifications
 	Android 92 fixed: when language is changed, reload the app to the same game
 		   fixed: crash in Preferences being opened when main activity is closed
 	Android 91 fixed: nullpointer when sending android push token too early before handshake done
