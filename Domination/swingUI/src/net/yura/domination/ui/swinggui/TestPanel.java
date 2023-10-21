@@ -109,7 +109,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 			}
                         
                         public boolean isCellEditable(int rowIndex, int columnIndex) {
-                            if ("Armies".equals(columnNames[columnIndex])) {
+                            if ("Armies".equals(columnNames[columnIndex]) || "Owner".equals(columnNames[columnIndex])) {
                                 return true;
                             }
                             return false;
@@ -171,15 +171,37 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                             Country country = myrisk.getGame().getCountries()[rowIndex];
                             switch(columnIndex) {
-                                case 7: int armies = country.getArmies();
-                                        int newArmies = Integer.parseInt(aValue.toString());
-                                        if (newArmies > armies) {
-                                            country.addArmies(newArmies - armies);
+                                case 6: // Owner
+                                    Player newPlayer = myrisk.getGame().getPlayer(String.valueOf(aValue));
+                                    if (newPlayer != null) {
+                                        Player oldPlayer = country.getOwner();
+                                        if (oldPlayer != null) {
+                                            oldPlayer.lostCountry(country);
                                         }
                                         else {
-                                            country.removeArmies(armies - newArmies);
+                                            country.addArmy();
                                         }
-                                        break;
+                                        newPlayer.newCountry(country);
+                                        country.setOwner(newPlayer);
+                                    }
+                                    break;
+                                case 7: // Armies
+                                    int newArmies = Integer.parseInt(aValue.toString());
+                                    if (newArmies < 0 || country.getOwner() == null) break;
+
+                                    int oldArmies = country.getArmies();
+                                    if (newArmies > oldArmies) {
+                                        country.addArmies(newArmies - oldArmies);
+                                    }
+                                    else {
+                                        country.removeArmies(oldArmies - newArmies);
+                                    }
+                                    if (oldArmies != 0 && newArmies == 0) {
+                                        Player player = country.getOwner();
+                                        player.lostCountry(country);
+                                        country.setOwner(null);
+                                    }
+                                    break;
                             }
                         }
 		};
