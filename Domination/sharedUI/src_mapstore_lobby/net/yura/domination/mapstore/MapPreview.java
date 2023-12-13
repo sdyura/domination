@@ -10,6 +10,7 @@ import java.util.WeakHashMap;
 import javax.microedition.lcdui.Image;
 import net.yura.cache.Cache;
 import net.yura.domination.ImageManager;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.layout.XULLoader;
@@ -57,13 +58,9 @@ public class MapPreview {
         map.setMapUrl( file );
 
         String name = (String)info.get("name");
-        if (name==null) {
-            if (file.toLowerCase().endsWith(".map")) {
-                name = RiskUtil.getFileNameWithoutExtension(file);
-            }
-            else {
-                name = file;
-            }
+        if (name == null) {
+            String filename = file.toLowerCase().endsWith(".map") ? RiskUtil.getFileNameWithoutExtension(file) : file;
+            name = JavaCompatUtil.replaceAll(filename, "_", " ");
         }
         map.setName(name);
         map.setDescription( (String)info.get("comment") );
