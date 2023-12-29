@@ -1253,7 +1253,7 @@ RiskUtil.printStackTrace(e);
 					else { output=JavaCompatUtil.replaceAll(resb.getString( "core.error.syntax"), "{0}", "autosetup"); }
 				}
 				else if (input.equals("startgame")) {
-					if (StringT.countTokens() >= 2 && StringT.countTokens() <= 4) {
+					if (StringT.countTokens() >= 2 && StringT.countTokens() <= 5) {
 
 						int n=game.getPlayers().size();
 

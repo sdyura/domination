@@ -14,6 +14,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
@@ -282,6 +283,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		smartFill.addActionListener(this);
 		modesPanel.add(smartFill);
 		smartFill.setEnabled(false);
+                smartFill.setMnemonic(KeyEvent.VK_F);
                 
 		autoDrawButton = new JButton("Auto Draw");
 		autoDrawButton.setActionCommand("autodraw");
