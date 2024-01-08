@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.2.10
 
 	fixed: unable to start game when all options are present
+	no repaint macos JDK-19 bug workaround: MapChooser loading animation added
 	SwingGUI: can change who owns a country
 	MapEditor: smart fill Mnemonic 'F'
 

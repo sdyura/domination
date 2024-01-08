@@ -277,7 +277,8 @@ public class MapChooser implements ActionListener,MapServerListener {
                                 client.makeRequestXML(MapServerClient.MAP_PAGE, "author", ((Map)map).getAuthorId());
                             }
                             else {
-                                setListData(null, null);
+                                // this map is not on the map store, must be a bundled map
+                                setListData(null, Collections.EMPTY_LIST);
                             }
                         }
                     });
@@ -487,6 +488,9 @@ public class MapChooser implements ActionListener,MapServerListener {
         //}
     }
 
+    /**
+     * @param items items to display or null for empty screen or empty list for 'no matches' message
+     */
     private void setListData(String url,java.util.List items) {
         ((MapRenderer) list.getCellRenderer()).setContext(MapPreview.getContext(url));
 
