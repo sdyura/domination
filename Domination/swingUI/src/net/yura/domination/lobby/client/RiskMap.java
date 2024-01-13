@@ -85,6 +85,12 @@ public class RiskMap {
                 public void paintIcon(Component c, Graphics g, int x, int y) {
                     if (lazyMapIcon == null) {
                         lazyMapIcon = mapPreviewClient.getIconForMap(mapUID);
+
+                        // if the lazy icon we got for the very first time is already set,
+                        // publishImg will never get called, so we dont need 'components'.
+                        if (lazyMapIcon.getImage() != null) {
+                            components = null;
+                        }
                     }
                     javax.microedition.lcdui.Image img = lazyMapIcon.getImage();
                     if (img != null) { // the icon has been loaded, so we can draw it
