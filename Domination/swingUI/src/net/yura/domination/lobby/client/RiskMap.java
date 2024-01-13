@@ -29,14 +29,12 @@ public class RiskMap {
     private static MapPreviewClient mapPreviewClient = new MapPreviewClient() {
         @Override
         public void publishMap(Map map) {
-            String mapUID = MapPreview.getFileUID(map.getMapUrl());
-            RiskMap riskMap = getMapIcon(mapUID);
-            riskMap.lazyMapMetadata = map;
+            setMapMetaData(map);
         }
 
         @Override
         public void publishImg(String mapUID) {
-            RiskMap riskMap = getMapIcon(mapUID);
+            RiskMap riskMap = getRiskMap(mapUID);
             // warning, items can be added to list while this is being called
             // we can NOT use new java for loop as it will throw ConcurrentModificationException
             for (int c = 0; c < riskMap.components.size(); c++) {
@@ -63,7 +61,11 @@ public class RiskMap {
         this.mapUID = mapUID;
     }
 
-    public static RiskMap getMapIcon(final String mapUID) {
+    public static void setMapMetaData(Map map) {
+        getRiskMap(MapPreview.getFileUID(map.getMapUrl())).lazyMapMetadata = map;
+    }
+
+    public static RiskMap getRiskMap(final String mapUID) {
         RiskMap icon  = mapUIDToIcon.get(mapUID);
         if (icon == null) {
             icon = new RiskMap(mapUID);

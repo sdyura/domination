@@ -688,7 +688,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
             String[] split = newGameOptions.split(",");
             RiskMap[] maps = new RiskMap[split.length];
             for (int c = 0; c < maps.length; c++) {
-                maps[c] = RiskMap.getMapIcon(decode(split[c]));
+                maps[c] = RiskMap.getRiskMap(decode(split[c]));
             }
             return maps;
         }

@@ -12,7 +12,9 @@ import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.domination.lobby.client.RiskMap;
 import net.yura.domination.lobby.mini.MiniLobbyRisk;
+import net.yura.domination.mapstore.Map;
 import net.yura.domination.mapstore.MapChooser;
 import net.yura.lobby.client.ChatBox;
 import net.yura.lobby.client.PlayerList;
@@ -86,6 +88,10 @@ public class SwingMEWrapper {
                     lobby.createNewGame(result);
                 }
             }
+            @Override
+            protected void mapMetaData(Map map) {
+                RiskMap.setMapMetaData(map);
+            }
             public String getAppName() {
                 return appName + RiskUtil.GAME_NAME;
             }
@@ -130,7 +136,6 @@ public class SwingMEWrapper {
                     players.setCurrentPlayer(whosTurn);
                 }
             }
-
         } );
         miniLobbyClient.connect(server);
         return miniLobbyClient;

@@ -60,11 +60,15 @@ public abstract class MapPreviewClient implements MapServerListener {
     }
 
     /**
-     * This method is called at least once (remote maps), but may get called many times (local maps)
+     * WARNING!
+     * This method is sometimes NOT called, (if we already had the icon in the cache)
+     * sometimes called once (if we needed to fetch the map from the MapStore)
+     * and may get called many times (for local maps)
      */
     public abstract void publishMap(Map map);
 
     /**
+     * WARNING!
      * This method is ONLY called if the icon that was returned originally is not yet loaded
      */
     public abstract void publishImg(String mapUID);

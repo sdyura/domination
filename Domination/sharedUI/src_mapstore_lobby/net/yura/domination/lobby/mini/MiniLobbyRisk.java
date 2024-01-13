@@ -146,12 +146,16 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     WeakHashMap mapping = new WeakHashMap();
     MapPreviewClient mapPreviewClient = new MapPreviewClient() {
         public void publishMap(Map map) {
-            // we do not care about the map metadata
+            mapMetaData(map);
         }
         public void publishImg(String mapUID) {
             lobby.getRoot().repaint();
         }
     };
+    
+    protected void mapMetaData(Map map) {
+        // we do not care about the map metadata
+    }
 
     public Icon getIconForGame(Game game) {
         String mapUID = OnlineUtil.getMapNameFromLobbyStartGameOption(game.getOptions());

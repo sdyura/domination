@@ -100,7 +100,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
             String mapUID = OnlineUtil.getMapNameFromLobbyStartGameOption(options);
             // keep a strong ref to the mapUID while we have a string ref to the options
             optionsToMapUID.put(options, mapUID);
-            return RiskMap.getMapIcon(mapUID).getIcon(32, 20, comp);
+            return RiskMap.getRiskMap(mapUID).getIcon(32, 20, comp);
 	}
 
         public String getGameDescription(String string) {
