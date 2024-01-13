@@ -1,6 +1,7 @@
 package net.yura.domination.mapstore;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -73,7 +74,7 @@ public class MapChooser implements ActionListener,MapServerListener {
         this.allowedMaps = allowedMaps;
 
         try {
-            loader = XULLoader.load( Application.getResourceAsStream("/ms_maps.xml") , this, resBundle);
+            loader = XULLoader.inflate( new InputStreamReader(Application.getResourceAsStream("/ms_maps.xml"), RiskUtil.UTF_8), this, resBundle);
         }
         catch(Exception ex) {
             throw new RuntimeException(ex);
@@ -260,6 +261,13 @@ public class MapChooser implements ActionListener,MapServerListener {
                 click(map);
             }
             //else value is null coz the list is empty
+        }
+        else if ("mapInfo".equals(actionCommand)) {
+            Object value = list.getSelectedValue();
+            if (value instanceof Map) {
+                Map map = (Map)value;
+                OptionPane.showMessageDialog(null, getMapInfo(map), map.toString(), OptionPane.INFORMATION_MESSAGE);
+            }
         }
         else if ("sameAuthor".equals(actionCommand)) {
             Object value = list.getSelectedValue();
@@ -557,5 +565,14 @@ public class MapChooser implements ActionListener,MapServerListener {
         }
 
         return MapUpdateService.getInstance().mapsToUpdate.contains(map);
+    }
+    
+    public static String getMapInfo(Map map) {
+        String author = map.getAuthorName();
+        String noOfDownloads = map.getNumberOfDownloads();
+        return "By: " + (author == null ? "?" : author) + "\n" +
+        "Downloads: " + (noOfDownloads == null ? "?" : noOfDownloads) + "\n" +
+        "Version: " + map.getVersion() + "\n" +
+        map.getDescription();
     }
 }

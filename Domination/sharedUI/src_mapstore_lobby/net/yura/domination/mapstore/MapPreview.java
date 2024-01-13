@@ -51,7 +51,6 @@ public class MapPreview {
             }
         }
 
-
         java.util.Map info = RiskUtil.loadInfo(file, false);
 
         Map map = new Map();
@@ -78,7 +77,8 @@ public class MapPreview {
         }
         map.setPreviewUrl( prv );
 
-        map.setVersion( (String)info.get("ver") );
+        String ver = (String)info.get("ver");
+        map.setVersion(ver == null ? "1" : ver);
 
         mapCache.put(file, new WeakReference(map));
 

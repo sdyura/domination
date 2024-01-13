@@ -62,6 +62,7 @@ import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mapstore.GetMap;
 import net.yura.domination.mapstore.Map;
+import net.yura.domination.mapstore.MapChooser;
 import net.yura.domination.ui.flashgui.NewGameFrame;
 import net.yura.lobby.model.Game;
 import net.yura.swing.HintTextField;
@@ -285,11 +286,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                                         // if we have more info about the map then show it.
                                         Map map = it.getMap();
                                         if (map != null) {
-                                            message = new String[] { message[0], message[1],
-                                            "By: " + map.getAuthorName(),
-                                            "Downloads: " + map.getNumberOfDownloads(),
-                                            "Version: " + map.getVersion(),
-                                            map.getDescription()};
+                                            message = new String[] { message[0], message[1], MapChooser.getMapInfo(map)};
                                         }
 
                                         int result = showConfirmDialog(GameSetupPanel.this, message, "Download?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, it.getIcon(203, 127, GameSetupPanel.this));
