@@ -22,10 +22,14 @@ public class MapPreview {
 
     public static final String PREVIEW_FILE_PREFIX = "preview/";
 
-    // this is a weak cache, it only keep a object if someone else holds it or a key
-    // needs to be synchronizedMap or we get endless loop in WeakHashMap: http://www.adam-bien.com/roller/abien/entry/endless_loops_in_unsychronized_weakhashmap
-    private static final java.util.Map mapCache = Collections.synchronizedMap(new WeakHashMap());
-    
+    /**
+     * this is a weak cache, it only keep a object if someone else holds it or a key
+     * needs to be synchronizedMap or we get endless loop in WeakHashMap: http://www.adam-bien.com/roller/abien/entry/endless_loops_in_unsychronized_weakhashmap
+     * 
+     * java Map: localfilename -> WeakReference of game 'Map' objects
+     */
+    private static final java.util.Map localMapsCache = Collections.synchronizedMap(new WeakHashMap());
+
     private static Cache repo;
 
     static {
@@ -43,7 +47,7 @@ public class MapPreview {
      */
     public static Map createMap(String file) {
 
-        WeakReference wr = (WeakReference)mapCache.get(file);
+        WeakReference wr = (WeakReference)localMapsCache.get(file);
         if (wr!=null) {
             Map map = (Map)wr.get();
             if (map!=null) {
@@ -80,13 +84,13 @@ public class MapPreview {
         String ver = (String)info.get("ver");
         map.setVersion(ver == null ? "1" : ver);
 
-        mapCache.put(file, new WeakReference(map));
+        localMapsCache.put(file, new WeakReference(map));
 
         return map;
     }
 
     public static boolean haveLocalMap(String mapUID) {
-        if (mapCache.containsKey(mapUID)) {
+        if (localMapsCache.containsKey(mapUID)) {
             return true;
         }
         return fileExists(mapUID);
@@ -107,7 +111,7 @@ public class MapPreview {
     }
 
     public static void clearFromCache(String mapUID) {
-        mapCache.remove(mapUID);
+        localMapsCache.remove(mapUID);
     }
 
     public static void cache(String url, byte[] data) {

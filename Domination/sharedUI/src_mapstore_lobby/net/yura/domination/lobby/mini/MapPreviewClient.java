@@ -38,7 +38,9 @@ public abstract class MapPreviewClient implements MapServerListener {
             Map map = MapPreview.createMap(mapUID);
             publishMap(map);
             Icon icon = MapPreview.getLocalIconForMap(map);
-            publishImg(mapUID);
+            // as this is a local map, we do NOT need to publish it, as we know we already have it
+            // the icon we return is already setup, if we publish and trigger a repaint, it will get stuck in a repaint loop
+            //publishImg(mapUID);
             return icon;
         }
 
