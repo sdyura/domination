@@ -29,7 +29,7 @@ public class GameSound {
     public void load(String theme) {
 
         try {
-            String folder = "sound";
+            final String folder = "sound";
 
             InputStream in = RiskUtil.openStream(folder + "/" + theme + ".xml");
 
