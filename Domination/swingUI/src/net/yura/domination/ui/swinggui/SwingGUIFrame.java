@@ -5,6 +5,7 @@ package net.yura.domination.ui.swinggui;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import net.yura.domination.SimpleAudio;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.guishared.AboutDialog;
@@ -29,6 +30,7 @@ public class SwingGUIFrame {
                 System.setProperty("apple.laf.useScreenMenuBar", "true");
 
                 final Risk r = new Risk();
+                r.getGameSound().setAudioSystem(new SimpleAudio());
 		SwingGUIPanel sg = new SwingGUIPanel( r );
 
 		final JFrame gui = new JFrame();

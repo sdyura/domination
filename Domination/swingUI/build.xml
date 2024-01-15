@@ -16,7 +16,7 @@
         
         <property file="local.properties" />
 
-	<property name="game.version" value="1.2.9"/>
+	<property name="game.version" value="1.2.10"/>
 
         <!--
             For releasing we want to be compatible wth as many versions of java as possible
@@ -158,7 +158,7 @@
 
 	<target name="game"
 		description="copies all the necessary files for the game to one directory, from which it can be played then"
-		depends="distribution.jar"><!-- ,manual -->
+		depends="distribution.jar,demo"><!-- ,manual -->
 
 		<mkdir dir="${dir.build.game}"/>
 
@@ -182,6 +182,11 @@
 			<fileset dir="game/${game.name}/maps" includes="**/*.*"/>
 		</copy>
 
+		<mkdir dir="${dir.build.game}/sound"/>
+		<copy todir="${dir.build.game}/sound">
+			<fileset dir="game/${game.name}/sound" includes="**/*.*" />
+		</copy>
+
 		<mkdir dir="${dir.build.game}/resources"/>
 		<copy todir="${dir.build.game}/resources">
 			<fileset dir="${basedir}/res/icons" includes="**/*.*" />
@@ -190,6 +195,7 @@
 		<mkdir dir="${dir.build.game}/saves"/>
 
 		<copy file="${dir.dist}/${game.name}.jar" todir="${dir.build.game}"/>
+                <copy file="${dir.dist}/${game.name}4ME.jar" todir="${dir.build.game}"/>
 
                 <copy todir="${dir.build.game}/lib">
                 	<!-- Desktop libs -->
@@ -251,7 +257,7 @@
 
 	<target name="jar"
 		description="generates distribution packages"
-		depends="distribution.zip,distribution.izpack,lobby,demo">
+		depends="distribution.zip,distribution.izpack,lobby">
 	</target>
 
 
@@ -618,11 +624,16 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
         <!-- copy assets into jar -->
 
         <copy todir="${dir.build}/swingme">
-                <fileset dir="../android" includes="assets/**"/>
                 <fileset dir="../src" includes="META-INF/services/**"/>
         </copy>
 
-        <jar destfile="dist/${game.name}4ME.jar" basedir="${dir.build}/swingme"/>
+        <jar destfile="dist/${game.name}4ME.jar" basedir="${dir.build}/swingme">
+            <manifest>
+                <attribute name="Main-Class" value="org.me4se.MIDletRunner" />
+                <attribute name="Class-Path" value="lib/midletrunner.jar lib/m3gbasic.jar lib/SwingME.jar lib/Grasshopper.jar lib/LobbyCore.jar lib/LobbyClient.jar" />
+                <attribute name="MIDlet-1" value="Flash GUI,,net.yura.domination.mobile.flashgui.DominationMain" />
+            </manifest>
+        </jar>
 
     </target>
 

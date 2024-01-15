@@ -378,8 +378,19 @@ public class RiskUIUtil {
 				final AtomicReference<File> mapsdir1 = new AtomicReference(new File("maps"));
 
 				// riskconfig.getProperty("default.map")
+                                final String dmname = RiskGame.getDefaultMap();
 
-				final String dmname = RiskGame.getDefaultMap();
+                                try {
+                                    // if we can not find maps, attempt to get path from jar file
+                                    if ( !(new File(mapsdir1.get(), dmname ).exists()) ) {
+                                        URL url = RiskUIUtil.class.getProtectionDomain().getCodeSource().getLocation();
+                                        File jarFile = new File(url.toURI());
+                                        mapsdir1.set(new File(jarFile.getParentFile(), "maps"));
+                                    }
+                                }
+                                catch (Throwable th) {
+                                    Logger.getLogger(RiskUIUtil.class.getName()).info("failed to get maps dir from jar " + th);
+                                }
 
 				while ( !(new File(mapsdir1.get(), dmname ).exists()) ) {
 

@@ -22,6 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RootPaneContainer;
 import javax.swing.event.MouseInputListener;
+import net.yura.domination.SimpleAudio;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -580,9 +582,13 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
         public void hide() {
             window.setVisible(false);
+
+            myrisk.getGameSound().stopMusic(GameSound.MENU_MUSIC);
         }
         public void show() {
             window.setVisible(true);
+
+            myrisk.getGameSound().playMusic(GameSound.MENU_MUSIC);
         }
         
         void showMainMenu() {
@@ -612,6 +618,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 }
 
                 Risk risk = new Risk();
+                risk.getGameSound().setAudioSystem(new SimpleAudio());
 		final MainMenu mainMneu = newMainMenuFrame(risk, JFrame.EXIT_ON_CLOSE );
 
                 try {
@@ -661,7 +668,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 		});
 
                 RiskUIUtil.center(gui);
-		gui.setVisible(true);
+		mm.show();
 
 		return mm;
 	}

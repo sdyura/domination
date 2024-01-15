@@ -1,0 +1,7 @@
+<sounds>
+    <!--
+    <sound name="menu_music" file="medieval/menu music1.au"/>
+    -->
+
+    <sound name="start_game" file="medieval/game starting.au"/>
+</sounds>

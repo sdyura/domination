@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+import net.yura.domination.SimpleAudio;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
@@ -355,6 +356,7 @@ public class DominationMain extends Application {
         }
 
         risk = new Risk();
+        risk.getGameSound().setAudioSystem(new SimpleAudio());
         adapter = new MiniFlashRiskAdapter(risk);
 
 

@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
@@ -61,8 +62,9 @@ public class Risk extends Thread {
 
         private static final Logger logger = Logger.getLogger(Risk.class.getName());
 
+        protected RiskGame game;
 	protected RiskController controller;
-	protected RiskGame game;
+	protected GameSound sounds;
 
         OnlineRisk onlinePlayClient;
 	private ChatArea p2pServer;
@@ -158,6 +160,8 @@ public class Risk extends Thread {
 		p2pPort = Integer.parseInt(riskconfig.getProperty("p2p.port", String.valueOf(p2pPort)));
 
 		controller = new RiskController();
+                sounds = new GameSound();
+                sounds.load("medieval"); // TODO this prob needs to be set somewhere else
 
 		start();
 	}
@@ -166,6 +170,10 @@ public class Risk extends Thread {
 		this();
 		RiskGame.setDefaultMapAndCards(b,c);
 	}
+        
+        public GameSound getGameSound() {
+            return sounds;
+        }
 
         public static void setShowDice(boolean show) {
             if (show) {
@@ -1326,6 +1334,8 @@ RiskUtil.printStackTrace(e);
                                                         controller.noInput();
 
                                                         controller.startGame(unlimitedLocalMode);
+                                                        
+                                                        sounds.playSound(GameSound.START_GAME);
 
                                                         if (shouldGameCommand(Addr)) {
                                                             gameCommand(Addr, "PLAYER", String.valueOf( game.getRandomPlayer() ) );
@@ -2242,7 +2252,7 @@ RiskUtil.printStackTrace(e);
 	}
 
 	/** Shows helpful tips in each game state */
-	public void setHelp() {
+	private void setHelp() {
 
 		String help="";
 
