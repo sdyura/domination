@@ -618,7 +618,13 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 }
 
                 Risk risk = new Risk();
-                risk.getGameSound().setAudioSystem(new SimpleAudio());
+                try {
+                    risk.getGameSound().setAudioSystem(new SimpleAudio());
+                }
+                catch (Throwable th) {
+                    RiskUtil.printStackTrace("SimpleAudio not loaded", th);
+                }
+
 		final MainMenu mainMneu = newMainMenuFrame(risk, JFrame.EXIT_ON_CLOSE );
 
                 try {

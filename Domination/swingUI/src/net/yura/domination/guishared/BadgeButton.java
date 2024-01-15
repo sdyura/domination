@@ -43,7 +43,7 @@ public class BadgeButton extends JButton implements Observer {
             g.translate(-w-overlap, +overlap);
         }
         catch (Throwable th) {
-            RiskUtil.printStackTrace(th);
+            RiskUtil.printStackTrace("unable to paint badge", th);
         }
     }
 

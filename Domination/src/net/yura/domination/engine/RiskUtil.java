@@ -124,7 +124,11 @@ public class RiskUtil {
         }
 
         public static void printStackTrace(Throwable ex) {
-            logger.log(Level.WARNING, null, ex);
+            printStackTrace(null, ex);
+        }
+        
+        public static void printStackTrace(String msg, Throwable ex) {
+            logger.log(Level.WARNING, msg, ex);
         }
 
         public static void donate() throws Exception {

@@ -954,7 +954,7 @@ public class RiskUIUtil {
                             MapUpdateService.getInstance().init( getFileList("map"), MapServerClient.MAP_PAGE );
                         }
                         catch (Throwable th) {
-                            RiskUtil.printStackTrace(th);
+                            RiskUtil.printStackTrace("unable to check for map updates", th);
                         }
                 }
         }
