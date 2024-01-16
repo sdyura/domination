@@ -563,45 +563,52 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
         public void openOptions() {
 
-                Component[] message = new Component[4];
-                message[0] = new JCheckBox("Show dice", Risk.isShowDice());
+                JCheckBox showDice = new JCheckBox("Show dice", Risk.isShowDice());
 
                 JSpinner aiwait = new JSpinner(new SpinnerNumberModel(AIManager.getWait(), 0, 10000, 100));
                 JPanel aiWaitPanel = new JPanel();
                 aiWaitPanel.add(new JLabel("AI wait time:"));
                 aiWaitPanel.add(aiwait);
                 aiWaitPanel.add(new JLabel("milliseconds"));
-                message[1] = aiWaitPanel;
 
-                message[2] = new JCheckBox("Auto End Go", swingGUIPanel.myrisk.getAutoEndGo());
-                message[3] = new JCheckBox("Auto Defend", swingGUIPanel.myrisk.getAutoDefend());
+                JCheckBox soundEnabled = new JCheckBox("Sound Enabled", swingGUIPanel.myrisk.getGameSound().isSoundEnabled());
+                JCheckBox musicEnabled = new JCheckBox("Music Enabled", swingGUIPanel.myrisk.getGameSound().isMusicEnabled());
+                
+                JCheckBox autoEndGo = new JCheckBox("Auto End Go", swingGUIPanel.myrisk.getAutoEndGo());
+                JCheckBox autoDefend = new JCheckBox("Auto Defend", swingGUIPanel.myrisk.getAutoDefend());
                 if (swingGUIPanel.gameState <= RiskGame.STATE_NEW_GAME) {
-                    message[2].setEnabled(false);
-                    message[3].setEnabled(false);
+                    autoEndGo.setEnabled(false);
+                    autoDefend.setEnabled(false);
                 }
 
                 int result = JOptionPane.showConfirmDialog(
                     this,                             // the parent that the dialog blocks
-                    message,                                    // the dialog message array
+                    new Component[] {                                    // the dialog message array
+                            showDice,aiWaitPanel,
+                            soundEnabled, musicEnabled,
+                            autoEndGo, autoDefend
+                    },
                     "Options", // the title of the dialog window
                     JOptionPane.OK_CANCEL_OPTION,                 // option type
                     JOptionPane.PLAIN_MESSAGE            // message type
                 );
 
                 if (result == JOptionPane.OK_OPTION) {
-                        Risk.setShowDice(((JCheckBox)message[0]).isSelected());
+                        Risk.setShowDice(showDice.isSelected());
                         AIManager.setWait(((Integer)aiwait.getValue()).intValue());
+                        swingGUIPanel.myrisk.getGameSound().setSoundEnabled(soundEnabled.isSelected());
+                        swingGUIPanel.myrisk.getGameSound().setMusicEnabled(musicEnabled.isSelected());
 
-                        if (message[2].isEnabled()) {
-                            boolean autoendgo = (((JCheckBox)message[2]).isSelected());
+                        if (autoEndGo.isEnabled()) {
+                            boolean autoendgo = autoEndGo.isSelected();
                             // "autoendgo on" may trigger the end of my go, so must be changed last
                             if (swingGUIPanel.myrisk.getAutoEndGo() != autoendgo) {
                                 swingGUIPanel.myrisk.parser("autoendgo " + (autoendgo ? "on" : "off"));
                             }
                         }
 
-                        if (message[3].isEnabled()) {
-                            boolean autodefend = (((JCheckBox)message[3]).isSelected());
+                        if (autoDefend.isEnabled()) {
+                            boolean autodefend = autoDefend.isSelected();
                             if (swingGUIPanel.myrisk.getAutoDefend() != autodefend) {
                                 swingGUIPanel.myrisk.parser("autodefend " + (autodefend ? "on" : "off"));
                             }

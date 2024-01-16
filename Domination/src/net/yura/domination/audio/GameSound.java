@@ -85,4 +85,12 @@ public class GameSound {
             }
         }
     }
+
+    public boolean isSoundEnabled() {
+        return soundEnabled;
+    }
+
+    public boolean isMusicEnabled() {
+        return musicEnabled;
+    }
 }
