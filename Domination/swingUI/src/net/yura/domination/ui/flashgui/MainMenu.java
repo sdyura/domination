@@ -26,6 +26,7 @@ import net.yura.domination.SimpleAudio;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.guishared.AboutDialog;
@@ -583,12 +584,12 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
         public void hide() {
             window.setVisible(false);
 
-            myrisk.getGameSound().stopMusic(GameSound.MENU_MUSIC);
+            GameSound.INSTANCE.stopMusic(GameSound.MENU_MUSIC);
         }
         public void show() {
             window.setVisible(true);
 
-            myrisk.getGameSound().playMusic(GameSound.MENU_MUSIC);
+            GameSound.INSTANCE.playMusic(GameSound.MENU_MUSIC);
         }
         
         void showMainMenu() {
@@ -618,8 +619,13 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 }
 
                 Risk risk = new Risk();
+
+                // before we create any UI, we want to load up all settings
+                RiskSettings.loadSettingsFromPrefs(RiskSettings.getPreferences(MainMenu.class));
+                
                 try {
-                    risk.getGameSound().setAudioSystem(new SimpleAudio());
+                    GameSound.INSTANCE.load("medieval");
+                    GameSound.INSTANCE.setAudioSystem(new SimpleAudio());
                 }
                 catch (Throwable th) {
                     RiskUtil.printStackTrace("SimpleAudio not loaded", th);

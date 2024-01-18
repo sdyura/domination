@@ -17,6 +17,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -770,7 +771,7 @@ public class GameWindow extends Frame implements ActionListener {
 
             repaint(); // SwingGUI has this here, if here then not needed in set status
 
-            if (isFocused() && DominationMain.getBoolean("show_toasts", false) ) {
+            if (isFocused() && DominationMain.getBoolean(RiskSettings.SHOW_TOASTS_KEY, false) ) {
                 toast(status);
             }
     }

@@ -27,9 +27,7 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import net.yura.domination.engine.core.Continent;
-import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.MapTranslator;
 
@@ -143,130 +141,6 @@ public class RiskUtil {
 		openURL(new URL("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=yura%40yura%2enet&item_name="+GAME_NAME+"%20Donation&no_shipping=0&no_note=1&tax=0&currency_code=GBP&lc=GB&bn=PP%2dDonationsBF&charset=UTF%2d8"));
 	}
 
-        public static Properties getPlayerSettings(final Risk risk,Class uiclass) {
-            Preferences prefs=null;
-            try {
-                 prefs = Preferences.userNodeForPackage( uiclass );
-            }
-            catch(Throwable th) { } // security
-            final Preferences theprefs = prefs;
-            return new Properties() {
-                public String getProperty(String key) {
-                    String value = risk.getRiskConfig(key);
-                    if (theprefs!=null) {
-                        value = theprefs.get(key, value);
-                    }
-                    return value;
-                }                
-            };
-        }
-
-        public static void loadPlayers(Risk risk,Class uiclass) {
-            if (!risk.isReplay()) {
-                Properties playerSettings = getPlayerSettings(risk, uiclass);
-                for (int cc=1;cc<=RiskGame.MAX_PLAYERS;cc++) {
-                    String name = playerSettings.getProperty("default.player"+cc+".name");
-                    String color = playerSettings.getProperty("default.player"+cc+".color");
-                    String type = playerSettings.getProperty("default.player"+cc+".type");
-                    if (name != null && color != null && type != null && !"".equals(name) && !"".equals(color) && !"".equals(type)) {
-                        risk.parser("newplayer " + type + " " + color + " " + name);
-                    }
-                }
-            }
-        }
-
-        public static void savePlayers(Risk risk,Class uiclass) {
-
-            Preferences prefs=null;
-            try {
-                 prefs = Preferences.userNodeForPackage( uiclass );
-            }
-            catch(Throwable th) { } // security
-
-            if (prefs!=null) {
-
-                List players = risk.getGame().getPlayers();
-
-                for (int cc=1;cc<=RiskGame.MAX_PLAYERS;cc++) {
-                    String nameKey = "default.player"+cc+".name";
-                    String colorKey = "default.player"+cc+".color";
-                    String typeKey = "default.player"+cc+".type";
-
-                    String name = "";
-                    String color = "";
-                    String type = "";
-
-                    Player player = (cc<=players.size())?(Player)players.get(cc-1):null;
-
-                    if (player!=null) {
-                        name = player.getName();
-                        color = ColorUtil.getStringForColor( player.getColor() );
-                        type = risk.getType( player.getType() );
-                    }
-                    prefs.put(nameKey, name);
-                    prefs.put(colorKey, color);
-                    prefs.put(typeKey, type);
-
-                }
-
-                // on android this does not work, god knows why
-                // whats the point of including a class if its
-                // most simple and basic operation does not work?
-                try {
-                    prefs.flush();
-                }
-                catch(Exception ex) {
-                    logger.log(Level.INFO, "can not flush prefs", ex);
-                }
-
-            }
-        }
-
-        public static void savePlayers(List players,Class uiclass) {
-
-            Preferences prefs=null;
-            try {
-                 prefs = Preferences.userNodeForPackage( uiclass );
-            }
-            catch(Throwable th) { } // security
-
-            if (prefs!=null) {
-
-                for (int cc=1;cc<=RiskGame.MAX_PLAYERS;cc++) {
-                    String nameKey = "default.player"+cc+".name";
-                    String colorKey = "default.player"+cc+".color";
-                    String typeKey = "default.player"+cc+".type";
-
-                    String name = "";
-                    String color = "";
-                    String type = "";
-                    
-                    String[] player = (cc<=players.size())?(String[])players.get(cc-1):null;
-
-                    if (player!=null) {
-                        name = player[0];
-                        color = player[1];
-                        type = player[2];
-                    }
-                    prefs.put(nameKey, name);
-                    prefs.put(colorKey, color);
-                    prefs.put(typeKey, type);
-
-                }
-
-                // on android this does not work, god knows why
-                // whats the point of including a class if its
-                // most simple and basic operation does not work?
-                try {
-                    prefs.flush();
-                }
-                catch(Exception ex) {
-                    logger.log(Level.INFO, "can not flush prefs", ex);
-                }
-
-            }
-        }
-        
         public static BufferedReader readMap(InputStream in) throws IOException {
 
             PushbackInputStream pushback = new PushbackInputStream(in,3);

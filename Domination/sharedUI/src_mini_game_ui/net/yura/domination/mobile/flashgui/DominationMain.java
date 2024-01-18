@@ -12,9 +12,10 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import net.yura.domination.SimpleAudio;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
-import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mapstore.MapChooser;
@@ -48,14 +49,6 @@ public class DominationMain extends Application {
     private static final Logger logger = Logger.getLogger(DominationMain.class.getName());
 
     public static final String SAVE_EXTENSION = ".save";
-
-    public static final boolean DEFAULT_SHOW_DICE = true;
-    public static final String SHOW_DICE_KEY = "show_dice";
-
-    public static final String DEFAULT_GAME_TYPE_KEY = "default.gametype";
-    public static final String DEFAULT_CARD_TYPE_KEY = "default.cardtype";
-    public static final String DEFAULT_AUTO_PLACE_ALL_KEY = "default.autoplaceall";
-    public static final String DEFAULT_RECYCLE_CARDS_KEY = "default.recycle";
 
     /**
      * @see net.yura.domination.ui.flashgui.MainMenu#product
@@ -333,8 +326,8 @@ public class DominationMain extends Application {
             }
 
             String shouldDifferentiateWithoutColor = System.getProperty("shouldDifferentiateWithoutColor");
-            if ("true".equalsIgnoreCase(shouldDifferentiateWithoutColor) && !containsKey("color_blind")) {
-                appPreferences.putBoolean("color_blind", true);
+            if ("true".equalsIgnoreCase(shouldDifferentiateWithoutColor) && !containsKey(RiskSettings.COLOR_BLIND_KEY)) {
+                appPreferences.putBoolean(RiskSettings.COLOR_BLIND_KEY, true);
                 // on android this does nothing unless we call flushPreferences :-(
                 // on all other OSs it sets the property in memory and does not persist it
                 // on android this will only work the first time, if the user
@@ -344,19 +337,22 @@ public class DominationMain extends Application {
                 }
             }
 
-            AIManager.setWait( appPreferences.getInt("ai_wait", AIManager.getWait()) );
             String lang = appPreferences.get("lang", null);
             if (lang != null) {
                 TranslationBundle.setLanguage(lang);
             }
-            Risk.setShowDice(appPreferences.getBoolean(SHOW_DICE_KEY, DEFAULT_SHOW_DICE));
         }
         else {
             System.out.println("can not load appPreferences as it is NULL!");
         }
 
         risk = new Risk();
-        risk.getGameSound().setAudioSystem(new SimpleAudio());
+
+        RiskSettings.loadSettingsFromPrefs(appPreferences);
+
+        GameSound.INSTANCE.load("medieval");
+        GameSound.INSTANCE.setAudioSystem(new SimpleAudio());
+
         adapter = new MiniFlashRiskAdapter(risk);
 
 
@@ -461,16 +457,6 @@ public class DominationMain extends Application {
     public static String getString(String key, String defaultValue) {
         if (appPreferences == null) return defaultValue;
         return appPreferences.get(key, defaultValue);
-    }
-
-    public static void saveGameSettings(String gameTypeCommand, String cardTypeCommand, boolean autoPlaceAllBoolean, boolean recycleCardsBoolean) {
-        if (appPreferences != null) {
-            appPreferences.put(DEFAULT_GAME_TYPE_KEY, gameTypeCommand);
-            appPreferences.put(DEFAULT_CARD_TYPE_KEY, cardTypeCommand);
-            appPreferences.putBoolean(DEFAULT_AUTO_PLACE_ALL_KEY, autoPlaceAllBoolean);
-            appPreferences.putBoolean(DEFAULT_RECYCLE_CARDS_KEY, recycleCardsBoolean);
-            flushPreferences();
-        }
     }
 
     public static void setAccounts(List<String> accounts) {

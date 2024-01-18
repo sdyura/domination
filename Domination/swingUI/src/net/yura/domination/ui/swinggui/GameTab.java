@@ -55,9 +55,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
@@ -571,8 +573,8 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                 aiWaitPanel.add(aiwait);
                 aiWaitPanel.add(new JLabel("milliseconds"));
 
-                JCheckBox soundEnabled = new JCheckBox("Sound Enabled", swingGUIPanel.myrisk.getGameSound().isSoundEnabled());
-                JCheckBox musicEnabled = new JCheckBox("Music Enabled", swingGUIPanel.myrisk.getGameSound().isMusicEnabled());
+                JCheckBox soundEnabled = new JCheckBox("Sound Enabled", GameSound.INSTANCE.isSoundEnabled());
+                JCheckBox musicEnabled = new JCheckBox("Music Enabled", GameSound.INSTANCE.isMusicEnabled());
                 
                 JCheckBox autoEndGo = new JCheckBox("Auto End Go", swingGUIPanel.myrisk.getAutoEndGo());
                 JCheckBox autoDefend = new JCheckBox("Auto Defend", swingGUIPanel.myrisk.getAutoDefend());
@@ -596,8 +598,9 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                 if (result == JOptionPane.OK_OPTION) {
                         Risk.setShowDice(showDice.isSelected());
                         AIManager.setWait(((Integer)aiwait.getValue()).intValue());
-                        swingGUIPanel.myrisk.getGameSound().setSoundEnabled(soundEnabled.isSelected());
-                        swingGUIPanel.myrisk.getGameSound().setMusicEnabled(musicEnabled.isSelected());
+                        GameSound.INSTANCE.setSoundEnabled(soundEnabled.isSelected());
+                        GameSound.INSTANCE.setMusicEnabled(musicEnabled.isSelected());
+                        RiskSettings.saveSettingsToPrefs(SwingGUIPanel.getUIPreferences());
 
                         if (autoEndGo.isEnabled()) {
                             boolean autoendgo = autoEndGo.isSelected();
@@ -1747,7 +1750,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 									swingGUIPanel.go("newplayer "+type+" "+color+" "+name );
 								    }
 
-                                                                    RiskUtil.savePlayers(playerStrings, SwingGUIPanel.class);
+                                                                    RiskSettings.savePlayers(playerStrings, SwingGUIPanel.class);
 								}
 
 								String type="";
@@ -1860,7 +1863,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
                         Properties settings;
                         if (lastUsed) {
-                            settings = RiskUtil.getPlayerSettings(swingGUIPanel.myrisk, SwingGUIPanel.class);
+                            settings = RiskSettings.getPlayerSettings(swingGUIPanel.myrisk, SwingGUIPanel.class);
                         }
                         else {
                             settings = new Properties() {

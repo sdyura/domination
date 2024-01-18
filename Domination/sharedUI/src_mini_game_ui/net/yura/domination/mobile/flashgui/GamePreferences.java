@@ -10,7 +10,7 @@ import net.yura.mobile.gui.layout.XULLoader;
 import net.yura.mobile.util.Properties;
 import net.yura.swingme.core.CoreUtil;
 import java.util.Map;
-import java.util.prefs.BackingStoreException;
+import net.yura.domination.engine.RiskSettings;
 
 public class GamePreferences implements ActionListener {
 
@@ -35,24 +35,18 @@ public class GamePreferences implements ActionListener {
             //new CheckBox(resb.getString("game.menu.fullscreen"));
             //fullscreen.setKey("fullscreen");
 
-            boolean show_toasts = Boolean.parseBoolean(results.get("show_toasts"));
-            boolean color_blind = Boolean.parseBoolean(results.get("color_blind"));
-            boolean show_dice = Boolean.parseBoolean(results.get("show_dice"));
-            int ai_wait = Integer.parseInt(results.get("ai_wait"));
+            boolean show_toasts = Boolean.parseBoolean(results.get(RiskSettings.SHOW_TOASTS_KEY));
+            boolean color_blind = Boolean.parseBoolean(results.get(RiskSettings.COLOR_BLIND_KEY));
+            boolean showDice = Boolean.parseBoolean(results.get(RiskSettings.SHOW_DICE_KEY));
+            int aiWait = Integer.parseInt(results.get(RiskSettings.AI_WAIT_KEY));
 
-            Risk.setShowDice(show_dice);
-            AIManager.setWait(ai_wait);
+            Risk.setShowDice(showDice);
+            AIManager.setWait(aiWait);
 
-            DominationMain.appPreferences.putBoolean("show_toasts", show_toasts);
-            DominationMain.appPreferences.putBoolean("color_blind", color_blind);
-            DominationMain.appPreferences.putBoolean("show_dice", show_dice);
-            DominationMain.appPreferences.putInt("ai_wait", ai_wait);
-
-            try {
-                DominationMain.appPreferences.flush();
-            } catch (BackingStoreException e) {
-                e.printStackTrace();
-            }
+            DominationMain.appPreferences.putBoolean(RiskSettings.SHOW_TOASTS_KEY, show_toasts);
+            DominationMain.appPreferences.putBoolean(RiskSettings.COLOR_BLIND_KEY, color_blind);
+            
+            RiskSettings.saveSettingsToPrefs(DominationMain.appPreferences);
         }
     }
 

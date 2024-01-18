@@ -7,6 +7,7 @@ import java.util.List;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -94,8 +95,6 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
                 if (numOfPlayers >= 2 && numOfPlayers <= RiskGame.MAX_PLAYERS ) {
 
                     if (localgame) {
-                        RiskUtil.savePlayers(myrisk, getClass());
-
                         // do not allow the user to accidently tap the start button twice.
                         newgame.find("startButton").setFocusable(false);
 
@@ -104,7 +103,8 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
                         boolean autoPlaceAllBoolean = autoplaceall != null && autoplaceall.isSelected();
                         boolean recycleCardsBoolean = recycle != null && recycle.isSelected();
 
-                        DominationMain.saveGameSettings(gameTypeCommand, cardTypeCommand, autoPlaceAllBoolean, recycleCardsBoolean);
+                        RiskSettings.savePlayers(myrisk, getClass());
+                        RiskSettings.saveGameSettings(DominationMain.appPreferences, gameTypeCommand, cardTypeCommand, autoPlaceAllBoolean, recycleCardsBoolean);
 
                         myrisk.parser("startgame " + gameTypeCommand + " " + cardTypeCommand +
                                 (autoPlaceAllBoolean ? " autoplaceall" : "") +
@@ -288,14 +288,14 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
         autoplaceall = (Button)newgame.find("autoplaceall");
         Button recycle = (Button)newgame.find("recycle");
 
-        setSelected(gameType, DominationMain.getString(DominationMain.DEFAULT_GAME_TYPE_KEY, gameType.getSelection().getActionCommand()));
-        setSelected(cardType, DominationMain.getString(DominationMain.DEFAULT_CARD_TYPE_KEY, cardType.getSelection().getActionCommand()));
+        setSelected(gameType, DominationMain.getString(RiskSettings.DEFAULT_GAME_TYPE_KEY, gameType.getSelection().getActionCommand()));
+        setSelected(cardType, DominationMain.getString(RiskSettings.DEFAULT_CARD_TYPE_KEY, cardType.getSelection().getActionCommand()));
 
         if (autoplaceall != null) {
-            autoplaceall.setSelected(DominationMain.getBoolean(DominationMain.DEFAULT_AUTO_PLACE_ALL_KEY, autoplaceall.isSelected()));
+            autoplaceall.setSelected(DominationMain.getBoolean(RiskSettings.DEFAULT_AUTO_PLACE_ALL_KEY, autoplaceall.isSelected()));
         }
         if (recycle != null) {
-            recycle.setSelected(DominationMain.getBoolean(DominationMain.DEFAULT_RECYCLE_CARDS_KEY, recycle.isSelected()));
+            recycle.setSelected(DominationMain.getBoolean(RiskSettings.DEFAULT_RECYCLE_CARDS_KEY, recycle.isSelected()));
         }
 
         ((Spinner) newgame.find("human")).setMinimum(localgame ? ("true".equals(System.getProperty("debug")) ? 0 : 1)
@@ -309,7 +309,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
         PlayerList playerList = (PlayerList) newgame.find("playerList");
 
         if (localgame) {
-            RiskUtil.loadPlayers( myrisk ,getClass());
+            RiskSettings.loadPlayers(myrisk, getClass());
             playerList.setGame(myrisk);
         }
         else {

@@ -14,16 +14,18 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class GameSound {
 
+    public final static GameSound INSTANCE = new GameSound();
+    
     public static final String MENU_MUSIC = "menu_music";
     public static final String START_GAME = "start_game";
     
     private boolean soundEnabled = true;
     private boolean musicEnabled = true;
-    private AudioSystem instance;
+    private AudioSystem audioSystem;
     private Map<String, String> currentTheme; // ID -> filename
 
     public void setAudioSystem(AudioSystem audio) {
-        instance = audio;
+        audioSystem = audio;
     }
 
     public void load(String theme) {
@@ -60,28 +62,28 @@ public class GameSound {
     }
 
     public void playSound(String audioId) {
-        if (soundEnabled && instance != null && currentTheme != null) {
+        if (soundEnabled && audioSystem != null && currentTheme != null) {
             String audioFile = currentTheme.get(audioId);
             if (audioFile != null) {
-                instance.play(audioFile);
+                audioSystem.play(audioFile);
             }
         }
     }
 
     public void playMusic(String audioId) {
-        if (musicEnabled && instance != null && currentTheme != null) {
+        if (musicEnabled && audioSystem != null && currentTheme != null) {
             String audioFile = currentTheme.get(audioId);
             if (audioFile != null) {
-                instance.start(audioFile);
+                audioSystem.start(audioFile);
             }
         }
     }
 
     public void stopMusic(String audioId) {
-        if (instance != null && currentTheme != null) {
+        if (audioSystem != null && currentTheme != null) {
             String audioFile = currentTheme.get(audioId);
             if (audioFile != null) {
-                instance.stop(audioFile);
+                audioSystem.stop(audioFile);
             }
         }
     }

@@ -43,6 +43,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
@@ -492,7 +493,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		nothing.setVisible(false);
 
 		if (this.localgame) {
-                    RiskUtil.loadPlayers(myrisk,getClass());
+                    RiskSettings.loadPlayers(myrisk,getClass());
                 }
 	}
 
@@ -861,7 +862,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 					// || (players.length == 2 && domination.isSelected() && ((playerPanel)players[0]).getType() == 0 && ((playerPanel)players[1]).getType() == 0 )
 			) {
                                 if (localgame) {
-                                    RiskUtil.savePlayers(myrisk,getClass());
+                                    RiskSettings.savePlayers(myrisk,getClass());
                                 }
 
 				String type="";

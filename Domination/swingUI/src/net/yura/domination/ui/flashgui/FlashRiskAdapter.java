@@ -353,5 +353,4 @@ public class FlashRiskAdapter implements RiskListener {
 	public GameFrame getGameFrame() {
 		return gameFrame;
 	}
-
 }

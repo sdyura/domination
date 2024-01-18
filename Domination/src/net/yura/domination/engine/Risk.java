@@ -64,7 +64,6 @@ public class Risk extends Thread {
 
         protected RiskGame game;
 	protected RiskController controller;
-	protected GameSound sounds;
 
         OnlineRisk onlinePlayClient;
 	private ChatArea p2pServer;
@@ -130,8 +129,8 @@ public class Risk extends Thread {
 		riskconfig = new Properties();
 
                 // game setup defaults
-                riskconfig.setProperty("default.autoplaceall","false");
-                riskconfig.setProperty("default.recyclecards","true");
+                riskconfig.setProperty(RiskSettings.DEFAULT_AUTO_PLACE_ALL_KEY, "false");
+                riskconfig.setProperty(RiskSettings.DEFAULT_RECYCLE_CARDS_KEY, "true");
                 // player settings are only used at first launch or if java.util.prefs.Preferences fail to save
                 for (int c=0;c<names.length;c++) {
                     riskconfig.setProperty("default.player" + (c + 1) + ".type", types[c]);
@@ -151,17 +150,16 @@ public class Risk extends Thread {
 
                 // initalise static settings from game config file (on PC game only)
 		RiskGame.setDefaultMapAndCards(
-                        riskconfig.getProperty("default.map", RiskGame.getDefaultMap()),
-                        riskconfig.getProperty("default.cards", RiskGame.getDefaultCards())
+                        riskconfig.getProperty(RiskSettings.DEFAULT_MAP_KEY, RiskGame.getDefaultMap()),
+                        riskconfig.getProperty(RiskSettings.DEFAULT_CARDS_KEY, RiskGame.getDefaultCards())
                 );
                 RiskGame.MAX_PLAYERS = Integer.parseInt(riskconfig.getProperty("game.players.max", String.valueOf(RiskGame.MAX_PLAYERS)));
-                setShowDice(Boolean.parseBoolean(riskconfig.getProperty("game.dice.show", String.valueOf(isShowDice()))));
-                AIManager.setWait(Integer.parseInt(riskconfig.getProperty("ai.wait", String.valueOf(AIManager.getWait()))));
 		p2pPort = Integer.parseInt(riskconfig.getProperty("p2p.port", String.valueOf(p2pPort)));
 
+                setShowDice(Boolean.parseBoolean(riskconfig.getProperty(RiskSettings.SHOW_DICE_KEY, String.valueOf(isShowDice()))));
+                AIManager.setWait(Integer.parseInt(riskconfig.getProperty(RiskSettings.AI_WAIT_KEY, String.valueOf(AIManager.getWait()))));
+
 		controller = new RiskController();
-                sounds = new GameSound();
-                sounds.load("medieval"); // TODO this prob needs to be set somewhere else
 
 		start();
 	}
@@ -170,10 +168,6 @@ public class Risk extends Thread {
 		this();
 		RiskGame.setDefaultMapAndCards(b,c);
 	}
-        
-        public GameSound getGameSound() {
-            return sounds;
-        }
 
         public static void setShowDice(boolean show) {
             if (show) {
@@ -1334,8 +1328,6 @@ RiskUtil.printStackTrace(e);
                                                         controller.noInput();
 
                                                         controller.startGame(unlimitedLocalMode);
-                                                        
-                                                        sounds.playSound(GameSound.START_GAME);
 
                                                         if (shouldGameCommand(Addr)) {
                                                             gameCommand(Addr, "PLAYER", String.valueOf( game.getRandomPlayer() ) );

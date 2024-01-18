@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -52,6 +53,7 @@ import javax.swing.event.ChangeListener;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
@@ -255,8 +257,15 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                     debugTab.start();
                 }
 
-                net.yura.domination.engine.ai.AIManager.setWait(5);
+                Preferences prefs = getUIPreferences();
+                if (prefs == null || prefs.getInt(RiskSettings.AI_WAIT_KEY, -1) == -1) {
+                    net.yura.domination.engine.ai.AIManager.setWait(5);
+                }
 	}
+        
+        static Preferences getUIPreferences() {
+            return RiskSettings.getPreferences(SwingGUIPanel.class);
+        }
 
         public JMenuBar getJMenuBar() {
             return gMenuBar;

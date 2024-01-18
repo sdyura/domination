@@ -14,6 +14,7 @@ import com.nokia.mid.ui.DirectGraphics;
 import com.nokia.mid.ui.DirectUtils;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
@@ -548,7 +549,7 @@ public class PicturePanel extends ImageView implements MapPanel {
          * @see net.yura.domination.android.StatsActivity#getIcon(Player)
          */
         public static Image getIconForColor(int color) {
-            return DominationMain.getBoolean("color_blind",false)?icons.get(color):null;
+            return DominationMain.getBoolean(RiskSettings.COLOR_BLIND_KEY,false)?icons.get(color):null;
         }
 
         // cache font for reuse

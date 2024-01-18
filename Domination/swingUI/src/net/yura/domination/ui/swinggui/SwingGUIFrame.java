@@ -6,7 +6,9 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import net.yura.domination.SimpleAudio;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.guishared.AboutDialog;
@@ -31,8 +33,13 @@ public class SwingGUIFrame {
                 System.setProperty("apple.laf.useScreenMenuBar", "true");
 
                 final Risk r = new Risk();
+
+                // before we create any UI, we want to load up all settings
+                RiskSettings.loadSettingsFromPrefs(SwingGUIPanel.getUIPreferences());
+
                 try {
-                    r.getGameSound().setAudioSystem(new SimpleAudio());
+                    GameSound.INSTANCE.load("medieval");
+                    GameSound.INSTANCE.setAudioSystem(new SimpleAudio());
                 }
                 catch (Throwable th) {
                     RiskUtil.printStackTrace("SimpleAudio not loaded", th);
