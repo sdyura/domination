@@ -21,6 +21,8 @@ public class RiskSettings {
     public static final String MUSIC_KEY = "audio.music";
     public static final String SHOW_TOASTS_KEY = "show_toasts";
     public static final String COLOR_BLIND_KEY = "color_blind";
+    public static final String FULL_SCREEN_KEY = "fullscreen";
+    public static final String LANGUAGE_KEY = "lang";
 
     // default new game settings
     public static final String DEFAULT_GAME_TYPE_KEY = "default.gametype";

@@ -8,9 +8,9 @@ import java.util.TimerTask;
 import net.yura.android.AndroidMeActivity;
 import net.yura.android.AndroidMeApp;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.translation.TranslationBundle;
-import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.Application;
 import net.yura.mobile.logging.Logger;
 import android.app.Activity;
@@ -58,13 +58,13 @@ public class GamePreferenceActivity extends PreferenceActivity {
 
         CheckBoxPreference show_toasts = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
         show_toasts.setTitle( resb.getString("game.menu.showtoasts") );
-        show_toasts.setKey("show_toasts");
+        show_toasts.setKey(RiskSettings.SHOW_TOASTS_KEY);
         inlinePrefCat.addPreference(show_toasts);
 
         CheckBoxPreference showDice = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
         showDice.setTitle(resb.getString("game.menu.showdice"));
-        showDice.setKey(DominationMain.SHOW_DICE_KEY);
-        showDice.setDefaultValue(DominationMain.DEFAULT_SHOW_DICE);
+        showDice.setKey(RiskSettings.SHOW_DICE_KEY);
+        showDice.setDefaultValue(Risk.isShowDice());
         showDice.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -76,12 +76,12 @@ public class GamePreferenceActivity extends PreferenceActivity {
 
         CheckBoxPreference color_blind = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
         color_blind.setTitle( resb.getString("game.menu.colorblind") );
-        color_blind.setKey("color_blind");
+        color_blind.setKey(RiskSettings.COLOR_BLIND_KEY);
         inlinePrefCat.addPreference(color_blind);
 
         CheckBoxPreference fullscreen = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
         fullscreen.setTitle( resb.getString("game.menu.fullscreen") );
-        fullscreen.setKey("fullscreen");
+        fullscreen.setKey(RiskSettings.FULL_SCREEN_KEY);
         fullscreen.setDefaultValue(GameActivity.getDefaultFullScreen(context));
         inlinePrefCat.addPreference(fullscreen);
         fullscreen.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -94,7 +94,7 @@ public class GamePreferenceActivity extends PreferenceActivity {
 
         final ListPreference ai = new IntListPreference(context);
         ai.setTitle( resb.getString("game.menu.aiSpeed") );
-        ai.setKey("ai_wait");
+        ai.setKey(RiskSettings.AI_WAIT_KEY);
         final String[] aiSpeeds = new String[] {
                 resb.getString("game.menu.aiSpeed.normal"),
                 resb.getString("game.menu.aiSpeed.fast"),
@@ -118,7 +118,7 @@ public class GamePreferenceActivity extends PreferenceActivity {
 
         final ListPreference lang = new ListPreference(context);
         lang.setTitle( resb.getString("game.menu.language") );
-        lang.setKey("lang");
+        lang.setKey(RiskSettings.LANGUAGE_KEY);
         Locale[] locales = Locale.getAvailableLocales();
         final String[] languageNames = new String[locales.length];
         final String[] languages = new String[locales.length];

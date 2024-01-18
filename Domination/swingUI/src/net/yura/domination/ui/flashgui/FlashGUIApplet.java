@@ -4,6 +4,7 @@ package net.yura.domination.ui.flashgui;
 
 import javax.swing.JApplet;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 
@@ -36,7 +37,7 @@ public class FlashGUIApplet extends JApplet {
 
                 RiskUIUtil.setupMapsDir(this);
 
-		String lang = getParameter("lang");
+		String lang = getParameter(RiskSettings.LANGUAGE_KEY);
 		if (lang !=null) {
 			TranslationBundle.parseArgs( new String[] {"--lang="+lang } );
 		}
