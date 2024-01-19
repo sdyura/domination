@@ -1,10 +1,12 @@
 package net.yura.domination.ui.swinggui;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.AbstractAction;
@@ -139,22 +141,52 @@ public class PLAF {
 
         for(Window window : windows) {
             SwingUtilities.updateComponentTreeUI(window);
-            for(Component demoPanel : ui.getJTabbedPane().getComponents()) {
-                SwingGUITab tab = (SwingGUITab)demoPanel;
-                SwingUtilities.updateComponentTreeUI(tab.getToolBar());
-            }
+        }
+        
+        for(Component demoPanel : ui.getJTabbedPane().getComponents()) {
+            SwingGUITab tab = (SwingGUITab)demoPanel;
+            SwingUtilities.updateComponentTreeUI(tab.getToolBar());
         }
     }
     
     private void font(boolean up) {
-        int szIncr = up ? 5 : -5; // Value to increase the size by
-        // UIManager.getDefaults() works for metal, but causes other issues
-        UIDefaults uidef = UIManager.getLookAndFeelDefaults();
-        for (Map.Entry<Object,Object> e : uidef.entrySet()) {
+        int szIncr = up ? 1 : -1; // Value to increase the size by
+        // UIManager.getDefaults() works for all inclusing metal, windows L&F but causes some issues
+        // UIManager.getLookAndFeelDefaults() works for ONLY Mac OS X, Nimbus and CDE/Motif
+        Map<Object, Object> uidefCopy = new HashMap(UIManager.getDefaults());
+        UIDefaults lookAndFeelDefaults = UIManager.getLookAndFeelDefaults();
+        Map<Font, FontUIResource> newFonts = new HashMap();
+
+        //order of getting a font
+        // 1) overrides stored MultiUIDefaults (that extends Hashtable) directly (we can put things there with UIManager.put(...))
+        // 2) look and feel stored in MultiUIDefaults.tables[0] (we can put things there with UIManager.getLookAndFeelDefaults().put(...))
+        // 3) system defaults stored in MultiUIDefaults.tables[1] (we can not store things here)
+
+        for (Map.Entry<Object,Object> e : uidefCopy.entrySet()) {
             Object val = e.getValue();
-            if (val != null && val instanceof FontUIResource) {
-                FontUIResource fui = (FontUIResource)val;
-                uidef.put(e.getKey(), new FontUIResource(fui.getName(), fui.getStyle(), fui.getSize()+szIncr));
+
+            if (String.valueOf(e.getKey()).endsWith("font")) {
+                if (val instanceof UIDefaults.ActiveValue) {
+                    UIDefaults.ActiveValue av = (UIDefaults.ActiveValue)val;
+                    val = av.createValue(lookAndFeelDefaults);
+                }
+                else if (val instanceof UIDefaults.LazyValue) {
+                    UIDefaults.LazyValue av = (UIDefaults.LazyValue)val;
+                    val = av.createValue(lookAndFeelDefaults);
+                }
+            }
+
+            if (val != null && val instanceof Font) {
+                Font fui = (Font)val;
+
+                FontUIResource newFont = newFonts.get(fui);
+                if (newFont == null) {
+                    newFont = new FontUIResource(fui.getName(), fui.getStyle(), fui.getSize() + szIncr);
+                    newFonts.put(fui, newFont);
+                }
+
+                // if this is done on its own, it has an effect on some themes, if it is done with UIManager.put, it does nothing
+                lookAndFeelDefaults.put(e.getKey(), newFont);
             }
         }
         updateLookAndFeel();
