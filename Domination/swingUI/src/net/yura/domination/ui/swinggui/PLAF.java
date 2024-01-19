@@ -4,17 +4,22 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.FontUIResource;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.util.Service;
 
@@ -71,6 +76,25 @@ public class PLAF {
                 menu.add(createLookAndFeelItem(laf.toString(), laf.getClass().getName()));
             }
         //}
+        
+        menu.addSeparator();
+        JMenuItem fontUp = new JMenuItem("Font up");
+        fontUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                font(true);
+            }
+        });
+        menu.add(fontUp);
+        JMenuItem fontDown = new JMenuItem("Font down");
+        fontDown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                font(false);
+            }
+        });
+        menu.add(fontDown);
+        
         return menu;
     }
 
@@ -120,5 +144,19 @@ public class PLAF {
                 SwingUtilities.updateComponentTreeUI(tab.getToolBar());
             }
         }
+    }
+    
+    private void font(boolean up) {
+        int szIncr = up ? 5 : -5; // Value to increase the size by
+        // UIManager.getDefaults() works for metal, but causes other issues
+        UIDefaults uidef = UIManager.getLookAndFeelDefaults();
+        for (Map.Entry<Object,Object> e : uidef.entrySet()) {
+            Object val = e.getValue();
+            if (val != null && val instanceof FontUIResource) {
+                FontUIResource fui = (FontUIResource)val;
+                uidef.put(e.getKey(), new FontUIResource(fui.getName(), fui.getStyle(), fui.getSize()+szIncr));
+            }
+        }
+        updateLookAndFeel();
     }
 }
