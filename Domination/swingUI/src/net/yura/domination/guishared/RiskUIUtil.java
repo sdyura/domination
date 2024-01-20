@@ -845,14 +845,15 @@ public class RiskUIUtil {
 	}
 
         public static String getOSString() {
-            String patch;
+            String patchAndArch;
             if (checkForNoSandbox()) {
-                patch = System.getProperty("sun.os.patch.level") + " (" + System.getProperty("sun.arch.data.model") + "bit)";
+                String patch = System.getProperty("sun.os.patch.level");
+                patchAndArch = (patch == null ? "" : patch + " ") + "(" + System.getProperty("sun.arch.data.model") + "bit)";
             }
             else {
-                patch="?";
+                patchAndArch="?";
             }
-            return System.getProperty("os.name") + " " + System.getProperty("os.version") +" "+ patch + " on " + System.getProperty("os.arch");
+            return System.getProperty("os.name") + " " + System.getProperty("os.version") +" "+ patchAndArch + " on " + System.getProperty("os.arch");
         }
 
 
