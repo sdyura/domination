@@ -151,8 +151,20 @@ public class PLAF {
     
     private void font(boolean up) {
         int szIncr = up ? 1 : -1; // Value to increase the size by
-        // UIManager.getDefaults() works for all inclusing metal, windows L&F but causes some issues
-        // UIManager.getLookAndFeelDefaults() works for ONLY Mac OS X, Nimbus and CDE/Motif
+        
+        if ("Nimbus".equals(UIManager.getLookAndFeel().getName())) {
+            try {
+                Font font = (Font)UIManager.get("defaultFont");
+                UIManager.setLookAndFeel(UIManager.getLookAndFeel().getClass().getName());
+                UIManager.getLookAndFeelDefaults().put("defaultFont", new FontUIResource(font.getName(), font.getStyle(), font.getSize() + szIncr));
+                updateLookAndFeel();
+                return;
+            }
+            catch (Exception ex) { }
+        }
+
+        // UIManager.getDefaults() MultiUIDefaults with fallbacks
+        // UIManager.getLookAndFeelDefaults() UIDefaults for only the current theme
         Map<Object, Object> uidefCopy = new HashMap(UIManager.getDefaults());
         UIDefaults lookAndFeelDefaults = UIManager.getLookAndFeelDefaults();
         Map<Font, FontUIResource> newFonts = new HashMap();
@@ -165,7 +177,7 @@ public class PLAF {
         for (Map.Entry<Object,Object> e : uidefCopy.entrySet()) {
             Object val = e.getValue();
 
-            if (String.valueOf(e.getKey()).endsWith("font")) {
+            if (String.valueOf(e.getKey()).toLowerCase().endsWith("font")) {
                 if (val instanceof UIDefaults.ActiveValue) {
                     UIDefaults.ActiveValue av = (UIDefaults.ActiveValue)val;
                     val = av.createValue(lookAndFeelDefaults);
@@ -176,7 +188,7 @@ public class PLAF {
                 }
             }
 
-            if (val != null && val instanceof Font) {
+            if (val instanceof Font) {
                 Font fui = (Font)val;
 
                 FontUIResource newFont = newFonts.get(fui);
@@ -185,7 +197,6 @@ public class PLAF {
                     newFonts.put(fui, newFont);
                 }
 
-                // if this is done on its own, it has an effect on some themes, if it is done with UIManager.put, it does nothing
                 lookAndFeelDefaults.put(e.getKey(), newFont);
             }
         }
