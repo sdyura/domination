@@ -1,7 +1,47 @@
 <sounds>
-    <!--
-    <sound name="menu_music" file="medieval/menu music1.au"/>
+    <sound name="music_menu" file="medieval/menu_music1.au"/>
+
+    <!-- not enabled yet
+    <sound name="music_game" file="medieval/music game.au"/>
+    <sound name="music_defeat" file="medieval/music defeat1.au"/>
+    <sound name="music_victory" file="medieval/victory1.au"/>
     -->
 
-    <sound name="start_game" file="medieval/game starting.au"/>
+    <sound name="menu_button" file="medieval/select1.au"/>
+    <sound name="button" file="medieval/button1.au"/>
+    <sound name="back_button" file="medieval/return button3.au"/>
+    <sound name="button_start_game" file="medieval/game starting.au"/>
+
+    <sound name="cards_receive" file="medieval/receiving card.au"/>
+    <sound name="cards_trade" file="medieval/trade-cards-in-medieval-map.au"/>
+
+    <sound name="place_army" file="medieval/adding_pieces_-_128kbps.au"/>
+    <sound name="place_armies" file="medieval/adding soldiers1.au"/>
+
+    <sound name="attack" file="medieval/attack.au"/>
+    <sound name="battle_retreat" file="medieval/retreating.au"/>
+
+    <sound name="dice_roll" file="medieval/batttle_medieval_map1.au"/>
+    <sound name="dice_win" file="medieval/Victory2.au"/>
+    <sound name="dice_lose" file="medieval/losing medieval battle1.au"/>
+    <sound name="dice_draw" file="medieval/medieval-draw-battle.au"/>
+
+    <sound name="battle_win" file="medieval/won-against-all-troops-medieval.au"/>
+    <sound name="battle_defeat" file="medieval/lost-all-troops-medieval.au"/>
+
+    <sound name="battle_defense_win" file="medieval/defense sucess.au"/>
+    <sound name="battle_defense_defeat" file="medieval/lost1.au"/>
+
+    <sound name="move_armies" file="medieval/moving soldiers after to win and conquer territory.au"/>
+    <sound name="move_tactical" file="medieval/moving troops1.au"/>
+
+    <!-- not enabled yet
+    <sound name="lobby_start" file="medieval/entered lobby.au"/>
+    <sound name="lobby_join" file="medieval/joining room.au"/>
+    <sound name="lobby_play" file="medieval/joining match.au"/>
+    <sound name="lobby_watch" file="medieval/spectator-mode.au"/>
+    <sound name="lobby_set_nick" file="medieval/saving name.au"/>
+    <sound name="lobby_close_game" file="medieval/leaving match.au"/>
+    -->
+
 </sounds>

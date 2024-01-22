@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RootPaneContainer;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -198,6 +199,10 @@ public class FlashRiskAdapter implements RiskListener {
 			battledialog.setVisible(false);
 		}
 	}
+
+        public void playerGotCard() {
+            GameSound.INSTANCE.playSound(GameSound.CARDS_RECEIVE);
+        }
 
 	/**
 	 * Starts the game

@@ -428,4 +428,21 @@ public class RiskController {
             printStackTrace(ex);
         }
     }
+
+    public void playerGotCard() {
+
+        Object[] arrLocal;
+
+        synchronized (this) {
+            arrLocal = obs.toArray();
+        }
+
+        try {
+            for (int i = arrLocal.length-1; i>=0; i--)
+                ((RiskListener)arrLocal[i]).playerGotCard();
+        }
+        catch(Exception ex) {
+            printStackTrace(ex);
+        }
+    }
 }

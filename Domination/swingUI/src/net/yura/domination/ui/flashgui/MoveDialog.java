@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Country;
 import net.yura.swing.GraphicsUtil;
@@ -147,18 +148,22 @@ public class MoveDialog extends JDialog {
 				}
 				else if (e.getActionCommand().equals("all")) {
 					if (tacmove) {
+                                                GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
 						gui.go("movearmies " +country1.getColor()+ " " +country2.getColor()+ " " + (csrc-1) );
 					}
 					else {
+                                                GameSound.INSTANCE.playSound(GameSound.MOVE_ARMIES);
 						gui.go("move " + (csrc-1) );
 					}
 					//exitForm();
 				}
 				else if (e.getActionCommand().equals("move")) {
 					if (tacmove) {
+                                                GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
 						gui.go("movearmies " +country1.getColor()+ " " +country2.getColor()+ " " + move );
 					}
 					else {
+                                                GameSound.INSTANCE.playSound(GameSound.MOVE_ARMIES);
 						gui.go("move " + move);
 					}
 					//exitForm();

@@ -5,7 +5,7 @@ package net.yura.domination.ui.swinggui;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import net.yura.domination.SimpleAudio;
+import net.yura.domination.audio.SimpleAudio;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;

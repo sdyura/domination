@@ -28,6 +28,7 @@ public interface RiskListener {
     public void showDiceResults(int[] att, int[] def);
     public void setNODAttacker(int n);
     public void setNODDefender(int n);
+    public void playerGotCard();
     public void sendDebug(String a);
     public void showMessageDialog(String a);
 }

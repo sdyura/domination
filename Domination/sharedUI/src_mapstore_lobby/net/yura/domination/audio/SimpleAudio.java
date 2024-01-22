@@ -1,4 +1,4 @@
-package net.yura.domination;
+package net.yura.domination.audio;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
@@ -996,6 +995,7 @@ RiskUtil.printStackTrace(e);
 						cardName = card.getName() + " " + game.getCountryInt( Integer.parseInt(name) ).getName();
 					}
 
+                                        controller.playerGotCard();
 					controller.sendMessage("You got a new card: \"" + cardName +"\"", false , false);
 				}
 			}

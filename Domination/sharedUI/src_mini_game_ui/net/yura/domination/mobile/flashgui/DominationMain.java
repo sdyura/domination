@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
-import net.yura.domination.SimpleAudio;
+import net.yura.domination.audio.SimpleAudio;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;
@@ -337,7 +337,7 @@ public class DominationMain extends Application {
                 }
             }
 
-            String lang = appPreferences.get("lang", null);
+            String lang = appPreferences.get(RiskSettings.LANGUAGE_KEY, null);
             if (lang != null) {
                 TranslationBundle.setLanguage(lang);
             }

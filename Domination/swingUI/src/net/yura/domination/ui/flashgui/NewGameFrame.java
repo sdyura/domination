@@ -42,6 +42,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -811,6 +812,17 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 * @param e The ActionEvent Object
 	 */
 	public void actionPerformed(ActionEvent e) {
+            
+                if (e.getSource() == start) {
+                    GameSound.INSTANCE.playSound(GameSound.BUTTON_START_GAME);
+                }
+                else if (e.getSource() == cancel) {
+                    GameSound.INSTANCE.playSound(GameSound.BACK_BUTTON);
+                }
+                else {
+                    GameSound.INSTANCE.playSound(GameSound.BUTTON);
+                }
+            
 		if (e.getSource()==chooseMap) {
 			String name = RiskUIUtil.getNewMap(this);
 

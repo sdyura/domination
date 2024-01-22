@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RootPaneContainer;
 import javax.swing.event.MouseInputListener;
-import net.yura.domination.SimpleAudio;
+import net.yura.domination.audio.SimpleAudio;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
@@ -301,6 +301,9 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	 */
 	private void activateButton(int thebutton) {
 		if (thebutton != 0) {
+                    
+                        GameSound.INSTANCE.playSound(GameSound.MENU_BUTTON);
+                    
 			switch (thebutton) {
 				case MainMenu.BUTTON_NEW:{
 
@@ -584,12 +587,12 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
         public void hide() {
             window.setVisible(false);
 
-            GameSound.INSTANCE.stopMusic(GameSound.MENU_MUSIC);
+            GameSound.INSTANCE.stopMusic(GameSound.MUSIC_MENU);
         }
         public void show() {
             window.setVisible(true);
 
-            GameSound.INSTANCE.playMusic(GameSound.MENU_MUSIC);
+            GameSound.INSTANCE.playMusic(GameSound.MUSIC_MENU);
         }
         
         void showMainMenu() {
@@ -622,7 +625,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
                 // before we create any UI, we want to load up all settings
                 RiskSettings.loadSettingsFromPrefs(RiskSettings.getPreferences(MainMenu.class));
-                
+
                 try {
                     GameSound.INSTANCE.load("medieval");
                     GameSound.INSTANCE.setAudioSystem(new SimpleAudio());
@@ -675,6 +678,8 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 gui.setDefaultCloseOperation(defaultCloseOperation);
 		gui.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent evt) {
+                        
+                        GameSound.INSTANCE.stopMusic(GameSound.MUSIC_MENU);
                         mm.exit();
                     }
 		});

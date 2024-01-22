@@ -38,6 +38,7 @@ import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputAdapter;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
@@ -897,9 +898,15 @@ public class GameFrame extends JFrame implements KeyListener {
                     if (countries.length==1) {
                         if ( e.getModifiers() == java.awt.event.InputEvent.BUTTON1_MASK ) {
                             pp.setC1(PicturePanel.NO_COUNTRY);
+
+                            GameSound.INSTANCE.playSound(GameSound.PLACE_ARMY);
+
                             go( "placearmies " + countries[0] + " 1" );
                         }
                         else if (myrisk.getGame().getSetupDone()) {
+
+                            GameSound.INSTANCE.playSound(GameSound.PLACE_ARMIES);
+
                             go( "placearmies " + countries[0] + " 10" );
                         }
                         else if (myrisk.getGame().NoEmptyCountries()) {
@@ -918,6 +925,9 @@ public class GameFrame extends JFrame implements KeyListener {
                         note=resb.getString("game.note.selectdefender");
                     }
                     else {
+                        // TODO do we want to play for all attacks?
+                        GameSound.INSTANCE.playSound(GameSound.ATTACK);
+
                         go("attack " + countries[0] + " " + countries[1]);
                         note=resb.getString("game.note.selectattacker");
                     }

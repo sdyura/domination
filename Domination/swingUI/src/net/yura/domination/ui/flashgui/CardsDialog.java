@@ -26,6 +26,7 @@ import java.awt.RenderingHints;
 import java.awt.AlphaComposite;
 import java.awt.Component;
 import java.util.List;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Card;
@@ -171,13 +172,16 @@ public class CardsDialog extends JDialog {
 				}
 		);
 
-		tradeButton.addActionListener(
-				new ActionListener() {
+		tradeButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
 					    Component[] cards2 = TradePanel.getComponents();
 
 					    if (cards2.length==3) {
+
+                                                // TODO should it go here? or in the game engine itself?
+                                                // what about if others trade cards??
+                                                GameSound.INSTANCE.playSound(GameSound.CARDS_TRADE);
 
 						myrisk.parser("trade "+((CardPanel)cards2[0]).getCardName() + " " + ((CardPanel)cards2[1]).getCardName() + " " + ((CardPanel)cards2[2]).getCardName() );
 

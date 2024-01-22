@@ -19,9 +19,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Country;
+import net.yura.domination.engine.core.Player;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 
@@ -146,26 +148,33 @@ public class BattleDialog extends JDialog implements MouseListener {
                 NewGameFrame.sortOutButton( annihilate, GraphicsUtil.getSubimage(Battle, 485, 5, w, h), GraphicsUtil.getSubimage(Battle, 481, 73, w, h), GraphicsUtil.getSubimage(Battle, 481, 41, w, h) );
 		GraphicsUtil.setBounds(annihilate, 50, 270, 88, 31);
 
-		button.addActionListener(
-                    new ActionListener() {
+		button.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
+
+                            // TODO should this be for all rolling or just us?
+                            GameSound.INSTANCE.playSound(GameSound.DICE_ROLL);
+
                             gui.go( "roll " + (canRetreat?noda:nodd) );
                         }
                     }
 		);
 
-		retreat.addActionListener(
-                    new ActionListener() {
+		retreat.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
+
+                            GameSound.INSTANCE.playSound(GameSound.BATTLE_RETREAT);
+
                             gui.go( "retreat" );
                         }
                     }
 		);
 
-                annihilate.addActionListener(
-                    new ActionListener() {
+                annihilate.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             if (annihilate.isSelected()) {
+
+                                GameSound.INSTANCE.playSound(GameSound.DICE_ROLL);
+
                                 gui.go( "roll " + (canRetreat?noda:nodd) );
                             }
                         }
@@ -181,10 +190,12 @@ public class BattleDialog extends JDialog implements MouseListener {
 		timer = new javax.swing.Timer(10, spinDiceAction());
 
 
-		addWindowListener(
-			new java.awt.event.WindowAdapter() {
+		addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent evt) {
 					if (canRetreat) {
+
+                                                GameSound.INSTANCE.playSound(GameSound.BATTLE_RETREAT);
+
 						gui.go( "retreat" );
 					}
 				}
@@ -289,6 +300,47 @@ public class BattleDialog extends JDialog implements MouseListener {
                 spinA = false;
                 spinD = false;
 		battle.repaint();
+
+                // work out what sound to play
+                int out = 0;
+                int fights = Math.min(atti.length, defi.length);
+                for (int c = 0; c < fights; c++) {
+                    out = out + (atti[0] > defi[0] ? 1 : -1);
+                }
+                int over = country2.getArmies() == 0 ? 1 : (country1.getArmies() == 1 ? -1 : 0);
+                Player onlyHuman = myrisk.getSingleLocalHumanPlayer();
+                boolean weAreTheDefender = onlyHuman != null && myrisk.getGame().getCurrentPlayer() != onlyHuman;
+                if (weAreTheDefender) {
+                    // we must be the defender
+                    out = -out;
+                    over = -over;
+                }
+                
+                if (over == 1) {
+                    if (weAreTheDefender) {
+                        GameSound.INSTANCE.playSound(GameSound.BATTLE_DEFENSE_WIN);
+                    }
+                    else {
+                        GameSound.INSTANCE.playSound(GameSound.BATTLE_WIN);
+                    }
+                }
+                else if (over == -1) {
+                    if (weAreTheDefender) {
+                        GameSound.INSTANCE.playSound(GameSound.BATTLE_DEFENSE_DEFEAT);
+                    }
+                    else {
+                        GameSound.INSTANCE.playSound(GameSound.BATTLE_DEFEAT);
+                    }
+                }
+                else if (out == 0) {
+                    GameSound.INSTANCE.playSound(GameSound.DICE_DRAW);
+                }
+                else if (out > 0) {
+                    GameSound.INSTANCE.playSound(GameSound.DICE_WIN);
+                }
+                else {
+                    GameSound.INSTANCE.playSound(GameSound.DICE_LOSE);
+                }
 	}
 
 	/**
