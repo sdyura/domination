@@ -1291,6 +1291,15 @@ public class GameFrame extends JFrame implements KeyListener {
 			add(AutoEndGo);
 			add(closebutton);
 			add(resumebutton);
+
+                        int menuX=633,menuY=175,menuW=170,menuH=250,side=20;
+
+                        setBorder( new FlashBorder(
+                            GraphicsUtil.getSubimage(gameImg, menuX, menuY, menuW, side),
+                            GraphicsUtil.getSubimage(gameImg, menuX, menuY + side, side, menuH - side - side),
+                            GraphicsUtil.getSubimage(gameImg, menuX, menuY + menuH - side, menuW, side),
+                            GraphicsUtil.getSubimage(gameImg, menuX + menuW - side, menuY + side, side, menuH - side - side)
+                        ) );
 		}
                 
                 private void sortOutButton(AbstractButton button) {
@@ -1311,8 +1320,9 @@ public class GameFrame extends JFrame implements KeyListener {
 			AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
 			g2.setComposite(ac);
 
+                        Insets insets = getInsets();
 //					  destination		source
-			GraphicsUtil.drawImage(g2, gameImg, 0, 0, 170, 250,     633, 175, 803, 425, this); // top
+			g2.drawImage(gameImg, insets.left, insets.top, getWidth() - insets.right, getHeight() - insets.bottom,     633 + 20, 175 + 20, 803 - 20, 425 - 20, this); // top
 
 			FontRenderContext frc = g2.getFontRenderContext();
 
