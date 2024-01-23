@@ -615,13 +615,17 @@ public class GameFrame extends JFrame implements KeyListener {
                         }
                         else if (e.getSource() == optionsButton) {
 
-                                RiskUIUtil.openOptions(GameFrame.this, myrisk, gameState > RiskGame.STATE_NEW_GAME, RiskSettings.getPreferences(MainMenu.class));
+                                openOptions();
                         }
                         else {
                                 System.out.println("[ERROR] Unknown button source " + e.getSource());
                         }
 		}
 	};
+        
+        public void openOptions() {
+            RiskUIUtil.openOptions(GameFrame.this, myrisk, gameState > RiskGame.STATE_NEW_GAME, RiskSettings.getPreferences(MainMenu.class));
+        }
 
 	public void repaintCountries() {
 		pp.repaintCountries( mapView );

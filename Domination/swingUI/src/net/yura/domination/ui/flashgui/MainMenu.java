@@ -662,6 +662,20 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 catch(Throwable th) {
                     // ignore
                 }
+
+                try {
+                    if (java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.valueOf("APP_PREFERENCES"))) {
+                        JavaCompatUtil.setLambda(java.awt.Desktop.getDesktop(), "setPreferencesHandler", "java.awt.desktop.PreferencesHandler", new Runnable() {
+                            @Override
+                            public void run() {
+                                mainMneu.fra.getGameFrame().openOptions();
+                            }
+                        });
+                    }
+                }
+                catch(Throwable th) {
+                    // ignore
+                }
                 
                 RiskUIUtil.openFile(argv, risk);
 
