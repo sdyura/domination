@@ -43,21 +43,30 @@ import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskIO;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.swing.BrowserLauncher;
 import net.yura.swing.GraphicsUtil;
@@ -1329,4 +1338,61 @@ public class RiskUIUtil {
             }
         }
     }
+    
+    public static void openOptions(Component parentComponent, Risk myrisk, boolean myTurn, Preferences preferences) {
+
+                JCheckBox showDice = new JCheckBox("Show dice", Risk.isShowDice());
+
+                JSpinner aiwait = new JSpinner(new SpinnerNumberModel(AIManager.getWait(), 0, 10000, 100));
+                JPanel aiWaitPanel = new JPanel();
+                aiWaitPanel.add(new JLabel("AI wait time:"));
+                aiWaitPanel.add(aiwait);
+                aiWaitPanel.add(new JLabel("milliseconds"));
+
+                JCheckBox soundEnabled = new JCheckBox("Sound Enabled", GameSound.INSTANCE.isSoundEnabled());
+                JCheckBox musicEnabled = new JCheckBox("Music Enabled", GameSound.INSTANCE.isMusicEnabled());
+                
+                JCheckBox autoEndGo = new JCheckBox("Auto End Go", myrisk.getAutoEndGo());
+                JCheckBox autoDefend = new JCheckBox("Auto Defend", myrisk.getAutoDefend());
+
+                if (!myTurn) {
+                    autoEndGo.setEnabled(false);
+                    autoDefend.setEnabled(false);
+                }
+
+                int result = JOptionPane.showConfirmDialog(
+                    parentComponent,                             // the parent that the dialog blocks
+                    new Component[] {                                    // the dialog message array
+                            showDice,aiWaitPanel,
+                            soundEnabled, musicEnabled,
+                            autoEndGo, autoDefend
+                    },
+                    "Options", // the title of the dialog window
+                    JOptionPane.OK_CANCEL_OPTION,                 // option type
+                    JOptionPane.PLAIN_MESSAGE            // message type
+                );
+
+                if (result == JOptionPane.OK_OPTION) {
+                        Risk.setShowDice(showDice.isSelected());
+                        AIManager.setWait(((Integer)aiwait.getValue()).intValue());
+                        GameSound.INSTANCE.setSoundEnabled(soundEnabled.isSelected());
+                        GameSound.INSTANCE.setMusicEnabled(musicEnabled.isSelected());
+                        RiskSettings.saveSettingsToPrefs(preferences);
+
+                        if (autoEndGo.isEnabled()) {
+                            boolean autoendgo = autoEndGo.isSelected();
+                            // "autoendgo on" may trigger the end of my go, so must be changed last
+                            if (myrisk.getAutoEndGo() != autoendgo) {
+                                myrisk.parser("autoendgo " + (autoendgo ? "on" : "off"));
+                            }
+                        }
+
+                        if (autoDefend.isEnabled()) {
+                            boolean autodefend = autoDefend.isSelected();
+                            if (myrisk.getAutoDefend() != autodefend) {
+                                myrisk.parser("autodefend " + (autodefend ? "on" : "off"));
+                            }
+                        }
+                }
+        }
 }

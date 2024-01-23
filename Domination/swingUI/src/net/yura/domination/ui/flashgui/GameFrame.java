@@ -42,6 +42,7 @@ import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
@@ -108,6 +109,9 @@ public class GameFrame extends JFrame implements KeyListener {
 
 	private JButton helpbutton;
 	private JButton closebutton;
+        
+        private JButton continentsButton;
+	private JButton optionsButton;
 
         private MouseInputAdapter mapListener;
         private Map quickPlace = new HashMap();
@@ -604,6 +608,18 @@ public class GameFrame extends JFrame implements KeyListener {
 					JOptionPane.showMessageDialog(GameFrame.this,"Unable to open manual: "+er.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
+                        else if (e.getSource() == continentsButton) {
+
+                                String continentsHTML = RiskUtil.asHTML(myrisk.getGame().getContinents());
+                                JOptionPane.showMessageDialog(GameFrame.this, continentsHTML, resb.getString("swing.button.continents"), JOptionPane.PLAIN_MESSAGE );
+                        }
+                        else if (e.getSource() == optionsButton) {
+
+                                RiskUIUtil.openOptions(GameFrame.this, myrisk, gameState > RiskGame.STATE_NEW_GAME, RiskSettings.getPreferences(MainMenu.class));
+                        }
+                        else {
+                                System.out.println("[ERROR] Unknown button source " + e.getSource());
+                        }
 		}
 	};
 
@@ -1231,48 +1247,55 @@ public class GameFrame extends JFrame implements KeyListener {
 			setLayout(null);
 
 			int w=100;
+                        
+                        Image menuButtonNormal = GraphicsUtil.getSubimage(gameImg, 480, 373, w, 21);
+                        Image menuButtonPressed = GraphicsUtil.getSubimage(gameImg, 380, 373, w, 21);
+                        Image menuButtonHover = GraphicsUtil.getSubimage(gameImg, 280, 373, w, 21);
+                        Image menuButtonDisabled = GraphicsUtil.getSubimage(gameImg, 180, 373, w, 21);
 
-			savebutton = makeRiskButton(GraphicsUtil.getSubimage(gameImg, 480, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 380, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 280, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 180, 373, w, 21) );
+			savebutton = makeRiskButton(menuButtonNormal, menuButtonPressed, menuButtonHover, menuButtonDisabled);
 			savebutton.setText(resb.getString("game.menu.save"));
 			GraphicsUtil.setBounds(savebutton, 35, 50, w, 20);
 			savebutton.addActionListener( buttonActionListener );
 
                         // close button text and action set when menu is opened
-			closebutton = makeRiskButton(GraphicsUtil.getSubimage(gameImg, 480, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 380, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 280, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 180, 373, w, 21) );
+			closebutton = makeRiskButton(menuButtonNormal, menuButtonPressed, menuButtonHover, menuButtonDisabled);
 			GraphicsUtil.setBounds(closebutton, 35, 80, w, 20);
 
 
-
-
-
+                        // not used any more
+                        AutoEndGo = new JCheckBox();
+                        AutoDefend = new JCheckBox();
+/*
 			AutoEndGo = new JCheckBox(resb.getString("game.menu.autoendgo"));
 			AutoEndGo.setToolTipText( resb.getString("game.menu.autoendgo"));
-
 			sortOutButton(AutoEndGo);
-
 			GraphicsUtil.setBounds(AutoEndGo, 35, 110, w, 20);
 			AutoEndGo.addActionListener( buttonActionListener );
 			AutoEndGo.setBackground( Color.lightGray );
 
-
-
-
-
-
 			AutoDefend = new JCheckBox(resb.getString("game.menu.autodefend"));
 			AutoDefend.setToolTipText( resb.getString("game.menu.autodefend"));
-
 			sortOutButton(AutoDefend);
-
 			GraphicsUtil.setBounds(AutoDefend, 35, 140, w, 20);
 			AutoDefend.addActionListener( buttonActionListener );
 			AutoDefend.setBackground( Color.lightGray );
+*/
+
+			continentsButton = makeRiskButton(menuButtonNormal, menuButtonPressed, menuButtonHover, menuButtonDisabled);
+			continentsButton.setText(resb.getString("swing.button.continents"));
+			GraphicsUtil.setBounds(continentsButton, 35, 110, w, 20);
+			continentsButton.addActionListener( buttonActionListener );
+                        
+                        optionsButton = makeRiskButton(menuButtonNormal, menuButtonPressed, menuButtonHover, menuButtonDisabled);
+			optionsButton.setText(resb.getString("swing.menu.options"));
+			GraphicsUtil.setBounds(optionsButton, 35, 140, w, 20);
+			optionsButton.addActionListener( buttonActionListener );
 
 
 
 
-
-			helpbutton = makeRiskButton(GraphicsUtil.getSubimage(gameImg, 480, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 380, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 280, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 180, 373, w, 21) );
+			helpbutton = makeRiskButton(menuButtonNormal, menuButtonPressed, menuButtonHover, menuButtonDisabled);
 			helpbutton.setText(resb.getString("game.menu.manual"));
 			GraphicsUtil.setBounds(helpbutton, 35, 170, w, 20);
 			helpbutton.addActionListener( buttonActionListener );
@@ -1280,16 +1303,18 @@ public class GameFrame extends JFrame implements KeyListener {
 
 
 
-			resumebutton = makeRiskButton(GraphicsUtil.getSubimage(gameImg, 480, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 380, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 280, 373, w, 21), GraphicsUtil.getSubimage(gameImg, 180, 373, w, 21) );
+			resumebutton = makeRiskButton(menuButtonNormal, menuButtonPressed, menuButtonHover, menuButtonDisabled);
 			resumebutton.setText(resb.getString("game.menu.closemenu"));
 			GraphicsUtil.setBounds(resumebutton, 35, 200, w, 20);
 			resumebutton.addActionListener( buttonActionListener );
 
 			add(savebutton);
-			add(AutoDefend);
+                        add(closebutton);
+                        
+                        add(continentsButton);
+			add(optionsButton);
+
 			add(helpbutton);
-			add(AutoEndGo);
-			add(closebutton);
 			add(resumebutton);
 
                         int menuX=633,menuY=175,menuW=170,menuH=250,side=20;

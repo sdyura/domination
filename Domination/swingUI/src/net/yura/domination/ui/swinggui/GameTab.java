@@ -3,7 +3,6 @@ package net.yura.domination.ui.swinggui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -43,11 +42,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
@@ -55,14 +52,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.RiskUtil;
-import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.BadgeButton;
@@ -557,66 +552,14 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                     // it MUST be our turn!
                     human = currentPlayer;
                 }
-                
+
 		cardsDialog.populate(human.getCards(), human == currentPlayer && swingGUIPanel.gameState == RiskGame.STATE_TRADE_CARDS);
 
 		cardsDialog.setVisible(true);
 	}
-
-        public void openOptions() {
-
-                JCheckBox showDice = new JCheckBox("Show dice", Risk.isShowDice());
-
-                JSpinner aiwait = new JSpinner(new SpinnerNumberModel(AIManager.getWait(), 0, 10000, 100));
-                JPanel aiWaitPanel = new JPanel();
-                aiWaitPanel.add(new JLabel("AI wait time:"));
-                aiWaitPanel.add(aiwait);
-                aiWaitPanel.add(new JLabel("milliseconds"));
-
-                JCheckBox soundEnabled = new JCheckBox("Sound Enabled", GameSound.INSTANCE.isSoundEnabled());
-                JCheckBox musicEnabled = new JCheckBox("Music Enabled", GameSound.INSTANCE.isMusicEnabled());
-                
-                JCheckBox autoEndGo = new JCheckBox("Auto End Go", swingGUIPanel.myrisk.getAutoEndGo());
-                JCheckBox autoDefend = new JCheckBox("Auto Defend", swingGUIPanel.myrisk.getAutoDefend());
-                if (swingGUIPanel.gameState <= RiskGame.STATE_NEW_GAME) {
-                    autoEndGo.setEnabled(false);
-                    autoDefend.setEnabled(false);
-                }
-
-                int result = JOptionPane.showConfirmDialog(
-                    this,                             // the parent that the dialog blocks
-                    new Component[] {                                    // the dialog message array
-                            showDice,aiWaitPanel,
-                            soundEnabled, musicEnabled,
-                            autoEndGo, autoDefend
-                    },
-                    "Options", // the title of the dialog window
-                    JOptionPane.OK_CANCEL_OPTION,                 // option type
-                    JOptionPane.PLAIN_MESSAGE            // message type
-                );
-
-                if (result == JOptionPane.OK_OPTION) {
-                        Risk.setShowDice(showDice.isSelected());
-                        AIManager.setWait(((Integer)aiwait.getValue()).intValue());
-                        GameSound.INSTANCE.setSoundEnabled(soundEnabled.isSelected());
-                        GameSound.INSTANCE.setMusicEnabled(musicEnabled.isSelected());
-                        RiskSettings.saveSettingsToPrefs(SwingGUIPanel.getUIPreferences());
-
-                        if (autoEndGo.isEnabled()) {
-                            boolean autoendgo = autoEndGo.isSelected();
-                            // "autoendgo on" may trigger the end of my go, so must be changed last
-                            if (swingGUIPanel.myrisk.getAutoEndGo() != autoendgo) {
-                                swingGUIPanel.myrisk.parser("autoendgo " + (autoendgo ? "on" : "off"));
-                            }
-                        }
-
-                        if (autoDefend.isEnabled()) {
-                            boolean autodefend = autoDefend.isSelected();
-                            if (swingGUIPanel.myrisk.getAutoDefend() != autodefend) {
-                                swingGUIPanel.myrisk.parser("autodefend " + (autodefend ? "on" : "off"));
-                            }
-                        }
-                }
+        
+        private void openOptions() {
+            RiskUIUtil.openOptions(this, swingGUIPanel.myrisk, swingGUIPanel.gameState > RiskGame.STATE_NEW_GAME, SwingGUIPanel.getUIPreferences());
         }
 
 	public void blockInput() {
