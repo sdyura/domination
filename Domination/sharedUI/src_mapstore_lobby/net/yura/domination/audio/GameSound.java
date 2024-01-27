@@ -58,12 +58,12 @@ public class GameSound {
     public static final String LOBBY_WATCH = "lobby_watch";
     public static final String LOBBY_SET_NICK = "lobby_set_nick";
     public static final String LOBBY_CLOSE_GAME = "lobby_close_game";
-    
-    
+
     private boolean soundEnabled = true;
     private boolean musicEnabled = true;
     private AudioSystem audioSystem;
     private Map<String, String> currentTheme; // ID -> filename
+    private String currentMusicId;
 
     public void setAudioSystem(AudioSystem audio) {
         audioSystem = audio;
@@ -104,7 +104,16 @@ public class GameSound {
         soundEnabled = on;
     }
     public void setMusicEnabled(boolean on) {
+        boolean musicOld = musicEnabled;
         musicEnabled = on;
+        if (currentMusicId != null) {
+            if (musicOld && !musicEnabled) {
+                stopSound(currentMusicId);
+            }
+            else if (!musicOld && musicEnabled) {
+                playMusic(currentMusicId);
+            }
+        }
     }
 
     public void playSound(String audioId) {
@@ -120,6 +129,7 @@ public class GameSound {
     }
 
     public void playMusic(String audioId) {
+        currentMusicId = audioId;
         
         LOGGER.info("Playing music with id: " + audioId);
         
@@ -132,9 +142,13 @@ public class GameSound {
     }
 
     public void stopMusic(String audioId) {
+        currentMusicId = null;
 
         LOGGER.info("Stopping music with id: " + audioId);
-        
+        stopSound(audioId);
+    }
+
+    private void stopSound(String audioId) {
         if (audioSystem != null && currentTheme != null) {
             String audioFile = currentTheme.get(audioId);
             if (audioFile != null) {
