@@ -56,7 +56,7 @@
 	<property name="dir.dist" location="dist"/>
 	<property name="dir.sources" location="../src:src:../sharedUI/src_mapstore_lobby"/>
         <property name="dir.properties" location="../src"/>
-        <property name="dir.libs" location="lib/httpmime-4.1.2.jar;lib/httpcore-4.1.2.jar;lib/jnlp.jar;lib/TranslationTool.jar;lib/SwingME.jar;lib/midletrunner.jar;lib/Grasshopper.jar;lib/LobbyClient.jar;lib/jfreechart-1.0.15.jar;lib/jcommon-1.0.18.jar"/>
+        <property name="dir.libs" location="lib/httpmime-4.1.2.jar;lib/httpcore-4.1.2.jar;lib/jnlp.jar;lib/TranslationTool.jar;lib/SwingME.jar;lib/midletrunner.jar;lib/Grasshopper.jar;lib/LobbyClient.jar;lib/jfreechart-1.0.15.jar;lib/jcommon-1.0.18.jar;lib/jlayer-1.0.1.4.jar;lib/mp3spi-1.9.5.4.jar;lib/tritonus-share-0.3.7.4.jar"/>
 
 
 	<property name="file.src" location="${dir.dist}/src.zip"/>
@@ -199,7 +199,7 @@
 
                 <copy todir="${dir.build.game}/lib">
                 	<!-- Desktop libs -->
-			<fileset dir="lib" includes="SwingME.jar,midletrunner.jar,m3gbasic.jar,TranslationTool.jar,Grasshopper.jar,LobbyClient.jar,httpmime-4.1.2.jar,httpcore-4.1.2.jar"/>
+			<fileset dir="lib" includes="SwingME.jar,midletrunner.jar,m3gbasic.jar,TranslationTool.jar,Grasshopper.jar,LobbyClient.jar,httpmime-4.1.2.jar,httpcore-4.1.2.jar,jlayer-1.0.1.4.jar,mp3spi-1.9.5.4.jar,tritonus-share-0.3.7.4.jar"/>
 		</copy>
 
 
