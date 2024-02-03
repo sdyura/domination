@@ -19,6 +19,8 @@
 		DE079D2B2678C45800CFBB43 /* help in Resources */ = {isa = PBXBuildFile; fileRef = DE079D2A2678C45800CFBB43 /* help */; };
 		DE30C94F268FBDCE0018914C /* iosmeimg in Resources */ = {isa = PBXBuildFile; fileRef = DE30C94E268FBDCE0018914C /* iosmeimg */; };
 		DE3135722684F4F400E558A3 /* Graphics in Resources */ = {isa = PBXBuildFile; fileRef = DE3135712684F4F400E558A3 /* Graphics */; };
+		DE4987202B55AF8E0076AE7D /* sound in Resources */ = {isa = PBXBuildFile; fileRef = DE49871F2B55AF8E0076AE7D /* sound */; };
+		DE4987212B55AF8E0076AE7D /* sound in Resources */ = {isa = PBXBuildFile; fileRef = DE49871F2B55AF8E0076AE7D /* sound */; };
 		DE7C5DAD27230ADA000EB1FF /* gpl.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAC27230ADA000EB1FF /* gpl.txt */; };
 		DE7C5DAF27230B2E000EB1FF /* ChangeLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */; };
 		DE7E9AE22774A71400555709 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE7E9AE12774A71400555709 /* MessageUI.framework */; };
@@ -101,6 +103,7 @@
 		DE079D2A2678C45800CFBB43 /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../../swingUI/game/Domination/help; sourceTree = "<group>"; };
 		DE30C94E268FBDCE0018914C /* iosmeimg */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iosmeimg; path = ../../../iOSME/iosmeimg; sourceTree = "<group>"; };
 		DE3135712684F4F400E558A3 /* Graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Graphics; sourceTree = "<group>"; };
+		DE49871F2B55AF8E0076AE7D /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sound; path = ../../swingUI/game/Domination/sound; sourceTree = "<group>"; };
 		DE7C5DAC27230ADA000EB1FF /* gpl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gpl.txt; path = ../../gpl.txt; sourceTree = "<group>"; };
 		DE7C5DAE27230B2E000EB1FF /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ChangeLog.txt; path = ../../ChangeLog.txt; sourceTree = "<group>"; };
 		DE7E9AE12774A71400555709 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -175,6 +178,7 @@
 				DE3135712684F4F400E558A3 /* Graphics */,
 				DE079D2A2678C45800CFBB43 /* help */,
 				DE079D282678C41300CFBB43 /* maps */,
+				DE49871F2B55AF8E0076AE7D /* sound */,
 				4D85E57E486ED51FA34DE305 /* Domination */,
 				DEAA4E27296388B00000B66F /* Domination-Simple */,
 				73D1721AB6220D74E351DD53 /* Domination-Test */,
@@ -366,6 +370,7 @@
 				583D448A1E40B4B90048FF77 /* Assets.xcassets in Resources */,
 				DE3135722684F4F400E558A3 /* Graphics in Resources */,
 				DE7C5DAD27230ADA000EB1FF /* gpl.txt in Resources */,
+				DE4987202B55AF8E0076AE7D /* sound in Resources */,
 				583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +387,7 @@
 				DEAA4E14296385900000B66F /* Assets.xcassets in Resources */,
 				DEAA4E15296385900000B66F /* Graphics in Resources */,
 				DEAA4E16296385900000B66F /* gpl.txt in Resources */,
+				DE4987212B55AF8E0076AE7D /* sound in Resources */,
 				DEAA4E17296385900000B66F /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

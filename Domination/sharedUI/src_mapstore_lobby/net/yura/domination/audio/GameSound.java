@@ -21,6 +21,7 @@ public class GameSound {
 
     public static final String MUSIC_MENU = "music_menu";
     public static final String MUSIC_GAME = "music_game";
+    public static final String MUSIC_BATTLE = "music_battle";
     public static final String MUSIC_VICTORY = "music_victory";
     public static final String MUSIC_DEFEAT = "music_defeat";
 
@@ -85,11 +86,12 @@ public class GameSound {
                     if ("sound".equals(qName)) {
                         String key = attributes.getValue("name");
                         String filename = attributes.getValue("file");
-                        
+
+                        // TODO this check is wrong on android/ios
                         if (!new File("sound", filename).exists()) {
                             System.out.println("[WARNING!!!!!] File not found: " + filename);
                         }
-                        
+
                         currentTheme.put(key, folder + "/" + filename);
                     }
                 }

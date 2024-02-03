@@ -50,6 +50,7 @@ task copyAssets(type: Copy) {
     from('../swingUI/game/Domination') {
         include 'maps/**'
         include 'help/**'
+        include 'sound/**'
     }
     from('../src/META-INF') {
         include 'services/**'
