@@ -630,7 +630,7 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
         <jar destfile="dist/${game.name}4ME.jar" basedir="${dir.build}/swingme">
             <manifest>
                 <attribute name="Main-Class" value="org.me4se.MIDletRunner" />
-                <attribute name="Class-Path" value="lib/midletrunner.jar lib/m3gbasic.jar lib/SwingME.jar lib/Grasshopper.jar lib/LobbyCore.jar lib/LobbyClient.jar" />
+                <attribute name="Class-Path" value="lib/midletrunner.jar lib/m3gbasic.jar lib/SwingME.jar lib/Grasshopper.jar lib/LobbyCore.jar lib/LobbyClient.jar lib/jlayer-1.0.1.4.jar lib/mp3spi-1.9.5.4.jar lib/tritonus-share-0.3.7.4.jar" />
                 <attribute name="MIDlet-1" value="Flash GUI,,net.yura.domination.mobile.flashgui.DominationMain" />
             </manifest>
         </jar>

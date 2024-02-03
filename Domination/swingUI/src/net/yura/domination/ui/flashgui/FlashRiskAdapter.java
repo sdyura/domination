@@ -156,6 +156,8 @@ public class FlashRiskAdapter implements RiskListener {
 		battledialog.setup(c1num, c2num, c1img, c2img, country1, country2, color1 ,color2);
 
 		battledialog.setVisible(true);
+                
+                GameSound.INSTANCE.playMusic(GameSound.MUSIC_BATTLE);
 	}
 
 	/**
@@ -197,6 +199,8 @@ public class FlashRiskAdapter implements RiskListener {
 	public void closeBattle() {
 		if (battledialog.isVisible() ) {
 			battledialog.setVisible(false);
+
+                        GameSound.INSTANCE.stopMusic(GameSound.MUSIC_BATTLE);
 		}
 	}
 
