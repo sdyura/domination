@@ -394,7 +394,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
     }
 
     @Override
-    public void showDiceResults(int[] att, int[] def) {
+    public void showDiceResults(int[] att, int[] def, boolean weAreAttacker, int result) {
         if (battle.isVisible() ) {
                 battle.showDiceResults(att, def);
         }

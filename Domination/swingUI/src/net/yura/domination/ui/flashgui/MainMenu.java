@@ -596,13 +596,9 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
         public void hide() {
             window.setVisible(false);
-
-            GameSound.INSTANCE.stopMusic(GameSound.MUSIC_MENU);
         }
         public void show() {
             window.setVisible(true);
-
-            GameSound.INSTANCE.playMusic(GameSound.MUSIC_MENU);
         }
         
         void showMainMenu() {
@@ -637,8 +633,8 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 RiskSettings.loadSettingsFromPrefs(RiskSettings.getPreferences(MainMenu.class));
 
                 try {
+                    GameSound.INSTANCE.setAudioSystem(risk, new SimpleAudio());
                     GameSound.INSTANCE.load("medieval");
-                    GameSound.INSTANCE.setAudioSystem(new SimpleAudio());
                 }
                 catch (Throwable th) {
                     RiskUtil.printStackTrace("SimpleAudio not loaded", th);
@@ -701,9 +697,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
                 gui.setDefaultCloseOperation(defaultCloseOperation);
 		gui.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent evt) {
-                        
-                        GameSound.INSTANCE.stopMusic(GameSound.MUSIC_MENU);
+                    public void windowClosing(java.awt.event.WindowEvent evt) {                        
                         mm.exit();
                     }
 		});

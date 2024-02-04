@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RootPaneContainer;
 import javax.swing.SwingUtilities;
-import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -172,8 +171,6 @@ public class FlashRiskAdapter implements RiskListener {
 		battledialog.setup(c1num, c2num, c1img, c2img, country1, country2, color1 ,color2);
 
 		battledialog.setVisible(true);
-                
-                GameSound.INSTANCE.playMusic(GameSound.MUSIC_BATTLE);
 	}
 
 	/**
@@ -203,7 +200,7 @@ public class FlashRiskAdapter implements RiskListener {
 	 * @param att The attacker's results
 	 * @param def The defender's results
 	 */
-	public void showDiceResults(int[] att, int[] def) {
+	public void showDiceResults(int[] att, int[] def, boolean weAreAttacker, int result) {
 		if (battledialog.isVisible() ) {
 			battledialog.showDiceResults(att, def);
 		}
@@ -215,13 +212,11 @@ public class FlashRiskAdapter implements RiskListener {
 	public void closeBattle() {
 		if (battledialog.isVisible() ) {
 			battledialog.setVisible(false);
-
-                        GameSound.INSTANCE.stopMusic(GameSound.MUSIC_BATTLE);
 		}
 	}
 
         public void playerGotCard() {
-            GameSound.INSTANCE.playSound(GameSound.CARDS_RECEIVE);
+
         }
 
 	/**

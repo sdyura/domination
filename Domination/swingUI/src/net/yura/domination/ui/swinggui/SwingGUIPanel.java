@@ -635,7 +635,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                     });
 		}
 
-		public void showDiceResults(int[] att, int[] def) {
+		public void showDiceResults(int[] att, int[] def, boolean weAreAttacker, int result) {
 
 			String output=resbundle.getString("core.dice.results");
 

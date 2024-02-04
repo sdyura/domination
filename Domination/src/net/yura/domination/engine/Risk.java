@@ -858,6 +858,7 @@ RiskUtil.printStackTrace(e);
 
 			output = output + System.getProperty("line.separator");
 
+                        Country attacker = game.getAttacker();
 			int result[] = game.battle( att, def );
 
 			if ( result[0]==1 ) {
@@ -865,9 +866,8 @@ RiskUtil.printStackTrace(e);
 									, "{0}", String.valueOf(result[2]) ) //defeated
 									, "{1}", String.valueOf(result[1]) );//lost
 
-
-				if (result[3]==0) {
-					int n=((Country)game.getAttacker()).getArmies()-1;
+				if (result[3] == 0) {
+					int n = attacker.getArmies()-1;
 
 					output=output + System.getProperty("line.separator") + resb.getString( "core.dice.notdefeated") + " ";
 
@@ -880,16 +880,12 @@ RiskUtil.printStackTrace(e);
 //						if ( showHumanPlayerThereInfo( attackingPlayer ) ) {
 //							controller.showDice(n, true);
 //						}
-
 					}
 					else {
 						output=output + resb.getString( "core.dice.noattackagain");
 					}
-
-
 				}
 				else {
-
 //                                      // not needed any more
 //					Player attackingPlayer = ((Country)game.getAttacker()).getOwner();
 //
@@ -914,11 +910,8 @@ RiskUtil.printStackTrace(e);
 						output=output + JavaCompatUtil.replaceAll(resb.getString( "core.dice.armiesmoved"), "{0}", String.valueOf(noa) );
 
 						if (ma==2) {
-
 							output=output + whoWon();
-
 						}
-
 					}
 					else {
 						//How many armies do you wish to move? ({0} to {1})
@@ -926,19 +919,19 @@ RiskUtil.printStackTrace(e);
 								, "{0}", String.valueOf(result[4]) )
 								, "{1}", String.valueOf(result[5]) );
 					}
-
-
 				}
 
-				if ( battle ) {
+				if (battle) {
+                                        boolean weAreAttacker = showHumanPlayerThereInfo(attacker.getOwner());
+                                        boolean defenderWon = result[3] == 0 && attacker.getArmies() == 1;
+                                        //boolean attackerWon = result[3] >= 1;
+                                        //boolean playerEliminated = result[3] == 2;
 
-					controller.showDiceResults( att, def );
+					controller.showDiceResults(att, def, weAreAttacker, defenderWon ? -1 : result[3]);
 
 					try{ Thread.sleep(SHOW_DICE_SLEEP); }
 					catch(InterruptedException e){}
-
 				}
-
 			}
 			else { output=resb.getString( "core.dice.error.unabletoroll"); }
 

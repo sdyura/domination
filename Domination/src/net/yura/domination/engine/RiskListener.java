@@ -25,7 +25,7 @@ public interface RiskListener {
     public void closeBattle();
     public void addPlayer(int type, String name, int color, String ip);
     public void delPlayer(String name);
-    public void showDiceResults(int[] att, int[] def);
+    public void showDiceResults(int[] att, int[] def, boolean weAreAttacker, int result);
     public void setNODAttacker(int n);
     public void setNODDefender(int n);
     public void playerGotCard();

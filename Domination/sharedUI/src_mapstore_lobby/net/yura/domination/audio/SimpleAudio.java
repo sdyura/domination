@@ -9,7 +9,6 @@ import javax.microedition.media.Manager;
 import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
-import net.yura.domination.audio.AudioSystem;
 
 public class SimpleAudio implements AudioSystem, PlayerListener {
 
@@ -54,7 +53,8 @@ public class SimpleAudio implements AudioSystem, PlayerListener {
 
     @Override
     public void playerUpdate(Player player, String event, Object eventData) {
-        System.out.println("meow " + event);
+        // TODO do i need to do something about this?
+        // do i need to close the player?
     }
 
     @Override

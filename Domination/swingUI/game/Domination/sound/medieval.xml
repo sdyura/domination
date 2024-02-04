@@ -8,15 +8,13 @@
     https://developer.apple.com/library/archive/documentation/MusicAudio/Conceptual/CoreAudioOverview/SupportedAudioFormatsMacOSX/SupportedAudioFormatsMacOSX.html
     
     -->
-    
-    <sound name="music_menu" file="medieval/menu_music1.mp3"/>
-    <sound name="music_battle" file="medieval/duel-loop.mp3"/>
 
-    <!-- not enabled yet
-    <sound name="music_game" file="medieval/music game.au"/>
-    <sound name="music_defeat" file="medieval/music defeat1.au"/>
-    <sound name="music_victory" file="medieval/victory1.au"/>
-    -->
+    <sound name="music_menu" file="medieval/menu_music1.mp3"/>
+    <sound name="music_my_turn" file="medieval/music_when_is_my_turn.mp3"/>
+    <sound name="music_other_turn" file="medieval/music_while_waiting_your_turn.mp3"/>
+    <sound name="music_battle" file="medieval/duel-loop.mp3"/>
+    <sound name="music_victory" file="medieval/music_win.mp3"/>
+    <sound name="music_defeat" file="medieval/music_defeat1.mp3"/>
 
     <sound name="menu_button" file="medieval/select1.mp3"/>
     <sound name="button" file="medieval/button1.mp3"/>

@@ -813,13 +813,10 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 */
 	public void actionPerformed(ActionEvent e) {
             
-                if (e.getSource() == start) {
-                    GameSound.INSTANCE.playSound(GameSound.BUTTON_START_GAME);
-                }
-                else if (e.getSource() == cancel) {
+                if (e.getSource() == cancel) {
                     GameSound.INSTANCE.playSound(GameSound.BACK_BUTTON);
                 }
-                else {
+                else if (e.getSource() != start) {
                     GameSound.INSTANCE.playSound(GameSound.BUTTON);
                 }
             

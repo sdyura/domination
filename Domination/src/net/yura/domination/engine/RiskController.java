@@ -11,7 +11,7 @@ import net.yura.domination.engine.core.RiskGame;
  * <p> Risk Controller </p>
  * @author Yura Mamyrin
  */
-public class RiskController {
+public class RiskController implements RiskListener {
 
     private static final Logger logger = Logger.getLogger(RiskController.class.getName());
 
@@ -344,7 +344,7 @@ public class RiskController {
         }
     }
 
-    public void showDiceResults(int[] att, int[] def) {
+    public void showDiceResults(int[] att, int[] def, boolean weAreAttacker, int result) {
 
         Object[] arrLocal;
 
@@ -354,7 +354,7 @@ public class RiskController {
 
 	try {
             for (int i = arrLocal.length-1; i>=0; i--)
-                ((RiskListener)arrLocal[i]).showDiceResults(att,def);
+                ((RiskListener)arrLocal[i]).showDiceResults(att, def, weAreAttacker, result);
 	}
         catch(Exception ex) {
             printStackTrace(ex);

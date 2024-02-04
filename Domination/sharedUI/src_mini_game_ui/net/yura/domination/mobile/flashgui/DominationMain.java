@@ -350,8 +350,8 @@ public class DominationMain extends Application {
 
         RiskSettings.loadSettingsFromPrefs(appPreferences);
 
+        GameSound.INSTANCE.setAudioSystem(risk, new SimpleAudio());
         GameSound.INSTANCE.load("medieval");
-        GameSound.INSTANCE.setAudioSystem(new SimpleAudio());
 
         adapter = new MiniFlashRiskAdapter(risk);
 

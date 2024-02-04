@@ -38,8 +38,8 @@ public class SwingGUIFrame {
                 RiskSettings.loadSettingsFromPrefs(SwingGUIPanel.getUIPreferences());
 
                 try {
+                    GameSound.INSTANCE.setAudioSystem(r, new SimpleAudio());
                     GameSound.INSTANCE.load("medieval");
-                    GameSound.INSTANCE.setAudioSystem(new SimpleAudio());
                 }
                 catch (Throwable th) {
                     RiskUtil.printStackTrace("SimpleAudio not loaded", th);

@@ -8,20 +8,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskAdapter;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.engine.core.RiskGame;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class GameSound {
+public class GameSound extends RiskAdapter {
     
     private static final Logger LOGGER = Logger.getLogger(GameSound.class.getName());
 
     public final static GameSound INSTANCE = new GameSound();
 
     public static final String MUSIC_MENU = "music_menu";
-    public static final String MUSIC_GAME = "music_game";
+    public static final String MUSIC_SETUP = "music_setup";
+    public static final String MUSIC_LOBBY = "music_lobby";
+
+    public static final String MUSIC_MY_TURN = "music_my_turn";
+    public static final String MUSIC_OTHER_TURN = "music_other_turn";
     public static final String MUSIC_BATTLE = "music_battle";
+
     public static final String MUSIC_VICTORY = "music_victory";
     public static final String MUSIC_DEFEAT = "music_defeat";
 
@@ -66,13 +74,19 @@ public class GameSound {
     private Map<String, String> currentTheme; // ID -> filename
     private String currentMusicId;
 
-    public void setAudioSystem(AudioSystem audio) {
+    public void setAudioSystem(Risk risk, AudioSystem audio) {
         audioSystem = audio;
+        risk.addRiskListener(this);
+        currentMusicId = MUSIC_MENU;
     }
 
     public void load(String theme) {
 
         try {
+            if (currentMusicId != null) {
+                stopSound(currentMusicId);
+            }
+            
             final String folder = "sound";
 
             InputStream in = RiskUtil.openStream(folder + "/" + theme + ".xml");
@@ -99,6 +113,11 @@ public class GameSound {
         }
         catch (Exception ex) {
             Logger.getLogger(GameSound.class.getName()).log(Level.WARNING, "unable to load theme: " + theme, ex);
+        }
+        finally {
+            if (currentMusicId != null) {
+                playMusic(currentMusicId);
+            }
         }
     }
     
@@ -166,4 +185,110 @@ public class GameSound {
     public boolean isMusicEnabled() {
         return musicEnabled;
     }
+    
+    
+    private void switchToMusic(String id) {
+        if (!id.equals(currentMusicId)) {
+            if (currentMusicId != null) {
+                stopMusic(currentMusicId);
+            }
+            playMusic(id);
+        }
+    }
+    
+    
+    // ============ RiskAdapter methods =============
+    
+    public void needInput(int s) {
+        if (s > RiskGame.STATE_NEW_GAME && s != RiskGame.STATE_ROLLING && s != RiskGame.STATE_DEFEND_YOURSELF) {
+            switchToMusic(MUSIC_MY_TURN);
+        }
+    }
+    public void noInput() {
+        switchToMusic(MUSIC_OTHER_TURN);
+    }
+
+    public void newGame(boolean t) {
+        switchToMusic(MUSIC_SETUP);
+    }
+    public void startGame(boolean localGame) {
+        playSound(BUTTON_START_GAME);
+        switchToMusic(MUSIC_OTHER_TURN);
+    }
+    public void closeGame() {
+        switchToMusic(MUSIC_MENU);
+    }
+
+    public void openBattle(int c1num, int c2num) {
+        switchToMusic(MUSIC_BATTLE);
+    }
+    public void closeBattle() {
+        switchToMusic(MUSIC_OTHER_TURN);
+    }
+
+    /**
+     * result == -1: attacker lost
+     * result == 0: nobody won
+     * result == 1: attacker won
+     * result == 2: attacker won and player eliminated
+     */
+    public void showDiceResults(int[] atti, int[] defi, boolean weAreAttacker, int result) {
+
+        // work out what sound to play
+        int out = 0;
+        int fights = Math.min(atti.length, defi.length);
+        for (int c = 0; c < fights; c++) {
+            out = out + (atti[0] > defi[0] ? 1 : -1);
+        }
+
+        if (!weAreAttacker) {
+            // we must be the defender
+            out = -out;
+            result = -result;
+        }
+
+        if (result >= 1) {
+            if (weAreAttacker) {
+                playSound(BATTLE_WIN);
+            }
+            else {
+                playSound(BATTLE_DEFENSE_WIN);
+            }
+        }
+        else if (result <= -1) {
+            if (weAreAttacker) {
+                playSound(BATTLE_DEFEAT);
+            }
+            else {
+                playSound(BATTLE_DEFENSE_DEFEAT);
+            }
+        }
+        else if (out == 0) {
+            playSound(DICE_DRAW);
+        }
+        else if (out > 0) {
+            playSound(DICE_WIN);
+        }
+        else {
+            playSound(DICE_LOSE);
+        }
+    }
+
+    public void playerGotCard() {
+        playSound(CARDS_RECEIVE);
+    }
+
+/*
+    public void sendMessage(String output, boolean a, boolean b) {}
+    public void setGameStatus(String state) {}
+    public void showMapPic(RiskGame p) {}
+    public void showCardsFile(String c, boolean m) {}
+    public void serverState(boolean s) {}
+    public void addPlayer(int type, String name, int color, String ip) {}
+    public void delPlayer(String name) {}
+    public void setNODAttacker(int n) {}
+    public void setNODDefender(int n) {}
+    public void sendDebug(String a) {}
+    public void showMessageDialog(String a) {}
+*/
 }
