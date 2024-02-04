@@ -7,6 +7,7 @@ import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FileDialog;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
@@ -56,7 +57,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import net.yura.domination.audio.GameSound;
@@ -1158,6 +1161,57 @@ public class RiskUIUtil {
             }
             catch (Throwable th) {
                 return true;
+            }
+        }
+        
+        public static void fontSize(int szIncr) {
+
+            if ("Nimbus".equals(UIManager.getLookAndFeel().getName())) {
+                try {
+                    Font font = (Font)UIManager.get("defaultFont");
+                    UIManager.setLookAndFeel(UIManager.getLookAndFeel().getClass().getName());
+                    UIManager.getLookAndFeelDefaults().put("defaultFont", new FontUIResource(font.getName(), font.getStyle(), font.getSize() + szIncr));
+                    return;
+                }
+                catch (Exception ex) { }
+            }
+
+            // UIManager.getDefaults() MultiUIDefaults with fallbacks
+            // UIManager.getLookAndFeelDefaults() UIDefaults for only the current theme
+            Map<Object, Object> uidefCopy = new HashMap(UIManager.getDefaults());
+            UIDefaults lookAndFeelDefaults = UIManager.getLookAndFeelDefaults();
+            Map<Font, FontUIResource> newFonts = new HashMap();
+
+            //order of getting a font
+            // 1) overrides stored MultiUIDefaults (that extends Hashtable) directly (we can put things there with UIManager.put(...))
+            // 2) look and feel stored in MultiUIDefaults.tables[0] (we can put things there with UIManager.getLookAndFeelDefaults().put(...))
+            // 3) system defaults stored in MultiUIDefaults.tables[1] (we can not store things here)
+
+            for (Map.Entry<Object,Object> e : uidefCopy.entrySet()) {
+                Object val = e.getValue();
+
+                if (String.valueOf(e.getKey()).toLowerCase().endsWith("font")) {
+                    if (val instanceof UIDefaults.ActiveValue) {
+                        UIDefaults.ActiveValue av = (UIDefaults.ActiveValue)val;
+                        val = av.createValue(lookAndFeelDefaults);
+                    }
+                    else if (val instanceof UIDefaults.LazyValue) {
+                        UIDefaults.LazyValue av = (UIDefaults.LazyValue)val;
+                        val = av.createValue(lookAndFeelDefaults);
+                    }
+                }
+
+                if (val instanceof Font) {
+                    Font fui = (Font)val;
+
+                    FontUIResource newFont = newFonts.get(fui);
+                    if (newFont == null) {
+                        newFont = new FontUIResource(fui.getName(), fui.getStyle(), fui.getSize() + szIncr);
+                        newFonts.put(fui, newFont);
+                    }
+
+                    lookAndFeelDefaults.put(e.getKey(), newFont);
+                }
             }
         }
 

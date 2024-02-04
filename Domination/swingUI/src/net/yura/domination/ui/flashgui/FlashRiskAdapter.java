@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RootPaneContainer;
+import javax.swing.SwingUtilities;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
@@ -64,6 +65,21 @@ public class FlashRiskAdapter implements RiskListener {
         void closeMiniLobby() {
             lobby = null;
             menu.showMainMenu();
+        }
+        
+        public void updateLookAndFeel() {
+            	if (gameFrame != null) {
+                        SwingUtilities.updateComponentTreeUI(gameFrame);
+		}
+		if (menu != null) {
+			SwingUtilities.updateComponentTreeUI(menu);
+		}
+		if (newgameframe != null) {
+			SwingUtilities.updateComponentTreeUI(newgameframe);
+		}
+		if (battledialog != null) {
+			SwingUtilities.updateComponentTreeUI(battledialog);
+		}
         }
 
 	/**

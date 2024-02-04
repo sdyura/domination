@@ -561,6 +561,16 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 				activateButton( MainMenu.BUTTON_LOBBY);
 				break;
 
+			case KeyEvent.VK_PLUS:
+			case KeyEvent.VK_EQUALS:
+				RiskUIUtil.fontSize(1);
+				fra.updateLookAndFeel();
+				break;
+
+			case KeyEvent.VK_MINUS:
+				RiskUIUtil.fontSize(-1);
+				fra.updateLookAndFeel();
+				break;
 		}//switch keycode
 	}//public void keyReleased( KeyEvent event )
 

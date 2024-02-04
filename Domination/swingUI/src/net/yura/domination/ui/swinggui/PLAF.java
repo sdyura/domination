@@ -1,14 +1,11 @@
 package net.yura.domination.ui.swinggui;
 
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -18,11 +15,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.FontUIResource;
 import net.yura.domination.engine.RiskUtil;
+import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.util.Service;
 
 public class PLAF {
@@ -151,55 +147,7 @@ public class PLAF {
     
     private void font(boolean up) {
         int szIncr = up ? 1 : -1; // Value to increase the size by
-        
-        if ("Nimbus".equals(UIManager.getLookAndFeel().getName())) {
-            try {
-                Font font = (Font)UIManager.get("defaultFont");
-                UIManager.setLookAndFeel(UIManager.getLookAndFeel().getClass().getName());
-                UIManager.getLookAndFeelDefaults().put("defaultFont", new FontUIResource(font.getName(), font.getStyle(), font.getSize() + szIncr));
-                updateLookAndFeel();
-                return;
-            }
-            catch (Exception ex) { }
-        }
-
-        // UIManager.getDefaults() MultiUIDefaults with fallbacks
-        // UIManager.getLookAndFeelDefaults() UIDefaults for only the current theme
-        Map<Object, Object> uidefCopy = new HashMap(UIManager.getDefaults());
-        UIDefaults lookAndFeelDefaults = UIManager.getLookAndFeelDefaults();
-        Map<Font, FontUIResource> newFonts = new HashMap();
-
-        //order of getting a font
-        // 1) overrides stored MultiUIDefaults (that extends Hashtable) directly (we can put things there with UIManager.put(...))
-        // 2) look and feel stored in MultiUIDefaults.tables[0] (we can put things there with UIManager.getLookAndFeelDefaults().put(...))
-        // 3) system defaults stored in MultiUIDefaults.tables[1] (we can not store things here)
-
-        for (Map.Entry<Object,Object> e : uidefCopy.entrySet()) {
-            Object val = e.getValue();
-
-            if (String.valueOf(e.getKey()).toLowerCase().endsWith("font")) {
-                if (val instanceof UIDefaults.ActiveValue) {
-                    UIDefaults.ActiveValue av = (UIDefaults.ActiveValue)val;
-                    val = av.createValue(lookAndFeelDefaults);
-                }
-                else if (val instanceof UIDefaults.LazyValue) {
-                    UIDefaults.LazyValue av = (UIDefaults.LazyValue)val;
-                    val = av.createValue(lookAndFeelDefaults);
-                }
-            }
-
-            if (val instanceof Font) {
-                Font fui = (Font)val;
-
-                FontUIResource newFont = newFonts.get(fui);
-                if (newFont == null) {
-                    newFont = new FontUIResource(fui.getName(), fui.getStyle(), fui.getSize() + szIncr);
-                    newFonts.put(fui, newFont);
-                }
-
-                lookAndFeelDefaults.put(e.getKey(), newFont);
-            }
-        }
+        RiskUIUtil.fontSize(szIncr);
         updateLookAndFeel();
     }
 }
