@@ -280,7 +280,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
 		playersModel = new AbstractTableModel() {
 
-			private final String[] columnNames = { "Name", "Color", "Type", "Extra Armies", "No. Cards", "No. Countries", "No. Player Eliminated", "Capital", "Mission", "Address", "autodefend","autoendgo"};
+			private final String[] columnNames = { "Name", "Color", "Type", "Extra Armies", "Armies", "No. Cards", "No. Countries", "No. Player Eliminated", "Capital", "Mission", "Address", "autodefend","autoendgo"};
 
 			public int getColumnCount() {
 				return columnNames.length;
@@ -307,20 +307,20 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
 				Player player = (Player)myrisk.getGame().getPlayers().elementAt(row);
 
-				switch(col) {
-
+				switch (col) {
 					case 0: return player.getName();
 					case 1: return ColorUtil.getStringForColor( player.getColor() );
 					case 2: return myrisk.getType(player.getType());
 					case 3: return new Integer( player.getExtraArmies() );
-					case 4: return new Integer( player.getCards().size() );
-					case 5: return new Integer( player.getNoTerritoriesOwned() );
-					case 6: return new Integer( player.getPlayersEliminated().size() );
-					case 7: return player.getCapital();
-					case 8: return player.getMission();
-					case 9: return player.getAddress();
-					case 10: return new Boolean( player.getAutoDefend() );
-					case 11: return new Boolean( player.getAutoEndGo() );
+					case 4: return new Integer( player.getNoArmies() );
+					case 5: return new Integer( player.getCards().size() );
+					case 6: return new Integer( player.getNoTerritoriesOwned() );
+					case 7: return new Integer( player.getPlayersEliminated().size() );
+					case 8: return player.getCapital();
+					case 9: return player.getMission();
+					case 10: return player.getAddress();
+					case 11: return new Boolean( player.getAutoDefend() );
+					case 12: return new Boolean( player.getAutoEndGo() );
 					default: throw new RuntimeException();
 				}
 			}
@@ -330,8 +330,8 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                             switch (col) {
                                 case 0: // name
                                 case 2: // type
-                                case 9: // address
                                 case 3: // extra armies
+                                case 10: // address
                                     return true;
                                 default:
                                     return false;
@@ -360,7 +360,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                                     if (type == -1) {
                                         throw new IllegalArgumentException("bad type "+aValue);
                                     }
-                                    String address = col==9?String.valueOf(aValue):player.getAddress();
+                                    String address = col == 10 ? String.valueOf(aValue) : player.getAddress();
                                     if (address.equals("")) {
                                         throw new IllegalArgumentException("no empty address");
                                     }
