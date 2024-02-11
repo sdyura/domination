@@ -47,13 +47,12 @@
     <sound name="move_armies" file="medieval/moving soldiers after to win and conquer territory.mp3"/>
     <sound name="move_tactical" file="medieval/moving troops1.mp3"/>
 
-    <!-- not enabled yet
-    <sound name="lobby_start" file="medieval/entered lobby.au"/>
-    <sound name="lobby_join" file="medieval/joining room.au"/>
-    <sound name="lobby_play" file="medieval/joining match.au"/>
-    <sound name="lobby_watch" file="medieval/spectator-mode.au"/>
-    <sound name="lobby_set_nick" file="medieval/saving name.au"/>
-    <sound name="lobby_close_game" file="medieval/leaving match.au"/>
-    -->
+
+    <sound name="lobby_start" file="medieval/entered lobby.mp3"/>
+    <sound name="lobby_join" file="medieval/joining room.mp3"/>
+    <sound name="lobby_play" file="medieval/joining match.mp3"/>
+    <sound name="lobby_watch" file="medieval/spectator mode.mp3"/>
+    <sound name="lobby_set_nick" file="medieval/saving name.mp3"/>
+    <sound name="lobby_close_game" file="medieval/leaving match.mp3"/>
 
 </sounds>
