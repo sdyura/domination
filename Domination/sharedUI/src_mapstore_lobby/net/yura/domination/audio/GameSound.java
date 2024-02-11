@@ -165,8 +165,10 @@ public class GameSound extends RiskAdapter {
     public void stopMusic(String audioId) {
         currentMusicId = null;
 
-        LOGGER.info("Stopping music with id: " + audioId);
-        stopSound(audioId);
+        if (musicEnabled) {
+            LOGGER.info("Stopping music with id: " + audioId);
+            stopSound(audioId);
+        }
     }
 
     private void stopSound(String audioId) {

@@ -65,7 +65,7 @@ public class SimpleAudio implements AudioSystem, PlayerListener {
                 player.stop();
             }
             else {
-                LOGGER.log(Level.INFO, "unable to find " + audioFile);
+                LOGGER.log(Level.INFO, "unable to stop, not found: " + audioFile);
             }
         }
         catch (Exception ex) {
