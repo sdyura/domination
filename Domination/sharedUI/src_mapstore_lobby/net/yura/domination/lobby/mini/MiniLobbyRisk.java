@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.WeakHashMap;
 import java.util.logging.Logger;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.OnlineRisk;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
@@ -36,6 +37,8 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
 
     public MiniLobbyRisk(Risk risk) {
         myrisk = risk;
+
+        GameSound.INSTANCE.setLobbyOpen(true);
     }
 
     public void addLobbyGameMoveListener(MiniLobbyClient lgl) {
@@ -165,6 +168,8 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
 
     public void lobbyShutdown() {
         mapPreviewClient.shutdown();
+
+        GameSound.INSTANCE.setLobbyOpen(false);
     }
 
     public String getGameDescription(Game game) {

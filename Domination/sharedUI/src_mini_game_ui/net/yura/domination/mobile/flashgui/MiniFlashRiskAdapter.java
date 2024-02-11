@@ -230,6 +230,10 @@ public class MiniFlashRiskAdapter implements RiskListener {
     }
 
     @Override
+    public void gameOver(boolean bln) {
+    }
+
+    @Override
     public void closeGame() {
         if (move!=null) {
             move.setVisible(false);

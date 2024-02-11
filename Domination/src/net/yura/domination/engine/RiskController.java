@@ -429,6 +429,23 @@ public class RiskController implements RiskListener {
         }
     }
 
+    public void gameOver(boolean won) {
+
+        Object[] arrLocal;
+
+	synchronized (this) {
+            arrLocal = obs.toArray();
+        }
+
+	try {
+            for (int i = arrLocal.length-1; i>=0; i--)
+                ((RiskListener)arrLocal[i]).gameOver(won);
+	}
+        catch(Exception ex) {
+            printStackTrace(ex);
+        }
+    }
+
     public void playerGotCard() {
 
         Object[] arrLocal;

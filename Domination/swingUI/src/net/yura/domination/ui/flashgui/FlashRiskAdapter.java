@@ -218,6 +218,10 @@ public class FlashRiskAdapter implements RiskListener {
         public void playerGotCard() {
 
         }
+        
+        public void gameOver(boolean won) {
+            
+        }
 
 	/**
 	 * Starts the game

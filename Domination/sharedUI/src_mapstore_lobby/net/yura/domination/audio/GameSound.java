@@ -197,15 +197,44 @@ public class GameSound extends RiskAdapter {
     }
     
     
-    // ============ RiskAdapter methods =============
+    boolean lobbyOpen;
+    boolean gameWon;
+    boolean gameLost;
     
+    public void setLobbyOpen(boolean open) {
+        lobbyOpen = open;
+        switchToMusic(getOutOfGameMusic());
+    }
+    public void setGameWon(boolean won) {
+        gameWon = won;
+        switchToMusic(getMyTurnGameMusic());
+    }
+    public void setGameLost(boolean lost) {
+        gameLost = lost;
+        switchToMusic(getOtherTurnGameMusic());
+    }
+
+    private String getOutOfGameMusic() {
+        return lobbyOpen ? MUSIC_LOBBY : MUSIC_MENU;
+    }
+
+    private String getMyTurnGameMusic() {
+        return gameWon ? MUSIC_VICTORY : MUSIC_MY_TURN;
+    }
+
+    private String getOtherTurnGameMusic() {
+        return gameLost ? MUSIC_DEFEAT : MUSIC_OTHER_TURN;
+    }
+
+    // ============ RiskAdapter methods =============
+
     public void needInput(int s) {
-        if (s > RiskGame.STATE_NEW_GAME && s != RiskGame.STATE_ROLLING && s != RiskGame.STATE_DEFEND_YOURSELF) {
-            switchToMusic(MUSIC_MY_TURN);
+        if (s > RiskGame.STATE_NEW_GAME && s != RiskGame.STATE_ROLLING && s != RiskGame.STATE_DEFEND_YOURSELF && s != RiskGame.STATE_GAME_OVER) {
+            switchToMusic( getMyTurnGameMusic() );
         }
     }
     public void noInput() {
-        switchToMusic(MUSIC_OTHER_TURN);
+        switchToMusic( getOtherTurnGameMusic() );
     }
 
     public void newGame(boolean t) {
@@ -213,17 +242,29 @@ public class GameSound extends RiskAdapter {
     }
     public void startGame(boolean localGame) {
         playSound(BUTTON_START_GAME);
-        switchToMusic(MUSIC_OTHER_TURN);
+        switchToMusic( getOtherTurnGameMusic() );
     }
+
+    public void gameOver(boolean bln) {
+        if (bln) {
+            setGameWon(true);
+        }
+        else {
+            setGameLost(true);
+        }
+    }
+    
     public void closeGame() {
-        switchToMusic(MUSIC_MENU);
+        gameWon = false;
+        gameLost = false;
+        switchToMusic( getOutOfGameMusic() );
     }
 
     public void openBattle(int c1num, int c2num) {
         switchToMusic(MUSIC_BATTLE);
     }
     public void closeBattle() {
-        switchToMusic(MUSIC_OTHER_TURN);
+        switchToMusic( getOtherTurnGameMusic() );
     }
 
     /**
@@ -254,6 +295,10 @@ public class GameSound extends RiskAdapter {
             else {
                 playSound(BATTLE_DEFENSE_WIN);
             }
+
+            if (result == 2) {
+                // TODO maybe play some player eliminated sound
+            }
         }
         else if (result <= -1) {
             if (weAreAttacker) {
@@ -261,6 +306,10 @@ public class GameSound extends RiskAdapter {
             }
             else {
                 playSound(BATTLE_DEFENSE_DEFEAT);
+            }
+                
+            if (result == -2) {
+                setGameLost(true);
             }
         }
         else if (out == 0) {

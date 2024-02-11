@@ -2219,6 +2219,10 @@ RiskUtil.printStackTrace(e);
 
 	public String whoWon() {
 		Player winner = getWinner();
+
+                boolean iWon = winner.getType() == Player.PLAYER_HUMAN && ( unlimitedLocalMode || myAddress.equals( winner.getAddress() ) );
+                controller.gameOver(iWon);
+
 		String text = System.getProperty("line.separator") +
 			JavaCompatUtil.replaceAll(resb.getString("core.whowon.hehaswon"), "{0}", winner.getName());
 		if ( game.getGameMode() == RiskGame.MODE_SECRET_MISSION ) {
