@@ -302,7 +302,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	private void activateButton(int thebutton) {
 		if (thebutton != 0) {
                     
-                        GameSound.INSTANCE.playSound(GameSound.MENU_BUTTON);
+                        GameSound.INSTANCE.playSound(thebutton == MainMenu.BUTTON_LOBBY ? GameSound.LOBBY_START : GameSound.MENU_BUTTON);
                     
 			switch (thebutton) {
 				case MainMenu.BUTTON_NEW:{

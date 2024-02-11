@@ -60,4 +60,6 @@ public interface MiniLobbyGame {
     void renameSpectator(String oldname, String newname, int newtype);
 
     void updatePlayerList(Collection<Player> playersInGame, String whoTurn);
+
+    void gameActionPerformed(int state);
 }

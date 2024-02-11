@@ -20,6 +20,8 @@
     <sound name="music_defeat" file="medieval/music_defeat1.mp3"/>
 
     <sound name="menu_button" file="medieval/select1.mp3"/>
+    
+    <!-- buttoms on game setup screen -->
     <sound name="button" file="medieval/button1.mp3"/>
     <sound name="back_button" file="medieval/return button3.mp3"/>
     <sound name="button_start_game" file="medieval/game starting.mp3"/>
@@ -50,9 +52,9 @@
 
     <sound name="lobby_start" file="medieval/entered lobby.mp3"/>
     <sound name="lobby_join" file="medieval/joining room.mp3"/>
+    <sound name="lobby_leave" file="medieval/leaving match.mp3"/>
     <sound name="lobby_play" file="medieval/joining match.mp3"/>
     <sound name="lobby_watch" file="medieval/spectator mode.mp3"/>
     <sound name="lobby_set_nick" file="medieval/saving name.mp3"/>
-    <sound name="lobby_close_game" file="medieval/leaving match.mp3"/>
 
 </sounds>

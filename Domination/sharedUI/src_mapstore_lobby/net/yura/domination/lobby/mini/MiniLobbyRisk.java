@@ -137,12 +137,25 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     }
 
     public void connected(String username) {
+        GameSound.INSTANCE.playSound(GameSound.LOBBY_SET_NICK);
     }
     public void loginGoogle() {
     }
     public void gameStarted(int id) {
     }
 
+    public void gameActionPerformed(int action) {
+        String sound = null;
+        switch (action) {
+            case Game.STATE_CAN_JOIN: sound = GameSound.LOBBY_JOIN; break;
+            case Game.STATE_CAN_LEAVE: sound = GameSound.LOBBY_LEAVE; break;
+            case Game.STATE_CAN_WATCH: sound = GameSound.LOBBY_WATCH; break;
+            case Game.STATE_CAN_PLAY: sound = GameSound.LOBBY_PLAY; break;
+        }
+        if (sound != null) {
+            GameSound.INSTANCE.playSound(sound);
+        }
+    }
 
 
     WeakHashMap mapping = new WeakHashMap();

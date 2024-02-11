@@ -220,6 +220,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             final Game game = (Game)gameList.getSelectedValue();
             if (game!=null) {
                 int state = game.getState( whoAmI() );
+                this.game.gameActionPerformed(state);
                 switch (state) {
                     case Game.STATE_CAN_JOIN:
                         if (game.getMagicWord() != null) {

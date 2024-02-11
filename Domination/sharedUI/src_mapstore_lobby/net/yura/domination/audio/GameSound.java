@@ -63,10 +63,10 @@ public class GameSound extends RiskAdapter {
 
     public static final String LOBBY_START = "lobby_start";
     public static final String LOBBY_JOIN = "lobby_join";
+    public static final String LOBBY_LEAVE = "lobby_leave";
     public static final String LOBBY_PLAY = "lobby_play";
     public static final String LOBBY_WATCH = "lobby_watch";
     public static final String LOBBY_SET_NICK = "lobby_set_nick";
-    public static final String LOBBY_CLOSE_GAME = "lobby_close_game";
 
     private boolean soundEnabled = true;
     private boolean musicEnabled = true;
@@ -259,6 +259,7 @@ public class GameSound extends RiskAdapter {
     public void closeGame() {
         gameWon = false;
         gameLost = false;
+        // TODO maybe play sound for closing game
         switchToMusic( getOutOfGameMusic() );
     }
 
