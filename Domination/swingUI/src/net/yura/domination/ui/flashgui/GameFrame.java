@@ -250,6 +250,7 @@ public class GameFrame extends JFrame implements KeyListener {
                 	int click=insideButton(e.getX(),e.getY());
 			if (click != -1) { // this means it was one of the view buttons
 				if (mapView !=click) {
+                                        GameSound.INSTANCE.playSound(GameSound.BUTTON);
 					setMapView(click);
 				}
 			}
@@ -552,6 +553,10 @@ public class GameFrame extends JFrame implements KeyListener {
 	ActionListener buttonActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 
+                        if (e.getSource() != gobutton || gameState != RiskGame.STATE_PLACE_ARMIES) {
+                            GameSound.INSTANCE.playSound(GameSound.BUTTON);
+                        }
+                    
 			if (e.getSource()==cardsbutton) {
 				displayCards();
 			}
@@ -1138,6 +1143,9 @@ public class GameFrame extends JFrame implements KeyListener {
 			go("endtrade");
 		}
 		else if (gameState==RiskGame.STATE_PLACE_ARMIES) {
+
+                        GameSound.INSTANCE.playSound(GameSound.PLACE_ARMY);
+                    
                         int quickPlaceCountry = pp.getC1();
                         if (quickPlaceCountry != PicturePanel.NO_COUNTRY) {
                             quickPlace.put(myrisk.getGame().getCurrentPlayer(), new Integer(quickPlaceCountry));

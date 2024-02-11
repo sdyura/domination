@@ -12,6 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.StatType;
@@ -122,6 +123,7 @@ public class StatsDialog extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent a) {
+            GameSound.INSTANCE.playSound(GameSound.BUTTON);
             showGraph(StatType.fromOrdinal(Integer.parseInt(a.getActionCommand())));
 	}
 
