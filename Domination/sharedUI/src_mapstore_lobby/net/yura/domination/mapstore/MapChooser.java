@@ -571,7 +571,7 @@ public class MapChooser implements ActionListener,MapServerListener {
         String author = map.getAuthorName();
         String noOfDownloads = map.getNumberOfDownloads();
         return "By: " + (author == null ? "?" : author) + "\n" +
-        "Downloads: " + (noOfDownloads == null ? "?" : noOfDownloads) + "\n" +
+        JavaCompatUtil.replaceAll(TranslationBundle.getBundle().getString("mapchooser.map.numberOfDownloads"), "{0}", (noOfDownloads == null ? "?" : noOfDownloads)) + "\n" +
         "Version: " + map.getVersion() + "\n" +
         map.getDescription();
     }

@@ -18,6 +18,7 @@ import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.KeyEvent;
 import net.yura.mobile.gui.Application;
+import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.io.FileUtil;
@@ -92,9 +93,11 @@ public class MiniUtil {
         String displayInfo;
 
         if (Application.getPlatform() == Application.PLATFORM_IOS) {
-            displayInfo = "<p>Screen scale: " + System.getProperty("display.scale") + "</p>";
+            DesktopPane dp = DesktopPane.getDesktopPane();
+            displayInfo = "<p>Screen scale: " + System.getProperty("display.scale") + " window: " +dp.getWidth() + "x" + dp.getHeight() + "</p>";
         }
         else {
+            // display.size = small/normal/large/...
             displayInfo = "<p>DPI: " + System.getProperty("display.dpi") + " Density: " + System.getProperty("display.density") + " Size: " + System.getProperty("display.size") + "</p>";
         }
 

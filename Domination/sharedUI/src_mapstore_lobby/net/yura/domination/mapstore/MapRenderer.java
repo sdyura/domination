@@ -1,6 +1,8 @@
 package net.yura.domination.mapstore;
 
+import java.util.ResourceBundle;
 import javax.microedition.lcdui.Image;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.mobile.gui.Animation;
 import net.yura.mobile.gui.Application;
@@ -31,6 +33,8 @@ public class MapRenderer extends DefaultListCellRenderer {
 
     MapChooser chooser;
     Map map;
+    
+    ResourceBundle resb = TranslationBundle.getBundle();
 
     public MapRenderer(MapChooser chooser) {
 
@@ -86,7 +90,7 @@ public class MapRenderer extends DefaultListCellRenderer {
 
             String author = map.getAuthorName();
             if (author!=null && !"".equals(author)) {
-                line2 = TranslationBundle.getBundle().getString("mapchooser.by").replaceAll("\\{0\\}", author);
+                line2 = resb.getString("mapchooser.by").replaceAll("\\{0\\}", author);
             }
             String description = map.getDescription();
             if (description!=null && !"".equals(description)) {
@@ -166,6 +170,18 @@ public class MapRenderer extends DefaultListCellRenderer {
             }
             else {
                 g.drawImage(play, getWidth()-play.getWidth()-gap, gap);
+            }
+
+            int w = getWidth();
+            if (w >= XULLoader.adjustSizeToDensity(768)) {
+                if (map.getMapWidth() > 0) {
+                    String size = "Size: " + map.getMapWidth() + "x" + map.getMapHeight();
+                    g.drawString(size, textx + w / 2, padding);
+                }
+                if (map.getNumberOfDownloads() != null) {
+                    String downloads = JavaCompatUtil.replaceAll(resb.getString("mapchooser.map.numberOfDownloads"), "{0}", map.getNumberOfDownloads());
+                    g.drawString(downloads, textx + w / 2 , padding + getFont().getHeight() + this.gap);
+                }
             }
         }
 
