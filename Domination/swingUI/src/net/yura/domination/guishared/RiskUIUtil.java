@@ -1,6 +1,7 @@
 package net.yura.domination.guishared;
 
 import java.applet.Applet;
+import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -14,6 +15,8 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.event.AWTEventListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.geom.AffineTransform;
 import java.io.BufferedReader;
@@ -63,6 +66,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import net.yura.domination.audio.GameSound;
+import net.yura.domination.audio.SimpleAudio;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
@@ -81,6 +85,7 @@ import net.yura.domination.mapstore.MapUpdateService;
  * @author Yura Mamyrin
  */
 public class RiskUIUtil {
+
     // TODO missing:
     //PicturePanel.getImage(
     // setupMapsDir(null) should be called b4 the Risk() object is created
@@ -1391,6 +1396,39 @@ public class RiskUIUtil {
                 ((Frame)window).setResizable(false);
             }
         }
+    }
+    
+    
+    public static void initAudio(Risk risk) {
+        try {
+            GameSound.INSTANCE.setAudioSystem(risk, new SimpleAudio());
+            GameSound.INSTANCE.load("medieval");
+        }
+        catch (Throwable th) {
+            RiskUtil.printStackTrace("SimpleAudio not loaded", th);
+        }
+
+        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+            boolean appActive = true;
+            boolean oldValue;
+            @Override
+            public void eventDispatched(AWTEvent event) {
+                if (event instanceof WindowEvent) {
+                    WindowEvent we = (WindowEvent)event;
+                    if (we.getID() == WindowEvent.WINDOW_GAINED_FOCUS && !appActive) {
+                        if (oldValue) {
+                            GameSound.INSTANCE.setMusicEnabled(oldValue);
+                        }
+                        appActive = true;
+                    }
+                    else if (we.getID() == WindowEvent.WINDOW_LOST_FOCUS && we.getOppositeWindow() == null && (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent() == null)) {
+                        oldValue = GameSound.INSTANCE.isMusicEnabled();
+                        GameSound.INSTANCE.setMusicEnabled(false);
+                        appActive = false;
+                    }
+                }
+            }
+        }, AWTEvent.WINDOW_FOCUS_EVENT_MASK);
     }
     
     public static void openOptions(Component parentComponent, Risk myrisk, boolean myTurn, Preferences preferences) {

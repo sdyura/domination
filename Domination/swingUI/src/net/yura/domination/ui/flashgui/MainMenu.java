@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RootPaneContainer;
 import javax.swing.event.MouseInputListener;
-import net.yura.domination.audio.SimpleAudio;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
@@ -632,13 +631,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 // before we create any UI, we want to load up all settings
                 RiskSettings.loadSettingsFromPrefs(RiskSettings.getPreferences(MainMenu.class));
 
-                try {
-                    GameSound.INSTANCE.setAudioSystem(risk, new SimpleAudio());
-                    GameSound.INSTANCE.load("medieval");
-                }
-                catch (Throwable th) {
-                    RiskUtil.printStackTrace("SimpleAudio not loaded", th);
-                }
+                RiskUIUtil.initAudio(risk);
 
 		final MainMenu mainMneu = newMainMenuFrame(risk, JFrame.EXIT_ON_CLOSE );
 
@@ -691,6 +684,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	public static MainMenu newMainMenuFrame(Risk risk, int defaultCloseOperation) {
 
 		JFrame gui = new JFrame();
+
                 gui.setIconImage(Toolkit.getDefaultToolkit().getImage( AboutDialog.class.getResource("icon.gif") ));
 
 		final MainMenu mm = new MainMenu(risk, gui, gui);

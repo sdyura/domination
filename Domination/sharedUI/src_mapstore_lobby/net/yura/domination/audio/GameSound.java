@@ -70,6 +70,7 @@ public class GameSound extends RiskAdapter {
 
     private boolean soundEnabled = true;
     private boolean musicEnabled = true;
+
     private AudioSystem audioSystem;
     private Map<String, String> currentTheme; // ID -> filename
     private String currentMusicId;
@@ -84,7 +85,7 @@ public class GameSound extends RiskAdapter {
 
         try {
             if (currentMusicId != null) {
-                stopSound(currentMusicId);
+                stopPlayingLoopedSound();
             }
             
             final String folder = "sound";
@@ -116,7 +117,7 @@ public class GameSound extends RiskAdapter {
         }
         finally {
             if (currentMusicId != null) {
-                playMusic(currentMusicId);
+                playCurrentLoopedSound();
             }
         }
     }
@@ -129,10 +130,10 @@ public class GameSound extends RiskAdapter {
         musicEnabled = on;
         if (currentMusicId != null) {
             if (musicOld && !musicEnabled) {
-                stopSound(currentMusicId);
+                stopPlayingLoopedSound();
             }
             else if (!musicOld && musicEnabled) {
-                playMusic(currentMusicId);
+                playCurrentLoopedSound();
             }
         }
     }
@@ -152,28 +153,31 @@ public class GameSound extends RiskAdapter {
     public void playMusic(String audioId) {
         currentMusicId = audioId;
         
-        LOGGER.info("Playing music with id: " + audioId);
-        
+        LOGGER.info("Playing music with id: " + currentMusicId);
+
+        playCurrentLoopedSound();
+    }
+
+    public void stopMusic() {
+        if (musicEnabled) {
+            LOGGER.info("Stopping music with id: " + currentMusicId);
+            stopPlayingLoopedSound();
+        }
+        currentMusicId = null;
+    }
+
+    private void playCurrentLoopedSound() {
         if (musicEnabled && audioSystem != null && currentTheme != null) {
-            String audioFile = currentTheme.get(audioId);
+            String audioFile = currentTheme.get(currentMusicId);
             if (audioFile != null) {
                 audioSystem.start(audioFile);
             }
         }
     }
 
-    public void stopMusic(String audioId) {
-        currentMusicId = null;
-
-        if (musicEnabled) {
-            LOGGER.info("Stopping music with id: " + audioId);
-            stopSound(audioId);
-        }
-    }
-
-    private void stopSound(String audioId) {
+    private void stopPlayingLoopedSound() {
         if (audioSystem != null && currentTheme != null) {
-            String audioFile = currentTheme.get(audioId);
+            String audioFile = currentTheme.get(currentMusicId);
             if (audioFile != null) {
                 audioSystem.stop(audioFile);
             }
@@ -192,7 +196,7 @@ public class GameSound extends RiskAdapter {
     private void switchToMusic(String id) {
         if (!id.equals(currentMusicId)) {
             if (currentMusicId != null) {
-                stopMusic(currentMusicId);
+                stopMusic();
             }
             playMusic(id);
         }
