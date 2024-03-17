@@ -1421,7 +1421,7 @@ public class RiskUIUtil {
                         }
                         appActive = true;
                     }
-                    else if (we.getID() == WindowEvent.WINDOW_LOST_FOCUS && we.getOppositeWindow() == null && (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent() == null)) {
+                    else if (we.getID() == WindowEvent.WINDOW_LOST_FOCUS && we.getOppositeWindow() == null && (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(WindowEvent.WINDOW_GAINED_FOCUS) == null)) {
                         oldValue = GameSound.INSTANCE.isMusicEnabled();
                         GameSound.INSTANCE.setMusicEnabled(false);
                         appActive = false;
