@@ -16,6 +16,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.AWTEventListener;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.geom.AffineTransform;
@@ -1421,7 +1422,10 @@ public class RiskUIUtil {
                         }
                         appActive = true;
                     }
-                    else if (we.getID() == WindowEvent.WINDOW_LOST_FOCUS && we.getOppositeWindow() == null && (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(WindowEvent.WINDOW_GAINED_FOCUS) == null)) {
+                    else if (we.getID() == WindowEvent.WINDOW_LOST_FOCUS && we.getOppositeWindow() == null &&
+                            (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(WindowEvent.WINDOW_GAINED_FOCUS) == null) &&
+                            (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(ComponentEvent.COMPONENT_HIDDEN) == null)) {
+
                         oldValue = GameSound.INSTANCE.isMusicEnabled();
                         GameSound.INSTANCE.setMusicEnabled(false);
                         appActive = false;
