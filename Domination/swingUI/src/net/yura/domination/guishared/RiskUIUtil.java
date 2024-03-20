@@ -16,6 +16,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.AWTEventListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -61,6 +63,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
@@ -1423,16 +1426,52 @@ public class RiskUIUtil {
                         appActive = true;
                     }
                     else if (we.getID() == WindowEvent.WINDOW_LOST_FOCUS && we.getOppositeWindow() == null &&
-                            (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(WindowEvent.WINDOW_GAINED_FOCUS) == null) &&
-                            (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(ComponentEvent.COMPONENT_HIDDEN) == null)) {
+                            // this one will always come, but sometimes not in time, so when we check its not there yet :-(
+                            (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(WindowEvent.WINDOW_GAINED_FOCUS) == null)) {
+                            //if we know the window is closing this is prob not the app losing focus, but this does not always work
+                            //(Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(WindowEvent.WINDOW_CLOSED) == null) &&
+                            //(Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(ComponentEvent.COMPONENT_HIDDEN) == null)
+                            // repaint events come as INVOCATION_DEFAULT, so we cant use it to check as we can get them after app focus lost
+                            //(Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(InvocationEvent.INVOCATION_DEFAULT) == null) &&
 
-                        oldValue = GameSound.INSTANCE.isMusicEnabled();
-                        GameSound.INSTANCE.setMusicEnabled(false);
-                        appActive = false;
+                        // maybe we need to stop the music, but we are still not 100% sure
+                        // wait a tiny bit and then check if a window has focus
+                        invokeLater(200, new Runnable() {
+                            @Override
+                            public void run() {
+
+                                // if we have an active window, we have not lost app focus so should keep playing music
+                                if (javax.swing.FocusManager.getCurrentManager().getActiveWindow() != null) { // && window.isFocused()
+                                    return;
+                                }
+
+                                oldValue = GameSound.INSTANCE.isMusicEnabled();
+                                GameSound.INSTANCE.setMusicEnabled(false);
+                                appActive = false;
+                            }
+                        });
+
                     }
                 }
             }
         }, AWTEvent.WINDOW_FOCUS_EVENT_MASK);
+    }
+
+    /**
+     * @see SwingUtilities#invokeLater(java.lang.Runnable) 
+     */
+    public static void invokeLater(int delay, final Runnable run) {
+        new Timer(delay, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    run.run();
+                }
+                finally {
+                    ((Timer)e.getSource()).stop();
+                }
+            }
+        }).start();
     }
     
     public static void openOptions(Component parentComponent, Risk myrisk, boolean myTurn, Preferences preferences) {
