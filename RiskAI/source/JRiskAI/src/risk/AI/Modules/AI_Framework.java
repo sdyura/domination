@@ -18,7 +18,7 @@ public class AI_Framework {
 	
 	private Random rand = new Random(); // used in selectCapital only.
 	
-	private final boolean debugging = true;
+	private final boolean debugging = false;
 	private final boolean outputLog = false;
 	
 	protected C_IG_Mission igMission_module;

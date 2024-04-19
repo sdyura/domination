@@ -143,9 +143,6 @@ public class T_Game {
 		this.attackerArmies = game.getAttacker().getArmies();
 		int armiesLost = oldAttackerArmies == -1 ? 0 : oldAttackerArmies - attackerArmies;
 
-
-
-System.out.println("getLastBattle_ArmiesLost " + armiesLost);
 		int checkValue = game.getLastBattle_ArmiesLost();
 		if (armiesLost != checkValue) throw new IllegalStateException("value missmatch " + armiesLost + " != " + checkValue);
 
@@ -153,7 +150,7 @@ System.out.println("getLastBattle_ArmiesLost " + armiesLost);
 	}
 
 	public void resetLastBattle_ArmiesLost() {
-System.out.println("resetLastBattle_ArmiesLost");
+		attacker = null;
 		attackerArmies = -1;
 		game.resetLastBattle_ArmiesLost();
 	}

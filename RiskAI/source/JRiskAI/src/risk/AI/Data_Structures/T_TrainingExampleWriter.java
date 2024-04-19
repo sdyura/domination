@@ -2,6 +2,9 @@ package risk.AI.Data_Structures;
 
 import java.io.*;
 import java.util.*;
+import net.yura.domination.engine.ai.framework.AIPlayerFrameworkBest;
+import net.yura.domination.engine.ai.framework.AIPlayerFrameworkCustom;
+import net.yura.domination.engine.ai.framework.AIPlayerFrameworkScripted;
 
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Continent;
@@ -274,7 +277,7 @@ public class T_TrainingExampleWriter  {
 			beginTag("mission", data);
 			addToData(T_Game.decentMissionToString(p.getMission(),p),data);
 			endTag("mission", data);
-			if (p.getType() == 7) { // Framework_custom
+			if (p.getType() == AIPlayerFrameworkCustom.TYPE) { // Framework_custom
 				beginTag("round_times", data);
 				for (int r = 0; r < this.frameworkTimers[i].size(); r++) {
 					addToData(String.valueOf(frameworkTimers[i].get(r).getTimer()),data);
@@ -429,17 +432,21 @@ public class T_TrainingExampleWriter  {
 	
 	private String playerTypeToString(Player p) {
 		switch (p.getType()) {
-			case 0: return "human";
-			case 1: return "AI (Easy)";
-			case 2: return "AI (Hard)";
-			case 3: return "Neutral";
-			case 4: return "AI (Random)";
-			case 5: return "AI (Framework)";
-			case 6: return "AI (ExtraHard)";
-			case 7: return "AI (Framework_custom)";
-			case 8: return "AI (Framework_best)";
+			case Player.PLAYER_HUMAN: return "human";
+
+			case Player.PLAYER_AI_CRAP: return "AI (Crap)";
+			case Player.PLAYER_AI_EASY: return "AI (Easy)";
+			case Player.PLAYER_AI_AVERAGE: return "AI (Average)";
+			case Player.PLAYER_AI_HARD: return "AI (Hard)";
+
+			case Player.PLAYER_NEUTRAL: return "Neutral";
+
+			case AIPlayerFrameworkScripted.TYPE: return "AI (Framework)";
+			case AIPlayerFrameworkCustom.TYPE: return "AI (Framework_custom)";
+			case AIPlayerFrameworkBest.TYPE: return "AI (Framework_best)";
+
+			default: return "unknown";
 		}
-		return "unknown";
 	}
 	
 	private void deleteLastBoard(T_TrainingExample currentBoardTrainingExample) {
