@@ -28,20 +28,33 @@ public class AIManager {
             try {
                 // each AIManager has its own instances of AI players so the state does not leak
                 AI ai = providers.next().newInstance();
-                int type = ai.getType();
-                if ( ais.get( type ) !=null ) {
-                    throw new RuntimeException("more then 1 ai with same type");
-                }
-                ais.put( type , ai );
+                registerAI(ai);
             }
             catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         }
+        
+        try {
+            for (AI ai : java.util.ServiceLoader.load(AI.class)) {
+                registerAI(ai);
+            }
+        }
+        catch (Throwable ex) {
+            Logger.getLogger(AIManager.class.getName()).info("ServiceLoader AIs not loaded " + ex);
+        }
 
         if (ais.isEmpty()) {
             Logger.getLogger(AIManager.class.getName()).info("NO AIs FOUND!!!!");
         }
+    }
+
+    private void registerAI(AI ai) {
+        int type = ai.getType();
+        if (ais.get(type) != null) {
+            throw new RuntimeException("more then 1 ai with same type: " + type);
+        }
+        ais.put(type, ai);
     }
 
     public void play(Risk risk) {

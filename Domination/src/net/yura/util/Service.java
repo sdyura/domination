@@ -10,6 +10,7 @@ import java.util.logging.Logger;
  * After the Service class from Sun and the Apache project.
  * With help from Frédéric Miserey.
  *
+ * @see java.util.ServiceLoader
  * @credits Frédéric Miserey, Joseph Oettinger
  * @author Matthias L. Jugel
  * @version $id$
