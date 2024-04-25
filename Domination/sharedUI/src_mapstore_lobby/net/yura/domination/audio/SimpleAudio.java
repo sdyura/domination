@@ -24,7 +24,6 @@ public class SimpleAudio implements AudioSystem, PlayerListener {
 
         //Player player = Manager.createPlayer(RiskUtil.openStream(fileName), "audio/basic");
         Player player = Manager.createPlayer("file:///android_asset/" + fileName);
-        player.addPlayerListener(this); // TODO do we need this?
         return player;
     }
 
@@ -53,8 +52,12 @@ public class SimpleAudio implements AudioSystem, PlayerListener {
 
     @Override
     public void playerUpdate(Player player, String event, Object eventData) {
-        // TODO do i need to do something about this?
-        // do i need to close the player?
+        try {
+            player.stop();
+        }
+        catch (Exception ex) {
+            LOGGER.log(Level.WARNING, "unable to stop " + player, ex);
+        }
     }
 
     @Override
@@ -62,6 +65,10 @@ public class SimpleAudio implements AudioSystem, PlayerListener {
         try {
             Player player = currentPlayers.remove(audioFile);
             if (player != null) {
+                if (player.getState() != Player.STARTED) {
+                    LOGGER.log(Level.INFO, "player not started yet, will stop with listener: " + audioFile);
+                    player.addPlayerListener(this);
+                }
                 player.stop();
             }
             else {

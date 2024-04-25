@@ -113,7 +113,7 @@ public class GameSound extends RiskAdapter {
             });
         }
         catch (Exception ex) {
-            Logger.getLogger(GameSound.class.getName()).log(Level.WARNING, "unable to load theme: " + theme, ex);
+            LOGGER.log(Level.WARNING, "unable to load theme: " + theme, ex);
         }
         finally {
             if (currentMusicId != null) {
@@ -140,7 +140,7 @@ public class GameSound extends RiskAdapter {
 
     public void playSound(String audioId) {
         
-        LOGGER.info("Playing sound with id: " + audioId);
+        LOGGER.fine("Playing sound with id: " + audioId);
         
         if (soundEnabled && audioSystem != null && currentTheme != null) {
             String audioFile = currentTheme.get(audioId);
@@ -152,21 +152,18 @@ public class GameSound extends RiskAdapter {
 
     public void playMusic(String audioId) {
         currentMusicId = audioId;
-        
-        LOGGER.info("Playing music with id: " + currentMusicId);
-
         playCurrentLoopedSound();
     }
 
     public void stopMusic() {
         if (musicEnabled) {
-            LOGGER.info("Stopping music with id: " + currentMusicId);
             stopPlayingLoopedSound();
         }
         currentMusicId = null;
     }
 
     private void playCurrentLoopedSound() {
+        LOGGER.fine("Playing music with id: " + currentMusicId);
         if (musicEnabled && audioSystem != null && currentTheme != null) {
             String audioFile = currentTheme.get(currentMusicId);
             if (audioFile != null) {
@@ -176,6 +173,7 @@ public class GameSound extends RiskAdapter {
     }
 
     private void stopPlayingLoopedSound() {
+        LOGGER.fine("Stopping music with id: " + currentMusicId);
         if (audioSystem != null && currentTheme != null) {
             String audioFile = currentTheme.get(currentMusicId);
             if (audioFile != null) {
