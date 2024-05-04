@@ -196,7 +196,8 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 scrollPane.setViewportBorder(null); // for nimbus
 
 		search = new HintTextField(resb.getString("newgame.map.filter"));
-		
+                search.putClientProperty("JTextField.variant", "search");
+
 		// Listen for changes in the text
 		search.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {

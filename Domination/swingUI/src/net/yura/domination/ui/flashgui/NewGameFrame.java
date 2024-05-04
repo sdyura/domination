@@ -346,6 +346,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		help = new JButton(); // 335 528
 		sortOutButton( help , GraphicsUtil.getSubimage(newgame, 781, 526, 30 , 30) , GraphicsUtil.getSubimage(newgame, 794, 171, 30 , 30) , GraphicsUtil.getSubimage(newgame, 794, 202, 30 , 30) );
 		help.addActionListener( this );
+                //help.putClientProperty("JButton.buttonType", "help");
 		GraphicsUtil.setBounds(help, 335, 529, 30, 30); // should be 528
 
 		start = new JButton(resb.getString("newgame.startgame"));

@@ -38,6 +38,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -105,6 +107,26 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 	cardsList = new JList( new CardsListModel() );
 	missionsList = new JList( new MissionsListModel() );
 
+        ListDataListener changeListener = new ListDataListener() {
+            @Override
+            public void intervalAdded(ListDataEvent e) {
+                editPanel.editor.setMapChanged(true);
+            }
+            @Override
+            public void intervalRemoved(ListDataEvent e) {
+                editPanel.editor.setMapChanged(true);
+            }
+            @Override
+            public void contentsChanged(ListDataEvent e) {
+                editPanel.editor.setMapChanged(true);
+            }
+        };
+        
+        countriesList.getModel().addListDataListener(changeListener);
+        continentsList.getModel().addListDataListener(changeListener);
+        cardsList.getModel().addListDataListener(changeListener);
+        missionsList.getModel().addListDataListener(changeListener);
+        
         MouseListener clicky = new MouseAdapter() {
             /**
              * TODO!!!!!!! this method does not work on macOS High Sierra, java 1.8
@@ -195,6 +217,8 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
                 return c;
             }
         });
+
+        getRootPane().putClientProperty("Window.style", "small");
     }
 
     public void valueChanged(ListSelectionEvent e) {

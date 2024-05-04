@@ -40,12 +40,14 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -120,6 +122,8 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 	// right now risk does NOT require this
 	// if ever set to true, there must be a check for this added to the check method
 	private boolean strictcards;
+        
+        private boolean unsavedChanges;
 
         private SwingGUIPanel panel;
 
@@ -346,6 +350,14 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		jp.add(b);
 		return b;
 	}
+        
+        public void setMapChanged(boolean changed) {
+            unsavedChanges = changed;
+            JRootPane rp = SwingUtilities.getRootPane(this);
+            if (rp != null) {
+                rp.putClientProperty("Window.documentModified", changed ? Boolean.TRUE: Boolean.FALSE);
+            }
+        }
 
 	public void stateChanged(ChangeEvent e) {
 
@@ -470,6 +482,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
             }
 
             setNewMap(map,ipic,imap,name,cardsFile,file);
+            setMapChanged(false);
         }
         
         void setImagePic(BufferedImage bufferedImage,File file,boolean checkmap) {
@@ -505,6 +518,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 				BufferedImage imap = newImageMap(PicturePanel.PP_X,PicturePanel.PP_Y);
 
 				setNewMap(map,ipic,imap,null,null,null);
+                                setMapChanged(true);
 			}
 			catch(Exception ex) {
 				showError(ex);
@@ -526,6 +540,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                                 myMap.setMapName(null);
                                 myMap.setPreviewPic(null);
                                 fileName = file.getParentFile().getName();
+                                setMapChanged(true);
                             }
                             else {
                                 loadMap(name);
@@ -622,7 +637,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                         return;
                     }
 
-                    if (fileName==null) {
+                    if (fileName == null || unsavedChanges) {
                         JOptionPane.showMessageDialog(this, "please save to disk first!");
                         save.doClick();
                         return;
@@ -1386,6 +1401,8 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                     doCopy ? null : editPanel.getImagePic(), IMAGE_PIC_EXTENSION, doCopy ? imgFile : null,
                     editPanel.getImageMap(), IMAGE_MAP_EXTENSION);
 
+            setMapChanged(false);
+            
             return true;
         }
         

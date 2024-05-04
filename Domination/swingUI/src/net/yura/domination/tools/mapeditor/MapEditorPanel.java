@@ -72,7 +72,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 	private int brush = DEFAULT_BRUSH_SIZE;
 	private float alpha;
         private float zoom = 1f;
-	private MapEditor editor;
+	MapEditor editor;
         private ListSelectionListener selectionListener;
         private int smartDrawTolerance = 20;
 
