@@ -379,6 +379,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                     if (myMap!=null) {
                         //myMap.setCircleSize(circle.getValue());
                         myMap.setCircleSize(  ((Integer)circle.getValue()).intValue()  );
+                        setMapChanged(true);
                         editPanel.repaint();
                     }
 		}

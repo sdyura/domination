@@ -265,7 +265,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 		//newImageMap.
 		map.setRGB(0,0,width,height,pixels,0,width);
 		//map = newImageMap;
-
+                editor.setMapChanged(true);
 		repaint();
 	}
 
@@ -315,7 +315,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                 }
 
                 map.setRGB(0, 0, width, height, newpixels, 0, width);
-
+                editor.setMapChanged(true);
                 repaintSelected();
                 repaint();
         }
@@ -618,6 +618,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
                 g1.dispose();
                 g2.dispose();
+                editor.setMapChanged(true);
 	}
 
 	public Country getCountryAt(int x,int y) {
@@ -660,6 +661,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                 }
             }
             g.dispose();
+            editor.setMapChanged(true);
             repaintSelected();
         }
         
@@ -674,6 +676,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                     Color color = new Color(country.getColor(), country.getColor(), country.getColor());
                     ImageUtil.smartFill(getImagePic(), getImageMap(), country.getX(), country.getY(), color.getRGB(), smartDrawTolerance);
                 }
+                editor.setMapChanged(true);
                 repaintSelected();
             }
         }
@@ -822,6 +825,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                         }
                     }
                     map.setRGB(0,0,width,map.getHeight(),pixels,0,width);
+                    editor.setMapChanged(true);
                     repaintSelected();
                 }
             }
@@ -927,6 +931,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
                     }
                 }
                 map.setRGB(0,0,width,map.getHeight(),pixels,0,width);
+                editor.setMapChanged(true);
                 repaintSelected();
             }
         }
@@ -985,6 +990,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 					if (!mynode.getNeighbours().contains(selected)) {
 						mynode.addNeighbour(selected);
 					}
+                                        editor.setMapChanged(true);
 					repaint();
 				}
 
@@ -1008,7 +1014,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 					if (!selected.getNeighbours().contains(mynode)) {
 						selected.addNeighbour(mynode);
 					}
-
+                                        editor.setMapChanged(true);
 					repaint();
 				}
 			}
@@ -1034,6 +1040,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 					if (mynode.getNeighbours().contains(selected)) {
 						mynode.getNeighbours().remove(selected);
 					}
+                                        editor.setMapChanged(true);
 					repaint();
 				}
 			}
@@ -1128,6 +1135,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 				//dragpoint = point;
 
 				scrollRectToVisible( new Rectangle(e.getX(), e.getY(), 1, 1) );
+                                editor.setMapChanged(true);
 				repaint();
 			}
 			else if (!xdrag && dragpoint!=null) {
@@ -1136,7 +1144,6 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 				r.translate(dragpoint.x-e.getX(),dragpoint.y-e.getY());
 
 				scrollRectToVisible( r );
-
 			}
 		}
 		else if (mode == MODE_MOVEALL && dragpoint!=null) {
@@ -1161,6 +1168,7 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 				countries[i].setY( (int)Math.round(countryPositions[i].getY() * dif) );
 			}
                     }
+                    editor.setMapChanged(true);
                     repaint();
 		}
 		else if (mode == MODE_DRAW && dragpoint!=null) {
