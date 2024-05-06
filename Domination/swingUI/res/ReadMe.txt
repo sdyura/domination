@@ -1,6 +1,6 @@
 @game.name@ - Yura Mamyrin (yura@yura.net)
 
-SUN Java 1.4 or higher must be installed to run @game.name@
+Java 1.5 or higher must be installed to run @game.name@
 
 Miniumum Resolulation is 1024x768
 
@@ -15,4 +15,4 @@ The full source to Risk is included in src.zip
 
 send questions and comments to: yura@yura.net
 
-Copyright (c) 2003-2012 yura.net
+Copyright (c) 2003-2024 yura.net
