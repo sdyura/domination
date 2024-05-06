@@ -14,9 +14,18 @@ public class Player implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * does not received reinforcements
+     */
     public final static int PLAYER_NEUTRAL    = -1;
     public final static int PLAYER_HUMAN      = 0;
+
+    /**
+     * does receive reinforcements, but never attacks
+     * @see net.yura.domination.engine.ai.AISubmissive
+     */
     public final static int PLAYER_AI_CRAP    = 3;
+
     public final static int PLAYER_AI_EASY    = 1;
     public final static int PLAYER_AI_AVERAGE = 4;
     public final static int PLAYER_AI_HARD    = 2;
@@ -24,15 +33,20 @@ public class Player implements Serializable {
     private String name;
 
     /**
-        playerType:
-       -1 - neutral (does not received reinforcements)
+        playerType (come with the game):
+       -1 - neutral
         0 - human
         1 - AI (Easy)
         2 - AI (Hard)
-        3 - AI (Crap) // never attacks
+        3 - AI (Crap)
         4 - AI (Average)
         5 - AI (Test) {@link net.yura.domination.engine.ai.AITest}
-        6 - AI (Old) {@link net.yura.domination.engine.ai.old.AIHardOld}
+
+        need to be downloaded separately
+        6 - AI (Old Hard AI) {@link net.yura.domination.engine.ai.old.AIHardOld}
+        7 - AI framework custom
+        8 - AI framework best
+        9 - AI framework scripted
      */
     private int type;
     

@@ -10,8 +10,7 @@ import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 
 /**
- * THIS IS NOT A REAL AI, THIS IS WHAT A HUMAN PLAYER THAT HAS RESIGNED FROM A GAME BECOMES
- * SO THAT OTHER PLAYERS CAN CARRY ON PLAYING, THIS AI NEVER ATTACKS ANYONE, JUST FOLLOWS RULES
+ * THIS IS NOT A REAL AI, THIS AI NEVER ATTACKS ANYONE, JUST FOLLOWS RULES
  * @author Yura Mamyrin
  */
 public class AISubmissive implements AI {
