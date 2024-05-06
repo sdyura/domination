@@ -559,6 +559,10 @@ public class RiskUIUtil {
             String osName = System.getProperty("os.name").toLowerCase(Locale.US);
             return osName.startsWith("mac");
         }
+        public static boolean isWindows() {
+            String osName = System.getProperty("os.name").toLowerCase(Locale.US);
+            return osName.startsWith("windows");
+        }
 
         /**
          * Used if the MapStore fails, also used in the map editor
@@ -1322,7 +1326,15 @@ public class RiskUIUtil {
         // oh crap, we have hit Win Vista/7 UAC
 
         File userHome = new File( System.getProperty("user.home") );
-        File userMaps = new File(userHome, RiskUtil.GAME_NAME+" Saves");
+        File userMaps = new File(userHome, RiskUtil.GAME_NAME + " Saves");
+        
+        if (isWindows() && !userMaps.exists()) {
+            File savedGames = new File(userHome, "Saved Games");
+            if (savedGames.exists() && savedGames.isDirectory()) {
+                userMaps = new File(savedGames, userMaps.getName());
+            }
+        }
+        
         if (!userMaps.isDirectory() && !userMaps.mkdirs()) { // if it does not exist and i cant make it
             throw new RuntimeException("can not create dir "+userMaps);
         }
