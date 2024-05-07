@@ -102,10 +102,10 @@ public class GameSound extends RiskAdapter {
                         String key = attributes.getValue("name");
                         String filename = attributes.getValue("file");
 
-                        // TODO this check is wrong on android/ios
-                        if (!new File("sound", filename).exists()) {
-                            System.out.println("[WARNING!!!!!] File not found: " + filename);
-                        }
+                        // TODO this check is wrong on android/ios, also if 'user.dir' has been changed
+                        //if (!new File("sound", filename).exists()) {
+                        //    System.out.println("[WARNING!!!!!] File not found: " + filename);
+                        //}
 
                         currentTheme.put(key, folder + "/" + filename);
                     }

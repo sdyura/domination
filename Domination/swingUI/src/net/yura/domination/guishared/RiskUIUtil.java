@@ -18,7 +18,6 @@ import java.awt.Window;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.geom.AffineTransform;
@@ -364,11 +363,16 @@ public class RiskUIUtil {
 				return new URL( bs.getCodeBase() , a);
 			}
 			else {
-				return new File(a).toURI().toURL();
+                            File file = new File(a);
+                            if (file.exists()) {
+				return file.toURI().toURL();
+                            }
+                            // in case the 'user.dir' has been changed
+                            return new File(System.getProperty("user.dir"), a).toURI().toURL();
 			}
 		}
 		catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("unable to get url for: " + a, e);
 		}
 	}
 
@@ -401,39 +405,42 @@ public class RiskUIUtil {
 				// riskconfig.getProperty("default.map")
                                 final String dmname = RiskGame.getDefaultMap();
 
-                                try {
-                                    // if we can not find maps, attempt to get path from jar file
-                                    if ( !(new File(mapsdir1.get(), dmname ).exists()) ) {
+                                if ( !(new File(mapsdir1.get(), dmname).exists()) ) {
+                                    try {
+                                        // if we can not find maps, attempt to get path from jar file
                                         URL url = RiskUIUtil.class.getProtectionDomain().getCodeSource().getLocation();
                                         File jarFile = new File(url.toURI());
                                         mapsdir1.set(new File(jarFile.getParentFile(), "maps"));
                                     }
+                                    catch (Throwable th) {
+                                        Logger.getLogger(RiskUIUtil.class.getName()).info("failed to get maps dir from jar " + th);
+                                    }
+
+                                    // if we still can not find the map, try and ask the user
+                                    while ( !(new File(mapsdir1.get(), dmname).exists()) ) {
+
+                                        // on Apple OS X java 1.7 this deadlocks if not on the UI Thread
+                                        SwingUtilities.invokeAndWait(new Runnable() { public void run() {
+
+                                            JOptionPane.showMessageDialog(null, "Can not find map: " + dmname);
+
+                                            JFileChooser fc = new JFileChooser( new File(".") );
+                                            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                                            fc.setDialogTitle("Select maps directory");
+
+                                            int returnVal = fc.showOpenDialog(null);
+                                            if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
+                                                    mapsdir1.set(fc.getSelectedFile());
+                                            }
+                                            else {
+                                                    System.exit(0);
+                                            }
+
+                                        }});
+                                    }
+                                    
+                                    System.setProperty("user.dir", mapsdir1.get().getParent());
                                 }
-                                catch (Throwable th) {
-                                    Logger.getLogger(RiskUIUtil.class.getName()).info("failed to get maps dir from jar " + th);
-                                }
-
-				while ( !(new File(mapsdir1.get(), dmname ).exists()) ) {
-
-                                    // on Apple OS X java 1.7 this deadlocks if not on the UI Thread
-                                    SwingUtilities.invokeAndWait(new Runnable() { public void run() {
-
-					JOptionPane.showMessageDialog(null,"Can not find map: "+dmname );
-
-					JFileChooser fc = new JFileChooser( new File(".") );
-					fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					fc.setDialogTitle("Select maps directory");
-
-					int returnVal = fc.showOpenDialog(null);
-					if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-						mapsdir1.set(fc.getSelectedFile());
-					}
-					else {
-						System.exit(0);
-					}
-
-                                    }});
-				}
 
 				mapsdir = mapsdir1.get().toURI().toURL();
 			}
