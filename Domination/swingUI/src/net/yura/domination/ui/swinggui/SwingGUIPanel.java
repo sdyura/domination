@@ -50,6 +50,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
@@ -260,6 +261,12 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                 Preferences prefs = getUIPreferences();
                 if (prefs == null || prefs.getInt(RiskSettings.AI_WAIT_KEY, -1) == -1) {
                     net.yura.domination.engine.ai.AIManager.setWait(5);
+                }
+                if (prefs == null || prefs.getBoolean(RiskSettings.SOUND_KEY, false) == false) {
+                    GameSound.INSTANCE.setSoundEnabled(false);
+                }
+                if (prefs == null || prefs.getBoolean(RiskSettings.MUSIC_KEY, false) == false) {
+                    GameSound.INSTANCE.setMusicEnabled(false);
                 }
 	}
         
