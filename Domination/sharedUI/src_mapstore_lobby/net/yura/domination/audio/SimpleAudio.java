@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.microedition.media.Manager;
@@ -12,7 +13,7 @@ import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 
-public class SimpleAudio implements AudioSystem, PlayerListener {
+public class SimpleAudio implements AudioSystem, PlayerListener, ThreadFactory {
 
     private static final Logger LOGGER = Logger.getLogger(SimpleAudio.class.getName());
     
@@ -23,7 +24,14 @@ public class SimpleAudio implements AudioSystem, PlayerListener {
      * otherwise if one thread starts it and another thread stops it
      * the stop may never happen as it may never find the player
      */
-    private final Executor singleThread = Executors.newSingleThreadExecutor();
+    private final Executor singleThread = Executors.newSingleThreadExecutor(this);
+    
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread th = Executors.defaultThreadFactory().newThread(r);
+        th.setName("SimpleAudioStartStopThread");
+        return th;
+    }
 
     private Player getPlayer(String fileName) throws IOException, MediaException {
 
