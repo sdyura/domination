@@ -11,13 +11,14 @@ import java.util.logging.Logger;
 import javax.microedition.media.Manager;
 import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
-import javax.microedition.media.PlayerListener;
 
-public class SimpleAudio implements AudioSystem, PlayerListener, ThreadFactory {
+public class SimpleAudio implements AudioSystem, ThreadFactory {
 
     private static final Logger LOGGER = Logger.getLogger(SimpleAudio.class.getName());
-    
+
     Map<String, Player> currentPlayers = new HashMap(); // filename -> player
+
+    private boolean outOfMemoryError;
 
     /**
      * we need a single thread for starting and stopping music
@@ -45,31 +46,56 @@ public class SimpleAudio implements AudioSystem, PlayerListener, ThreadFactory {
     }
 
     public void play(String fileName) {
+        if (outOfMemoryError) return;
+        
+        Player player = null;
         try {
-            Player player = getPlayer(fileName);
-            player.start();
+            player = getPlayer(fileName);
+            player.start(); // can throw oom
         }
         catch (Exception ex) {
-            LOGGER.log(Level.WARNING, "unable to play " + fileName, ex);
+            startError(fileName, player, ex);
+        }
+        catch (OutOfMemoryError oom) {
+            outOfMemoryError = true;
+            startError(fileName, player, oom);
         }
     }
 
     @Override
     public void start(final String fileName) {
+        if (outOfMemoryError) return;
+        
         singleThread.execute(new Runnable() {
             @Override
             public void run() {
+                Player player = null;
                 try {
-                    Player player = getPlayer(fileName);
+                    player = getPlayer(fileName);
                     player.setLoopCount(-1);
                     currentPlayers.put(fileName, player);
-                    player.start();
+                    player.start(); // can throw oom
                 }
                 catch (Exception ex) {
-                    LOGGER.log(Level.WARNING, "unable to play " + fileName, ex);
+                    startError(fileName, player, ex);
+                }
+                catch (OutOfMemoryError oom) {
+                    outOfMemoryError = true;
+                    startError(fileName, player, oom);
                 }
             }
         });
+    }
+    
+    private void startError(String fileName, Player player, Throwable ex) {
+        LOGGER.log(Level.WARNING, "unable to play " + fileName, ex);
+        try {
+            currentPlayers.remove(fileName);
+            if (player != null) {
+                player.close();
+            }
+        }
+        catch (Throwable th) {}
     }
 
     @Override
@@ -80,13 +106,15 @@ public class SimpleAudio implements AudioSystem, PlayerListener, ThreadFactory {
                 try {
                     Player player = currentPlayers.remove(audioFile);
                     if (player != null) {
-                        if (player.getState() != Player.STARTED) {
-                            LOGGER.log(Level.INFO, "player not started yet, will stop with listener: " + audioFile);
-                            player.addPlayerListener(SimpleAudio.this);
-                        }
+                        // this is not needed as we only start and stop from a single thread
+                        //if (player.getState() != Player.STARTED) {
+                        //    LOGGER.log(Level.INFO, "player not started yet, will stop with listener: " + audioFile);
+                        //    player.addPlayerListener(SimpleAudio.this);
+                        //}
                         player.stop();
                     }
                     else {
+                        // this really should never happen
                         LOGGER.log(Level.INFO, "unable to stop, not found: " + audioFile);
                     }
                 }
@@ -95,15 +123,5 @@ public class SimpleAudio implements AudioSystem, PlayerListener, ThreadFactory {
                 }
             }
         });
-    }
-
-    @Override
-    public void playerUpdate(Player player, String event, Object eventData) {
-        try {
-            player.stop();
-        }
-        catch (Exception ex) {
-            LOGGER.log(Level.WARNING, "unable to stop " + player, ex);
-        }
     }
 }
