@@ -100,28 +100,31 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
 
     @Override
     public void stop(final String audioFile) {
-        singleThread.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Player player = currentPlayers.remove(audioFile);
-                    if (player != null) {
-                        // this is not needed as we only start and stop from a single thread
-                        //if (player.getState() != Player.STARTED) {
-                        //    LOGGER.log(Level.INFO, "player not started yet, will stop with listener: " + audioFile);
-                        //    player.addPlayerListener(SimpleAudio.this);
-                        //}
-                        player.stop();
+        try {
+            singleThread.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Player player = currentPlayers.remove(audioFile);
+                        if (player != null) {
+                            // this is not needed as we only start and stop from a single thread
+                            //if (player.getState() != Player.STARTED) {
+                            //    LOGGER.log(Level.INFO, "player not started yet, will stop with listener: " + audioFile);
+                            //    player.addPlayerListener(SimpleAudio.this);
+                            //}
+                            player.stop();
+                        }
+                        else {
+                            // this really should never happen
+                            LOGGER.log(Level.INFO, "unable to stop, not found: " + audioFile);
+                        }
                     }
-                    else {
-                        // this really should never happen
-                        LOGGER.log(Level.INFO, "unable to stop, not found: " + audioFile);
+                    catch (Exception ex) {
+                        LOGGER.log(Level.WARNING, "unable to stop " + audioFile, ex);
                     }
                 }
-                catch (Exception ex) {
-                    LOGGER.log(Level.WARNING, "unable to stop " + audioFile, ex);
-                }
-            }
-        });
+            });
+        }
+        catch (Error error) {}
     }
 }
