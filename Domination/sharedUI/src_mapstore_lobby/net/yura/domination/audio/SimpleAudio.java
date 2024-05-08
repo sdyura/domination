@@ -56,7 +56,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
         catch (Exception ex) {
             startError(fileName, player, ex);
         }
-        catch (OutOfMemoryError oom) {
+        catch (Error oom) { // OutOfMemoryError and NoClassDefFoundError
             outOfMemoryError = true;
             startError(fileName, player, oom);
         }
@@ -79,7 +79,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
                 catch (Exception ex) {
                     startError(fileName, player, ex);
                 }
-                catch (OutOfMemoryError oom) {
+                catch (Error oom) { // OutOfMemoryError and NoClassDefFoundError
                     outOfMemoryError = true;
                     startError(fileName, player, oom);
                 }
