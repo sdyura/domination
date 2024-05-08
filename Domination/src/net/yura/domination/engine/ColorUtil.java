@@ -173,4 +173,56 @@ return Color.white;
         public static String getHexForColor(int c) {
                 return "#" + Integer.toHexString((  c & 0xffffff) | 0x1000000).substring(1);
         }
+
+    /**
+     * copy and paste from
+     * @see java.awt.Color#HSBtoRGB(float, float, float)
+     */
+    public static int HSBtoRGB(float hue, float saturation, float brightness) {
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        if (saturation == 0) {
+            r = g = b = (int) (brightness * 255.0F + 0.5F);
+        } else {
+            float h = (hue - (float) Math.floor(hue)) * 6.0F;
+            float f = h - (float) Math.floor(h);
+            float p = brightness * (1.0F - saturation);
+            float q = brightness * (1.0F - saturation * f);
+            float t = brightness * (1.0F - (saturation * (1.0F - f)));
+            switch ((int) h) {
+                case 0:
+                    r = (int) (brightness * 255.0F + 0.5F);
+                    g = (int) (t * 255.0F + 0.5F);
+                    b = (int) (p * 255.0F + 0.5F);
+                    break;
+                case 1:
+                    r = (int) (q * 255.0F + 0.5F);
+                    g = (int) (brightness * 255.0F + 0.5F);
+                    b = (int) (p * 255.0F + 0.5F);
+                    break;
+                case 2:
+                    r = (int) (p * 255.0F + 0.5F);
+                    g = (int) (brightness * 255.0F + 0.5F);
+                    b = (int) (t * 255.0F + 0.5F);
+                    break;
+                case 3:
+                    r = (int) (p * 255.0F + 0.5F);
+                    g = (int) (q * 255.0F + 0.5F);
+                    b = (int) (brightness * 255.0F + 0.5F);
+                    break;
+                case 4:
+                    r = (int) (t * 255.0F + 0.5F);
+                    g = (int) (p * 255.0F + 0.5F);
+                    b = (int) (brightness * 255.0F + 0.5F);
+                    break;
+                case 5:
+                    r = (int) (brightness * 255.0F + 0.5F);
+                    g = (int) (p * 255.0F + 0.5F);
+                    b = (int) (q * 255.0F + 0.5F);
+                    break;
+            }
+        }
+        return -16777216 | (r << 16) | (g << 8) | (b << 0);
+    }
 }
