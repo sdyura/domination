@@ -114,7 +114,8 @@
 		<pack name="Game base files" required="yes" id="package.base">
 			<description>Contains all the files and maps required to run the game</description>
 
-			<fileset dir="." targetdir="$INSTALL_PATH" excludes="help/**,src.zip,*.cmd,*.exe,*.sh,*.command,*.app/**,game.ini"/>
+                        <!-- override default is "update", but this prevents downgrades from working -->
+			<fileset dir="." targetdir="$INSTALL_PATH" excludes="help/**,src.zip,*.cmd,*.exe,*.sh,*.command,*.app/**,game.ini" override="true"/>
 			<fileset dir="." targetdir="$INSTALL_PATH" includes="game.ini" override="false"/>
 
 			<fileset dir="." targetdir="$INSTALL_PATH" os="windows" includes="*.cmd,*.exe"/>
