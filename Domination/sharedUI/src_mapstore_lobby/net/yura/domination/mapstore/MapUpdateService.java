@@ -127,6 +127,10 @@ logger.fine("URL: " + url + " payload: " + payload);
             return (List)map.get("maps");
         }
         catch (Throwable ex) {
+            // if we didnt log this at the start of the method, we should log it now
+            if (!logger.isLoggable(Level.FINE)) {
+                logger.info("error with URL: " + url + " payload: " + payload);
+            }
             logger.log(Level.INFO, "error in getting map metadata", ex);
             return Collections.EMPTY_LIST;
         }
