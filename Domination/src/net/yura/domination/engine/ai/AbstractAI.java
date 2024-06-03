@@ -26,7 +26,9 @@ public abstract class AbstractAI implements AI {
 
         if (game == null) {
             // game over, clear game
-            current.setGame(null);
+            if (current != null) {
+                current.setGame(null);
+            }
         }
         else {
             int mode = game.getGameMode();

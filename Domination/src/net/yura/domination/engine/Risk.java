@@ -2737,8 +2737,8 @@ RiskUtil.printStackTrace(e);
                 // does not work from here
                 closeBattle();
                 controller.closeGame();
-                ai.closeGame();
                 game = null;
+                ai.closeGame();
             }
 
             // we want to do this last as this may take a long time
