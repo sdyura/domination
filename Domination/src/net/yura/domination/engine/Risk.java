@@ -2081,7 +2081,13 @@ RiskUtil.printStackTrace(e);
                 controller.sendMessage(output, false , true);
             }
             else {
-                controller.startGame(unlimitedLocalMode);
+                // GetMap class used to call this method directly, now it takes a callback
+                // This is almost certainly not needed any more
+
+                // if we had failed to start the UI because of a currupt map file on android
+                // we will try to re download the map, and so after downloading the map,
+                // we should try and load the map into the UI again
+                controller.startGame(unlimitedLocalMode); // prob not used any more
             }
         }
         private void getMapError(String exception) {
@@ -2731,6 +2737,7 @@ RiskUtil.printStackTrace(e);
                 // does not work from here
                 closeBattle();
                 controller.closeGame();
+                ai.closeGame();
                 game = null;
             }
 
@@ -2780,10 +2787,15 @@ RiskUtil.printStackTrace(e);
             unlimitedLocalMode = onlinePlayClient==null;
         }
 
+        /**
+         * If we are opening a new game from outside the Risk command parser
+         * e.g. from a network game, or some other source
+         */
         public void setGame(RiskGame b) {
                 if (game!=null) {
                     closeBattle();
                     controller.closeGame();
+                    ai.closeGame();
                 }
 		inbox.clear();
 		game = b;

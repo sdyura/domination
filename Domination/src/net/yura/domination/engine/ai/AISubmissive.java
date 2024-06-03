@@ -15,6 +15,11 @@ import net.yura.domination.engine.core.RiskGame;
  */
 public class AISubmissive implements AI {
 
+    protected Random r = new Random(); // this was always static
+
+    protected RiskGame game;
+    protected Player player;
+
     public int getType() {
         return Player.PLAYER_AI_CRAP;
     }
@@ -25,13 +30,13 @@ public class AISubmissive implements AI {
 
     public void setGame(RiskGame game) {
         this.game = game;
-        player = game.getCurrentPlayer();
+        if (game == null) {
+            player = null;
+        }
+        else {
+            player = game.getCurrentPlayer();
+        }
     }
-
-    protected Random r = new Random(); // this was always static
-
-    protected RiskGame game;
-    protected Player player;
 
     public String getBattleWon() {
 	return "move all";

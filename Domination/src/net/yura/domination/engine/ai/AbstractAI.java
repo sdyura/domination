@@ -23,19 +23,26 @@ public abstract class AbstractAI implements AI {
     }
 
     public void setGame(RiskGame game) {
-        int mode = game.getGameMode();
 
-        if (mode==RiskGame.MODE_CAPITAL) {
-            current = capital;
-        }
-        else if (mode==RiskGame.MODE_SECRET_MISSION) {
-            current = mission;
+        if (game == null) {
+            // game over, clear game
+            current.setGame(null);
         }
         else {
-            current = domination;
+            int mode = game.getGameMode();
+
+            if (mode == RiskGame.MODE_CAPITAL) {
+                current = capital;
+            }
+            else if (mode == RiskGame.MODE_SECRET_MISSION) {
+                current = mission;
+            }
+            else {
+                current = domination;
+            }
+
+            current.setGame(game);
         }
-        
-        current.setGame(game);
     }
 
     public String getBattleWon() {
@@ -62,5 +69,4 @@ public abstract class AbstractAI implements AI {
     public String getAutoDefendString() {
         return current.getAutoDefendString();
     }
-
 }

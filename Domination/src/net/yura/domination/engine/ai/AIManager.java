@@ -18,8 +18,6 @@ public class AIManager {
             wait = w;
     }
 
-
-
     private final Map<Integer,AI> ais = new HashMap();
 
     public AIManager() {
@@ -34,7 +32,7 @@ public class AIManager {
                 throw new RuntimeException(ex);
             }
         }
-        
+
         try {
             for (AI ai : java.util.ServiceLoader.load(AI.class)) {
                 registerAI(ai);
@@ -55,6 +53,33 @@ public class AIManager {
             throw new RuntimeException("more then 1 ai with same type: " + type);
         }
         ais.put(type, ai);
+    }
+
+    public int getTypeFromCommand(String command) {
+        for (AI ai:ais.values()) {
+            if (ai.getCommand().equals(command)) {
+                return ai.getType();
+            }
+        }
+        throw new IllegalArgumentException("unknown command: '" + command + "' not found in " + ais);
+    }
+
+    public String getCommandFromType(int type) {
+        for (AI ai:ais.values()) {
+            if (ai.getType() == type) {
+                return ai.getCommand();
+            }
+        }
+        throw new IllegalArgumentException("unknown type "+type);
+    }
+
+    public String[] getAICommands() {
+        String[] commands = new String[ais.size()];
+        int c=0;
+        for (AI ai:ais.values()) {
+            commands[c++] = ai.getCommand();
+        }
+        return commands;
     }
 
     public void play(Risk risk) {
@@ -101,30 +126,9 @@ public class AIManager {
             return output;
     }
 
-    public int getTypeFromCommand(String command) {
-        for (AI ai:ais.values()) {
-            if (ai.getCommand().equals(command)) {
-                return ai.getType();
-            }
+    public void closeGame() {
+        for (AI ai : ais.values()) {
+            ai.setGame(null);
         }
-        throw new IllegalArgumentException("unknown command: '" + command + "' not found in " + ais);
-    }
-
-    public String getCommandFromType(int type) {
-        for (AI ai:ais.values()) {
-            if (ai.getType() == type) {
-                return ai.getCommand();
-            }
-        }
-        throw new IllegalArgumentException("unknown type "+type);
-    }
-
-    public String[] getAICommands() {
-        String[] commands = new String[ais.size()];
-        int c=0;
-        for (AI ai:ais.values()) {
-            commands[c++] = ai.getCommand();
-        }
-        return commands;
     }
 }
