@@ -30,7 +30,7 @@ public class O_IG_MissionEstimate {
 		return highestEstimateIndex;
 	}
 	
-	public Mission getMostLikelyMission(int player, Vector missionList) {
+	public Mission getMostLikelyMission(int player, List missionList) {
 		return (Mission)missionList.get(calcHighestEstimateIndex(player));
 	}
 	

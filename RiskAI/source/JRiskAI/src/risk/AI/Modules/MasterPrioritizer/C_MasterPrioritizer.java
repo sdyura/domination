@@ -25,9 +25,9 @@ public class C_MasterPrioritizer {
 	private O_MP_GoalDistribution output;
 	private int currentPlayerIndex;
 	private Mission ownMission;
-	private Vector<Mission> missions;
+	private List<Mission> missions;
 	private List<Continent> continents;
-	private Vector<Player> playersInGame;
+	private List<Player> playersInGame;
 	private risk.AI.Data_Structures.T_Game game;
 	private T_TrainingExampleWriter trainingExample;
 	//private O_IG_NextMoveEstimate nextMove;
@@ -38,10 +38,10 @@ public class C_MasterPrioritizer {
 		this.type = type;
 		this.currentPlayerIndex = currentPlayerIndex;
 		this.continents = continents;
-		this.missions = (Vector<Mission>)game.getMissions();
+		this.missions = game.getMissions();
 		this.ownMission = ownMission;
 		this.game = game;
-		this.playersInGame = (Vector<Player>)game.getPlayers();
+		this.playersInGame = game.getPlayers();
 		this.trainingExample = trainingExample;
 		loadModel();
 	}

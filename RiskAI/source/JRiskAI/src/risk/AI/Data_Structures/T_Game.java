@@ -25,11 +25,41 @@ public class T_Game {
 
 	// TODO YURA why is this here? can it be removed and loaded from the map?
 	public static final String[] CONTINENT_NAMES = {"North-America", "South-America", "Europe", "Africa", "Asia", "Australia"};
-	public static final String[] MISSION_NAMES = {"Asia_SouthAmerica", "Europe_Australia_3rd", "Asia_Africa", "Europe_SouthAmerica_3rd", "NorthAmerica_Australia", "NorthAmerica_Africa", "18_Territories", "24_Territories", "Kill_Player1", "Kill_Player2", "Kill_Player3", "Kill_Player4", "Kill_Player5", "Kill_Player6"};
-	public static final String[] MODULE_NAMES = {"ig_mission", "ig_winning", "ig_nextmove", "ig_continent", "master_prioritizer", 
-													  "rp_makeattackplan", "rp_ap_cost", "rp_ap_priority", "rp_discardattackplan", 
-													  "rp_de_cost", "rp_de_priority", "rp_cashcards", "rp_placearmies", "rp_scoreattackplan", 
-													  "rp_fortify", "initialplacement", "rp_scoremergedplan"};
+	public static final String[] MISSION_NAMES = {
+			"Asia_SouthAmerica",
+			"Europe_Australia_3rd",
+			"Asia_Africa",
+			"Europe_SouthAmerica_3rd",
+			"NorthAmerica_Australia",
+			"NorthAmerica_Africa",
+			"18_Territories",
+			"24_Territories",
+			"Kill_Player1",
+			"Kill_Player2",
+			"Kill_Player3",
+			"Kill_Player4",
+			"Kill_Player5",
+			"Kill_Player6"};
+	public static final String[] MODULE_NAMES = { // size: 17
+			"ig_mission", 			// 0
+			"ig_winning",			// 1
+			"ig_nextmove",			// 2
+			"ig_continent",			// 3
+			"master_prioritizer",	// 4
+			"rp_makeattackplan",	// 5
+			"rp_ap_cost",			// 6
+			"rp_ap_priority",		// 7
+			"rp_discardattackplan",	// 8
+			"rp_de_cost",			// 9
+			"rp_de_priority",		// 10
+			"rp_cashcards",			// 11
+			"rp_placearmies",		// 12
+			"rp_scoreattackplan",	// 13
+			"rp_fortify",			// 14
+			"initialplacement",		// 15
+			"rp_scoremergedplan"	// 16
+	};
+
 	public static final String[][] AI_TECHNIQUES = {{"script", "nn"},
 													{"script", "nn", "nb", "nn_wo", "bn"},
 													{"script", "nn_wo"},
@@ -55,7 +85,8 @@ public class T_Game {
 		NUMBER_OF_GOALS = 38;
 	
 	private RiskGame game;
-	private T_AISettings aiSettings;
+
+ 	private T_AISettings aiSettings;
 	private T_BattleOutcomeProbTable battleOutcomeProbTable = new T_BattleOutcomeProbTable();
 	private T_Board board;
 	public static final double[] reinforcementsFromCards = {0.0, 0.0, 0.0, 3.73132, 7.1289, 8.91622, 9.4314, 9.70446, 9.84778, 9.91876, 9.95572};
@@ -234,9 +265,12 @@ public class T_Game {
 			case ColorUtil.YELLOW: return "yellow";
 			default: return null;
 		}
-	}	
-	
-	/** Returns a decent String-version of a mission. If player is null, it is simply a converter. If player is not null, then the players mission is tranformed to the 24-mission when necessary. */
+	}
+
+	/**
+	 * Returns a decent String-version of a mission. If player is null, it is simply a converter.
+	 * If player is not null, then the players mission is tranformed to the 24-mission when necessary.
+	 */
 	public static String decentMissionToString(Mission m, Player p) {
 		if (m.getContinent1() != null) {
 			if (m.getContinent3() == null) {

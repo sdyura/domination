@@ -49,12 +49,12 @@ public abstract class AIPlayerFrameworkAbstract implements AI {
             // TODO YURA it seems the AI has been trained on a board with East-Africa - Middle-East connection present
 
             this.aiSettings  = new T_AISettings("AIPlayerFrameworkSettings.txt");
-            this.trainingExample = new T_TrainingExampleWriter(riskGame, aiSettings, aiSettings.saveTrainingExample, "../ai-data/");
 
             this.past = new T_Past(riskGame.getPlayers(), new java.util.Vector(Arrays.asList(riskGame.getContinents())));
             this.board = new T_Board(riskGame);
-            this.game = new T_Game(riskGame, board, aiSettings);
 
+            this.game = new T_Game(riskGame, board, aiSettings);
+            this.trainingExample = new T_TrainingExampleWriter(riskGame, aiSettings, aiSettings.saveTrainingExample, "../ai-data/");
             this.trainingExample.init(riskGame); // this used to be done AFTER player init, but i hope it will work if done before
         }
 
@@ -99,24 +99,34 @@ public abstract class AIPlayerFrameworkAbstract implements AI {
             return this.trainingExample;
         }
 
-        // TODO YURA: this needs to be called
-        public void gameOver(Player currentPlayer) {
+        public void gameOver(Player winner) {
             this.trainingExample.endAllFrameworkTimer();
-            this.trainingExample.closeGameAndSave(currentPlayer);
+            this.trainingExample.closeGameAndSave(winner);
             if (this.aiSettings.saveWinnerFile) {
-                this.trainingExample.saveWinnerFile(currentPlayer, this.winnerStatsDir);
+                this.trainingExample.saveWinnerFile(winner, this.winnerStatsDir);
             }
             if (this.aiSettings.saveFullGameStats) {
-                this.trainingExample.saveGameStats(currentPlayer, aiPlayers);
+                this.trainingExample.saveGameStats(winner, aiPlayers);
             }
         }
     }
 
     @Override
     public void setGame(RiskGame riskGame) {
-        Player currentplayer = riskGame.getCurrentPlayer();
-        AIPlayerFrameworkGlobal ais = gameGlobal.computeIfAbsent(riskGame, k -> new AIPlayerFrameworkGlobal(riskGame));
-        currentFrameworkAI = ais.getFrameworkAI(currentplayer);
+        if (riskGame == null) {
+            for (AIPlayerFrameworkGlobal global : gameGlobal.values()) {
+                if (global.riskGame.getState() == RiskGame.STATE_GAME_OVER) {
+                    global.gameOver(global.riskGame.getCurrentPlayer());
+                    gameGlobal.remove(global.riskGame);
+                    return;
+                }
+            }
+        }
+        else {
+            Player currentplayer = riskGame.getCurrentPlayer();
+            AIPlayerFrameworkGlobal ais = gameGlobal.computeIfAbsent(riskGame, k -> new AIPlayerFrameworkGlobal(riskGame));
+            currentFrameworkAI = ais.getFrameworkAI(currentplayer);
+        }
     }
 
     @Override

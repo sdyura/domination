@@ -4,23 +4,51 @@ import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Mission;
 import net.yura.domination.engine.core.Player;
+import risk.AI.Data_Structures.Module_Input.I_IG_ContinentEstimate;
+import risk.AI.Data_Structures.Module_Input.I_IG_MissionEstimate;
+import risk.AI.Data_Structures.Module_Input.I_IG_NextMoveEstimate;
+import risk.AI.Data_Structures.Module_Input.I_IG_Ownership;
+import risk.AI.Data_Structures.Module_Input.I_IG_WinningEstimate;
+import risk.AI.Data_Structures.Module_Input.I_InitialPlacement;
+import risk.AI.Data_Structures.Module_Input.I_MP_GoalDistribution;
+import risk.AI.Data_Structures.Module_Input.I_RP_ScoreMergedPlans;
 import risk.AI.Data_Structures.Module_Output.O_IG_Ownership;
 import risk.AI.Data_Structures.Module_Output.O_IG_WinningEstimate;
-import risk.AI.Modules.InformationGivers.*;
-import risk.AI.Modules.RoundPlanner.*;
-import risk.AI.Modules.MasterPrioritizer.*;
-import risk.AI.Techniques.Pathfinding.*;
-import risk.AI.Data_Structures.*;
-import risk.AI.Data_Structures.Module_Input.*;
-import java.util.*;
+import risk.AI.Data_Structures.T_Board;
+import risk.AI.Data_Structures.T_Game;
+import risk.AI.Data_Structures.T_InfluenceMap;
+import risk.AI.Data_Structures.T_Opp_RiskCards;
+import risk.AI.Data_Structures.T_Past;
+import risk.AI.Data_Structures.T_RP_AttackPlanList;
+import risk.AI.Data_Structures.T_RP_AttackPlanListElement;
+import risk.AI.Data_Structures.T_RP_DefenseList;
+import risk.AI.Data_Structures.T_RP_DefenseListElement;
+import risk.AI.Data_Structures.T_RP_MergedPlanElement;
+import risk.AI.Data_Structures.T_RP_MergedPlanList;
+import risk.AI.Data_Structures.T_TrainingExampleWriter;
+import risk.AI.Modules.InformationGivers.C_IG_Continent;
+import risk.AI.Modules.InformationGivers.C_IG_Mission;
+import risk.AI.Modules.InformationGivers.C_IG_NextMove;
+import risk.AI.Modules.InformationGivers.C_IG_Ownership;
+import risk.AI.Modules.InformationGivers.C_IG_Winning;
+import risk.AI.Modules.MasterPrioritizer.C_MasterPrioritizer;
+import risk.AI.Modules.RoundPlanner.C_RP_Attack;
+import risk.AI.Modules.RoundPlanner.C_RP_Fortify;
+import risk.AI.Modules.RoundPlanner.C_RP_InitPlacement;
+import risk.AI.Modules.RoundPlanner.C_RP_Planner;
+import risk.AI.Modules.RoundPlanner.C_RP_Reinforce;
+import risk.AI.Modules.RoundPlanner.C_RP_ScoreMergedPlans;
+import risk.AI.Techniques.Pathfinding.Pathfinder;
+import java.util.Random;
+import java.util.Vector;
 
 public class AI_Framework {
-	
+
 	private Random rand = new Random(); // used in selectCapital only.
-	
+
 	private final boolean debugging = false;
 	private final boolean outputLog = false;
-	
+
 	protected C_IG_Mission igMission_module;
 	protected C_IG_Winning igWinning_module;
 	protected C_IG_NextMove igNextMove_module;
@@ -34,7 +62,7 @@ public class AI_Framework {
 	private C_RP_InitPlacement rpInitPlacement_module;
 	private C_RP_ScoreMergedPlans rpScoreMergedPlans_module;
 	//private C_RP_MakeSimpleAttackPlan rpMakeSimpleAttackPlan_module;
-	
+
 	protected T_Past past;
 	protected T_Board board;
 	protected T_Opp_RiskCards opp_risk_cards;
@@ -43,25 +71,25 @@ public class AI_Framework {
 	private O_IG_Ownership continentDistribution; // Bruges til at finde ud af om man lige pludselig ejer et continent.
 	private int lastBattleArmiesLost = 0;
 	private boolean beginningOfTurn;
-	
+
 	private Pathfinder pathfinder;
 	protected Player player;
 	protected Mission ownMission;
 	protected T_InfluenceMap attackerArmiesLeftMap;
-	
+
 	protected String[] types;
-	
+
 	private Vector frameworkLog = new Vector();
-	
+
 	private boolean newTurn = true;
-	
+
 	private T_RP_MergedPlanList mergedPlanList = null;
 	private boolean reviseAttackPlanNow = true;
 	private boolean isFirstRoundEver;
-	
+
 	/** Are we following a simple attack plan just to gain a Risk card? */
 	//private boolean isAttackingSimple;
-	
+
 	/**
 	 * types[0]: type of igMission<br>
 	 * types[1]: type of igWinning<br>
@@ -84,14 +112,14 @@ public class AI_Framework {
 	 */
 	public AI_Framework() {
 	}
-	
+
 	public AI_Framework(String[] types, Player player, Mission ownMission, T_TrainingExampleWriter trainingExample) {
 		this.types = types;
 		this.player = player;
 		this.ownMission = ownMission; // Overridden by init(). But igNextMove does not call init() and should not call init()!.
 		this.trainingExample = trainingExample;
 	}
-	
+
 	public void init(T_Past past, T_Game game, T_Board board) {
 		this.past = past;
 		this.board = board;

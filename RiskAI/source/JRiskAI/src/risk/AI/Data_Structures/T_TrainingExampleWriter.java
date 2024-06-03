@@ -17,11 +17,12 @@ import risk.AI.Data_Structures.Module_Output.*;
 import risk.AI.AIPlayerFramework;
 
 public class T_TrainingExampleWriter  {
-	
+
 	private final String[] module_names = {"ig_mission","ig_continent","ig_winning",
 											"master_prioritizer",
 											"rp_cashcards", "rp_placearmies", "rp_fortify",
 											"initialplacement", "attack_plan", "defense_plan"};
+
 	/*{"ig_mission","ig_continent","ig_winning", "ig_nextmove",
 											"master_prioritizer", "initialplacement",
 											"rp_ap_cost", "rp_ap_priority", "rp_makeattackplan", "rp_discardplan", "rp_de_cost", "rp_de_priority", 
@@ -30,7 +31,8 @@ public class T_TrainingExampleWriter  {
 	private Random rand = new Random();
 	private Vector trainingExamples = new Vector();
 	private boolean recordTrainingData;
-	private RiskGame game;
+	private final RiskGame game;
+
 	private T_AISettings settings;
 	private String currentBoardFile;
 	private T_TrainingExample currentBoardTrainingExample;

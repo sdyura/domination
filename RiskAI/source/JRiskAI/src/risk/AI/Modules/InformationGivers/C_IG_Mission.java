@@ -105,7 +105,7 @@ public class C_IG_Mission {
 	
 	private void script_run(T_Past past) {
 		int numOfPlayers = game.getPlayerCount();
-		Vector missions = game.getMissions();
+		List missions = game.getMissions();
 		output = new O_IG_MissionEstimate();
 		for (int i = 0; i < numOfPlayers; i++) {
 			double totalAttacks = (double)past.getTotalAttacksByPlayer(i);

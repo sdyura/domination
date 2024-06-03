@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Vector;
+import net.yura.domination.engine.core.RiskGame;
 import progressstats.ProgressStats;
 import risk.AI.Data_Structures.T_Game;
 import trainingdataconverter.trainingdata.gamedata.BeginningOfTurnAttribute;
@@ -24,19 +25,26 @@ import trainingdataconverter.trainingdata.io.XMLInput;
 import trainingdataconverter.trainingdata.winnerloser.WinnerLoserFileList;
 
 public class TrainingData {
-    public static final String[] CONTINENT_NAMES;
-    public static final String[] MISSION_NAMES;
-    public static final String[] TERRITORY_NAMES;
-    public static final String[][] TERRITORIES_IN_CONTINENTS;
-    public static final int[] CONTINENTS_VALUE;
-    public static final int NUMBER_OF_PLAYERS_MAX = 6;
-    public static final int NUMBER_OF_TERRITORIES = 42;
+    public static final String[] CONTINENT_NAMES = T_Game.CONTINENT_NAMES;
+    public static final int[] CONTINENTS_VALUE = new int[]{5, 2, 5, 3, 7, 2};
+    public static final String[][] TERRITORIES_IN_CONTINENTS = new String[][]{{"Alaska", "North-West-Territory", "Alberta", "Western-United-States", "Central-America", "Greenland", "Ontario", "Quebec", "Eastern-United-States"}, {"Venezuela", "Peru", "Brazil", "Argentina"}, {"Iceland", "Scandinavia", "Ukraine", "Great-Britain", "Northern-Europe", "Western-Europe", "Southern-Europe"}, {"North-Africa", "Egypt", "Congo", "East-Africa", "South-Africa", "Madagascar"}, {"Siberia", "Ural", "China", "Afghanistan", "Middle-East", "India", "Siam", "Yakutsk", "Irkutsk", "Mongolia", "Japan", "Kamchatka"}, {"Indonesia", "New-Guinea", "Western-Australia", "Eastern-Australia"}};
+
+    public static final String[] TERRITORY_NAMES = new String[]{"Alaska", "North-West-Territory", "Alberta", "Western-United-States", "Central-America", "Greenland", "Ontario", "Quebec", "Eastern-United-States", "Venezuela", "Peru", "Brazil", "Argentina", "Iceland", "Scandinavia", "Ukraine", "Great-Britain", "Northern-Europe", "Western-Europe", "Southern-Europe", "North-Africa", "Egypt", "Congo", "East-Africa", "South-Africa", "Madagascar", "Siberia", "Ural", "China", "Afghanistan", "Middle-East", "India", "Siam", "Yakutsk", "Irkutsk", "Mongolia", "Japan", "Kamchatka", "Indonesia", "New-Guinea", "Western-Australia", "Eastern-Australia"};
+    public static final int NUMBER_OF_TERRITORIES = TERRITORY_NAMES.length;
+
+    public static final int NUMBER_OF_PLAYERS_MAX = RiskGame.MAX_PLAYERS;
+    public static final String[] MISSION_NAMES = T_Game.MISSION_NAMES;
+
+    public static final double[] REINFORCEMENTS_FROM_CARDS = T_Game.reinforcementsFromCards;
+
+/*
     public static final int NUMBER_OF_CONTINENTS = 6;
     public static final int NUMBER_OF_MISSIONS = 14;
     public static final int NUMBER_OF_GOALS = 38;
     public static final int NUMBER_OF_ROUNDS_PREDICTED = 5;
-    public static final double[] REINFORCEMENTS_FROM_CARDS;
     protected static final int SAVED_GAMEDATA_SET_SIZE = 50;
+*/
+
     protected GameData[] gameDataArray;
 
     public TrainingData() {
@@ -997,7 +1005,7 @@ public class TrainingData {
             } else if (split[0].equals(CONTINENT_NAMES[0]) && split[1].equals(CONTINENT_NAMES[3])) {
                 return 5;
             } else {
-                throw new UnsupportedOperationException("Did not find a matching mission!");
+                throw new IllegalArgumentException("Did not find a matching mission!");
             }
         }
     }
@@ -1008,18 +1016,9 @@ public class TrainingData {
         }
 
         if (i == -1) {
-            throw new UnsupportedOperationException("Could not find the color of a player in the player-array!");
+            throw new IllegalArgumentException("Could not find the color of a player in the player-array!");
         } else {
             return i;
         }
-    }
-
-    static {
-        CONTINENT_NAMES = T_Game.CONTINENT_NAMES;
-        MISSION_NAMES = T_Game.MISSION_NAMES;
-        TERRITORY_NAMES = new String[]{"Alaska", "North-West-Territory", "Alberta", "Western-United-States", "Central-America", "Greenland", "Ontario", "Quebec", "Eastern-United-States", "Venezuela", "Peru", "Brazil", "Argentina", "Iceland", "Scandinavia", "Ukraine", "Great-Britain", "Northern-Europe", "Western-Europe", "Southern-Europe", "North-Africa", "Egypt", "Congo", "East-Africa", "South-Africa", "Madagascar", "Siberia", "Ural", "China", "Afghanistan", "Middle-East", "India", "Siam", "Yakutsk", "Irkutsk", "Mongolia", "Japan", "Kamchatka", "Indonesia", "New-Guinea", "Western-Australia", "Eastern-Australia"};
-        TERRITORIES_IN_CONTINENTS = new String[][]{{"Alaska", "North-West-Territory", "Alberta", "Western-United-States", "Central-America", "Greenland", "Ontario", "Quebec", "Eastern-United-States"}, {"Venezuela", "Peru", "Brazil", "Argentina"}, {"Iceland", "Scandinavia", "Ukraine", "Great-Britain", "Northern-Europe", "Western-Europe", "Southern-Europe"}, {"North-Africa", "Egypt", "Congo", "East-Africa", "South-Africa", "Madagascar"}, {"Siberia", "Ural", "China", "Afghanistan", "Middle-East", "India", "Siam", "Yakutsk", "Irkutsk", "Mongolia", "Japan", "Kamchatka"}, {"Indonesia", "New-Guinea", "Western-Australia", "Eastern-Australia"}};
-        CONTINENTS_VALUE = new int[]{5, 2, 5, 3, 7, 2};
-        REINFORCEMENTS_FROM_CARDS = T_Game.reinforcementsFromCards;
     }
 }
