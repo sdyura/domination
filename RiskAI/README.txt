@@ -10,6 +10,15 @@ term 6 - dat6.pdf/report.pdf (same files)
 
 testing out the lib
 
+build and place RiskAI.jar into the Domination install dir
+copy these files into the Domination install folder:
+ - source/JRiskAI/closeToContinent_one.oobn
+ - source/JRiskAI/closeToWinBN.oobn
+ - source/JRiskAI/custom_framework.txt
+ - source/RiskBattleProbTable/BattleOutcomeTable.txt
+ - source/TrainingDataConverter/AIPlayerFrameworkSettings.txt
+copy "ai-data" folder into the parent folder of Domination
+
 there seem to be 3 new AIs, from docs:
  - Scripted Framework: Creates a purely scripted implementation of the framework.
  - Best framework: Creates the best implementation of the framework, which were found through the research documented in this report.
