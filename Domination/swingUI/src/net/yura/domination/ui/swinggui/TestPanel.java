@@ -32,6 +32,7 @@ import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Country;
+import net.yura.domination.engine.core.Mission;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.guishared.PicturePanel;
@@ -56,6 +57,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 	private AbstractTableModel countriesModel;
 	private AbstractTableModel continentsModel;
 	private AbstractTableModel cardsModel,cardsModel2;
+        private AbstractTableModel missionsModel;
 	private AbstractTableModel playersModel;
         private AbstractTableModel gameInfo;
         private AbstractTableModel commands;
@@ -99,7 +101,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		mapServerNameChack.setActionCommand("checkMapServer");
 		mapServerNameChack.addActionListener(this);
 		toolbar.add(mapServerNameChack);
-
+                
 		countriesModel = new AbstractTableModel() {
 
 			private final String[] columnNames = { "Color/No.","ID","Name","x","y","Continent","Owner","Armies","No. Neighbours","in","con" };
@@ -277,6 +279,38 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         return Collections.EMPTY_LIST;
                     }
                 };
+                
+                missionsModel = new AbstractTableModel() {
+
+			private final String[] columnNames = { "Mission" };
+
+			public int getColumnCount() {
+				return columnNames.length;
+			}
+
+			public int getRowCount() {
+				RiskGame game = myrisk.getGame();
+				if (game != null) {
+					List missions = game.getMissions();
+					if (missions != null) {
+						return missions.size();
+					}
+				}
+				return 0;
+  			}
+
+			public String getColumnName(int col) {
+				return columnNames[col];
+			}
+
+			public Object getValueAt(int row, int col) {
+				Mission mission = (Mission)myrisk.getGame().getMissions().get(row);
+				switch(col) {
+					case 0: return mission.toString();
+					default: throw new RuntimeException();
+				}
+			}
+		};
 
 		playersModel = new AbstractTableModel() {
 
@@ -462,6 +496,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		views.add( "Cards" , new JScrollPane(new JTable(cardsModel)) );
                 views.add( "Spent Cards" , new JScrollPane(new JTable(cardsModel2)) );
 		views.add( "Players" , new JScrollPane(new JTable(playersModel)) );
+                views.add( "Missions" , new JScrollPane(new JTable(missionsModel)) );
                 views.add( "Game" , new JScrollPane(new JTable(gameInfo)) );
 
                 JTable commandsTable = new JTable(commands);
@@ -651,6 +686,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                 playersModel.fireTableDataChanged();
                 gameInfo.fireTableDataChanged();
                 commands.fireTableDataChanged();
+                missionsModel.fireTableDataChanged();
 
                 repaint();
         }

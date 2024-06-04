@@ -13,6 +13,7 @@ import java.io.StringReader;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1031,7 +1032,7 @@ RiskUtil.printStackTrace(e);
 		}
 		else if (Addr.equals("MISSION")) { // a server command
 
-			List m = game.getMissions();
+			List m = new ArrayList(game.getMissions());
 			List p = game.getPlayers();
 
 			for (int c=0; c< p.size() ; c++) {
