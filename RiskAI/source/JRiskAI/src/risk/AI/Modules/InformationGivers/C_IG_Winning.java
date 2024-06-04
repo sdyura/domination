@@ -4,14 +4,20 @@ import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Mission;
 import net.yura.domination.engine.core.Player;
-import risk.AI.Data_Structures.*;
+import risk.AI.Data_Structures.C_Timing;
 import risk.AI.Data_Structures.Module_Output.O_IG_ContinentEstimate;
 import risk.AI.Data_Structures.Module_Output.O_IG_MissionEstimate;
 import risk.AI.Data_Structures.Module_Output.O_IG_WinningEstimate;
 import risk.AI.Data_Structures.Module_Input.I_IG_WinningEstimate;
+import risk.AI.Data_Structures.T_Board;
+import risk.AI.Data_Structures.T_Game;
+import risk.AI.Data_Structures.T_Opp_RiskCards;
+import risk.AI.Data_Structures.T_TrainingExampleWriter;
 import risk.AI.Modules.RoundPlanner.Planner.C_RP_Planner_AP_Cost;
-import risk.AI.Techniques.Pathfinding.*;
-import java.util.*;
+import java.util.List;
+import java.util.Random;
+import java.util.Vector;
+import risk.AI.Techniques.Pathfinding.AStar;
 import trainer.trainers.WekaTrainer;
 import trainingdataconverter.trainingdata.GameData;
 import trainingdataconverter.trainingdata.IG_WinningData;
@@ -221,8 +227,8 @@ public class C_IG_Winning {
 						Vector<Integer> playerArmies = new Vector();
 						Vector<Integer> enemyArmies = new Vector();
 						Vector<Boolean> playerOwns = new Vector();
-						
-						Vector<Integer> numberOfPlayerReinforcements = game.calcFutureReinforcements(player, roundsToPredict);
+
+						List<Integer> numberOfPlayerReinforcements = game.calcFutureReinforcements(player, roundsToPredict);
 						Vector<Integer> numberOfEnemyReinforcements = calcNumberOfEnemyReinforcements(player, roundsToPredict);
 						
 						float estimate;
@@ -282,7 +288,7 @@ public class C_IG_Winning {
 			numberOfEnemyReinforcements.add(0);
 		}
 		// For each enemy player, add his number of reinforcements to the total number of enemy reinforcements
-		Vector<Integer> reinforcements = new Vector();
+		List<Integer> reinforcements = new Vector();
 		Player enemy = null;
 		for(int enemyIndex = 0; enemyIndex < game.getPlayerCount(); enemyIndex++) {
 			enemy = ((Player)game.getPlayers().get(enemyIndex));
@@ -470,8 +476,7 @@ public class C_IG_Winning {
 		data.setBeginningOfTurn(beginningOfTurn);
 		data.initBnWinningValueCalc();
 		output = new O_IG_WinningEstimate();
-		
-                
+
 		// output = new O_IG_WinningEstimate();
 		//String[] goalStateList = {"0.0;0.0", "0.0;0.2", "0.2;0.4", "0.4;0.6", "0.6;0.8", "0.8;1.0", "1.0;1.0"};
 		///AttributeStates goalStates = new AttributeStates(goalStateList);
@@ -591,7 +596,3 @@ public class C_IG_Winning {
 		
 	}
 }
-
-
-
-

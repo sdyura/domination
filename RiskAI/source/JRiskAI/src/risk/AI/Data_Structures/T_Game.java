@@ -6,7 +6,6 @@
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
  */
-
 package risk.AI.Data_Structures;
 
 import net.yura.domination.engine.ColorUtil;
@@ -16,12 +15,52 @@ import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Mission;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import java.util.*;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * @author Pelle
  */
 public class T_Game {
+
+	public static final String[] MODULE_NAMES = { // size: 17
+			"ig_mission", 			// 0
+			"ig_winning",			// 1
+			"ig_nextmove",			// 2
+			"ig_continent",			// 3
+			"master_prioritizer",		// 4
+			"rp_makeattackplan",		// 5
+			"rp_ap_cost",			// 6
+			"rp_ap_priority",		// 7
+			"rp_discardattackplan",		// 8
+			"rp_de_cost",			// 9
+			"rp_de_priority",		// 10
+			"rp_cashcards",			// 11
+			"rp_placearmies",		// 12
+			"rp_scoreattackplan",		// 13
+			"rp_fortify",			// 14
+			"initialplacement",		// 15
+			"rp_scoremergedplan"		// 16
+	};
+
+	public static final String[][] AI_TECHNIQUES = { // size: 17
+			{"script", "nn"},			// 0
+			{"script", "nn", "nb", "nn_wo", "bn"},	// 1
+			{"script", "nn_wo"},			// 2
+			{"script", "nn", "nb", "nn_wo", "bn"},	// 3
+			{"script", "nn", "nn_wo"},		// 4
+			{"script"},				// 5
+			{"script"},				// 6
+			{"script", "nn", "nn_wo"},		// 7
+			{"script"},				// 8
+			{"script", "nn", "dt", "nb", "nn_wo"},	// 9
+			{"script", "nn", "dt", "nb", "nn_wo"},	// 10
+			{"script"},				// 11
+			{"script"},				// 12
+			{"script", "nn", "dt", "nb", "nn_wo"},	// 13
+			{"script"},				// 14
+			{"script", "nn", "nn_wo"},		// 15
+			{"script", "nn", "dt", "nb", "nn_wo"}};	// 16
 
 	// TODO YURA why is this here? can it be removed and loaded from the map?
 	public static final String[] CONTINENT_NAMES = {"North-America", "South-America", "Europe", "Africa", "Asia", "Australia"};
@@ -40,44 +79,8 @@ public class T_Game {
 			"Kill_Player4",
 			"Kill_Player5",
 			"Kill_Player6"};
-	public static final String[] MODULE_NAMES = { // size: 17
-			"ig_mission", 			// 0
-			"ig_winning",			// 1
-			"ig_nextmove",			// 2
-			"ig_continent",			// 3
-			"master_prioritizer",	// 4
-			"rp_makeattackplan",	// 5
-			"rp_ap_cost",			// 6
-			"rp_ap_priority",		// 7
-			"rp_discardattackplan",	// 8
-			"rp_de_cost",			// 9
-			"rp_de_priority",		// 10
-			"rp_cashcards",			// 11
-			"rp_placearmies",		// 12
-			"rp_scoreattackplan",	// 13
-			"rp_fortify",			// 14
-			"initialplacement",		// 15
-			"rp_scoremergedplan"	// 16
-	};
 
-	public static final String[][] AI_TECHNIQUES = {{"script", "nn"},
-													{"script", "nn", "nb", "nn_wo", "bn"},
-													{"script", "nn_wo"},
-													{"script", "nn", "nb", "nn_wo", "bn"},
-													{"script", "nn", "nn_wo"},
-													{"script"},
-													{"script"},
-													{"script", "nn", "nn_wo"},
-													{"script"},
-													{"script", "nn", "dt", "nb", "nn_wo"},
-													{"script", "nn", "dt", "nb", "nn_wo"},
-													{"script"},
-													{"script"},
-													{"script", "nn", "dt", "nb", "nn_wo"},
-													{"script"},
-													{"script", "nn", "nn_wo"},
-													{"script", "nn", "dt", "nb", "nn_wo"}};
-	public static final int NUMBER_OF_PLAYERS_MAX = 6;
+	public static final int NUMBER_OF_PLAYERS_MAX = RiskGame.MAX_PLAYERS;
 	public static final int NUMBER_OF_TERRITORIES = 42, 
 		NUMBER_OF_CONTINENTS = 6, 
 		NUMBER_OF_ROUNDS_PREDICTED = 5, 
@@ -98,18 +101,18 @@ public class T_Game {
 	}
 
 	public int getMissionCount() {
-		return game.getAllMissionsVector().size();
+		return game.getNoMissions();
 	}
 
-	public Vector getMissions() {
-		return game.getAllMissionsVector();
+	public List<Mission> getMissions() {
+		return game.getMissions();
 	}
 
 	public int getPlayerCount() {
 		return game.getNoPlayers();
 	}
 
-	public Vector getPlayers() {
+	public List<Player> getPlayers() {
 		return game.getPlayers();
 	}
 
@@ -121,8 +124,8 @@ public class T_Game {
 		// YURA old code used to call: game.getNewCardState(card1,card2,card3);
 		return game.getTradeAbsValue(card1.getName(), card2.getName(), card3.getName(), game.getCardMode());
 	}
-	
-	public Card[] getBestCardCombination(Vector cards) {
+
+	public Card[] getBestCardCombination(List cards) {
 		if (this.canTrade()) {
 			Card[] bestCombination = new Card[3];
 			int bestScore = 1;
@@ -149,7 +152,7 @@ public class T_Game {
 			return null;
 		}
 	}
-	
+
 	private boolean doCombinationContainWildcard(Card[] combination) {
 		if (combination[0].equals("wildcard") || 
 			combination[1].equals("wildcard") ||
@@ -174,8 +177,8 @@ public class T_Game {
 		this.attackerArmies = game.getAttacker().getArmies();
 		int armiesLost = oldAttackerArmies == -1 ? 0 : oldAttackerArmies - attackerArmies;
 
-		int checkValue = game.getLastBattle_ArmiesLost();
-		if (armiesLost != checkValue) throw new IllegalStateException("value missmatch " + armiesLost + " != " + checkValue);
+		//int checkValue = game.getLastBattle_ArmiesLost();
+		//if (armiesLost != checkValue) throw new IllegalStateException("value missmatch " + armiesLost + " != " + checkValue);
 
 		return armiesLost;
 	}
@@ -183,9 +186,9 @@ public class T_Game {
 	public void resetLastBattle_ArmiesLost() {
 		attacker = null;
 		attackerArmies = -1;
-		game.resetLastBattle_ArmiesLost();
+		//game.resetLastBattle_ArmiesLost();
 	}
-	
+
 	public int getPlayerIndex(Player player) {
 		return this.getPlayers().indexOf(player);
 	}
@@ -193,13 +196,12 @@ public class T_Game {
 	public T_AISettings getAISettings() {
 		return aiSettings;
 	}
-	
+
 	public int getNumberOfReinforcements(Player p){
 		int armies_received = Math.max((int)(p.getNoTerritoriesOwned()/3),3) + calcContinentReinforcements(p);
 		return armies_received;
-		
 	}
-	
+
 	public float calcReinforcementsFromCards(int numberOfCards) {
 		if (numberOfCards <= 10) {
 			return (float)reinforcementsFromCards[numberOfCards];
@@ -207,7 +209,7 @@ public class T_Game {
 			return 10;
 		}
 	}
-	
+
 	public Vector<Integer> calcFutureReinforcements(Player player, int numberOfRounds) {
 		Vector<Integer> result = new Vector();
 		int numberOfRiskCards = player.getCards().size();
@@ -218,7 +220,7 @@ public class T_Game {
 		}
 		return result;
 	}
-	
+
 	private int calcContinentReinforcements(Player p) {
 		// How many reinforcements does the player get from Continents?
 		int armies = 0;
@@ -230,16 +232,16 @@ public class T_Game {
 		}
 		return armies;
 	}
-	
+
 	public double calcEstimatedArmyCost(int defendingArmies){
 		return 0.8534144 * defendingArmies - 0.2213413 * (1 - Math.pow(-0.525359, (double)defendingArmies));
 		
 	}
-	
+
 	public T_BattleOutcomeProbTable getBattleOutcomeProbTable() {
 		return battleOutcomeProbTable;
 	}
-	
+
 	public boolean isPlayerDead(Player player){
 		if(player.getNoTerritoriesOwned() != 0){
 			return false;
@@ -290,7 +292,7 @@ public class T_Game {
 			return "24";
 		}
 	}	
-	
+
 	public boolean riskCardIsReceivedThisRound(Player p) {
 		return !(game.getDesrvedCard().equals(""));
 	}

@@ -519,8 +519,8 @@ public class T_TrainingExampleWriter  {
 		beginTag("missions_estimates",data);
 		for (int p = 0; p < game.getPlayers().size(); p++) {
 			beginTag("player color=\""+T_Game.decentColorToString(((Player)game.getPlayers().get(p)).getColor())+"\"",data);
-			for (int m = 0; m < game.getAllMissionsVector().size(); m++) {
-				beginTag("mission type=\""+T_Game.decentMissionToString((Mission)game.getAllMissionsVector().get(m),null)+"\"",data);
+			for (int m = 0; m < game.getNoMissions(); m++) {
+				beginTag("mission type=\""+T_Game.decentMissionToString((Mission)game.getMissions().get(m),null)+"\"",data);
 				addToData(String.valueOf(missionEstimate.getEstimate(p,m)),data);
 				endTag("mission", data);
 			}

@@ -1,5 +1,6 @@
 package trainingdataconverter.trainingdata;
 
+import java.util.List;
 import java.util.Vector;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
@@ -134,7 +135,7 @@ public class GameData {
         this.score = new ScoreAttribute(0.0F);
     }
 
-    public GameData(Vector<Player> players, int currentPlayerIndex) {
+    public GameData(List<Player> players, int currentPlayerIndex) {
         this();
         this.numberOfPlayers = players.size();
         this.playerColors = new String[6];
