@@ -26,19 +26,28 @@ public class AIHardOld implements AI {
     }
 
     public void setGame(RiskGame game) {
-        int mode = game.getGameMode();
 
-        if (mode==RiskGame.MODE_CAPITAL) {
-            current = capital;
-        }
-        else if (mode==RiskGame.MODE_SECRET_MISSION) {
-            current = mission;
+        // cleanup after game finished (called on ALL loaded AIs)
+        if (game == null) {
+            if (current != null) {
+                current.setGame(null);
+            }
         }
         else {
-            current = domination;
+            int mode = game.getGameMode();
+
+            if (mode==RiskGame.MODE_CAPITAL) {
+                current = capital;
+            }
+            else if (mode==RiskGame.MODE_SECRET_MISSION) {
+                current = mission;
+            }
+            else {
+                current = domination;
+            }
+
+            current.setGame(game);
         }
-        
-        current.setGame(game);
     }
 
     public String getBattleWon() {
