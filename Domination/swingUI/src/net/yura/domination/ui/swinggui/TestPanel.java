@@ -282,7 +282,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                 
                 missionsModel = new AbstractTableModel() {
 
-			private final String[] columnNames = { "Mission" };
+			private final String[] columnNames = { "i", "Mission" };
 
 			public int getColumnCount() {
 				return columnNames.length;
@@ -306,7 +306,8 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 			public Object getValueAt(int row, int col) {
 				Mission mission = (Mission)myrisk.getGame().getMissions().get(row);
 				switch(col) {
-					case 0: return mission.toString();
+					case 0: return String.valueOf(row);
+					case 1: return mission.toString();
 					default: throw new RuntimeException();
 				}
 			}
@@ -496,7 +497,9 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		views.add( "Cards" , new JScrollPane(new JTable(cardsModel)) );
                 views.add( "Spent Cards" , new JScrollPane(new JTable(cardsModel2)) );
 		views.add( "Players" , new JScrollPane(new JTable(playersModel)) );
-                views.add( "Missions" , new JScrollPane(new JTable(missionsModel)) );
+                JTable missionTable = new JTable(missionsModel);
+                missionTable.getColumnModel().getColumn(0).setMaxWidth(missionTable.getFontMetrics(missionTable.getFont()).stringWidth("1000"));
+                views.add( "Missions" , new JScrollPane(missionTable) );
                 views.add( "Game" , new JScrollPane(new JTable(gameInfo)) );
 
                 JTable commandsTable = new JTable(commands);

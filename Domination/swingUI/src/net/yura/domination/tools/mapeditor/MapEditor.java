@@ -1414,11 +1414,11 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 risk.loadMap();
                 risk.loadCards(true);
                 
-                if (!risk.getCards().equals(myMap.getCards()) || risk.getMissions().size() != myMap.getMissions().size()) {
+                if (!risk.getCards().equals(myMap.getCards()) || risk.getNoMissions() != myMap.getNoMissions()) {
                     return false;
                 }
                 
-                for (int c = 0; c < myMap.getMissions().size(); c++) {
+                for (int c = 0; c < myMap.getNoMissions(); c++) {
                     Mission m1 = (Mission)myMap.getMissions().get(c);
                     Mission m2 = (Mission)risk.getMissions().get(c);
                     if (!MapSave.getMissionString(m1, myMap).equals(MapSave.getMissionString(m2, risk))) {

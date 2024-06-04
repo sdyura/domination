@@ -2663,10 +2663,10 @@ System.out.print(str+"]\n");
 	}
 
 	/**
-	 * Gets the allocated Missions in the game
-	 * @return Vector Return the Missions in the current game
+	 * Gets all Missions in the game
+	 * @return all the Missions in the current game
 	 */
-	public Vector getMissions() {
+	public List getMissions() {
 		return Missions;
 	}
 

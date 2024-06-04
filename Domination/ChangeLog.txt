@@ -2,7 +2,7 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.3.1
+	Risk Game:	1.3.2
 	 * Network:	14
 	 * Save:	8
 
@@ -13,6 +13,10 @@ CURRENT VERSION:
 	Simple GUI:	2
 	Increment1GUI:	2
 	CommandLine:	2
+
+1.3.2
+
+	RiskGame.getMissions() now returns ALL game missions, to make AI development easier
 
 1.3.1 (08.05.2024) (svn rev 2540)
 

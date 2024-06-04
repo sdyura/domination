@@ -711,6 +711,7 @@ public class RiskUIUtil {
                 if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
                         java.io.File file = fc.getSelectedFile();
 
+                        // TODO file null???? windows java1.8
                         return file.getAbsolutePath();
                 }
 

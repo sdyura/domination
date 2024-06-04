@@ -931,7 +931,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 	public Object getElementAt(int index) {
 
 		if (map==null) { return null; }
-		return map.getMissions().elementAt(index);
+		return map.getMissions().get(index);
 	}
 
 	public int getSize() {

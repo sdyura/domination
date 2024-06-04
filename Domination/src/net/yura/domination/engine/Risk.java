@@ -1366,7 +1366,7 @@ RiskUtil.printStackTrace(e);
                                                         output=null;
                                                         needInput=false;
                                                     }
-                                                    else if (newgame_type == RiskGame.MODE_SECRET_MISSION && game.getMissions().size() < game.getPlayers().size()) {
+                                                    else if (newgame_type == RiskGame.MODE_SECRET_MISSION && game.getNoMissions() < game.getPlayers().size()) {
                                                         output="map does not have enough missions for players";
                                                     }
                                                     else {
