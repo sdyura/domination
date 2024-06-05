@@ -17,7 +17,7 @@ copy these files into the Domination install folder:
  - source/JRiskAI/custom_framework.txt
  - source/RiskBattleProbTable/BattleOutcomeTable.txt
  - source/TrainingDataConverter/AIPlayerFrameworkSettings.txt
-copy "ai-data" folder into the parent folder of Domination
+copy "ai-data" folder into the Domination install dir
 
 there seem to be 3 new AIs, from docs:
  - Scripted Framework: Creates a purely scripted implementation of the framework.

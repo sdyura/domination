@@ -27,7 +27,7 @@ public class T_TrainingExampleWriter  {
 											"master_prioritizer", "initialplacement",
 											"rp_ap_cost", "rp_ap_priority", "rp_makeattackplan", "rp_discardplan", "rp_de_cost", "rp_de_priority", 
 											"rp_cashcards", "rp_placearmies", "rp_fortify", "rp_scoreattackplan", "rp_scoremergedplan"};*/
-	private String baseDir = "../ai-data/";
+	private String baseDir = "ai-data/";
 	private Random rand = new Random();
 	private Vector trainingExamples = new Vector();
 	private boolean recordTrainingData;

@@ -54,7 +54,7 @@ public abstract class AIPlayerFrameworkAbstract implements AI {
             this.board = new T_Board(riskGame);
 
             this.game = new T_Game(riskGame, board, aiSettings);
-            this.trainingExample = new T_TrainingExampleWriter(riskGame, aiSettings, aiSettings.saveTrainingExample, "../ai-data/");
+            this.trainingExample = new T_TrainingExampleWriter(riskGame, aiSettings, aiSettings.saveTrainingExample, "ai-data/");
             this.trainingExample.init(riskGame); // this used to be done AFTER player init, but i hope it will work if done before
         }
 
@@ -114,11 +114,19 @@ public abstract class AIPlayerFrameworkAbstract implements AI {
     @Override
     public void setGame(RiskGame riskGame) {
         if (riskGame == null) {
+            
+            // TODO YURA we can prob just get it from the currentFrameworkAI
+            //AIPlayerFrameworkGlobal ais = currentFrameworkAI.frameworkGame;
+            //ais.gameOver(ais.riskGame.getCurrentPlayer());
+            //gameGlobal.remove(ais.riskGame);
+            
             for (AIPlayerFrameworkGlobal global : gameGlobal.values()) {
-                if (global.riskGame.getState() == RiskGame.STATE_GAME_OVER) {
-                    global.gameOver(global.riskGame.getCurrentPlayer());
-                    gameGlobal.remove(global.riskGame);
-                    return;
+                if (global.aiPlayers.containsValue(currentFrameworkAI)) {
+                    if (global.riskGame.getState() == RiskGame.STATE_GAME_OVER) {
+                        global.gameOver(global.riskGame.getCurrentPlayer());
+                        gameGlobal.remove(global.riskGame);
+                        return;
+                    }
                 }
             }
         }

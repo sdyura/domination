@@ -35,7 +35,7 @@ public class T_AISettings {
 	/** Should the framework save game statistics. */
 	public boolean saveFullGameStats = false;
 	/** The directory where the trained AI models for the learning AI techniques are stored */
-	public String trainedAIModelsDirectory = "../ai-data/trained_models/";
+	public String trainedAIModelsDirectory = "ai-data/trained_models/";
 	/***************************************************************/
 	/*                                                             */
 	/* IMPORTANT: When adding new variables, increase this number: */

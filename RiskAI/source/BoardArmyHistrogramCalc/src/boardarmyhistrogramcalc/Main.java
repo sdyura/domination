@@ -84,9 +84,11 @@ public class Main {
 		String boardStateDirectory;
 		if (args.length == 1) {
 			boardStateDirectory = args[0];
-		} else{
-			boardStateDirectory = "../ai-data_10_first/ai-data/training_examples/boardstates/";
 		}
+                else {
+			boardStateDirectory = "ai-data_10_first/ai-data/training_examples/boardstates/";
+		}
+
 		if (!boardStateDirectory.endsWith("/")) {
 			boardStateDirectory += "/";
 		}

@@ -1,2 +1,2 @@
-java -jar TrainingDataConverter.jar rp_de_cost dt ../
+java -jar TrainingDataConverter.jar rp_de_cost dt ./
 pause

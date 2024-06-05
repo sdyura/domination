@@ -44,7 +44,7 @@ public class Main {
             System.out.println("  technique: The AI technique to convert to. ");
             System.out.println("    -Possibilities: \"nn\", \"dt\", \"nb\" or \"bn\" (dt and nb does the same)");
             System.out.println("  ai-data-dir: The directory location where the directory \"ai-data\" is located. ");
-            System.out.println("    -Example: \"../\"");
+            System.out.println("    -Example: \"./\"");
             aiDataLoadDirectory = "";
             convertType = "";
             modulename = "";

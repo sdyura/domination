@@ -11,4 +11,4 @@ otherArmiesFactor=0.2
 saveTrainingExample=false
 saveWinnerFile=false
 saveFullGameStats=false
-trainedAIModelsDirectory=../ai-data/trained_models/
+trainedAIModelsDirectory=ai-data/trained_models/
