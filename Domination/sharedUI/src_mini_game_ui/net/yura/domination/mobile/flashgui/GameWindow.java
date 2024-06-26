@@ -33,6 +33,7 @@ import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.KeyEvent;
 import net.yura.mobile.gui.Application;
+import net.yura.mobile.gui.Font;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.CheckBox;
 import net.yura.mobile.gui.components.Component;
@@ -236,6 +237,18 @@ public class GameWindow extends Frame implements ActionListener {
                 Window w = getWindow();
                 if (w!=null) {
                     w.repaint();
+                }
+            }
+            @Override
+            public void paintComponent(Graphics2D g) {
+                List<Player> players = myrisk.getGame().getPlayers();
+                Font f = g.getFont();
+                int x = f.getHeight();
+                int y = f.getHeight();
+                for (Player p : players) {
+                    g.setColor(p.getColor());
+                    g.drawString(p.getName() + " - " + p.getCards().size(), x, y);
+                    y = y + x;
                 }
             }
         };
