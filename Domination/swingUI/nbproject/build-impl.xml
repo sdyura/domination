@@ -27,6 +27,10 @@ is divided into following sections:
             </not>
         </condition>
     </fail>
+    <!-- YURA added Java Code Coverage (JaCoCo) -->
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="lib/jacocoant.jar"/>
+    </taskdef>
     <target depends="test,jar,javadoc" description="Build and test whole project." name="default"/>
     <!-- 
                 ======================
@@ -547,24 +551,27 @@ is divided into following sections:
             <element name="customizePrototype" optional="true"/>
             <sequential>
                 <property name="junit.forkmode" value="perTest"/>
-                <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" jvm="${platform.java}" showoutput="true" tempdir="${build.dir}">
-                    <syspropertyset>
-                        <propertyref prefix="test-sys-prop."/>
-                        <mapper from="test-sys-prop.*" to="*" type="glob"/>
-                    </syspropertyset>
-                    <classpath>
-                        <path path="${run.test.classpath}"/>
-                    </classpath>
-                    <modulepath>
-                        <path path="${run.test.modulepath}"/>
-                    </modulepath>
-                    <formatter type="brief" usefile="false"/>
-                    <formatter type="xml"/>
-                    <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
-                    <jvmarg value="-ea"/>
-                    <jvmarg line="${run.test.jvmargs}"/>
-                    <customizePrototype/>
-                </junit>
+                <!-- YURA added Java Code Coverage (JaCoCo) -->
+                <jacoco:coverage output="file" destfile="${build.dir}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant" exclclassloader="sun.reflect.DelegatingClassLoader:javassist.Loader">
+                    <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" jvm="${platform.java}" showoutput="true" tempdir="${build.dir}">
+                        <syspropertyset>
+                            <propertyref prefix="test-sys-prop."/>
+                            <mapper from="test-sys-prop.*" to="*" type="glob"/>
+                        </syspropertyset>
+                        <classpath>
+                            <path path="${run.test.classpath}"/>
+                        </classpath>
+                        <modulepath>
+                            <path path="${run.test.modulepath}"/>
+                        </modulepath>
+                        <formatter type="brief" usefile="false"/>
+                        <formatter type="xml"/>
+                        <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+                        <jvmarg value="-ea"/>
+                        <jvmarg line="${run.test.jvmargs}"/>
+                        <customizePrototype/>
+                    </junit>
+                </jacoco:coverage>
             </sequential>
         </macrodef>
     </target>
@@ -575,20 +582,23 @@ is divided into following sections:
             <element name="customizePrototype" optional="true"/>
             <sequential>
                 <property name="junit.forkmode" value="perTest"/>
-                <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" jvm="${platform.java}" showoutput="true" tempdir="${build.dir}">
-                    <syspropertyset>
-                        <propertyref prefix="test-sys-prop."/>
-                        <mapper from="test-sys-prop.*" to="*" type="glob"/>
-                    </syspropertyset>
-                    <classpath>
-                        <path path="${run.test.classpath}"/>
-                    </classpath>
-                    <formatter type="brief" usefile="false"/>
-                    <formatter type="xml"/>
-                    <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
-                    <jvmarg value="-ea"/>
-                    <customizePrototype/>
-                </junit>
+                <!-- YURA added Java Code Coverage (JaCoCo) -->
+                <jacoco:coverage output="file" destfile="${build.dir}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant" exclclassloader="sun.reflect.DelegatingClassLoader:javassist.Loader">
+                    <junit dir="${work.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" forkmode="${junit.forkmode}" jvm="${platform.java}" showoutput="true" tempdir="${build.dir}">
+                        <syspropertyset>
+                            <propertyref prefix="test-sys-prop."/>
+                            <mapper from="test-sys-prop.*" to="*" type="glob"/>
+                        </syspropertyset>
+                        <classpath>
+                            <path path="${run.test.classpath}"/>
+                        </classpath>
+                        <formatter type="brief" usefile="false"/>
+                        <formatter type="xml"/>
+                        <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+                        <jvmarg value="-ea"/>
+                        <customizePrototype/>
+                    </junit>
+                </jacoco:coverage>
             </sequential>
         </macrodef>
     </target>

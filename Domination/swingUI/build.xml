@@ -703,4 +703,56 @@ some changes need to be made to the ${sdk.dir}/tools/ant/build.xml file
 
     </target>
 
+
+
+
+
+
+
+
+    <!-- 
+        Java Code Coverage (JaCoCo)
+        taken from https://www.jacoco.org/jacoco/trunk/doc/examples/build/build.xml
+    -->
+
+    <property name="result.exec.file" location="${dir.build}/jacoco.exec" />
+    <property name="result.report.dir" location="${dir.build}/report/jacoco" />
+
+    <target name="report" depends="classes,test">
+
+        <!-- convert our ":" seperated string into "," seperated string-->
+        <loadresource property="src.dir">
+        <propertyresource name="dir.sources"/>
+            <filterchain>
+                <tokenfilter>
+                    <filetokenizer/>
+                    <replacestring from=":" to=","/>
+                </tokenfilter>
+            </filterchain>
+        </loadresource>
+
+        <jacoco:report xmlns:jacoco="antlib:org.jacoco.ant">
+
+                <!-- This task needs the collected execution data and ... -->
+                <executiondata>
+                        <file file="${result.exec.file}" />
+                </executiondata>
+
+                <!-- the class files and optional source files ... -->
+                <structure name="Java Code Coverage (JaCoCo) Domination">
+                        <classfiles>
+                                <fileset dir="${dir.build.classes}" />
+                        </classfiles>
+                        <sourcefiles encoding="UTF-8">
+                            <multirootfileset basedirs="${src.dir}" includes="**/*" />
+                        </sourcefiles>
+                </structure>
+
+                <!-- to produce reports in different formats. -->
+                <html destdir="${result.report.dir}" />
+                <csv destfile="${result.report.dir}/report.csv" />
+                <xml destfile="${result.report.dir}/report.xml" />
+        </jacoco:report>
+    </target>
+
 </project>
