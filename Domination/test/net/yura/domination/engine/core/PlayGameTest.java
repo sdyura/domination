@@ -42,7 +42,9 @@ public class PlayGameTest extends TestCase {
 
     public void playGame(String mode) throws Exception {
         File file = TestUtil.getScriptFile(mode);
-        
+
+        assertTrue(file + " NOT FOUND!", file.exists());
+
         playGame(file);
     }
     

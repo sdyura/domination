@@ -11,7 +11,7 @@ public class TestUtil {
 
     public static void setupMapsForTest() throws Exception {
             // we must set the maps folder for map loading to work
-            RiskUIUtil.mapsdir = new File("maps").toURI().toURL();
+            RiskUIUtil.mapsdir = new File("game/Domination/maps").toURI().toURL();
     }
 
     public static Risk newRisk() throws Exception {
@@ -34,7 +34,7 @@ public class TestUtil {
     }
 
     public static File getScriptFile(String mode) {
-        File resFolder = new File("../../../res/test_scripts");
+        File resFolder = new File("../res/test_scripts");
         return new File(resFolder, mode.replace(' ', '-') + "." + RiskFileFilter.RISK_SCRIPT_FILES);
     }
 }

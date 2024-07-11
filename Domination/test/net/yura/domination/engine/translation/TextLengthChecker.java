@@ -5,8 +5,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class TextLengthTest {
-
+/**
+ * As this is not a junit test, we can not end the class name with 'Test'
+ */
+public class TextLengthChecker {
+    
     public static void main(String[] args) throws Exception {
 
         new TranslationBundleTest(null).setUp();
