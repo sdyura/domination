@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import net.yura.android.AndroidMeActivity;
 import net.yura.android.AndroidMeApp;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.ai.AIManager;
@@ -56,10 +57,54 @@ public class GamePreferenceActivity extends PreferenceActivity {
         inlinePrefCat.setTitle( resb.getString("swing.menu.options") );
         root.addPreference(inlinePrefCat);
 
+        CheckBoxPreference fullscreen = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
+        fullscreen.setTitle( resb.getString("game.menu.fullscreen") );
+        fullscreen.setKey(RiskSettings.FULL_SCREEN_KEY);
+        fullscreen.setDefaultValue(GameActivity.getDefaultFullScreen(context));
+        inlinePrefCat.addPreference(fullscreen);
+        fullscreen.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                GameActivity.setGameFullscreen((Boolean)newValue);
+                return true;
+            }
+        });
+
         CheckBoxPreference show_toasts = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
         show_toasts.setTitle( resb.getString("game.menu.showtoasts") );
         show_toasts.setKey(RiskSettings.SHOW_TOASTS_KEY);
         inlinePrefCat.addPreference(show_toasts);
+
+        CheckBoxPreference color_blind = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
+        color_blind.setTitle( resb.getString("game.menu.colorblind") );
+        color_blind.setKey(RiskSettings.COLOR_BLIND_KEY);
+        inlinePrefCat.addPreference(color_blind);
+
+        CheckBoxPreference sound = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
+        sound.setTitle(resb.getString("game.menu.sound"));
+        sound.setKey(RiskSettings.SOUND_KEY);
+        sound.setDefaultValue(GameSound.INSTANCE.isSoundEnabled());
+        sound.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                GameSound.INSTANCE.setSoundEnabled((Boolean)newValue);
+                return true;
+            }
+        });
+        inlinePrefCat.addPreference(sound);
+
+        CheckBoxPreference music = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
+        music.setTitle(resb.getString("game.menu.music"));
+        music.setKey(RiskSettings.MUSIC_KEY);
+        music.setDefaultValue(GameSound.INSTANCE.isMusicEnabled());
+        music.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                GameSound.INSTANCE.setMusicEnabled((Boolean)newValue);
+                return true;
+            }
+        });
+        inlinePrefCat.addPreference(music);
 
         CheckBoxPreference showDice = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
         showDice.setTitle(resb.getString("game.menu.showdice"));
@@ -73,24 +118,6 @@ public class GamePreferenceActivity extends PreferenceActivity {
             }
         });
         inlinePrefCat.addPreference(showDice);
-
-        CheckBoxPreference color_blind = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
-        color_blind.setTitle( resb.getString("game.menu.colorblind") );
-        color_blind.setKey(RiskSettings.COLOR_BLIND_KEY);
-        inlinePrefCat.addPreference(color_blind);
-
-        CheckBoxPreference fullscreen = new CheckBoxPreference(context); // TwoStatePreference = new SwitchPreference(this);
-        fullscreen.setTitle( resb.getString("game.menu.fullscreen") );
-        fullscreen.setKey(RiskSettings.FULL_SCREEN_KEY);
-        fullscreen.setDefaultValue(GameActivity.getDefaultFullScreen(context));
-        inlinePrefCat.addPreference(fullscreen);
-        fullscreen.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                GameActivity.setGameFullscreen((Boolean)newValue);
-                return true;
-            }
-        });
 
         final ListPreference ai = new IntListPreference(context);
         ai.setTitle( resb.getString("game.menu.aiSpeed") );

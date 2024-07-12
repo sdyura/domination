@@ -1496,6 +1496,8 @@ public class RiskUIUtil {
     
     public static void openOptions(Component parentComponent, Risk myrisk, boolean myTurn, Preferences preferences) {
 
+                ResourceBundle resB = TranslationBundle.getBundle();
+
                 JCheckBox showDice = new JCheckBox("Show dice", Risk.isShowDice());
 
                 JSpinner aiwait = new JSpinner(new SpinnerNumberModel(AIManager.getWait(), 0, 10000, 100));
@@ -1504,8 +1506,8 @@ public class RiskUIUtil {
                 aiWaitPanel.add(aiwait);
                 aiWaitPanel.add(new JLabel("milliseconds"));
 
-                JCheckBox soundEnabled = new JCheckBox("Sound Enabled", GameSound.INSTANCE.isSoundEnabled());
-                JCheckBox musicEnabled = new JCheckBox("Music Enabled", GameSound.INSTANCE.isMusicEnabled());
+                JCheckBox soundEnabled = new JCheckBox(resB.getString("game.menu.sound"), GameSound.INSTANCE.isSoundEnabled());
+                JCheckBox musicEnabled = new JCheckBox(resB.getString("game.menu.music"), GameSound.INSTANCE.isMusicEnabled());
                 
                 JCheckBox autoEndGo = new JCheckBox("Auto End Go", myrisk.getAutoEndGo());
                 JCheckBox autoDefend = new JCheckBox("Auto Defend", myrisk.getAutoDefend());
