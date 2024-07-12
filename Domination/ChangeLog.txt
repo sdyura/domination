@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		15
-	Android:	93
+	Android:	94
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -29,6 +29,9 @@ CURRENT VERSION:
 	SwingGUI: fixed: unable to start game when all options are present
 	MapEditor: smart fill Mnemonic 'F'
 	MapEditor: force user to save map if changed before publish
+
+	Android 94 Sound
+		   Player card info on main screen
 
 1.2.9 (04.08.2023) (svn rev 2470)
 

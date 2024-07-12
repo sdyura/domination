@@ -242,12 +242,13 @@ public class GameWindow extends Frame implements ActionListener {
             @Override
             public void paintComponent(Graphics2D g) {
                 List<Player> players = myrisk.getGame().getPlayers();
+                Player current = myrisk.getGame().getCurrentPlayer();
                 Font f = g.getFont();
                 int x = f.getHeight();
                 int y = f.getHeight();
                 for (Player p : players) {
                     g.setColor(p.getColor());
-                    g.drawString(p.getName() + " - " + p.getCards().size(), x, y);
+                    g.drawString((p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") + " " + p.getName() + " - " + p.getCards().size() + (p == current ? " \u2b05\ufe0f" : ""), x, y);
                     y = y + x;
                 }
             }
