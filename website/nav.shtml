@@ -76,7 +76,7 @@
 <a href="https://play.google.com/store/apps/details?id=net.yura.domination"><img src="images/android_app_on_play_logo_small.png" alt="Android App on Google Play" width="129" height="45"></a>
 </p>
 
-
+<!--
 <p>
 <a href="https://support.microsoft.com/en-us/windows/install-mobile-apps-and-the-amazon-appstore-on-windows-f8d0abb5-44ad-47d8-b9fb-ad6b1459ff6c" target=”_blank”>
     <img src="images/windows-subsystem-for-android.png" width="32" height="39" alt="Windows Subsystem For Android" title="Windows Subsystem For Android"/></a>
@@ -85,6 +85,7 @@
 	<img src="https://get.microsoft.com/images/en-GB%20dark.svg"/>
 </a>
 </p>
+-->
 
 <p>
 <a href="applet/flashDomination.jnlp"><img src="images/webstart.png" alt="Launches Flash GUI Domination" height="23" width="88"></a>
