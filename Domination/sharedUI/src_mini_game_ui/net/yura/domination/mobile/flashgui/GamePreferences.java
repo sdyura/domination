@@ -1,5 +1,6 @@
 package net.yura.domination.mobile.flashgui;
 
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.translation.TranslationBundle;
@@ -32,20 +33,16 @@ public class GamePreferences implements ActionListener {
             Map<String, String> results = loader.getFormData();
 
             // TODO do we want to support ability to put the game into fullscreen mode?
-            //new CheckBox(resb.getString("game.menu.fullscreen"));
-            //fullscreen.setKey("fullscreen");
 
-            boolean show_toasts = Boolean.parseBoolean(results.get(RiskSettings.SHOW_TOASTS_KEY));
-            boolean color_blind = Boolean.parseBoolean(results.get(RiskSettings.COLOR_BLIND_KEY));
-            boolean showDice = Boolean.parseBoolean(results.get(RiskSettings.SHOW_DICE_KEY));
-            int aiWait = Integer.parseInt(results.get(RiskSettings.AI_WAIT_KEY));
+            Risk.setShowDice(Boolean.parseBoolean(results.get(RiskSettings.SHOW_DICE_KEY)));
+            AIManager.setWait(Integer.parseInt(results.get(RiskSettings.AI_WAIT_KEY)));
 
-            Risk.setShowDice(showDice);
-            AIManager.setWait(aiWait);
+            DominationMain.appPreferences.putBoolean(RiskSettings.SHOW_TOASTS_KEY, Boolean.parseBoolean(results.get(RiskSettings.SHOW_TOASTS_KEY)));
+            DominationMain.appPreferences.putBoolean(RiskSettings.COLOR_BLIND_KEY, Boolean.parseBoolean(results.get(RiskSettings.COLOR_BLIND_KEY)));
 
-            DominationMain.appPreferences.putBoolean(RiskSettings.SHOW_TOASTS_KEY, show_toasts);
-            DominationMain.appPreferences.putBoolean(RiskSettings.COLOR_BLIND_KEY, color_blind);
-            
+            GameSound.INSTANCE.setSoundEnabled(Boolean.parseBoolean(results.get(RiskSettings.SOUND_KEY)));
+            GameSound.INSTANCE.setMusicEnabled(Boolean.parseBoolean(results.get(RiskSettings.MUSIC_KEY)));
+
             RiskSettings.saveSettingsToPrefs(DominationMain.appPreferences);
         }
     }

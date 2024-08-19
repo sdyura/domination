@@ -11,4 +11,6 @@
         <choice i18n="true" name="100" text="game.menu.aiSpeed.lightning"/>
         <choice i18n="true" name="0" text="game.menu.aiSpeed.instant"/>
     </combobox>
+    <checkbox colspan="2" i18n="true" name="audio.sound" selected="true" text="game.menu.sound"/>
+    <checkbox colspan="2" i18n="true" name="audio.music" selected="true" text="game.menu.music"/>
 </panel>
