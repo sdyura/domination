@@ -110,7 +110,7 @@
 
 	<p>Please use <a href="https://developer.android.com/studio/archive">Android Studio 3.2.1</a>/<a href="http://developer.android.com/sdk/installing/studio-build.html">Gradle</a> to build the project</p>
 
-        <p>iOS setup: you will need to have <a href="https://cocoapods.org/">cocoapods</a> installed and
+        <p>iOS setup: you will need to have <a href="https://cocoapods.org/" target=”_blank”>cocoapods</a> <a href="https://formulae.brew.sh/formula/cocoapods" target=”_blank”>installed</a> and
             run "pod install" from 'Domination/ios/xcode'
             then you will need to revert the 'ChartDataSet.swift' file.
         </p>
