@@ -16,6 +16,7 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import net.yura.domination.audio.GameSound;
+import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;
@@ -233,6 +234,7 @@ public class GameWindow extends Frame implements ActionListener {
         Panel mainWindow = new Panel( new BorderLayout() );
         scroll = new ScrollPane(pp) {
             // a little hack as we set setClip to false
+            final int ARROW_COLOR = PicturePanel.colorWithAlpha(ColorUtil.WHITE, 200);
             @Override
             public void repaint() {
                 Window w = getWindow();
@@ -245,11 +247,16 @@ public class GameWindow extends Frame implements ActionListener {
                 List<Player> players = myrisk.getGame().getPlayers();
                 Player current = myrisk.getGame().getCurrentPlayer();
                 Font f = g.getFont();
-                int x = f.getHeight();
+                final int x = f.getHeight();
                 int y = f.getHeight();
                 for (Player p : players) {
                     g.setColor(p.getColor());
-                    g.drawString((p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") + " " + p.getName() + " - " + p.getCards().size() + (p == current ? " \u2b05\ufe0f" : ""), x, y);
+                    String text = (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") + " " + p.getName() + " - " + p.getCards().size();
+                    g.drawString(text, x, y);
+                    if (p == current) {
+                        int offset = x + f.getWidth(text) + x / 2;
+                        MoveDialog.drawArrow(g, offset + (int)(x * 1.5), offset, y, y + x, ARROW_COLOR);
+                    }
                     y = y + x;
                 }
             }

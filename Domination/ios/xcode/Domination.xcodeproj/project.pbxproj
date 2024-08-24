@@ -313,7 +313,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0820;
-				ORGANIZATIONNAME = "yura.net";
+				ORGANIZATIONNAME = yura.net;
 			};
 			buildConfigurationList = EE1B76AC2D4C44432A7FA818 /* Build configuration list for PBXProject "Domination" */;
 			compatibilityVersion = "Xcode 3.2";

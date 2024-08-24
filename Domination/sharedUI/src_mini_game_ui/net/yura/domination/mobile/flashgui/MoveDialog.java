@@ -188,11 +188,8 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
         PicturePanel.drawArmy(g, color2, noa2i, xMiddle+distanceFromCenter, yMiddle, size, capital2);
 
         int xOffset = XULLoader.adjustSizeToDensity(70);
-        int yOffset = XULLoader.adjustSizeToDensity(20);
-        int xCoords[] = {xMiddle-xOffset, xMiddle, xMiddle, xMiddle+xOffset, xMiddle, xMiddle, xMiddle-xOffset};
-        int yCoords[] = {yMiddle-yOffset,  yMiddle-yOffset,  yMiddle-yOffset*2, yMiddle, yMiddle+yOffset*2,  yMiddle+yOffset, yMiddle+yOffset};
-        DirectGraphics g2 = DirectUtils.getDirectGraphics(g.getGraphics());
-        g2.fillPolygon(xCoords, 0, yCoords, 0, xCoords.length, PicturePanel.colorWithAlpha(color1, 150) );
+        int yOffset = XULLoader.adjustSizeToDensity(40);
+        drawArrow(g, xMiddle-xOffset, xMiddle+xOffset, yMiddle-yOffset, yMiddle+yOffset, PicturePanel.colorWithAlpha(color1, 150));
 
         if (move > 0) {
             g.setColor( ColorUtil.getTextColorFor(color1) );
@@ -204,6 +201,15 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
         
         g.drawString(name1, xC1-font.getWidth(name1)/2, texty);
         g.drawString(name2, xC2-font.getWidth(name2)/2, texty);
+    }
+
+    public static void drawArrow(Graphics2D g, int xStart, int xEnd, int yTop, int yBottom, int color) {
+        int xMiddle = (xEnd + xStart) / 2;
+        int xCoords[] = {xStart, xMiddle, xMiddle, xEnd, xMiddle, xMiddle, xStart};
+        int yOffset = (yBottom - yTop) / 4;
+        int yCoords[] = {yTop + yOffset,  yTop + yOffset,  yTop, yTop + yOffset * 2, yBottom,  yBottom - yOffset, yBottom - yOffset};
+        DirectGraphics g2 = DirectUtils.getDirectGraphics(g.getGraphics());
+        g2.fillPolygon(xCoords, 0, yCoords, 0, xCoords.length, color);
     }
 
     public static void drawCountry(Graphics2D g, Image img, int x, int y) {
