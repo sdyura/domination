@@ -13,6 +13,9 @@ import net.yura.lobby.server.ServerGame;
 import net.yura.lobby.server.ServerGameListener;
 import static junit.framework.TestCase.assertEquals;
 
+/**
+ * WARNING! this test is NOT compatible to being run with other tests in the same VM!
+ */
 public class ServerGameTest extends TestCase {
 
     ServerGame serverGame;
@@ -21,12 +24,18 @@ public class ServerGameTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
+        if ("/".equals(System.getProperty("user.dir"))) {
+            throw new RuntimeException("current dir set incorrectly! /");
+        }
+        
         // we must change the current folder for map loading to work
         System.setProperty("user.dir", System.getProperty("user.dir") + File.separator +"game" );
 
         AIManager.setWait(0);
         Risk.setShowDice(false);
-        
+
+        // WARNING!! this will call the ServerGameRisk static initializer!! (that sets RiskUtil.streamOpener)
+        // WARNING!! if this test is not run forked, it will break tests that come after!!
         serverGame = new ServerGameRisk() {
             AIManager fakeHuman = new AIManager();
             @Override

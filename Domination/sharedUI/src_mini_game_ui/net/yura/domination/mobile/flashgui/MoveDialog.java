@@ -5,6 +5,7 @@ import com.nokia.mid.ui.DirectGraphics;
 import com.nokia.mid.ui.DirectUtils;
 import java.util.List;
 import javax.microedition.lcdui.Image;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.Player;
@@ -242,18 +243,22 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
         else if (actionCommand.equals("all")) {
             int src = myrisk.hasArmiesInt( c1num );
             if (tacmove) {
+                    GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
                     go("movearmies " +c1num+ " " +c2num+ " " + (src-1) );
             }
             else {
+                    GameSound.INSTANCE.playSound(GameSound.MOVE_ARMIES);
                     go("move " + (src-1) );
             }
         }
         else if (actionCommand.equals("move")) {
             int move = ((Integer)slider.getValue());
             if (tacmove) {
+                    GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
                     go("movearmies " +c1num+ " " +c2num+ " " + move );
             }
             else {
+                    GameSound.INSTANCE.playSound(GameSound.MOVE_ARMIES);
                     go("move " + move);
             }
         }

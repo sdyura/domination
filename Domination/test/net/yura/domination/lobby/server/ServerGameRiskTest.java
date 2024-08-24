@@ -2,8 +2,11 @@ package net.yura.domination.lobby.server;
 
 import junit.framework.TestCase;
 
+/**
+ * WARNING! this test is NOT compatible to being run with other tests in the same VM!
+ */
 public class ServerGameRiskTest extends TestCase {
-    
+
     public ServerGameRiskTest(String testName) {
         super(testName);
     }

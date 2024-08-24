@@ -5,6 +5,7 @@ import com.nokia.mid.ui.DirectUtils;
 import java.util.Random;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.Sprite;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.mobile.gui.ActionListener;
@@ -88,15 +89,18 @@ public class BattleDialog extends Frame implements ActionListener {
     @Override
     public void actionPerformed(String actionCommand) {
         if ("fight".equals( actionCommand )) {
+            GameSound.INSTANCE.playSound(GameSound.DICE_ROLL);
             go("roll "+ (canRetreat?noda:nodd) );
         }
         else if ("kill".equals( actionCommand )) {
             if (kill.isSelected()) {
+                GameSound.INSTANCE.playSound(GameSound.DICE_ROLL);
                 go("roll "+ (canRetreat?noda:nodd) );
             }
         }
         else if ("retreat".equals( actionCommand )) {
             if (canRetreat) {
+                GameSound.INSTANCE.playSound(GameSound.BATTLE_RETREAT);
                 go("retreat");
             }
             else {

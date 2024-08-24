@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;
@@ -457,6 +458,11 @@ public class GameWindow extends Frame implements ActionListener {
     }
 
     public void actionPerformed(String actionCommand) {
+
+        if (!"go".equals(actionCommand) || gameState != RiskGame.STATE_PLACE_ARMIES) {
+            GameSound.INSTANCE.playSound(GameSound.BUTTON);
+        }
+
         if ("go".equals(actionCommand)) {
             goOn();
         }
@@ -968,6 +974,7 @@ public class GameWindow extends Frame implements ActionListener {
                     go("endtrade");
             }
             else if (gameState==RiskGame.STATE_PLACE_ARMIES) {
+                    GameSound.INSTANCE.playSound(GameSound.PLACE_ARMY);
                     go("autoplace");
             }
             else if (gameState==RiskGame.STATE_ATTACKING) {
@@ -1038,9 +1045,11 @@ public class GameWindow extends Frame implements ActionListener {
         if (gameState == RiskGame.STATE_PLACE_ARMIES) {
             if (countries.length == 1) {
                 if (rightClick) {
+                    GameSound.INSTANCE.playSound(GameSound.PLACE_ARMIES);
                     go( "placearmies " + countries[0] + " 10" );
                 }
                 else {
+                    GameSound.INSTANCE.playSound(GameSound.PLACE_ARMY);
                     go( "placearmies " + countries[0] + " 1" );
                 }
             }
@@ -1054,6 +1063,7 @@ public class GameWindow extends Frame implements ActionListener {
                 note.setText( resb.getProperty("game.note.selectdefender") );
             }
             else {
+                GameSound.INSTANCE.playSound(GameSound.ATTACK);
                 go("attack " + countries[0] + " " + countries[1]);
                 note.setText(" "); // HACK: go sets the note to "please wait" so now we want to clear it
             }

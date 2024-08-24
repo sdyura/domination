@@ -3,6 +3,7 @@ package net.yura.domination.mobile.flashgui;
 import java.util.List;
 import java.util.Locale;
 import java.io.File;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
@@ -101,6 +102,9 @@ public class MainMenu extends Frame implements ActionListener {
 
     @Override
     public void actionPerformed(String actionCommand) {
+
+            GameSound.INSTANCE.playSound("online".equals(actionCommand) ? GameSound.LOBBY_START : GameSound.MENU_BUTTON);
+
             if ("new game".equals(actionCommand)) {
                 myrisk.parser("newgame");
             }

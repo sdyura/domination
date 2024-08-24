@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
@@ -74,6 +75,13 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
 
     @Override
     public void actionPerformed(String actionCommand) {
+
+            if ("closegame".equals(actionCommand)) {
+                GameSound.INSTANCE.playSound(GameSound.BACK_BUTTON);
+            }
+            else if (!"startgame".equals(actionCommand)) {
+                GameSound.INSTANCE.playSound(GameSound.BUTTON);
+            }
 
             if ("closegame".equals(actionCommand)) { // user clicks back in game setup screen
         	if (localgame) {

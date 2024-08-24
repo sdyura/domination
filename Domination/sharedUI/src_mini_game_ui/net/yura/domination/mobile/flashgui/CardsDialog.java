@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -167,6 +167,8 @@ public class CardsDialog extends Frame implements ActionListener {
             setVisible(false);
         }
         else if ("trade".equals(actionCommand)) {
+
+            GameSound.INSTANCE.playSound(GameSound.CARDS_TRADE);
 
             List<CardPanel> cards2 = getSelectedCards();
 
