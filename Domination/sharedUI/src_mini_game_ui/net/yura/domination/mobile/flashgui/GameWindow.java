@@ -52,6 +52,7 @@ import net.yura.mobile.gui.layout.GridBagConstraints;
 import net.yura.mobile.gui.layout.GridBagLayout;
 import net.yura.mobile.gui.layout.XHTMLLoader;
 import net.yura.mobile.gui.layout.XULLoader;
+import net.yura.mobile.gui.plaf.Style;
 import net.yura.mobile.io.kdom.Document;
 import net.yura.mobile.io.kdom.Element;
 import net.yura.mobile.io.kxml2.KXmlSerializer;
@@ -234,7 +235,8 @@ public class GameWindow extends Frame implements ActionListener {
         Panel mainWindow = new Panel( new BorderLayout() );
         scroll = new ScrollPane(pp) {
             // a little hack as we set setClip to false
-            final int ARROW_COLOR = PicturePanel.colorWithAlpha(ColorUtil.WHITE, 200);
+            private final int ARROW_COLOR = PicturePanel.colorWithAlpha(ColorUtil.WHITE, 200);
+            private Font font;
             @Override
             public void repaint() {
                 Window w = getWindow();
@@ -246,19 +248,25 @@ public class GameWindow extends Frame implements ActionListener {
             public void paintComponent(Graphics2D g) {
                 List<Player> players = myrisk.getGame().getPlayers();
                 Player current = myrisk.getGame().getCurrentPlayer();
-                Font f = g.getFont();
-                final int x = f.getHeight();
-                int y = f.getHeight();
+                g.setFont(font);
+                final int x = font.getHeight();
+                int y = font.getHeight();
                 for (Player p : players) {
                     g.setColor(p.getColor());
                     String text = (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") + " " + p.getName() + " - " + p.getCards().size();
                     g.drawString(text, x, y);
                     if (p == current) {
-                        int offset = x + f.getWidth(text) + x / 2;
+                        int offset = x + font.getWidth(text) + x / 2;
                         MoveDialog.drawArrow(g, offset + (int)(x * 1.5), offset, y, y + x, ARROW_COLOR);
                     }
                     y = y + x;
                 }
+            }
+
+            @Override
+            public void updateUI() {
+                super.updateUI();
+                font = theme.getFont(Style.ALL);
             }
         };
 
