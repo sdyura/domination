@@ -234,9 +234,10 @@ public class GameWindow extends Frame implements ActionListener {
 
         Panel mainWindow = new Panel( new BorderLayout() );
         scroll = new ScrollPane(pp) {
-            // a little hack as we set setClip to false
             private final int ARROW_COLOR = PicturePanel.colorWithAlpha(ColorUtil.WHITE, 200);
             private Font font;
+
+            // a little hack as we set setClip to false
             @Override
             public void repaint() {
                 Window w = getWindow();
@@ -270,7 +271,6 @@ public class GameWindow extends Frame implements ActionListener {
             }
         };
 
-
         //sp.setMode( ScrollPane.MODE_FLOATING_SCROLLBARS );
         scroll.setClip(false);
         mainWindow.add( scroll );
@@ -280,7 +280,6 @@ public class GameWindow extends Frame implements ActionListener {
         Panel contentPane = new Panel( new BorderLayout() );
         contentPane.add( mainWindow );
         setContentPane(contentPane);
-
     }
 
     ScrollPane scroll;

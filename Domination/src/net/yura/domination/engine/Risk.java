@@ -2402,18 +2402,14 @@ RiskUtil.printStackTrace(e);
 		return game.getCurrentPlayer().getCards();
 	}
 
-
-
 	/**
 	 * Checks whether a Player has armies in a country
-	 * @param name The index of the country
+	 * @param color The color of the country
 	 * @return int Returns the number of armies
 	 */
-	public int hasArmiesInt(int name) {
-		return ((Country)game.getCountryInt(name)).getArmies();
+	public int hasArmiesInt(int color) {
+		return game.getCountryInt(color).getArmies();
 	}
-
-
 
 	/**
 	 * Checks whether a Player can attack a country
