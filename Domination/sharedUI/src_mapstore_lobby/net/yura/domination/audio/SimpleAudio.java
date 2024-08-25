@@ -1,11 +1,16 @@
 package net.yura.domination.audio;
 
 import java.io.IOException;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.Executor;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.microedition.media.Manager;
@@ -23,10 +28,19 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
     /**
      * we need a single thread for starting and stopping music
      * otherwise if one thread starts it and another thread stops it
-     * the stop may never happen as it may never find the player
+     * the stop may never happen as it may never find the player.
+     *
+     * We need to create our own instance so we have access to the BlockingQueue
      */
-    private final Executor singleThread = Executors.newSingleThreadExecutor(this);
-    
+    //private final Executor singleThread = Executors.newSingleThreadExecutor(this);
+    private final ThreadPoolExecutor musicThread = new ThreadPoolExecutor(1, 1,
+            0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>(), this);
+
+    private final ThreadPoolExecutor soundThread = new ThreadPoolExecutor(1, 1,
+            0L,TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>(), this);
+
     @Override
     public Thread newThread(Runnable r) {
         Thread th = Executors.defaultThreadFactory().newThread(r);
@@ -45,28 +59,46 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
         return player;
     }
 
-    public void play(String fileName) {
+    public void play(final String fileName) {
         if (outOfMemoryError) return;
-        
-        Player player = null;
-        try {
-            player = getPlayer(fileName);
-            player.start(); // can throw oom
-        }
-        catch (Exception ex) {
-            startError(fileName, player, ex);
-        }
-        catch (Error oom) { // OutOfMemoryError and NoClassDefFoundError
-            outOfMemoryError = true;
-            startError(fileName, player, oom);
-        }
+
+        purge(soundThread.getQueue(), fileName);
+
+        // on very very old computers even playing a short sound clip is very slow
+        soundThread.execute(new Runnable() {
+            @Override
+            public void run() {
+                Player player = null;
+                try {
+                    player = getPlayer(fileName);
+                    player.start(); // can throw oom
+                }
+                catch (Exception ex) {
+                    startError(fileName, player, ex);
+                }
+                catch (Error oom) { // OutOfMemoryError and NoClassDefFoundError
+                    outOfMemoryError = true;
+                    startError(fileName, player, oom);
+                }
+            }
+
+            @Override
+            public String toString() {
+                return fileName;
+            }
+        });
     }
 
+    /**
+     * Only 1 music file with this name can play at a time
+     */
     @Override
     public void start(final String fileName) {
         if (outOfMemoryError) return;
-        
-        singleThread.execute(new Runnable() {
+
+        purge(musicThread.getQueue(), fileName);
+
+        musicThread.execute(new Runnable() {
             @Override
             public void run() {
                 Player player = null;
@@ -83,6 +115,10 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
                     outOfMemoryError = true;
                     startError(fileName, player, oom);
                 }
+            }
+            @Override
+            public String toString() {
+                return fileName;
             }
         });
     }
@@ -101,7 +137,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
     @Override
     public void stop(final String audioFile) {
         try {
-            singleThread.execute(new Runnable() {
+            musicThread.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -125,6 +161,36 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
                 }
             });
         }
+        // in case the app is run without any libs, and is unable to find the classes needed to play sound
         catch (Error error) {}
+    }
+
+    private void purge(final BlockingQueue<Runnable> q, String name) {
+        try {
+            Iterator<Runnable> it = q.iterator();
+            while (it.hasNext()) {
+                Runnable r = it.next();
+                if (name.equals(r.toString())){
+                    it.remove();
+                }
+            }
+        } catch (ConcurrentModificationException fallThrough) {
+            // Take slow path if we encounter interference during traversal.
+            // Make copy for traversal and call remove for cancelled entries.
+            // The slow path is more likely to be O(N*N).
+            for (Object r : q.toArray())
+                if (name.equals(r.toString())) {
+                    q.remove(r);
+                }
+        }
+    }
+
+    /**
+     * @see Executors.FinalizableDelegatedExecutorService#finalize()
+     */
+    @Override
+    protected void finalize() {
+        musicThread.shutdown();
+        soundThread.shutdown();
     }
 }
