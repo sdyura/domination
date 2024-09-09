@@ -306,8 +306,8 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
             recycle.setSelected(DominationMain.getBoolean(RiskSettings.DEFAULT_RECYCLE_CARDS_KEY, recycle.isSelected()));
         }
 
-        ((Spinner) newgame.find("human")).setMinimum(localgame ? ("true".equals(System.getProperty("debug")) ? 0 : 1)
-                                                               : ("true".equals(System.getProperty("debug")) ? 1 : 2));
+        ((Spinner) newgame.find("human")).setMinimum(localgame ? (Boolean.getBoolean("debug") ? 0 : 1)
+                                                               : (Boolean.getBoolean("debug") ? 1 : 2));
 
 
         for (int c=0;c<compsNames.length;c++) {
