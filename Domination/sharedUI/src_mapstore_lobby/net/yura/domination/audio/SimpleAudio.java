@@ -16,12 +16,13 @@ import java.util.logging.Logger;
 import javax.microedition.media.Manager;
 import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
+import javax.microedition.media.PlayerListener;
 
-public class SimpleAudio implements AudioSystem, ThreadFactory {
+public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
 
     private static final Logger LOGGER = Logger.getLogger(SimpleAudio.class.getName());
 
-    Map<String, Player> currentPlayers = new HashMap(); // filename -> player
+    Map<String, Player> currentMusicPlayers = new HashMap(); // filename -> player
 
     private boolean outOfMemoryError;
 
@@ -59,6 +60,16 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
         return player;
     }
 
+    /**
+     * we add a listener ONLY when this is NOT a looping sound, so we can clean up when it finishes.
+     */
+    @Override
+    public void playerUpdate(Player player, String s, Object o) {
+        if (PlayerListener.END_OF_MEDIA.equals(s)) {
+            player.close();
+        }
+    }
+
     public void play(final String fileName) {
         if (outOfMemoryError) return;
 
@@ -71,6 +82,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
                 Player player = null;
                 try {
                     player = getPlayer(fileName);
+                    player.addPlayerListener(SimpleAudio.this);
                     player.start(); // can throw oom
                 }
                 catch (Exception ex) {
@@ -105,7 +117,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
                 try {
                     player = getPlayer(fileName);
                     player.setLoopCount(-1);
-                    currentPlayers.put(fileName, player);
+                    currentMusicPlayers.put(fileName, player);
                     player.start(); // can throw oom
                 }
                 catch (Exception ex) {
@@ -126,7 +138,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
     private void startError(String fileName, Player player, Throwable ex) {
         LOGGER.log(Level.WARNING, "unable to play " + fileName, ex);
         try {
-            currentPlayers.remove(fileName);
+            currentMusicPlayers.remove(fileName);
             if (player != null) {
                 player.close();
             }
@@ -141,7 +153,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
                 @Override
                 public void run() {
                     try {
-                        Player player = currentPlayers.remove(audioFile);
+                        Player player = currentMusicPlayers.remove(audioFile);
                         if (player != null) {
                             // this is not needed as we only start and stop from a single thread
                             //if (player.getState() != Player.STARTED) {
@@ -149,6 +161,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory {
                             //    player.addPlayerListener(SimpleAudio.this);
                             //}
                             player.stop();
+                            player.close();
                         }
                         else {
                             // this really should never happen
