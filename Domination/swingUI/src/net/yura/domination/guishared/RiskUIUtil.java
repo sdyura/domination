@@ -1439,13 +1439,13 @@ public class RiskUIUtil {
             public void eventDispatched(AWTEvent event) {
                 if (event instanceof WindowEvent) {
                     WindowEvent we = (WindowEvent)event;
-                    if (we.getID() == WindowEvent.WINDOW_GAINED_FOCUS && !appActive) {
+                    if (we.getID() == WindowEvent.WINDOW_GAINED_FOCUS && !appActive) { // WindowEvent.WINDOW_ACTIVATED
                         if (oldValue) {
                             GameSound.INSTANCE.setMusicEnabled(oldValue);
                         }
                         appActive = true;
                     }
-                    else if (we.getID() == WindowEvent.WINDOW_LOST_FOCUS && we.getOppositeWindow() == null &&
+                    else if (we.getID() == WindowEvent.WINDOW_LOST_FOCUS && we.getOppositeWindow() == null && // WindowEvent.WINDOW_DEACTIVATED
                             // this one will always come, but sometimes not in time, so when we check its not there yet :-(
                             (Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(WindowEvent.WINDOW_GAINED_FOCUS) == null)) {
                             //if we know the window is closing this is prob not the app losing focus, but this does not always work
@@ -1474,7 +1474,8 @@ public class RiskUIUtil {
                     }
                 }
             }
-        }, AWTEvent.WINDOW_FOCUS_EVENT_MASK);
+        }, AWTEvent.WINDOW_FOCUS_EVENT_MASK); // AWTEvent.WINDOW_EVENT_MASK works with WindowEvent.WINDOW_ACTIVATED and WindowEvent.WINDOW_DEACTIVATED,
+                                              // with much the same result. on macOS FileDialog also does not register and seems to stop the music.
     }
 
     /**
