@@ -12,7 +12,6 @@
 		583D44871E40B4910048FF77 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 583D44861E40B4910048FF77 /* main.cpp */; };
 		583D448A1E40B4B90048FF77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 583D44881E40B4B90048FF77 /* Assets.xcassets */; };
 		583D448B1E40B4B90048FF77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 583D44891E40B4B90048FF77 /* LaunchScreen.storyboard */; };
-		6E6B9E28FE61156B22FBBB30 /* Pods_Domination.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C0FF0A52B13E0866D81581 /* Pods_Domination.framework */; };
 		BD473EE73F32A0B01719CDA7 /* Pods_Domination.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C0FF0A52B13E0866D81581 /* Pods_Domination.framework */; };
 		DE050F552788EAE30084C691 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DE050F532788EAE30084C691 /* Localizable.strings */; };
 		DE079D292678C41300CFBB43 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = DE079D282678C41300CFBB43 /* maps */; };
@@ -120,7 +119,6 @@
 				DEDE4FE229BCF5770041E9A8 /* Charts.framework in Frameworks */,
 				DE7E9AE22774A71400555709 /* MessageUI.framework in Frameworks */,
 				BD473EE73F32A0B01719CDA7 /* Pods_Domination.framework in Frameworks */,
-				6E6B9E28FE61156B22FBBB30 /* Pods_Domination.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
