@@ -23,6 +23,7 @@ public class RiskSettings {
     public static final String COLOR_BLIND_KEY = "color_blind";
     public static final String FULL_SCREEN_KEY = "fullscreen";
     public static final String LANGUAGE_KEY = "lang";
+    public static final String EXTERNAL_MAPS_KEY = "externalMapsDirUrl";
 
     // default new game settings
     public static final String DEFAULT_GAME_TYPE_KEY = "default.gametype";

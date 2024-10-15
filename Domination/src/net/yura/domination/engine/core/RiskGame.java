@@ -171,7 +171,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 		//try {
 
 			setMapfile("default");
-			setCardsfile("default");
+			setCardsfile("default"); // TODO is the really needed, setting map already sets the correct cards for that map
 		//}
 		//catch (Exception e) {
 		//	RiskUtil.printStackTrace(e);

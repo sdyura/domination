@@ -22,6 +22,7 @@ import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.OptionPane;
 import net.yura.mobile.io.FileUtil;
+import javax.microedition.io.file.FileConnection;
 
 public class MiniUtil {
 
@@ -82,7 +83,7 @@ public class MiniUtil {
         String author = resb.getString("about.author") + " Yura Mamyrin (yura@yura.net)";
         String c1="#DA4437",c2="#F6971D",c3="#F5EA3B",c4="#65AF45",c5="#4284F3",c6="#7E3793";
 
-        File externalMapDir = getExternalMapDir();
+        String externalMapDirUrl = getExternalMapDir();
 
         String version = DominationMain.version;
         String versionName = System.getProperty("versionName");
@@ -124,9 +125,22 @@ public class MiniUtil {
                 displayInfo +
                 "<p>Locale: "+Locale.getDefault()+" use: "+resb.getLocale()+"</p>"+
                 "<p>Device: " + System.getProperty("microedition.platform") + "</p>"+
-                (externalMapDir == null ? "" : "<p>ExternalMapDir=<a href=\"" + externalMapDir.toURI() + "\">" + externalMapDir + "</a></p>") +
+                (externalMapDirUrl == null ? "" : "<p>ExternalMapDir=<a href=\"" + externalMapDirUrl + "\">" + getLabelForUrl(externalMapDirUrl) + "</a></p>") +
                 // e.g. file:///storage/emulated/0/Domination%20Maps/
                 "</html>";
+    }
+
+    private static String getLabelForUrl(String url) {
+        if (url.startsWith("file:/")) {
+            return url;
+        }
+        try {
+            FileConnection fileConnection = FileUtil.getReadFileConnection(url);
+            return fileConnection.getName();
+        }
+        catch (Exception ex) {
+            return url;
+        }
     }
 
     public static String getStatsLabel(StatType statType, Player player) {
@@ -151,15 +165,16 @@ public class MiniUtil {
      */
     public static List getFileList(String extension) {
         List result = new java.util.Vector();
+        String dotExtension = "." + extension;
 
-        File externalMapDir = getExternalMapDir();
-        if (externalMapDir != null) {
-            String[] list = externalMapDir.list();
-            if (list != null) {
-                for (int c = 0; c < list.length; c++) {
-                    String file = list[c];
-                    if (file.endsWith("." + extension)) {
-                        result.add(file);
+        String externalMapDirUrl = getExternalMapDir();
+        if (externalMapDirUrl != null) {
+            Enumeration<String> files = FileUtil.getDirectoryFiles(externalMapDirUrl);
+            if (files != null) {
+                while (files.hasMoreElements()) {
+                    String name = files.nextElement();
+                    if (name.endsWith(dotExtension)) {
+                        result.add(name);
                     }
                 }
             }
@@ -168,7 +183,7 @@ public class MiniUtil {
         Enumeration en = FileUtil.getDirectoryFiles(mapsdir);
         while (en.hasMoreElements()) {
             String file = (String)en.nextElement();
-            if (file.endsWith("." + extension) && !result.contains(file)) {
+            if (file.endsWith(dotExtension) && !result.contains(file)) {
                 result.add( file );
             }
         }
@@ -177,7 +192,7 @@ public class MiniUtil {
         String[] list = getSaveMapDir().list();
         for (int c=0;c<list.length;c++) {
             String file = list[c];
-            if (file.endsWith("." + extension) && !result.contains(file)) {
+            if (file.endsWith(dotExtension) && !result.contains(file)) {
                 result.add( file );
             }
         }
@@ -187,11 +202,11 @@ public class MiniUtil {
 
     public static InputStream openMapStream(String name) throws IOException {
         try {
-            File externalMapDir = getExternalMapDir();
-            if (externalMapDir != null) {
-                File newFile = new File(externalMapDir, name);
-                if (newFile.exists()) {
-                    return new FileInputStream(newFile);
+            String externalMapDirUrl = getExternalMapDir();
+            if (externalMapDirUrl != null) {
+                FileConnection fileConnection = FileUtil.getReadFileConnection(externalMapDirUrl + name);
+                if (fileConnection.exists()) {
+                    return fileConnection.openInputStream();
                 }
             }
         }
@@ -217,10 +232,13 @@ public class MiniUtil {
         }
     }
 
-    private static File externalMapsDir;
-    static File getExternalMapDir() {
-        if (externalMapsDir!=null) {
-            return externalMapsDir;
+    /**
+     * This is really only used for android, as on desktop and iOS you can access the main maps folder
+     */
+    private static String externalMapsDirUrl;
+    static String getExternalMapDir() {
+        if (externalMapsDirUrl != null) {
+            return externalMapsDirUrl;
         }
 
         String ExternalStorageDirectory = System.getProperty("ExternalStorageDirectory");
@@ -230,10 +248,13 @@ public class MiniUtil {
             //    return null; // if we can not make it,
             //}
 
-            externalMapsDir = userMaps;
-            return userMaps;
+            externalMapsDirUrl = userMaps.toURI().toString();
+            return externalMapsDirUrl;
         }
         return null;
+    }
+    public static void setExternalMapDir(String url) {
+        externalMapsDirUrl = url;
     }
 
     private static File mapsDir;

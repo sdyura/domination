@@ -341,6 +341,11 @@ public class DominationMain extends Application {
             if (lang != null) {
                 TranslationBundle.setLanguage(lang);
             }
+
+            String externalMapsUrl = appPreferences.get(RiskSettings.EXTERNAL_MAPS_KEY, null);
+            if (externalMapsUrl != null) {
+                MiniUtil.setExternalMapDir(externalMapsUrl);
+            }
         }
         else {
             System.out.println("can not load appPreferences as it is NULL!");
@@ -465,6 +470,14 @@ public class DominationMain extends Application {
                 appPreferences.put("accounts", MiniUtil.listToCsv(accounts, ','));
                 flushPreferences();
             }
+        }
+    }
+
+    public static void setExternalMapsDir(String url) {
+        MiniUtil.setExternalMapDir(url);
+        if (appPreferences != null) {
+            DominationMain.appPreferences.put(RiskSettings.EXTERNAL_MAPS_KEY, url);
+            flushPreferences();
         }
     }
 

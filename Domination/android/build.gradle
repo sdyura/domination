@@ -32,8 +32,8 @@ dependencies {
 
 android {
     compileOptions.encoding = 'cp1252'
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 34
+    buildToolsVersion '34.0.0'
     // this to to avoid error from httpcore-4.1.2.jar and httpcore-4.1.2.jar having the same file
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'

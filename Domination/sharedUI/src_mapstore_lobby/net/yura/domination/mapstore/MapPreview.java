@@ -72,6 +72,7 @@ public class MapPreview {
         if (prv!=null) {
             prv = PREVIEW_FILE_PREFIX + prv;
             if (!fileExists(prv)) {
+                Logger.info("MAP ERROR: preview file specifies but not found: " + prv);
                 prv=null;
             }
         }

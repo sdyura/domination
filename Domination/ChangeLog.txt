@@ -35,6 +35,7 @@ CURRENT VERSION:
 	       Can add custom maps through Files app
 
 	Android 94 Sound
+		   Fix bug with maps not loading from external storage
 
 1.2.9 (04.08.2023) (svn rev 2470)
 
