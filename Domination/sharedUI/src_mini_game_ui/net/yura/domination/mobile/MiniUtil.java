@@ -236,7 +236,7 @@ public class MiniUtil {
      * This is really only used for android, as on desktop and iOS you can access the main maps folder
      */
     private static String externalMapsDirUrl;
-    static String getExternalMapDir() {
+    public static String getExternalMapDir() {
         if (externalMapsDirUrl != null) {
             return externalMapsDirUrl;
         }

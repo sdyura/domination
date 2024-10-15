@@ -59,6 +59,8 @@ public class AboutActivity extends Activity implements TabHost.TabContentFactory
                         // technically we can start using this API if >= lolli
                         // but its so broken and buggy in those versions so we only use it when we have to
                         // https://developer.android.com/training/data-storage/use-cases#opt-out-in-production-app
+                        // we HAVE to start using the new method in 30, as fresh installs have no option to use old method
+                        // Android 11 (API level 30) https://developer.android.com/about/versions/11/privacy/storage
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { // API-30
                             openDirectory(url);
                             return true;
