@@ -164,7 +164,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                 public void run() {
                     java.util.List riskmaps = new java.util.Vector(localMaps.size());
                     for (int c = 0; c < localMaps.size(); c++) {
-                        String file = (String) localMaps.get(c);
+                        final String file = localMaps.get(c);
 
                         // if one map is corrupted, we dont want to block all map loading
                         try {
@@ -174,6 +174,22 @@ public class MapChooser implements ActionListener,MapServerListener {
                         }
                         catch (Exception ex) {
                             Logger.warn("error creating map: " + file, ex);
+
+                            // create placeholder so map can be deleted
+                            Map map = new Map();
+                            map.setMapUrl(file);
+                            map.setName(file);
+                            riskmaps.add(map);
+/*
+                            // we are not in UI thread here, in Desktop mode we may not have a UI at all yet
+                            OptionPane.showConfirmDialog(new ActionListener() {
+                                public void actionPerformed(String actionCommand) {
+                                    if ("ok".equals(actionCommand)) {
+                                        RiskUtil.streamOpener.deleteMapFile(file);
+                                    }
+                                }
+                            }, "Error with: " + file + ". Delete?", "Map Error", OptionPane.OK_CANCEL_OPTION);
+ */
                         }
                     }
 
@@ -313,19 +329,25 @@ public class MapChooser implements ActionListener,MapServerListener {
                     client.makeRequestMap(MapServerClient.MAP_PAGE, mapUID, new Observer() {
                         public void update(Observable o, Object map) {
                             if (map != null) {
-                                java.util.Map mapinfo = RiskUtil.loadInfo(mapUID, false);
-                                String cardsFile = (String) mapinfo.get("crd");
-                                String prvFile = (String) mapinfo.get("prv");
-                                String picFile = (String) mapinfo.get("pic");
-                                String mapFile = (String) mapinfo.get("map");
-                                RiskUtil.streamOpener.deleteMapFile(mapFile);
-                                RiskUtil.streamOpener.deleteMapFile(picFile);
-                                if (prvFile != null) {
-                                    RiskUtil.streamOpener.deleteMapFile(MapPreview.PREVIEW_FILE_PREFIX + prvFile);
+                                try {
+                                    java.util.Map mapinfo = RiskUtil.loadInfo(mapUID, false);
+                                    String cardsFile = (String) mapinfo.get("crd");
+                                    String prvFile = (String) mapinfo.get("prv");
+                                    String picFile = (String) mapinfo.get("pic");
+                                    String mapFile = (String) mapinfo.get("map");
+                                    RiskUtil.streamOpener.deleteMapFile(mapFile);
+                                    RiskUtil.streamOpener.deleteMapFile(picFile);
+                                    if (prvFile != null) {
+                                        RiskUtil.streamOpener.deleteMapFile(MapPreview.PREVIEW_FILE_PREFIX + prvFile);
+                                    }
+                                    if (!"risk.cards".equals(cardsFile) && !"nomission.cards".equals(cardsFile)) {
+                                        RiskUtil.streamOpener.deleteMapFile(cardsFile);
+                                    }
                                 }
-                                if (!"risk.cards".equals(cardsFile) && !"nomission.cards".equals(cardsFile)) {
-                                    RiskUtil.streamOpener.deleteMapFile(cardsFile);
+                                catch (Exception ex) {
+                                    Logger.warn("unable to delete supplementary map files for: " + mapUID, ex);
                                 }
+
                                 if (RiskUtil.streamOpener.deleteMapFile(mapUID)) {
                                     localMaps.remove(mapUID);
                                     

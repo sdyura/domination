@@ -141,7 +141,7 @@ public class DominationMain extends Application {
                         return true;
                     }
                     // if we have already quit the game, any events arriving after may cause errors
-                    if (net.yura.mobile.gui.DesktopPane.getDesktopPane() == null) {
+                    if (risk != null && DesktopPane.getDesktopPane() == null) {
                         return true;
                     }
                     String loggerName = record.getLoggerName();
@@ -444,7 +444,7 @@ public class DominationMain extends Application {
     public static void quit() {
         // HACK: if the user hits quit 2 times in a row,
         // the 2nd event may throw a nullpointer as desktopPane is set to null after the 1st
-        if (net.yura.mobile.gui.DesktopPane.getDesktopPane() != null) {
+        if (DesktopPane.getDesktopPane() != null) {
 
             logger.info("UI QUIT");
 
