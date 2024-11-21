@@ -45,6 +45,9 @@ public class FCMServerUtilities implements PushLobbyClient {
                                     // TODO maybe prompt user to check phone date/time
                                     // TODO also some report that retrying can fix this issue
                                     "SERVICE_NOT_AVAILABLE".equals(exception.getMessage())
+
+                                    // not sure why this sometimes happens
+                                    //"FIS_AUTH_ERROR".equals(exception.getMessage())
                             )) {
                                 level = Level.INFO;
                             }

@@ -140,6 +140,10 @@ public class DominationMain extends Application {
                     if (RiskUtil.isOldVersion()) {
                         return true;
                     }
+                    // if we have already quit the game, any events arriving after may cause errors
+                    if (net.yura.mobile.gui.DesktopPane.getDesktopPane() == null) {
+                        return true;
+                    }
                     String loggerName = record.getLoggerName();
                     if ("DataScheduler".equals(loggerName)) { // "libcore.io.IoBridge".equals(className) && "isDataSchedulerEnabled".equals(methodName)
                         // isDataSchedulerEnabled(): DataScheduler is disabled, exeption=java.io.FileNotFoundException: /system/etc/datascheduling_policy_conf.xml: open failed: ENOENT (No such file or directory)
@@ -189,6 +193,14 @@ public class DominationMain extends Application {
                         }
                         if ("com.android.webview.chromium.WebViewExtAmazon".equals(className) && "destroy".equals(methodName)) {
                             // java.lang.IllegalArgumentException: Service not registered: com.amazon.webview.awvdeploymentservice.client.AWVDeploymentClient$1@7992672
+                            return true;
+                        }
+                        if ("android.app.Dialog".equals(className) && "show".equals(methodName)) {
+                            // ERR: java.lang.SecurityException: net.yura.domination was not granted  this permission: android.permission.WRITE_SETTINGS.
+                            return true;
+                        }
+                        if ("android.app.Dialog".equals(className) && "dismissDialog".equals(methodName)) {
+                            // ERR: java.lang.SecurityException: net.yura.domination was not granted  this permission: android.permission.WRITE_SETTINGS.
                             return true;
                         }
                     }

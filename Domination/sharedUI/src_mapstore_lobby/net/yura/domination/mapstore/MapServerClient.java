@@ -106,6 +106,7 @@ public class MapServerClient extends HTTPClient {
                // "java.io.IOException: unexpected end of stream on com.android.okhttp.Address@b7996b41" "Caused by: java.io.EOFException: \n not found: size=0 content=..."
                (ex instanceof IOException && responseCode == 0 && ex.getCause() instanceof EOFException) || // end of stream during getResponseCode
                (ex instanceof ProtocolException && "unexpected end of stream".equals(ex.getMessage())) ||
+               (ex instanceof ProtocolException && ex.getMessage() != null && ex.getMessage().startsWith("Unexpected status line:")) ||
                (ex instanceof SocketException &&
                    ("Connection timed out".equals(ex.getMessage()) ||
                     "Connection reset by peer".equals(ex.getMessage()) ||
