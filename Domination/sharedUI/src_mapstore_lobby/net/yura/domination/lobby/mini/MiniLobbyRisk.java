@@ -92,35 +92,39 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
      * @see net.yura.domination.lobby.client.ClientGameRisk#gameObject(java.lang.Object)
      */
     public void objectForGame(Object object) {
-        if (object instanceof RiskGame) {
-            RiskGame thegame = (RiskGame)object;
-            Player player = thegame.getPlayer(lobby.whoAmI());
-            String address = player==null?"_watch_":player.getAddress();
-            myrisk.setOnlinePlay(this);
-            myrisk.setAddress(address);
-            myrisk.setGame(thegame);
-            openGame = true;
-        }
-// TODO remove this legacy message system
-        else if (object instanceof java.util.Map) {
-            java.util.Map map = (java.util.Map)object;
-
-            String command = (String)map.get("command");
-            if ("game".equals(command)) {
-                String address = (String)map.get("playerId");
-                RiskGame thegame = (RiskGame)map.get("game");
+        try {
+            if (object instanceof RiskGame) {
+                RiskGame thegame = (RiskGame) object;
+                Player player = thegame.getPlayer(lobby.whoAmI());
+                String address = player == null ? "_watch_" : player.getAddress();
                 myrisk.setOnlinePlay(this);
                 myrisk.setAddress(address);
                 myrisk.setGame(thegame);
                 openGame = true;
             }
+// TODO remove this legacy message system
+            else if (object instanceof java.util.Map) {
+                java.util.Map map = (java.util.Map) object;
+
+                String command = (String) map.get("command");
+                if ("game".equals(command)) {
+                    String address = (String) map.get("playerId");
+                    RiskGame thegame = (RiskGame) map.get("game");
+                    myrisk.setOnlinePlay(this);
+                    myrisk.setAddress(address);
+                    myrisk.setGame(thegame);
+                    openGame = true;
+                } else {
+                    System.out.println("MiniLobbyRisk unknown command " + command + " " + map);
+                }
+            }
+// END TODO
             else {
-                System.out.println("MiniLobbyRisk unknown command "+command+" "+map);
+                System.out.println("MiniLobbyRisk unknown object " + object);
             }
         }
-// END TODO
-        else {
-            System.out.println("MiniLobbyRisk unknown object "+object);
+        finally {
+            LoadingManager.showLoadingScreen(false);
         }
     }
 
@@ -137,6 +141,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     }
 
     public void disconnected() {
+        LoadingManager.showLoadingScreen(false);
         myrisk.disconnected();
     }
 
