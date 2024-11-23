@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import net.yura.domination.LoadingManager;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
@@ -364,7 +365,7 @@ public class GameWindow extends Frame implements ActionListener {
         boolean retry=false;
         boolean error = pp != scroll.getView();
 
-        if (!error) showloadingScreen(true);
+        if (!error) LoadingManager.showLoadingScreen(true);
 
         try {
             pp.load();
@@ -426,7 +427,7 @@ public class GameWindow extends Frame implements ActionListener {
             logger.log( (retry || ex instanceof OutOfMemoryError) ?Level.INFO:Level.WARNING , text, ex);
         }
         finally {
-            if (!retry) showloadingScreen(false);
+            if (!retry) LoadingManager.showLoadingScreen(false);
         }
 
         note.setText( resb.getString("game.pleasewait") );
@@ -442,15 +443,6 @@ public class GameWindow extends Frame implements ActionListener {
         cardsbutton.setFocusable(myrisk.getSingleLocalHumanPlayer() != null);
 
         setVisible(true);
-    }
-
-    private void showloadingScreen(boolean show) {
-        if (show) {
-            LoadingScreen.show(resb.getProperty("mainmenu.loading"));
-        }
-        else {
-            LoadingScreen.hide();
-        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.WeakHashMap;
 import java.util.logging.Logger;
+import net.yura.domination.LoadingManager;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.OnlineRisk;
 import net.yura.domination.engine.OnlineUtil;
@@ -59,6 +60,8 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
 
     @Override
     public void prepareAndOpenGame(final Game game) {
+        LoadingManager.showLoadingScreen(true);
+
         final String mapUID = OnlineUtil.getMapNameFromLobbyStartGameOption(game.getOptions());
 
         // TODO check if we are already in the process of downloading this map
@@ -75,6 +78,7 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
                         lobby.mycom.playGame(game.getId());
                     }
                     else {
+                        LoadingManager.showLoadingScreen(false);
                         lobby.error("map download failed for: " + mapUID);
                     }
                 }
