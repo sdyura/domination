@@ -509,6 +509,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             String iosNotificationSetting = System.getProperty("iosNotificationSetting");
 
             // the OS will only ever show this once, so we must make sure we only ever request it once
+            // can be "on", "off" or "ask"
             if ("ask".equals(iosNotificationSetting)) {
                 OptionPane.showMessageDialog(new ActionListener() {
                     @java.lang.Override
@@ -519,6 +520,8 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             }
         }
         else if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+            // TODO android also has a 'notificationSetting' value, but its a bit more retarded, as when its off, you still need to request it
+
             // creates Notification Channel
             // on new version of android this prompts the user to allow notifications.
             // On android this method can be called many times and it just updates the channel settings

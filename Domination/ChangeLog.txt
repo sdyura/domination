@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		16
-	Android:	95
+	Android:	96
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -36,6 +36,10 @@ CURRENT VERSION:
 
 	Android 95 Sound
 		   Fix bug with maps not loading from external storage
+
+	Android 96 fix for notifications not working
+		   Show corrupted maps in MapChooser so they can be deleted
+		   maybe fixed issue with opening urls in browser
 
 1.2.9 (04.08.2023) (svn rev 2470)
 

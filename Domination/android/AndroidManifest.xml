@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
       package="net.yura.domination"
-      android:versionCode="95"
-      android:versionName="95"
+      android:versionCode="96"
+      android:versionName="96"
       android:installLocation="auto">
 
     <!-- android:targetSdkVersion 11 to hide the legacy menu button on tablets -->
@@ -36,7 +36,7 @@
     <uses-permission android:name="net.yura.domination.permission.C2D_MESSAGE"/>
     <!-- Keeps the processor from sleeping when a message is received. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <!-- this means i dont need different assets for different resolutions -->
     <!-- supports-screens android:anyDensity="false"/ -->
