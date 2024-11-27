@@ -248,20 +248,22 @@ public class GameWindow extends Frame implements ActionListener {
             }
             @Override
             public void paintComponent(Graphics2D g) {
-                List<Player> players = myrisk.getGame().getPlayers();
-                Player current = myrisk.getGame().getCurrentPlayer();
-                g.setFont(font);
-                final int x = font.getHeight();
-                int y = font.getHeight();
-                for (Player p : players) {
-                    g.setColor(p.getColor());
-                    String text = (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") + " " + p.getName() + " - " + p.getCards().size();
-                    g.drawString(text, x, y);
-                    if (p == current) {
-                        int offset = x + font.getWidth(text) + x / 2;
-                        MoveDialog.drawArrow(g, offset + (int)(x * 1.5), offset, y, y + x, ARROW_COLOR);
+                if (!isErrorShowing()) {
+                    List<Player> players = myrisk.getGame().getPlayers();
+                    Player current = myrisk.getGame().getCurrentPlayer();
+                    g.setFont(font);
+                    final int x = font.getHeight();
+                    int y = font.getHeight();
+                    for (Player p : players) {
+                        g.setColor(p.getColor());
+                        String text = (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") + " " + p.getName() + " - " + p.getCards().size();
+                        g.drawString(text, x, y);
+                        if (p == current) {
+                            int offset = x + font.getWidth(text) + x / 2;
+                            MoveDialog.drawArrow(g, offset + (int)(x * 1.5), offset, y, y + x, ARROW_COLOR);
+                        }
+                        y = y + x;
                     }
-                    y = y + x;
                 }
             }
 
@@ -363,7 +365,7 @@ public class GameWindow extends Frame implements ActionListener {
         // ============================================ setup UI
 
         boolean retry=false;
-        boolean error = pp != scroll.getView();
+        boolean error = isErrorShowing();
 
         if (!error) LoadingManager.showLoadingScreen(true);
 
@@ -443,6 +445,10 @@ public class GameWindow extends Frame implements ActionListener {
         cardsbutton.setFocusable(myrisk.getSingleLocalHumanPlayer() != null);
 
         setVisible(true);
+    }
+    
+    private boolean isErrorShowing() {
+        return pp != scroll.getView();
     }
 
     @Override
