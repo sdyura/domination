@@ -443,8 +443,6 @@ public class GameWindow extends Frame implements ActionListener {
             buttons[c].setFocusable(false);
         }
         cardsbutton.setFocusable(myrisk.getSingleLocalHumanPlayer() != null);
-
-        setVisible(true);
     }
     
     private boolean isErrorShowing() {
