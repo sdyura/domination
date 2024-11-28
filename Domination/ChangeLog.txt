@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		16
-	Android:	97
+	Android:	98
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -34,12 +34,14 @@ CURRENT VERSION:
 	       Player card info on main screen
 	       Can add custom maps through Files app
 
-	Android 95 Sound
-		   Fix bug with maps not loading from external storage
+	Android 98 fix for images sometimes not loading
 
 	Android 97 fix for notifications not working
 		   Show corrupted maps in MapChooser so they can be deleted
 		   maybe fixed issue with opening urls in browser
+
+	Android 95 Sound
+		   Fix bug with maps not loading from external storage
 
 1.2.9 (04.08.2023) (svn rev 2470)
 
