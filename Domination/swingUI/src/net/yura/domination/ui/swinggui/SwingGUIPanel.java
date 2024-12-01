@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.prefs.Preferences;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -1004,6 +1005,7 @@ class ConsoleTab extends JPanel implements SwingGUITab, ActionListener {
 					// Testing.append("Script end\n");
 				}
 				catch(Exception error) {
+                                    RiskUtil.printStackTrace("error running script", error);
 					// Testing.append("Error: "+error.getMessage() + "\n");
 				}
 			}
@@ -1060,18 +1062,21 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
 
 		JButton tdSaveDebug  = new JButton("Save Debug Log");
 		JButton tdPlayDebug  = new JButton("Play Debug Log");
+                JButton playCommands  = new JButton("Play Debug Commands");
 		JButton tdClearDebug = new JButton("Clear Debug Log");
 		JButton tdSaveError = new JButton("Save Error Log");
 		JButton sendError = new JButton("Send Error Log");
 
 		tdSaveDebug.setActionCommand("save debug");
 		tdPlayDebug.setActionCommand("play debug");
+                playCommands.setActionCommand("play commands");
 		tdClearDebug.setActionCommand("clear debug");
 		tdSaveError.setActionCommand("save error");
 		sendError.setActionCommand("send error");
 
 		tdSaveDebug.addActionListener(this);
 		tdPlayDebug.addActionListener(this);
+                playCommands.addActionListener(this);
 		tdClearDebug.addActionListener(this);
 		tdSaveError.addActionListener(this);
 		sendError.addActionListener(this);
@@ -1088,6 +1093,7 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
 
 		toolbarDebug.add(tdSaveDebug);
 		toolbarDebug.add(tdPlayDebug);
+                toolbarDebug.add(playCommands);
 		toolbarDebug.add(tdClearDebug);
 		toolbarDebug.addSeparator();
 		toolbarDebug.add(tdSaveError);
@@ -1245,6 +1251,38 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
 				go("play " + fileName);
 			}
 		}
+                else if (a.getActionCommand().equals("play commands")) {
+
+                    JTextArea msg = new JTextArea();
+
+                    if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(this, new JScrollPane(msg), "play commands:", JOptionPane.OK_CANCEL_OPTION)) {
+                        try {
+                            if (myrisk.getGame() != null) {
+                                myrisk.parserAndWait("closegame");
+                            }
+                            myrisk.parserAndWait("newgame");
+                            //myrisk.setReplay(true);
+                            
+                            Scanner scanner = new Scanner(msg.getText());
+                            while (scanner.hasNextLine()) {
+                              String line = scanner.nextLine().trim();
+                              myrisk.getGame().getCommands().add(line);
+                              //myrisk.parserFromNetwork(line);
+                            }
+                            scanner.close();
+
+                            go("replay");
+                        }
+                        catch(Exception error) {
+                            RiskUtil.printStackTrace("error running commands", error);
+                        }
+                        finally {
+                            // This does NOT work here, as the finally block gets called too fast
+                            // this code finshes when all commands are sent to engine and NOT when all commands finish running!
+                            //myrisk.setReplay(false);
+                        }
+                    }
+                }
 		else if (a.getActionCommand().equals("save debug")) {
 
                         RiskGame game = myrisk.getGame();
