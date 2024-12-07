@@ -4,6 +4,7 @@ import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.components.Label;
 import net.yura.mobile.gui.components.ProgressBar;
 import net.yura.mobile.gui.components.Window;
+import net.yura.mobile.logging.Logger;
 import net.yura.mobile.util.Url;
 import javax.microedition.lcdui.Graphics;
 
@@ -37,7 +38,21 @@ public class LoadingScreen {
     public static void hide() {
 
         if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
-            Application.openURL("nativeNoResult://net.yura.android.LoadingDialog?command=hide");
+            Application app = Application.getInstance();
+            if (app != null) {
+                try {
+                    app.platformRequest("nativeNoResult://net.yura.android.LoadingDialog?command=hide");
+                }
+                catch (Exception ex) {
+                    // if android has closed the activity by the time we want to hide the loading screen, then do nothing
+                    if (hasMessage(ex, "AndroidME default activity is null")) {
+                        Logger.info("unable to hide!", ex);
+                    }
+                    else {
+                        Logger.warn("unable to hide!", ex);
+                    }
+                }
+            }
             return;
         }
 
@@ -47,5 +62,15 @@ public class LoadingScreen {
         }
 
         instance = null;
+    }
+
+    private static boolean hasMessage(Throwable ex, String message) {
+        while (ex != null) {
+            if (ex.getMessage() != null && ex.getMessage().contains(message)) {
+                return true;
+            }
+            ex = ex.getCause();
+        }
+        return false;
     }
 }
