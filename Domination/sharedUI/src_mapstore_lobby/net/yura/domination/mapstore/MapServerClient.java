@@ -102,6 +102,7 @@ public class MapServerClient extends HTTPClient {
         if (    ex instanceof UnknownHostException ||
                 ex instanceof SocketTimeoutException ||
                 ex instanceof ConnectException ||
+                responseCode == 502 || // Bad Gateway
                (ex instanceof EOFException && responseCode == 0) || // end of stream during getResponseCode
                // "java.io.IOException: unexpected end of stream on com.android.okhttp.Address@b7996b41" "Caused by: java.io.EOFException: \n not found: size=0 content=..."
                (ex instanceof IOException && responseCode == 0 && ex.getCause() instanceof EOFException) || // end of stream during getResponseCode
