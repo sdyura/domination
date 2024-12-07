@@ -297,7 +297,7 @@ public class RiskUtil {
                         }
                 }
                 catch (RuntimeException ex) {
-                    System.err.println("Error trying to load: " + fileName);
+                    System.out.println("Error trying to load: " + fileName);
                     throw ex;
                 }
                 finally {

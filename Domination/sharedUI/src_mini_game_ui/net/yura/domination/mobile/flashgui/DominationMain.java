@@ -683,6 +683,7 @@ public class DominationMain extends Application {
                     final File autoSaveFile = DominationMain.getAutoSaveFile();
                     final File tempSaveFile = new File(autoSaveFile.getParent(), autoSaveFile.getName() + ".part");
 
+                    // WARNING! we may be in the middle of a large annihilation battle, with both sides rolling dice
                     risk.parserAndWait("savegame " + DominationMain.getAutoSaveFile() + ".part");
                     // if we may have closed the game while also closing the activity
                     // the save probably failed, and the rename will fail for sure.

@@ -414,7 +414,10 @@ public class GameWindow extends Frame implements ActionListener {
                     RiskUtil.streamOpener.getMap(mapFile, new Observer() {
                         public void update(Observable o, Object arg) {
                             if (arg == RiskUtil.SUCCESS) {
-                                startGame(localGame);
+                                // user may have closed game as they got tired of waiting, then do nothing
+                                if (myrisk.getGame() == null) {
+                                    startGame(localGame);
+                                }
                             }
                             else {
                                 OptionPane.showMessageDialog(null, "error downloading map", null, OptionPane.ERROR_MESSAGE);
