@@ -180,7 +180,7 @@ public class MapChooser implements ActionListener,MapServerListener {
                             map.setMapUrl(file);
                             map.setName(file);
                             riskmaps.add(map);
-/*
+
                             // we are not in UI thread here, in Desktop mode we may not have a UI at all yet
                             OptionPane.showConfirmDialog(new ActionListener() {
                                 public void actionPerformed(String actionCommand) {
@@ -188,8 +188,8 @@ public class MapChooser implements ActionListener,MapServerListener {
                                         RiskUtil.streamOpener.deleteMapFile(file);
                                     }
                                 }
-                            }, "Error with: " + file + ". Delete?", "Map Error", OptionPane.OK_CANCEL_OPTION);
- */
+                            }, "Error in file: " + file + ". Delete?", "Map Error", OptionPane.OK_CANCEL_OPTION);
+
                         }
                     }
 

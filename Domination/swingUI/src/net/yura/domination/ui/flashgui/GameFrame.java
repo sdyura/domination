@@ -36,7 +36,9 @@ import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.event.MouseInputAdapter;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
@@ -459,6 +461,13 @@ public class GameFrame extends JFrame implements KeyListener {
 		flashPanel.add(fpRight,BorderLayout.EAST);
 
 		getContentPane().add( flashPanel );
+                
+                this.getRootPane().registerKeyboardAction(new ActionListener() {//this, is a JFrame
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        savebutton.doClick();
+                    }
+                }, KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), JComponent.WHEN_IN_FOCUSED_WINDOW );
 	}
 
         public void setExtraAction(Action action) {
