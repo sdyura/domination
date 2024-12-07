@@ -415,7 +415,7 @@ public class GameWindow extends Frame implements ActionListener {
                         public void update(Observable o, Object arg) {
                             if (arg == RiskUtil.SUCCESS) {
                                 // user may have closed game as they got tired of waiting, then do nothing
-                                if (myrisk.getGame() == null) {
+                                if (myrisk.getGame() != null) {
                                     startGame(localGame);
                                 }
                             }
