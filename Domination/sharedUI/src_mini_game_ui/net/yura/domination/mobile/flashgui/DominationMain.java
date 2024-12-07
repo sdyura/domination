@@ -187,6 +187,10 @@ public class DominationMain extends Application {
                             // android.os.DeadObjectException
                             return true;
                         }
+                        if ("android.widget.directwriting.DirectWritingServiceBinder".equals(className) && "onStartRecognition".equals(methodName)) {
+                            // ERR: java.lang.NullPointerException: null cannot be cast to non-null type com.samsung.android.directwriting.service.DirectWritingServiceCallbackImpl
+                            return true;
+                        }
                         if ("com.samsung.android.content.clipboard.SemClipboardManager".equals(className) && "isEnabled".equals(methodName)) {
                             // java.lang.SecurityException: Permission Denial: getCurrentUser() from pid=31156, uid=10245 requires android.permission.INTERACT_ACROSS_USERS
                             return true;
