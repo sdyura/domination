@@ -796,21 +796,26 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
                 }
             }
             else if (message instanceof byte[]) {
+                Object object = null;
                 try {
                     ByteArrayInputStream in = new ByteArrayInputStream( (byte[])message );
                     ObjectInputStream oin = new ObjectInputStream(in);
-                    Object object = oin.readObject();
-                    game.objectForGame(object);
+                    object = oin.readObject();
                 }
                 catch (Exception ex) {
-                    throw new RuntimeException("objectForGame error for game: " + gameid, ex);
+                    logger.log(Level.WARNING, "serialization error for game: " + gameid, ex);
+                    error("unable to open game " + gameid + ": " + ex);
+                    closeGame();
                 }
                 catch (StackOverflowError error) {
                     // this happens on large maps on android, so far i have not found a way round this
-                    logger.log(Level.WARNING, "objectForGame error for game: " + gameid, error);
+                    logger.log(Level.WARNING, "serialization StackOverflowError for game: " + gameid, error);
                     error("device unable to open large game " + gameid + ": " + error);
                     closeGame();
                 }
+
+                // we want to ALWAYS call objectForGame, as that closes the loading screen
+                game.objectForGame(object);
             }
             else {
                 throw new RuntimeException("unknown object "+message);

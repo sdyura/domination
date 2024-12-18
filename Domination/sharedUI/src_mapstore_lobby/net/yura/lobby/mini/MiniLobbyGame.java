@@ -33,6 +33,9 @@ public interface MiniLobbyGame {
      */
     void prepareAndOpenGame(Game game);
 
+    /**
+     * @param object for game, if serialization error then null
+     */
     void objectForGame(Object object);
     void stringForGame(String message);
 
