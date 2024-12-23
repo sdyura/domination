@@ -121,7 +121,7 @@
 			<fileset dir="." targetdir="$INSTALL_PATH" os="windows" includes="*.cmd,*.exe"/>
 			<fileset dir="." targetdir="$INSTALL_PATH" os="unix" includes="*.sh"/>
 			<fileset dir="." targetdir="$INSTALL_PATH" os="mac" includes="mac.command,*.app/**"/>
-			<fileset dir="." targetdir="$INSTALL_PATH" os="mac" includes="**/._*" defaultexcludes="no"/>
+			<fileset dir="." targetdir="$INSTALL_PATH" os="mac" includes="**/._*" defaultexcludes="false"/>
 
 			<!-- set the executable flag on unix -->
 
