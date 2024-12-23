@@ -2362,19 +2362,12 @@ RiskUtil.printStackTrace(e);
         }
 
 	public void disconnected() {
-		//System.out.print("Got kicked off the server!\n");
-                try {
-                    // if close the game, we may be right in the middle of processing a game command right now
-                    parserAndWait("closegame");
-                }
-                catch (InterruptedException e) {
-                    // this should never happen, but just in case, we want to shutdown the game
-                    logger.log(Level.WARNING, "InterruptedException during disconnected closegame", e);
-                    closeGame();
-                    getInput();
-                }
+		logger.info("disconnected from the server!!");
 
-                controller.sendMessage(resb.getString( "core.kicked.error.disconnected"),false,false);
+                controller.sendMessage(resb.getString("core.kicked.error.disconnected"), false, false);
+
+                // if close the game, we may be right in the middle of processing a game command right now
+                parser("closegame");
 	}
 
         private void updateBattleState() {
