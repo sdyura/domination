@@ -67,6 +67,7 @@ import net.yura.domination.guishared.RiskFileFilter;
 import net.yura.domination.guishared.StatsPanel;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.tools.mapeditor.MapEditor;
+import net.yura.swing.HeapView;
 
 /**
  * <p> Swing GUI Main Frame </p>
@@ -1089,6 +1090,7 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
 		gc.setActionCommand("gc");
 		gc.addActionListener(this);
 
+                HeapView hv = new HeapView();
 
 
 		toolbarDebug.add(tdSaveDebug);
@@ -1101,6 +1103,7 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
                 toolbarDebug.add(cr);
                 toolbarDebug.addSeparator();
                 toolbarDebug.add(gc);
+                toolbarDebug.add(hv);
 
 		toolbarDebug.setFloatable(false);
 
