@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -132,7 +133,7 @@ public class MiniUtil {
 
     private static String getLabelForUrl(String url) {
         if (url.startsWith("file:/")) {
-            return url;
+            return JavaCompatUtil.replaceAll(url, "%20", " ");
         }
         try {
             FileConnection fileConnection = FileUtil.getReadFileConnection(url);
