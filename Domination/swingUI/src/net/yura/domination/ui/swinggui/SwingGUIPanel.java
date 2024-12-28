@@ -468,7 +468,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                     Map map = new HashMap();
                     RiskGame game = myrisk.getGame();
                     if (game != null) {
-                        map.put("gameLog", new net.yura.grasshopper.LogList(game.getCommands()));
+                        map.put("gameLog", new net.yura.grasshopper.info.LogList(game.getCommands()));
                     }
                     if (messageFromUser != null) {
                         map.put("messageFromUser" , messageFromUser);
@@ -481,7 +481,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
                         map.put("recipient", to);
                     }
 
-                    boolean success = net.yura.grasshopper.BugSubmitter.submitBug(map, from, subject, cause, RiskUtil.GAME_NAME,
+                    boolean success = net.yura.grasshopper.submitter.BugSubmitter.submitBug(map, from, subject, cause, RiskUtil.GAME_NAME,
                             RiskUtil.RISK_VERSION, TranslationBundle.getBundle().getLocale().toString()
                         );
                     
@@ -1225,7 +1225,7 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
                         public void flush() { }
                         public void close() { }
                     }, new net.yura.grasshopper.BugManager() {
-                        public void action(String thecause) {
+                        public void action(String thecause, int actionCount) {
                                 cause = thecause;
                                 int nom = tabbedpane.indexOfComponent(DebugTab.this);
 

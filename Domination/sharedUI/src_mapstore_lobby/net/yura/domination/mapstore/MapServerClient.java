@@ -64,10 +64,11 @@ public class MapServerClient extends HTTPClient {
 
     // this stop imagees being fucked by operators
     // http://benvallack.com/notebook/how-to-fix-poor-image-quality-compression-when-using-tmobile-web-n-walk-on-a-mac/
+    // https://serverfault.com/questions/752846/how-to-prevent-compression-of-images-served-via-http
     static final Hashtable headers = new Hashtable();
     static {
-        headers.put("Cache-Control", "no-cache");
-        headers.put("Pragma", "no-cache");
+        headers.put("Cache-Control", "no-transform, no-cache, no-store, private, max-age=0");
+        headers.put("Pragma", "no-cache"); // for backwards compatibility with HTTP/1.0 caches that do not support the Cache-Control HTTP/1.1 header.
     }
 
     MapServerListener listener;

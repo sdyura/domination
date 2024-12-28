@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		16
-	Android:	98
+	Android:	99
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -33,6 +33,8 @@ CURRENT VERSION:
 	iOS 16 Sound
 	       Player card info on main screen
 	       Can add custom maps through Files app
+
+	Android 99 handle lobby disconnections better
 
 	Android 98 fix for images sometimes not loading
 

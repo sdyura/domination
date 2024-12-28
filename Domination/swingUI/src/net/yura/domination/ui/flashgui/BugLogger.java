@@ -23,7 +23,7 @@ public class BugLogger {
                         RiskUtil.RISK_VERSION+" FlashGUI" // "(save: " + RiskGame.SAVE_VERSION + " network: "+RiskGame.NETWORK_VERSION+")"
                         , TranslationBundle.getBundle().getLocale().toString());
 
-                net.yura.grasshopper.BugSubmitter.setApplicationInfoProvider(new net.yura.grasshopper.ApplicationInfoProvider() {
+                net.yura.grasshopper.submitter.BugSubmitter.setApplicationInfoProvider(new net.yura.grasshopper.info.ApplicationInfoProvider() {
                     public void addInfoForSubmit(Map map) {
                         // TODO SwingGUI should also prob send this
                         map.put("lobbyID", net.yura.lobby.mini.MiniLobbyClient.getMyUUID());

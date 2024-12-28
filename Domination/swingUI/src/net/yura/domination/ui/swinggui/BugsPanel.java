@@ -24,7 +24,7 @@ import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.guishared.RiskUIUtil;
-import net.yura.grasshopper.BugSubmitter;
+import net.yura.grasshopper.submitter.BugSubmitter;
 
 /**
  * @author Yura Mamyrin
