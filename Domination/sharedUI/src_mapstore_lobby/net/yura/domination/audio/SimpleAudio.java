@@ -24,7 +24,8 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
 
     Map<String, Player> currentMusicPlayers = new HashMap(); // filename -> player
 
-    private boolean outOfMemoryError;
+    private int consecutiveStartErrors;
+    private boolean fatalAudioSystemError;
 
     /**
      * we need a single thread for starting and stopping music
@@ -71,7 +72,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
     }
 
     public void play(final String fileName) {
-        if (outOfMemoryError) return;
+        if (fatalAudioSystemError) return;
 
         purge(soundThread.getQueue(), fileName);
 
@@ -84,12 +85,12 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
                     player = getPlayer(fileName);
                     player.addPlayerListener(SimpleAudio.this);
                     player.start(); // can throw oom
+                    consecutiveStartErrors = 0;
                 }
                 catch (Exception ex) {
                     startError(fileName, player, ex);
                 }
                 catch (Error oom) { // OutOfMemoryError and NoClassDefFoundError
-                    outOfMemoryError = true;
                     startError(fileName, player, oom);
                 }
             }
@@ -106,7 +107,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
      */
     @Override
     public void start(final String fileName) {
-        if (outOfMemoryError) return;
+        if (fatalAudioSystemError) return;
 
         purge(musicThread.getQueue(), fileName);
 
@@ -119,12 +120,12 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
                     player.setLoopCount(-1);
                     currentMusicPlayers.put(fileName, player);
                     player.start(); // can throw oom
+                    consecutiveStartErrors = 0;
                 }
                 catch (Exception ex) {
                     startError(fileName, player, ex);
                 }
                 catch (Error oom) { // OutOfMemoryError and NoClassDefFoundError
-                    outOfMemoryError = true;
                     startError(fileName, player, oom);
                 }
             }
@@ -136,6 +137,15 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
     }
     
     private void startError(String fileName, Player player, Throwable ex) {
+        consecutiveStartErrors++;
+        if (ex instanceof Error) { // OutOfMemoryError and NoClassDefFoundError
+            fatalAudioSystemError = true;
+        }
+        if (consecutiveStartErrors > 10) {
+            // we can get some very random errors, maybe the computer has no sound card
+            // java.lang.IllegalArgumentException: No line matching interface Clip supporting format PCM_SIGNED unknown sample rate, 16 bit, stereo, 4 bytes/frame, big-endian is supported. 
+            fatalAudioSystemError = true;
+        }
         LOGGER.log(Level.WARNING, "unable to play " + fileName, ex);
         try {
             currentMusicPlayers.remove(fileName);
