@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -89,5 +90,25 @@ public class JavaCompatUtil {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * @see String#join(java.lang.CharSequence, java.lang.CharSequence...)
+     */
+    public static String join(Collection list, String delimiter) {
+        Iterator i = list.iterator();
+        if (! i.hasNext()) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (;;) {
+            Object e = i.next();
+            sb.append(e);
+            if (!i.hasNext()) {
+                return sb.toString();
+            }
+            sb.append(delimiter);
+        }
     }
 }

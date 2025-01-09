@@ -4,7 +4,10 @@ package net.yura.domination.guishared;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.filechooser.FileFilter;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 
 /**
@@ -20,10 +23,10 @@ public class RiskFileFilter extends FileFilter implements FilenameFilter {
 	public final static String RISK_LOG_FILES		="log";
 	//public final static String RISK_PROPERTIES_FILES	="properties";
 
-	private String extension = null;
+	private final String[] extensions;
 
-	public RiskFileFilter(String ext) {
-		extension = ext;
+	public RiskFileFilter(String... ext) {
+		extensions = ext;
 	}
 
 	public boolean accept(File f) {
@@ -35,16 +38,14 @@ public class RiskFileFilter extends FileFilter implements FilenameFilter {
 		String ext = getExtension(f);
 
 		if (ext != null) {
-			if (ext.equals( extension )) {
-				return true;
-			}
-			else {
-				return false;
-			}
+                    for (String e : extensions) {
+                        if (ext.equals(e)) {
+                            return true;
+                        }
+                    }
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -55,36 +56,30 @@ public class RiskFileFilter extends FileFilter implements FilenameFilter {
 
 		String name;
 
-		if ( extension.equals(RISK_MAP_FILES) ) {
+                if (extensions[0].equals(RISK_MAP_FILES)) {
+                        name = resb.getString("riskfilefilter.map");
+                }
+                else if (extensions[0].equals(RISK_CARDS_FILES)) {
+                        name = resb.getString("riskfilefilter.cards");
+                }
+                else if (extensions[0].equals(RISK_SAVE_FILES)) {
+                        name = resb.getString("riskfilefilter.save");
+                }
+                else if (extensions[0].equals(RISK_SCRIPT_FILES)) {
+                        name = resb.getString("riskfilefilter.script");
+                }
+                else if (extensions[0].equals(RISK_LOG_FILES)) {
+                        name = resb.getString("riskfilefilter.log") ;
+                }
+                else {
+                        name = resb.getString("riskfilefilter.files");
+                }
 
-			name = resb.getString("riskfilefilter.map");
-		}
-		else if ( extension.equals(RISK_CARDS_FILES) ) {
-
-			name = resb.getString("riskfilefilter.cards");
-		}
-		else if ( extension.equals(RISK_SAVE_FILES) ) {
-
-			name = resb.getString("riskfilefilter.save");
-		}
-		else if ( extension.equals(RISK_SCRIPT_FILES) ) {
-
-			name = resb.getString("riskfilefilter.script");
-		}
-		else if ( extension.equals(RISK_LOG_FILES) ) {
-
-			name = resb.getString("riskfilefilter.log") ;
-		}
-		else {
-			name = resb.getString("riskfilefilter.files");
-		}
-
-		return name + " (*."+extension+")";
-
-	}//public String getDescription()
-
-	public String getExtension() {
-		return extension;
+                List types = new ArrayList();
+                for (String e : extensions) {
+                    types.add("*." + e);
+                }
+		return name + " (" + JavaCompatUtil.join(types, ", ") + ")";
 	}
 
 	/**

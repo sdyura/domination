@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.RiskGame;
@@ -259,20 +260,7 @@ public class GameSettings implements GameSettingsMXBean {
      * then the returned string will be "hello,world"
      */
     private static <E> String toOptionString(Collection<E> list) {
-        Iterator<E> i = list.iterator();
-        if (! i.hasNext()) {
-            return "";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (;;) {
-            E e = i.next();
-            sb.append(e);
-            if (!i.hasNext()) {
-                return sb.toString();
-            }
-            sb.append(",");
-        }
+        return JavaCompatUtil.join(list, ",");
     }
 
     ServerRisk getServerGame(int id) {

@@ -553,12 +553,12 @@ public class RiskUIUtil {
             return getNewMapsFile(f, RiskFileFilter.RISK_MAP_FILES);
         }
 
-        public static String getNewMapsFile(Frame f,String extension) {
+        public static String getNewMapsFile(Frame f, String... extension) {
             if (checkForNoSandbox()) {
                 return getNewMapsFileNoSandbox(f, extension);
             }
             else {
-                return getNewFileInSandbox(f, extension);
+                return getNewFileInSandbox(f, extension[0]);
             }
         }
         
@@ -575,7 +575,7 @@ public class RiskUIUtil {
          * Used if the MapStore fails, also used in the map editor
          * and also for selecting the cards file
          */
-        public static String getNewMapsFileNoSandbox(Frame f, String extension) {
+        public static String getNewMapsFileNoSandbox(Frame f, String... extension) {
             File md = getFile(mapsdir);
             File file = getFileOpenDialog(f, md, extension);
 
@@ -588,7 +588,7 @@ public class RiskUIUtil {
             return file.getPath();
         }
 
-        public static File getFileOpenDialog(Frame parent, File directory, String extension) {
+        public static File getFileOpenDialog(Frame parent, File directory, String... extension) {
             RiskFileFilter filter = new RiskFileFilter(extension);
             java.io.File file;
 
@@ -631,9 +631,9 @@ public class RiskUIUtil {
             return new File(fileDialog.getDirectory(), filename);
         }
 
-	public static String getNewFileInSandbox(Frame f,String a) {
+	public static String getNewFileInSandbox(Frame f, String type) {
 
-            List namesvector = getFileList(a);
+            List namesvector = getFileList(type);
 
             JComboBox combobox = new JComboBox( JavaCompatUtil.asVector(namesvector) );
 
@@ -649,7 +649,7 @@ public class RiskUIUtil {
             int result = JOptionPane.showOptionDialog(
                     f,				// the parent that the dialog blocks
                     message,			// the dialog message array
-                    "select "+a,			// the title of the dialog window
+                    "select " + type,			// the title of the dialog window
                     JOptionPane.OK_CANCEL_OPTION,	// option type
                     JOptionPane.QUESTION_MESSAGE,	// message type
                     null,				// optional icon, use null to use the default icon
