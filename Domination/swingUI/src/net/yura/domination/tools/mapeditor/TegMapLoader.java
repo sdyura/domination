@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
@@ -94,6 +95,11 @@ public class TegMapLoader {
                         drawTegCountry(g, countryImage, continentX+pos_x, continentY+pos_y);
                         g.dispose();
 
+                        // m3 map for unkown reasons has armies_pos in old coordinates of m2 map
+                        if (armiesPos != null && new Rectangle(continentX+pos_x, continentY+pos_y, countryImage.getWidth(), countryImage.getHeight()).contains(armiesPos)) {
+                            armiesPos = null;
+                        }
+
                         Color color = new Color(countryId+1, countryId+1, countryId+1);
                         FilteredImageSource filteredSrc = new FilteredImageSource(countryImage.getSource(), new ImgMapFilter(color.getRGB()));
                         Image image = Toolkit.getDefaultToolkit().createImage(filteredSrc);
@@ -130,7 +136,12 @@ public class TegMapLoader {
                     //<armies_pos x="358" y="24" background="false" dragable="false"/>
                     String x = parser.getAttributeValue(null, "x");
                     String y = parser.getAttributeValue(null, "y");
-                    armiesPos = new Point(Integer.parseInt(x), Integer.parseInt(y));
+                    String background = parser.getAttributeValue(null, "background");
+                    String dragable = parser.getAttributeValue(null, "dragable");
+                    // in 'modern' theme there is not enough room for armies info
+                    if (background != null && dragable != null) {
+                        armiesPos = new Point(Integer.parseInt(x), Integer.parseInt(y));
+                    }
                 }
 
                 // read end tag
@@ -157,8 +168,7 @@ public class TegMapLoader {
         editor.setImagePic(board, null, false);
         editor.setImageMap(imgMap);
     }
-    
-    
+
     int convertContinentId(int tegId) {
         switch(tegId) {
             case 0: return 1; // South-America
@@ -167,7 +177,7 @@ public class TegMapLoader {
             case 3: return 5; // Australia/Oceania
             case 4: return 2; // Europe
             case 5: return 4; // Asia
-            default: throw new RuntimeException("strange teg id " + tegId);
+            default: throw new IllegalArgumentException("strange teg id " + tegId);
         }
     }
 
