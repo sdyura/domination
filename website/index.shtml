@@ -23,14 +23,6 @@ and that I can continue to provide a high quality online board gaming experience
 
         <h2>News:</h2>
 
-
-<div class='thumbnail2'>
-
-<a href="images/manvmarmot.jpg"><img src="images/manvmarmot_small.jpg" border="1" width="200" height="138"><br>Man V Marmot</a>
-
-</div>
-
-
 <!--
 see the ChangeLog for more info.
 See the updated ChangeLog for details.
@@ -38,13 +30,20 @@ Check the ChangeLog for more information.
 To find out the rest of the changes please check out the ChangeLog.
 Now, go check it out! The ChangeLog is lonely. Go visit it, too. 
 -->
-    <p>08.05.2024 Domination 1.3.1 released, Sound and Music have been added to the game, Huge thanks to Dom Sigma for all your hard work!
 
-    <p>04.08.2023 Domination 1.2.9 released, contains many fixes for macOS and allows you to fully control troop numbers for local games in case you want to base them on something external to the rules. Video demonstrating how to control troop number <a href="https://www.youtube.com/watch?v=xABcdKCZFjs">here</a>.
+    <p>10.01.2025 Android version 99 is out! After being gone from the PlayStore over new year because Google has broken the yura.net Publisher account, I have had to move the game to another account to keep it still available. Thanks to Wolfgang Morawetz for helping me with this.</p>
+
+    <p>08.05.2024 Domination 1.3.1 released, Sound and Music have been added to the game, Huge thanks to Dom Sigma for all your hard work!</p>
+
+    <p>04.08.2023 Domination 1.2.9 released, contains many fixes for macOS and allows you to fully control troop numbers for local games in case you want to base them on something external to the rules. Video demonstrating how to control troop number <a href="https://www.youtube.com/watch?v=xABcdKCZFjs">here</a>.</p>
 
     <p>23.06.2023 New PC/Mac update, Domination 1.2.8 brings bug fixes for windows OS and MapEditor improvements.</p>
 
     <p>18.02.2023 New version of Domination for iOS (11) and android (87) is out! With a fresh new UI designed by Andry Green.</p>
+
+    <div class='thumbnail2'>
+        <a href="images/manvmarmot.jpg"><img src="images/manvmarmot_small.jpg" border="1" width="200" height="138"><br>Man V Marmot</a>
+    </div>
 
     <p>01.01.2023 This years sponsor of iOS Domination is Alan Tyler with Man V Marmot!</p>
 
