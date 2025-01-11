@@ -11,6 +11,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -20,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.RootPaneContainer;
 import javax.swing.event.MouseInputListener;
 import net.yura.domination.audio.GameSound;
@@ -127,6 +130,15 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 		hand = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 		defaultCursor = getCursor();
+                
+                JPopupMenu rightClickMenu = new JPopupMenu();
+                rightClickMenu.add(resBundle.getString("swing.menu.options")).addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        fra.getGameFrame().openOptions();
+                    }
+                });
+                setComponentPopupMenu(rightClickMenu);
                 
                 showMainMenu();
 	}
