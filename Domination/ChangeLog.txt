@@ -14,7 +14,7 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.3.2 (11.01.2025) (svn rev 2612)
+1.3.2 (11.01.2025) (svn rev 2614)
 
 	music update for menu and winning
 	better loading screens when loading online games and downloading maps

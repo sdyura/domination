@@ -33,7 +33,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -417,13 +417,13 @@ public class HeapView extends JComponent {
      * @param height The height of the chart
      */
     private void paintSamples(Graphics2D g, int width, int height) {
-        Path2D path = new Path2D.Double();
+        GeneralPath path = new GeneralPath();
         path.moveTo(0, height);
         for (int i = 0; i < GRAPH_COUNT; ++i) {
             int index = (i + graphIndex) % GRAPH_COUNT;
             double x = (double) i / (double) (GRAPH_COUNT - 1) * (double) width;
             double y = (double) height * (1.0 - (double) graph[index] / (double) lastTotal);
-            path.lineTo(x, y);
+            path.lineTo((float)x, (float)y);
         }
         path.lineTo(width, height);
         path.closePath();
