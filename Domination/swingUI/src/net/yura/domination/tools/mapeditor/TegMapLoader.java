@@ -115,6 +115,10 @@ public class TegMapLoader {
                         country.setX( continentX+pos_x+  (countryImage.getWidth()/2)  +(armyX/2) );
                         country.setY( continentY+pos_y+  (countryImage.getHeight()/2)  +(armyY/2) );
 
+                        if (country.getContinent() != continent) {
+                            throw new IllegalStateException("continent does not match for " + country + " " +country.getContinent() + "!=" + continent);
+                        }
+                        
                         countryId++;
                     }
                     // read end tag

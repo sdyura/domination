@@ -534,10 +534,11 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 
 			if (name!=null) {
                             if (name.endsWith(".xml")) {
-                                loadMap("teg.map");
                                 File file = new File(name);
+                                // we load a base map, it HAS to have the same order of countries!
+                                loadMap("teg.map");
                                 TegMapLoader loader = new TegMapLoader();
-                                loader.load( file , myMap , this);
+                                loader.load(file , myMap , this);
                                 myMap.setMapName(null);
                                 myMap.setPreviewPic(null);
                                 fileName = file.getParentFile().getName();
