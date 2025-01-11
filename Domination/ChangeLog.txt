@@ -14,9 +14,9 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.3.3
+1.3.3 (11.01.2025) (svn rev 2616)
 
-	Linux audio fixed
+	Linux audio fix
 
 1.3.2 (11.01.2025) (svn rev 2614)
 
