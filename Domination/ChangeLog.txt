@@ -2,7 +2,7 @@ Risk - Yura Mamyrin (yura@yura.net)
 
 CURRENT VERSION:
 
-	Risk Game:	1.3.2
+	Risk Game:	1.3.3
 	 * Network:	14
 	 * Save:	8
 
@@ -13,6 +13,10 @@ CURRENT VERSION:
 	Simple GUI:	2
 	Increment1GUI:	2
 	CommandLine:	2
+
+1.3.3
+
+	Linux audio fixed
 
 1.3.2 (11.01.2025) (svn rev 2614)
 

@@ -146,7 +146,9 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
             // java.lang.IllegalArgumentException: No line matching interface Clip supporting format PCM_SIGNED unknown sample rate, 16 bit, stereo, 4 bytes/frame, big-endian is supported. 
             fatalAudioSystemError = true;
         }
-        LOGGER.log(Level.WARNING, "unable to play " + fileName, ex);
+        // sometimes we try everything and we just cant play a sound
+        // java.lang.IllegalArgumentException: Mixer not supported: null
+        LOGGER.log(Level.INFO, "unable to play " + fileName, ex);
         try {
             currentMusicPlayers.remove(fileName);
             if (player != null) {
