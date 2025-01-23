@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.3.4
 
 	better fallbacks for audio not loading from url
+	fix for small screen Domination not loading sound when space in path
 
 1.3.3 (11.01.2025) (svn rev 2616)
 
