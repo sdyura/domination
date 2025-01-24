@@ -14,9 +14,11 @@ Check GameGUI, SwingGUI and Domination4ME runs on all systems:
 
 Check game runs when run from wrong folder:
 $ java -jar build/game/Domination.jar
+$ java -cp build/game/Domination.jar net.yura.domination.ui.swinggui.SwingGUIFrame
 
 Check game runs without any libs or resources
 $ java -jar dist/Domination.jar
+$ java -cp dist/Domination.jar net.yura.domination.ui.swinggui.SwingGUIFrame
 
 
 

@@ -118,48 +118,21 @@
 	<bind style="itemStyle" type="region" key="ListRendererCollapsed"/>
 -->
 
-    <style id="view">
-	   <opaque value="false"/>
-	   <state>
-	      <imagePainter path="/shadow.9.png"/>
-	   </state>
+    <style id="tankButton">
+	<state>
+	    <font name="PROPORTIONAL" size="MEDIUM" style="BOLD"/>
+	    <color type="FOREGROUND" value="#ffffff"/>
+	    <property key="margin" type="integer" value="0"/>
+	</state>
     </style>
-    <bind style="view" type="region" key="PicturePanel"/>
+    <bind style="tankButton" type="region" key="TankButton"/>
 
-    <style id="transPanel">
-	   <state>
-	      <color value="#AA000000" type="BACKGROUND"/>
-              <color value="#FFFFFF" type="FOREGROUND"/>
-	   </state>
+    <style id="newGamePanel">
+        <state>
+            <color value="#BBFFFFFF" type="BACKGROUND"/>
+        </state>
     </style>
-    <bind style="transPanel" type="region" key="TransPanel"/>
-
-	<style id="newGamePanel">
-		<state>
-			<color value="#BBFFFFFF" type="BACKGROUND"/>
-		</state>
-	</style>
-	<bind style="newGamePanel" type="region" key="NewGamePanel"/>
-
-
-    <style id="actionbarMenuButton">
-	   <state>
-	      <imagePainter method="buttonBackground" path="/menu_button.9.png" />
-	   </state>
-           <state value="FOCUSED">
-              <imagePainter method="buttonBackground" path="/menu_button_pressed.9.png" />
-           </state>
-    </style>
-    <bind style="actionbarMenuButton" type="region" key="ActionbarMenuButton"/>
-
-	<style id="actionbarBackButton">
-		<insets top="10" left="10" bottom="10" right="10"/>
-		<state value="FOCUSED">
-			<color value="#994f5b85" type="BORDERFILL"/>
-		</state>
-	</style>
-	<bind style="actionbarBackButton" type="region" key="ActionbarBackButton"/>
-
+    <bind style="newGamePanel" type="region" key="NewGamePanel"/>
 
     <style id="spinner">
       <insets top="5" left="25" bottom="5" right="25"/>
@@ -179,20 +152,63 @@
     </style>
     <bind style="spinner" key="Spinner"/>
 
+    <style id="opaqueDialog">
+        <insets top="5" left="15" bottom="5" right="15"/>
+        <state>
+            <imagePainter path="/opaque_dialog.png" sourceInsets="10 10 10 10" paintCenter="false"/>
+            <color type="BORDERFILL" value="#ffffff"/>
+            <color type="FOREGROUND" value="#000000"/>
+        </state>
+    </style>
+    <bind style="opaqueDialog" key="OpaqueDialog"/>
 
-    <style id="tankButton">
+    <style id="view">
+        <opaque value="false"/>
+        <state>
+            <imagePainter path="/shadow.9.png"/>
+        </state>
+    </style>
+    <bind style="view" type="region" key="PicturePanel"/>
+
+    <style id="transPanel">
+        <state>
+            <color value="#AA000000" type="BACKGROUND"/>
+            <color value="#FFFFFF" type="FOREGROUND"/>
+        </state>
+    </style>
+    <bind style="transPanel" type="region" key="TransPanel"/>
+
+    <style id="inheritForeground">
 	<state>
-	    <font name="PROPORTIONAL" size="MEDIUM" style="BOLD"/>
-	    <color type="FOREGROUND" value="#ffffff"/>
-	    <property key="margin" type="integer" value="0"/>
+            <!-- disable any theme color, and take the forground from the parent -->
+            <color type="FOREGROUND"/>
 	</state>
     </style>
-    <bind style="tankButton" type="region" key="TankButton"/>
+    <bind style="inheritForeground" type="region" key="GoNote"/>
+    <bind style="inheritForeground" type="region" key="Panel"/>
 
+    <style id="actionbarMenuButton">
+        <state>
+            <imagePainter method="buttonBackground" path="/menu_button.9.png" />
+        </state>
+        <state value="FOCUSED">
+            <imagePainter method="buttonBackground" path="/menu_button_pressed.9.png" />
+        </state>
+    </style>
+    <bind style="actionbarMenuButton" type="region" key="ActionbarMenuButton"/>
+
+    <style id="actionbarBackButton">
+            <insets top="10" left="10" bottom="10" right="10"/>
+            <state value="FOCUSED">
+                    <color value="#994f5b85" type="BORDERFILL"/>
+            </state>
+    </style>
+    <bind style="actionbarBackButton" type="region" key="ActionbarBackButton"/>
 
     <style id="goButton">
 	<state>
 	    <imagePainter path="/go_button.9.png" />
+            <color type="FOREGROUND" value="#ffffff"/>
 	</state>
 	<state value="FOCUSED">
 	    <imagePainter path="/go_button_active.9.png" />
@@ -202,55 +218,6 @@
 	</state>
     </style>
     <bind style="goButton" type="region" key="GoButton"/>
-
-
-    <style id="card">
-	<state>
-	    <imagePainter path="/card.9.png" />
-	</state>
-	<state value="SELECTED">
-	    <imagePainter path="/card_active.9.png" />
-	</state>
-        <state value="DISABLED"> 
-	    <imagePainter path="/card_disabled.9.png" />
-	</state>
-    </style>
-    <bind style="card" type="region" key="Card"/>
-
-
-    <style id="cardsButton">
-	<imageIcon id="cards" path="/cards_button.png"/>
-	<imageIcon id="cards_active" path="/cards_button_active.png"/>
-	<imageIcon id="cards_disabled" path="/cards_button_disabled.png"/>
-	<state>
-	    <property key="icon" value="cards"/>
-	</state>
-	<state value="FOCUSED">
-	    <property key="icon" value="cards_active"/>
-	</state>
-	<state value="DISABLED">
-	    <property key="icon" value="cards_disabled"/>
-	</state>
-    </style>
-    <bind style="cardsButton" key="CardsButton"/>
-
-
-    <style id="mustTradeButton">
-	<imageIcon id="cards_green" path="/cards_button_green.png"/>
-	<imageIcon id="cards_green_active" path="/cards_button_green_active.png"/>
-	<imageIcon id="cards_disabled" path="/cards_button_disabled.png"/>
-	<state>
-	    <property key="icon" value="cards_green"/>
-	</state>
-	<state value="FOCUSED">
-	    <property key="icon" value="cards_green_active"/>
-	</state>
-	<state value="DISABLED">
-	    <property key="icon" value="cards_disabled"/>
-	</state>
-    </style>
-    <bind style="mustTradeButton" key="MustTradeButton"/>
-
 
     <style id="hintButton">
 	<imageIcon id="mission" path="/mission_button.png"/>
@@ -268,15 +235,49 @@
     </style>
     <bind style="hintButton" key="HintButton"/>
 
+    <style id="cardsButton">
+	<imageIcon id="cards" path="/cards_button.png"/>
+	<imageIcon id="cards_active" path="/cards_button_active.png"/>
+	<imageIcon id="cards_disabled" path="/cards_button_disabled.png"/>
+	<state>
+	    <property key="icon" value="cards"/>
+	</state>
+	<state value="FOCUSED">
+	    <property key="icon" value="cards_active"/>
+	</state>
+	<state value="DISABLED">
+	    <property key="icon" value="cards_disabled"/>
+	</state>
+    </style>
+    <bind style="cardsButton" key="CardsButton"/>
 
-	<style id="opaqueDialog">
-		<insets top="5" left="15" bottom="5" right="15"/>
-		<state>
-			<imagePainter path="/opaque_dialog.png" sourceInsets="10 10 10 10" paintCenter="false"/>
-			<color type="BORDERFILL" value="#ffffff"/>
-			<color type="FOREGROUND" value="#000000"/>
-		</state>
-	</style>
-	<bind style="opaqueDialog" key="OpaqueDialog"/>
+    <style id="mustTradeButton">
+	<imageIcon id="cards_green" path="/cards_button_green.png"/>
+	<imageIcon id="cards_green_active" path="/cards_button_green_active.png"/>
+	<imageIcon id="cards_disabled" path="/cards_button_disabled.png"/>
+	<state>
+	    <property key="icon" value="cards_green"/>
+	</state>
+	<state value="FOCUSED">
+	    <property key="icon" value="cards_green_active"/>
+	</state>
+	<state value="DISABLED">
+	    <property key="icon" value="cards_disabled"/>
+	</state>
+    </style>
+    <bind style="mustTradeButton" key="MustTradeButton"/>
+
+    <style id="card">
+	<state>
+	    <imagePainter path="/card.9.png" />
+	</state>
+	<state value="SELECTED">
+	    <imagePainter path="/card_active.9.png" />
+	</state>
+        <state value="DISABLED"> 
+	    <imagePainter path="/card_disabled.9.png" />
+	</state>
+    </style>
+    <bind style="card" type="region" key="Card"/>
 
 </synth>
