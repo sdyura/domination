@@ -2,7 +2,9 @@ Release Checklist:
 
 Testing:
 
-Check GameGUI and SwingGUI runs on all systems:
+make sure game is installed in location that has space ' ' in path!
+
+Check GameGUI, SwingGUI and Domination4ME runs on all systems:
  - Windows Java 1.5 (check the oldest supported version of java)
  - Windows Java 21 (check new windows scaling works)
  - Linux Java 1.8 (check old linux audio system works)
@@ -15,10 +17,6 @@ $ java -jar build/game/Domination.jar
 
 Check game runs without any libs or resources
 $ java -jar dist/Domination.jar
-
-Check small screen game works
-$ cd build/game
-$ java -jar Domination4ME.jar
 
 
 
