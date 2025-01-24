@@ -3,6 +3,7 @@ package net.yura.domination.mobile.flashgui;
 import java.util.List;
 import java.util.Locale;
 import java.io.File;
+import javax.microedition.lcdui.Image;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
@@ -44,7 +45,8 @@ public class MainMenu extends Frame implements ActionListener {
 
     public static final Border background;
     static {
-        background = new BackgroundBorder(Application.createImage("/war_blood.png"));
+        Image bkg = Application.createImage("/war_blood.png");
+        background = bkg == null ? null : new BackgroundBorder(bkg);
     }
 
     public MainMenu(Risk risk,MiniFlashRiskAdapter controller) {
