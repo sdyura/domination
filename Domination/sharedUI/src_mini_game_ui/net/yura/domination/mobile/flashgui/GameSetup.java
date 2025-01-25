@@ -58,6 +58,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
         myrisk = risk;
         this.controller = controller;
         setMaximum(true);
+        addWindowListener(this);
 
         setBorder(MainMenu.background);
         setBackground( 0x00FFFFFF );
@@ -76,14 +77,14 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
     @Override
     public void actionPerformed(String actionCommand) {
 
-            if ("closegame".equals(actionCommand)) {
+            if (CMD_CLOSE.equals(actionCommand)) {
                 GameSound.INSTANCE.playSound(GameSound.BACK_BUTTON);
             }
             else if (!"startgame".equals(actionCommand)) {
                 GameSound.INSTANCE.playSound(GameSound.BUTTON);
             }
 
-            if ("closegame".equals(actionCommand)) { // user clicks back in game setup screen
+            if (CMD_CLOSE.equals(actionCommand)) { // user clicks back in game setup screen
         	if (localgame) {
         	    myrisk.parser("closegame");
         	}
