@@ -50,7 +50,7 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
         slider.addChangeListener(this);
 
         cancelMove = new Button(resb.getProperty("move.cancel"));
-        cancelMove.setActionCommand("cancel");
+        cancelMove.setActionCommand(CMD_CLOSE);
 
         final Button moveall = new Button(resb.getProperty("move.moveall"));
         moveall.setActionCommand("all");
@@ -73,7 +73,7 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
         contentPane.add(slider);
         contentPane.add(moveControl);
         setMaximum(true);
-
+        addWindowListener(this); // capture any window events, e.g. close
 
         setName("TransparentDialog");
         setForeground(0xFF000000);
@@ -122,7 +122,6 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
         }
 */
         revalidate();
-
     }
 
 
@@ -229,7 +228,6 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
         }
         
         g.drawScaledImage(img, x - w/2, y - h/2, w, h);
-
     }
 
     static ColorMatrix getMatrix(int color) {
@@ -243,10 +241,7 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
 
         boolean tacmove = myrisk.getGame().getState()==RiskGame.STATE_FORTIFYING;
 
-        if (actionCommand.equals("cancel")) {
-            setVisible(false);
-        }
-        else if (actionCommand.equals("all")) {
+        if ("all".equals(actionCommand)) {
             int src = myrisk.hasArmiesInt( c1num );
             if (tacmove) {
                     GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
@@ -257,7 +252,7 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
                     go("move " + (src-1) );
             }
         }
-        else if (actionCommand.equals("move")) {
+        else if ("move".equals(actionCommand)) {
             int move = ((Integer)slider.getValue());
             if (tacmove) {
                     GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
@@ -267,6 +262,15 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
                     GameSound.INSTANCE.playSound(GameSound.MOVE_ARMIES);
                     go("move " + move);
             }
+        }
+        else if (CMD_CLOSE.equals(actionCommand)) {
+            if (tacmove) {
+                setVisible(false);
+            }
+            // else we are not allowed to close, we HAVE to pick
+        }
+        else {
+            System.out.println("Unknown command in MoveDialog " + actionCommand);
         }
     }
     
@@ -286,7 +290,6 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
         }
 
         myrisk.parser(input);
-
     }
 
     @Override
@@ -305,8 +308,7 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
             this.imageAreaHeight = imageAreaHeight;
             gap = XULLoader.adjustSizeToDensity(7);
         }
-        
-        
+
         public void layoutPanel(Panel panel) {
 
             int heightOfComponents = getHeightOfComponents(panel);
@@ -328,7 +330,6 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
                     yOffset = yOffset + h + gap;
                 }
             }
-
         }
 
         public int getPreferredHeight(Panel panel) {
@@ -349,7 +350,5 @@ public class MoveDialog extends Frame implements ActionListener,ChangeListener {
             }
             return heightOfComponents;
         }
-            
     }
-    
 }

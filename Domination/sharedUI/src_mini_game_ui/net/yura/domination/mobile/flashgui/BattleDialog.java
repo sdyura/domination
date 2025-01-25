@@ -53,7 +53,7 @@ public class BattleDialog extends Frame implements ActionListener {
 
         retreat = new Button( resb.getProperty("battle.retreat") );
         retreat.addActionListener(this);
-        retreat.setActionCommand("retreat");
+        retreat.setActionCommand(CMD_CLOSE);
         retreat.setMnemonic( KeyEvent.KEY_SOFTKEY2 );
 
         Panel controls = new Panel();
@@ -66,6 +66,7 @@ public class BattleDialog extends Frame implements ActionListener {
         contentPane.add(controls);
 
         setMaximum(true);
+        addWindowListener(this); // capture any window events, e.g. close
     }
 
     public static Sprite getSprite(String name,int cols,int rows) {
@@ -98,7 +99,7 @@ public class BattleDialog extends Frame implements ActionListener {
                 go("roll "+ (canRetreat?noda:nodd) );
             }
         }
-        else if ("retreat".equals( actionCommand )) {
+        else if (CMD_CLOSE.equals( actionCommand )) {
             if (canRetreat) {
                 GameSound.INSTANCE.playSound(GameSound.BATTLE_RETREAT);
                 go("retreat");
@@ -106,6 +107,9 @@ public class BattleDialog extends Frame implements ActionListener {
             else {
                 GameWindow.showClosePrompt(myrisk);
             }
+        }
+        else {
+            System.out.println("Unknown command in BattleDialog " + actionCommand);
         }
     }
 
