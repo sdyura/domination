@@ -32,3 +32,14 @@ sudo ln -s risk.apache2-conf /etc/apache2/sites-enabled/risk.conf
 ln -s /usr/local/lib/python2.7/dist-packages/django/contrib/admin/media static/admin
 
 
+
+Optional - tell apache2 to restart on errors
+
+$ sudo vim /lib/systemd/system/apache2.service
+change "Restart=on-abort" to "Restart=always" in the [Service] section
+Then run these commends to reload the changes:
+$ sudo systemctl daemon-reload
+$ sudo service apache2 restart
+
+
+
