@@ -119,7 +119,7 @@ return Color.white;
          * Returns the red component in the range 0-255 in the default sRGB
          * space.
          * @return the red component.
-         * @see #getRGB
+         * @see java.awt.Color#getRed()
          */
         public static int getRed(int rgb) {
             return (rgb >> 16) & 0xFF;
@@ -129,7 +129,7 @@ return Color.white;
          * Returns the green component in the range 0-255 in the default sRGB
          * space.
          * @return the green component.
-         * @see #getRGB
+         * @see java.awt.Color#getGreen()
          */
         public static int getGreen(int rgb) {
             return (rgb >> 8) & 0xFF;
@@ -139,7 +139,7 @@ return Color.white;
          * Returns the blue component in the range 0-255 in the default sRGB
          * space.
          * @return the blue component.
-         * @see #getRGB
+         * @see java.awt.Color#getBlue()
          */
         public static int getBlue(int rgb) {
             return (rgb >> 0) & 0xFF;
@@ -148,7 +148,7 @@ return Color.white;
         /**
          * Returns the alpha component in the range 0-255.
          * @return the alpha component.
-         * @see #getRGB
+         * @see java.awt.Color#getAlpha()
          */
         public static int getAlpha(int rgb) {
             return (rgb >> 24) & 0xff;

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import net.yura.domination.audio.SimpleAudio;
 import net.yura.domination.audio.GameSound;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
@@ -483,7 +484,7 @@ public class DominationMain extends Application {
     public static void setAccounts(List<String> accounts) {
         if (!accounts.isEmpty()) {
             if (appPreferences != null) {
-                appPreferences.put("accounts", MiniUtil.listToCsv(accounts, ','));
+                appPreferences.put("accounts", JavaCompatUtil.listToCsv(accounts, ','));
                 flushPreferences();
             }
         }

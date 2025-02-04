@@ -6,6 +6,7 @@ import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -110,5 +111,22 @@ public class JavaCompatUtil {
             }
             sb.append(delimiter);
         }
+    }
+    
+    public static String listToCsv(List<String> listOfStrings, char separator) {
+        StringBuilder sb = new StringBuilder();
+
+        // all but last
+        for(int i = 0; i < listOfStrings.size() - 1 ; i++) {
+            sb.append(listOfStrings.get(i));
+            sb.append(separator);
+        }
+
+        // last string, no separator
+        if(listOfStrings.size() > 0){
+            sb.append(listOfStrings.get(listOfStrings.size()-1));
+        }
+
+        return sb.toString();
     }
 }

@@ -2,7 +2,6 @@ package net.yura.domination.mobile.flashgui;
 
 import java.util.Arrays;
 import net.yura.domination.engine.ColorUtil;
-import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.PicturePanel;
 import net.yura.mobile.gui.ActionListener;
