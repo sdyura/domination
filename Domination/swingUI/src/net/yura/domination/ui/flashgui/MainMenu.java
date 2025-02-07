@@ -138,10 +138,27 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                         fra.getGameFrame().openOptions();
                     }
                 });
+                rightClickMenu.add("+").addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        fontSize(1);
+                    }
+                });
+                rightClickMenu.add("-").addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        fontSize(-1);
+                    }
+                });
                 setComponentPopupMenu(rightClickMenu);
                 
                 showMainMenu();
 	}
+        
+        private void fontSize(int num) {
+            RiskUIUtil.fontSize(num);
+            fra.updateLookAndFeel();
+        }
 
 	/**
 	 * Checks the server's state
@@ -574,13 +591,11 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
 			case KeyEvent.VK_PLUS:
 			case KeyEvent.VK_EQUALS:
-				RiskUIUtil.fontSize(1);
-				fra.updateLookAndFeel();
+				fontSize(1);
 				break;
 
 			case KeyEvent.VK_MINUS:
-				RiskUIUtil.fontSize(-1);
-				fra.updateLookAndFeel();
+				fontSize(-1);
 				break;
 		}//switch keycode
 	}//public void keyReleased( KeyEvent event )
