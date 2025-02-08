@@ -105,6 +105,22 @@ public class GraphicsUtil {
                 sx1, sy1, sx2, sy2, observer);
     }
 
+    public static void drawImageInRect(Graphics g, Image img, int xPos, int yPos, int maxW, int maxH, ImageObserver observer) {
+
+        int centreX = xPos + (maxW / 2);
+        int centreY = yPos + (maxH / 2);
+        int w = img.getWidth(observer);
+        int h = img.getHeight(observer);
+
+        if (w > maxW || h > maxH) {
+            double scale = Math.min(maxW/(double)w,maxH/(double)h);
+            w = (int)( scale * w );
+            h = (int)( scale * h );
+        }
+
+        drawImage(g, img, centreX - w/2, centreY - h/2, w, h, observer);
+    }
+
     public static void fillRect(Graphics g, int x, int y, int width, int height) {
         g.fillRect(scale(x), scale(y), scale(width), scale(height));
     }

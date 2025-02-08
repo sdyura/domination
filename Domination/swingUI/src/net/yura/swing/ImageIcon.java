@@ -8,9 +8,6 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.logging.Logger;
 
-/**
- * TODO: add support for apple image@2x.png
- */
 public class ImageIcon extends javax.swing.ImageIcon {
 
     public ImageIcon (String filename) {

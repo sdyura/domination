@@ -317,8 +317,8 @@ public class MoveDialog extends JDialog {
 			Graphics2D g2 = (Graphics2D)g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                        drawCountry(g2, c1img, 130, 100);
-                        drawCountry(g2, c2img, 350, 100);
+                        GraphicsUtil.drawImageInRect(g2, c1img, 30, 30, 200, 140, null);
+                        GraphicsUtil.drawImageInRect(g2, c2img, 250, 30, 200, 140, null);
 
 			g2.setColor( Color.black );
 
@@ -340,22 +340,5 @@ public class MoveDialog extends JDialog {
 
 			g2.setColor( RiskUIUtil.getTextColorFor(color2) );
                         GraphicsUtil.drawStringCenteredAt(g, String.valueOf(noa2i), 350, 105);
-        }
-
-        static void drawCountry(Graphics2D g, BufferedImage img, int x, int y) {
-
-            int maxW = 200;
-            int maxH = 140;
-
-            int w = img.getWidth();
-            int h = img.getHeight();
-
-            if (w > maxW || h > maxH) {
-                double scale = Math.min(maxW/(double)w,maxH/(double)h);
-                w = (int)( scale * w );
-                h = (int)( scale * h );
-            }
-
-            GraphicsUtil.drawImage(g, img, x - w/2, y - h/2, w, h, null);
         }
 }
