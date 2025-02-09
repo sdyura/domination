@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		16
-	Android:	99
+	Android:	100
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -16,6 +16,7 @@ CURRENT VERSION:
 
 1.3.4
 
+	Accessibility GameGUI: right click options to increate and decrease font size
 	better fallbacks for audio not loading from url
 	fix for small screen Domination not loading when space in path
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
       package="net.yura.domination"
-      android:versionCode="99"
-      android:versionName="99"
+      android:versionCode="100"
+      android:versionName="100"
       android:installLocation="auto">
 
     <!-- android:targetSdkVersion 11 to hide the legacy menu button on tablets -->
@@ -96,7 +96,6 @@
 
         <activity android:name="net.yura.domination.android.push.PushActivity" android:theme="@android:style/Theme.NoDisplay"/>
         <activity android:name="net.yura.android.WebViewActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize" android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name="net.yura.android.LoadingDialog" android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize" android:windowSoftInputMode="stateAlwaysHidden" android:theme="@android:style/Theme.NoDisplay"/>
         <activity android:name="net.yura.domination.android.StatsActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize" android:windowSoftInputMode="stateAlwaysHidden" android:theme="@style/Theme" />
         <activity android:name="net.yura.domination.android.GamePreferenceActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize" android:windowSoftInputMode="stateAlwaysHidden" android:theme="@style/Dialog" />
         <activity android:name="net.yura.domination.android.AboutActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize" android:windowSoftInputMode="stateAlwaysHidden" android:theme="@style/Theme" />

@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.yura.android.LoadingDialog;
 import net.yura.domination.engine.JavaCompatUtil;
-import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.lobby.client.ProtoAccess;
 import net.yura.lobby.model.Game;
@@ -585,17 +584,12 @@ public class RealTimeMultiplayer extends InvitationCallback implements GoogleAcc
                 .build());
     }
 
-    private void closeLoadingDialog() {
-        Intent intent = new Intent(activity, LoadingDialog.class);
-        intent.putExtra(LoadingDialog.PARAM_COMMAND, "hide");
-        activity.startActivity(intent);
+    private void openLoadingDialog(String messageName) {
+        LoadingDialog.setupAndShow(TranslationBundle.getBundle().getString(messageName), true);
     }
 
-    private void openLoadingDialog(String messageName) {
-        Intent intent = new Intent(activity, LoadingDialog.class);
-        intent.putExtra(LoadingDialog.PARAM_MESSAGE, TranslationBundle.getBundle().getString(messageName));
-        intent.putExtra(LoadingDialog.PARAM_CANCELLABLE, true);
-        activity.startActivity(intent);
+    private void closeLoadingDialog() {
+        LoadingDialog.hide();
     }
 
     void toast(String text) {
