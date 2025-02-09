@@ -208,6 +208,10 @@ public class DominationMain extends Application {
                             // ERR: java.lang.SecurityException: net.yura.domination was not granted  this permission: android.permission.WRITE_SETTINGS.
                             return true;
                         }
+                        if ("android.app.AlertDialog".equals(className) && "show".equals(methodName)) {
+                            // ERR: java.lang.Exception: show AlertDialog! title=
+                            return true;
+                        }
                     }
 
                     String message = record.getMessage();

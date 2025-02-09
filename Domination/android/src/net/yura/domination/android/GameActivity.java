@@ -402,7 +402,8 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                                 .show();
                     }
                     catch (Throwable th) {
-                        logger.log(Level.WARNING, "error showing Achievement Unlocked UI", th);
+                        Level level = GameActivity.this.isFinishing() ? Level.INFO : Level.WARNING;
+                        logger.log(level, "error showing Achievement Unlocked UI", th);
                     }
                 }
             });
