@@ -904,10 +904,14 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			for (int c=0; c < colors.length ; c++) {
 				g.setColor( new Color( colors[c] ) );
 				g.fillRect(((width / colors.length) * c), 0, width / colors.length, height);
+                                
+                                Image img = swingGUIPanel.pp.getIconForColor(colors[c]);
+                                if (img != null) {
+                                    GraphicsUtil.drawImageInRect(g, img, ((width / colors.length) * c) + 2, 2, width / colors.length - 5, height - 5, this);
+                                }
 			}
 
 			g.setColor( new Color( ColorUtil.getTextColorFor( colors[0] ) ) );
-
 			g.drawRect( 2 , 2 , (width/colors.length)-5 , height - 5);
 
 			g.setColor( Color.black );
