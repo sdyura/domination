@@ -22,10 +22,15 @@ import java.awt.image.RescaleOp;
 import javax.swing.JPanel;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
@@ -323,7 +328,36 @@ public class PicturePanel extends JPanel implements MapPanel {
             return map[0].length;
         }
 
+        public void setColorBlindMode(Preferences prefs) {
+            if (prefs != null) {
+                setColorBlindMode(prefs.getBoolean(RiskSettings.COLOR_BLIND_KEY, false));
+            }
+        }
+
+        public void setColorBlindMode(boolean cb) {
+            colorBlind = cb;
+            repaint();
+        }
+
         public int BALL_SIZE=20;
+        private boolean colorBlind;
+
+        static Map<Integer,Image> icons = new HashMap();
+        static {
+            icons.put(ColorUtil.RED, RiskUIUtil.getUIImage(PicturePanel.class, "/color_red.png"));
+            icons.put(ColorUtil.BLUE, RiskUIUtil.getUIImage(PicturePanel.class, "/color_blue.png"));
+            icons.put(ColorUtil.YELLOW, RiskUIUtil.getUIImage(PicturePanel.class, "/color_yellow.png"));
+            icons.put(ColorUtil.CYAN, RiskUIUtil.getUIImage(PicturePanel.class, "/color_cyan.png"));
+            icons.put(ColorUtil.GREEN, RiskUIUtil.getUIImage(PicturePanel.class, "/color_green.png"));
+            icons.put(ColorUtil.MAGENTA, RiskUIUtil.getUIImage(PicturePanel.class, "/color_magenta.png"));
+        }
+
+        /**
+         * @see net.yura.domination.android.StatsActivity#getIcon(Player)
+         */
+        public Image getIconForColor(int color) {
+            return colorBlind ? icons.get(color) : null;
+        }
 
 	/**
 	 * Paints the army components
@@ -336,8 +370,6 @@ public class PicturePanel extends JPanel implements MapPanel {
 		Country[] v = game.getCountries();
 
                 int state = game.getState();
-
-                int r = BALL_SIZE/2;
 
 		if (state==RiskGame.STATE_ROLLING || state==RiskGame.STATE_BATTLE_WON || state==RiskGame.STATE_DEFEND_YOURSELF) {
 
@@ -380,11 +412,26 @@ public class PicturePanel extends JPanel implements MapPanel {
                     }
                 }
 
+                Map<Country,Player> capitals = Collections.EMPTY_MAP;
+                if (game.getGameMode() == RiskGame.MODE_CAPITAL && game.getSetupDone() && state != RiskGame.STATE_SELECT_CAPITAL) {
+                    capitals = new HashMap(game.getNoPlayers());
+                    List<Player> players = game.getPlayers();
+                    for (int c=0; c<players.size(); c++) {
+                        Player player = players.get(c);
+                        Country capital = player.getCapital();
+                        if (capital!=null) {
+                            capitals.put(capital, player);
+                        }
+                    }
+                }
+                
                 Country t;
                 for (int c=0; c< v.length ; c++) {
 
                         t = v[c];
 
+                        g2.setFont( getFont() );
+                        
                         if ( t.getOwner() != null ) {
 
                                 int x,y;
@@ -397,70 +444,55 @@ public class PicturePanel extends JPanel implements MapPanel {
                                     y = (int)ballWorld.balls[c].y;
                                 }
 
-                                g2.setColor( new Color( t.getOwner().getColor() ) );
-
-                                Ellipse2D ellipse = new Ellipse2D.Double();
-                                ellipse.setFrame( x-r , y-r , BALL_SIZE, BALL_SIZE );
-                                g2.fill(ellipse);
-
-                                //g.fillOval( t.getX()-r , t.getY()-r, (r*2), (r*2) );
-
-                                g2.setColor( new Color( ColorUtil.getTextColorFor( t.getOwner().getColor() ) ) );
-
-                                g2.setFont( getFont() );
-
-                                String noa= String.valueOf( t.getArmies() );
-
-                                int w2 = g2.getFontMetrics().stringWidth(noa) / 2;
-                                int h2 = g2.getFontMetrics().getAscent()*2/5 ;
-
-                                g2.drawString( String.valueOf( noa ) , x-w2, y+h2 );
+                                drawArmy(this, g2, t.getOwner().getColor(), t.getArmies(), x, y, BALL_SIZE, capitals.get(t));
                         }
                 }
-
-		if (game.getGameMode() == RiskGame.MODE_CAPITAL && game.getSetupDone() && state !=RiskGame.STATE_SELECT_CAPITAL ) {
-
-                        int stroke = BALL_SIZE / 10;
-
-                        Stroke old = g2.getStroke();
-			g2.setStroke(new BasicStroke( stroke ));
-			List players = game.getPlayers();
-
-			for (int c=0; c< players.size() ; c++) {
-
-                                Country capital = ((Player)players.get(c)).getCapital();
-
-				if ( capital !=null ) {
-
-                                        int pos = capital.getColor()-1;
-
-                                        int x,y;
-                                        if (ballWorld==null) {
-                                            x = v[pos].getX();
-                                            y = v[pos].getY();
-                                        }
-                                        else {
-                                            x = (int)ballWorld.balls[pos].x;
-                                            y = (int)ballWorld.balls[pos].y;
-                                        }
-
-					g2.setColor( new Color( ColorUtil.getTextColorFor( capital.getOwner().getColor() ) ) );
-
-					Ellipse2D ellipse = new Ellipse2D.Double();
-					ellipse.setFrame( x-r , y-r , BALL_SIZE-1, BALL_SIZE-1);
-					g2.draw(ellipse);
-
-					g2.setColor( new Color( ((Player)players.get(c)).getColor() ) );
-
-					Ellipse2D ellipse2 = new Ellipse2D.Double();
-                                        int size = BALL_SIZE + (stroke*2);
-					ellipse2.setFrame( x-(size/2) , y-(size/2) , size-1, size-1);
-					g2.draw(ellipse2);
-				}
-			}
-			g2.setStroke(old);
-		}
 	}
+
+        public static void drawArmy(PicturePanel pp, Graphics2D g2, int countryOwnerColor, int armies, int x, int y, int ballSize, Player capital) {
+            int r = ballSize / 2;
+            
+            Image icon = pp.getIconForColor(countryOwnerColor);
+            if (icon == null) {
+                g2.setColor( new Color( countryOwnerColor ) );
+                Ellipse2D ellipse = new Ellipse2D.Double();
+                ellipse.setFrame( x-r , y-r , ballSize, ballSize);
+                g2.fill(ellipse);
+                //g.fillOval( t.getX()-r , t.getY()-r, (r*2), (r*2) );
+            }
+            else {
+                int w = (int)(ballSize * 1.1);
+                int h = (int)(icon.getHeight(pp) * (w / (double)icon.getWidth(pp)));
+                g2.drawImage(icon, x-(w/2), y-(w/2), w, h, pp);
+            }
+
+            g2.setColor( new Color( ColorUtil.getTextColorFor( countryOwnerColor ) ) );
+            String noa = String.valueOf( armies );
+            int w2 = g2.getFontMetrics().stringWidth(noa) / 2;
+            int h2 = g2.getFontMetrics().getAscent()*2/5 ;
+            g2.drawString( String.valueOf( noa ) , x-w2, y+h2 );
+            
+            if (capital != null) {
+                int stroke = ballSize / 10;
+                Stroke old = g2.getStroke();
+                g2.setStroke(new BasicStroke( stroke ));
+
+                g2.setColor(new Color(ColorUtil.getTextColorFor(capital.getColor())));
+
+                Ellipse2D ellipse1 = new Ellipse2D.Double();
+                ellipse1.setFrame( x-r , y-r , ballSize-1, ballSize-1);
+                g2.draw(ellipse1);
+
+                g2.setColor(new Color(capital.getColor()));
+
+                Ellipse2D ellipse2 = new Ellipse2D.Double();
+                int size = ballSize + (stroke*2);
+                ellipse2.setFrame( x-(size/2) , y-(size/2) , size-1, size-1);
+                g2.draw(ellipse2);
+
+                g2.setStroke(old);
+            }
+        }
 
         BallWorld ballWorld;
         int oldState;

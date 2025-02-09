@@ -3,12 +3,14 @@ package net.yura.domination.ui.swinggui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -26,6 +28,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
@@ -559,7 +562,9 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 	}
         
         private void openOptions() {
-            RiskUIUtil.openOptions(this, swingGUIPanel.myrisk, swingGUIPanel.gameState > RiskGame.STATE_NEW_GAME, SwingGUIPanel.getUIPreferences());
+            Preferences prefs = SwingGUIPanel.getUIPreferences();
+            RiskUIUtil.openOptions(this, swingGUIPanel.myrisk, swingGUIPanel.gameState > RiskGame.STATE_NEW_GAME, prefs);
+            swingGUIPanel.pp.setColorBlindMode(prefs);
         }
 
 	public void blockInput() {
@@ -1279,6 +1284,25 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 						setBackground(c);
 						setForeground( RiskUIUtil.getTextColorFor( c ) );
 						setText(c.toString());
+
+                                                final Image img = swingGUIPanel.pp.getIconForColor(c.getRGB());
+                                                setIcon(img == null ? null : new Icon() {
+                                                    @Override
+                                                    public void paintIcon(Component c, Graphics g, int x, int y) {
+                                                        g.drawImage(img, x, y, getIconWidth(), getIconHeight(), c);
+                                                    }
+
+                                                    @Override
+                                                    public int getIconWidth() {
+                                                        double scale = getIconHeight() / (double)img.getHeight(null);
+                                                        return (int) (scale * img.getWidth(null));
+                                                    }
+
+                                                    @Override
+                                                    public int getIconHeight() {
+                                                        return players.getRowHeight();
+                                                    }
+                                                });
 					} else {
 						super.setValue(value);
 					}

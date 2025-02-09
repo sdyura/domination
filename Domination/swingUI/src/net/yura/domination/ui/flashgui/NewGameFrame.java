@@ -55,6 +55,7 @@ import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
 import net.yura.domination.guishared.RiskFileFilter;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.domination.guishared.PicturePanel;
 
 /**
  * <p> New Game Frame for FlashGUI </p>
@@ -122,12 +123,14 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 */
 	private int nRemoveButtonPos = 8;
 
+        private PicturePanel pp;
+        
 	/**
 	 * The NewGameFrame Constructor
 	 * @param r The Risk Parser used for playing the game
 	 * @param t States whether this game is local
 	 */
-	public NewGameFrame(Risk r) {
+	public NewGameFrame(Risk r, PicturePanel pp) {
 		resb = TranslationBundle.getBundle();
 		myrisk=r;
 		newgame = RiskUIUtil.getUIImage(this.getClass(),"newgame.jpg");
@@ -136,6 +139,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		setResizable(false);
 		pack();
 		chooseCards.requestFocus();
+                this.pp = pp;
 	}
 
 	/**
@@ -706,12 +710,14 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 		public void paintComponent(Graphics g) {
 
 			g.setColor( new Color(color.getRed(), color.getGreen(), color.getBlue(), 125) );
-
 			GraphicsUtil.fillRect(g, 0, 0, 309, 30);
+                        
+                        Image img = pp.getIconForColor(color.getRGB());
+                        if (img != null) {
+                            GraphicsUtil.drawImageInRect(g, img, 98, 5, 20, 20, this);
+                        }
 
 			g.setColor( RiskUIUtil.getTextColorFor(color) );
-
-
 			GraphicsUtil.drawString(g, name, 10, 20);
 
                         String typeString;
@@ -766,16 +772,10 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			GraphicsUtil.drawImage(g, newgame, 0, 0, 700, 600,     0, 0, 700, 600, this);
 
 			if (localgame) {
-
 				GraphicsUtil.drawImage(g, newgame, 432, 262, 557, 305,     700, 482, 825, 525, this);
-
 			}
 
-			g.setColor( thecolor );
-			GraphicsUtil.fillRect(g, 400, 370, 100, 25);
-
 			g.setColor( Color.black );
-
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.map"), 55, 40);
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.players"), 350, 40);
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.cards"), 55, 250);
@@ -784,9 +784,15 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.name"), 400, 325);
 			GraphicsUtil.drawString(g, resb.getString("newgame.label.type"), 520, 325);
 
+			g.setColor( thecolor );
+			GraphicsUtil.fillRect(g, 400, 370, 100, 25);
+                        Image img = pp.getIconForColor(thecolor.getRGB());
+                        if (img != null) {
+                            GraphicsUtil.drawImageInRect(g, img, 450, 370, 25, 25, this);
+                        }
+                        
 			g.setColor( RiskUIUtil.getTextColorFor( thecolor ) );
-
-			GraphicsUtil.drawString(g, resb.getString("newgame.label.color"), 410, 387);
+			GraphicsUtil.drawString(g, resb.getString("newgame.label.color"), 405, 387);
 		}
 	}
 
@@ -804,6 +810,10 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			for (int c=0; c< Colors.length ; c++) {
 				g.setColor( Colors[c].getColor() );
 				GraphicsUtil.fillRect(g, Colors[c].getX(), Colors[c].getY(), Colors[c].getWidth(), Colors[c].getHeight());
+                                Image img = pp.getIconForColor(Colors[c].getColor().getRGB());
+                                if (img != null) {
+                                    GraphicsUtil.drawImageInRect(g2, img, Colors[c].getX(), Colors[c].getY(), Colors[c].getWidth(), Colors[c].getHeight(), this);                                 
+                                }
 			}
 		}
 	}//class colorChooserPanel extends JPanel

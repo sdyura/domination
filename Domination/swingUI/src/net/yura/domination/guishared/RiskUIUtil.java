@@ -245,6 +245,17 @@ public class RiskUIUtil {
                     // failed to create MultiResolutionImage
                 }
             }
+            if (name.startsWith("/")) {
+                String xhdpi = "/drawable-xhdpi" + name;
+                try {
+                    Image img2x = getUIImageCached(cls, xhdpi);
+                    Image[] imgList = new Image[] {img, img2x};
+                    return GraphicsUtil.newBaseMultiResolutionImage(imgList);
+                }
+                catch (Throwable ex) {
+                    // failed to create MultiResolutionImage
+                }
+            }
         }
 
         return img;
@@ -1507,6 +1518,7 @@ public class RiskUIUtil {
                 aiWaitPanel.add(aiwait);
                 aiWaitPanel.add(new JLabel("milliseconds"));
 
+                JCheckBox colorBlind = new JCheckBox(resB.getString("game.menu.colorblind"), preferences.getBoolean(RiskSettings.COLOR_BLIND_KEY, false));
                 JCheckBox soundEnabled = new JCheckBox(resB.getString("game.menu.sound"), GameSound.INSTANCE.isSoundEnabled());
                 JCheckBox musicEnabled = new JCheckBox(resB.getString("game.menu.music"), GameSound.INSTANCE.isMusicEnabled());
                 
@@ -1522,7 +1534,7 @@ public class RiskUIUtil {
                     parentComponent,                             // the parent that the dialog blocks
                     new Component[] {                                    // the dialog message array
                             showDice,aiWaitPanel,
-                            soundEnabled, musicEnabled,
+                            colorBlind, soundEnabled, musicEnabled,
                             autoEndGo, autoDefend
                     },
                     "Options", // the title of the dialog window
@@ -1535,6 +1547,7 @@ public class RiskUIUtil {
                         AIManager.setWait(((Integer)aiwait.getValue()).intValue());
                         GameSound.INSTANCE.setSoundEnabled(soundEnabled.isSelected());
                         GameSound.INSTANCE.setMusicEnabled(musicEnabled.isSelected());
+                        preferences.putBoolean(RiskSettings.COLOR_BLIND_KEY, colorBlind.isSelected());
                         RiskSettings.saveSettingsToPrefs(preferences);
 
                         if (autoEndGo.isEnabled()) {

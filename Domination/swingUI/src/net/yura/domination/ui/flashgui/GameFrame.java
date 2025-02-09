@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.prefs.Preferences;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
@@ -636,9 +637,11 @@ public class GameFrame extends JFrame implements KeyListener {
                         }
 		}
 	};
-        
+
         public void openOptions() {
-            RiskUIUtil.openOptions(GameFrame.this, myrisk, gameState > RiskGame.STATE_NEW_GAME, RiskSettings.getPreferences(MainMenu.class));
+            Preferences prefs = RiskSettings.getPreferences(MainMenu.class);
+            RiskUIUtil.openOptions(GameFrame.this, myrisk, gameState > RiskGame.STATE_NEW_GAME, prefs);
+            pp.setColorBlindMode(prefs);
         }
 
 	public void repaintCountries() {

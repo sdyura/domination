@@ -13,6 +13,7 @@ import javax.swing.RootPaneContainer;
 import javax.swing.SwingUtilities;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
+import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.RiskGame;
@@ -37,12 +38,18 @@ public class FlashRiskAdapter implements RiskListener {
 
 	private int nogames;
 
+        /**
+         * constructor for game screen mode ONLY
+         * used when game setup screen is not needed
+         * e.g. Lobby Game Client
+         */
         public FlashRiskAdapter(Risk r) {
 		myrisk = r;
 
 		myrisk.addRiskListener(this);
 
 		pp = new PicturePanel(myrisk);
+                pp.setColorBlindMode(RiskSettings.getPreferences(MainMenu.class));
 		gameFrame = new GameFrame(myrisk, pp);
 		battledialog = new BattleDialog(gameFrame, false, myrisk);
 		gameFrame.setBattleDialog(battledialog);
@@ -50,11 +57,13 @@ public class FlashRiskAdapter implements RiskListener {
                 RiskUIUtil.center(battledialog);
 	}
 
-
+        /**
+         * Main constructor
+         */
 	FlashRiskAdapter(MainMenu m, Risk r) {
 		this(r);
 		menu = m;
-		newgameframe = new NewGameFrame(myrisk);
+		newgameframe = new NewGameFrame(myrisk, pp);
 	}
         
         void showMiniLobby(RootPaneContainer root, Frame window) {
@@ -65,7 +74,7 @@ public class FlashRiskAdapter implements RiskListener {
             lobby = null;
             menu.showMainMenu();
         }
-        
+
         public void updateLookAndFeel() {
             	if (gameFrame != null) {
                         SwingUtilities.updateComponentTreeUI(gameFrame);

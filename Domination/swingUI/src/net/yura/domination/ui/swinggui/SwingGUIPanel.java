@@ -106,6 +106,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 		gameState=-1; // (-1 means no game)
 
 		pp = new PicturePanel(myrisk);
+                pp.setColorBlindMode(getUIPreferences());
 
 		setLayout(new java.awt.BorderLayout());
 
