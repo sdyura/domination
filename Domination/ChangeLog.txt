@@ -34,6 +34,8 @@ CURRENT VERSION:
 	SwingGUI: little memory graph on debug screen
 	SwingGUI: fix - allow opening TEG xml maps in MapEditor on macOS again
 
+	Android 100 fix loading screen getting stuck when starting game
+
 1.3.1 (08.05.2024) (svn rev 2540)
 
 	Sounds effects and music! (memory leak fixed this time)
