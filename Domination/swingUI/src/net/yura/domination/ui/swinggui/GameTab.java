@@ -914,7 +914,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			}
 
 			g.setColor( new Color( ColorUtil.getTextColorFor( colors[0] ) ) );
-			g.drawRect(2, 2, (width/colors.length) - 5, height - 5);
+			g.drawRect(GraphicsUtil.scale(2), GraphicsUtil.scale(2), (width/colors.length) - GraphicsUtil.scale(5), height - GraphicsUtil.scale(5));
 
 			g.setColor( Color.black );
 			g.drawLine((width / colors.length) - 1, 0, (width / colors.length) - 1, height - 1);
