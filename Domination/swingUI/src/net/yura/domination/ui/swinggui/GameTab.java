@@ -1294,8 +1294,14 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                                 setNamedColorValue(this, value);
                                 if (isSelected || cellHasFocus) {
                                     Color highlight = getBackground().darker();
-                                    setBackground(highlight);
-                                    setForeground(new Color(ColorUtil.getTextColorFor(highlight.getRGB())));
+                                    if (getBackground().equals(highlight)) {
+                                        setBackground(list.getSelectionBackground());
+                                        setForeground(list.getSelectionForeground());
+                                    }
+                                    else {
+                                        setBackground(highlight);
+                                        setForeground(new Color(ColorUtil.getTextColorFor(highlight.getRGB())));
+                                    }
                                 }
                                 return result;
                             }
