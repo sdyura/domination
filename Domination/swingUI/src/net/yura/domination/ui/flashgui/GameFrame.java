@@ -658,6 +658,7 @@ public class GameFrame extends JFrame implements KeyListener {
             Preferences prefs = RiskSettings.getPreferences(MainMenu.class);
             RiskUIUtil.openOptions(GameFrame.this, myrisk, gameState > RiskGame.STATE_NEW_GAME, prefs);
             pp.setColorBlindMode(prefs);
+            repaint();
         }
 
 	public void repaintCountries() {

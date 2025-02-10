@@ -567,6 +567,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
             Preferences prefs = SwingGUIPanel.getUIPreferences();
             RiskUIUtil.openOptions(this, swingGUIPanel.myrisk, swingGUIPanel.gameState > RiskGame.STATE_NEW_GAME, prefs);
             swingGUIPanel.pp.setColorBlindMode(prefs);
+            repaint();
         }
 
 	public void blockInput() {
