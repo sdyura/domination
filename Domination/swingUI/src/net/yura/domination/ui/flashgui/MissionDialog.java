@@ -101,7 +101,7 @@ public class MissionDialog extends JDialog implements MouseListener {
 	    //GraphicsUtil.drawImage(g, mission, 0, 0, this);
 
             GraphicsUtil.drawImage(g, mission,
-                    40, 60, unscale(getWidth()) -40, unscale(getHeight()) -40,
+                    40, 60, GameFrame.unscale(getWidth()) -40, GameFrame.unscale(getHeight()) -40,
                     40, 60, 150 -40, 230 -40, this);
 
 	    Graphics2D g2 = (Graphics2D)g;
@@ -116,15 +116,8 @@ public class MissionDialog extends JDialog implements MouseListener {
             g.setFont(font);
             g2.setColor( GameFrame.UI_COLOR );
 
-            GraphicsUtil.drawStringCenteredAt(g, text, unscale(getWidth() / 2), 70, unscale(getWidth()) - 50);
+            GraphicsUtil.drawStringCenteredAt(g, text, GameFrame.unscale(getWidth() / 2), 70, GameFrame.unscale(getWidth()) - 50);
 	}
-
-        /**
-         * @see GraphicsUtil#scale(int)
-         */
-        private int unscale(int size) {
-            return (int) Math.ceil(size * GraphicsUtil.scale / GraphicsUtil.density);
-        }
     }
 
 	//**********************************************************************

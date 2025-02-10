@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Composite;
 import java.awt.Container;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -284,20 +285,35 @@ public class GameFrame extends JFrame implements KeyListener {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 			int[] cols = colors;
+                        int colorY = 89;
+                        int colorH = 24;
 
+                        Composite oldComp = g2.getComposite();
+                        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f);
+			g2.setComposite(ac);
+                        
 			for (int c=0; c<cols.length; c++) {
-				Color col = new Color( cols[c] );
+				Color col = new Color(cols[c]);
+				g.setColor(col); // new Color(col.getRed(),col.getGreen(),col.getBlue(), 100)
 
-				g.setColor( new Color(col.getRed(),col.getGreen(),col.getBlue(), 100) );
+                                Image colorImg = pp.getIconForColor(cols[c]);
 
 				if (c==0) {
-					GraphicsUtil.fillArc(g, 8, 89, 24 , 24, 90, 180);
-					g.fillRect(GraphicsUtil.scale(20), GraphicsUtil.scale(89), (getWidth() - GraphicsUtil.scale(173)) - (GraphicsUtil.scale(24) * (cols.length - c)), GraphicsUtil.scale(24));
+					GraphicsUtil.fillArc(g, 8, colorY, colorH, colorH, 90, 180);
+					g.fillRect(GraphicsUtil.scale(20), GraphicsUtil.scale(colorY), (getWidth() - GraphicsUtil.scale(173)) - (GraphicsUtil.scale(colorH) * (cols.length - c)), GraphicsUtil.scale(colorH));
+                                        if (colorImg != null) {
+                                            GraphicsUtil.drawImageInRect(g, colorImg, 10, colorY+2, colorH-4, colorH-4, this);
+                                        }
 				}
 				else {
-					g.fillRect((getWidth() - GraphicsUtil.scale(177)) - (GraphicsUtil.scale(24) * (cols.length - c)), GraphicsUtil.scale(89), GraphicsUtil.scale(24), GraphicsUtil.scale(24));
+                                        int colorXScaled = (getWidth() - GraphicsUtil.scale(177)) - (GraphicsUtil.scale(colorH) * (cols.length - c));
+					g.fillRect(colorXScaled, GraphicsUtil.scale(colorY), GraphicsUtil.scale(colorH), GraphicsUtil.scale(colorH));
+                                        if (colorImg != null) {
+                                            GraphicsUtil.drawImageInRect(g, colorImg, unscale(colorXScaled)+2, colorY+2, colorH-4, colorH-4, this);
+                                        }
 				}
 			}
+                        g2.setComposite(oldComp);
 
 			if (gameStatus!=null) {
 				g.setColor( new Color( ColorUtil.getTextColorFor( cols[0] ) ) );
@@ -470,6 +486,13 @@ public class GameFrame extends JFrame implements KeyListener {
                     }
                 }, KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), JComponent.WHEN_IN_FOCUSED_WINDOW );
 	}
+        
+        /**
+         * @see GraphicsUtil#scale(int)
+         */
+        public static int unscale(int size) {
+            return (int) Math.ceil(size * GraphicsUtil.scale / GraphicsUtil.density);
+        }
 
         public void setExtraAction(Action action) {
             extraAction = action;
