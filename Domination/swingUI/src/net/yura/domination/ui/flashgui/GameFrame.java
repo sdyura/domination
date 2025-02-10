@@ -309,7 +309,7 @@ public class GameFrame extends JFrame implements KeyListener {
                                         int colorXScaled = (getWidth() - GraphicsUtil.scale(177)) - (GraphicsUtil.scale(colorH) * (cols.length - c));
 					g.fillRect(colorXScaled, GraphicsUtil.scale(colorY), GraphicsUtil.scale(colorH), GraphicsUtil.scale(colorH));
                                         if (colorImg != null) {
-                                            GraphicsUtil.drawImageInRect(g, colorImg, unscale(colorXScaled)+2, colorY+2, colorH-4, colorH-4, this);
+                                            GraphicsUtil.drawImageInRect(g, colorImg, RiskUIUtil.unscale(colorXScaled)+2, colorY+2, colorH-4, colorH-4, this);
                                         }
 				}
 			}
@@ -486,13 +486,6 @@ public class GameFrame extends JFrame implements KeyListener {
                     }
                 }, KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), JComponent.WHEN_IN_FOCUSED_WINDOW );
 	}
-        
-        /**
-         * @see GraphicsUtil#scale(int)
-         */
-        public static int unscale(int size) {
-            return (int) Math.ceil(size * GraphicsUtil.scale / GraphicsUtil.density);
-        }
 
         public void setExtraAction(Action action) {
             extraAction = action;

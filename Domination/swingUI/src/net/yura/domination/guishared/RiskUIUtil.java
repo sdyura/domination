@@ -489,6 +489,13 @@ public class RiskUIUtil {
             window.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         }
 
+        /**
+         * @see GraphicsUtil#scale(int)
+         */
+        public static int unscale(int size) {
+            return (int) Math.ceil(size * GraphicsUtil.scale / GraphicsUtil.density);
+        }
+
         private static List getFileList(final String a) {
 
             List namesvector = new ArrayList();
