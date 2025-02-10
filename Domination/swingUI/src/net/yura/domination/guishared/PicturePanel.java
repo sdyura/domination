@@ -444,17 +444,17 @@ public class PicturePanel extends JPanel implements MapPanel {
                                     y = (int)ballWorld.balls[c].y;
                                 }
 
-                                drawArmy(this, g2, t.getOwner().getColor(), t.getArmies(), x, y, BALL_SIZE, capitals.get(t));
+                                drawArmy(g2, t.getOwner().getColor(), t.getArmies(), x, y, BALL_SIZE, capitals.get(t));
                         }
                 }
 	}
 
-        public static void drawArmy(PicturePanel pp, Graphics2D g2, int countryOwnerColor, int armies, int x, int y, int ballSize, Player capital) {
+        public void drawArmy(Graphics2D g2, int countryOwnerColor, int armies, int x, int y, int ballSize, Player capital) {
             int r = ballSize / 2;
             
-            Image icon = pp.getIconForColor(countryOwnerColor);
+            Image icon = getIconForColor(countryOwnerColor);
             if (icon == null) {
-                g2.setColor( new Color( countryOwnerColor ) );
+                g2.setColor(new Color(countryOwnerColor));
                 Ellipse2D ellipse = new Ellipse2D.Double();
                 ellipse.setFrame( x-r , y-r , ballSize, ballSize);
                 g2.fill(ellipse);
@@ -462,11 +462,11 @@ public class PicturePanel extends JPanel implements MapPanel {
             }
             else {
                 int w = (int)(ballSize * 1.1);
-                int h = (int)(icon.getHeight(pp) * (w / (double)icon.getWidth(pp)));
-                g2.drawImage(icon, x-(w/2), y-(w/2), w, h, pp);
+                int h = (int)(icon.getHeight(this) * (w / (double)icon.getWidth(this)));
+                g2.drawImage(icon, x-(w/2), y-(w/2), w, h, this);
             }
 
-            g2.setColor( new Color( ColorUtil.getTextColorFor( countryOwnerColor ) ) );
+            g2.setColor(new Color(ColorUtil.getTextColorFor(countryOwnerColor)));
             String noa = String.valueOf( armies );
             int w2 = g2.getFontMetrics().stringWidth(noa) / 2;
             int h2 = g2.getFontMetrics().getAscent()*2/5 ;

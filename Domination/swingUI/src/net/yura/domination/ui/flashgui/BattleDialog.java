@@ -357,9 +357,11 @@ public class BattleDialog extends JDialog implements MouseListener {
 
                         MoveDialog.paintMove(g,
                                 c1img, c2img,
-                                color1, color2, 
+                                color1, color2,
+                                gui.getCountryCapital(country1), gui.getCountryCapital(country2),
                                 country1.getName(), country2.getName(),
-                                myrisk.hasArmiesInt(c1num),myrisk.hasArmiesInt(c2num) );
+                                myrisk.hasArmiesInt(c1num), myrisk.hasArmiesInt(c2num),
+                                gui);
 
                         g.setColor( Color.BLACK );
                         GraphicsUtil.drawStringCenteredAt(g, resb.getString("battle.select.dice"), 240, 320);

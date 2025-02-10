@@ -22,6 +22,7 @@ import javax.swing.event.ChangeListener;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Country;
+import net.yura.domination.engine.core.Player;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 
@@ -300,8 +301,9 @@ public class MoveDialog extends JDialog {
 			paintMove(g, 
                                 c1img, c2img,
                                 color, color,
+                                gui.getCountryCapital(country1), gui.getCountryCapital(country2),
                                 country1.getName(), country2.getName(),
-                                csrc-move,cdes+move );
+                                csrc - move, cdes + move, gui);
 
                         g.setColor( RiskUIUtil.getTextColorFor(color) );
 			GraphicsUtil.drawStringCenteredAt(g, java.lang.Integer.toString(move), 240, 104);
@@ -309,36 +311,36 @@ public class MoveDialog extends JDialog {
 	}
 
         static void paintMove(Graphics g,
-                BufferedImage c1img,BufferedImage c2img,
-                Color color1, Color color2,
-                String name1,String name2,
-                int noa1i, int noa2i
-                ) {
-			Graphics2D g2 = (Graphics2D)g;
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        BufferedImage c1img,BufferedImage c2img,
+                        Color playerColor1, Color playerColor2,
+                        Player capital1,Player capital2,
+                        String name1, String name2,
+                        int noa1i, int noa2i, GameFrame gf) {
 
-                        GraphicsUtil.drawImageInRect(g2, c1img, 30, 30, 200, 140, null);
-                        GraphicsUtil.drawImageInRect(g2, c2img, 250, 30, 200, 140, null);
+                Graphics2D g2 = (Graphics2D)g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-			g2.setColor( Color.black );
+                GraphicsUtil.drawImageInRect(g2, c1img, 30, 30, 200, 140, null);
+                GraphicsUtil.drawImageInRect(g2, c2img, 250, 30, 200, 140, null);
 
-                        GraphicsUtil.drawStringCenteredAt(g, name1, 130, 40);
-                        GraphicsUtil.drawStringCenteredAt(g, name2, 350, 40);
+                g2.setColor( Color.black );
 
-			g2.setColor( color1 );
-                        GraphicsUtil.fillOval(g, 120 , 90 , 20, 20);
+                GraphicsUtil.drawStringCenteredAt(g, name1, 130, 40);
+                GraphicsUtil.drawStringCenteredAt(g, name2, 350, 40);
 
-			g2.setColor( color2 );
-                        GraphicsUtil.fillOval(g, 340 , 90 , 20, 20);
+                gf.drawArmy(g2, playerColor1, noa1i, 130, 100, 20, capital1);
+                //g2.setColor(color1);
+                //GraphicsUtil.fillOval(g, 120 , 90 , 20, 20);
+                //g2.setColor(RiskUIUtil.getTextColorFor(color1));
+                //GraphicsUtil.drawStringCenteredAt(g, String.valueOf(noa1i), 130, 105);
 
-			g2.setColor( new Color(color1.getRed(), color1.getGreen(), color1.getBlue(), 150) );
+                gf.drawArmy(g2, playerColor2, noa2i, 350, 100, 20, capital2);
+                //g2.setColor(color2);
+                //GraphicsUtil.fillOval(g, 340 , 90 , 20, 20);
+                //g2.setColor(RiskUIUtil.getTextColorFor(color2));
+                //GraphicsUtil.drawStringCenteredAt(g, String.valueOf(noa2i), 350, 105);
 
-			g2.fillPolygon( arrow );
-
-			g2.setColor( RiskUIUtil.getTextColorFor(color1) );
-                        GraphicsUtil.drawStringCenteredAt(g, String.valueOf(noa1i), 130, 105);
-
-			g2.setColor( RiskUIUtil.getTextColorFor(color2) );
-                        GraphicsUtil.drawStringCenteredAt(g, String.valueOf(noa2i), 350, 105);
+                g2.setColor(new Color(playerColor1.getRed(), playerColor1.getGreen(), playerColor1.getBlue(), 150) );
+                g2.fillPolygon( arrow );
         }
 }

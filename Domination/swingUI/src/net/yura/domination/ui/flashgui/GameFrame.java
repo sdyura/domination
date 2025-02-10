@@ -908,6 +908,14 @@ public class GameFrame extends JFrame implements KeyListener {
 	public BufferedImage getCountryImage(int a) {
 		return pp.getCountryImage(a, true);
 	}
+        
+        public Player getCountryCapital(Country c) {
+            return myrisk.getCountryCapital(c.getColor());
+        }
+
+        public void drawArmy(Graphics2D g2, Color countryOwnerColor, int armies, int x, int y, int ballSize, Player capital) {
+            pp.drawArmy(g2, countryOwnerColor.getRGB(), armies, GraphicsUtil.scale(x), GraphicsUtil.scale(y), GraphicsUtil.scale(ballSize), capital);
+        }
 
 	public void openMove(int min, int c1num, int c2num, boolean tacmove) {
 

@@ -2593,11 +2593,11 @@ RiskUtil.printStackTrace(e);
 
 	/**
 	 * Get the name of the country from the game
-	 * @param c The (unique) country identifier
+	 * @param color The (unique) country identifier
 	 * @return String Return Country name if it is there, else return empty speech-marks otherwise
 	 */
-	public String getCountryName(int c) {
-		Country t = game.getCountryInt(c);
+	public String getCountryName(int color) {
+		Country t = game.getCountryInt(color);
 		if (t==null) {
 			return "";
 		} else {
@@ -2605,8 +2605,8 @@ RiskUtil.printStackTrace(e);
 		}
 	}
 
-	public Player getCountryCapital(int c) {
-	    Country t = game.getCountryInt(c);
+	public Player getCountryCapital(int color) {
+	    Country t = game.getCountryInt(color);
 	    List<Player> players = game.getPlayers();
 	    for (Player player: players) {
 	        if (player.getCapital() == t) {
