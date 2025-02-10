@@ -32,11 +32,13 @@ import java.util.prefs.Preferences;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -1281,45 +1283,36 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			players.setSelectionMode(0);
 			players.getTableHeader().setReorderingAllowed(false);
 
-			DefaultTableCellRenderer colorRenderer = new DefaultTableCellRenderer() {
-				public void setValue(Object value) {
-					if (value instanceof NamedColor) {
-						NamedColor c = (NamedColor) value;
-						setBackground(c);
-						setForeground( RiskUIUtil.getTextColorFor( c ) );
-						setText(c.toString());
+			final JComboBox colorComboBox = new JComboBox(namedColors);
 
-                                                final Image img = swingGUIPanel.pp.getIconForColor(c.getRGB());
-                                                setIcon(img == null ? null : new Icon() {
-                                                    @Override
-                                                    public void paintIcon(Component c, Graphics g, int x, int y) {
-                                                        g.drawImage(img, x, y, getIconWidth(), getIconHeight(), c);
-                                                    }
+                        colorComboBox.setRenderer(new DefaultListCellRenderer() {
+                            {
+                                setHorizontalAlignment(JLabel.CENTER);
+                            }
+                            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                                Component result = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                                setNamedColorValue(this, value);
+                                if (isSelected || cellHasFocus) {
+                                    Color highlight = getBackground().darker();
+                                    setBackground(highlight);
+                                    setForeground(new Color(ColorUtil.getTextColorFor(highlight.getRGB())));
+                                }
+                                return result;
+                            }
+                        });
 
-                                                    @Override
-                                                    public int getIconWidth() {
-                                                        double scale = getIconHeight() / (double)img.getHeight(null);
-                                                        return (int) (scale * img.getWidth(null));
-                                                    }
-
-                                                    @Override
-                                                    public int getIconHeight() {
-                                                        return players.getRowHeight();
-                                                    }
-                                                });
-					} else {
-						super.setValue(value);
-					}
-				}
-			};
-
-			final JComboBox colorComboBox = new JComboBox( namedColors );
 			final JComboBox typeComboBox = new JComboBox( playerTypes );
 
 			TableColumn colorColumn = players.getColumn(resbundle.getString("newgame.label.color"));
 			colorColumn.setCellEditor(new DefaultCellEditor(colorComboBox));
-			colorRenderer.setHorizontalAlignment(JLabel.CENTER);
-			colorColumn.setCellRenderer(colorRenderer);
+			colorColumn.setCellRenderer(new DefaultTableCellRenderer() {
+                            {
+                                setHorizontalAlignment(JLabel.CENTER);
+                            }
+                            public void setValue(Object value) {
+                                setNamedColorValue(this, value);
+                            }
+                        });
 
 			TableColumn typeColumn = players.getColumn(resbundle.getString("newgame.label.type"));
 			typeColumn.setCellEditor(new DefaultCellEditor(typeComboBox));
@@ -1336,11 +1329,9 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			colorComboBox.addActionListener(
 			    new ActionListener() {
 				public void actionPerformed(ActionEvent a) {
-
 					Color c = (Color)colorComboBox.getSelectedItem();
 					colorComboBox.setBackground( c );
 					colorComboBox.setForeground( RiskUIUtil.getTextColorFor(c) );
-
 				}
 			    }
 			);
@@ -1800,6 +1791,34 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			c.gridheight = 1; // height
 			this.add(startGame, c);
 		}
+                
+                public void setNamedColorValue(JLabel label, Object value) {
+                    if (value instanceof NamedColor) {
+                        NamedColor c = (NamedColor) value;
+                        label.setBackground(c);
+                        label.setForeground( RiskUIUtil.getTextColorFor( c ) );
+                        label.setText(c.toString());
+
+                        final Image img = swingGUIPanel.pp.getIconForColor(c.getRGB());
+                        label.setIcon(img == null ? null : new Icon() {
+                            @Override
+                            public void paintIcon(Component c, Graphics g, int x, int y) {
+                                g.drawImage(img, x, y, getIconWidth(), getIconHeight(), c);
+                            }
+
+                            @Override
+                            public int getIconWidth() {
+                                double scale = getIconHeight() / (double)img.getHeight(null);
+                                return (int) (scale * img.getWidth(null));
+                            }
+
+                            @Override
+                            public int getIconHeight() {
+                                return players.getRowHeight();
+                            }
+                        });
+                    }
+                }
 
 		public void showCardsFile(String c, boolean m) {
 			cardsFile.setText(c);
