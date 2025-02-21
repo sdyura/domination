@@ -26,7 +26,7 @@
 
 
 <!-- from: https://www.patreon.com/dashboard/widgets -->
-<div style="width: 176px;overflow:hidden">
+<div style="width: 176px;overflow:hidden; background-color: #f76c4f;">
 <a href="https://www.patreon.com/bePatron?u=11130257" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js" charset="UTF-8"></script>
 </div>
 
