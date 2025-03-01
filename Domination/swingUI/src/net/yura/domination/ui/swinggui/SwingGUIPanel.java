@@ -1177,6 +1177,8 @@ class DebugTab extends JSplitPane implements SwingGUITab,ActionListener {
 		errText.setEditable(false);
 
 		JScrollPane errScroll = new JScrollPane( errText );
+                // set to any small size, so it gets stretched, othersie when long text is in the log it will make the window massive
+                errScroll.setPreferredSize(new Dimension(10,10));
 		//errScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		//errScroll.setBorder( BorderFactory.createTitledBorder( BorderFactory.createLoweredBevelBorder() , "Error Log", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP ) );
 
