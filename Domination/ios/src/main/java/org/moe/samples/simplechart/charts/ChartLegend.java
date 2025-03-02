@@ -2,7 +2,7 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGSize;
+import apple.corefoundation.struct.CGSize;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumber;
@@ -10,6 +10,8 @@ import apple.foundation.NSSet;
 import apple.foundation.NSValue;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -59,41 +61,47 @@ public class ChartLegend extends ChartComponentBase {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("calculateDimensionsWithLabelFont:viewPortHandler:")
-    public native void calculateDimensionsWithLabelFontViewPortHandler(UIFont labelFont,
-            ChartViewPortHandler viewPortHandler);
+    public native void calculateDimensionsWithLabelFontViewPortHandler(@NotNull UIFont labelFont,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("calculatedLabelBreakPoints")
+    @NotNull
     public native NSArray<? extends NSNumber> calculatedLabelBreakPoints();
 
     @Generated
     @Selector("calculatedLabelSizes")
+    @NotNull
     public native NSArray<? extends NSValue> calculatedLabelSizes();
 
     @Generated
     @Selector("calculatedLineSizes")
+    @NotNull
     public native NSArray<? extends NSValue> calculatedLineSizes();
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -123,6 +131,7 @@ public class ChartLegend extends ChartComponentBase {
      */
     @Generated
     @Selector("entries")
+    @NotNull
     public native NSArray<? extends ChartLegendEntry> entries();
 
     /**
@@ -131,10 +140,12 @@ public class ChartLegend extends ChartComponentBase {
      */
     @Generated
     @Selector("extraEntries")
+    @NotNull
     public native NSArray<? extends ChartLegendEntry> extraEntries();
 
     @Generated
     @Selector("font")
+    @NotNull
     public native UIFont font();
 
     /**
@@ -152,6 +163,7 @@ public class ChartLegend extends ChartComponentBase {
      */
     @Generated
     @Selector("formLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> formLineDashLengths();
 
     /**
@@ -183,7 +195,7 @@ public class ChartLegend extends ChartComponentBase {
     @Generated
     @Selector("getMaximumEntrySizeWithFont:")
     @ByValue
-    public native CGSize getMaximumEntrySizeWithFont(UIFont font);
+    public native CGSize getMaximumEntrySizeWithFont(@NotNull UIFont font);
 
     @Generated
     @Selector("hash")
@@ -203,7 +215,7 @@ public class ChartLegend extends ChartComponentBase {
 
     @Generated
     @Selector("initWithEntries:")
-    public native ChartLegend initWithEntries(NSArray<? extends ChartLegendEntry> entries);
+    public native ChartLegend initWithEntries(@NotNull NSArray<? extends ChartLegendEntry> entries);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -246,7 +258,8 @@ public class ChartLegend extends ChartComponentBase {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * The maximum relative size out of the whole chart view in percent.
@@ -295,15 +308,15 @@ public class ChartLegend extends ChartComponentBase {
 
     @Generated
     @Selector("setCalculatedLabelBreakPoints:")
-    public native void setCalculatedLabelBreakPoints(NSArray<? extends NSNumber> value);
+    public native void setCalculatedLabelBreakPoints(@NotNull NSArray<? extends NSNumber> value);
 
     @Generated
     @Selector("setCalculatedLabelSizes:")
-    public native void setCalculatedLabelSizes(NSArray<? extends NSValue> value);
+    public native void setCalculatedLabelSizes(@NotNull NSArray<? extends NSValue> value);
 
     @Generated
     @Selector("setCalculatedLineSizes:")
-    public native void setCalculatedLineSizes(NSArray<? extends NSValue> value);
+    public native void setCalculatedLineSizes(@NotNull NSArray<? extends NSValue> value);
 
     /**
      * Sets a custom legend’s entries array.
@@ -317,7 +330,7 @@ public class ChartLegend extends ChartComponentBase {
      */
     @Generated
     @Selector("setCustomWithEntries:")
-    public native void setCustomWithEntries(NSArray<? extends ChartLegendEntry> entries);
+    public native void setCustomWithEntries(@NotNull NSArray<? extends ChartLegendEntry> entries);
 
     /**
      * The text direction of the legend
@@ -338,7 +351,7 @@ public class ChartLegend extends ChartComponentBase {
      */
     @Generated
     @Selector("setEntries:")
-    public native void setEntries(NSArray<? extends ChartLegendEntry> value);
+    public native void setEntries(@NotNull NSArray<? extends ChartLegendEntry> value);
 
     /**
      * Entries that will be appended to the end of the auto calculated entries after calculating the legend.
@@ -346,11 +359,11 @@ public class ChartLegend extends ChartComponentBase {
      */
     @Generated
     @Selector("setExtraEntries:")
-    public native void setExtraEntries(NSArray<? extends ChartLegendEntry> value);
+    public native void setExtraEntries(@NotNull NSArray<? extends ChartLegendEntry> value);
 
     @Generated
     @Selector("setFont:")
-    public native void setFont(UIFont value);
+    public native void setFont(@NotNull UIFont value);
 
     /**
      * The form/shape of the legend forms
@@ -367,7 +380,7 @@ public class ChartLegend extends ChartComponentBase {
      */
     @Generated
     @Selector("setFormLineDashLengths:")
-    public native void setFormLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setFormLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     /**
      * Line dash configuration for shapes that consist of lines.
@@ -433,7 +446,7 @@ public class ChartLegend extends ChartComponentBase {
 
     @Generated
     @Selector("setTextColor:")
-    public native void setTextColor(UIColor value);
+    public native void setTextColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setTextHeightMax:")
@@ -482,6 +495,7 @@ public class ChartLegend extends ChartComponentBase {
 
     @Generated
     @Selector("textColor")
+    @NotNull
     public native UIColor textColor();
 
     @Generated
@@ -491,6 +505,11 @@ public class ChartLegend extends ChartComponentBase {
     @Generated
     @Selector("textWidthMax")
     public native double textWidthMax();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

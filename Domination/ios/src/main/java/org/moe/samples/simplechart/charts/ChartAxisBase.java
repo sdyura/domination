@@ -8,6 +8,8 @@ import apple.foundation.NSNumber;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -54,7 +56,7 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("addLimitLine:")
-    public native void addLimitLine(ChartLimitLine line);
+    public native void addLimitLine(@NotNull ChartLimitLine line);
 
     @Generated
     @Owned
@@ -68,10 +70,11 @@ public class ChartAxisBase extends ChartComponentBase {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("axisLineColor")
+    @NotNull
     public native UIColor axisLineColor();
 
     @Generated
@@ -137,13 +140,14 @@ public class ChartAxisBase extends ChartComponentBase {
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     /**
      * Centers the axis labels instead of drawing them at their original position.
@@ -158,14 +162,17 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("centeredEntries")
+    @NotNull
     public native NSArray<? extends NSNumber> centeredEntries();
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -219,6 +226,7 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("entries")
+    @NotNull
     public native NSArray<? extends NSNumber> entries();
 
     /**
@@ -241,10 +249,12 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("getFormattedLabel:")
+    @NotNull
     public native String getFormattedLabel(long index);
 
     @Generated
     @Selector("getLongestLabel")
+    @NotNull
     public native String getLongestLabel();
 
     /**
@@ -275,6 +285,7 @@ public class ChartAxisBase extends ChartComponentBase {
 
     @Generated
     @Selector("gridColor")
+    @NotNull
     public native UIColor gridColor();
 
     @Generated
@@ -375,7 +386,8 @@ public class ChartAxisBase extends ChartComponentBase {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * the number of label entries the axis should have
@@ -390,10 +402,12 @@ public class ChartAxisBase extends ChartComponentBase {
 
     @Generated
     @Selector("labelFont")
+    @NotNull
     public native UIFont labelFont();
 
     @Generated
     @Selector("labelTextColor")
+    @NotNull
     public native UIColor labelTextColor();
 
     /**
@@ -401,6 +415,7 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("limitLines")
+    @NotNull
     public native NSArray<? extends ChartLimitLine> limitLines();
 
     @Generated
@@ -420,7 +435,7 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("removeLimitLine:")
-    public native void removeLimitLine(ChartLimitLine line);
+    public native void removeLimitLine(@NotNull ChartLimitLine line);
 
     /**
      * By calling this method, any custom maximum value that has been previously set is reseted, and the calculation is done automatically.
@@ -446,7 +461,7 @@ public class ChartAxisBase extends ChartComponentBase {
 
     @Generated
     @Selector("setAxisLineColor:")
-    public native void setAxisLineColor(UIColor value);
+    public native void setAxisLineColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setAxisLineDashLengths:")
@@ -512,7 +527,7 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("setCenteredEntries:")
-    public native void setCenteredEntries(NSArray<? extends NSNumber> value);
+    public native void setCenteredEntries(@NotNull NSArray<? extends NSNumber> value);
 
     /**
      * the number of decimal digits to use (for the default formatter
@@ -557,7 +572,7 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("setEntries:")
-    public native void setEntries(NSArray<? extends NSNumber> value);
+    public native void setEntries(@NotNull NSArray<? extends NSNumber> value);
 
     /**
      * if true, the set number of y-labels will be forced
@@ -594,7 +609,7 @@ public class ChartAxisBase extends ChartComponentBase {
 
     @Generated
     @Selector("setGridColor:")
-    public native void setGridColor(UIColor value);
+    public native void setGridColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setGridLineCap:")
@@ -629,11 +644,11 @@ public class ChartAxisBase extends ChartComponentBase {
 
     @Generated
     @Selector("setLabelFont:")
-    public native void setLabelFont(UIFont value);
+    public native void setLabelFont(@NotNull UIFont value);
 
     @Generated
     @Selector("setLabelTextColor:")
-    public native void setLabelTextColor(UIColor value);
+    public native void setLabelTextColor(@NotNull UIColor value);
 
     /**
      * Extra spacing for <code>axisMaximum</code> to be added to automatically calculated <code>axisMaximum</code>
@@ -656,7 +671,7 @@ public class ChartAxisBase extends ChartComponentBase {
      */
     @Generated
     @Selector("setValueFormatter:")
-    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) IChartAxisValueFormatter value);
+    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) @Nullable IChartAxisValueFormatter value);
 
     @Generated
     @Selector("setVersion:")
@@ -680,6 +695,11 @@ public class ChartAxisBase extends ChartComponentBase {
     @Selector("superclass")
     public static native Class superclass_static();
 
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
     /**
      * Sets the formatter to be used for formatting the axis labels.
      * If no formatter is set, the chart will automatically determine a reasonable formatting (concerning decimals) for all the values that are drawn inside the chart.
@@ -688,6 +708,7 @@ public class ChartAxisBase extends ChartComponentBase {
     @Generated
     @Selector("valueFormatter")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IChartAxisValueFormatter valueFormatter();
 
     @Generated

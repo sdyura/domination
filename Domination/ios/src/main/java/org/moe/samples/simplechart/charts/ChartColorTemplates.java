@@ -6,6 +6,8 @@ import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -56,32 +58,37 @@ public class ChartColorTemplates extends NSObject {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Selector("colorFromString:")
-    public static native UIColor colorFromString(String colorString);
+    @NotNull
+    public static native UIColor colorFromString(@NotNull String colorString);
 
     @Generated
     @Selector("colorful")
+    @NotNull
     public static native NSArray<? extends UIColor> colorful();
 
     @Generated
@@ -120,18 +127,22 @@ public class ChartColorTemplates extends NSObject {
 
     @Generated
     @Selector("joyful")
+    @NotNull
     public static native NSArray<? extends UIColor> joyful();
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("liberty")
+    @NotNull
     public static native NSArray<? extends UIColor> liberty();
 
     @Generated
     @Selector("material")
+    @NotNull
     public static native NSArray<? extends UIColor> material();
 
     @Generated
@@ -141,6 +152,7 @@ public class ChartColorTemplates extends NSObject {
 
     @Generated
     @Selector("pastel")
+    @NotNull
     public static native NSArray<? extends UIColor> pastel();
 
     @Generated
@@ -160,11 +172,17 @@ public class ChartColorTemplates extends NSObject {
     public static native Class superclass_static();
 
     @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
+    @Generated
     @Selector("version")
     @NInt
     public static native long version_static();
 
     @Generated
     @Selector("vordiplom")
+    @NotNull
     public static native NSArray<? extends UIColor> vordiplom();
 }

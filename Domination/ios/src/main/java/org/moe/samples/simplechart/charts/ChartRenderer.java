@@ -5,6 +5,8 @@ import apple.NSObject;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -53,24 +55,27 @@ public class ChartRenderer extends NSObject {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -92,7 +97,7 @@ public class ChartRenderer extends NSObject {
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native ChartRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native ChartRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -113,7 +118,8 @@ public class ChartRenderer extends NSObject {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -137,6 +143,11 @@ public class ChartRenderer extends NSObject {
     public static native Class superclass_static();
 
     @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
+    @Generated
     @Selector("version")
     @NInt
     public static native long version_static();
@@ -146,5 +157,6 @@ public class ChartRenderer extends NSObject {
      */
     @Generated
     @Selector("viewPortHandler")
+    @NotNull
     public native ChartViewPortHandler viewPortHandler();
 }

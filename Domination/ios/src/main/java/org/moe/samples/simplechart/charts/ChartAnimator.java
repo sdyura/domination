@@ -5,6 +5,8 @@ import apple.NSObject;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -63,8 +65,9 @@ public class ChartAnimator extends NSObject {
      */
     @Generated
     @Selector("animateWithXAxisDuration:easing:")
-    public native void animateWithXAxisDurationEasing(double xAxisDuration,
-            @ObjCBlock(name = "call_animateWithXAxisDurationEasing") Block_animateWithXAxisDurationEasing easing);
+    public native void animateWithXAxisDurationEasing(
+            double xAxisDuration,
+            @ObjCBlock(name = "call_animateWithXAxisDurationEasing") @Nullable Block_animateWithXAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -98,7 +101,7 @@ public class ChartAnimator extends NSObject {
     public native void animateWithXAxisDurationYAxisDurationEasing(
             double xAxisDuration,
             double yAxisDuration,
-            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasing") Block_animateWithXAxisDurationYAxisDurationEasing easing);
+            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasing") @Nullable Block_animateWithXAxisDurationYAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -153,8 +156,8 @@ public class ChartAnimator extends NSObject {
     public native void animateWithXAxisDurationYAxisDurationEasingXEasingY(
             double xAxisDuration,
             double yAxisDuration,
-            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasingXEasingY_2") Block_animateWithXAxisDurationYAxisDurationEasingXEasingY_2 easingX,
-            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasingXEasingY_3") Block_animateWithXAxisDurationYAxisDurationEasingXEasingY_3 easingY);
+            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasingXEasingY_2") @Nullable Block_animateWithXAxisDurationYAxisDurationEasingXEasingY_2 easingX,
+            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasingXEasingY_3") @Nullable Block_animateWithXAxisDurationYAxisDurationEasingXEasingY_3 easingY);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -179,8 +182,9 @@ public class ChartAnimator extends NSObject {
      */
     @Generated
     @Selector("animateWithYAxisDuration:easing:")
-    public native void animateWithYAxisDurationEasing(double yAxisDuration,
-            @ObjCBlock(name = "call_animateWithYAxisDurationEasing") Block_animateWithYAxisDurationEasing easing);
+    public native void animateWithYAxisDurationEasing(
+            double yAxisDuration,
+            @ObjCBlock(name = "call_animateWithYAxisDurationEasing") @Nullable Block_animateWithYAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -202,24 +206,27 @@ public class ChartAnimator extends NSObject {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -229,6 +236,7 @@ public class ChartAnimator extends NSObject {
     @Generated
     @Selector("delegate")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native ChartAnimatorDelegate delegate();
 
     @Generated
@@ -263,7 +271,8 @@ public class ChartAnimator extends NSObject {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -294,10 +303,10 @@ public class ChartAnimator extends NSObject {
 
     @Generated
     @Selector("setDelegate:")
-    public native void setDelegate_unsafe(@Mapped(ObjCObjectMapper.class) ChartAnimatorDelegate value);
+    public native void setDelegate_unsafe(@Mapped(ObjCObjectMapper.class) @Nullable ChartAnimatorDelegate value);
 
     @Generated
-    public void setDelegate(@Mapped(ObjCObjectMapper.class) ChartAnimatorDelegate value) {
+    public void setDelegate(@Mapped(ObjCObjectMapper.class) @Nullable ChartAnimatorDelegate value) {
         Object __old = delegate();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -324,7 +333,7 @@ public class ChartAnimator extends NSObject {
 
     @Generated
     @Selector("setStopBlock:")
-    public native void setStopBlock(@ObjCBlock(name = "call_setStopBlock") Block_setStopBlock value);
+    public native void setStopBlock(@ObjCBlock(name = "call_setStopBlock") @Nullable Block_setStopBlock value);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -335,7 +344,7 @@ public class ChartAnimator extends NSObject {
 
     @Generated
     @Selector("setUpdateBlock:")
-    public native void setUpdateBlock(@ObjCBlock(name = "call_setUpdateBlock") Block_setUpdateBlock value);
+    public native void setUpdateBlock(@ObjCBlock(name = "call_setUpdateBlock") @Nullable Block_setUpdateBlock value);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -355,6 +364,7 @@ public class ChartAnimator extends NSObject {
     @Generated
     @Selector("stopBlock")
     @ObjCBlock(name = "call_stopBlock_ret")
+    @Nullable
     public native Block_stopBlock_ret stopBlock();
 
     @Runtime(ObjCRuntime.class)
@@ -371,6 +381,7 @@ public class ChartAnimator extends NSObject {
     @Generated
     @Selector("updateBlock")
     @ObjCBlock(name = "call_updateBlock_ret")
+    @Nullable
     public native Block_updateBlock_ret updateBlock();
 
     @Runtime(ObjCRuntime.class)
@@ -379,6 +390,11 @@ public class ChartAnimator extends NSObject {
         @Generated
         void call_updateBlock_ret();
     }
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

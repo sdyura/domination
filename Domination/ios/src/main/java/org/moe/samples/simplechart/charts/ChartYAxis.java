@@ -2,12 +2,14 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGSize;
+import apple.corefoundation.struct.CGSize;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumber;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -62,7 +64,7 @@ public class ChartYAxis extends ChartAxisBase {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("axisDependency")
@@ -74,20 +76,23 @@ public class ChartYAxis extends ChartAxisBase {
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -174,14 +179,15 @@ public class ChartYAxis extends ChartAxisBase {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * the alignment of the text in the y-label
      */
     @Generated
     @Selector("labelAlignment")
-    public native long labelAlignment();
+    public native int labelAlignment();
 
     /**
      * the position of the y-labels relative to the chart
@@ -272,7 +278,7 @@ public class ChartYAxis extends ChartAxisBase {
      */
     @Generated
     @Selector("setLabelAlignment:")
-    public native void setLabelAlignment(long value);
+    public native void setLabelAlignment(int value);
 
     /**
      * the position of the y-labels relative to the chart
@@ -328,7 +334,7 @@ public class ChartYAxis extends ChartAxisBase {
      */
     @Generated
     @Selector("setZeroLineColor:")
-    public native void setZeroLineColor(UIColor value);
+    public native void setZeroLineColor(@Nullable UIColor value);
 
     /**
      * This is the actual dash pattern.
@@ -337,7 +343,7 @@ public class ChartYAxis extends ChartAxisBase {
      */
     @Generated
     @Selector("setZeroLineDashLengths:")
-    public native void setZeroLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setZeroLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     /**
      * This is how much (in pixels) into the dash pattern are we starting from.
@@ -372,6 +378,11 @@ public class ChartYAxis extends ChartAxisBase {
     public static native Class superclass_static();
 
     @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
+    @Generated
     @Selector("version")
     @NInt
     public static native long version_static();
@@ -381,6 +392,7 @@ public class ChartYAxis extends ChartAxisBase {
      */
     @Generated
     @Selector("zeroLineColor")
+    @Nullable
     public native UIColor zeroLineColor();
 
     /**
@@ -390,6 +402,7 @@ public class ChartYAxis extends ChartAxisBase {
      */
     @Generated
     @Selector("zeroLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> zeroLineDashLengths();
 
     /**

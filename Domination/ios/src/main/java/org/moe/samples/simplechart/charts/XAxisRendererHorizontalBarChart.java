@@ -2,13 +2,15 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
-import apple.coregraphics.struct.CGRect;
+import apple.corefoundation.struct.CGPoint;
+import apple.corefoundation.struct.CGRect;
 import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSDictionary;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -60,24 +62,27 @@ public class XAxisRendererHorizontalBarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -98,20 +103,20 @@ public class XAxisRendererHorizontalBarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("drawGridLineWithContext:x:y:")
-    public native void drawGridLineWithContextXY(CGContextRef context, double x, double y);
+    public native void drawGridLineWithContextXY(@NotNull CGContextRef context, double x, double y);
 
     @Generated
     @Selector("drawLabelWithContext:formattedLabel:x:y:attributes:anchor:angleRadians:")
-    public native void drawLabelWithContextFormattedLabelXYAttributesAnchorAngleRadians(CGContextRef context,
-            String formattedLabel, double x, double y, NSDictionary<String, ?> attributes, @ByValue CGPoint anchor,
-            double angleRadians);
+    public native void drawLabelWithContextFormattedLabelXYAttributesAnchorAngleRadians(@NotNull CGContextRef context,
+            @NotNull String formattedLabel, double x, double y, @NotNull NSDictionary<String, ?> attributes,
+            @ByValue CGPoint anchor, double angleRadians);
 
     /**
      * draws the x-labels on the specified y-position
      */
     @Generated
     @Selector("drawLabelsWithContext:pos:anchor:")
-    public native void drawLabelsWithContextPosAnchor(CGContextRef context, double pos, @ByValue CGPoint anchor);
+    public native void drawLabelsWithContextPosAnchor(@NotNull CGContextRef context, double pos, @ByValue CGPoint anchor);
 
     @Generated
     @Selector("gridClippingRect")
@@ -129,22 +134,25 @@ public class XAxisRendererHorizontalBarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native XAxisRendererHorizontalBarChart initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native XAxisRendererHorizontalBarChart initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:transformer:axis:")
     public native XAxisRendererHorizontalBarChart initWithViewPortHandlerTransformerAxis(
-            ChartViewPortHandler viewPortHandler, ChartTransformer transformer, ChartAxisBase axis);
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartTransformer transformer,
+            @Nullable ChartAxisBase axis);
 
     @Generated
     @Selector("initWithViewPortHandler:xAxis:transformer:")
     public native XAxisRendererHorizontalBarChart initWithViewPortHandlerXAxisTransformer(
-            ChartViewPortHandler viewPortHandler, ChartXAxis xAxis, ChartTransformer transformer);
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartXAxis xAxis,
+            @Nullable ChartTransformer transformer);
 
     @Generated
     @Selector("initWithViewPortHandler:xAxis:transformer:chart:")
     public native XAxisRendererHorizontalBarChart initWithViewPortHandlerXAxisTransformerChart(
-            ChartViewPortHandler viewPortHandler, ChartXAxis xAxis, ChartTransformer transformer, BarChartView chart);
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartXAxis xAxis,
+            @Nullable ChartTransformer transformer, @NotNull BarChartView chart);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -165,7 +173,8 @@ public class XAxisRendererHorizontalBarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -174,15 +183,15 @@ public class XAxisRendererHorizontalBarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("renderAxisLabelsWithContext:")
-    public native void renderAxisLabelsWithContext(CGContextRef context);
+    public native void renderAxisLabelsWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("renderAxisLineWithContext:")
-    public native void renderAxisLineWithContext(CGContextRef context);
+    public native void renderAxisLineWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("renderLimitLinesWithContext:")
-    public native void renderLimitLinesWithContext(CGContextRef context);
+    public native void renderLimitLinesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("resolveClassMethod:")
@@ -199,6 +208,11 @@ public class XAxisRendererHorizontalBarChart extends ChartXAxisRenderer {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

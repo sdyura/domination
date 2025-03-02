@@ -1,9 +1,10 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
 import apple.coregraphics.opaque.CGContextRef;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
 import org.moe.natj.general.ann.ByValue;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
@@ -36,7 +37,7 @@ public interface IShapeRenderer {
      */
     @Generated
     @Selector("renderShapeWithContext:dataSet:viewPortHandler:point:color:")
-    void renderShapeWithContextDataSetViewPortHandlerPointColor(CGContextRef context,
-            @Mapped(ObjCObjectMapper.class) IScatterChartDataSet dataSet, ChartViewPortHandler viewPortHandler,
-            @ByValue CGPoint point, UIColor color);
+    void renderShapeWithContextDataSetViewPortHandlerPointColor(@NotNull CGContextRef context,
+            @Mapped(ObjCObjectMapper.class) @NotNull IScatterChartDataSet dataSet,
+            @NotNull ChartViewPortHandler viewPortHandler, @ByValue CGPoint point, @NotNull UIColor color);
 }

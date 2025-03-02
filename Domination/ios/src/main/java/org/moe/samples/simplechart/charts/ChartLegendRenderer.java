@@ -8,6 +8,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -56,24 +58,27 @@ public class ChartLegendRenderer extends ChartRenderer {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     /**
@@ -81,7 +86,7 @@ public class ChartLegendRenderer extends ChartRenderer {
      */
     @Generated
     @Selector("computeLegendWithData:")
-    public native void computeLegendWithData(ChartData data);
+    public native void computeLegendWithData(@NotNull ChartData data);
 
     @Generated
     @Selector("debugDescription")
@@ -96,16 +101,16 @@ public class ChartLegendRenderer extends ChartRenderer {
      */
     @Generated
     @Selector("drawFormWithContext:x:y:entry:legend:")
-    public native void drawFormWithContextXYEntryLegend(CGContextRef context, double x, double y,
-            ChartLegendEntry entry, ChartLegend legend);
+    public native void drawFormWithContextXYEntryLegend(@NotNull CGContextRef context, double x, double y,
+            @NotNull ChartLegendEntry entry, @NotNull ChartLegend legend);
 
     /**
      * Draws the provided label at the given position.
      */
     @Generated
     @Selector("drawLabelWithContext:x:y:label:font:textColor:")
-    public native void drawLabelWithContextXYLabelFontTextColor(CGContextRef context, double x, double y, String label,
-            UIFont font, UIColor textColor);
+    public native void drawLabelWithContextXYLabelFontTextColor(@NotNull CGContextRef context, double x, double y,
+            @NotNull String label, @NotNull UIFont font, @NotNull UIColor textColor);
 
     @Generated
     @Selector("hash")
@@ -118,12 +123,12 @@ public class ChartLegendRenderer extends ChartRenderer {
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native ChartLegendRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native ChartLegendRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:legend:")
-    public native ChartLegendRenderer initWithViewPortHandlerLegend(ChartViewPortHandler viewPortHandler,
-            ChartLegend legend);
+    public native ChartLegendRenderer initWithViewPortHandlerLegend(@NotNull ChartViewPortHandler viewPortHandler,
+            @Nullable ChartLegend legend);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -144,13 +149,15 @@ public class ChartLegendRenderer extends ChartRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * the legend object this renderer renders
      */
     @Generated
     @Selector("legend")
+    @Nullable
     public native ChartLegend legend();
 
     @Generated
@@ -160,7 +167,7 @@ public class ChartLegendRenderer extends ChartRenderer {
 
     @Generated
     @Selector("renderLegendWithContext:")
-    public native void renderLegendWithContext(CGContextRef context);
+    public native void renderLegendWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("resolveClassMethod:")
@@ -175,7 +182,7 @@ public class ChartLegendRenderer extends ChartRenderer {
      */
     @Generated
     @Selector("setLegend:")
-    public native void setLegend(ChartLegend value);
+    public native void setLegend(@Nullable ChartLegend value);
 
     @Generated
     @Selector("setVersion:")
@@ -184,6 +191,11 @@ public class ChartLegendRenderer extends ChartRenderer {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

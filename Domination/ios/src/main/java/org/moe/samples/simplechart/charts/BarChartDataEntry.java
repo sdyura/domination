@@ -7,6 +7,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumber;
 import apple.foundation.NSSet;
 import apple.uikit.UIImage;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -58,7 +60,7 @@ public class BarChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("calcPosNegSum")
@@ -77,27 +79,31 @@ public class BarChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Owned
     @Selector("copyWithZone:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native Object copyWithZone(VoidPtr zone);
+    @NotNull
+    public native Object copyWithZone(@Nullable VoidPtr zone);
 
     @Generated
     @Selector("debugDescription")
@@ -128,52 +134,54 @@ public class BarChartDataEntry extends ChartDataEntry {
      */
     @Generated
     @Selector("initWithX:y:data:")
-    public native BarChartDataEntry initWithXYData(double x, double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native BarChartDataEntry initWithXYData(double x, double y,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     /**
      * Constructor for normal bars (not stacked).
      */
     @Generated
     @Selector("initWithX:y:icon:")
-    public native BarChartDataEntry initWithXYIcon(double x, double y, UIImage icon);
+    public native BarChartDataEntry initWithXYIcon(double x, double y, @Nullable UIImage icon);
 
     /**
      * Constructor for normal bars (not stacked).
      */
     @Generated
     @Selector("initWithX:y:icon:data:")
-    public native BarChartDataEntry initWithXYIconData(double x, double y, UIImage icon,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native BarChartDataEntry initWithXYIconData(double x, double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     /**
      * Constructor for stacked bar entries.
      */
     @Generated
     @Selector("initWithX:yValues:")
-    public native BarChartDataEntry initWithXYValues(double x, NSArray<? extends NSNumber> yValues);
+    public native BarChartDataEntry initWithXYValues(double x, @NotNull NSArray<? extends NSNumber> yValues);
 
     /**
      * Constructor for stacked bar entries. One data object for whole stack
      */
     @Generated
     @Selector("initWithX:yValues:data:")
-    public native BarChartDataEntry initWithXYValuesData(double x, NSArray<? extends NSNumber> yValues,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native BarChartDataEntry initWithXYValuesData(double x, @NotNull NSArray<? extends NSNumber> yValues,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     /**
      * Constructor for stacked bar entries. One data object for whole stack
      */
     @Generated
     @Selector("initWithX:yValues:icon:")
-    public native BarChartDataEntry initWithXYValuesIcon(double x, NSArray<? extends NSNumber> yValues, UIImage icon);
+    public native BarChartDataEntry initWithXYValuesIcon(double x, @NotNull NSArray<? extends NSNumber> yValues,
+            @Nullable UIImage icon);
 
     /**
      * Constructor for stacked bar entries. One data object for whole stack
      */
     @Generated
     @Selector("initWithX:yValues:icon:data:")
-    public native BarChartDataEntry initWithXYValuesIconData(double x, NSArray<? extends NSNumber> yValues,
-            UIImage icon, @Mapped(ObjCObjectMapper.class) Object data);
+    public native BarChartDataEntry initWithXYValuesIconData(double x, @NotNull NSArray<? extends NSNumber> yValues,
+            @Nullable UIImage icon, @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithY:")
@@ -181,16 +189,16 @@ public class BarChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("initWithY:data:")
-    public native BarChartDataEntry initWithYData(double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native BarChartDataEntry initWithYData(double y, @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithY:icon:")
-    public native BarChartDataEntry initWithYIcon(double y, UIImage icon);
+    public native BarChartDataEntry initWithYIcon(double y, @Nullable UIImage icon);
 
     @Generated
     @Selector("initWithY:icon:data:")
-    public native BarChartDataEntry initWithYIconData(double y, UIImage icon,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native BarChartDataEntry initWithYIconData(double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -218,7 +226,8 @@ public class BarChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * The sum of all negative values this entry (if stacked) contains. (this is a positive number)
@@ -244,6 +253,7 @@ public class BarChartDataEntry extends ChartDataEntry {
      */
     @Generated
     @Selector("ranges")
+    @Nullable
     public native NSArray<? extends ChartRange> ranges();
 
     @Generated
@@ -263,7 +273,7 @@ public class BarChartDataEntry extends ChartDataEntry {
      */
     @Generated
     @Selector("setYValues:")
-    public native void setYValues(NSArray<? extends NSNumber> value);
+    public native void setYValues(@Nullable NSArray<? extends NSNumber> value);
 
     @Generated
     @Selector("sumBelowStackIndex:")
@@ -272,6 +282,11 @@ public class BarChartDataEntry extends ChartDataEntry {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")
@@ -283,5 +298,6 @@ public class BarChartDataEntry extends ChartDataEntry {
      */
     @Generated
     @Selector("yValues")
+    @Nullable
     public native NSArray<? extends NSNumber> yValues();
 }

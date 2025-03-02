@@ -4,6 +4,8 @@ package org.moe.samples.simplechart.charts.protocol;
 import apple.foundation.NSArray;
 import apple.foundation.NSNumber;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -20,10 +22,12 @@ import org.moe.natj.objc.ann.Selector;
 public interface IBarLineScatterCandleBubbleChartDataSet extends IChartDataSet {
     @Generated
     @Selector("highlightColor")
+    @NotNull
     UIColor highlightColor();
 
     @Generated
     @Selector("highlightLineDashLengths")
+    @Nullable
     NSArray<? extends NSNumber> highlightLineDashLengths();
 
     @Generated
@@ -36,11 +40,11 @@ public interface IBarLineScatterCandleBubbleChartDataSet extends IChartDataSet {
 
     @Generated
     @Selector("setHighlightColor:")
-    void setHighlightColor(UIColor value);
+    void setHighlightColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setHighlightLineDashLengths:")
-    void setHighlightLineDashLengths(NSArray<? extends NSNumber> value);
+    void setHighlightLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     @Generated
     @Selector("setHighlightLineDashPhase:")

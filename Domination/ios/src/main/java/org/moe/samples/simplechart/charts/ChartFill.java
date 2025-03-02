@@ -2,8 +2,8 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
-import apple.coregraphics.struct.CGRect;
+import apple.corefoundation.struct.CGPoint;
+import apple.corefoundation.struct.CGRect;
 import apple.coregraphics.opaque.CGColorRef;
 import apple.coregraphics.opaque.CGContextRef;
 import apple.coregraphics.opaque.CGGradientRef;
@@ -14,6 +14,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIImage;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -63,28 +65,32 @@ public class ChartFill extends NSObject {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Selector("color")
+    @Nullable
     public native CGColorRef color();
 
     @Generated
@@ -100,52 +106,63 @@ public class ChartFill extends NSObject {
      */
     @Generated
     @Selector("fillPathWithContext:rect:")
-    public native void fillPathWithContextRect(CGContextRef context, @ByValue CGRect rect);
+    public native void fillPathWithContextRect(@NotNull CGContextRef context, @ByValue CGRect rect);
 
     @Generated
     @Selector("fillWithCGColor:")
-    public static native ChartFill fillWithCGColor(CGColorRef CGColor);
+    @NotNull
+    public static native ChartFill fillWithCGColor(@NotNull CGColorRef CGColor);
 
     @Generated
     @Selector("fillWithCGImage:")
-    public static native ChartFill fillWithCGImage(CGImageRef CGImage);
+    @NotNull
+    public static native ChartFill fillWithCGImage(@NotNull CGImageRef CGImage);
 
     @Generated
     @Selector("fillWithCGImage:tiled:")
-    public static native ChartFill fillWithCGImageTiled(CGImageRef CGImage, boolean tiled);
+    @NotNull
+    public static native ChartFill fillWithCGImageTiled(@NotNull CGImageRef CGImage, boolean tiled);
 
     @Generated
     @Selector("fillWithCGLayer:")
-    public static native ChartFill fillWithCGLayer(CGLayerRef CGLayer);
+    @NotNull
+    public static native ChartFill fillWithCGLayer(@NotNull CGLayerRef CGLayer);
 
     @Generated
     @Selector("fillWithColor:")
-    public static native ChartFill fillWithColor(UIColor color);
+    @NotNull
+    public static native ChartFill fillWithColor(@NotNull UIColor color);
 
     @Generated
     @Selector("fillWithImage:")
-    public static native ChartFill fillWithImage(UIImage image);
+    @NotNull
+    public static native ChartFill fillWithImage(@NotNull UIImage image);
 
     @Generated
     @Selector("fillWithImage:tiled:")
-    public static native ChartFill fillWithImageTiled(UIImage image, boolean tiled);
+    @NotNull
+    public static native ChartFill fillWithImageTiled(@NotNull UIImage image, boolean tiled);
 
     @Generated
     @Selector("fillWithLinearGradient:angle:")
-    public static native ChartFill fillWithLinearGradientAngle(CGGradientRef linearGradient, double angle);
+    @NotNull
+    public static native ChartFill fillWithLinearGradientAngle(@NotNull CGGradientRef linearGradient, double angle);
 
     @Generated
     @Selector("fillWithRadialGradient:")
-    public static native ChartFill fillWithRadialGradient(CGGradientRef radialGradient);
+    @NotNull
+    public static native ChartFill fillWithRadialGradient(@NotNull CGGradientRef radialGradient);
 
     @Generated
     @Selector("fillWithRadialGradient:startOffsetPercent:startRadiusPercent:endOffsetPercent:endRadiusPercent:")
+    @NotNull
     public static native ChartFill fillWithRadialGradientStartOffsetPercentStartRadiusPercentEndOffsetPercentEndRadiusPercent(
-            CGGradientRef radialGradient, @ByValue CGPoint startOffsetPercent, double startRadiusPercent,
+            @NotNull CGGradientRef radialGradient, @ByValue CGPoint startOffsetPercent, double startRadiusPercent,
             @ByValue CGPoint endOffsetPercent, double endRadiusPercent);
 
     @Generated
     @Selector("gradient")
+    @Nullable
     public native CGGradientRef gradient();
 
     @Generated
@@ -177,6 +194,7 @@ public class ChartFill extends NSObject {
 
     @Generated
     @Selector("image")
+    @Nullable
     public native CGImageRef image();
 
     @Generated
@@ -185,44 +203,44 @@ public class ChartFill extends NSObject {
 
     @Generated
     @Selector("initWithCGColor:")
-    public native ChartFill initWithCGColor(CGColorRef CGColor);
+    public native ChartFill initWithCGColor(@NotNull CGColorRef CGColor);
 
     @Generated
     @Selector("initWithCGImage:")
-    public native ChartFill initWithCGImage(CGImageRef CGImage);
+    public native ChartFill initWithCGImage(@NotNull CGImageRef CGImage);
 
     @Generated
     @Selector("initWithCGImage:tiled:")
-    public native ChartFill initWithCGImageTiled(CGImageRef CGImage, boolean tiled);
+    public native ChartFill initWithCGImageTiled(@NotNull CGImageRef CGImage, boolean tiled);
 
     @Generated
     @Selector("initWithCGLayer:")
-    public native ChartFill initWithCGLayer(CGLayerRef CGLayer);
+    public native ChartFill initWithCGLayer(@NotNull CGLayerRef CGLayer);
 
     @Generated
     @Selector("initWithColor:")
-    public native ChartFill initWithColor(UIColor color);
+    public native ChartFill initWithColor(@NotNull UIColor color);
 
     @Generated
     @Selector("initWithImage:")
-    public native ChartFill initWithImage(UIImage image);
+    public native ChartFill initWithImage(@NotNull UIImage image);
 
     @Generated
     @Selector("initWithImage:tiled:")
-    public native ChartFill initWithImageTiled(UIImage image, boolean tiled);
+    public native ChartFill initWithImageTiled(@NotNull UIImage image, boolean tiled);
 
     @Generated
     @Selector("initWithLinearGradient:angle:")
-    public native ChartFill initWithLinearGradientAngle(CGGradientRef linearGradient, double angle);
+    public native ChartFill initWithLinearGradientAngle(@NotNull CGGradientRef linearGradient, double angle);
 
     @Generated
     @Selector("initWithRadialGradient:")
-    public native ChartFill initWithRadialGradient(CGGradientRef radialGradient);
+    public native ChartFill initWithRadialGradient(@NotNull CGGradientRef radialGradient);
 
     @Generated
     @Selector("initWithRadialGradient:startOffsetPercent:startRadiusPercent:endOffsetPercent:endRadiusPercent:")
     public native ChartFill initWithRadialGradientStartOffsetPercentStartRadiusPercentEndOffsetPercentEndRadiusPercent(
-            CGGradientRef radialGradient, @ByValue CGPoint startOffsetPercent, double startRadiusPercent,
+            @NotNull CGGradientRef radialGradient, @ByValue CGPoint startOffsetPercent, double startRadiusPercent,
             @ByValue CGPoint endOffsetPercent, double endRadiusPercent);
 
     @Generated
@@ -244,10 +262,12 @@ public class ChartFill extends NSObject {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("layer")
+    @Nullable
     public native CGLayerRef layer();
 
     @Generated
@@ -274,6 +294,11 @@ public class ChartFill extends NSObject {
     @Generated
     @Selector("type")
     public native long type();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

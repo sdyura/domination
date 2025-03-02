@@ -2,8 +2,8 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
-import apple.coregraphics.struct.CGRect;
+import apple.corefoundation.struct.CGPoint;
+import apple.corefoundation.struct.CGRect;
 import apple.foundation.NSArray;
 import apple.foundation.NSCoder;
 import apple.foundation.NSDate;
@@ -19,6 +19,8 @@ import apple.uikit.UITraitCollection;
 import apple.uikit.UIView;
 import apple.uikit.protocol.UIAppearanceContainer;
 import apple.uikit.protocol.UIGestureRecognizerDelegate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.c.ann.Variadic;
 import org.moe.natj.general.NatJ;
@@ -75,7 +77,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     public static native void addKeyframeWithRelativeStartTimeRelativeDurationAnimations(
             double frameStartTime,
             double frameDuration,
-            @ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") UIView.Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
+            @ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") @NotNull UIView.Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
 
     @Generated
     @Owned
@@ -93,21 +95,21 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
             double duration,
             double delay,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") @NotNull UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") @Nullable UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("animateWithDuration:animations:")
     public static native void animateWithDurationAnimations(
             double duration,
-            @ObjCBlock(name = "call_animateWithDurationAnimations") UIView.Block_animateWithDurationAnimations animations);
+            @ObjCBlock(name = "call_animateWithDurationAnimations") @NotNull UIView.Block_animateWithDurationAnimations animations);
 
     @Generated
     @Selector("animateWithDuration:animations:completion:")
     public static native void animateWithDurationAnimationsCompletion(
             double duration,
-            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") UIView.Block_animateWithDurationAnimationsCompletion_1 animations,
-            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") UIView.Block_animateWithDurationAnimationsCompletion_2 completion);
+            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") @NotNull UIView.Block_animateWithDurationAnimationsCompletion_1 animations,
+            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") @Nullable UIView.Block_animateWithDurationAnimationsCompletion_2 completion);
 
     @Generated
     @Selector("animateWithDuration:delay:options:animations:completion:")
@@ -115,8 +117,8 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
             double duration,
             double delay,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") @NotNull UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") @Nullable UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:")
@@ -126,26 +128,41 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
             @NFloat double dampingRatio,
             @NFloat double velocity,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
-            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
+            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") @NotNull UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
+            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") @Nullable UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
+
+    @Generated
+    @Selector("animateWithSpringDuration:bounce:initialSpringVelocity:delay:options:animations:completion:")
+    public static native void animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion(
+            double duration,
+            @NFloat double bounce,
+            @NFloat double velocity,
+            double delay,
+            @NUInt long options,
+            @ObjCBlock(name = "call_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_5") @NotNull UIView.Block_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_5 animations,
+            @ObjCBlock(name = "call_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_6") @Nullable UIView.Block_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_6 completion);
 
     @Generated
     @Selector("appearance")
+    @NotNull
     public static native BarLineChartViewBase appearance();
 
     @Generated
     @ProtocolClassMethod("appearance")
+    @NotNull
     public BarLineChartViewBase _appearance() {
         return appearance();
     }
 
     @Generated
     @Selector("appearanceForTraitCollection:")
-    public static native BarLineChartViewBase appearanceForTraitCollection(UITraitCollection trait);
+    @NotNull
+    public static native BarLineChartViewBase appearanceForTraitCollection(@NotNull UITraitCollection trait);
 
     @Generated
     @ProtocolClassMethod("appearanceForTraitCollection")
-    public BarLineChartViewBase _appearanceForTraitCollection(UITraitCollection trait) {
+    @NotNull
+    public BarLineChartViewBase _appearanceForTraitCollection(@NotNull UITraitCollection trait) {
         return appearanceForTraitCollection(trait);
     }
 
@@ -153,26 +170,31 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @Variadic()
     @Deprecated
     @Selector("appearanceForTraitCollection:whenContainedIn:")
-    public static native BarLineChartViewBase appearanceForTraitCollectionWhenContainedIn(UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs);
+    @NotNull
+    public static native BarLineChartViewBase appearanceForTraitCollectionWhenContainedIn(
+            @NotNull UITraitCollection trait,
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedIn")
-    public BarLineChartViewBase _appearanceForTraitCollectionWhenContainedIn(UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs) {
+    @NotNull
+    public BarLineChartViewBase _appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
         return appearanceForTraitCollectionWhenContainedIn(trait, ContainerClass, varargs);
     }
 
     @Generated
     @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
+    @NotNull
     public static native BarLineChartViewBase appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            UITraitCollection trait, NSArray<?> containerTypes);
+            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes);
 
     @Generated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
-    public BarLineChartViewBase _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(UITraitCollection trait,
-            NSArray<?> containerTypes) {
+    @NotNull
+    public BarLineChartViewBase _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes) {
         return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
     }
 
@@ -180,24 +202,29 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @Variadic()
     @Deprecated
     @Selector("appearanceWhenContainedIn:")
+    @NotNull
     public static native BarLineChartViewBase appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs);
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceWhenContainedIn")
+    @NotNull
     public BarLineChartViewBase _appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
         return appearanceWhenContainedIn(ContainerClass, varargs);
     }
 
     @Generated
     @Selector("appearanceWhenContainedInInstancesOfClasses:")
-    public static native BarLineChartViewBase appearanceWhenContainedInInstancesOfClasses(NSArray<?> containerTypes);
+    @NotNull
+    public static native BarLineChartViewBase appearanceWhenContainedInInstancesOfClasses(
+            @NotNull NSArray<?> containerTypes);
 
     @Generated
     @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
-    public BarLineChartViewBase _appearanceWhenContainedInInstancesOfClasses(NSArray<?> containerTypes) {
+    @NotNull
+    public BarLineChartViewBase _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes) {
         return appearanceWhenContainedInInstancesOfClasses(containerTypes);
     }
 
@@ -215,14 +242,16 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
+    @Deprecated
     @Selector("beginAnimations:context:")
-    public static native void beginAnimationsContext(String animationID, VoidPtr context);
+    public static native void beginAnimationsContext(@Nullable String animationID, @Nullable VoidPtr context);
 
     @Generated
     @Selector("borderColor")
+    @NotNull
     public native UIColor borderColor();
 
     @Generated
@@ -231,13 +260,14 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("centerOffsets")
@@ -280,7 +310,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
             double yValue,
             long axis,
             double duration,
-            @ObjCBlock(name = "call_centerViewToAnimatedWithXValueYValueAxisDurationEasing") Block_centerViewToAnimatedWithXValueYValueAxisDurationEasing easing);
+            @ObjCBlock(name = "call_centerViewToAnimatedWithXValueYValueAxisDurationEasing") @Nullable Block_centerViewToAnimatedWithXValueYValueAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -337,15 +367,17 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Selector("clearTextInputContextIdentifier:")
-    public static native void clearTextInputContextIdentifier(String identifier);
+    public static native void clearTextInputContextIdentifier(@NotNull String identifier);
 
     /**
      * When disabled, the data and/or highlights will not be clipped to contentRect. Disabling this option can
@@ -364,11 +396,13 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     public native boolean clipValuesToContentEnabled();
 
     @Generated
+    @Deprecated
     @Selector("commitAnimations")
     public static native void commitAnimations();
 
     @Generated
     @Selector("data")
+    @Nullable
     public native ChartData data();
 
     @Generated
@@ -437,37 +471,40 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @IsOptional
     @Selector("gestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:")
     public native boolean gestureRecognizerShouldBeRequiredToFailByGestureRecognizer(
-            UIGestureRecognizer gestureRecognizer, UIGestureRecognizer otherGestureRecognizer);
+            @NotNull UIGestureRecognizer gestureRecognizer, @NotNull UIGestureRecognizer otherGestureRecognizer);
 
     @Generated
     @IsOptional
     @Selector("gestureRecognizer:shouldReceiveEvent:")
-    public native boolean gestureRecognizerShouldReceiveEvent(UIGestureRecognizer gestureRecognizer, UIEvent event);
+    public native boolean gestureRecognizerShouldReceiveEvent(@NotNull UIGestureRecognizer gestureRecognizer,
+            @NotNull UIEvent event);
 
     @Generated
     @IsOptional
     @Selector("gestureRecognizer:shouldReceivePress:")
-    public native boolean gestureRecognizerShouldReceivePress(UIGestureRecognizer gestureRecognizer, UIPress press);
+    public native boolean gestureRecognizerShouldReceivePress(@NotNull UIGestureRecognizer gestureRecognizer,
+            @NotNull UIPress press);
 
     @Generated
     @IsOptional
     @Selector("gestureRecognizer:shouldReceiveTouch:")
-    public native boolean gestureRecognizerShouldReceiveTouch(UIGestureRecognizer gestureRecognizer, UITouch touch);
+    public native boolean gestureRecognizerShouldReceiveTouch(@NotNull UIGestureRecognizer gestureRecognizer,
+            @NotNull UITouch touch);
 
     @Generated
     @Selector("gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:")
     public native boolean gestureRecognizerShouldRecognizeSimultaneouslyWithGestureRecognizer(
-            UIGestureRecognizer gestureRecognizer, UIGestureRecognizer otherGestureRecognizer);
+            @NotNull UIGestureRecognizer gestureRecognizer, @NotNull UIGestureRecognizer otherGestureRecognizer);
 
     @Generated
     @IsOptional
     @Selector("gestureRecognizer:shouldRequireFailureOfGestureRecognizer:")
     public native boolean gestureRecognizerShouldRequireFailureOfGestureRecognizer(
-            UIGestureRecognizer gestureRecognizer, UIGestureRecognizer otherGestureRecognizer);
+            @NotNull UIGestureRecognizer gestureRecognizer, @NotNull UIGestureRecognizer otherGestureRecognizer);
 
     @Generated
     @Selector("gestureRecognizerShouldBegin:")
-    public native boolean gestureRecognizerShouldBegin(UIGestureRecognizer gestureRecognizer);
+    public native boolean gestureRecognizerShouldBegin(@NotNull UIGestureRecognizer gestureRecognizer);
 
     /**
      * returns:
@@ -476,6 +513,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("getAxis:")
+    @NotNull
     public native ChartYAxis getAxis(long axis);
 
     /**
@@ -493,6 +531,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @Generated
     @Selector("getDataSetByTouchPointWithPoint:")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IBarLineScatterCandleBubbleChartDataSet getDataSetByTouchPointWithPoint(@ByValue CGPoint pt);
 
     /**
@@ -510,10 +549,11 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @Generated
     @Selector("getPositionWithEntry:axis:")
     @ByValue
-    public native CGPoint getPositionWithEntryAxis(ChartDataEntry e, long axis);
+    public native CGPoint getPositionWithEntryAxis(@NotNull ChartDataEntry e, long axis);
 
     @Generated
     @Selector("getTransformerForAxis:")
+    @NotNull
     public native ChartTransformer getTransformerForAxis(long axis);
 
     /**
@@ -553,6 +593,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("gridBackgroundColor")
+    @NotNull
     public native UIColor gridBackgroundColor();
 
     /**
@@ -588,7 +629,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
 
     @Generated
     @Selector("initWithCoder:")
-    public native BarLineChartViewBase initWithCoder(NSCoder aDecoder);
+    public native BarLineChartViewBase initWithCoder(@NotNull NSCoder aDecoder);
 
     @Generated
     @Selector("initWithFrame:")
@@ -703,10 +744,12 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("layerClass")
+    @NotNull
     public static native Class layerClass();
 
     /**
@@ -715,6 +758,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("leftAxis")
+    @NotNull
     public native ChartYAxis leftAxis();
 
     /**
@@ -723,6 +767,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("leftYAxisRenderer")
+    @NotNull
     public native ChartYAxisRenderer leftYAxisRenderer();
 
     @Generated
@@ -749,7 +794,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     public static native void modifyAnimationsWithRepeatCountAutoreversesAnimations(
             @NFloat double count,
             boolean autoreverses,
-            @ObjCBlock(name = "call_modifyAnimationsWithRepeatCountAutoreversesAnimations") UIView.Block_modifyAnimationsWithRepeatCountAutoreversesAnimations animations);
+            @ObjCBlock(name = "call_modifyAnimationsWithRepeatCountAutoreversesAnimations") @NotNull UIView.Block_modifyAnimationsWithRepeatCountAutoreversesAnimations animations);
 
     /**
      * This will move the left side of the current viewport to the specified x-position and center the viewport to the specified y-position animated.
@@ -789,7 +834,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
             double yValue,
             long axis,
             double duration,
-            @ObjCBlock(name = "call_moveViewToAnimatedWithXValueYValueAxisDurationEasing") Block_moveViewToAnimatedWithXValueYValueAxisDurationEasing easing);
+            @ObjCBlock(name = "call_moveViewToAnimatedWithXValueYValueAxisDurationEasing") @Nullable Block_moveViewToAnimatedWithXValueYValueAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -859,22 +904,23 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
 
     @Generated
     @Selector("observeValueForKeyPath:ofObject:change:context:")
-    public native void observeValueForKeyPathOfObjectChangeContext(String keyPath,
-            @Mapped(ObjCObjectMapper.class) Object object, NSDictionary<String, ?> change, VoidPtr context);
+    public native void observeValueForKeyPathOfObjectChangeContext(@Nullable String keyPath,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object object, @Nullable NSDictionary<String, ?> change,
+            @Nullable VoidPtr context);
 
     @Generated
     @Selector("performSystemAnimation:onViews:options:animations:completion:")
     public static native void performSystemAnimationOnViewsOptionsAnimationsCompletion(
             @NUInt long animation,
-            NSArray<? extends UIView> views,
+            @NotNull NSArray<? extends UIView> views,
             @NUInt long options,
-            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
-            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") @Nullable UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
+            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") @Nullable UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("performWithoutAnimation:")
     public static native void performWithoutAnimation(
-            @ObjCBlock(name = "call_performWithoutAnimation") UIView.Block_performWithoutAnimation actionsWithoutAnimation);
+            @ObjCBlock(name = "call_performWithoutAnimation") @NotNull UIView.Block_performWithoutAnimation actionsWithoutAnimation);
 
     /**
      * flag that indicates if pinch-zoom is enabled. if true, both x and y axis can be scaled simultaneously with 2 fingers, if false, x and y axis can be scaled separately
@@ -924,6 +970,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("rightAxis")
+    @NotNull
     public native ChartYAxis rightAxis();
 
     /**
@@ -932,6 +979,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("rightYAxisRenderer")
+    @NotNull
     public native ChartYAxisRenderer rightYAxisRenderer();
 
     /**
@@ -957,48 +1005,60 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     public native boolean scaleYEnabled();
 
     @Generated
+    @Deprecated
     @Selector("setAnimationBeginsFromCurrentState:")
     public static native void setAnimationBeginsFromCurrentState(boolean fromCurrentState);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationCurve:")
     public static native void setAnimationCurve(@NInt long curve);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDelay:")
     public static native void setAnimationDelay(double delay);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDelegate:")
-    public static native void setAnimationDelegate(@Mapped(ObjCObjectMapper.class) Object delegate);
+    public static native void setAnimationDelegate(@Mapped(ObjCObjectMapper.class) @Nullable Object delegate);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDidStopSelector:")
-    public static native void setAnimationDidStopSelector(SEL selector);
+    public static native void setAnimationDidStopSelector(@Nullable SEL selector);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDuration:")
     public static native void setAnimationDuration_static(double duration);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationRepeatAutoreverses:")
     public static native void setAnimationRepeatAutoreverses(boolean repeatAutoreverses);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationRepeatCount:")
     public static native void setAnimationRepeatCount_static(float repeatCount);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationStartDate:")
-    public static native void setAnimationStartDate(NSDate startDate);
+    public static native void setAnimationStartDate(@NotNull NSDate startDate);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationTransition:forView:cache:")
-    public static native void setAnimationTransitionForViewCache(@NInt long transition, UIView view, boolean cache);
+    public static native void setAnimationTransitionForViewCache(@NInt long transition, @NotNull UIView view,
+            boolean cache);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationWillStartSelector:")
-    public static native void setAnimationWillStartSelector(SEL selector);
+    public static native void setAnimationWillStartSelector(@Nullable SEL selector);
 
     @Generated
     @Selector("setAnimationsEnabled:")
@@ -1014,7 +1074,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
 
     @Generated
     @Selector("setBorderColor:")
-    public native void setBorderColor(UIColor value);
+    public native void setBorderColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setBorderLineWidth:")
@@ -1100,7 +1160,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("setGridBackgroundColor:")
-    public native void setGridBackgroundColor(UIColor value);
+    public native void setGridBackgroundColor(@NotNull UIColor value);
 
     /**
      * flag that indicates if highlighting per dragging over a fully zoomed out chart is enabled
@@ -1123,7 +1183,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("setLeftYAxisRenderer:")
-    public native void setLeftYAxisRenderer(ChartYAxisRenderer value);
+    public native void setLeftYAxisRenderer(@NotNull ChartYAxisRenderer value);
 
     /**
      * the number of maximum visible drawn values on the chart only active when <code>drawValuesEnabled</code> is enabled
@@ -1152,7 +1212,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("setRightYAxisRenderer:")
-    public native void setRightYAxisRenderer(ChartYAxisRenderer value);
+    public native void setRightYAxisRenderer(@NotNull ChartYAxisRenderer value);
 
     /**
      * is scaling enabled? (zooming in and out by gesture) for the chart (this does not affect dragging).
@@ -1254,7 +1314,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("setXAxisRenderer:")
-    public native void setXAxisRenderer(ChartXAxisRenderer value);
+    public native void setXAxisRenderer(@NotNull ChartXAxisRenderer value);
 
     /**
      * Sets a maximum width to the specified y axis.
@@ -1282,20 +1342,25 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @Generated
     @Selector("transitionFromView:toView:duration:options:completion:")
     public static native void transitionFromViewToViewDurationOptionsCompletion(
-            UIView fromView,
-            UIView toView,
+            @NotNull UIView fromView,
+            @NotNull UIView toView,
             double duration,
             @NUInt long options,
-            @ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") UIView.Block_transitionFromViewToViewDurationOptionsCompletion completion);
+            @ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") @Nullable UIView.Block_transitionFromViewToViewDurationOptionsCompletion completion);
 
     @Generated
     @Selector("transitionWithView:duration:options:animations:completion:")
     public static native void transitionWithViewDurationOptionsAnimationsCompletion(
-            UIView view,
+            @NotNull UIView view,
             double duration,
             @NUInt long options,
-            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") @Nullable UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") @Nullable UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("userInterfaceLayoutDirectionForSemanticContentAttribute:")
@@ -1335,6 +1400,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
      */
     @Generated
     @Selector("xAxisRenderer")
+    @NotNull
     public native ChartXAxisRenderer xAxisRenderer();
 
     @Generated
@@ -1387,7 +1453,7 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
             double yValue,
             long axis,
             double duration,
-            @ObjCBlock(name = "call_zoomAndCenterViewAnimatedWithScaleXScaleYXValueYValueAxisDurationEasing") Block_zoomAndCenterViewAnimatedWithScaleXScaleYXValueYValueAxisDurationEasing easing);
+            @ObjCBlock(name = "call_zoomAndCenterViewAnimatedWithScaleXScaleYXValueYValueAxisDurationEasing") @Nullable Block_zoomAndCenterViewAnimatedWithScaleXScaleYXValueYValueAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated

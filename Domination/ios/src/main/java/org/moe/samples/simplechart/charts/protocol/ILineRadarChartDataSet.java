@@ -2,6 +2,8 @@ package org.moe.samples.simplechart.charts.protocol;
 
 
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -33,6 +35,7 @@ public interface ILineRadarChartDataSet extends ILineScatterCandleRadarChartData
      */
     @Generated
     @Selector("fill")
+    @Nullable
     ChartFill fill();
 
     /**
@@ -48,6 +51,7 @@ public interface ILineRadarChartDataSet extends ILineScatterCandleRadarChartData
      */
     @Generated
     @Selector("fillColor")
+    @NotNull
     UIColor fillColor();
 
     /**
@@ -81,7 +85,7 @@ public interface ILineRadarChartDataSet extends ILineScatterCandleRadarChartData
      */
     @Generated
     @Selector("setFill:")
-    void setFill(ChartFill value);
+    void setFill(@Nullable ChartFill value);
 
     /**
      * The alpha value that is used for filling the line surface.
@@ -96,7 +100,7 @@ public interface ILineRadarChartDataSet extends ILineScatterCandleRadarChartData
      */
     @Generated
     @Selector("setFillColor:")
-    void setFillColor(UIColor value);
+    void setFillColor(@NotNull UIColor value);
 
     /**
      * line width of the chart (min = 0.0, max = 10)

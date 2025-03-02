@@ -4,6 +4,8 @@ package org.moe.samples.simplechart.charts.protocol;
 import apple.foundation.NSArray;
 import apple.foundation.NSNumber;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Mapped;
@@ -23,6 +25,7 @@ import org.moe.natj.objc.map.ObjCObjectMapper;
 public interface ILineChartDataSet extends ILineRadarChartDataSet {
     @Generated
     @Selector("circleColors")
+    @NotNull
     NSArray<? extends UIColor> circleColors();
 
     /**
@@ -30,6 +33,7 @@ public interface ILineChartDataSet extends ILineRadarChartDataSet {
      */
     @Generated
     @Selector("circleHoleColor")
+    @Nullable
     UIColor circleHoleColor();
 
     /**
@@ -74,6 +78,7 @@ public interface ILineChartDataSet extends ILineRadarChartDataSet {
     @Generated
     @Selector("fillFormatter")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     IChartFillFormatter fillFormatter();
 
     /**
@@ -83,6 +88,7 @@ public interface ILineChartDataSet extends ILineRadarChartDataSet {
      */
     @Generated
     @Selector("getCircleColorAtIndex:")
+    @Nullable
     UIColor getCircleColorAtIndex(long atIndex);
 
     /**
@@ -113,6 +119,7 @@ public interface ILineChartDataSet extends ILineRadarChartDataSet {
      */
     @Generated
     @Selector("lineDashLengths")
+    @Nullable
     NSArray<? extends NSNumber> lineDashLengths();
 
     /**
@@ -143,18 +150,18 @@ public interface ILineChartDataSet extends ILineRadarChartDataSet {
      */
     @Generated
     @Selector("setCircleColor:")
-    void setCircleColor(UIColor color);
+    void setCircleColor(@NotNull UIColor color);
 
     @Generated
     @Selector("setCircleColors:")
-    void setCircleColors(NSArray<? extends UIColor> value);
+    void setCircleColors(@NotNull NSArray<? extends UIColor> value);
 
     /**
      * The color of the inner circle (the circle-hole).
      */
     @Generated
     @Selector("setCircleHoleColor:")
-    void setCircleHoleColor(UIColor value);
+    void setCircleHoleColor(@Nullable UIColor value);
 
     /**
      * The hole radius of the drawn circles.
@@ -197,7 +204,7 @@ public interface ILineChartDataSet extends ILineRadarChartDataSet {
      */
     @Generated
     @Selector("setFillFormatter:")
-    void setFillFormatter(@Mapped(ObjCObjectMapper.class) IChartFillFormatter value);
+    void setFillFormatter(@Mapped(ObjCObjectMapper.class) @Nullable IChartFillFormatter value);
 
     /**
      * Line cap type, default is CGLineCap.Butt
@@ -213,7 +220,7 @@ public interface ILineChartDataSet extends ILineRadarChartDataSet {
      */
     @Generated
     @Selector("setLineDashLengths:")
-    void setLineDashLengths(NSArray<? extends NSNumber> value);
+    void setLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     /**
      * The drawing mode for this line dataset

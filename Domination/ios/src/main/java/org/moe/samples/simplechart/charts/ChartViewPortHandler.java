@@ -2,12 +2,14 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGAffineTransform;
-import apple.coregraphics.struct.CGPoint;
-import apple.coregraphics.struct.CGRect;
+import apple.corefoundation.struct.CGAffineTransform;
+import apple.corefoundation.struct.CGPoint;
+import apple.corefoundation.struct.CGRect;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -60,7 +62,7 @@ public class ChartViewPortHandler extends NSObject {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     /**
      * <code>true</code> if the chart is not yet fully zoomed in on the x-axis
@@ -92,13 +94,14 @@ public class ChartViewPortHandler extends NSObject {
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     /**
      * Centers the viewport around the specified position (x-index and y-value) in the chart.
@@ -107,7 +110,7 @@ public class ChartViewPortHandler extends NSObject {
      */
     @Generated
     @Selector("centerViewPortWithPt:chart:")
-    public native void centerViewPortWithPtChart(@ByValue CGPoint pt, ChartViewBase chart);
+    public native void centerViewPortWithPtChart(@ByValue CGPoint pt, @NotNull ChartViewBase chart);
 
     @Generated
     @Selector("chartHeight")
@@ -119,10 +122,12 @@ public class ChartViewPortHandler extends NSObject {
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -291,7 +296,8 @@ public class ChartViewPortHandler extends NSObject {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * The minimum x-scale factor
@@ -349,7 +355,7 @@ public class ChartViewPortHandler extends NSObject {
     @Selector("refreshWithNewMatrix:chart:invalidate:")
     @ByValue
     public native CGAffineTransform refreshWithNewMatrixChartInvalidate(@ByValue CGAffineTransform newMatrix,
-            ChartViewBase chart, boolean invalidate);
+            @NotNull ChartViewBase chart, boolean invalidate);
 
     /**
      * Zooms out to original size.
@@ -493,6 +499,11 @@ public class ChartViewPortHandler extends NSObject {
     @Selector("translateWithPt:")
     @ByValue
     public native CGAffineTransform translateWithPt(@ByValue CGPoint pt);
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

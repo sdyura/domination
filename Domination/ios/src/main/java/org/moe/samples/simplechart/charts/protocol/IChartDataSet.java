@@ -1,11 +1,13 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
 import apple.foundation.NSArray;
 import apple.foundation.NSNumber;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.ByValue;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
@@ -27,7 +29,7 @@ import org.moe.samples.simplechart.charts.ChartDataEntry;
 public interface IChartDataSet {
     @Generated
     @Selector("addColor:")
-    void addColor(UIColor color);
+    void addColor(@NotNull UIColor color);
 
     /**
      * Adds an Entry to the DataSet dynamically.
@@ -41,7 +43,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("addEntry:")
-    boolean addEntry(ChartDataEntry e);
+    boolean addEntry(@NotNull ChartDataEntry e);
 
     /**
      * Adds an Entry to the DataSet dynamically.
@@ -57,7 +59,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("addEntryOrdered:")
-    boolean addEntryOrdered(ChartDataEntry e);
+    boolean addEntryOrdered(@NotNull ChartDataEntry e);
 
     /**
      * The axis this DataSet should be plotted against.
@@ -96,6 +98,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("colorAtIndex:")
+    @NotNull
     UIColor colorAtIndex(long atIndex);
 
     /**
@@ -104,6 +107,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("colors")
+    @NotNull
     NSArray<? extends UIColor> colors();
 
     /**
@@ -114,7 +118,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("contains:")
-    boolean contains(ChartDataEntry e);
+    boolean contains(@NotNull ChartDataEntry e);
 
     /**
      * Set this to true to draw y-icons on the chart
@@ -141,6 +145,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("entriesForXValue:")
+    @NotNull
     NSArray<? extends ChartDataEntry> entriesForXValue(double xValue);
 
     /**
@@ -160,6 +165,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("entryForIndex:")
+    @Nullable
     ChartDataEntry entryForIndex(long i);
 
     /**
@@ -175,6 +181,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("entryForXValue:closestToY:")
+    @Nullable
     ChartDataEntry entryForXValueClosestToY(double xValue, double yValue);
 
     /**
@@ -192,6 +199,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("entryForXValue:closestToY:rounding:")
+    @Nullable
     ChartDataEntry entryForXValueClosestToYRounding(double xValue, double yValue, long rounding);
 
     /**
@@ -203,7 +211,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("entryIndexWithEntry:")
-    long entryIndexWithEntry(ChartDataEntry e);
+    long entryIndexWithEntry(@NotNull ChartDataEntry e);
 
     /**
      * \param xValue x-value of the entry to search for
@@ -237,6 +245,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("formLineDashLengths")
+    @Nullable
     NSArray<? extends NSNumber> formLineDashLengths();
 
     /**
@@ -313,6 +322,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("label")
+    @Nullable
     String label();
 
     /**
@@ -340,7 +350,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("removeEntry:")
-    boolean removeEntry(ChartDataEntry entry);
+    boolean removeEntry(@NotNull ChartDataEntry entry);
 
     /**
      * Removes the Entry object at the given index in the values array from the DataSet.
@@ -396,7 +406,7 @@ public interface IChartDataSet {
 
     @Generated
     @Selector("setColor:")
-    void setColor(UIColor color);
+    void setColor(@NotNull UIColor color);
 
     /**
      * Set this to true to draw y-icons on the chart
@@ -437,14 +447,14 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("setValueFont:")
-    void setValueFont(UIFont value);
+    void setValueFont(@NotNull UIFont value);
 
     /**
      * Custom formatter that is used instead of the auto-formatter if set
      */
     @Generated
     @Selector("setValueFormatter:")
-    void setValueFormatter(@Mapped(ObjCObjectMapper.class) IChartValueFormatter value);
+    void setValueFormatter(@Mapped(ObjCObjectMapper.class) @Nullable IChartValueFormatter value);
 
     /**
      * Sets/get a single color for value text.
@@ -453,7 +463,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("setValueTextColor:")
-    void setValueTextColor(UIColor value);
+    void setValueTextColor(@NotNull UIColor value);
 
     /**
      * Set the visibility of this DataSet. If not visible, the DataSet will not be drawn to the chart upon refreshing it.
@@ -467,6 +477,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("valueColors")
+    @NotNull
     NSArray<? extends UIColor> valueColors();
 
     /**
@@ -474,6 +485,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("valueFont")
+    @NotNull
     UIFont valueFont();
 
     /**
@@ -482,6 +494,7 @@ public interface IChartDataSet {
     @Generated
     @Selector("valueFormatter")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     IChartValueFormatter valueFormatter();
 
     /**
@@ -491,6 +504,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("valueTextColor")
+    @NotNull
     UIColor valueTextColor();
 
     /**
@@ -499,6 +513,7 @@ public interface IChartDataSet {
      */
     @Generated
     @Selector("valueTextColorAt:")
+    @NotNull
     UIColor valueTextColorAt(long index);
 
     /**

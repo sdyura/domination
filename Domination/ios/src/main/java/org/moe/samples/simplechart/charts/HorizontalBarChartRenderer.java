@@ -6,6 +6,8 @@ import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -59,24 +61,27 @@ public class HorizontalBarChartRenderer extends BarChartRenderer {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -89,12 +94,12 @@ public class HorizontalBarChartRenderer extends BarChartRenderer {
 
     @Generated
     @Selector("drawDataSetWithContext:dataSet:index:")
-    public native void drawDataSetWithContextDataSetIndex(CGContextRef context,
-            @Mapped(ObjCObjectMapper.class) IBarChartDataSet dataSet, long index);
+    public native void drawDataSetWithContextDataSetIndex(@NotNull CGContextRef context,
+            @Mapped(ObjCObjectMapper.class) @NotNull IBarChartDataSet dataSet, long index);
 
     @Generated
     @Selector("drawValuesWithContext:")
-    public native void drawValuesWithContext(CGContextRef context);
+    public native void drawValuesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("hash")
@@ -111,18 +116,18 @@ public class HorizontalBarChartRenderer extends BarChartRenderer {
 
     @Generated
     @Selector("initWithAnimator:viewPortHandler:")
-    public native HorizontalBarChartRenderer initWithAnimatorViewPortHandler(ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native HorizontalBarChartRenderer initWithAnimatorViewPortHandler(@NotNull ChartAnimator animator,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithDataProvider:animator:viewPortHandler:")
     public native HorizontalBarChartRenderer initWithDataProviderAnimatorViewPortHandler(
-            @Mapped(ObjCObjectMapper.class) BarChartDataProvider dataProvider, ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+            @Mapped(ObjCObjectMapper.class) @NotNull BarChartDataProvider dataProvider,
+            @NotNull ChartAnimator animator, @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native HorizontalBarChartRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native HorizontalBarChartRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -140,7 +145,7 @@ public class HorizontalBarChartRenderer extends BarChartRenderer {
     @Generated
     @Selector("isDrawingValuesAllowedWithDataProvider:")
     public native boolean isDrawingValuesAllowedWithDataProvider(
-            @Mapped(ObjCObjectMapper.class) ChartDataProvider dataProvider);
+            @Mapped(ObjCObjectMapper.class) @Nullable ChartDataProvider dataProvider);
 
     @Generated
     @Selector("isSubclassOfClass:")
@@ -148,7 +153,8 @@ public class HorizontalBarChartRenderer extends BarChartRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -170,6 +176,11 @@ public class HorizontalBarChartRenderer extends BarChartRenderer {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

@@ -2,13 +2,15 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumber;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -54,15 +56,15 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("addColor:")
-    public native void addColor(UIColor color);
+    public native void addColor(@NotNull UIColor color);
 
     @Generated
     @Selector("addEntry:")
-    public native boolean addEntry(ChartDataEntry e);
+    public native boolean addEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("addEntryOrdered:")
-    public native boolean addEntryOrdered(ChartDataEntry e);
+    public native boolean addEntryOrdered(@NotNull ChartDataEntry e);
 
     @Generated
     @Owned
@@ -76,7 +78,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("axisDependency")
@@ -92,20 +94,23 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("circleColors")
+    @NotNull
     public native NSArray<? extends UIColor> circleColors();
 
     @Generated
     @Selector("circleHoleColor")
+    @Nullable
     public native UIColor circleHoleColor();
 
     @Generated
@@ -118,10 +123,12 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -130,21 +137,24 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("colorAtIndex:")
+    @NotNull
     public native UIColor colorAtIndex(long atIndex);
 
     @Generated
     @Selector("colors")
+    @NotNull
     public native NSArray<? extends UIColor> colors();
 
     @Generated
     @Selector("contains:")
-    public native boolean contains(ChartDataEntry e);
+    public native boolean contains(@NotNull ChartDataEntry e);
 
     @Generated
     @Owned
     @Selector("copyWithZone:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native Object copyWithZone(VoidPtr zone);
+    @NotNull
+    public native Object copyWithZone(@Nullable VoidPtr zone);
 
     @Generated
     @Selector("cubicIntensity")
@@ -188,6 +198,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("entriesForXValue:")
+    @NotNull
     public native NSArray<? extends ChartDataEntry> entriesForXValue(double xValue);
 
     @Generated
@@ -196,19 +207,22 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("entryForIndex:")
+    @Nullable
     public native ChartDataEntry entryForIndex(long i);
 
     @Generated
     @Selector("entryForXValue:closestToY:")
+    @Nullable
     public native ChartDataEntry entryForXValueClosestToY(double xValue, double yValue);
 
     @Generated
     @Selector("entryForXValue:closestToY:rounding:")
+    @Nullable
     public native ChartDataEntry entryForXValueClosestToYRounding(double xValue, double yValue, long rounding);
 
     @Generated
     @Selector("entryIndexWithEntry:")
-    public native long entryIndexWithEntry(ChartDataEntry e);
+    public native long entryIndexWithEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("entryIndexWithX:closestToY:rounding:")
@@ -216,6 +230,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("fill")
+    @Nullable
     public native ChartFill fill();
 
     @Generated
@@ -224,11 +239,13 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("fillColor")
+    @NotNull
     public native UIColor fillColor();
 
     @Generated
     @Selector("fillFormatter")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IChartFillFormatter fillFormatter();
 
     @Generated
@@ -237,6 +254,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("formLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> formLineDashLengths();
 
     @Generated
@@ -253,6 +271,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("getCircleColorAtIndex:")
+    @Nullable
     public native UIColor getCircleColorAtIndex(long index);
 
     @Generated
@@ -262,6 +281,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("highlightColor")
+    @NotNull
     public native UIColor highlightColor();
 
     @Generated
@@ -270,6 +290,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("highlightLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> highlightLineDashLengths();
 
     @Generated
@@ -291,15 +312,16 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("initWithEntries:")
-    public native LineChartDataSet initWithEntries(NSArray<? extends ChartDataEntry> entries);
+    public native LineChartDataSet initWithEntries(@Nullable NSArray<? extends ChartDataEntry> entries);
 
     @Generated
     @Selector("initWithEntries:label:")
-    public native LineChartDataSet initWithEntriesLabel(NSArray<? extends ChartDataEntry> entries, String label);
+    public native LineChartDataSet initWithEntriesLabel(@Nullable NSArray<? extends ChartDataEntry> entries,
+            @Nullable String label);
 
     @Generated
     @Selector("initWithLabel:")
-    public native LineChartDataSet initWithLabel(String label);
+    public native LineChartDataSet initWithLabel(@Nullable String label);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -356,10 +378,12 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("label")
+    @Nullable
     public native String label();
 
     @Generated
@@ -368,6 +392,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("lineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> lineDashLengths();
 
     @Generated
@@ -397,7 +422,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("removeEntry:")
-    public native boolean removeEntry(ChartDataEntry entry);
+    public native boolean removeEntry(@NotNull ChartDataEntry entry);
 
     @Generated
     @Selector("removeEntryWithIndex:")
@@ -433,15 +458,15 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("setCircleColor:")
-    public native void setCircleColor(UIColor color);
+    public native void setCircleColor(@NotNull UIColor color);
 
     @Generated
     @Selector("setCircleColors:")
-    public native void setCircleColors(NSArray<? extends UIColor> value);
+    public native void setCircleColors(@NotNull NSArray<? extends UIColor> value);
 
     @Generated
     @Selector("setCircleHoleColor:")
-    public native void setCircleHoleColor(UIColor value);
+    public native void setCircleHoleColor(@Nullable UIColor value);
 
     @Generated
     @Selector("setCircleHoleRadius:")
@@ -453,7 +478,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("setColor:")
-    public native void setColor(UIColor color);
+    public native void setColor(@NotNull UIColor color);
 
     @Generated
     @Selector("setCubicIntensity:")
@@ -493,7 +518,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("setFill:")
-    public native void setFill(ChartFill value);
+    public native void setFill(@Nullable ChartFill value);
 
     @Generated
     @Selector("setFillAlpha:")
@@ -501,15 +526,15 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("setFillColor:")
-    public native void setFillColor(UIColor value);
+    public native void setFillColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setFillFormatter:")
-    public native void setFillFormatter(@Mapped(ObjCObjectMapper.class) IChartFillFormatter value);
+    public native void setFillFormatter(@Mapped(ObjCObjectMapper.class) @Nullable IChartFillFormatter value);
 
     @Generated
     @Selector("setHighlightColor:")
-    public native void setHighlightColor(UIColor value);
+    public native void setHighlightColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setHighlightEnabled:")
@@ -517,7 +542,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("setHighlightLineDashLengths:")
-    public native void setHighlightLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setHighlightLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     @Generated
     @Selector("setHighlightLineDashPhase:")
@@ -537,7 +562,7 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("setLineDashLengths:")
-    public native void setLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     /**
      * This is how much (in pixels) into the dash pattern are we starting from.
@@ -556,15 +581,15 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
 
     @Generated
     @Selector("setValueFont:")
-    public native void setValueFont(UIFont value);
+    public native void setValueFont(@NotNull UIFont value);
 
     @Generated
     @Selector("setValueFormatter:")
-    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) IChartValueFormatter value);
+    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) @Nullable IChartValueFormatter value);
 
     @Generated
     @Selector("setValueTextColor:")
-    public native void setValueTextColor(UIColor value);
+    public native void setValueTextColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setVersion:")
@@ -579,24 +604,34 @@ public class LineChartDataSet extends LineRadarChartDataSet implements ILineChar
     public static native Class superclass_static();
 
     @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
+    @Generated
     @Selector("valueColors")
+    @NotNull
     public native NSArray<? extends UIColor> valueColors();
 
     @Generated
     @Selector("valueFont")
+    @NotNull
     public native UIFont valueFont();
 
     @Generated
     @Selector("valueFormatter")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IChartValueFormatter valueFormatter();
 
     @Generated
     @Selector("valueTextColor")
+    @NotNull
     public native UIColor valueTextColor();
 
     @Generated
     @Selector("valueTextColorAt:")
+    @NotNull
     public native UIColor valueTextColorAt(long index);
 
     @Generated

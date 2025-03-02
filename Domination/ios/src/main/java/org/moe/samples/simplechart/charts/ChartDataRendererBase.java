@@ -6,6 +6,8 @@ import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -55,28 +57,32 @@ public class ChartDataRendererBase extends ChartRenderer {
 
     @Generated
     @Selector("animator")
+    @NotNull
     public native ChartAnimator animator();
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -89,11 +95,11 @@ public class ChartDataRendererBase extends ChartRenderer {
 
     @Generated
     @Selector("drawDataWithContext:")
-    public native void drawDataWithContext(CGContextRef context);
+    public native void drawDataWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawExtrasWithContext:")
-    public native void drawExtrasWithContext(CGContextRef context);
+    public native void drawExtrasWithContext(@NotNull CGContextRef context);
 
     /**
      * Draws all highlight indicators for the values that are currently highlighted.
@@ -101,11 +107,12 @@ public class ChartDataRendererBase extends ChartRenderer {
      */
     @Generated
     @Selector("drawHighlightedWithContext:indices:")
-    public native void drawHighlightedWithContextIndices(CGContextRef context, NSArray<? extends ChartHighlight> indices);
+    public native void drawHighlightedWithContextIndices(@NotNull CGContextRef context,
+            @NotNull NSArray<? extends ChartHighlight> indices);
 
     @Generated
     @Selector("drawValuesWithContext:")
-    public native void drawValuesWithContext(CGContextRef context);
+    public native void drawValuesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("hash")
@@ -126,12 +133,12 @@ public class ChartDataRendererBase extends ChartRenderer {
 
     @Generated
     @Selector("initWithAnimator:viewPortHandler:")
-    public native ChartDataRendererBase initWithAnimatorViewPortHandler(ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native ChartDataRendererBase initWithAnimatorViewPortHandler(@NotNull ChartAnimator animator,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native ChartDataRendererBase initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native ChartDataRendererBase initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -149,7 +156,7 @@ public class ChartDataRendererBase extends ChartRenderer {
     @Generated
     @Selector("isDrawingValuesAllowedWithDataProvider:")
     public native boolean isDrawingValuesAllowedWithDataProvider(
-            @Mapped(ObjCObjectMapper.class) ChartDataProvider dataProvider);
+            @Mapped(ObjCObjectMapper.class) @Nullable ChartDataProvider dataProvider);
 
     @Generated
     @Selector("isSubclassOfClass:")
@@ -157,7 +164,8 @@ public class ChartDataRendererBase extends ChartRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -179,6 +187,11 @@ public class ChartDataRendererBase extends ChartRenderer {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

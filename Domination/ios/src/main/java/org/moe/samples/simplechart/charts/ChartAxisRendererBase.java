@@ -6,6 +6,8 @@ import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -54,31 +56,35 @@ public class ChartAxisRendererBase extends ChartRenderer {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     /**
      * base axis this axis renderer works with
      */
     @Generated
     @Selector("axis")
+    @Nullable
     public native ChartAxisBase axis();
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     /**
@@ -117,12 +123,13 @@ public class ChartAxisRendererBase extends ChartRenderer {
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native ChartAxisRendererBase initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native ChartAxisRendererBase initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:transformer:axis:")
-    public native ChartAxisRendererBase initWithViewPortHandlerTransformerAxis(ChartViewPortHandler viewPortHandler,
-            ChartTransformer transformer, ChartAxisBase axis);
+    public native ChartAxisRendererBase initWithViewPortHandlerTransformerAxis(
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartTransformer transformer,
+            @Nullable ChartAxisBase axis);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -143,7 +150,8 @@ public class ChartAxisRendererBase extends ChartRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -155,28 +163,28 @@ public class ChartAxisRendererBase extends ChartRenderer {
      */
     @Generated
     @Selector("renderAxisLabelsWithContext:")
-    public native void renderAxisLabelsWithContext(CGContextRef context);
+    public native void renderAxisLabelsWithContext(@NotNull CGContextRef context);
 
     /**
      * Draws the line that goes alongside the axis.
      */
     @Generated
     @Selector("renderAxisLineWithContext:")
-    public native void renderAxisLineWithContext(CGContextRef context);
+    public native void renderAxisLineWithContext(@NotNull CGContextRef context);
 
     /**
      * Draws the grid lines belonging to the axis.
      */
     @Generated
     @Selector("renderGridLinesWithContext:")
-    public native void renderGridLinesWithContext(CGContextRef context);
+    public native void renderGridLinesWithContext(@NotNull CGContextRef context);
 
     /**
      * Draws the LimitLines associated with this axis to the screen.
      */
     @Generated
     @Selector("renderLimitLinesWithContext:")
-    public native void renderLimitLinesWithContext(CGContextRef context);
+    public native void renderLimitLinesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("resolveClassMethod:")
@@ -191,14 +199,14 @@ public class ChartAxisRendererBase extends ChartRenderer {
      */
     @Generated
     @Selector("setAxis:")
-    public native void setAxis(ChartAxisBase value);
+    public native void setAxis(@Nullable ChartAxisBase value);
 
     /**
      * transformer to transform values to screen pixels and return
      */
     @Generated
     @Selector("setTransformer:")
-    public native void setTransformer(ChartTransformer value);
+    public native void setTransformer(@Nullable ChartTransformer value);
 
     @Generated
     @Selector("setVersion:")
@@ -213,7 +221,13 @@ public class ChartAxisRendererBase extends ChartRenderer {
      */
     @Generated
     @Selector("transformer")
+    @Nullable
     public native ChartTransformer transformer();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

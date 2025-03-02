@@ -6,6 +6,8 @@ import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -56,28 +58,32 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("chart")
+    @Nullable
     public native CombinedChartView chart();
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -97,15 +103,16 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
 
     @Generated
     @Selector("drawDataWithContext:")
-    public native void drawDataWithContext(CGContextRef context);
+    public native void drawDataWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawExtrasWithContext:")
-    public native void drawExtrasWithContext(CGContextRef context);
+    public native void drawExtrasWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawHighlightedWithContext:indices:")
-    public native void drawHighlightedWithContextIndices(CGContextRef context, NSArray<? extends ChartHighlight> indices);
+    public native void drawHighlightedWithContextIndices(@NotNull CGContextRef context,
+            @NotNull NSArray<? extends ChartHighlight> indices);
 
     /**
      * if set to true, all values are drawn above their bars, instead of below their top
@@ -116,7 +123,7 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
 
     @Generated
     @Selector("drawValuesWithContext:")
-    public native void drawValuesWithContext(CGContextRef context);
+    public native void drawValuesWithContext(@NotNull CGContextRef context);
 
     /**
      * returns:
@@ -124,6 +131,7 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
      */
     @Generated
     @Selector("getSubRendererWithIndex:")
+    @Nullable
     public native ChartDataRendererBase getSubRendererWithIndex(long index);
 
     @Generated
@@ -141,17 +149,17 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
 
     @Generated
     @Selector("initWithAnimator:viewPortHandler:")
-    public native CombinedChartRenderer initWithAnimatorViewPortHandler(ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native CombinedChartRenderer initWithAnimatorViewPortHandler(@NotNull ChartAnimator animator,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithChart:animator:viewPortHandler:")
-    public native CombinedChartRenderer initWithChartAnimatorViewPortHandler(CombinedChartView chart,
-            ChartAnimator animator, ChartViewPortHandler viewPortHandler);
+    public native CombinedChartRenderer initWithChartAnimatorViewPortHandler(@NotNull CombinedChartView chart,
+            @NotNull ChartAnimator animator, @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native CombinedChartRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native CombinedChartRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -186,7 +194,8 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -203,10 +212,10 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
 
     @Generated
     @Selector("setChart:")
-    public native void setChart_unsafe(CombinedChartView value);
+    public native void setChart_unsafe(@Nullable CombinedChartView value);
 
     @Generated
-    public void setChart(CombinedChartView value) {
+    public void setChart(@Nullable CombinedChartView value) {
         Object __old = chart();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -236,7 +245,7 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
      */
     @Generated
     @Selector("setSubRenderers:")
-    public native void setSubRenderers(NSArray<? extends ChartDataRendererBase> value);
+    public native void setSubRenderers(@NotNull NSArray<? extends ChartDataRendererBase> value);
 
     @Generated
     @Selector("setVersion:")
@@ -247,11 +256,17 @@ public class CombinedChartRenderer extends ChartDataRendererBase {
      */
     @Generated
     @Selector("subRenderers")
+    @NotNull
     public native NSArray<? extends ChartDataRendererBase> subRenderers();
 
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

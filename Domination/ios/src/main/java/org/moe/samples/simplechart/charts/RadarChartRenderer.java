@@ -6,6 +6,8 @@ import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -56,28 +58,32 @@ public class RadarChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("chart")
+    @Nullable
     public native RadarChartView chart();
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -90,23 +96,24 @@ public class RadarChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("drawDataWithContext:")
-    public native void drawDataWithContext(CGContextRef context);
+    public native void drawDataWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawExtrasWithContext:")
-    public native void drawExtrasWithContext(CGContextRef context);
+    public native void drawExtrasWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawHighlightedWithContext:indices:")
-    public native void drawHighlightedWithContextIndices(CGContextRef context, NSArray<? extends ChartHighlight> indices);
+    public native void drawHighlightedWithContextIndices(@NotNull CGContextRef context,
+            @NotNull NSArray<? extends ChartHighlight> indices);
 
     @Generated
     @Selector("drawValuesWithContext:")
-    public native void drawValuesWithContext(CGContextRef context);
+    public native void drawValuesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawWebWithContext:")
-    public native void drawWebWithContext(CGContextRef context);
+    public native void drawWebWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("hash")
@@ -123,17 +130,17 @@ public class RadarChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("initWithAnimator:viewPortHandler:")
-    public native RadarChartRenderer initWithAnimatorViewPortHandler(ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native RadarChartRenderer initWithAnimatorViewPortHandler(@NotNull ChartAnimator animator,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithChart:animator:viewPortHandler:")
-    public native RadarChartRenderer initWithChartAnimatorViewPortHandler(RadarChartView chart, ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native RadarChartRenderer initWithChartAnimatorViewPortHandler(@NotNull RadarChartView chart,
+            @NotNull ChartAnimator animator, @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native RadarChartRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native RadarChartRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -154,7 +161,8 @@ public class RadarChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -171,10 +179,10 @@ public class RadarChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("setChart:")
-    public native void setChart_unsafe(RadarChartView value);
+    public native void setChart_unsafe(@Nullable RadarChartView value);
 
     @Generated
-    public void setChart(RadarChartView value) {
+    public void setChart(@Nullable RadarChartView value) {
         Object __old = chart();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -192,6 +200,11 @@ public class RadarChartRenderer extends LineRadarChartRenderer {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

@@ -1,6 +1,7 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -23,21 +24,21 @@ public interface ChartViewDelegate {
     @Generated
     @IsOptional
     @Selector("chartScaled:scaleX:scaleY:")
-    default void chartScaledScaleXScaleY(ChartViewBase chartView, double scaleX, double scaleY) {
+    default void chartScaledScaleXScaleY(@NotNull ChartViewBase chartView, double scaleX, double scaleY) {
         throw new java.lang.UnsupportedOperationException();
     }
 
     @Generated
     @IsOptional
     @Selector("chartTranslated:dX:dY:")
-    default void chartTranslatedDXDY(ChartViewBase chartView, double dX, double dY) {
+    default void chartTranslatedDXDY(@NotNull ChartViewBase chartView, double dX, double dY) {
         throw new java.lang.UnsupportedOperationException();
     }
 
     @Generated
     @IsOptional
     @Selector("chartValueNothingSelected:")
-    default void chartValueNothingSelected(ChartViewBase chartView) {
+    default void chartValueNothingSelected(@NotNull ChartViewBase chartView) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -50,15 +51,15 @@ public interface ChartViewDelegate {
     @Generated
     @IsOptional
     @Selector("chartValueSelected:entry:highlight:")
-    default void chartValueSelectedEntryHighlight(ChartViewBase chartView, ChartDataEntry entry,
-            ChartHighlight highlight) {
+    default void chartValueSelectedEntryHighlight(@NotNull ChartViewBase chartView, @NotNull ChartDataEntry entry,
+            @NotNull ChartHighlight highlight) {
         throw new java.lang.UnsupportedOperationException();
     }
 
     @Generated
     @IsOptional
     @Selector("chartView:animatorDidStop:")
-    default void chartViewAnimatorDidStop(ChartViewBase chartView, ChartAnimator animator) {
+    default void chartViewAnimatorDidStop(@NotNull ChartViewBase chartView, @NotNull ChartAnimator animator) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -68,7 +69,7 @@ public interface ChartViewDelegate {
     @Generated
     @IsOptional
     @Selector("chartViewDidEndPanning:")
-    default void chartViewDidEndPanning(ChartViewBase chartView) {
+    default void chartViewDidEndPanning(@NotNull ChartViewBase chartView) {
         throw new java.lang.UnsupportedOperationException();
     }
 }

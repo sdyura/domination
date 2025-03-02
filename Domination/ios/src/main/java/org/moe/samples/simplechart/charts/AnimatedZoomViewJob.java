@@ -5,6 +5,8 @@ import apple.NSObject;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -56,24 +58,27 @@ public class AnimatedZoomViewJob extends AnimatedViewPortJob {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -96,10 +101,10 @@ public class AnimatedZoomViewJob extends AnimatedViewPortJob {
     @Generated
     @Selector("initWithViewPortHandler:transformer:view:yAxis:xAxisRange:scaleX:scaleY:xOrigin:yOrigin:zoomCenterX:zoomCenterY:zoomOriginX:zoomOriginY:duration:easing:")
     public native AnimatedZoomViewJob initWithViewPortHandlerTransformerViewYAxisXAxisRangeScaleXScaleYXOriginYOriginZoomCenterXZoomCenterYZoomOriginXZoomOriginYDurationEasing(
-            ChartViewPortHandler viewPortHandler,
-            ChartTransformer transformer,
-            ChartViewBase view,
-            ChartYAxis yAxis,
+            @NotNull ChartViewPortHandler viewPortHandler,
+            @NotNull ChartTransformer transformer,
+            @NotNull ChartViewBase view,
+            @NotNull ChartYAxis yAxis,
             double xAxisRange,
             double scaleX,
             double scaleY,
@@ -110,7 +115,7 @@ public class AnimatedZoomViewJob extends AnimatedViewPortJob {
             double zoomOriginX,
             double zoomOriginY,
             double duration,
-            @ObjCBlock(name = "call_initWithViewPortHandlerTransformerViewYAxisXAxisRangeScaleXScaleYXOriginYOriginZoomCenterXZoomCenterYZoomOriginXZoomOriginYDurationEasing") Block_initWithViewPortHandlerTransformerViewYAxisXAxisRangeScaleXScaleYXOriginYOriginZoomCenterXZoomCenterYZoomOriginXZoomOriginYDurationEasing easing);
+            @ObjCBlock(name = "call_initWithViewPortHandlerTransformerViewYAxisXAxisRangeScaleXScaleYXOriginYOriginZoomCenterXZoomCenterYZoomOriginXZoomOriginYDurationEasing") @Nullable Block_initWithViewPortHandlerTransformerViewYAxisXAxisRangeScaleXScaleYXOriginYOriginZoomCenterXZoomCenterYZoomOriginXZoomOriginYDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -123,21 +128,21 @@ public class AnimatedZoomViewJob extends AnimatedViewPortJob {
     @Generated
     @Selector("initWithViewPortHandler:xValue:yValue:transformer:view:")
     public native AnimatedZoomViewJob initWithViewPortHandlerXValueYValueTransformerView(
-            ChartViewPortHandler viewPortHandler, double xValue, double yValue, ChartTransformer transformer,
-            ChartViewBase view);
+            @NotNull ChartViewPortHandler viewPortHandler, double xValue, double yValue,
+            @NotNull ChartTransformer transformer, @NotNull ChartViewBase view);
 
     @Generated
     @Selector("initWithViewPortHandler:xValue:yValue:transformer:view:xOrigin:yOrigin:duration:easing:")
     public native AnimatedZoomViewJob initWithViewPortHandlerXValueYValueTransformerViewXOriginYOriginDurationEasing(
-            ChartViewPortHandler viewPortHandler,
+            @NotNull ChartViewPortHandler viewPortHandler,
             double xValue,
             double yValue,
-            ChartTransformer transformer,
-            ChartViewBase view,
+            @NotNull ChartTransformer transformer,
+            @NotNull ChartViewBase view,
             double xOrigin,
             double yOrigin,
             double duration,
-            @ObjCBlock(name = "call_initWithViewPortHandlerXValueYValueTransformerViewXOriginYOriginDurationEasing") AnimatedViewPortJob.Block_initWithViewPortHandlerXValueYValueTransformerViewXOriginYOriginDurationEasing easing);
+            @ObjCBlock(name = "call_initWithViewPortHandlerXValueYValueTransformerViewXOriginYOriginDurationEasing") @Nullable AnimatedViewPortJob.Block_initWithViewPortHandlerXValueYValueTransformerViewXOriginYOriginDurationEasing easing);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -158,7 +163,8 @@ public class AnimatedZoomViewJob extends AnimatedViewPortJob {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -180,6 +186,11 @@ public class AnimatedZoomViewJob extends AnimatedViewPortJob {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

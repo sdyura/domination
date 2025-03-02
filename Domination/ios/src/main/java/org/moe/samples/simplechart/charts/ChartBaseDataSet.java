@@ -2,7 +2,7 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumber;
@@ -10,6 +10,8 @@ import apple.foundation.NSSet;
 import apple.foundation.protocol.NSCopying;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -54,15 +56,15 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("addColor:")
-    public native void addColor(UIColor color);
+    public native void addColor(@NotNull UIColor color);
 
     @Generated
     @Selector("addEntry:")
-    public native boolean addEntry(ChartDataEntry e);
+    public native boolean addEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("addEntryOrdered:")
-    public native boolean addEntryOrdered(ChartDataEntry e);
+    public native boolean addEntryOrdered(@NotNull ChartDataEntry e);
 
     @Generated
     @Owned
@@ -76,7 +78,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("axisDependency")
@@ -92,20 +94,23 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -114,28 +119,33 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("colorAtIndex:")
+    @NotNull
     public native UIColor colorAtIndex(long index);
 
     @Generated
     @Selector("colors")
+    @NotNull
     public native NSArray<? extends UIColor> colors();
 
     @Generated
     @Selector("contains:")
-    public native boolean contains(ChartDataEntry e);
+    public native boolean contains(@NotNull ChartDataEntry e);
 
     @Generated
     @Owned
     @Selector("copyWithZone:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native Object copyWithZone(VoidPtr zone);
+    @NotNull
+    public native Object copyWithZone(@Nullable VoidPtr zone);
 
     @Generated
     @Selector("debugDescription")
+    @NotNull
     public native String debugDescription();
 
     @Generated
     @Selector("description")
+    @NotNull
     public native String description();
 
     @Generated
@@ -148,6 +158,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("entriesForXValue:")
+    @NotNull
     public native NSArray<? extends ChartDataEntry> entriesForXValue(double x);
 
     @Generated
@@ -156,19 +167,22 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("entryForIndex:")
+    @Nullable
     public native ChartDataEntry entryForIndex(long i);
 
     @Generated
     @Selector("entryForXValue:closestToY:")
+    @Nullable
     public native ChartDataEntry entryForXValueClosestToY(double x, double y);
 
     @Generated
     @Selector("entryForXValue:closestToY:rounding:")
+    @Nullable
     public native ChartDataEntry entryForXValueClosestToYRounding(double x, double y, long rounding);
 
     @Generated
     @Selector("entryIndexWithEntry:")
-    public native long entryIndexWithEntry(ChartDataEntry e);
+    public native long entryIndexWithEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("entryIndexWithX:closestToY:rounding:")
@@ -180,6 +194,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("formLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> formLineDashLengths();
 
     @Generated
@@ -214,7 +229,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("initWithLabel:")
-    public native ChartBaseDataSet initWithLabel(String label);
+    public native ChartBaseDataSet initWithLabel(@Nullable String label);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -251,10 +266,12 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("label")
+    @Nullable
     public native String label();
 
     @Generated
@@ -272,7 +289,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("removeEntry:")
-    public native boolean removeEntry(ChartDataEntry entry);
+    public native boolean removeEntry(@NotNull ChartDataEntry entry);
 
     @Generated
     @Selector("removeEntryWithIndex:")
@@ -311,7 +328,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
 
     @Generated
     @Selector("setColor:")
-    public native void setColor(UIColor color);
+    public native void setColor(@NotNull UIColor color);
 
     /**
      * Sets colors to a single color a specific alpha value.
@@ -321,7 +338,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
      */
     @Generated
     @Selector("setColor:alpha:")
-    public native void setColorAlpha(UIColor color, double alpha);
+    public native void setColorAlpha(@NotNull UIColor color, double alpha);
 
     /**
      * All the colors that are used for this DataSet.
@@ -329,7 +346,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
      */
     @Generated
     @Selector("setColors:")
-    public native void setColors(NSArray<? extends UIColor> value);
+    public native void setColors(@NotNull NSArray<? extends UIColor> value);
 
     /**
      * Sets colors with a specific alpha value.
@@ -339,7 +356,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
      */
     @Generated
     @Selector("setColors:alpha:")
-    public native void setColorsAlpha(NSArray<? extends UIColor> colors, double alpha);
+    public native void setColorsAlpha(@NotNull NSArray<? extends UIColor> colors, double alpha);
 
     @Generated
     @Selector("setDrawIconsEnabled:")
@@ -364,7 +381,7 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
      */
     @Generated
     @Selector("setFormLineDashLengths:")
-    public native void setFormLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setFormLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     /**
      * Line dash configuration for legend shapes that consist of lines.
@@ -403,26 +420,26 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
      */
     @Generated
     @Selector("setLabel:")
-    public native void setLabel(String value);
+    public native void setLabel(@Nullable String value);
 
     /**
      * List representing all colors that are used for drawing the actual values for this DataSet
      */
     @Generated
     @Selector("setValueColors:")
-    public native void setValueColors(NSArray<? extends UIColor> value);
+    public native void setValueColors(@NotNull NSArray<? extends UIColor> value);
 
     @Generated
     @Selector("setValueFont:")
-    public native void setValueFont(UIFont value);
+    public native void setValueFont(@NotNull UIFont value);
 
     @Generated
     @Selector("setValueFormatter:")
-    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) IChartValueFormatter value);
+    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) @Nullable IChartValueFormatter value);
 
     @Generated
     @Selector("setValueTextColor:")
-    public native void setValueTextColor(UIColor value);
+    public native void setValueTextColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setVersion:")
@@ -437,24 +454,34 @@ public class ChartBaseDataSet extends NSObject implements IChartDataSet, NSCopyi
     public static native Class superclass_static();
 
     @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
+    @Generated
     @Selector("valueColors")
+    @NotNull
     public native NSArray<? extends UIColor> valueColors();
 
     @Generated
     @Selector("valueFont")
+    @NotNull
     public native UIFont valueFont();
 
     @Generated
     @Selector("valueFormatter")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IChartValueFormatter valueFormatter();
 
     @Generated
     @Selector("valueTextColor")
+    @NotNull
     public native UIColor valueTextColor();
 
     @Generated
     @Selector("valueTextColorAt:")
+    @NotNull
     public native UIColor valueTextColorAt(long index);
 
     @Generated

@@ -2,13 +2,15 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumber;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -53,15 +55,15 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("addColor:")
-    public native void addColor(UIColor color);
+    public native void addColor(@NotNull UIColor color);
 
     @Generated
     @Selector("addEntry:")
-    public native boolean addEntry(ChartDataEntry e);
+    public native boolean addEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("addEntryOrdered:")
-    public native boolean addEntryOrdered(ChartDataEntry e);
+    public native boolean addEntryOrdered(@NotNull ChartDataEntry e);
 
     @Generated
     @Owned
@@ -75,7 +77,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("axisDependency")
@@ -95,24 +97,27 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("calcMinMaxYWithEntry:")
-    public native void calcMinMaxYWithEntry(ChartDataEntry e);
+    public native void calcMinMaxYWithEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -121,15 +126,17 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("colorAtIndex:")
+    @NotNull
     public native UIColor colorAtIndex(long atIndex);
 
     @Generated
     @Selector("colors")
+    @NotNull
     public native NSArray<? extends UIColor> colors();
 
     @Generated
     @Selector("contains:")
-    public native boolean contains(ChartDataEntry e);
+    public native boolean contains(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("debugDescription")
@@ -137,6 +144,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("decreasingColor")
+    @Nullable
     public native UIColor decreasingColor();
 
     @Generated
@@ -165,6 +173,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("entriesForXValue:")
+    @NotNull
     public native NSArray<? extends ChartDataEntry> entriesForXValue(double xValue);
 
     @Generated
@@ -173,19 +182,22 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("entryForIndex:")
+    @Nullable
     public native ChartDataEntry entryForIndex(long i);
 
     @Generated
     @Selector("entryForXValue:closestToY:")
+    @Nullable
     public native ChartDataEntry entryForXValueClosestToY(double xValue, double yValue);
 
     @Generated
     @Selector("entryForXValue:closestToY:rounding:")
+    @Nullable
     public native ChartDataEntry entryForXValueClosestToYRounding(double xValue, double yValue, long rounding);
 
     @Generated
     @Selector("entryIndexWithEntry:")
-    public native long entryIndexWithEntry(ChartDataEntry e);
+    public native long entryIndexWithEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("entryIndexWithX:closestToY:rounding:")
@@ -197,6 +209,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("formLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> formLineDashLengths();
 
     @Generated
@@ -218,6 +231,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("highlightColor")
+    @NotNull
     public native UIColor highlightColor();
 
     @Generated
@@ -226,6 +240,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("highlightLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> highlightLineDashLengths();
 
     @Generated
@@ -243,6 +258,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("increasingColor")
+    @Nullable
     public native UIColor increasingColor();
 
     @Generated
@@ -255,15 +271,16 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("initWithEntries:")
-    public native CandleChartDataSet initWithEntries(NSArray<? extends ChartDataEntry> entries);
+    public native CandleChartDataSet initWithEntries(@Nullable NSArray<? extends ChartDataEntry> entries);
 
     @Generated
     @Selector("initWithEntries:label:")
-    public native CandleChartDataSet initWithEntriesLabel(NSArray<? extends ChartDataEntry> entries, String label);
+    public native CandleChartDataSet initWithEntriesLabel(@Nullable NSArray<? extends ChartDataEntry> entries,
+            @Nullable String label);
 
     @Generated
     @Selector("initWithLabel:")
-    public native CandleChartDataSet initWithLabel(String label);
+    public native CandleChartDataSet initWithLabel(@Nullable String label);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -320,10 +337,12 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("label")
+    @Nullable
     public native String label();
 
     @Generated
@@ -332,6 +351,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("neutralColor")
+    @Nullable
     public native UIColor neutralColor();
 
     @Generated
@@ -345,7 +365,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("removeEntry:")
-    public native boolean removeEntry(ChartDataEntry entry);
+    public native boolean removeEntry(@NotNull ChartDataEntry entry);
 
     @Generated
     @Selector("removeEntryWithIndex:")
@@ -381,11 +401,11 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("setColor:")
-    public native void setColor(UIColor color);
+    public native void setColor(@NotNull UIColor color);
 
     @Generated
     @Selector("setDecreasingColor:")
-    public native void setDecreasingColor(UIColor value);
+    public native void setDecreasingColor(@Nullable UIColor value);
 
     @Generated
     @Selector("setDecreasingFilled:")
@@ -413,7 +433,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("setHighlightColor:")
-    public native void setHighlightColor(UIColor value);
+    public native void setHighlightColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setHighlightEnabled:")
@@ -421,7 +441,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("setHighlightLineDashLengths:")
-    public native void setHighlightLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setHighlightLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     @Generated
     @Selector("setHighlightLineDashPhase:")
@@ -437,7 +457,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("setIncreasingColor:")
-    public native void setIncreasingColor(UIColor value);
+    public native void setIncreasingColor(@Nullable UIColor value);
 
     @Generated
     @Selector("setIncreasingFilled:")
@@ -445,11 +465,11 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("setNeutralColor:")
-    public native void setNeutralColor(UIColor value);
+    public native void setNeutralColor(@Nullable UIColor value);
 
     @Generated
     @Selector("setShadowColor:")
-    public native void setShadowColor(UIColor value);
+    public native void setShadowColor(@Nullable UIColor value);
 
     @Generated
     @Selector("setShadowColorSameAsCandle:")
@@ -465,15 +485,15 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("setValueFont:")
-    public native void setValueFont(UIFont value);
+    public native void setValueFont(@NotNull UIFont value);
 
     @Generated
     @Selector("setValueFormatter:")
-    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) IChartValueFormatter value);
+    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) @Nullable IChartValueFormatter value);
 
     @Generated
     @Selector("setValueTextColor:")
-    public native void setValueTextColor(UIColor value);
+    public native void setValueTextColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setVersion:")
@@ -485,6 +505,7 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
 
     @Generated
     @Selector("shadowColor")
+    @Nullable
     public native UIColor shadowColor();
 
     @Generated
@@ -504,24 +525,34 @@ public class CandleChartDataSet extends LineScatterCandleRadarChartDataSet imple
     public static native Class superclass_static();
 
     @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
+    @Generated
     @Selector("valueColors")
+    @NotNull
     public native NSArray<? extends UIColor> valueColors();
 
     @Generated
     @Selector("valueFont")
+    @NotNull
     public native UIFont valueFont();
 
     @Generated
     @Selector("valueFormatter")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IChartValueFormatter valueFormatter();
 
     @Generated
     @Selector("valueTextColor")
+    @NotNull
     public native UIColor valueTextColor();
 
     @Generated
     @Selector("valueTextColorAt:")
+    @NotNull
     public native UIColor valueTextColorAt(long index);
 
     @Generated

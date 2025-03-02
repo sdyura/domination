@@ -2,6 +2,7 @@ package org.moe.samples.simplechart.charts.protocol;
 
 
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -29,6 +30,7 @@ public interface ICandleChartDataSet extends ILineScatterCandleRadarChartDataSet
      */
     @Generated
     @Selector("decreasingColor")
+    @Nullable
     UIColor decreasingColor();
 
     /**
@@ -43,6 +45,7 @@ public interface ICandleChartDataSet extends ILineScatterCandleRadarChartDataSet
      */
     @Generated
     @Selector("increasingColor")
+    @Nullable
     UIColor increasingColor();
 
     /**
@@ -78,6 +81,7 @@ public interface ICandleChartDataSet extends ILineScatterCandleRadarChartDataSet
      */
     @Generated
     @Selector("neutralColor")
+    @Nullable
     UIColor neutralColor();
 
     /**
@@ -93,7 +97,7 @@ public interface ICandleChartDataSet extends ILineScatterCandleRadarChartDataSet
      */
     @Generated
     @Selector("setDecreasingColor:")
-    void setDecreasingColor(UIColor value);
+    void setDecreasingColor(@Nullable UIColor value);
 
     /**
      * Are decreasing values drawn as filled?
@@ -107,7 +111,7 @@ public interface ICandleChartDataSet extends ILineScatterCandleRadarChartDataSet
      */
     @Generated
     @Selector("setIncreasingColor:")
-    void setIncreasingColor(UIColor value);
+    void setIncreasingColor(@Nullable UIColor value);
 
     /**
      * Are increasing values drawn as filled?
@@ -121,14 +125,14 @@ public interface ICandleChartDataSet extends ILineScatterCandleRadarChartDataSet
      */
     @Generated
     @Selector("setNeutralColor:")
-    void setNeutralColor(UIColor value);
+    void setNeutralColor(@Nullable UIColor value);
 
     /**
      * the color of the shadow line
      */
     @Generated
     @Selector("setShadowColor:")
-    void setShadowColor(UIColor value);
+    void setShadowColor(@Nullable UIColor value);
 
     /**
      * use candle color for the shadow
@@ -159,6 +163,7 @@ public interface ICandleChartDataSet extends ILineScatterCandleRadarChartDataSet
      */
     @Generated
     @Selector("shadowColor")
+    @Nullable
     UIColor shadowColor();
 
     /**

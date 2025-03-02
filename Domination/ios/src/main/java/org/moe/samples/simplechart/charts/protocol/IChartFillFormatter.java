@@ -1,6 +1,7 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Mapped;
@@ -24,6 +25,7 @@ public interface IChartFillFormatter {
      */
     @Generated
     @Selector("getFillLinePositionWithDataSet:dataProvider:")
-    double getFillLinePositionWithDataSetDataProvider(@Mapped(ObjCObjectMapper.class) ILineChartDataSet dataSet,
-            @Mapped(ObjCObjectMapper.class) LineChartDataProvider dataProvider);
+    double getFillLinePositionWithDataSetDataProvider(
+            @Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet dataSet,
+            @Mapped(ObjCObjectMapper.class) @NotNull LineChartDataProvider dataProvider);
 }

@@ -2,6 +2,7 @@ package org.moe.samples.simplechart.charts.protocol;
 
 
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.MappedReturn;
@@ -25,6 +26,7 @@ public interface IScatterChartDataSet extends ILineScatterCandleRadarChartDataSe
      */
     @Generated
     @Selector("scatterShapeHoleColor")
+    @Nullable
     UIColor scatterShapeHoleColor();
 
     /**
@@ -50,5 +52,6 @@ public interface IScatterChartDataSet extends ILineScatterCandleRadarChartDataSe
     @Generated
     @Selector("shapeRenderer")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     IShapeRenderer shapeRenderer();
 }

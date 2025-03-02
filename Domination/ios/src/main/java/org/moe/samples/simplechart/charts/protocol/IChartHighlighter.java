@@ -1,6 +1,7 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -25,5 +26,6 @@ public interface IChartHighlighter {
      */
     @Generated
     @Selector("getHighlightWithX:y:")
+    @Nullable
     ChartHighlight getHighlightWithXY(double x, double y);
 }

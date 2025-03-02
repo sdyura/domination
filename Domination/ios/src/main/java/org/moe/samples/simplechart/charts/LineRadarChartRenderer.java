@@ -8,6 +8,8 @@ import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -56,24 +58,27 @@ public class LineRadarChartRenderer extends LineScatterCandleRadarChartRenderer 
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -89,16 +94,16 @@ public class LineRadarChartRenderer extends LineScatterCandleRadarChartRenderer 
      */
     @Generated
     @Selector("drawFilledPathWithContext:path:fill:fillAlpha:")
-    public native void drawFilledPathWithContextPathFillFillAlpha(CGContextRef context, CGPathRef path, ChartFill fill,
-            double fillAlpha);
+    public native void drawFilledPathWithContextPathFillFillAlpha(@NotNull CGContextRef context,
+            @NotNull CGPathRef path, @NotNull ChartFill fill, double fillAlpha);
 
     /**
      * Draws the provided path in filled mode with the provided color and alpha.
      */
     @Generated
     @Selector("drawFilledPathWithContext:path:fillColor:fillAlpha:")
-    public native void drawFilledPathWithContextPathFillColorFillAlpha(CGContextRef context, CGPathRef path,
-            UIColor fillColor, double fillAlpha);
+    public native void drawFilledPathWithContextPathFillColorFillAlpha(@NotNull CGContextRef context,
+            @NotNull CGPathRef path, @NotNull UIColor fillColor, double fillAlpha);
 
     @Generated
     @Selector("hash")
@@ -115,12 +120,12 @@ public class LineRadarChartRenderer extends LineScatterCandleRadarChartRenderer 
 
     @Generated
     @Selector("initWithAnimator:viewPortHandler:")
-    public native LineRadarChartRenderer initWithAnimatorViewPortHandler(ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native LineRadarChartRenderer initWithAnimatorViewPortHandler(@NotNull ChartAnimator animator,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native LineRadarChartRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native LineRadarChartRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -141,7 +146,8 @@ public class LineRadarChartRenderer extends LineScatterCandleRadarChartRenderer 
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -163,6 +169,11 @@ public class LineRadarChartRenderer extends LineScatterCandleRadarChartRenderer 
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

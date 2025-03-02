@@ -6,6 +6,8 @@ import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIImage;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -57,24 +59,27 @@ public class ChartDataEntryBase extends NSObject {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     /**
@@ -83,6 +88,7 @@ public class ChartDataEntryBase extends NSObject {
     @Generated
     @Selector("data")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native Object data();
 
     @Generated
@@ -91,6 +97,7 @@ public class ChartDataEntryBase extends NSObject {
 
     @Generated
     @Selector("description")
+    @NotNull
     public native String description();
 
     @Generated
@@ -103,6 +110,7 @@ public class ChartDataEntryBase extends NSObject {
      */
     @Generated
     @Selector("icon")
+    @Nullable
     public native UIImage icon();
 
     @Generated
@@ -124,7 +132,7 @@ public class ChartDataEntryBase extends NSObject {
      */
     @Generated
     @Selector("initWithY:data:")
-    public native ChartDataEntryBase initWithYData(double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native ChartDataEntryBase initWithYData(double y, @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     /**
      * \param y the y value (the actual value of the entry)
@@ -133,7 +141,7 @@ public class ChartDataEntryBase extends NSObject {
      */
     @Generated
     @Selector("initWithY:icon:")
-    public native ChartDataEntryBase initWithYIcon(double y, UIImage icon);
+    public native ChartDataEntryBase initWithYIcon(double y, @Nullable UIImage icon);
 
     /**
      * \param y the y value (the actual value of the entry)
@@ -144,8 +152,8 @@ public class ChartDataEntryBase extends NSObject {
      */
     @Generated
     @Selector("initWithY:icon:data:")
-    public native ChartDataEntryBase initWithYIconData(double y, UIImage icon,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native ChartDataEntryBase initWithYIconData(double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -162,7 +170,7 @@ public class ChartDataEntryBase extends NSObject {
 
     @Generated
     @Selector("isEqual:")
-    public native boolean isEqual(@Mapped(ObjCObjectMapper.class) Object object);
+    public native boolean isEqual(@Mapped(ObjCObjectMapper.class) @Nullable Object object);
 
     @Generated
     @Selector("isSubclassOfClass:")
@@ -170,7 +178,8 @@ public class ChartDataEntryBase extends NSObject {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -190,14 +199,14 @@ public class ChartDataEntryBase extends NSObject {
      */
     @Generated
     @Selector("setData:")
-    public native void setData(@Mapped(ObjCObjectMapper.class) Object value);
+    public native void setData(@Mapped(ObjCObjectMapper.class) @Nullable Object value);
 
     /**
      * optional icon image
      */
     @Generated
     @Selector("setIcon:")
-    public native void setIcon(UIImage value);
+    public native void setIcon(@Nullable UIImage value);
 
     @Generated
     @Selector("setVersion:")
@@ -213,6 +222,11 @@ public class ChartDataEntryBase extends NSObject {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

@@ -6,6 +6,8 @@ import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIImage;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -57,7 +59,7 @@ public class CandleChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     /**
      * The body size (difference between open and close).
@@ -68,20 +70,23 @@ public class CandleChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     /**
@@ -95,7 +100,8 @@ public class CandleChartDataEntry extends ChartDataEntry {
     @Owned
     @Selector("copyWithZone:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native Object copyWithZone(VoidPtr zone);
+    @NotNull
+    public native Object copyWithZone(@Nullable VoidPtr zone);
 
     @Generated
     @Selector("debugDescription")
@@ -129,17 +135,18 @@ public class CandleChartDataEntry extends ChartDataEntry {
     @Generated
     @Selector("initWithX:shadowH:shadowL:open:close:data:")
     public native CandleChartDataEntry initWithXShadowHShadowLOpenCloseData(double x, double shadowH, double shadowL,
-            double open, double close, @Mapped(ObjCObjectMapper.class) Object data);
+            double open, double close, @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithX:shadowH:shadowL:open:close:icon:")
     public native CandleChartDataEntry initWithXShadowHShadowLOpenCloseIcon(double x, double shadowH, double shadowL,
-            double open, double close, UIImage icon);
+            double open, double close, @Nullable UIImage icon);
 
     @Generated
     @Selector("initWithX:shadowH:shadowL:open:close:icon:data:")
     public native CandleChartDataEntry initWithXShadowHShadowLOpenCloseIconData(double x, double shadowH,
-            double shadowL, double open, double close, UIImage icon, @Mapped(ObjCObjectMapper.class) Object data);
+            double shadowL, double open, double close, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithX:y:")
@@ -147,16 +154,17 @@ public class CandleChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("initWithX:y:data:")
-    public native CandleChartDataEntry initWithXYData(double x, double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native CandleChartDataEntry initWithXYData(double x, double y,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithX:y:icon:")
-    public native CandleChartDataEntry initWithXYIcon(double x, double y, UIImage icon);
+    public native CandleChartDataEntry initWithXYIcon(double x, double y, @Nullable UIImage icon);
 
     @Generated
     @Selector("initWithX:y:icon:data:")
-    public native CandleChartDataEntry initWithXYIconData(double x, double y, UIImage icon,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native CandleChartDataEntry initWithXYIconData(double x, double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithY:")
@@ -164,16 +172,16 @@ public class CandleChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("initWithY:data:")
-    public native CandleChartDataEntry initWithYData(double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native CandleChartDataEntry initWithYData(double y, @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithY:icon:")
-    public native CandleChartDataEntry initWithYIcon(double y, UIImage icon);
+    public native CandleChartDataEntry initWithYIcon(double y, @Nullable UIImage icon);
 
     @Generated
     @Selector("initWithY:icon:data:")
-    public native CandleChartDataEntry initWithYIconData(double y, UIImage icon,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native CandleChartDataEntry initWithYIconData(double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -194,7 +202,8 @@ public class CandleChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * shadow-low value
@@ -272,6 +281,11 @@ public class CandleChartDataEntry extends ChartDataEntry {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

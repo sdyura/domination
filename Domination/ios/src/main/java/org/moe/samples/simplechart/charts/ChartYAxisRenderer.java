@@ -2,13 +2,15 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
-import apple.coregraphics.struct.CGRect;
+import apple.corefoundation.struct.CGPoint;
+import apple.corefoundation.struct.CGRect;
 import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.foundation.NSValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -58,24 +60,27 @@ public class ChartYAxisRenderer extends ChartAxisRendererBase {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -88,14 +93,14 @@ public class ChartYAxisRenderer extends ChartAxisRendererBase {
 
     @Generated
     @Selector("drawGridLineWithContext:position:")
-    public native void drawGridLineWithContextPosition(CGContextRef context, @ByValue CGPoint position);
+    public native void drawGridLineWithContextPosition(@NotNull CGContextRef context, @ByValue CGPoint position);
 
     /**
      * Draws the zero line at the specified position.
      */
     @Generated
     @Selector("drawZeroLineWithContext:")
-    public native void drawZeroLineWithContext(CGContextRef context);
+    public native void drawZeroLineWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("gridClippingRect")
@@ -113,17 +118,19 @@ public class ChartYAxisRenderer extends ChartAxisRendererBase {
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native ChartYAxisRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native ChartYAxisRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:transformer:axis:")
-    public native ChartYAxisRenderer initWithViewPortHandlerTransformerAxis(ChartViewPortHandler viewPortHandler,
-            ChartTransformer transformer, ChartAxisBase axis);
+    public native ChartYAxisRenderer initWithViewPortHandlerTransformerAxis(
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartTransformer transformer,
+            @Nullable ChartAxisBase axis);
 
     @Generated
     @Selector("initWithViewPortHandler:yAxis:transformer:")
-    public native ChartYAxisRenderer initWithViewPortHandlerYAxisTransformer(ChartViewPortHandler viewPortHandler,
-            ChartYAxis yAxis, ChartTransformer transformer);
+    public native ChartYAxisRenderer initWithViewPortHandlerYAxisTransformer(
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartYAxis yAxis,
+            @Nullable ChartTransformer transformer);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -144,7 +151,8 @@ public class ChartYAxisRenderer extends ChartAxisRendererBase {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -156,19 +164,19 @@ public class ChartYAxisRenderer extends ChartAxisRendererBase {
      */
     @Generated
     @Selector("renderAxisLabelsWithContext:")
-    public native void renderAxisLabelsWithContext(CGContextRef context);
+    public native void renderAxisLabelsWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("renderAxisLineWithContext:")
-    public native void renderAxisLineWithContext(CGContextRef context);
+    public native void renderAxisLineWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("renderGridLinesWithContext:")
-    public native void renderGridLinesWithContext(CGContextRef context);
+    public native void renderGridLinesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("renderLimitLinesWithContext:")
-    public native void renderLimitLinesWithContext(CGContextRef context);
+    public native void renderLimitLinesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("resolveClassMethod:")
@@ -188,7 +196,13 @@ public class ChartYAxisRenderer extends ChartAxisRendererBase {
 
     @Generated
     @Selector("transformedPositions")
+    @NotNull
     public native NSArray<? extends NSValue> transformedPositions();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

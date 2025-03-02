@@ -2,10 +2,12 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -60,17 +62,18 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     /**
      * instance of the data-provider
@@ -78,14 +81,17 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
     @Generated
     @Selector("chart")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native ChartDataProvider chart();
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -98,6 +104,7 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
 
     @Generated
     @Selector("getHighlightWithX:y:")
+    @Nullable
     public native ChartHighlight getHighlightWithXY(double x, double y);
 
     /**
@@ -113,6 +120,7 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
      */
     @Generated
     @Selector("getHighlightWithXValue:x:y:")
+    @Nullable
     public native ChartHighlight getHighlightWithXValueXY(double xVal, double x, double y);
 
     /**
@@ -129,6 +137,7 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
      */
     @Generated
     @Selector("getHighlightsWithXValue:x:y:")
+    @NotNull
     public native NSArray<? extends ChartHighlight> getHighlightsWithXValueXY(double xValue, double x, double y);
 
     /**
@@ -154,7 +163,7 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
 
     @Generated
     @Selector("initWithChart:")
-    public native ChartHighlighter initWithChart(@Mapped(ObjCObjectMapper.class) Object chart);
+    public native ChartHighlighter initWithChart(@Mapped(ObjCObjectMapper.class) @NotNull Object chart);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -175,7 +184,8 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -195,13 +205,13 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
      */
     @Generated
     @Selector("setChart:")
-    public native void setChart_unsafe(@Mapped(ObjCObjectMapper.class) ChartDataProvider value);
+    public native void setChart_unsafe(@Mapped(ObjCObjectMapper.class) @Nullable ChartDataProvider value);
 
     /**
      * instance of the data-provider
      */
     @Generated
-    public void setChart(@Mapped(ObjCObjectMapper.class) ChartDataProvider value) {
+    public void setChart(@Mapped(ObjCObjectMapper.class) @Nullable ChartDataProvider value) {
         Object __old = chart();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -219,6 +229,11 @@ public class ChartHighlighter extends NSObject implements IChartHighlighter {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

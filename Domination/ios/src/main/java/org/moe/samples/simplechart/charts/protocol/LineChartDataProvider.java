@@ -1,6 +1,8 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -19,9 +21,11 @@ import org.moe.samples.simplechart.charts.LineChartData;
 public interface LineChartDataProvider extends BarLineScatterCandleBubbleChartDataProvider {
     @Generated
     @Selector("getAxis:")
+    @NotNull
     ChartYAxis getAxis(long axis);
 
     @Generated
     @Selector("lineData")
+    @Nullable
     LineChartData lineData();
 }

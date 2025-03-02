@@ -2,8 +2,8 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
-import apple.coregraphics.struct.CGRect;
+import apple.corefoundation.struct.CGPoint;
+import apple.corefoundation.struct.CGRect;
 import apple.foundation.NSArray;
 import apple.foundation.NSCoder;
 import apple.foundation.NSDate;
@@ -18,6 +18,8 @@ import apple.uikit.UITouch;
 import apple.uikit.UITraitCollection;
 import apple.uikit.UIView;
 import apple.uikit.protocol.UIAppearanceContainer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.c.ann.Variadic;
 import org.moe.natj.general.NatJ;
@@ -69,6 +71,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("accessibilityChildren")
+    @Nullable
     public native NSArray<?> accessibilityChildren();
 
     @Generated
@@ -76,11 +79,11 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     public static native void addKeyframeWithRelativeStartTimeRelativeDurationAnimations(
             double frameStartTime,
             double frameDuration,
-            @ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") UIView.Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
+            @ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") @NotNull UIView.Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
 
     @Generated
     @Selector("addViewportJob:")
-    public native void addViewportJob(ChartViewPortJob job);
+    public native void addViewportJob(@NotNull ChartViewPortJob job);
 
     @Generated
     @Owned
@@ -98,21 +101,21 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
             double duration,
             double delay,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") @NotNull UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") @Nullable UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("animateWithDuration:animations:")
     public static native void animateWithDurationAnimations(
             double duration,
-            @ObjCBlock(name = "call_animateWithDurationAnimations") UIView.Block_animateWithDurationAnimations animations);
+            @ObjCBlock(name = "call_animateWithDurationAnimations") @NotNull UIView.Block_animateWithDurationAnimations animations);
 
     @Generated
     @Selector("animateWithDuration:animations:completion:")
     public static native void animateWithDurationAnimationsCompletion(
             double duration,
-            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") UIView.Block_animateWithDurationAnimationsCompletion_1 animations,
-            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") UIView.Block_animateWithDurationAnimationsCompletion_2 completion);
+            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") @NotNull UIView.Block_animateWithDurationAnimationsCompletion_1 animations,
+            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") @Nullable UIView.Block_animateWithDurationAnimationsCompletion_2 completion);
 
     @Generated
     @Selector("animateWithDuration:delay:options:animations:completion:")
@@ -120,8 +123,8 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
             double duration,
             double delay,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") @NotNull UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") @Nullable UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:")
@@ -131,8 +134,19 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
             @NFloat double dampingRatio,
             @NFloat double velocity,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
-            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
+            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") @NotNull UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
+            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") @Nullable UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
+
+    @Generated
+    @Selector("animateWithSpringDuration:bounce:initialSpringVelocity:delay:options:animations:completion:")
+    public static native void animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion(
+            double duration,
+            @NFloat double bounce,
+            @NFloat double velocity,
+            double delay,
+            @NUInt long options,
+            @ObjCBlock(name = "call_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_5") @NotNull UIView.Block_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_5 animations,
+            @ObjCBlock(name = "call_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_6") @Nullable UIView.Block_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_6 completion);
 
     /**
      * Animates the drawing / rendering of the chart the x-axis with the specified animation time.
@@ -152,8 +166,9 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("animateWithXAxisDuration:easing:")
-    public native void animateWithXAxisDurationEasing(double xAxisDuration,
-            @ObjCBlock(name = "call_animateWithXAxisDurationEasing") Block_animateWithXAxisDurationEasing easing);
+    public native void animateWithXAxisDurationEasing(
+            double xAxisDuration,
+            @ObjCBlock(name = "call_animateWithXAxisDurationEasing") @Nullable Block_animateWithXAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -198,7 +213,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     public native void animateWithXAxisDurationYAxisDurationEasing(
             double xAxisDuration,
             double yAxisDuration,
-            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasing") Block_animateWithXAxisDurationYAxisDurationEasing easing);
+            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasing") @Nullable Block_animateWithXAxisDurationYAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -253,8 +268,8 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     public native void animateWithXAxisDurationYAxisDurationEasingXEasingY(
             double xAxisDuration,
             double yAxisDuration,
-            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasingXEasingY_2") Block_animateWithXAxisDurationYAxisDurationEasingXEasingY_2 easingX,
-            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasingXEasingY_3") Block_animateWithXAxisDurationYAxisDurationEasingXEasingY_3 easingY);
+            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasingXEasingY_2") @Nullable Block_animateWithXAxisDurationYAxisDurationEasingXEasingY_2 easingX,
+            @ObjCBlock(name = "call_animateWithXAxisDurationYAxisDurationEasingXEasingY_3") @Nullable Block_animateWithXAxisDurationYAxisDurationEasingXEasingY_3 easingY);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -288,8 +303,9 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("animateWithYAxisDuration:easing:")
-    public native void animateWithYAxisDurationEasing(double yAxisDuration,
-            @ObjCBlock(name = "call_animateWithYAxisDurationEasing") Block_animateWithYAxisDurationEasing easing);
+    public native void animateWithYAxisDurationEasing(
+            double yAxisDuration,
+            @ObjCBlock(name = "call_animateWithYAxisDurationEasing") @Nullable Block_animateWithYAxisDurationEasing easing);
 
     @Runtime(ObjCRuntime.class)
     @Generated
@@ -311,29 +327,33 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("animatorStopped:")
-    public native void animatorStopped(ChartAnimator chartAnimator);
+    public native void animatorStopped(@NotNull ChartAnimator chartAnimator);
 
     @Generated
     @Selector("animatorUpdated:")
-    public native void animatorUpdated(ChartAnimator chartAnimator);
+    public native void animatorUpdated(@NotNull ChartAnimator chartAnimator);
 
     @Generated
     @Selector("appearance")
+    @NotNull
     public static native ChartViewBase appearance();
 
     @Generated
     @ProtocolClassMethod("appearance")
+    @NotNull
     public ChartViewBase _appearance() {
         return appearance();
     }
 
     @Generated
     @Selector("appearanceForTraitCollection:")
-    public static native ChartViewBase appearanceForTraitCollection(UITraitCollection trait);
+    @NotNull
+    public static native ChartViewBase appearanceForTraitCollection(@NotNull UITraitCollection trait);
 
     @Generated
     @ProtocolClassMethod("appearanceForTraitCollection")
-    public ChartViewBase _appearanceForTraitCollection(UITraitCollection trait) {
+    @NotNull
+    public ChartViewBase _appearanceForTraitCollection(@NotNull UITraitCollection trait) {
         return appearanceForTraitCollection(trait);
     }
 
@@ -341,26 +361,30 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     @Variadic()
     @Deprecated
     @Selector("appearanceForTraitCollection:whenContainedIn:")
-    public static native ChartViewBase appearanceForTraitCollectionWhenContainedIn(UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs);
+    @NotNull
+    public static native ChartViewBase appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedIn")
-    public ChartViewBase _appearanceForTraitCollectionWhenContainedIn(UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs) {
+    @NotNull
+    public ChartViewBase _appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
         return appearanceForTraitCollectionWhenContainedIn(trait, ContainerClass, varargs);
     }
 
     @Generated
     @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
+    @NotNull
     public static native ChartViewBase appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            UITraitCollection trait, NSArray<?> containerTypes);
+            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes);
 
     @Generated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
-    public ChartViewBase _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(UITraitCollection trait,
-            NSArray<?> containerTypes) {
+    @NotNull
+    public ChartViewBase _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes) {
         return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
     }
 
@@ -368,24 +392,28 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     @Variadic()
     @Deprecated
     @Selector("appearanceWhenContainedIn:")
+    @NotNull
     public static native ChartViewBase appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs);
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceWhenContainedIn")
+    @NotNull
     public ChartViewBase _appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
         return appearanceWhenContainedIn(ContainerClass, varargs);
     }
 
     @Generated
     @Selector("appearanceWhenContainedInInstancesOfClasses:")
-    public static native ChartViewBase appearanceWhenContainedInInstancesOfClasses(NSArray<?> containerTypes);
+    @NotNull
+    public static native ChartViewBase appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes);
 
     @Generated
     @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
-    public ChartViewBase _appearanceWhenContainedInInstancesOfClasses(NSArray<?> containerTypes) {
+    @NotNull
+    public ChartViewBase _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes) {
         return appearanceWhenContainedInInstancesOfClasses(containerTypes);
     }
 
@@ -395,21 +423,23 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
+    @Deprecated
     @Selector("beginAnimations:context:")
-    public static native void beginAnimationsContext(String animationID, VoidPtr context);
+    public static native void beginAnimationsContext(@Nullable String animationID, @Nullable VoidPtr context);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("centerOffsets")
@@ -429,6 +459,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("chartDescription")
+    @Nullable
     public native ChartDescription chartDescription();
 
     @Generated
@@ -449,10 +480,12 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     /**
@@ -468,7 +501,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("clearTextInputContextIdentifier:")
-    public static native void clearTextInputContextIdentifier(String identifier);
+    public static native void clearTextInputContextIdentifier(@NotNull String identifier);
 
     /**
      * Removes all DataSets (and thereby Entries) from the chart. Does not set the data object to nil. Also refreshes the chart by calling setNeedsDisplay().
@@ -478,6 +511,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     public native void clearValues();
 
     @Generated
+    @Deprecated
     @Selector("commitAnimations")
     public static native void commitAnimations();
 
@@ -491,6 +525,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("data")
+    @Nullable
     public native ChartData data();
 
     @Generated
@@ -503,6 +538,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     @Generated
     @Selector("delegate")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native ChartViewDelegate delegate();
 
     @Generated
@@ -571,6 +607,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("getChartImageWithTransparent:")
+    @Nullable
     public native UIImage getChartImageWithTransparent(boolean transparent);
 
     /**
@@ -581,6 +618,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("getHighlightByTouchPoint:")
+    @Nullable
     public native ChartHighlight getHighlightByTouchPoint(@ByValue CGPoint pt);
 
     /**
@@ -590,7 +628,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     @Generated
     @Selector("getMarkerPositionWithHighlight:")
     @ByValue
-    public native CGPoint getMarkerPositionWithHighlight(ChartHighlight highlight);
+    public native CGPoint getMarkerPositionWithHighlight(@NotNull ChartHighlight highlight);
 
     @Generated
     @Selector("hash")
@@ -613,14 +651,14 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("highlightValue:")
-    public native void highlightValue(ChartHighlight highlight);
+    public native void highlightValue(@Nullable ChartHighlight highlight);
 
     /**
      * Highlights the value selected by touch gesture.
      */
     @Generated
     @Selector("highlightValue:callDelegate:")
-    public native void highlightValueCallDelegate(ChartHighlight highlight, boolean callDelegate);
+    public native void highlightValueCallDelegate(@Nullable ChartHighlight highlight, boolean callDelegate);
 
     /**
      * Highlights any y-value at the given x-value in the given DataSet.
@@ -694,18 +732,20 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("highlightValues:")
-    public native void highlightValues(NSArray<? extends ChartHighlight> highs);
+    public native void highlightValues(@Nullable NSArray<? extends ChartHighlight> highs);
 
     /**
      * The array of currently highlighted values. This might an empty if nothing is highlighted.
      */
     @Generated
     @Selector("highlighted")
+    @NotNull
     public native NSArray<? extends ChartHighlight> highlighted();
 
     @Generated
     @Selector("highlighter")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IChartHighlighter highlighter();
 
     @Generated
@@ -718,7 +758,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("initWithCoder:")
-    public native ChartViewBase initWithCoder(NSCoder aDecoder);
+    public native ChartViewBase initWithCoder(@NotNull NSCoder aDecoder);
 
     @Generated
     @Selector("initWithFrame:")
@@ -775,17 +815,20 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * The last value that was highlighted via touch.
      */
     @Generated
     @Selector("lastHighlighted")
+    @Nullable
     public native ChartHighlight lastHighlighted();
 
     @Generated
     @Selector("layerClass")
+    @NotNull
     public static native Class layerClass();
 
     /**
@@ -793,6 +836,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("legend")
+    @NotNull
     public native ChartLegend legend();
 
     /**
@@ -808,6 +852,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     @Generated
     @Selector("marker")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IChartMarker marker();
 
     @Generated
@@ -833,7 +878,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     public static native void modifyAnimationsWithRepeatCountAutoreversesAnimations(
             @NFloat double count,
             boolean autoreverses,
-            @ObjCBlock(name = "call_modifyAnimationsWithRepeatCountAutoreversesAnimations") UIView.Block_modifyAnimationsWithRepeatCountAutoreversesAnimations animations);
+            @ObjCBlock(name = "call_modifyAnimationsWithRepeatCountAutoreversesAnimations") @NotNull UIView.Block_modifyAnimationsWithRepeatCountAutoreversesAnimations animations);
 
     @Generated
     @Owned
@@ -845,6 +890,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("noDataFont")
+    @NotNull
     public native UIFont noDataFont();
 
     /**
@@ -852,6 +898,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("noDataText")
+    @NotNull
     public native String noDataText();
 
     /**
@@ -859,13 +906,14 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("noDataTextAlignment")
-    public native long noDataTextAlignment();
+    public native int noDataTextAlignment();
 
     /**
      * color of the no data text
      */
     @Generated
     @Selector("noDataTextColor")
+    @NotNull
     public native UIColor noDataTextColor();
 
     /**
@@ -878,48 +926,50 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("nsuiTouchesBegan:withEvent:")
-    public native void nsuiTouchesBeganWithEvent(NSSet<? extends UITouch> touches, UIEvent event);
+    public native void nsuiTouchesBeganWithEvent(@NotNull NSSet<? extends UITouch> touches, @Nullable UIEvent event);
 
     @Generated
     @Selector("nsuiTouchesCancelled:withEvent:")
-    public native void nsuiTouchesCancelledWithEvent(NSSet<? extends UITouch> touches, UIEvent event);
+    public native void nsuiTouchesCancelledWithEvent(@Nullable NSSet<? extends UITouch> touches, @Nullable UIEvent event);
 
     @Generated
     @Selector("nsuiTouchesEnded:withEvent:")
-    public native void nsuiTouchesEndedWithEvent(NSSet<? extends UITouch> touches, UIEvent event);
+    public native void nsuiTouchesEndedWithEvent(@NotNull NSSet<? extends UITouch> touches, @Nullable UIEvent event);
 
     @Generated
     @Selector("nsuiTouchesMoved:withEvent:")
-    public native void nsuiTouchesMovedWithEvent(NSSet<? extends UITouch> touches, UIEvent event);
+    public native void nsuiTouchesMovedWithEvent(@NotNull NSSet<? extends UITouch> touches, @Nullable UIEvent event);
 
     @Generated
     @Selector("observeValueForKeyPath:ofObject:change:context:")
-    public native void observeValueForKeyPathOfObjectChangeContext(String keyPath,
-            @Mapped(ObjCObjectMapper.class) Object object, NSDictionary<String, ?> change, VoidPtr context);
+    public native void observeValueForKeyPathOfObjectChangeContext(@Nullable String keyPath,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object object, @Nullable NSDictionary<String, ?> change,
+            @Nullable VoidPtr context);
 
     @Generated
     @Selector("performSystemAnimation:onViews:options:animations:completion:")
     public static native void performSystemAnimationOnViewsOptionsAnimationsCompletion(
             @NUInt long animation,
-            NSArray<? extends UIView> views,
+            @NotNull NSArray<? extends UIView> views,
             @NUInt long options,
-            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
-            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") @Nullable UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
+            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") @Nullable UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("performWithoutAnimation:")
     public static native void performWithoutAnimation(
-            @ObjCBlock(name = "call_performWithoutAnimation") UIView.Block_performWithoutAnimation actionsWithoutAnimation);
+            @ObjCBlock(name = "call_performWithoutAnimation") @NotNull UIView.Block_performWithoutAnimation actionsWithoutAnimation);
 
     @Generated
     @Selector("removeViewportJob:")
-    public native void removeViewportJob(ChartViewPortJob job);
+    public native void removeViewportJob(@NotNull ChartViewPortJob job);
 
     /**
      * object responsible for rendering the data
      */
     @Generated
     @Selector("renderer")
+    @Nullable
     public native ChartDataRendererBase renderer();
 
     @Generated
@@ -935,48 +985,60 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     public static native boolean resolveInstanceMethod(SEL sel);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationBeginsFromCurrentState:")
     public static native void setAnimationBeginsFromCurrentState(boolean fromCurrentState);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationCurve:")
     public static native void setAnimationCurve(@NInt long curve);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDelay:")
     public static native void setAnimationDelay(double delay);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDelegate:")
-    public static native void setAnimationDelegate(@Mapped(ObjCObjectMapper.class) Object delegate);
+    public static native void setAnimationDelegate(@Mapped(ObjCObjectMapper.class) @Nullable Object delegate);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDidStopSelector:")
-    public static native void setAnimationDidStopSelector(SEL selector);
+    public static native void setAnimationDidStopSelector(@Nullable SEL selector);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDuration:")
     public static native void setAnimationDuration_static(double duration);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationRepeatAutoreverses:")
     public static native void setAnimationRepeatAutoreverses(boolean repeatAutoreverses);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationRepeatCount:")
     public static native void setAnimationRepeatCount_static(float repeatCount);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationStartDate:")
-    public static native void setAnimationStartDate(NSDate startDate);
+    public static native void setAnimationStartDate(@NotNull NSDate startDate);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationTransition:forView:cache:")
-    public static native void setAnimationTransitionForViewCache(@NInt long transition, UIView view, boolean cache);
+    public static native void setAnimationTransitionForViewCache(@NInt long transition, @NotNull UIView view,
+            boolean cache);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationWillStartSelector:")
-    public static native void setAnimationWillStartSelector(SEL selector);
+    public static native void setAnimationWillStartSelector(@Nullable SEL selector);
 
     @Generated
     @Selector("setAnimationsEnabled:")
@@ -988,27 +1050,27 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("setChartDescription:")
-    public native void setChartDescription(ChartDescription value);
+    public native void setChartDescription(@Nullable ChartDescription value);
 
     /**
      * The data for the chart
      */
     @Generated
     @Selector("setData:")
-    public native void setData(ChartData value);
+    public native void setData(@Nullable ChartData value);
 
     /**
      * delegate to receive chart events
      */
     @Generated
     @Selector("setDelegate:")
-    public native void setDelegate_unsafe(@Mapped(ObjCObjectMapper.class) ChartViewDelegate value);
+    public native void setDelegate_unsafe(@Mapped(ObjCObjectMapper.class) @Nullable ChartViewDelegate value);
 
     /**
      * delegate to receive chart events
      */
     @Generated
-    public void setDelegate(@Mapped(ObjCObjectMapper.class) ChartViewDelegate value) {
+    public void setDelegate(@Mapped(ObjCObjectMapper.class) @Nullable ChartViewDelegate value) {
         Object __old = delegate();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -1086,21 +1148,21 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
 
     @Generated
     @Selector("setHighlighter:")
-    public native void setHighlighter(@Mapped(ObjCObjectMapper.class) IChartHighlighter value);
+    public native void setHighlighter(@Mapped(ObjCObjectMapper.class) @Nullable IChartHighlighter value);
 
     /**
      * The last value that was highlighted via touch.
      */
     @Generated
     @Selector("setLastHighlighted:")
-    public native void setLastHighlighted(ChartHighlight value);
+    public native void setLastHighlighted(@Nullable ChartHighlight value);
 
     /**
      * The marker that is displayed when a value is clicked on the chart
      */
     @Generated
     @Selector("setMarker:")
-    public native void setMarker(@Mapped(ObjCObjectMapper.class) IChartMarker value);
+    public native void setMarker(@Mapped(ObjCObjectMapper.class) @Nullable IChartMarker value);
 
     /**
      * The maximum distance in screen pixels away from an entry causing it to highlight.
@@ -1115,35 +1177,35 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("setNoDataFont:")
-    public native void setNoDataFont(UIFont value);
+    public native void setNoDataFont(@NotNull UIFont value);
 
     /**
      * text that is displayed when the chart is empty
      */
     @Generated
     @Selector("setNoDataText:")
-    public native void setNoDataText(String value);
+    public native void setNoDataText(@NotNull String value);
 
     /**
      * alignment of the no data text
      */
     @Generated
     @Selector("setNoDataTextAlignment:")
-    public native void setNoDataTextAlignment(long value);
+    public native void setNoDataTextAlignment(int value);
 
     /**
      * color of the no data text
      */
     @Generated
     @Selector("setNoDataTextColor:")
-    public native void setNoDataTextColor(UIColor value);
+    public native void setNoDataTextColor(@NotNull UIColor value);
 
     /**
      * object responsible for rendering the data
      */
     @Generated
     @Selector("setRenderer:")
-    public native void setRenderer(ChartDataRendererBase value);
+    public native void setRenderer(@Nullable ChartDataRendererBase value);
 
     @Generated
     @Selector("setVersion:")
@@ -1156,20 +1218,25 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
     @Generated
     @Selector("transitionFromView:toView:duration:options:completion:")
     public static native void transitionFromViewToViewDurationOptionsCompletion(
-            UIView fromView,
-            UIView toView,
+            @NotNull UIView fromView,
+            @NotNull UIView toView,
             double duration,
             @NUInt long options,
-            @ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") UIView.Block_transitionFromViewToViewDurationOptionsCompletion completion);
+            @ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") @Nullable UIView.Block_transitionFromViewToViewDurationOptionsCompletion completion);
 
     @Generated
     @Selector("transitionWithView:duration:options:animations:completion:")
     public static native void transitionWithViewDurationOptionsAnimationsCompletion(
-            UIView view,
+            @NotNull UIView view,
             double duration,
             @NUInt long options,
-            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") @Nullable UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") @Nullable UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("userInterfaceLayoutDirectionForSemanticContentAttribute:")
@@ -1214,6 +1281,7 @@ public class ChartViewBase extends NSUIView implements ChartAnimatorDelegate, Ch
      */
     @Generated
     @Selector("xAxis")
+    @NotNull
     public native ChartXAxis xAxis();
 
     @Generated

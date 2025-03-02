@@ -1,6 +1,7 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -19,5 +20,6 @@ public interface CombinedChartDataProvider extends BarChartDataProvider, BubbleC
         CandleChartDataProvider, LineChartDataProvider, ScatterChartDataProvider {
     @Generated
     @Selector("combinedData")
+    @Nullable
     CombinedChartData combinedData();
 }

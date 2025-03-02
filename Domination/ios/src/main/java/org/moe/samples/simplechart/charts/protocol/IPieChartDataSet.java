@@ -3,6 +3,7 @@ package org.moe.samples.simplechart.charts.protocol;
 
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -29,6 +30,7 @@ public interface IPieChartDataSet extends IChartDataSet {
      */
     @Generated
     @Selector("entryLabelColor")
+    @Nullable
     UIColor entryLabelColor();
 
     /**
@@ -36,6 +38,7 @@ public interface IPieChartDataSet extends IChartDataSet {
      */
     @Generated
     @Selector("entryLabelFont")
+    @Nullable
     UIFont entryLabelFont();
 
     /**
@@ -43,6 +46,7 @@ public interface IPieChartDataSet extends IChartDataSet {
      */
     @Generated
     @Selector("highlightColor")
+    @Nullable
     UIColor highlightColor();
 
     /**
@@ -64,21 +68,21 @@ public interface IPieChartDataSet extends IChartDataSet {
      */
     @Generated
     @Selector("setEntryLabelColor:")
-    void setEntryLabelColor(UIColor value);
+    void setEntryLabelColor(@Nullable UIColor value);
 
     /**
      * the font for the slice-text labels
      */
     @Generated
     @Selector("setEntryLabelFont:")
-    void setEntryLabelFont(UIFont value);
+    void setEntryLabelFont(@Nullable UIFont value);
 
     /**
      * get/sets the color for the highlighted sector
      */
     @Generated
     @Selector("setHighlightColor:")
-    void setHighlightColor(UIColor value);
+    void setHighlightColor(@Nullable UIColor value);
 
     /**
      * indicates the selection distance of a pie slice
@@ -108,7 +112,7 @@ public interface IPieChartDataSet extends IChartDataSet {
      */
     @Generated
     @Selector("setValueLineColor:")
-    void setValueLineColor(UIColor value);
+    void setValueLineColor(@Nullable UIColor value);
 
     /**
      * When valuePosition is OutsideSlice, indicates length of first half of the line
@@ -174,6 +178,7 @@ public interface IPieChartDataSet extends IChartDataSet {
      */
     @Generated
     @Selector("valueLineColor")
+    @Nullable
     UIColor valueLineColor();
 
     /**

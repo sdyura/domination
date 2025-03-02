@@ -7,6 +7,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumber;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -58,24 +60,27 @@ public class RadarChartData extends ChartData {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -88,7 +93,8 @@ public class RadarChartData extends ChartData {
 
     @Generated
     @Selector("entryForHighlight:")
-    public native ChartDataEntry entryForHighlight(ChartHighlight highlight);
+    @Nullable
+    public native ChartDataEntry entryForHighlight(@NotNull ChartHighlight highlight);
 
     @Generated
     @Selector("hash")
@@ -97,10 +103,12 @@ public class RadarChartData extends ChartData {
 
     @Generated
     @Selector("highlightColor")
+    @NotNull
     public native UIColor highlightColor();
 
     @Generated
     @Selector("highlightLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> highlightLineDashLengths();
 
     @Generated
@@ -117,11 +125,11 @@ public class RadarChartData extends ChartData {
 
     @Generated
     @Selector("initWithDataSet:")
-    public native RadarChartData initWithDataSet(@Mapped(ObjCObjectMapper.class) IChartDataSet dataSet);
+    public native RadarChartData initWithDataSet(@Mapped(ObjCObjectMapper.class) @Nullable IChartDataSet dataSet);
 
     @Generated
     @Selector("initWithDataSets:")
-    public native RadarChartData initWithDataSets(NSArray<?> dataSets);
+    public native RadarChartData initWithDataSets(@Nullable NSArray<?> dataSets);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -142,13 +150,15 @@ public class RadarChartData extends ChartData {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * Sets labels that should be drawn around the RadarChart at the end of each web line.
      */
     @Generated
     @Selector("labels")
+    @NotNull
     public native NSArray<String> labels();
 
     @Generated
@@ -166,11 +176,11 @@ public class RadarChartData extends ChartData {
 
     @Generated
     @Selector("setHighlightColor:")
-    public native void setHighlightColor(UIColor value);
+    public native void setHighlightColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setHighlightLineDashLengths:")
-    public native void setHighlightLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setHighlightLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     @Generated
     @Selector("setHighlightLineDashPhase:")
@@ -185,7 +195,7 @@ public class RadarChartData extends ChartData {
      */
     @Generated
     @Selector("setLabels:")
-    public native void setLabels(NSArray<String> value);
+    public native void setLabels(@NotNull NSArray<String> value);
 
     @Generated
     @Selector("setVersion:")
@@ -194,6 +204,11 @@ public class RadarChartData extends ChartData {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

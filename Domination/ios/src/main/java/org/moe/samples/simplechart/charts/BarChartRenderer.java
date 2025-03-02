@@ -8,6 +8,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -61,29 +63,33 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleChartRenderer {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Selector("dataProvider")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native BarChartDataProvider dataProvider();
 
     @Generated
@@ -96,32 +102,34 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleChartRenderer {
 
     @Generated
     @Selector("drawDataSetWithContext:dataSet:index:")
-    public native void drawDataSetWithContextDataSetIndex(CGContextRef context,
-            @Mapped(ObjCObjectMapper.class) IBarChartDataSet dataSet, long index);
+    public native void drawDataSetWithContextDataSetIndex(@NotNull CGContextRef context,
+            @Mapped(ObjCObjectMapper.class) @NotNull IBarChartDataSet dataSet, long index);
 
     @Generated
     @Selector("drawDataWithContext:")
-    public native void drawDataWithContext(CGContextRef context);
+    public native void drawDataWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawExtrasWithContext:")
-    public native void drawExtrasWithContext(CGContextRef context);
+    public native void drawExtrasWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawHighlightedWithContext:indices:")
-    public native void drawHighlightedWithContextIndices(CGContextRef context, NSArray<? extends ChartHighlight> indices);
+    public native void drawHighlightedWithContextIndices(@NotNull CGContextRef context,
+            @NotNull NSArray<? extends ChartHighlight> indices);
 
     /**
      * Draws a value at the specified x and y position.
      */
     @Generated
     @Selector("drawValueWithContext:value:xPos:yPos:font:align:color:")
-    public native void drawValueWithContextValueXPosYPosFontAlignColor(CGContextRef context, String value, double xPos,
-            double yPos, UIFont font, long align, UIColor color);
+    public native void drawValueWithContextValueXPosYPosFontAlignColor(@NotNull CGContextRef context,
+            @NotNull String value, double xPos, double yPos, @NotNull UIFont font,
+            @Mapped(ObjCObjectMapper.class) Object align, @NotNull UIColor color);
 
     @Generated
     @Selector("drawValuesWithContext:")
-    public native void drawValuesWithContext(CGContextRef context);
+    public native void drawValuesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("hash")
@@ -138,18 +146,18 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleChartRenderer {
 
     @Generated
     @Selector("initWithAnimator:viewPortHandler:")
-    public native BarChartRenderer initWithAnimatorViewPortHandler(ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native BarChartRenderer initWithAnimatorViewPortHandler(@NotNull ChartAnimator animator,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithDataProvider:animator:viewPortHandler:")
     public native BarChartRenderer initWithDataProviderAnimatorViewPortHandler(
-            @Mapped(ObjCObjectMapper.class) BarChartDataProvider dataProvider, ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+            @Mapped(ObjCObjectMapper.class) @NotNull BarChartDataProvider dataProvider,
+            @NotNull ChartAnimator animator, @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native BarChartRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native BarChartRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -170,7 +178,8 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleChartRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -187,10 +196,10 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleChartRenderer {
 
     @Generated
     @Selector("setDataProvider:")
-    public native void setDataProvider_unsafe(@Mapped(ObjCObjectMapper.class) BarChartDataProvider value);
+    public native void setDataProvider_unsafe(@Mapped(ObjCObjectMapper.class) @Nullable BarChartDataProvider value);
 
     @Generated
-    public void setDataProvider(@Mapped(ObjCObjectMapper.class) BarChartDataProvider value) {
+    public void setDataProvider(@Mapped(ObjCObjectMapper.class) @Nullable BarChartDataProvider value) {
         Object __old = dataProvider();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -208,6 +217,11 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleChartRenderer {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

@@ -7,6 +7,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -54,6 +56,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("accessibilityEntryLabelPrefix")
+    @Nullable
     public native String accessibilityEntryLabelPrefix();
 
     /**
@@ -62,6 +65,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("accessibilityEntryLabelSuffix")
+    @Nullable
     public native String accessibilityEntryLabelSuffix();
 
     /**
@@ -81,7 +85,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("addEntry:dataSetIndex:")
-    public native void addEntryDataSetIndex(ChartDataEntry e, long dataSetIndex);
+    public native void addEntryDataSetIndex(@NotNull ChartDataEntry e, long dataSetIndex);
 
     @Generated
     @Owned
@@ -95,7 +99,7 @@ public class ChartData extends NSObject {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     /**
      * calc minimum and maximum y value over all datasets
@@ -109,14 +113,14 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("calcMinMaxWithDataSet:")
-    public native void calcMinMaxWithDataSet(@Mapped(ObjCObjectMapper.class) IChartDataSet d);
+    public native void calcMinMaxWithDataSet(@Mapped(ObjCObjectMapper.class) @NotNull IChartDataSet d);
 
     /**
      * Adjusts the current minimum and maximum values based on the provided Entry object.
      */
     @Generated
     @Selector("calcMinMaxWithEntry:axis:")
-    public native void calcMinMaxWithEntryAxis(ChartDataEntry e, long axis);
+    public native void calcMinMaxWithEntryAxis(@NotNull ChartDataEntry e, long axis);
 
     @Generated
     @Selector("calcMinMaxYFromX:toX:")
@@ -124,20 +128,23 @@ public class ChartData extends NSObject {
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     /**
@@ -156,7 +163,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("containsWithDataSet:")
-    public native boolean containsWithDataSet(@Mapped(ObjCObjectMapper.class) IChartDataSet dataSet);
+    public native boolean containsWithDataSet(@Mapped(ObjCObjectMapper.class) @NotNull IChartDataSet dataSet);
 
     /**
      * The number of LineDataSets this object contains
@@ -170,6 +177,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("dataSets")
+    @NotNull
     public native NSArray<?> dataSets();
 
     @Generated
@@ -197,7 +205,8 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("entryForHighlight:")
-    public native ChartDataEntry entryForHighlight(ChartHighlight highlight);
+    @Nullable
+    public native ChartDataEntry entryForHighlight(@NotNull ChartHighlight highlight);
 
     /**
      * returns:
@@ -205,6 +214,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("getColors")
+    @Nullable
     public native NSArray<? extends UIColor> getColors();
 
     @Generated
@@ -225,7 +235,8 @@ public class ChartData extends NSObject {
     @Generated
     @Selector("getDataSetByLabel:ignorecase:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native IChartDataSet getDataSetByLabelIgnorecase(String label, boolean ignorecase);
+    @Nullable
+    public native IChartDataSet getDataSetByLabelIgnorecase(@NotNull String label, boolean ignorecase);
 
     /**
      * returns:
@@ -234,7 +245,8 @@ public class ChartData extends NSObject {
     @Generated
     @Selector("getDataSetForEntry:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native IChartDataSet getDataSetForEntry(ChartDataEntry e);
+    @Nullable
+    public native IChartDataSet getDataSetForEntry(@NotNull ChartDataEntry e);
 
     /**
      * returns:
@@ -243,7 +255,8 @@ public class ChartData extends NSObject {
     @Generated
     @Selector("getFirstLeftWithDataSets:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native IChartDataSet getFirstLeftWithDataSets(NSArray<?> dataSets);
+    @Nullable
+    public native IChartDataSet getFirstLeftWithDataSets(@NotNull NSArray<?> dataSets);
 
     /**
      * returns:
@@ -252,7 +265,8 @@ public class ChartData extends NSObject {
     @Generated
     @Selector("getFirstRightWithDataSets:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native IChartDataSet getFirstRightWithDataSets(NSArray<?> dataSets);
+    @Nullable
+    public native IChartDataSet getFirstRightWithDataSets(@NotNull NSArray<?> dataSets);
 
     @Generated
     @Selector("getYMaxWithAxis:")
@@ -281,7 +295,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("indexOfDataSet:")
-    public native long indexOfDataSet(@Mapped(ObjCObjectMapper.class) IChartDataSet dataSet);
+    public native long indexOfDataSet(@Mapped(ObjCObjectMapper.class) @NotNull IChartDataSet dataSet);
 
     @Generated
     @Selector("init")
@@ -289,11 +303,11 @@ public class ChartData extends NSObject {
 
     @Generated
     @Selector("initWithDataSet:")
-    public native ChartData initWithDataSet(@Mapped(ObjCObjectMapper.class) IChartDataSet dataSet);
+    public native ChartData initWithDataSet(@Mapped(ObjCObjectMapper.class) @Nullable IChartDataSet dataSet);
 
     @Generated
     @Selector("initWithDataSets:")
-    public native ChartData initWithDataSets(NSArray<?> dataSets);
+    public native ChartData initWithDataSets(@Nullable NSArray<?> dataSets);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -321,7 +335,8 @@ public class ChartData extends NSObject {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * The DataSet object with the maximum number of entries or null if there are no DataSets.
@@ -329,6 +344,7 @@ public class ChartData extends NSObject {
     @Generated
     @Selector("maxEntryCountSet")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native IChartDataSet maxEntryCountSet();
 
     @Generated
@@ -353,7 +369,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("removeDataSet:")
-    public native boolean removeDataSet(@Mapped(ObjCObjectMapper.class) IChartDataSet dataSet);
+    public native boolean removeDataSet(@Mapped(ObjCObjectMapper.class) @NotNull IChartDataSet dataSet);
 
     /**
      * Removes the DataSet at the given index in the DataSet array from the data object.
@@ -371,7 +387,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("removeEntry:dataSetIndex:")
-    public native boolean removeEntryDataSetIndex(ChartDataEntry entry, long dataSetIndex);
+    public native boolean removeEntryDataSetIndex(@NotNull ChartDataEntry entry, long dataSetIndex);
 
     /**
      * Removes the Entry object closest to the given xIndex from the ChartDataSet at the
@@ -398,7 +414,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("setAccessibilityEntryLabelPrefix:")
-    public native void setAccessibilityEntryLabelPrefix(String value);
+    public native void setAccessibilityEntryLabelPrefix(@Nullable String value);
 
     /**
      * When the data entry value requires a unit, use this property to append the string representation of the unit to the value
@@ -406,7 +422,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("setAccessibilityEntryLabelSuffix:")
-    public native void setAccessibilityEntryLabelSuffix(String value);
+    public native void setAccessibilityEntryLabelSuffix(@Nullable String value);
 
     /**
      * If the data entry value is a count, set this to true to allow plurals and other grammatical changes
@@ -421,7 +437,7 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("setDataSets:")
-    public native void setDataSets(NSArray<?> value);
+    public native void setDataSets(@NotNull NSArray<?> value);
 
     /**
      * Enables / disables drawing values (value-text) for all DataSets this data object contains.
@@ -443,21 +459,21 @@ public class ChartData extends NSObject {
      */
     @Generated
     @Selector("setValueFont:")
-    public native void setValueFont(UIFont font);
+    public native void setValueFont(@NotNull UIFont font);
 
     /**
      * Sets a custom IValueFormatter for all DataSets this data object contains.
      */
     @Generated
     @Selector("setValueFormatter:")
-    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) IChartValueFormatter formatter);
+    public native void setValueFormatter(@Mapped(ObjCObjectMapper.class) @NotNull IChartValueFormatter formatter);
 
     /**
      * Sets the color of the value-text (color in which the value-labels are drawn) for all DataSets this data object contains.
      */
     @Generated
     @Selector("setValueTextColor:")
-    public native void setValueTextColor(UIColor color);
+    public native void setValueTextColor(@NotNull UIColor color);
 
     @Generated
     @Selector("setVersion:")
@@ -466,6 +482,11 @@ public class ChartData extends NSObject {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

@@ -7,6 +7,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -55,24 +57,27 @@ public class ChartDescription extends ChartComponentBase {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -88,6 +93,7 @@ public class ChartDescription extends ChartComponentBase {
      */
     @Generated
     @Selector("font")
+    @NotNull
     public native UIFont font();
 
     @Generated
@@ -118,7 +124,8 @@ public class ChartDescription extends ChartComponentBase {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -138,28 +145,28 @@ public class ChartDescription extends ChartComponentBase {
      */
     @Generated
     @Selector("setFont:")
-    public native void setFont(UIFont value);
+    public native void setFont(@NotNull UIFont value);
 
     /**
      * The text to be shown as the description.
      */
     @Generated
     @Selector("setText:")
-    public native void setText(String value);
+    public native void setText(@Nullable String value);
 
     /**
      * The text alignment of the description text. Default RIGHT.
      */
     @Generated
     @Selector("setTextAlign:")
-    public native void setTextAlign(long value);
+    public native void setTextAlign(int value);
 
     /**
      * Text color used for drawing the description text
      */
     @Generated
     @Selector("setTextColor:")
-    public native void setTextColor(UIColor value);
+    public native void setTextColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setVersion:")
@@ -174,6 +181,7 @@ public class ChartDescription extends ChartComponentBase {
      */
     @Generated
     @Selector("text")
+    @Nullable
     public native String text();
 
     /**
@@ -181,14 +189,20 @@ public class ChartDescription extends ChartComponentBase {
      */
     @Generated
     @Selector("textAlign")
-    public native long textAlign();
+    public native int textAlign();
 
     /**
      * Text color used for drawing the description text
      */
     @Generated
     @Selector("textColor")
+    @NotNull
     public native UIColor textColor();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

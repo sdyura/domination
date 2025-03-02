@@ -6,6 +6,8 @@ import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -59,29 +61,33 @@ public class LineChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Selector("dataProvider")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native LineChartDataProvider dataProvider();
 
     @Generated
@@ -94,39 +100,40 @@ public class LineChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("drawCubicBezierWithContext:dataSet:")
-    public native void drawCubicBezierWithContextDataSet(CGContextRef context,
-            @Mapped(ObjCObjectMapper.class) ILineChartDataSet dataSet);
+    public native void drawCubicBezierWithContextDataSet(@NotNull CGContextRef context,
+            @Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet dataSet);
 
     @Generated
     @Selector("drawDataSetWithContext:dataSet:")
-    public native void drawDataSetWithContextDataSet(CGContextRef context,
-            @Mapped(ObjCObjectMapper.class) ILineChartDataSet dataSet);
+    public native void drawDataSetWithContextDataSet(@NotNull CGContextRef context,
+            @Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet dataSet);
 
     @Generated
     @Selector("drawDataWithContext:")
-    public native void drawDataWithContext(CGContextRef context);
+    public native void drawDataWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawExtrasWithContext:")
-    public native void drawExtrasWithContext(CGContextRef context);
+    public native void drawExtrasWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawHighlightedWithContext:indices:")
-    public native void drawHighlightedWithContextIndices(CGContextRef context, NSArray<? extends ChartHighlight> indices);
+    public native void drawHighlightedWithContextIndices(@NotNull CGContextRef context,
+            @NotNull NSArray<? extends ChartHighlight> indices);
 
     @Generated
     @Selector("drawHorizontalBezierWithContext:dataSet:")
-    public native void drawHorizontalBezierWithContextDataSet(CGContextRef context,
-            @Mapped(ObjCObjectMapper.class) ILineChartDataSet dataSet);
+    public native void drawHorizontalBezierWithContextDataSet(@NotNull CGContextRef context,
+            @Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet dataSet);
 
     @Generated
     @Selector("drawLinearWithContext:dataSet:")
-    public native void drawLinearWithContextDataSet(CGContextRef context,
-            @Mapped(ObjCObjectMapper.class) ILineChartDataSet dataSet);
+    public native void drawLinearWithContextDataSet(@NotNull CGContextRef context,
+            @Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet dataSet);
 
     @Generated
     @Selector("drawValuesWithContext:")
-    public native void drawValuesWithContext(CGContextRef context);
+    public native void drawValuesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("hash")
@@ -143,18 +150,18 @@ public class LineChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("initWithAnimator:viewPortHandler:")
-    public native LineChartRenderer initWithAnimatorViewPortHandler(ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native LineChartRenderer initWithAnimatorViewPortHandler(@NotNull ChartAnimator animator,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithDataProvider:animator:viewPortHandler:")
     public native LineChartRenderer initWithDataProviderAnimatorViewPortHandler(
-            @Mapped(ObjCObjectMapper.class) LineChartDataProvider dataProvider, ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+            @Mapped(ObjCObjectMapper.class) @NotNull LineChartDataProvider dataProvider,
+            @NotNull ChartAnimator animator, @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native LineChartRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native LineChartRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -175,7 +182,8 @@ public class LineChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -192,10 +200,10 @@ public class LineChartRenderer extends LineRadarChartRenderer {
 
     @Generated
     @Selector("setDataProvider:")
-    public native void setDataProvider_unsafe(@Mapped(ObjCObjectMapper.class) LineChartDataProvider value);
+    public native void setDataProvider_unsafe(@Mapped(ObjCObjectMapper.class) @Nullable LineChartDataProvider value);
 
     @Generated
-    public void setDataProvider(@Mapped(ObjCObjectMapper.class) LineChartDataProvider value) {
+    public void setDataProvider(@Mapped(ObjCObjectMapper.class) @Nullable LineChartDataProvider value) {
         Object __old = dataProvider();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -213,6 +221,11 @@ public class LineChartRenderer extends LineRadarChartRenderer {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

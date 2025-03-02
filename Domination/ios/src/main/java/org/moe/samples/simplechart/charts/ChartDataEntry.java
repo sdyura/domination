@@ -7,6 +7,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.foundation.protocol.NSCopying;
 import apple.uikit.UIImage;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -58,31 +60,35 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Owned
     @Selector("copyWithZone:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native Object copyWithZone(VoidPtr zone);
+    @NotNull
+    public native Object copyWithZone(@Nullable VoidPtr zone);
 
     @Generated
     @Selector("debugDescription")
@@ -90,6 +96,7 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
 
     @Generated
     @Selector("description")
+    @NotNull
     public native String description();
 
     @Generated
@@ -121,7 +128,8 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
      */
     @Generated
     @Selector("initWithX:y:data:")
-    public native ChartDataEntry initWithXYData(double x, double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native ChartDataEntry initWithXYData(double x, double y,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     /**
      * An Entry represents one single entry in the chart.
@@ -133,7 +141,7 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
      */
     @Generated
     @Selector("initWithX:y:icon:")
-    public native ChartDataEntry initWithXYIcon(double x, double y, UIImage icon);
+    public native ChartDataEntry initWithXYIcon(double x, double y, @Nullable UIImage icon);
 
     /**
      * An Entry represents one single entry in the chart.
@@ -147,8 +155,8 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
      */
     @Generated
     @Selector("initWithX:y:icon:data:")
-    public native ChartDataEntry initWithXYIconData(double x, double y, UIImage icon,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native ChartDataEntry initWithXYIconData(double x, double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithY:")
@@ -156,15 +164,16 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
 
     @Generated
     @Selector("initWithY:data:")
-    public native ChartDataEntry initWithYData(double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native ChartDataEntry initWithYData(double y, @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithY:icon:")
-    public native ChartDataEntry initWithYIcon(double y, UIImage icon);
+    public native ChartDataEntry initWithYIcon(double y, @Nullable UIImage icon);
 
     @Generated
     @Selector("initWithY:icon:data:")
-    public native ChartDataEntry initWithYIconData(double y, UIImage icon, @Mapped(ObjCObjectMapper.class) Object data);
+    public native ChartDataEntry initWithYIconData(double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -181,7 +190,7 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
 
     @Generated
     @Selector("isEqual:")
-    public native boolean isEqual(@Mapped(ObjCObjectMapper.class) Object object);
+    public native boolean isEqual(@Mapped(ObjCObjectMapper.class) @Nullable Object object);
 
     @Generated
     @Selector("isSubclassOfClass:")
@@ -189,7 +198,8 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -218,6 +228,11 @@ public class ChartDataEntry extends ChartDataEntryBase implements NSCopying {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

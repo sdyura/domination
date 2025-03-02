@@ -1,6 +1,8 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -35,6 +37,7 @@ public interface IChartValueFormatter {
      */
     @Generated
     @Selector("stringForValue:entry:dataSetIndex:viewPortHandler:")
-    String stringForValueEntryDataSetIndexViewPortHandler(double value, ChartDataEntry entry, long dataSetIndex,
-            ChartViewPortHandler viewPortHandler);
+    @NotNull
+    String stringForValueEntryDataSetIndexViewPortHandler(double value, @NotNull ChartDataEntry entry,
+            long dataSetIndex, @Nullable ChartViewPortHandler viewPortHandler);
 }

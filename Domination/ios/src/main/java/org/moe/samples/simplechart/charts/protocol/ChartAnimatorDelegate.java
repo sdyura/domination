@@ -1,6 +1,7 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -19,12 +20,12 @@ public interface ChartAnimatorDelegate {
      */
     @Generated
     @Selector("animatorStopped:")
-    void animatorStopped(ChartAnimator animator);
+    void animatorStopped(@NotNull ChartAnimator animator);
 
     /**
      * Called when the Animator has stepped.
      */
     @Generated
     @Selector("animatorUpdated:")
-    void animatorUpdated(ChartAnimator animator);
+    void animatorUpdated(@NotNull ChartAnimator animator);
 }

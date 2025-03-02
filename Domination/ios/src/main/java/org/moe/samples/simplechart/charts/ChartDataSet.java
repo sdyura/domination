@@ -5,6 +5,8 @@ import apple.NSObject;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -59,9 +61,8 @@ public class ChartDataSet extends ChartBaseDataSet {
      * True
      */
     @Generated
-    @Deprecated
     @Selector("addEntry:")
-    public native boolean addEntry(ChartDataEntry e);
+    public native boolean addEntry(@NotNull ChartDataEntry e);
 
     /**
      * Adds an Entry to the DataSet dynamically.
@@ -75,7 +76,7 @@ public class ChartDataSet extends ChartBaseDataSet {
      */
     @Generated
     @Selector("addEntryOrdered:")
-    public native boolean addEntryOrdered(ChartDataEntry e);
+    public native boolean addEntryOrdered(@NotNull ChartDataEntry e);
 
     @Generated
     @Owned
@@ -89,7 +90,7 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("calcMinMax")
@@ -97,7 +98,7 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("calcMinMaxXWithEntry:")
-    public native void calcMinMaxXWithEntry(ChartDataEntry e);
+    public native void calcMinMaxXWithEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("calcMinMaxYFromX:toX:")
@@ -105,31 +106,33 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("calcMinMaxYWithEntry:")
-    public native void calcMinMaxYWithEntry(ChartDataEntry e);
+    public native void calcMinMaxYWithEntry(@NotNull ChartDataEntry e);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     /**
      * Removes all values from this DataSet and recalculates min and max value.
      */
     @Generated
-    @Deprecated
     @Selector("clear")
     public native void clear();
 
@@ -137,7 +140,8 @@ public class ChartDataSet extends ChartBaseDataSet {
     @Owned
     @Selector("copyWithZone:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native Object copyWithZone(VoidPtr zone);
+    @NotNull
+    public native Object copyWithZone(@Nullable VoidPtr zone);
 
     @Generated
     @Selector("debugDescription")
@@ -149,6 +153,7 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("entries")
+    @NotNull
     public native NSArray<? extends ChartDataEntry> entries();
 
     /**
@@ -158,13 +163,13 @@ public class ChartDataSet extends ChartBaseDataSet {
      */
     @Generated
     @Selector("entriesForXValue:")
+    @NotNull
     public native NSArray<? extends ChartDataEntry> entriesForXValue(double xValue);
 
     /**
      * The number of y-values this DataSet represents
      */
     @Generated
-    @Deprecated
     @Selector("entryCount")
     public native long entryCount();
 
@@ -177,8 +182,8 @@ public class ChartDataSet extends ChartBaseDataSet {
      * The entry object found at the given index (not x-value!)
      */
     @Generated
-    @Deprecated
     @Selector("entryForIndex:")
+    @Nullable
     public native ChartDataEntry entryForIndex(long i);
 
     /**
@@ -194,6 +199,7 @@ public class ChartDataSet extends ChartBaseDataSet {
      */
     @Generated
     @Selector("entryForXValue:closestToY:")
+    @Nullable
     public native ChartDataEntry entryForXValueClosestToY(double xValue, double yValue);
 
     /**
@@ -211,6 +217,7 @@ public class ChartDataSet extends ChartBaseDataSet {
      */
     @Generated
     @Selector("entryForXValue:closestToY:rounding:")
+    @Nullable
     public native ChartDataEntry entryForXValueClosestToYRounding(double xValue, double yValue, long rounding);
 
     /**
@@ -221,9 +228,8 @@ public class ChartDataSet extends ChartBaseDataSet {
      * The array-index of the specified entry
      */
     @Generated
-    @Deprecated
     @Selector("entryIndexWithEntry:")
-    public native long entryIndexWithEntry(ChartDataEntry e);
+    public native long entryIndexWithEntry(@NotNull ChartDataEntry e);
 
     /**
      * \param xValue x-value of the entry to search for
@@ -252,15 +258,16 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("initWithEntries:")
-    public native ChartDataSet initWithEntries(NSArray<? extends ChartDataEntry> entries);
+    public native ChartDataSet initWithEntries(@Nullable NSArray<? extends ChartDataEntry> entries);
 
     @Generated
     @Selector("initWithEntries:label:")
-    public native ChartDataSet initWithEntriesLabel(NSArray<? extends ChartDataEntry> entries, String label);
+    public native ChartDataSet initWithEntriesLabel(@Nullable NSArray<? extends ChartDataEntry> entries,
+            @Nullable String label);
 
     @Generated
     @Selector("initWithLabel:")
-    public native ChartDataSet initWithLabel(String label);
+    public native ChartDataSet initWithLabel(@Nullable String label);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -281,7 +288,8 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -290,6 +298,7 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("objectAtIndexedSubscript:")
+    @NotNull
     public native ChartDataEntry objectAtIndexedSubscript(long position);
 
     @Generated
@@ -298,7 +307,7 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("removeEntry:")
-    public native boolean removeEntry(ChartDataEntry entry);
+    public native boolean removeEntry(@NotNull ChartDataEntry entry);
 
     /**
      * Removes the first Entry (at index 0) of this DataSet from the entries array.
@@ -307,7 +316,6 @@ public class ChartDataSet extends ChartBaseDataSet {
      * <code>true</code> if successful, <code>false</code> if not.
      */
     @Generated
-    @Deprecated
     @Selector("removeFirst")
     public native boolean removeFirst();
 
@@ -318,7 +326,6 @@ public class ChartDataSet extends ChartBaseDataSet {
      * <code>true</code> if successful, <code>false</code> if not.
      */
     @Generated
-    @Deprecated
     @Selector("removeLast")
     public native boolean removeLast();
 
@@ -330,7 +337,7 @@ public class ChartDataSet extends ChartBaseDataSet {
      */
     @Generated
     @Selector("replaceEntries:")
-    public native void replaceEntries(NSArray<? extends ChartDataEntry> entries);
+    public native void replaceEntries(@NotNull NSArray<? extends ChartDataEntry> entries);
 
     @Generated
     @Selector("resolveClassMethod:")
@@ -342,7 +349,7 @@ public class ChartDataSet extends ChartBaseDataSet {
 
     @Generated
     @Selector("setObject:atIndexedSubscript:")
-    public native void setObjectAtIndexedSubscript(ChartDataEntry newValue, long position);
+    public native void setObjectAtIndexedSubscript(@NotNull ChartDataEntry newValue, long position);
 
     @Generated
     @Selector("setVersion:")
@@ -351,6 +358,11 @@ public class ChartDataSet extends ChartBaseDataSet {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

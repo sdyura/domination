@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		16
+	iOS:		17
 	Android:	100
 	Game GUI:	2
 	Swing GUI:	2
@@ -16,7 +16,7 @@ CURRENT VERSION:
 
 1.3.4
 
-	Accessibility GameGUI: right click options to increate and decrease font size
+	Accessibility GameGUI: right click options to increase and decrease font size
 	better fallbacks for audio not loading from url
 	fix for small screen Domination not loading when space in path
 
@@ -33,6 +33,9 @@ CURRENT VERSION:
 	SwingGUI: can replay debug game log without having to save it to file first
 	SwingGUI: little memory graph on debug screen
 	SwingGUI: fix - allow opening TEG xml maps in MapEditor on macOS again
+
+	iOS 17 upgraded to MOE 1.10.1
+	       fix to not play sound when iPhone is already playing music
 
 	Android 100 fix loading screen getting stuck when starting game
 

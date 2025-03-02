@@ -5,6 +5,8 @@ import apple.NSObject;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -50,6 +52,7 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
      */
     @Generated
     @Selector("allData")
+    @NotNull
     public native NSArray<? extends ChartData> allData();
 
     @Generated
@@ -64,7 +67,7 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("barData")
@@ -80,13 +83,14 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("candleData")
@@ -94,14 +98,17 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Selector("dataByIndex:")
+    @NotNull
     public native ChartData dataByIndex(long index);
 
     @Generated
@@ -122,7 +129,8 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
      */
     @Generated
     @Selector("entryForHighlight:")
-    public native ChartDataEntry entryForHighlight(ChartHighlight highlight);
+    @Nullable
+    public native ChartDataEntry entryForHighlight(@NotNull ChartHighlight highlight);
 
     /**
      * Get dataset for highlight
@@ -135,7 +143,7 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
     @Generated
     @Selector("getDataSetByHighlight:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native IChartDataSet getDataSetByHighlight(ChartHighlight highlight);
+    public native IChartDataSet getDataSetByHighlight(@NotNull ChartHighlight highlight);
 
     @Generated
     @Selector("hash")
@@ -148,11 +156,11 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
 
     @Generated
     @Selector("initWithDataSet:")
-    public native CombinedChartData initWithDataSet(@Mapped(ObjCObjectMapper.class) IChartDataSet dataSet);
+    public native CombinedChartData initWithDataSet(@Mapped(ObjCObjectMapper.class) @Nullable IChartDataSet dataSet);
 
     @Generated
     @Selector("initWithDataSets:")
-    public native CombinedChartData initWithDataSets(NSArray<?> dataSets);
+    public native CombinedChartData initWithDataSets(@Nullable NSArray<?> dataSets);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -173,7 +181,8 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("lineData")
@@ -190,7 +199,7 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
 
     @Generated
     @Selector("removeDataSet:")
-    public native boolean removeDataSet(@Mapped(ObjCObjectMapper.class) IChartDataSet dataSet);
+    public native boolean removeDataSet(@Mapped(ObjCObjectMapper.class) @NotNull IChartDataSet dataSet);
 
     @Generated
     @Selector("removeDataSetByIndex:")
@@ -198,7 +207,7 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
 
     @Generated
     @Selector("removeEntry:dataSetIndex:")
-    public native boolean removeEntryDataSetIndex(ChartDataEntry entry, long dataSetIndex);
+    public native boolean removeEntryDataSetIndex(@NotNull ChartDataEntry entry, long dataSetIndex);
 
     @Generated
     @Selector("removeEntryWithXValue:dataSetIndex:")
@@ -243,6 +252,11 @@ public class CombinedChartData extends BarLineScatterCandleBubbleChartData {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

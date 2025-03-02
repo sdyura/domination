@@ -1,8 +1,9 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
 import apple.coregraphics.opaque.CGContextRef;
+import org.jetbrains.annotations.NotNull;
 import org.moe.natj.general.ann.ByValue;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
@@ -23,7 +24,7 @@ public interface IChartMarker {
      */
     @Generated
     @Selector("drawWithContext:point:")
-    void drawWithContextPoint(CGContextRef context, @ByValue CGPoint point);
+    void drawWithContextPoint(@NotNull CGContextRef context, @ByValue CGPoint point);
 
     /**
      * returns:
@@ -58,5 +59,5 @@ public interface IChartMarker {
      */
     @Generated
     @Selector("refreshContentWithEntry:highlight:")
-    void refreshContentWithEntryHighlight(ChartDataEntry entry, ChartHighlight highlight);
+    void refreshContentWithEntryHighlight(@NotNull ChartDataEntry entry, @NotNull ChartHighlight highlight);
 }

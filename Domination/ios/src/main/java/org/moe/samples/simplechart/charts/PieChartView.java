@@ -2,8 +2,8 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
-import apple.coregraphics.struct.CGRect;
+import apple.corefoundation.struct.CGPoint;
+import apple.corefoundation.struct.CGRect;
 import apple.foundation.NSArray;
 import apple.foundation.NSAttributedString;
 import apple.foundation.NSCoder;
@@ -16,6 +16,8 @@ import apple.uikit.UIFont;
 import apple.uikit.UITraitCollection;
 import apple.uikit.UIView;
 import apple.uikit.protocol.UIAppearanceContainer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.c.ann.Variadic;
 import org.moe.natj.general.NatJ;
@@ -65,6 +67,7 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("absoluteAngles")
+    @NotNull
     public native NSArray<? extends NSNumber> absoluteAngles();
 
     @Generated
@@ -76,7 +79,7 @@ public class PieChartView extends PieRadarChartViewBase {
     public static native void addKeyframeWithRelativeStartTimeRelativeDurationAnimations(
             double frameStartTime,
             double frameDuration,
-            @ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") UIView.Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
+            @ObjCBlock(name = "call_addKeyframeWithRelativeStartTimeRelativeDurationAnimations") @NotNull UIView.Block_addKeyframeWithRelativeStartTimeRelativeDurationAnimations animations);
 
     @Generated
     @Owned
@@ -98,21 +101,21 @@ public class PieChartView extends PieRadarChartViewBase {
             double duration,
             double delay,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3") @NotNull UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4") @Nullable UIView.Block_animateKeyframesWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("animateWithDuration:animations:")
     public static native void animateWithDurationAnimations(
             double duration,
-            @ObjCBlock(name = "call_animateWithDurationAnimations") UIView.Block_animateWithDurationAnimations animations);
+            @ObjCBlock(name = "call_animateWithDurationAnimations") @NotNull UIView.Block_animateWithDurationAnimations animations);
 
     @Generated
     @Selector("animateWithDuration:animations:completion:")
     public static native void animateWithDurationAnimationsCompletion(
             double duration,
-            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") UIView.Block_animateWithDurationAnimationsCompletion_1 animations,
-            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") UIView.Block_animateWithDurationAnimationsCompletion_2 completion);
+            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_1") @NotNull UIView.Block_animateWithDurationAnimationsCompletion_1 animations,
+            @ObjCBlock(name = "call_animateWithDurationAnimationsCompletion_2") @Nullable UIView.Block_animateWithDurationAnimationsCompletion_2 completion);
 
     @Generated
     @Selector("animateWithDuration:delay:options:animations:completion:")
@@ -120,8 +123,8 @@ public class PieChartView extends PieRadarChartViewBase {
             double duration,
             double delay,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_3") @NotNull UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_animateWithDurationDelayOptionsAnimationsCompletion_4") @Nullable UIView.Block_animateWithDurationDelayOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:")
@@ -131,26 +134,41 @@ public class PieChartView extends PieRadarChartViewBase {
             @NFloat double dampingRatio,
             @NFloat double velocity,
             @NUInt long options,
-            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
-            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
+            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5") @NotNull UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_5 animations,
+            @ObjCBlock(name = "call_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6") @Nullable UIView.Block_animateWithDurationDelayUsingSpringWithDampingInitialSpringVelocityOptionsAnimationsCompletion_6 completion);
+
+    @Generated
+    @Selector("animateWithSpringDuration:bounce:initialSpringVelocity:delay:options:animations:completion:")
+    public static native void animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion(
+            double duration,
+            @NFloat double bounce,
+            @NFloat double velocity,
+            double delay,
+            @NUInt long options,
+            @ObjCBlock(name = "call_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_5") @NotNull UIView.Block_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_5 animations,
+            @ObjCBlock(name = "call_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_6") @Nullable UIView.Block_animateWithSpringDurationBounceInitialSpringVelocityDelayOptionsAnimationsCompletion_6 completion);
 
     @Generated
     @Selector("appearance")
+    @NotNull
     public static native PieChartView appearance();
 
     @Generated
     @ProtocolClassMethod("appearance")
+    @NotNull
     public PieChartView _appearance() {
         return appearance();
     }
 
     @Generated
     @Selector("appearanceForTraitCollection:")
-    public static native PieChartView appearanceForTraitCollection(UITraitCollection trait);
+    @NotNull
+    public static native PieChartView appearanceForTraitCollection(@NotNull UITraitCollection trait);
 
     @Generated
     @ProtocolClassMethod("appearanceForTraitCollection")
-    public PieChartView _appearanceForTraitCollection(UITraitCollection trait) {
+    @NotNull
+    public PieChartView _appearanceForTraitCollection(@NotNull UITraitCollection trait) {
         return appearanceForTraitCollection(trait);
     }
 
@@ -158,26 +176,30 @@ public class PieChartView extends PieRadarChartViewBase {
     @Variadic()
     @Deprecated
     @Selector("appearanceForTraitCollection:whenContainedIn:")
-    public static native PieChartView appearanceForTraitCollectionWhenContainedIn(UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs);
+    @NotNull
+    public static native PieChartView appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedIn")
-    public PieChartView _appearanceForTraitCollectionWhenContainedIn(UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs) {
+    @NotNull
+    public PieChartView _appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
         return appearanceForTraitCollectionWhenContainedIn(trait, ContainerClass, varargs);
     }
 
     @Generated
     @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
+    @NotNull
     public static native PieChartView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            UITraitCollection trait, NSArray<?> containerTypes);
+            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes);
 
     @Generated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
-    public PieChartView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(UITraitCollection trait,
-            NSArray<?> containerTypes) {
+    @NotNull
+    public PieChartView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes) {
         return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
     }
 
@@ -185,24 +207,28 @@ public class PieChartView extends PieRadarChartViewBase {
     @Variadic()
     @Deprecated
     @Selector("appearanceWhenContainedIn:")
+    @NotNull
     public static native PieChartView appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs);
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceWhenContainedIn")
+    @NotNull
     public PieChartView _appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
         return appearanceWhenContainedIn(ContainerClass, varargs);
     }
 
     @Generated
     @Selector("appearanceWhenContainedInInstancesOfClasses:")
-    public static native PieChartView appearanceWhenContainedInInstancesOfClasses(NSArray<?> containerTypes);
+    @NotNull
+    public static native PieChartView appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes);
 
     @Generated
     @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
-    public PieChartView _appearanceWhenContainedInInstancesOfClasses(NSArray<?> containerTypes) {
+    @NotNull
+    public PieChartView _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes) {
         return appearanceWhenContainedInInstancesOfClasses(containerTypes);
     }
 
@@ -212,27 +238,30 @@ public class PieChartView extends PieRadarChartViewBase {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
+    @Deprecated
     @Selector("beginAnimations:context:")
-    public static native void beginAnimationsContext(String animationID, VoidPtr context);
+    public static native void beginAnimationsContext(@Nullable String animationID, @Nullable VoidPtr context);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     /**
      * the text that is displayed in the center of the pie-chart
      */
     @Generated
     @Selector("centerAttributedText")
+    @Nullable
     public native NSAttributedString centerAttributedText();
 
     /**
@@ -248,6 +277,7 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("centerText")
+    @Nullable
     public native String centerText();
 
     /**
@@ -275,17 +305,20 @@ public class PieChartView extends PieRadarChartViewBase {
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Selector("clearTextInputContextIdentifier:")
-    public static native void clearTextInputContextIdentifier(String identifier);
+    public static native void clearTextInputContextIdentifier(@NotNull String identifier);
 
     @Generated
+    @Deprecated
     @Selector("commitAnimations")
     public static native void commitAnimations();
 
@@ -321,6 +354,7 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("drawAngles")
+    @NotNull
     public native NSArray<? extends NSNumber> drawAngles();
 
     /**
@@ -361,6 +395,7 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("entryLabelColor")
+    @Nullable
     public native UIColor entryLabelColor();
 
     /**
@@ -368,12 +403,13 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("entryLabelFont")
+    @Nullable
     public native UIFont entryLabelFont();
 
     @Generated
     @Selector("getMarkerPositionWithHighlight:")
     @ByValue
-    public native CGPoint getMarkerPositionWithHighlight(ChartHighlight highlight);
+    public native CGPoint getMarkerPositionWithHighlight(@NotNull ChartHighlight highlight);
 
     @Generated
     @Selector("hash")
@@ -387,6 +423,7 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("holeColor")
+    @Nullable
     public native UIColor holeColor();
 
     /**
@@ -411,7 +448,7 @@ public class PieChartView extends PieRadarChartViewBase {
 
     @Generated
     @Selector("initWithCoder:")
-    public native PieChartView initWithCoder(NSCoder aDecoder);
+    public native PieChartView initWithCoder(@NotNull NSCoder aDecoder);
 
     @Generated
     @Selector("initWithFrame:")
@@ -471,10 +508,12 @@ public class PieChartView extends PieRadarChartViewBase {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("layerClass")
+    @NotNull
     public static native Class layerClass();
 
     /**
@@ -491,7 +530,7 @@ public class PieChartView extends PieRadarChartViewBase {
     public static native void modifyAnimationsWithRepeatCountAutoreversesAnimations(
             @NFloat double count,
             boolean autoreverses,
-            @ObjCBlock(name = "call_modifyAnimationsWithRepeatCountAutoreversesAnimations") UIView.Block_modifyAnimationsWithRepeatCountAutoreversesAnimations animations);
+            @ObjCBlock(name = "call_modifyAnimationsWithRepeatCountAutoreversesAnimations") @NotNull UIView.Block_modifyAnimationsWithRepeatCountAutoreversesAnimations animations);
 
     /**
      * Checks if the given index is set to be highlighted.
@@ -509,15 +548,15 @@ public class PieChartView extends PieRadarChartViewBase {
     @Selector("performSystemAnimation:onViews:options:animations:completion:")
     public static native void performSystemAnimationOnViewsOptionsAnimationsCompletion(
             @NUInt long animation,
-            NSArray<? extends UIView> views,
+            @NotNull NSArray<? extends UIView> views,
             @NUInt long options,
-            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
-            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_3") @Nullable UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_3 parallelAnimations,
+            @ObjCBlock(name = "call_performSystemAnimationOnViewsOptionsAnimationsCompletion_4") @Nullable UIView.Block_performSystemAnimationOnViewsOptionsAnimationsCompletion_4 completion);
 
     @Generated
     @Selector("performWithoutAnimation:")
     public static native void performWithoutAnimation(
-            @ObjCBlock(name = "call_performWithoutAnimation") UIView.Block_performWithoutAnimation actionsWithoutAnimation);
+            @ObjCBlock(name = "call_performWithoutAnimation") @NotNull UIView.Block_performWithoutAnimation actionsWithoutAnimation);
 
     @Generated
     @Selector("radius")
@@ -536,48 +575,60 @@ public class PieChartView extends PieRadarChartViewBase {
     public static native boolean resolveInstanceMethod(SEL sel);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationBeginsFromCurrentState:")
     public static native void setAnimationBeginsFromCurrentState(boolean fromCurrentState);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationCurve:")
     public static native void setAnimationCurve(@NInt long curve);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDelay:")
     public static native void setAnimationDelay(double delay);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDelegate:")
-    public static native void setAnimationDelegate(@Mapped(ObjCObjectMapper.class) Object delegate);
+    public static native void setAnimationDelegate(@Mapped(ObjCObjectMapper.class) @Nullable Object delegate);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDidStopSelector:")
-    public static native void setAnimationDidStopSelector(SEL selector);
+    public static native void setAnimationDidStopSelector(@Nullable SEL selector);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationDuration:")
     public static native void setAnimationDuration_static(double duration);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationRepeatAutoreverses:")
     public static native void setAnimationRepeatAutoreverses(boolean repeatAutoreverses);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationRepeatCount:")
     public static native void setAnimationRepeatCount_static(float repeatCount);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationStartDate:")
-    public static native void setAnimationStartDate(NSDate startDate);
+    public static native void setAnimationStartDate(@NotNull NSDate startDate);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationTransition:forView:cache:")
-    public static native void setAnimationTransitionForViewCache(@NInt long transition, UIView view, boolean cache);
+    public static native void setAnimationTransitionForViewCache(@NInt long transition, @NotNull UIView view,
+            boolean cache);
 
     @Generated
+    @Deprecated
     @Selector("setAnimationWillStartSelector:")
-    public static native void setAnimationWillStartSelector(SEL selector);
+    public static native void setAnimationWillStartSelector(@Nullable SEL selector);
 
     @Generated
     @Selector("setAnimationsEnabled:")
@@ -588,14 +639,14 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("setCenterAttributedText:")
-    public native void setCenterAttributedText(NSAttributedString value);
+    public native void setCenterAttributedText(@Nullable NSAttributedString value);
 
     /**
      * the text that is displayed in the center of the pie-chart
      */
     @Generated
     @Selector("setCenterText:")
-    public native void setCenterText(String value);
+    public native void setCenterText(@Nullable String value);
 
     /**
      * Sets the offset the center text should have from it’s original position in dp. Default x = 0, y = 0
@@ -645,14 +696,14 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("setEntryLabelColor:")
-    public native void setEntryLabelColor(UIColor value);
+    public native void setEntryLabelColor(@Nullable UIColor value);
 
     /**
      * The font the entry labels are drawn with.
      */
     @Generated
     @Selector("setEntryLabelFont:")
-    public native void setEntryLabelFont(UIFont value);
+    public native void setEntryLabelFont(@Nullable UIFont value);
 
     /**
      * The color for the hole that is drawn in the center of the PieChart (if enabled).
@@ -661,7 +712,7 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("setHoleColor:")
-    public native void setHoleColor(UIColor value);
+    public native void setHoleColor(@Nullable UIColor value);
 
     /**
      * the radius of the hole in the center of the piechart in percent of the maximum radius (max = the radius of the whole chart)
@@ -686,7 +737,7 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("setTransparentCircleColor:")
-    public native void setTransparentCircleColor(UIColor value);
+    public native void setTransparentCircleColor(@Nullable UIColor value);
 
     /**
      * the radius of the transparent circle that is drawn next to the hole in the piechart in percent of the maximum radius (max = the radius of the whole chart)
@@ -714,20 +765,20 @@ public class PieChartView extends PieRadarChartViewBase {
     @Generated
     @Selector("transitionFromView:toView:duration:options:completion:")
     public static native void transitionFromViewToViewDurationOptionsCompletion(
-            UIView fromView,
-            UIView toView,
+            @NotNull UIView fromView,
+            @NotNull UIView toView,
             double duration,
             @NUInt long options,
-            @ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") UIView.Block_transitionFromViewToViewDurationOptionsCompletion completion);
+            @ObjCBlock(name = "call_transitionFromViewToViewDurationOptionsCompletion") @Nullable UIView.Block_transitionFromViewToViewDurationOptionsCompletion completion);
 
     @Generated
     @Selector("transitionWithView:duration:options:animations:completion:")
     public static native void transitionWithViewDurationOptionsAnimationsCompletion(
-            UIView view,
+            @NotNull UIView view,
             double duration,
             @NUInt long options,
-            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
-            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
+            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_3") @Nullable UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_3 animations,
+            @ObjCBlock(name = "call_transitionWithViewDurationOptionsAnimationsCompletion_4") @Nullable UIView.Block_transitionWithViewDurationOptionsAnimationsCompletion_4 completion);
 
     /**
      * The color that the transparent-circle should have.
@@ -735,6 +786,7 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("transparentCircleColor")
+    @Nullable
     public native UIColor transparentCircleColor();
 
     /**
@@ -751,6 +803,11 @@ public class PieChartView extends PieRadarChartViewBase {
     @Generated
     @Selector("usePercentValuesEnabled")
     public native boolean usePercentValuesEnabled();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("userInterfaceLayoutDirectionForSemanticContentAttribute:")
@@ -773,5 +830,6 @@ public class PieChartView extends PieRadarChartViewBase {
      */
     @Generated
     @Selector("xAxis")
+    @NotNull
     public native ChartXAxis xAxis();
 }

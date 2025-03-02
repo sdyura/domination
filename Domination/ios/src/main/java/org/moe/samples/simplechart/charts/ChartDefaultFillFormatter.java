@@ -5,6 +5,8 @@ import apple.NSObject;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -60,36 +62,41 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("block")
     @ObjCBlock(name = "call_block_ret")
+    @Nullable
     public native Block_block_ret block();
 
     @Runtime(ObjCRuntime.class)
     @Generated
     public interface Block_block_ret {
         @Generated
-        double call_block_ret(@Mapped(ObjCObjectMapper.class) Object arg0, @Mapped(ObjCObjectMapper.class) Object arg1);
+        double call_block_ret(@Mapped(ObjCObjectMapper.class) @NotNull Object arg0,
+                @Mapped(ObjCObjectMapper.class) @NotNull Object arg1);
     }
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -103,8 +110,8 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
     @Generated
     @Selector("getFillLinePositionWithDataSet:dataProvider:")
     public native double getFillLinePositionWithDataSetDataProvider(
-            @Mapped(ObjCObjectMapper.class) ILineChartDataSet dataSet,
-            @Mapped(ObjCObjectMapper.class) LineChartDataProvider dataProvider);
+            @Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet dataSet,
+            @Mapped(ObjCObjectMapper.class) @NotNull LineChartDataProvider dataProvider);
 
     @Generated
     @Selector("hash")
@@ -118,14 +125,14 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
     @Generated
     @Selector("initWithBlock:")
     public native ChartDefaultFillFormatter initWithBlock(
-            @ObjCBlock(name = "call_initWithBlock") Block_initWithBlock block);
+            @ObjCBlock(name = "call_initWithBlock") @NotNull Block_initWithBlock block);
 
     @Runtime(ObjCRuntime.class)
     @Generated
     public interface Block_initWithBlock {
         @Generated
-        double call_initWithBlock(@Mapped(ObjCObjectMapper.class) Object arg0,
-                @Mapped(ObjCObjectMapper.class) Object arg1);
+        double call_initWithBlock(@Mapped(ObjCObjectMapper.class) @NotNull Object arg0,
+                @Mapped(ObjCObjectMapper.class) @NotNull Object arg1);
     }
 
     @Generated
@@ -147,7 +154,8 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -164,13 +172,14 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
 
     @Generated
     @Selector("setBlock:")
-    public native void setBlock(@ObjCBlock(name = "call_setBlock") Block_setBlock value);
+    public native void setBlock(@ObjCBlock(name = "call_setBlock") @Nullable Block_setBlock value);
 
     @Runtime(ObjCRuntime.class)
     @Generated
     public interface Block_setBlock {
         @Generated
-        double call_setBlock(@Mapped(ObjCObjectMapper.class) Object arg0, @Mapped(ObjCObjectMapper.class) Object arg1);
+        double call_setBlock(@Mapped(ObjCObjectMapper.class) @NotNull Object arg0,
+                @Mapped(ObjCObjectMapper.class) @NotNull Object arg1);
     }
 
     @Generated
@@ -182,18 +191,26 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
     public static native Class superclass_static();
 
     @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
+    @Generated
     @Selector("version")
     @NInt
     public static native long version_static();
 
     @Generated
     @Selector("withBlock:")
-    public static native ChartDefaultFillFormatter withBlock(@ObjCBlock(name = "call_withBlock") Block_withBlock block);
+    @Nullable
+    public static native ChartDefaultFillFormatter withBlock(
+            @ObjCBlock(name = "call_withBlock") @NotNull Block_withBlock block);
 
     @Runtime(ObjCRuntime.class)
     @Generated
     public interface Block_withBlock {
         @Generated
-        double call_withBlock(@Mapped(ObjCObjectMapper.class) Object arg0, @Mapped(ObjCObjectMapper.class) Object arg1);
+        double call_withBlock(@Mapped(ObjCObjectMapper.class) @NotNull Object arg0,
+                @Mapped(ObjCObjectMapper.class) @NotNull Object arg1);
     }
 }

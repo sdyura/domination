@@ -1,6 +1,8 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -30,5 +32,6 @@ public interface IChartAxisValueFormatter {
      */
     @Generated
     @Selector("stringForValue:axis:")
-    String stringForValueAxis(double value, ChartAxisBase axis);
+    @NotNull
+    String stringForValueAxis(double value, @Nullable ChartAxisBase axis);
 }

@@ -1,7 +1,8 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.ByValue;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
@@ -53,6 +54,7 @@ public interface ChartDataProvider {
 
     @Generated
     @Selector("data")
+    @Nullable
     ChartData data();
 
     @Generated

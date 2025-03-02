@@ -8,6 +8,8 @@ import apple.foundation.NSNumber;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
 import apple.uikit.UIFont;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -62,24 +64,27 @@ public class ChartLimitLine extends ChartComponentBase {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -109,7 +114,7 @@ public class ChartLimitLine extends ChartComponentBase {
 
     @Generated
     @Selector("initWithLimit:label:")
-    public native ChartLimitLine initWithLimitLabel(double limit, String label);
+    public native ChartLimitLine initWithLimitLabel(double limit, @NotNull String label);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -130,10 +135,12 @@ public class ChartLimitLine extends ChartComponentBase {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Selector("label")
+    @NotNull
     public native String label();
 
     @Generated
@@ -149,10 +156,12 @@ public class ChartLimitLine extends ChartComponentBase {
 
     @Generated
     @Selector("lineColor")
+    @NotNull
     public native UIColor lineColor();
 
     @Generated
     @Selector("lineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> lineDashLengths();
 
     @Generated
@@ -185,7 +194,7 @@ public class ChartLimitLine extends ChartComponentBase {
 
     @Generated
     @Selector("setLabel:")
-    public native void setLabel(String value);
+    public native void setLabel(@NotNull String value);
 
     @Generated
     @Selector("setLabelPosition:")
@@ -200,11 +209,11 @@ public class ChartLimitLine extends ChartComponentBase {
 
     @Generated
     @Selector("setLineColor:")
-    public native void setLineColor(UIColor value);
+    public native void setLineColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setLineDashLengths:")
-    public native void setLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     @Generated
     @Selector("setLineDashPhase:")
@@ -219,11 +228,11 @@ public class ChartLimitLine extends ChartComponentBase {
 
     @Generated
     @Selector("setValueFont:")
-    public native void setValueFont(UIFont value);
+    public native void setValueFont(@NotNull UIFont value);
 
     @Generated
     @Selector("setValueTextColor:")
-    public native void setValueTextColor(UIColor value);
+    public native void setValueTextColor(@NotNull UIColor value);
 
     @Generated
     @Selector("setVersion:")
@@ -234,11 +243,18 @@ public class ChartLimitLine extends ChartComponentBase {
     public static native Class superclass_static();
 
     @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
+
+    @Generated
     @Selector("valueFont")
+    @NotNull
     public native UIFont valueFont();
 
     @Generated
     @Selector("valueTextColor")
+    @NotNull
     public native UIColor valueTextColor();
 
     @Generated

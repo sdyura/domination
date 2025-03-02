@@ -2,13 +2,15 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
-import apple.coregraphics.struct.CGSize;
+import apple.corefoundation.struct.CGPoint;
+import apple.corefoundation.struct.CGSize;
 import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIImage;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -59,28 +61,32 @@ public class ChartMarkerImage extends NSObject implements IChartMarker {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("chartView")
+    @Nullable
     public native ChartViewBase chartView();
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -93,7 +99,7 @@ public class ChartMarkerImage extends NSObject implements IChartMarker {
 
     @Generated
     @Selector("drawWithContext:point:")
-    public native void drawWithContextPoint(CGContextRef context, @ByValue CGPoint point);
+    public native void drawWithContextPoint(@NotNull CGContextRef context, @ByValue CGPoint point);
 
     @Generated
     @Selector("hash")
@@ -105,6 +111,7 @@ public class ChartMarkerImage extends NSObject implements IChartMarker {
      */
     @Generated
     @Selector("image")
+    @Nullable
     public native UIImage image();
 
     @Generated
@@ -130,7 +137,8 @@ public class ChartMarkerImage extends NSObject implements IChartMarker {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -149,7 +157,7 @@ public class ChartMarkerImage extends NSObject implements IChartMarker {
 
     @Generated
     @Selector("refreshContentWithEntry:highlight:")
-    public native void refreshContentWithEntryHighlight(ChartDataEntry entry, ChartHighlight highlight);
+    public native void refreshContentWithEntryHighlight(@NotNull ChartDataEntry entry, @NotNull ChartHighlight highlight);
 
     @Generated
     @Selector("resolveClassMethod:")
@@ -161,10 +169,10 @@ public class ChartMarkerImage extends NSObject implements IChartMarker {
 
     @Generated
     @Selector("setChartView:")
-    public native void setChartView_unsafe(ChartViewBase value);
+    public native void setChartView_unsafe(@Nullable ChartViewBase value);
 
     @Generated
-    public void setChartView(ChartViewBase value) {
+    public void setChartView(@Nullable ChartViewBase value) {
         Object __old = chartView();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -180,7 +188,7 @@ public class ChartMarkerImage extends NSObject implements IChartMarker {
      */
     @Generated
     @Selector("setImage:")
-    public native void setImage(UIImage value);
+    public native void setImage(@Nullable UIImage value);
 
     @Generated
     @Selector("setOffset:")
@@ -208,6 +216,11 @@ public class ChartMarkerImage extends NSObject implements IChartMarker {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

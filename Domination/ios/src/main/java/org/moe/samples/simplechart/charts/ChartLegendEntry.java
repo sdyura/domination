@@ -7,6 +7,8 @@ import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumber;
 import apple.foundation.NSSet;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -55,24 +57,27 @@ public class ChartLegendEntry extends NSObject {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -98,6 +103,7 @@ public class ChartLegendEntry extends NSObject {
      */
     @Generated
     @Selector("formColor")
+    @Nullable
     public native UIColor formColor();
 
     /**
@@ -109,6 +115,7 @@ public class ChartLegendEntry extends NSObject {
      */
     @Generated
     @Selector("formLineDashLengths")
+    @Nullable
     public native NSArray<? extends NSNumber> formLineDashLengths();
 
     /**
@@ -164,8 +171,8 @@ public class ChartLegendEntry extends NSObject {
     @Generated
     @Selector("initWithLabel:form:formSize:formLineWidth:formLineDashPhase:formLineDashLengths:formColor:")
     public native ChartLegendEntry initWithLabelFormFormSizeFormLineWidthFormLineDashPhaseFormLineDashLengthsFormColor(
-            String label, long form, double formSize, double formLineWidth, double formLineDashPhase,
-            NSArray<? extends NSNumber> formLineDashLengths, UIColor formColor);
+            @Nullable String label, long form, double formSize, double formLineWidth, double formLineDashPhase,
+            @Nullable NSArray<? extends NSNumber> formLineDashLengths, @Nullable UIColor formColor);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -186,7 +193,8 @@ public class ChartLegendEntry extends NSObject {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     /**
      * The legend entry text.
@@ -194,6 +202,7 @@ public class ChartLegendEntry extends NSObject {
      */
     @Generated
     @Selector("label")
+    @Nullable
     public native String label();
 
     @Generated
@@ -224,7 +233,7 @@ public class ChartLegendEntry extends NSObject {
      */
     @Generated
     @Selector("setFormColor:")
-    public native void setFormColor(UIColor value);
+    public native void setFormColor(@Nullable UIColor value);
 
     /**
      * Line dash configuration for shapes that consist of lines.
@@ -235,7 +244,7 @@ public class ChartLegendEntry extends NSObject {
      */
     @Generated
     @Selector("setFormLineDashLengths:")
-    public native void setFormLineDashLengths(NSArray<? extends NSNumber> value);
+    public native void setFormLineDashLengths(@Nullable NSArray<? extends NSNumber> value);
 
     /**
      * Line dash configuration for shapes that consist of lines.
@@ -268,7 +277,7 @@ public class ChartLegendEntry extends NSObject {
      */
     @Generated
     @Selector("setLabel:")
-    public native void setLabel(String value);
+    public native void setLabel(@Nullable String value);
 
     @Generated
     @Selector("setVersion:")
@@ -277,6 +286,11 @@ public class ChartLegendEntry extends NSObject {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

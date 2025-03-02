@@ -6,6 +6,8 @@ import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSNumberFormatter;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -56,36 +58,41 @@ public class ChartDefaultAxisValueFormatter extends NSObject implements IChartAx
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("block")
     @ObjCBlock(name = "call_block_ret")
+    @Nullable
     public native Block_block_ret block();
 
     @Runtime(ObjCRuntime.class)
     @Generated
     public interface Block_block_ret {
         @Generated
-        String call_block_ret(double arg0, ChartAxisBase arg1);
+        @NotNull
+        String call_block_ret(double arg0, @Nullable ChartAxisBase arg1);
     }
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -98,6 +105,7 @@ public class ChartDefaultAxisValueFormatter extends NSObject implements IChartAx
 
     @Generated
     @Selector("formatter")
+    @Nullable
     public native NSNumberFormatter formatter();
 
     @Generated
@@ -116,13 +124,14 @@ public class ChartDefaultAxisValueFormatter extends NSObject implements IChartAx
     @Generated
     @Selector("initWithBlock:")
     public native ChartDefaultAxisValueFormatter initWithBlock(
-            @ObjCBlock(name = "call_initWithBlock") Block_initWithBlock block);
+            @ObjCBlock(name = "call_initWithBlock") @NotNull Block_initWithBlock block);
 
     @Runtime(ObjCRuntime.class)
     @Generated
     public interface Block_initWithBlock {
         @Generated
-        String call_initWithBlock(double arg0, ChartAxisBase arg1);
+        @NotNull
+        String call_initWithBlock(double arg0, @Nullable ChartAxisBase arg1);
     }
 
     @Generated
@@ -131,7 +140,7 @@ public class ChartDefaultAxisValueFormatter extends NSObject implements IChartAx
 
     @Generated
     @Selector("initWithFormatter:")
-    public native ChartDefaultAxisValueFormatter initWithFormatter(NSNumberFormatter formatter);
+    public native ChartDefaultAxisValueFormatter initWithFormatter(@NotNull NSNumberFormatter formatter);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -152,7 +161,8 @@ public class ChartDefaultAxisValueFormatter extends NSObject implements IChartAx
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -169,18 +179,19 @@ public class ChartDefaultAxisValueFormatter extends NSObject implements IChartAx
 
     @Generated
     @Selector("setBlock:")
-    public native void setBlock(@ObjCBlock(name = "call_setBlock") Block_setBlock value);
+    public native void setBlock(@ObjCBlock(name = "call_setBlock") @Nullable Block_setBlock value);
 
     @Runtime(ObjCRuntime.class)
     @Generated
     public interface Block_setBlock {
         @Generated
-        String call_setBlock(double arg0, ChartAxisBase arg1);
+        @NotNull
+        String call_setBlock(double arg0, @Nullable ChartAxisBase arg1);
     }
 
     @Generated
     @Selector("setFormatter:")
-    public native void setFormatter(NSNumberFormatter value);
+    public native void setFormatter(@Nullable NSNumberFormatter value);
 
     @Generated
     @Selector("setHasAutoDecimals:")
@@ -192,11 +203,17 @@ public class ChartDefaultAxisValueFormatter extends NSObject implements IChartAx
 
     @Generated
     @Selector("stringForValue:axis:")
-    public native String stringForValueAxis(double value, ChartAxisBase axis);
+    @NotNull
+    public native String stringForValueAxis(double value, @Nullable ChartAxisBase axis);
 
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")
@@ -205,13 +222,15 @@ public class ChartDefaultAxisValueFormatter extends NSObject implements IChartAx
 
     @Generated
     @Selector("withBlock:")
+    @Nullable
     public static native ChartDefaultAxisValueFormatter withBlock(
-            @ObjCBlock(name = "call_withBlock") Block_withBlock block);
+            @ObjCBlock(name = "call_withBlock") @NotNull Block_withBlock block);
 
     @Runtime(ObjCRuntime.class)
     @Generated
     public interface Block_withBlock {
         @Generated
-        String call_withBlock(double arg0, ChartAxisBase arg1);
+        @NotNull
+        String call_withBlock(double arg0, @Nullable ChartAxisBase arg1);
     }
 }

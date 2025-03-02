@@ -2,6 +2,7 @@ package org.moe.samples.simplechart.charts.protocol;
 
 
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -25,6 +26,7 @@ public interface IRadarChartDataSet extends ILineRadarChartDataSet {
 
     @Generated
     @Selector("highlightCircleFillColor")
+    @Nullable
     UIColor highlightCircleFillColor();
 
     @Generated
@@ -45,6 +47,7 @@ public interface IRadarChartDataSet extends ILineRadarChartDataSet {
      */
     @Generated
     @Selector("highlightCircleStrokeColor")
+    @Nullable
     UIColor highlightCircleStrokeColor();
 
     @Generated
@@ -64,7 +67,7 @@ public interface IRadarChartDataSet extends ILineRadarChartDataSet {
 
     @Generated
     @Selector("setHighlightCircleFillColor:")
-    void setHighlightCircleFillColor(UIColor value);
+    void setHighlightCircleFillColor(@Nullable UIColor value);
 
     @Generated
     @Selector("setHighlightCircleInnerRadius:")
@@ -84,7 +87,7 @@ public interface IRadarChartDataSet extends ILineRadarChartDataSet {
      */
     @Generated
     @Selector("setHighlightCircleStrokeColor:")
-    void setHighlightCircleStrokeColor(UIColor value);
+    void setHighlightCircleStrokeColor(@Nullable UIColor value);
 
     @Generated
     @Selector("setHighlightCircleStrokeWidth:")

@@ -3,6 +3,7 @@ package org.moe.samples.simplechart.charts.protocol;
 
 import apple.foundation.NSArray;
 import apple.uikit.UIColor;
+import org.jetbrains.annotations.NotNull;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -22,6 +23,7 @@ public interface IBarChartDataSet extends IBarLineScatterCandleBubbleChartDataSe
      */
     @Generated
     @Selector("barBorderColor")
+    @NotNull
     UIColor barBorderColor();
 
     /**
@@ -36,6 +38,7 @@ public interface IBarChartDataSet extends IBarLineScatterCandleBubbleChartDataSe
      */
     @Generated
     @Selector("barShadowColor")
+    @NotNull
     UIColor barShadowColor();
 
     /**
@@ -57,7 +60,7 @@ public interface IBarChartDataSet extends IBarLineScatterCandleBubbleChartDataSe
      */
     @Generated
     @Selector("setBarBorderColor:")
-    void setBarBorderColor(UIColor value);
+    void setBarBorderColor(@NotNull UIColor value);
 
     /**
      * the width used for drawing borders around the bars. If borderWidth == 0, no border will be drawn.
@@ -71,7 +74,7 @@ public interface IBarChartDataSet extends IBarLineScatterCandleBubbleChartDataSe
      */
     @Generated
     @Selector("setBarShadowColor:")
-    void setBarShadowColor(UIColor value);
+    void setBarShadowColor(@NotNull UIColor value);
 
     /**
      * the alpha value (transparency) that is used for drawing the highlight indicator bar. min = 0.0 (fully transparent), max = 1.0 (fully opaque)
@@ -85,13 +88,14 @@ public interface IBarChartDataSet extends IBarLineScatterCandleBubbleChartDataSe
      */
     @Generated
     @Selector("setStackLabels:")
-    void setStackLabels(NSArray<String> value);
+    void setStackLabels(@NotNull NSArray<String> value);
 
     /**
      * array of labels used to describe the different values of the stacked bars
      */
     @Generated
     @Selector("stackLabels")
+    @NotNull
     NSArray<String> stackLabels();
 
     /**

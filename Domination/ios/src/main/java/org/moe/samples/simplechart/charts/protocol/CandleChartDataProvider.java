@@ -1,6 +1,7 @@
 package org.moe.samples.simplechart.charts.protocol;
 
 
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.general.ann.Generated;
 import org.moe.natj.general.ann.Library;
 import org.moe.natj.general.ann.Runtime;
@@ -18,5 +19,6 @@ import org.moe.samples.simplechart.charts.CandleChartData;
 public interface CandleChartDataProvider extends BarLineScatterCandleBubbleChartDataProvider {
     @Generated
     @Selector("candleData")
+    @Nullable
     CandleChartData candleData();
 }

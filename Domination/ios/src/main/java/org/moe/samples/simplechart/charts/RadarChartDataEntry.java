@@ -6,6 +6,8 @@ import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
 import apple.uikit.UIImage;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -57,31 +59,35 @@ public class RadarChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Owned
     @Selector("copyWithZone:")
     @MappedReturn(ObjCObjectMapper.class)
-    public native Object copyWithZone(VoidPtr zone);
+    @NotNull
+    public native Object copyWithZone(@Nullable VoidPtr zone);
 
     @Generated
     @Selector("debugDescription")
@@ -114,7 +120,8 @@ public class RadarChartDataEntry extends ChartDataEntry {
      */
     @Generated
     @Selector("initWithValue:data:")
-    public native RadarChartDataEntry initWithValueData(double value, @Mapped(ObjCObjectMapper.class) Object data);
+    public native RadarChartDataEntry initWithValueData(double value,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithX:y:")
@@ -122,16 +129,17 @@ public class RadarChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("initWithX:y:data:")
-    public native RadarChartDataEntry initWithXYData(double x, double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native RadarChartDataEntry initWithXYData(double x, double y,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithX:y:icon:")
-    public native RadarChartDataEntry initWithXYIcon(double x, double y, UIImage icon);
+    public native RadarChartDataEntry initWithXYIcon(double x, double y, @Nullable UIImage icon);
 
     @Generated
     @Selector("initWithX:y:icon:data:")
-    public native RadarChartDataEntry initWithXYIconData(double x, double y, UIImage icon,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native RadarChartDataEntry initWithXYIconData(double x, double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithY:")
@@ -139,16 +147,16 @@ public class RadarChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("initWithY:data:")
-    public native RadarChartDataEntry initWithYData(double y, @Mapped(ObjCObjectMapper.class) Object data);
+    public native RadarChartDataEntry initWithYData(double y, @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("initWithY:icon:")
-    public native RadarChartDataEntry initWithYIcon(double y, UIImage icon);
+    public native RadarChartDataEntry initWithYIcon(double y, @Nullable UIImage icon);
 
     @Generated
     @Selector("initWithY:icon:data:")
-    public native RadarChartDataEntry initWithYIconData(double y, UIImage icon,
-            @Mapped(ObjCObjectMapper.class) Object data);
+    public native RadarChartDataEntry initWithYIconData(double y, @Nullable UIImage icon,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object data);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -169,7 +177,8 @@ public class RadarChartDataEntry extends ChartDataEntry {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -195,6 +204,11 @@ public class RadarChartDataEntry extends ChartDataEntry {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("value")

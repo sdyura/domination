@@ -2,12 +2,14 @@ package org.moe.samples.simplechart.charts;
 
 
 import apple.NSObject;
-import apple.coregraphics.struct.CGPoint;
+import apple.corefoundation.struct.CGPoint;
 import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSDictionary;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -59,28 +61,32 @@ public class XAxisRendererRadarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("chart")
+    @Nullable
     public native RadarChartView chart();
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
@@ -93,9 +99,9 @@ public class XAxisRendererRadarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("drawLabelWithContext:formattedLabel:x:y:attributes:anchor:angleRadians:")
-    public native void drawLabelWithContextFormattedLabelXYAttributesAnchorAngleRadians(CGContextRef context,
-            String formattedLabel, double x, double y, NSDictionary<String, ?> attributes, @ByValue CGPoint anchor,
-            double angleRadians);
+    public native void drawLabelWithContextFormattedLabelXYAttributesAnchorAngleRadians(@NotNull CGContextRef context,
+            @NotNull String formattedLabel, double x, double y, @NotNull NSDictionary<String, ?> attributes,
+            @ByValue CGPoint anchor, double angleRadians);
 
     @Generated
     @Selector("hash")
@@ -108,22 +114,24 @@ public class XAxisRendererRadarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native XAxisRendererRadarChart initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native XAxisRendererRadarChart initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:transformer:axis:")
-    public native XAxisRendererRadarChart initWithViewPortHandlerTransformerAxis(ChartViewPortHandler viewPortHandler,
-            ChartTransformer transformer, ChartAxisBase axis);
+    public native XAxisRendererRadarChart initWithViewPortHandlerTransformerAxis(
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartTransformer transformer,
+            @Nullable ChartAxisBase axis);
 
     @Generated
     @Selector("initWithViewPortHandler:xAxis:chart:")
-    public native XAxisRendererRadarChart initWithViewPortHandlerXAxisChart(ChartViewPortHandler viewPortHandler,
-            ChartXAxis xAxis, RadarChartView chart);
+    public native XAxisRendererRadarChart initWithViewPortHandlerXAxisChart(
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartXAxis xAxis, @NotNull RadarChartView chart);
 
     @Generated
     @Selector("initWithViewPortHandler:xAxis:transformer:")
-    public native XAxisRendererRadarChart initWithViewPortHandlerXAxisTransformer(ChartViewPortHandler viewPortHandler,
-            ChartXAxis xAxis, ChartTransformer transformer);
+    public native XAxisRendererRadarChart initWithViewPortHandlerXAxisTransformer(
+            @NotNull ChartViewPortHandler viewPortHandler, @Nullable ChartXAxis xAxis,
+            @Nullable ChartTransformer transformer);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -144,7 +152,8 @@ public class XAxisRendererRadarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -153,11 +162,11 @@ public class XAxisRendererRadarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("renderAxisLabelsWithContext:")
-    public native void renderAxisLabelsWithContext(CGContextRef context);
+    public native void renderAxisLabelsWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("renderLimitLinesWithContext:")
-    public native void renderLimitLinesWithContext(CGContextRef context);
+    public native void renderLimitLinesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("resolveClassMethod:")
@@ -169,10 +178,10 @@ public class XAxisRendererRadarChart extends ChartXAxisRenderer {
 
     @Generated
     @Selector("setChart:")
-    public native void setChart_unsafe(RadarChartView value);
+    public native void setChart_unsafe(@Nullable RadarChartView value);
 
     @Generated
-    public void setChart(RadarChartView value) {
+    public void setChart(@Nullable RadarChartView value) {
         Object __old = chart();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -190,6 +199,11 @@ public class XAxisRendererRadarChart extends ChartXAxisRenderer {
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")

@@ -6,6 +6,8 @@ import apple.coregraphics.opaque.CGContextRef;
 import apple.foundation.NSArray;
 import apple.foundation.NSMethodSignature;
 import apple.foundation.NSSet;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.moe.natj.c.ann.FunctionPtr;
 import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
@@ -59,29 +61,33 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleChartRenderer
 
     @Generated
     @Selector("automaticallyNotifiesObserversForKey:")
-    public static native boolean automaticallyNotifiesObserversForKey(String key);
+    public static native boolean automaticallyNotifiesObserversForKey(@NotNull String key);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:")
-    public static native void cancelPreviousPerformRequestsWithTarget(@Mapped(ObjCObjectMapper.class) Object aTarget);
+    public static native void cancelPreviousPerformRequestsWithTarget(
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget);
 
     @Generated
     @Selector("cancelPreviousPerformRequestsWithTarget:selector:object:")
     public static native void cancelPreviousPerformRequestsWithTargetSelectorObject(
-            @Mapped(ObjCObjectMapper.class) Object aTarget, SEL aSelector,
-            @Mapped(ObjCObjectMapper.class) Object anArgument);
+            @Mapped(ObjCObjectMapper.class) @NotNull Object aTarget, @NotNull SEL aSelector,
+            @Mapped(ObjCObjectMapper.class) @Nullable Object anArgument);
 
     @Generated
     @Selector("classFallbacksForKeyedArchiver")
+    @NotNull
     public static native NSArray<String> classFallbacksForKeyedArchiver();
 
     @Generated
     @Selector("classForKeyedUnarchiver")
+    @NotNull
     public static native Class classForKeyedUnarchiver();
 
     @Generated
     @Selector("dataProvider")
     @MappedReturn(ObjCObjectMapper.class)
+    @Nullable
     public native BubbleChartDataProvider dataProvider();
 
     @Generated
@@ -94,24 +100,25 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleChartRenderer
 
     @Generated
     @Selector("drawDataSetWithContext:dataSet:dataSetIndex:")
-    public native void drawDataSetWithContextDataSetDataSetIndex(CGContextRef context,
-            @Mapped(ObjCObjectMapper.class) IBubbleChartDataSet dataSet, long dataSetIndex);
+    public native void drawDataSetWithContextDataSetDataSetIndex(@NotNull CGContextRef context,
+            @Mapped(ObjCObjectMapper.class) @NotNull IBubbleChartDataSet dataSet, long dataSetIndex);
 
     @Generated
     @Selector("drawDataWithContext:")
-    public native void drawDataWithContext(CGContextRef context);
+    public native void drawDataWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawExtrasWithContext:")
-    public native void drawExtrasWithContext(CGContextRef context);
+    public native void drawExtrasWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("drawHighlightedWithContext:indices:")
-    public native void drawHighlightedWithContextIndices(CGContextRef context, NSArray<? extends ChartHighlight> indices);
+    public native void drawHighlightedWithContextIndices(@NotNull CGContextRef context,
+            @NotNull NSArray<? extends ChartHighlight> indices);
 
     @Generated
     @Selector("drawValuesWithContext:")
-    public native void drawValuesWithContext(CGContextRef context);
+    public native void drawValuesWithContext(@NotNull CGContextRef context);
 
     @Generated
     @Selector("hash")
@@ -128,18 +135,18 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleChartRenderer
 
     @Generated
     @Selector("initWithAnimator:viewPortHandler:")
-    public native BubbleChartRenderer initWithAnimatorViewPortHandler(ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+    public native BubbleChartRenderer initWithAnimatorViewPortHandler(@NotNull ChartAnimator animator,
+            @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithDataProvider:animator:viewPortHandler:")
     public native BubbleChartRenderer initWithDataProviderAnimatorViewPortHandler(
-            @Mapped(ObjCObjectMapper.class) BubbleChartDataProvider dataProvider, ChartAnimator animator,
-            ChartViewPortHandler viewPortHandler);
+            @Mapped(ObjCObjectMapper.class) @NotNull BubbleChartDataProvider dataProvider,
+            @NotNull ChartAnimator animator, @NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("initWithViewPortHandler:")
-    public native BubbleChartRenderer initWithViewPortHandler(ChartViewPortHandler viewPortHandler);
+    public native BubbleChartRenderer initWithViewPortHandler(@NotNull ChartViewPortHandler viewPortHandler);
 
     @Generated
     @Selector("instanceMethodForSelector:")
@@ -160,7 +167,8 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleChartRenderer
 
     @Generated
     @Selector("keyPathsForValuesAffectingValueForKey:")
-    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(String key);
+    @NotNull
+    public static native NSSet<String> keyPathsForValuesAffectingValueForKey(@NotNull String key);
 
     @Generated
     @Owned
@@ -177,10 +185,10 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleChartRenderer
 
     @Generated
     @Selector("setDataProvider:")
-    public native void setDataProvider_unsafe(@Mapped(ObjCObjectMapper.class) BubbleChartDataProvider value);
+    public native void setDataProvider_unsafe(@Mapped(ObjCObjectMapper.class) @Nullable BubbleChartDataProvider value);
 
     @Generated
-    public void setDataProvider(@Mapped(ObjCObjectMapper.class) BubbleChartDataProvider value) {
+    public void setDataProvider(@Mapped(ObjCObjectMapper.class) @Nullable BubbleChartDataProvider value) {
         Object __old = dataProvider();
         if (value != null) {
             org.moe.natj.objc.ObjCRuntime.associateObjCObject(this, value);
@@ -198,6 +206,11 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleChartRenderer
     @Generated
     @Selector("superclass")
     public static native Class superclass_static();
+
+    @Generated
+    @Deprecated
+    @Selector("useStoredAccessor")
+    public static native boolean useStoredAccessor();
 
     @Generated
     @Selector("version")
