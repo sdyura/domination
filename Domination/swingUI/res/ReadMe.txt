@@ -2,7 +2,8 @@
 
 Java 1.5 or higher must be installed to run @game.name@
 
-Miniumum Resolulation is 1024x768
+For GameGUI and SwingGUI the miniumum resolulation is 1024x768
+For any resolution smaller then this please use MiniGUI
 
 For information look in the manual or visit @game.website@
 
@@ -15,4 +16,4 @@ The full source to Risk is included in src.zip
 
 send questions and comments to: yura@yura.net
 
-Copyright (c) 2003-2024 yura.net
+Copyright (c) 2003-2025 yura.net

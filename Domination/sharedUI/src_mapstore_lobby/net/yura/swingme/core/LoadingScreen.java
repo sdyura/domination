@@ -32,7 +32,11 @@ public class LoadingScreen {
             instance.setLocationRelativeTo(null);
         }
 
-        instance.setVisible(true);
+        // this can get called multiple times as we may be opening something from multiple possible locations
+        // e.g. 'open file' or 'load from online, then open file'
+        if (!instance.isVisible()) {
+            instance.setVisible(true);
+        }
     }
 
     public static void hide() {
