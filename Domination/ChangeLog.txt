@@ -171,6 +171,7 @@ CURRENT VERSION:
 	Android 83 new Italian rules
 
 1.2.4 (25.10.2021) ### released for iOS on App Store for the first time ###
+		   ### installer requires java 1.8+ ###
 
 	Started iOS version
 	Troop Strength view also shows enemies troop strength in red
