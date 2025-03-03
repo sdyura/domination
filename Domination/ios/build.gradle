@@ -58,7 +58,9 @@ moe {
         mainScheme 'Domination'
         testScheme 'Domination-Test'
     }
-    // to run this do "./gradlew ios:moeNatJGen"
+
+    // to generate the obj-c headers run "./gradlew ios:moeMainDebugIphonesimulatorXcodeBuild"
+    // then to generate the java bindings run "./gradlew ios:moeNatJGen" (or click 'Generate Binding' in intellij .nbc editor)
     natjgen {
         config='pods.nbc'
     }
