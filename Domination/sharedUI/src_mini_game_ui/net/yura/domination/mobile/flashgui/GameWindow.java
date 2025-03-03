@@ -256,7 +256,8 @@ public class GameWindow extends Frame implements ActionListener {
                     int y = font.getHeight();
                     for (Player p : players) {
                         g.setColor(p.getColor());
-                        String text = (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") + " " + p.getName() + " - " + p.getCards().size();
+                        String emoji = p.isAlive() ? (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") : (p.getType() == Player.PLAYER_HUMAN ? "\ud83d\udc80" : "\ud83d\uddd1");
+                        String text = emoji + " " + p.getName() + " - " + p.getCards().size();
                         g.drawString(text, x, y);
                         if (p == current) {
                             int offset = x + font.getWidth(text) + x / 2;
