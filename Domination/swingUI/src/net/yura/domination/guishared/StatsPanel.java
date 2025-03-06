@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
@@ -177,6 +178,8 @@ public class StatsPanel extends JPanel {
 
 	double[] PointToDraw = p.getStatistics(a);
 	g.setColor(new Color( p.getColor() ) );
+        Image icon = RiskUIUtil.getIconForColor(p.getColor());
+        int iconSize = scale(15);
 
 	double oldPoint = Double.NaN;
 	double newPoint = 0;
@@ -215,6 +218,9 @@ public class StatsPanel extends JPanel {
                     g.setStroke(stroke);
                 }
                 g.drawLine(x1,y1,x2,y2);
+                if (!Double.isNaN(oldPoint) && icon != null) {
+                    GraphicsUtil.drawImageInRect(g, icon, x1 - iconSize/2, y1 - iconSize/2, iconSize, iconSize, this);
+                }
             }
 
             oldPoint = newPoint;

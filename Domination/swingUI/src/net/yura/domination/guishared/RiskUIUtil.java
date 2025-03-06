@@ -1591,15 +1591,10 @@ public class RiskUIUtil {
         public static Image getIconForColor(int color) {
             return colorBlind ? icons.get(color) : null;
         }
-        
+
         public static void setColorBlindMode(Preferences prefs) {
             if (prefs != null) {
-                setColorBlindMode(prefs.getBoolean(RiskSettings.COLOR_BLIND_KEY, false));
+                colorBlind = prefs.getBoolean(RiskSettings.COLOR_BLIND_KEY, false);
             }
-        }
-
-        public static void setColorBlindMode(boolean cb) {
-            colorBlind = cb;
-            // TODO call in other palce repaint();
         }
 }
