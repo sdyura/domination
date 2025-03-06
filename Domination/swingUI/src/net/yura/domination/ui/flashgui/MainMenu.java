@@ -18,6 +18,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -656,7 +657,9 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
                 Risk risk = new Risk();
 
                 // before we create any UI, we want to load up all settings
-                RiskSettings.loadSettingsFromPrefs(RiskSettings.getPreferences(MainMenu.class));
+                Preferences prefs = RiskSettings.getPreferences(MainMenu.class);
+                RiskSettings.loadSettingsFromPrefs(prefs);
+                RiskUIUtil.setColorBlindMode(prefs);
 
                 RiskUIUtil.initAudio(risk);
 

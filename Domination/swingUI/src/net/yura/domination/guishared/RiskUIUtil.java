@@ -1331,7 +1331,6 @@ public class RiskUIUtil {
         catch (Exception ex) {
             return false;
         }
-
     }
 
 
@@ -1525,10 +1524,10 @@ public class RiskUIUtil {
                 aiWaitPanel.add(aiwait);
                 aiWaitPanel.add(new JLabel("milliseconds"));
 
-                JCheckBox colorBlind = new JCheckBox(resB.getString("game.menu.colorblind"), preferences.getBoolean(RiskSettings.COLOR_BLIND_KEY, false));
+                JCheckBox colorBlindEnabled = new JCheckBox(resB.getString("game.menu.colorblind"), RiskUIUtil.colorBlind);
                 JCheckBox soundEnabled = new JCheckBox(resB.getString("game.menu.sound"), GameSound.INSTANCE.isSoundEnabled());
                 JCheckBox musicEnabled = new JCheckBox(resB.getString("game.menu.music"), GameSound.INSTANCE.isMusicEnabled());
-                
+
                 JCheckBox autoEndGo = new JCheckBox("Auto End Go", myrisk.getAutoEndGo());
                 JCheckBox autoDefend = new JCheckBox("Auto Defend", myrisk.getAutoDefend());
 
@@ -1537,11 +1536,10 @@ public class RiskUIUtil {
                     autoDefend.setEnabled(false);
                 }
 
-                int result = JOptionPane.showConfirmDialog(
-                    parentComponent,                             // the parent that the dialog blocks
+                int result = JOptionPane.showConfirmDialog(parentComponent,                             // the parent that the dialog blocks
                     new Component[] {                                    // the dialog message array
                             showDice,aiWaitPanel,
-                            colorBlind, soundEnabled, musicEnabled,
+                            colorBlindEnabled, soundEnabled, musicEnabled,
                             autoEndGo, autoDefend
                     },
                     "Options", // the title of the dialog window
@@ -1554,7 +1552,8 @@ public class RiskUIUtil {
                         AIManager.setWait(((Integer)aiwait.getValue()).intValue());
                         GameSound.INSTANCE.setSoundEnabled(soundEnabled.isSelected());
                         GameSound.INSTANCE.setMusicEnabled(musicEnabled.isSelected());
-                        preferences.putBoolean(RiskSettings.COLOR_BLIND_KEY, colorBlind.isSelected());
+                        RiskUIUtil.colorBlind = colorBlindEnabled.isSelected();
+                        preferences.putBoolean(RiskSettings.COLOR_BLIND_KEY, RiskUIUtil.colorBlind);
                         RiskSettings.saveSettingsToPrefs(preferences);
 
                         if (autoEndGo.isEnabled()) {
@@ -1572,5 +1571,35 @@ public class RiskUIUtil {
                             }
                         }
                 }
+        }
+    
+        private static boolean colorBlind;
+
+        static Map<Integer,Image> icons = new HashMap();
+        static {
+            icons.put(ColorUtil.RED, RiskUIUtil.getUIImage(PicturePanel.class, "/color_red.png"));
+            icons.put(ColorUtil.BLUE, RiskUIUtil.getUIImage(PicturePanel.class, "/color_blue.png"));
+            icons.put(ColorUtil.YELLOW, RiskUIUtil.getUIImage(PicturePanel.class, "/color_yellow.png"));
+            icons.put(ColorUtil.CYAN, RiskUIUtil.getUIImage(PicturePanel.class, "/color_cyan.png"));
+            icons.put(ColorUtil.GREEN, RiskUIUtil.getUIImage(PicturePanel.class, "/color_green.png"));
+            icons.put(ColorUtil.MAGENTA, RiskUIUtil.getUIImage(PicturePanel.class, "/color_magenta.png"));
+        }
+
+        /**
+         * @see net.yura.domination.android.StatsActivity#getIcon(Player)
+         */
+        public static Image getIconForColor(int color) {
+            return colorBlind ? icons.get(color) : null;
+        }
+        
+        public static void setColorBlindMode(Preferences prefs) {
+            if (prefs != null) {
+                setColorBlindMode(prefs.getBoolean(RiskSettings.COLOR_BLIND_KEY, false));
+            }
+        }
+
+        public static void setColorBlindMode(boolean cb) {
+            colorBlind = cb;
+            // TODO call in other palce repaint();
         }
 }

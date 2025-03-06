@@ -16,9 +16,11 @@ CURRENT VERSION:
 
 1.3.4
 
+	Accessibility GameGUI: Color Blind mode for the game
 	Accessibility GameGUI: right click options to increase and decrease font size
 	better fallbacks for audio not loading from url
 	fix for small screen Domination not loading when space in path
+	installer updated to 5.2.4 to fix issue with Ubuntu jdk21 https://sf.net/p/domination/bugs/50/
 
 1.3.3 (11.01.2025) (svn rev 2616)
 

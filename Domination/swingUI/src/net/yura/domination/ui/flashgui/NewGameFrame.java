@@ -122,24 +122,21 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 	 * at which position the "remove player" buttons in the focus cycle list begin
 	 */
 	private int nRemoveButtonPos = 8;
-
-        private PicturePanel pp;
         
 	/**
 	 * The NewGameFrame Constructor
 	 * @param r The Risk Parser used for playing the game
 	 * @param t States whether this game is local
 	 */
-	public NewGameFrame(Risk r, PicturePanel pp) {
+	public NewGameFrame(Risk r) {
 		resb = TranslationBundle.getBundle();
-		myrisk=r;
+		myrisk = r;
 		newgame = RiskUIUtil.getUIImage(this.getClass(),"newgame.jpg");
 		initGUI();
 		setIconImage(Toolkit.getDefaultToolkit().getImage( AboutDialog.class.getResource("icon.gif") ));
 		setResizable(false);
 		pack();
 		chooseCards.requestFocus();
-                this.pp = pp;
 	}
 
 	/**
@@ -711,8 +708,8 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 
 			g.setColor( new Color(color.getRed(), color.getGreen(), color.getBlue(), 125) );
 			GraphicsUtil.fillRect(g, 0, 0, 309, 30);
-                        
-                        Image img = pp.getIconForColor(color.getRGB());
+
+                        Image img = RiskUIUtil.getIconForColor(color.getRGB());
                         if (img != null) {
                             GraphicsUtil.drawImageInRect(g, img, 98, 5, 20, 20, this);
                         }
@@ -786,7 +783,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 
 			g.setColor( thecolor );
 			GraphicsUtil.fillRect(g, 400, 370, 100, 25);
-                        Image img = pp.getIconForColor(thecolor.getRGB());
+                        Image img = RiskUIUtil.getIconForColor(thecolor.getRGB());
                         if (img != null) {
                             GraphicsUtil.drawImageInRect(g, img, 450, 370, 25, 25, this);
                         }
@@ -810,7 +807,7 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 			for (int c=0; c< Colors.length ; c++) {
 				g.setColor( Colors[c].getColor() );
 				GraphicsUtil.fillRect(g, Colors[c].getX(), Colors[c].getY(), Colors[c].getWidth(), Colors[c].getHeight());
-                                Image img = pp.getIconForColor(Colors[c].getColor().getRGB());
+                                Image img = RiskUIUtil.getIconForColor(Colors[c].getColor().getRGB());
                                 if (img != null) {
                                     GraphicsUtil.drawImageInRect(g2, img, Colors[c].getX(), Colors[c].getY(), Colors[c].getWidth(), Colors[c].getHeight(), this);                                 
                                 }

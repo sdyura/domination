@@ -49,7 +49,6 @@ public class FlashRiskAdapter implements RiskListener {
 		myrisk.addRiskListener(this);
 
 		pp = new PicturePanel(myrisk);
-                pp.setColorBlindMode(RiskSettings.getPreferences(MainMenu.class));
 		gameFrame = new GameFrame(myrisk, pp);
 		battledialog = new BattleDialog(gameFrame, false, myrisk);
 		gameFrame.setBattleDialog(battledialog);
@@ -63,7 +62,7 @@ public class FlashRiskAdapter implements RiskListener {
 	FlashRiskAdapter(MainMenu m, Risk r) {
 		this(r);
 		menu = m;
-		newgameframe = new NewGameFrame(myrisk, pp);
+		newgameframe = new NewGameFrame(myrisk);
 	}
         
         void showMiniLobby(RootPaneContainer root, Frame window) {

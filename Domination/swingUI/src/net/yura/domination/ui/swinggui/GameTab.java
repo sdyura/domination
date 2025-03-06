@@ -566,7 +566,6 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
         private void openOptions() {
             Preferences prefs = SwingGUIPanel.getUIPreferences();
             RiskUIUtil.openOptions(this, swingGUIPanel.myrisk, swingGUIPanel.gameState > RiskGame.STATE_NEW_GAME, prefs);
-            swingGUIPanel.pp.setColorBlindMode(prefs);
             repaint();
         }
 
@@ -908,7 +907,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 				g.setColor( new Color( colors[c] ) );
 				g.fillRect(((width / colors.length) * c), 0, width / colors.length, height);
                                 
-                                Image img = swingGUIPanel.pp.getIconForColor(colors[c]);
+                                Image img = RiskUIUtil.getIconForColor(colors[c]);
                                 if (img != null) {
                                     GraphicsUtil.drawImageInRect(g, img, RiskUIUtil.unscale((width / colors.length) * c) + 2, 2, RiskUIUtil.unscale(width / colors.length) - 5, RiskUIUtil.unscale(height) - 5, this);
                                 }
@@ -1806,7 +1805,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                         label.setForeground( RiskUIUtil.getTextColorFor( c ) );
                         label.setText(c.toString());
 
-                        final Image img = swingGUIPanel.pp.getIconForColor(c.getRGB());
+                        final Image img = RiskUIUtil.getIconForColor(c.getRGB());
                         label.setIcon(img == null ? null : new Icon() {
                             @Override
                             public void paintIcon(Component c, Graphics g, int x, int y) {

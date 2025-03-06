@@ -296,7 +296,7 @@ public class GameFrame extends JFrame implements KeyListener {
 				Color col = new Color(cols[c]);
 				g.setColor(col); // new Color(col.getRed(),col.getGreen(),col.getBlue(), 100)
 
-                                Image colorImg = pp.getIconForColor(cols[c]);
+                                Image colorImg = RiskUIUtil.getIconForColor(cols[c]);
 
 				if (c==0) {
 					GraphicsUtil.fillArc(g, 8, colorY, colorH, colorH, 90, 180);
@@ -657,7 +657,6 @@ public class GameFrame extends JFrame implements KeyListener {
         public void openOptions() {
             Preferences prefs = RiskSettings.getPreferences(MainMenu.class);
             RiskUIUtil.openOptions(GameFrame.this, myrisk, gameState > RiskGame.STATE_NEW_GAME, prefs);
-            pp.setColorBlindMode(prefs);
             repaint();
         }
 

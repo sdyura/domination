@@ -328,36 +328,7 @@ public class PicturePanel extends JPanel implements MapPanel {
             return map[0].length;
         }
 
-        public void setColorBlindMode(Preferences prefs) {
-            if (prefs != null) {
-                setColorBlindMode(prefs.getBoolean(RiskSettings.COLOR_BLIND_KEY, false));
-            }
-        }
-
-        public void setColorBlindMode(boolean cb) {
-            colorBlind = cb;
-            repaint();
-        }
-
         public int BALL_SIZE=20;
-        private boolean colorBlind;
-
-        static Map<Integer,Image> icons = new HashMap();
-        static {
-            icons.put(ColorUtil.RED, RiskUIUtil.getUIImage(PicturePanel.class, "/color_red.png"));
-            icons.put(ColorUtil.BLUE, RiskUIUtil.getUIImage(PicturePanel.class, "/color_blue.png"));
-            icons.put(ColorUtil.YELLOW, RiskUIUtil.getUIImage(PicturePanel.class, "/color_yellow.png"));
-            icons.put(ColorUtil.CYAN, RiskUIUtil.getUIImage(PicturePanel.class, "/color_cyan.png"));
-            icons.put(ColorUtil.GREEN, RiskUIUtil.getUIImage(PicturePanel.class, "/color_green.png"));
-            icons.put(ColorUtil.MAGENTA, RiskUIUtil.getUIImage(PicturePanel.class, "/color_magenta.png"));
-        }
-
-        /**
-         * @see net.yura.domination.android.StatsActivity#getIcon(Player)
-         */
-        public Image getIconForColor(int color) {
-            return colorBlind ? icons.get(color) : null;
-        }
 
 	/**
 	 * Paints the army components
@@ -451,8 +422,8 @@ public class PicturePanel extends JPanel implements MapPanel {
 
         public void drawArmy(Graphics2D g2, int countryOwnerColor, int armies, int x, int y, int ballSize, Player capital) {
             int r = ballSize / 2;
-            
-            Image icon = getIconForColor(countryOwnerColor);
+
+            Image icon = RiskUIUtil.getIconForColor(countryOwnerColor);
             if (icon == null) {
                 g2.setColor(new Color(countryOwnerColor));
                 Ellipse2D ellipse = new Ellipse2D.Double();

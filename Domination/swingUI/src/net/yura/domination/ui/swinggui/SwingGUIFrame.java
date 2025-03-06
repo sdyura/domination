@@ -3,6 +3,7 @@
 package net.yura.domination.ui.swinggui;
 
 import java.awt.Toolkit;
+import java.util.prefs.Preferences;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import net.yura.domination.engine.Risk;
@@ -32,7 +33,9 @@ public class SwingGUIFrame {
                 final Risk r = new Risk();
 
                 // before we create any UI, we want to load up all settings
-                RiskSettings.loadSettingsFromPrefs(SwingGUIPanel.getUIPreferences());
+                Preferences prefs = SwingGUIPanel.getUIPreferences();
+                RiskSettings.loadSettingsFromPrefs(prefs);
+                RiskUIUtil.setColorBlindMode(prefs);
 
                 RiskUIUtil.initAudio(r);
 
