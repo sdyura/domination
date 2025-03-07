@@ -13,6 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -144,10 +145,18 @@ public class MoveDialog extends JDialog {
 
 		ActionListener al = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("cancel")) {
+                                String actionCommand = e.getActionCommand();
+
+                                // seem to get bug reports that indicate that this must sometimes be happening
+                                if (!MoveDialog.this.isVisible()) {
+                                    Logger.getLogger(MoveDialog.class.getName()).info("WARNING! actionPerformed but window not Visible! " + actionCommand + " " + e);
+                                    return;
+                                }
+
+				if ("cancel".equals(actionCommand)) {
 					exitForm();
 				}
-				else if (e.getActionCommand().equals("all")) {
+				else if ("all".equals(actionCommand)) {
 					if (tacmove) {
                                                 GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
 						gui.go("movearmies " +country1.getColor()+ " " +country2.getColor()+ " " + (csrc-1) );
@@ -158,7 +167,7 @@ public class MoveDialog extends JDialog {
 					}
 					//exitForm();
 				}
-				else if (e.getActionCommand().equals("move")) {
+				else if ("move".equals(actionCommand)) {
 					if (tacmove) {
                                                 GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
 						gui.go("movearmies " +country1.getColor()+ " " +country2.getColor()+ " " + move );
@@ -169,16 +178,16 @@ public class MoveDialog extends JDialog {
 					}
 					//exitForm();
 				}
-				else if (e.getActionCommand().equals("b1")) {
+				else if ("b1".equals(actionCommand)) {
 					slider.setValue( slider.getMinimum() );
 				}
-				else if (e.getActionCommand().equals("b2")) {
+				else if ("b2".equals(actionCommand)) {
 					slider.setValue( move-1 );
 				}
-				else if (e.getActionCommand().equals("b3")) {
+				else if ("b3".equals(actionCommand)) {
 					slider.setValue( move+1 );
 				}
-				else if (e.getActionCommand().equals("b4")) {
+				else if ("b4".equals(actionCommand)) {
 					slider.setValue( slider.getMaximum() );
 				}
 			}
