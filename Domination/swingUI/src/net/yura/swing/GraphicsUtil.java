@@ -1,5 +1,7 @@
 package net.yura.swing;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -10,11 +12,14 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.MediaTracker;
 import java.awt.Polygon;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
@@ -146,7 +151,7 @@ public class GraphicsUtil {
         BasicGraphicsUtils.drawString(g, text, ch, GraphicsUtil.scale(x) - metrics.stringWidth(text) / 2, GraphicsUtil.scale(y));
     }
 
-    public static void drawStringCenteredAt(Graphics g, String text, int centerX, int startY, int wrapWidth) {
+    public static void drawStringCenteredAt(Graphics g, String text, int centerX, int startY, int wrapWidth, Color outline) {
         AttributedString as = new AttributedString(text);
         as.addAttribute(TextAttribute.FONT, g.getFont());
 
@@ -164,9 +169,32 @@ public class GraphicsUtil {
         TextLayout tl;
         while (lbm.getPosition() < text.length()) {
             tl = lbm.nextLayout(width);
-            tl.draw((Graphics2D)g, (float)(x - tl.getBounds().getWidth() / 2), y += tl.getAscent());
+            float textX = (float)(x - tl.getBounds().getWidth() / 2);
+            float textY = y += tl.getAscent();
+            if (outline == null) {
+                tl.draw((Graphics2D)g, textX, textY);
+            }
+            else {
+                drawStringWithOutline((Graphics2D)g, tl, textX, textY, outline);
+            }
             y += tl.getDescent() + tl.getLeading();
         }
+    }
+
+    public static void drawStringWithOutline(Graphics2D g2, TextLayout tl, float x, float y, Color outlineColor) {
+        Color textColor = g2.getColor();
+        AffineTransform transform = new AffineTransform();
+        transform.setToTranslation(x, y);
+        Shape outline = tl.getOutline(transform);
+        Stroke oldStroke = g2.getStroke();
+
+        g2.setStroke(new BasicStroke(2.0f));
+        g2.setColor(outlineColor);
+        g2.draw(outline);
+
+        g2.setColor(textColor);
+        g2.setStroke(oldStroke);
+        g2.fill(outline);
     }
 
     private static double getDisplayDensity() {

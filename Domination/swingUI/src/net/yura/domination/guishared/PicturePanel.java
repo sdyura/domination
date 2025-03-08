@@ -27,10 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
@@ -423,6 +421,11 @@ public class PicturePanel extends JPanel implements MapPanel {
         public void drawArmy(Graphics2D g2, int countryOwnerColor, int armies, int x, int y, int ballSize, Player capital) {
             int r = ballSize / 2;
 
+            String noa = String.valueOf(armies);
+            Color textColor = new Color(ColorUtil.getTextColorFor(countryOwnerColor));
+            int textX = x - (g2.getFontMetrics().stringWidth(noa) / 2);
+            int textY = y + (g2.getFontMetrics().getAscent() * 2 / 5);
+
             Image icon = RiskUIUtil.getIconForColor(countryOwnerColor);
             if (icon == null) {
                 g2.setColor(new Color(countryOwnerColor));
@@ -430,19 +433,20 @@ public class PicturePanel extends JPanel implements MapPanel {
                 ellipse.setFrame( x-r , y-r , ballSize, ballSize);
                 g2.fill(ellipse);
                 //g.fillOval( t.getX()-r , t.getY()-r, (r*2), (r*2) );
+
+                g2.setColor(textColor);
+                g2.drawString(noa, textX, textY);
             }
             else {
                 int w = (int)(ballSize * 1.1);
                 int h = (int)(icon.getHeight(this) * (w / (double)icon.getWidth(this)));
                 g2.drawImage(icon, x-(w/2), y-(w/2), w, h, this);
+
+                g2.setColor(textColor);
+                Color outlineColor = Color.WHITE.equals(textColor) ? Color.BLACK : Color.WHITE;
+                GraphicsUtil.drawStringWithOutline(g2, new TextLayout(noa, g2.getFont(), g2.getFontRenderContext()), textX, textY, outlineColor);
             }
 
-            g2.setColor(new Color(ColorUtil.getTextColorFor(countryOwnerColor)));
-            String noa = String.valueOf( armies );
-            int w2 = g2.getFontMetrics().stringWidth(noa) / 2;
-            int h2 = g2.getFontMetrics().getAscent()*2/5 ;
-            g2.drawString( String.valueOf( noa ) , x-w2, y+h2 );
-            
             if (capital != null) {
                 int stroke = ballSize / 10;
                 Stroke old = g2.getStroke();

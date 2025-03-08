@@ -2,6 +2,7 @@
 
 package net.yura.domination.ui.flashgui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
@@ -116,7 +117,7 @@ public class MissionDialog extends JDialog implements MouseListener {
             g.setFont(font);
             g2.setColor( GameFrame.UI_COLOR );
 
-            GraphicsUtil.drawStringCenteredAt(g, text, RiskUIUtil.unscale(getWidth() / 2), 70, RiskUIUtil.unscale(getWidth()) - 50);
+            GraphicsUtil.drawStringCenteredAt(g, text, RiskUIUtil.unscale(getWidth() / 2), 70, RiskUIUtil.unscale(getWidth()) - 50, Color.WHITE);
 	}
     }
 

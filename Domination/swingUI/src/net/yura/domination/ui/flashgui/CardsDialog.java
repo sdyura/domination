@@ -340,7 +340,7 @@ public class CardsDialog extends JDialog {
 
                                 g2.setColor( GameFrame.UI_COLOR );
 
-                                GraphicsUtil.drawStringCenteredAt(g2, text, cardWidth / 2, 5, cardWidth - 10);
+                                GraphicsUtil.drawStringCenteredAt(g2, text, cardWidth / 2, 5, cardWidth - 10, null);
 
 				Image i = getCountryImage( ((Country)card.getCountry()).getColor() );
 
