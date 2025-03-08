@@ -188,7 +188,7 @@ public class GraphicsUtil {
         Shape outline = tl.getOutline(transform);
         Stroke oldStroke = g2.getStroke();
 
-        g2.setStroke(new BasicStroke(2.0f));
+        g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2.setColor(outlineColor);
         g2.draw(outline);
 
