@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.table.AbstractTableModel;
+import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.OnlineUtil;
@@ -88,6 +89,11 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		allcards.addActionListener(this);
 		toolbar.add(allcards);
 
+                JButton testSounds = new JButton("All Sounds");
+		testSounds.setActionCommand("testSounds");
+		testSounds.addActionListener(this);
+		toolbar.add(testSounds);
+
 		toolbar.addSeparator();
 
 		JButton flash = new JButton("Run main GameGUI with current backend");
@@ -101,7 +107,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		mapServerNameChack.setActionCommand("checkMapServer");
 		mapServerNameChack.addActionListener(this);
 		toolbar.add(mapServerNameChack);
-                
+
 		countriesModel = new AbstractTableModel() {
 
 			private final String[] columnNames = { "Color/No.","ID","Name","x","y","Continent","Owner","Armies","No. Neighbours","in","con" };
@@ -675,6 +681,42 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                     else {
                         JOptionPane.showMessageDialog(this, "Error found with map: " + errors + info);
                     }
+                }
+                else if ("testSounds".equals(command)) {
+                    GameSound.INSTANCE.playSound(GameSound.MENU_BUTTON);
+                    GameSound.INSTANCE.playSound(GameSound.BUTTON);
+                    GameSound.INSTANCE.playSound(GameSound.BACK_BUTTON);
+                    GameSound.INSTANCE.playSound(GameSound.BUTTON_START_GAME);
+
+                    GameSound.INSTANCE.playSound(GameSound.CARDS_RECEIVE);
+                    GameSound.INSTANCE.playSound(GameSound.CARDS_TRADE);
+
+                    GameSound.INSTANCE.playSound(GameSound.PLACE_ARMY);
+                    GameSound.INSTANCE.playSound(GameSound.PLACE_ARMIES);
+
+                    GameSound.INSTANCE.playSound(GameSound.ATTACK);
+                    GameSound.INSTANCE.playSound(GameSound.BATTLE_RETREAT);
+
+                    GameSound.INSTANCE.playSound(GameSound.DICE_ROLL);
+                    GameSound.INSTANCE.playSound(GameSound.DICE_WIN);
+                    GameSound.INSTANCE.playSound(GameSound.DICE_LOSE);
+                    GameSound.INSTANCE.playSound(GameSound.DICE_DRAW);
+    
+                    GameSound.INSTANCE.playSound(GameSound.BATTLE_WIN);
+                    GameSound.INSTANCE.playSound(GameSound.BATTLE_DEFEAT);
+
+                    GameSound.INSTANCE.playSound(GameSound.BATTLE_DEFENSE_WIN);
+                    GameSound.INSTANCE.playSound(GameSound.BATTLE_DEFENSE_DEFEAT);
+
+                    GameSound.INSTANCE.playSound(GameSound.MOVE_ARMIES);
+                    GameSound.INSTANCE.playSound(GameSound.MOVE_TACTICAL);
+
+                    GameSound.INSTANCE.playSound(GameSound.LOBBY_START);
+                    GameSound.INSTANCE.playSound(GameSound.LOBBY_JOIN);
+                    GameSound.INSTANCE.playSound(GameSound.LOBBY_LEAVE);
+                    GameSound.INSTANCE.playSound(GameSound.LOBBY_PLAY);
+                    GameSound.INSTANCE.playSound(GameSound.LOBBY_WATCH);
+                    GameSound.INSTANCE.playSound(GameSound.LOBBY_SET_NICK);
                 }
 		else {
 			throw new RuntimeException("TestTab: unknown command found: "+command);
