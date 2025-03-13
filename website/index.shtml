@@ -20,6 +20,9 @@ and that I can continue to provide a high quality online board gaming experience
 
 <p style="text-align:right;">- Yura</p>
 
+        <p><b><u>Contact / Support / Help Needed:</u></b><br>
+        If anyone would like to help with this project or need any help please e-mail me (<a href="&#0109;&#97;&#105;&#108;&#116;&#111;&#58;&#121;u&#114;&#097;&#064;&#121;&#117;&#0114;&#097;&#046;&#0110;&#101;&#0116;">&#121;u&#114;&#097;&#064;&#0121;&#0117;&#0114;&#97;&#046;&#0110;&#101;&#0116;</a>)
+        </p>
 
         <h2>News:</h2>
 
@@ -30,6 +33,8 @@ Check the ChangeLog for more information.
 To find out the rest of the changes please check out the ChangeLog.
 Now, go check it out! The ChangeLog is lonely. Go visit it, too. 
 -->
+
+    <p>13.03.2025 Accessibility released! 1.3.4: added support to change font size and enable color blind mode.</p>
 
     <p>11.01.2025 Domination 1.3.3 released! many bug fixes for the audio system. see the <a href="http://sf.net/p/domination/code/HEAD/tree/Domination/ChangeLog.txt">ChangeLog</a> for list of all changes.</p>
 
@@ -259,10 +264,6 @@ Now, go check it out! The ChangeLog is lonely. Go visit it, too.
         <p>15.02.2005 - Lots of new things been happening with Domination recently, check out the CVS Domination for the newest version, German language now added and much more!!! may have a new version in a few weeks even. Thank you to everyone who sent maps in.</p>
 
 -->
-
-        <p><b><u>Contact / Support / Help Needed:</u></b><br>
-        If anyone would like to help with this project or need any help please e-mail me (<a href="&#0109;&#97;&#105;&#108;&#116;&#111;&#58;&#121;u&#114;&#097;&#064;&#121;&#117;&#0114;&#097;&#046;&#0110;&#101;&#0116;">&#121;u&#114;&#097;&#064;&#0121;&#0117;&#0114;&#97;&#046;&#0110;&#101;&#0116;</a>)
-        </p>
 
 <!--
         <p>Made by <a href="https://plus.google.com/104393657899926875405?rel=author">Yura Mamyrin</a>.</p>
