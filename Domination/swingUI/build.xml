@@ -483,7 +483,7 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 		<!-- copy images -->
 		<copy todir="${dir.build.lobby.client.classes}">
 			<fileset dir="game/${game.name}/jar" includes="**/lobby/client/*.*,**/guishared/*.*,**/flashgui/*.*" excludes="**/flashgui/joingame.jpg,**/flashgui/menu.jpg,**/flashgui/earth.gif"/>
-			<fileset dir="../sharedUI/img_mapstore_lobby/drawable-mdpi" includes="ms_download.png,ms_strip.png"/>
+			<fileset dir="../sharedUI/img_mapstore_lobby/drawable-mdpi" includes="ms_download.png,ms_strip.png,color_*.png"/>
 		</copy>
 
 		<!-- used for getting the map preview icon -->
@@ -544,9 +544,9 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 		<copy file="../gpl.txt" todir="${dir.lobby.dist.client}/${game.name}"/>
 		<copy file="../ChangeLog.txt" todir="${dir.lobby.dist.client}/${game.name}"/>
 
-		<mkdir dir="${dir.lobby.dist.client}/${game.name}/help"/>
-		<copy file="game/${game.name}/help/game_credits.htm" todir="${dir.lobby.dist.client}/${game.name}/help"/>
-
+		<copy todir="${dir.lobby.dist.client}/${game.name}/help">
+			<fileset dir="game/${game.name}/help" includes="**/*.*"/>
+		</copy>
 	</target>
 
 	<target name="lobby.server.dist" if="dir.lobby.dist.server.available">
