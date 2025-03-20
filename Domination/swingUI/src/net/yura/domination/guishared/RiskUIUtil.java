@@ -39,6 +39,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -113,7 +114,32 @@ public class RiskUIUtil {
         if (RiskUtil.streamOpener==null) {
             RiskUtil.streamOpener = new RiskIO() {
                 public InputStream openStream(String name) throws IOException {
-                    return getRiskFileURL(name).openStream();
+                    try {
+                        return getRiskFileURL(name).openStream();
+                    }
+                    catch (FileNotFoundException fnfe) {
+                        try {
+                            Logger logger = Logger.getLogger(RiskUIUtil.class.getName());
+                            logger.info("can not openStream for: " + name);
+                            File file = new File(name).getCanonicalFile();
+                            logger.info("file exists: " + file.exists() + " " + file);
+                            File parent = file.getParentFile();
+                            logger.info("parnet exists: " + parent.exists() + " " + parent);
+                            if (parent.exists()) {
+                                logger.info("siblings: " + Arrays.asList(parent.list()));
+                            }
+                            else {
+                                File grandParent = parent.getParentFile();
+                                logger.info("grand parent exists: " + grandParent.exists() + " " + grandParent);
+                                if (grandParent.exists()) {
+                                    logger.info("parnets siblings: " + Arrays.asList(grandParent.list()));
+                                }
+                            }
+                        }
+                        catch (Throwable th) {} // dont let errors in logging mess with anything
+
+                        throw fnfe;
+                    }
                 }
                 
                 /**
