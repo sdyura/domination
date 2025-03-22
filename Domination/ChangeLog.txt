@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		17
+	iOS:		18
 	Android:	100
 	Game GUI:	2
 	Swing GUI:	2
@@ -38,6 +38,8 @@ CURRENT VERSION:
 
 	iOS 17 upgraded to MOE 1.10.1
 	       fix to not play sound when iPhone is already playing music
+
+	iOS 18 maybe fix for crash in audio system
 
 	Android 100 fix loading screen getting stuck when starting game
 

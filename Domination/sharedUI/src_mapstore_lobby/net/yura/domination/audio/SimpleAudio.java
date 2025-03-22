@@ -69,6 +69,9 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
         if (PlayerListener.END_OF_MEDIA.equals(s)) {
             player.close();
         }
+        else if (PlayerListener.ERROR.equals(s)) {
+            LOGGER.log(Level.WARNING, "player error " + player + " " + o);
+        }
     }
 
     public void play(final String fileName) {
