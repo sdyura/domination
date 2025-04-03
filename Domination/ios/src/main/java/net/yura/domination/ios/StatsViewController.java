@@ -58,6 +58,8 @@ import org.moe.samples.simplechart.charts.protocol.ChartViewDelegate;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
@@ -245,7 +247,12 @@ public class StatsViewController extends UIViewController implements ChartViewDe
 
     @Override
     public void call_actionWithTitleImageIdentifierHandler(UIAction action) {
-        setData(StatType.valueOf(action.identifier()));
+        try {
+            setData(StatType.valueOf(action.identifier()));
+        }
+        catch (Throwable ex) {
+            Logger.getLogger(StatsViewController.class.getName()).log(Level.WARNING, "error setting data in graph " + action, ex);
+        }
     }
 
     @Selector("optionsMenuClicked:")
@@ -370,6 +377,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         return render.imageWithActions(new UIGraphicsImageRenderer.Block_imageWithActions() {
             @Override
             public void call_imageWithActions(UIGraphicsImageRendererContext rendererContext) {
+                //CoreGraphics.CGContextDrawImage(rendererContext.CGContext(), new CGRect(CoreGraphics.CGPointZero(), newSize), img.CGImage());
                 img.drawInRect(new CGRect(CoreGraphics.CGPointZero(), newSize));
             }
         });

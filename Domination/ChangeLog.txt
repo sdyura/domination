@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		18
+	iOS:		19
 	Android:	100
 	Game GUI:	2
 	Swing GUI:	2
@@ -36,10 +36,12 @@ CURRENT VERSION:
 	SwingGUI: little memory graph on debug screen
 	SwingGUI: fix - allow opening TEG xml maps in MapEditor on macOS again
 
+	iOS 19 grasshopper update, non fatal errors should not crash app
+
+	iOS 18 fix for crash in audio system (keep a ref to all players that are playing)
+
 	iOS 17 upgraded to MOE 1.10.1
 	       fix to not play sound when iPhone is already playing music
-
-	iOS 18 maybe fix for crash in audio system
 
 	Android 100 fix loading screen getting stuck when starting game
 
