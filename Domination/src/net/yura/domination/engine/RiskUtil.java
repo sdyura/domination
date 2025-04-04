@@ -380,6 +380,7 @@ public class RiskUtil {
             if (localHost == null) {
                 // on macOS this method can take a long time
                 long start = System.currentTimeMillis();
+                // TODO WARNING!! on iOS this can cause the popup of "app would like to find and connect to devices on your local network"
                 localHost = InetAddress.getLocalHost();
                 System.out.println("getLocalHost took " + (System.currentTimeMillis() - start) + "milliseconds");
             }
