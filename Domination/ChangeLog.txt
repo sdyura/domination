@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		19
+	iOS:		20
 	Android:	100
 	Game GUI:	2
 	Swing GUI:	2
@@ -35,6 +35,8 @@ CURRENT VERSION:
 	SwingGUI: can replay debug game log without having to save it to file first
 	SwingGUI: little memory graph on debug screen
 	SwingGUI: fix - allow opening TEG xml maps in MapEditor on macOS again
+
+	iOS 20 fix crash in text entry
 
 	iOS 19 grasshopper update, non fatal errors should not crash app
 
