@@ -175,14 +175,15 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
 	}
 
 	// this NEEDS to call leaveGame();
-	public void closegame() {
+        @Override
+	public void closegameRequested() {
             // simulate a normal ui command into the game
-            if (myrisk.getGame()!=null) {
+            if (myrisk.getGame() != null) {
 		myrisk.parser("closegame");
             }
             else {
                 // we are here coz the game failed to open
-                leaveGame();
+                closeGame();
             }
         }
 
@@ -255,10 +256,9 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
             return name.equals(lgml.whoAmI());
         }
 
-        public void closeGame() {
-            leaveGame();
-        }
-
+        /**
+         * a player resigning on the server will trigger this to be called
+         */
         public void playerRenamed(String oldName, String newName, String newAddress, int newType) {
             if (oldName.equals(lgml.whoAmI())) {
                 myrisk.setAddress("_watch_");
