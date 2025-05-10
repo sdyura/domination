@@ -158,6 +158,11 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
 				gameFrame.setVisible(false);
 			}
 
+                        @Override
+                        public void gameOver(boolean won) {
+                            paused = true;
+                        }
+                        
 			//public void needInput(int s) {
 			//	super.needInput(s);
 			//}
@@ -209,6 +214,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
                 myrisk.setAddress(address);
                 myrisk.setGame(thegame);
                 updateButtons();
+                if (thegame.getState() == RiskGame.STATE_GAME_OVER) paused = true;
             }
 // TODO remove this legacy message system
             else if (object instanceof java.util.Map) {
@@ -222,6 +228,7 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
                     myrisk.setAddress(address);
                     myrisk.setGame(thegame);
                     updateButtons();
+                    if (thegame.getState() == RiskGame.STATE_GAME_OVER) paused = true;
                 }
                 else {
                     System.out.println("ClientGameRisk unknown command "+command+" "+map);
