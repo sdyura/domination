@@ -439,7 +439,7 @@ public class ServerGameRisk extends TurnBasedGame {
                         // if game over and mode is mission or capital, the winner may choose to continue the game, so resign the player.
                         if (thePlayer.isAlive() && !(myrisk.getGame().getState() == RiskGame.STATE_GAME_OVER && (myrisk.getGame().getGameMode() == RiskGame.MODE_DOMINATION || myrisk.getWinner().getType() != Player.PLAYER_HUMAN))) {
 
-                                sendRename(username, newName, myrisk.getAddress(), Player.PLAYER_AI_EASY, true);
+                                sendRename(username, newName, myrisk.getAddress(), Player.PLAYER_AI_EASY);
                         }
 
                         if (aliveHumans == 0) {
@@ -475,40 +475,13 @@ public class ServerGameRisk extends TurnBasedGame {
                 return gameRemoved;
 	}
 
-        private void sendRename(String oldName, String newName, String newAddress, int newType, boolean doLegacySend) {
+        private void sendRename(String oldName, String newName, String newAddress, int newType) {
             HashMap map = new HashMap();
             map.put("oldName", oldName);
             map.put("newName", newName);
             map.put("newAddress", newAddress);
             map.put("newType", newType);
-            myrisk.addPlayerCommandToInbox("RENAME", Url.toQueryString(JavaCompatUtil.asHashtable(map)) );
-
-// TODO remove when no more <= 45 clients
-            if (doLegacySend) {
-                map.put("command", "rename");
-                for (LobbySession session: getAllClients()) {
-                    String username = session.getUsername();
-                    String playerid;
-                    if (oldName.equals(username) || newName.equals(username)) {
-                        if (newType==Player.PLAYER_HUMAN) {
-                            playerid = newAddress;
-                        }
-                        else {
-                            playerid="_watch_";
-                        }
-                    }
-                    else {
-                        playerid = getPlayerId(username);
-                        if (playerid==null) {
-                            playerid="_watch_";
-                        }
-                    }
-                    map.put("playerId", playerid);
-                    System.out.println("LEGACY RENAME "+map);
-                    sendObjectToClient(map,username);
-                }
-            }
-// END TODO
+            myrisk.addPlayerCommandToInbox("RENAME", Url.toQueryString(JavaCompatUtil.asHashtable(map)));
         }
 
         @Override
@@ -519,7 +492,7 @@ public class ServerGameRisk extends TurnBasedGame {
             }
             String playerId = "player"+( myrisk.getGame().getPlayers().indexOf(player) +1);
             String oldName = player.getName();
-            sendRename(oldName,newuser,playerId,Player.PLAYER_HUMAN,true);
+            sendRename(oldName, newuser, playerId, Player.PLAYER_HUMAN);
         }
 
         @Override
@@ -528,7 +501,7 @@ public class ServerGameRisk extends TurnBasedGame {
             if (playerId == null) {
                 throw new IllegalArgumentException(oldUser + " not found in game player: " + myrisk.getGame().getPlayers());
             }
-            sendRename(oldUser, newUser, playerId, Player.PLAYER_HUMAN, false);
+            sendRename(oldUser, newUser, playerId, Player.PLAYER_HUMAN);
 	}
 
         /**
