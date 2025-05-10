@@ -20,16 +20,18 @@ public class LoadingScreen {
         }
 
         if (instance == null) {
-            instance = new Window();
-            instance.setName("OpaqueDialog");
+            Window window = new Window();
+            window.setName("OpaqueDialog");
 
             final ProgressBar bar = new ProgressBar();
             bar.setIndeterminate(true);
 
-            instance.add(bar);
-            instance.add(new Label(message), Graphics.RIGHT);
-            instance.pack();
-            instance.setLocationRelativeTo(null);
+            window.add(bar);
+            window.add(new Label(message), Graphics.RIGHT);
+            window.pack();
+            window.setLocationRelativeTo(null);
+
+            instance = window;
         }
 
         // this can get called multiple times as we may be opening something from multiple possible locations
@@ -39,6 +41,10 @@ public class LoadingScreen {
         }
     }
 
+    /**
+     * this can get called multiple times at the same time from different threads
+     * e.g. a game has been loaded, but we have also just been disconnected
+     */
     public static void hide() {
 
         if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
@@ -61,7 +67,7 @@ public class LoadingScreen {
         }
 
         Window window = instance;
-        if (window != null) {
+        if (window != null && window.isVisible()) {
             window.setVisible(false);
         }
 
