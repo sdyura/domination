@@ -216,25 +216,6 @@ public class ClientGameRisk extends TurnBasedAdapter implements OnlineRisk {
                 updateButtons();
                 if (thegame.getState() == RiskGame.STATE_GAME_OVER) paused = true;
             }
-// TODO remove this legacy message system
-            else if (object instanceof java.util.Map) {
-		Map map = (Map)object;
-
-                String command = (String)map.get("command");
-                if ("game".equals(command)) {
-                    String address = (String)map.get("playerId");
-                    RiskGame thegame = (RiskGame)map.get("game");
-                    myrisk.setOnlinePlay(this);
-                    myrisk.setAddress(address);
-                    myrisk.setGame(thegame);
-                    updateButtons();
-                    if (thegame.getState() == RiskGame.STATE_GAME_OVER) paused = true;
-                }
-                else {
-                    System.out.println("ClientGameRisk unknown command "+command+" "+map);
-                }
-            }
-// END TODO
             else {
                 System.out.println("unknown object "+object);
             }

@@ -102,23 +102,6 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
                 myrisk.setGame(thegame);
                 openGame = true;
             }
-// TODO remove this legacy message system
-            else if (object instanceof java.util.Map) {
-                java.util.Map map = (java.util.Map) object;
-
-                String command = (String) map.get("command");
-                if ("game".equals(command)) {
-                    String address = (String) map.get("playerId");
-                    RiskGame thegame = (RiskGame) map.get("game");
-                    myrisk.setOnlinePlay(this);
-                    myrisk.setAddress(address);
-                    myrisk.setGame(thegame);
-                    openGame = true;
-                } else {
-                    System.out.println("MiniLobbyRisk unknown command " + command + " " + map);
-                }
-            }
-// END TODO
             else {
                 System.out.println("MiniLobbyRisk unknown object " + object);
             }
