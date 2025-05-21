@@ -235,7 +235,7 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         navigationController.navigationBar().setBarStyle(UIBarStyle.Black);
 
         // here navigationController gets status bar color from child
-        navigationController.setNavigationBarHidden(false);
+        navigationController.setNavigationBarHiddenAnimated(false, false);
         // here navigationController gets status bar color from itself
     }
 
