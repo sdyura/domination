@@ -215,6 +215,11 @@ public class StatsViewController extends UIViewController implements ChartViewDe
     }
 
     @Override
+    public boolean prefersStatusBarHidden() {
+        return Boolean.getBoolean("isMacCatalystApp");
+    }
+
+    @Override
     public void viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange();
         UIEdgeInsets safeAreaInsets = view().safeAreaInsets(); // {64, 0, 0, 0}
