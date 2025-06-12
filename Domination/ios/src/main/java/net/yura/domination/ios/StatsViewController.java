@@ -35,11 +35,13 @@ import apple.uikit.UIGraphicsImageRendererContext;
 import apple.uikit.UIGraphicsImageRendererFormat;
 import apple.uikit.UIImage;
 import apple.uikit.UIMenu;
+import apple.uikit.UINavigationBarAppearance;
 import apple.uikit.UINavigationController;
 import apple.uikit.UIPickerView;
 import apple.uikit.UITextField;
 import apple.uikit.UIToolbar;
 import apple.uikit.UIViewController;
+import apple.uikit.c.UIKit;
 import apple.uikit.enums.UIBarButtonItemStyle;
 import apple.uikit.enums.UIBarButtonSystemItem;
 import apple.uikit.enums.UIBarStyle;
@@ -236,6 +238,22 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         // This issue ONLY happens on a real device and not on the simulator?!
         //navigationController.setOverrideUserInterfaceStyle(UIUserInterfaceStyle.Dark); // API ONLY iOS 13
 
+        // new way of setting theme for navigation bar, needed as the old way breaks when back is cancelled (slow swipe from edge then)
+        try {
+            if (NSProcessInfo.processInfo().isOperatingSystemAtLeastVersion(IOS_14)) {
+                UINavigationBarAppearance appearance = UINavigationBarAppearance.alloc().init();
+                appearance.configureWithOpaqueBackground();
+                appearance.setBackgroundColor(UIColor.blackColor());
+                appearance.setTitleTextAttributes((NSDictionary<String, ?>) NSDictionary.dictionaryWithObjectForKey(UIColor.whiteColor(), UIKit.NSForegroundColorAttributeName()));
+                navigationItem().setStandardAppearance(appearance); // iOS-13
+                navigationItem().setScrollEdgeAppearance(appearance); // iOS-13
+            }
+        }
+        catch (Throwable th) {
+            th.printStackTrace();
+        }
+
+        // old way of setting theme for navigation bar
         oldBarStyle = navigationController.navigationBar().barStyle();
         navigationController.navigationBar().setBarStyle(UIBarStyle.Black);
 
