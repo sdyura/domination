@@ -115,6 +115,7 @@
             then you will need to revert the 'ChartDataSet.swift' file.
         </p>
 
+	<p>To run on iOS from Android Studio you will need to <a href="images/android_studio_setup.png">enable the experimental feature "Configure all Gradle tasks during Gradle Sync (this can make Gradle Sync slower)"</a></p>
 
 <h3>Other projects used by Domination</h3>
 
