@@ -112,13 +112,13 @@ public class Risk extends Thread {
                 try {
                     String newName = System.getProperty("user.name");
 
-                    if (newName==null || "".equals(newName.trim())) {
-                        throw new Exception("bad user name");
+                    if (newName==null || "".equals(newName.trim()) || "?".equals(newName.trim())) {
+                        throw new Exception("bad user name: " + newName);
                     }
                     else {
                         for (int c=0;c<names.length;c++) {
                             if (names[c].equals(newName)) {
-                                throw new Exception("name already in use");
+                                throw new Exception("name already in use: " + newName);
                             }
                         }
                     }
