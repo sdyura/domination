@@ -74,8 +74,8 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
     @Generated
     public interface Block_block_ret {
         @Generated
-        double call_block_ret(@Mapped(ObjCObjectMapper.class) @NotNull Object arg0,
-                @Mapped(ObjCObjectMapper.class) @NotNull Object arg1);
+        double call_block_ret(@Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet arg0,
+                @Mapped(ObjCObjectMapper.class) @NotNull LineChartDataProvider arg1);
     }
 
     @Generated
@@ -131,8 +131,8 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
     @Generated
     public interface Block_initWithBlock {
         @Generated
-        double call_initWithBlock(@Mapped(ObjCObjectMapper.class) @NotNull Object arg0,
-                @Mapped(ObjCObjectMapper.class) @NotNull Object arg1);
+        double call_initWithBlock(@Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet arg0,
+                @Mapped(ObjCObjectMapper.class) @NotNull LineChartDataProvider arg1);
     }
 
     @Generated
@@ -178,8 +178,8 @@ public class ChartDefaultFillFormatter extends NSObject implements IChartFillFor
     @Generated
     public interface Block_setBlock {
         @Generated
-        double call_setBlock(@Mapped(ObjCObjectMapper.class) @NotNull Object arg0,
-                @Mapped(ObjCObjectMapper.class) @NotNull Object arg1);
+        double call_setBlock(@Mapped(ObjCObjectMapper.class) @NotNull ILineChartDataSet arg0,
+                @Mapped(ObjCObjectMapper.class) @NotNull LineChartDataProvider arg1);
     }
 
     @Generated

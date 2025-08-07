@@ -158,29 +158,15 @@ public class ChartMarkerView extends NSUIView implements IChartMarker {
     @Selector("appearanceForTraitCollection:whenContainedIn:")
     @NotNull
     public static native ChartMarkerView appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedIn")
     @NotNull
     public ChartMarkerView _appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceForTraitCollectionWhenContainedIn(trait, ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native ChartMarkerView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
-    @NotNull
-    public ChartMarkerView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes) {
-        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
     }
 
     @Generated
@@ -189,27 +175,15 @@ public class ChartMarkerView extends NSUIView implements IChartMarker {
     @Selector("appearanceWhenContainedIn:")
     @NotNull
     public static native ChartMarkerView appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceWhenContainedIn")
     @NotNull
     public ChartMarkerView _appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceWhenContainedIn(ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceWhenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native ChartMarkerView appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
-    @NotNull
-    public ChartMarkerView _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes) {
-        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
     }
 
     @Generated
@@ -503,4 +477,31 @@ public class ChartMarkerView extends NSUIView implements IChartMarker {
     @Selector("viewFromXibIn:")
     @Nullable
     public static native ChartMarkerView viewFromXibIn(@NotNull NSBundle bundle);
+
+    @Generated
+    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native ChartMarkerView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
+    @NotNull
+    public ChartMarkerView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
+    }
+
+    @Generated
+    @Selector("appearanceWhenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native ChartMarkerView appearanceWhenContainedInInstancesOfClasses(
+            @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
+    @NotNull
+    public ChartMarkerView _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
+    }
 }

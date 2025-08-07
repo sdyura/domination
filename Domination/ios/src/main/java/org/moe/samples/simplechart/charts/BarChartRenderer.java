@@ -125,7 +125,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleChartRenderer {
     @Selector("drawValueWithContext:value:xPos:yPos:font:align:color:")
     public native void drawValueWithContextValueXPosYPosFontAlignColor(@NotNull CGContextRef context,
             @NotNull String value, double xPos, double yPos, @NotNull UIFont font,
-            @Mapped(ObjCObjectMapper.class) Object align, @NotNull UIColor color);
+            long align, @NotNull UIColor color);
 
     @Generated
     @Selector("drawValuesWithContext:")

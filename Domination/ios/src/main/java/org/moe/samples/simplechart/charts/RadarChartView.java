@@ -161,29 +161,15 @@ public class RadarChartView extends PieRadarChartViewBase {
     @Selector("appearanceForTraitCollection:whenContainedIn:")
     @NotNull
     public static native RadarChartView appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedIn")
     @NotNull
     public RadarChartView _appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceForTraitCollectionWhenContainedIn(trait, ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native RadarChartView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
-    @NotNull
-    public RadarChartView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes) {
-        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
     }
 
     @Generated
@@ -192,27 +178,15 @@ public class RadarChartView extends PieRadarChartViewBase {
     @Selector("appearanceWhenContainedIn:")
     @NotNull
     public static native RadarChartView appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceWhenContainedIn")
     @NotNull
     public RadarChartView _appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceWhenContainedIn(ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceWhenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native RadarChartView appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
-    @NotNull
-    public RadarChartView _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes) {
-        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
     }
 
     @Generated
@@ -619,4 +593,31 @@ public class RadarChartView extends PieRadarChartViewBase {
     @Generated
     @Selector("yRange")
     public native double yRange();
+
+    @Generated
+    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native RadarChartView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
+    @NotNull
+    public RadarChartView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
+    }
+
+    @Generated
+    @Selector("appearanceWhenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native RadarChartView appearanceWhenContainedInInstancesOfClasses(
+            @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
+    @NotNull
+    public RadarChartView _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
+    }
 }

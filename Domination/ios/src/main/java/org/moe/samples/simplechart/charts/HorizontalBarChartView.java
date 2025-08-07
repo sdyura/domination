@@ -161,29 +161,15 @@ public class HorizontalBarChartView extends BarChartView {
     @NotNull
     public static native HorizontalBarChartView appearanceForTraitCollectionWhenContainedIn(
             @NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedIn")
     @NotNull
     public HorizontalBarChartView _appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceForTraitCollectionWhenContainedIn(trait, ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native HorizontalBarChartView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
-    @NotNull
-    public HorizontalBarChartView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes) {
-        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
     }
 
     @Generated
@@ -192,28 +178,15 @@ public class HorizontalBarChartView extends BarChartView {
     @Selector("appearanceWhenContainedIn:")
     @NotNull
     public static native HorizontalBarChartView appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceWhenContainedIn")
     @NotNull
     public HorizontalBarChartView _appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceWhenContainedIn(ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceWhenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native HorizontalBarChartView appearanceWhenContainedInInstancesOfClasses(
-            @NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
-    @NotNull
-    public HorizontalBarChartView _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes) {
-        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
     }
 
     @Generated
@@ -517,4 +490,32 @@ public class HorizontalBarChartView extends BarChartView {
     @Selector("version")
     @NInt
     public static native long version_static();
+
+    @Generated
+    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native HorizontalBarChartView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
+    @NotNull
+    public HorizontalBarChartView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
+    }
+
+    @Generated
+    @Selector("appearanceWhenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native HorizontalBarChartView appearanceWhenContainedInInstancesOfClasses(
+            @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
+    @NotNull
+    public HorizontalBarChartView _appearanceWhenContainedInInstancesOfClasses(
+            @NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
+    }
 }

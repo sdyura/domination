@@ -178,29 +178,15 @@ public class PieChartView extends PieRadarChartViewBase {
     @Selector("appearanceForTraitCollection:whenContainedIn:")
     @NotNull
     public static native PieChartView appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedIn")
     @NotNull
     public PieChartView _appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceForTraitCollectionWhenContainedIn(trait, ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native PieChartView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
-    @NotNull
-    public PieChartView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes) {
-        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
     }
 
     @Generated
@@ -209,27 +195,15 @@ public class PieChartView extends PieRadarChartViewBase {
     @Selector("appearanceWhenContainedIn:")
     @NotNull
     public static native PieChartView appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceWhenContainedIn")
     @NotNull
     public PieChartView _appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceWhenContainedIn(ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceWhenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native PieChartView appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
-    @NotNull
-    public PieChartView _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes) {
-        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
     }
 
     @Generated
@@ -832,4 +806,31 @@ public class PieChartView extends PieRadarChartViewBase {
     @Selector("xAxis")
     @NotNull
     public native ChartXAxis xAxis();
+
+    @Generated
+    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native PieChartView appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
+    @NotNull
+    public PieChartView _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
+    }
+
+    @Generated
+    @Selector("appearanceWhenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native PieChartView appearanceWhenContainedInInstancesOfClasses(
+            @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
+    @NotNull
+    public PieChartView _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
+    }
 }

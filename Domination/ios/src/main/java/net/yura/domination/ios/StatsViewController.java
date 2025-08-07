@@ -216,6 +216,9 @@ public class StatsViewController extends UIViewController implements ChartViewDe
         setData(initialView);
     }
 
+    /**
+     * @see net.yura.ios.AppController#prefersStatusBarHidden()
+     */
     @Override
     public boolean prefersStatusBarHidden() {
         return Boolean.getBoolean("isMacCatalystApp");

@@ -173,29 +173,15 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @NotNull
     public static native BarLineChartViewBase appearanceForTraitCollectionWhenContainedIn(
             @NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedIn")
     @NotNull
     public BarLineChartViewBase _appearanceForTraitCollectionWhenContainedIn(@NotNull UITraitCollection trait,
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceForTraitCollectionWhenContainedIn(trait, ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native BarLineChartViewBase appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
-    @NotNull
-    public BarLineChartViewBase _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
-            @NotNull UITraitCollection trait, @NotNull NSArray<?> containerTypes) {
-        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
     }
 
     @Generated
@@ -204,28 +190,15 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @Selector("appearanceWhenContainedIn:")
     @NotNull
     public static native BarLineChartViewBase appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs);
+            @Nullable Class ContainerClass, Object... varargs);
 
     @Generated
     @Deprecated
     @ProtocolClassMethod("appearanceWhenContainedIn")
     @NotNull
     public BarLineChartViewBase _appearanceWhenContainedIn(
-            @Mapped(ObjCObjectMapper.class) @Nullable UIAppearanceContainer ContainerClass, Object... varargs) {
+            @Nullable Class ContainerClass, Object... varargs) {
         return appearanceWhenContainedIn(ContainerClass, varargs);
-    }
-
-    @Generated
-    @Selector("appearanceWhenContainedInInstancesOfClasses:")
-    @NotNull
-    public static native BarLineChartViewBase appearanceWhenContainedInInstancesOfClasses(
-            @NotNull NSArray<?> containerTypes);
-
-    @Generated
-    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
-    @NotNull
-    public BarLineChartViewBase _appearanceWhenContainedInInstancesOfClasses(@NotNull NSArray<?> containerTypes) {
-        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
     }
 
     @Generated
@@ -1545,4 +1518,32 @@ public class BarLineChartViewBase extends ChartViewBase implements BarLineScatte
     @Selector("zoomWithScaleX:scaleY:xValue:yValue:axis:")
     public native void zoomWithScaleXScaleYXValueYValueAxis(double scaleX, double scaleY, double xValue, double yValue,
             long axis);
+
+    @Generated
+    @Selector("appearanceForTraitCollection:whenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native BarLineChartViewBase appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceForTraitCollectionWhenContainedInInstancesOfClasses")
+    @NotNull
+    public BarLineChartViewBase _appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+            @NotNull UITraitCollection trait, @NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait, containerTypes);
+    }
+
+    @Generated
+    @Selector("appearanceWhenContainedInInstancesOfClasses:")
+    @NotNull
+    public static native BarLineChartViewBase appearanceWhenContainedInInstancesOfClasses(
+            @NotNull NSArray<? extends Class> containerTypes);
+
+    @Generated
+    @ProtocolClassMethod("appearanceWhenContainedInInstancesOfClasses")
+    @NotNull
+    public BarLineChartViewBase _appearanceWhenContainedInInstancesOfClasses(
+            @NotNull NSArray<? extends Class> containerTypes) {
+        return appearanceWhenContainedInInstancesOfClasses(containerTypes);
+    }
 }

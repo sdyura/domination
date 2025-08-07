@@ -187,7 +187,7 @@ public class ChartYAxis extends ChartAxisBase {
      */
     @Generated
     @Selector("labelAlignment")
-    public native int labelAlignment();
+    public native long labelAlignment();
 
     /**
      * the position of the y-labels relative to the chart
@@ -278,7 +278,7 @@ public class ChartYAxis extends ChartAxisBase {
      */
     @Generated
     @Selector("setLabelAlignment:")
-    public native void setLabelAlignment(int value);
+    public native void setLabelAlignment(long value);
 
     /**
      * the position of the y-labels relative to the chart

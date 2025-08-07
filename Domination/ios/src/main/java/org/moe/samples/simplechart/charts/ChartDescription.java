@@ -159,7 +159,7 @@ public class ChartDescription extends ChartComponentBase {
      */
     @Generated
     @Selector("setTextAlign:")
-    public native void setTextAlign(int value);
+    public native void setTextAlign(long value);
 
     /**
      * Text color used for drawing the description text
@@ -189,7 +189,7 @@ public class ChartDescription extends ChartComponentBase {
      */
     @Generated
     @Selector("textAlign")
-    public native int textAlign();
+    public native long textAlign();
 
     /**
      * Text color used for drawing the description text
