@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.microedition.lcdui.Display;
 import net.yura.domination.engine.JavaCompatUtil;
-import net.yura.domination.engine.RiskUtil;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.LobbyClient;
 import net.yura.lobby.client.LobbyCom;
@@ -44,6 +43,7 @@ import net.yura.mobile.gui.components.ScrollPane;
 import net.yura.mobile.gui.components.TextField;
 import net.yura.mobile.gui.components.Window;
 import net.yura.mobile.gui.layout.XULLoader;
+import net.yura.mobile.io.FileUtil;
 import net.yura.mobile.util.Option;
 import net.yura.mobile.util.Properties;
 import net.yura.mobile.util.Url;
@@ -154,7 +154,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         }
         catch (Exception ex) { }
         finally {
-            RiskUtil.close(lobbySettingsData);
+            FileUtil.close(lobbySettingsData);
         }
 
         String uuid = prop.getProperty("uuid");
@@ -169,7 +169,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             }
             catch (Exception ex) { }
             finally {
-                RiskUtil.close(fileOutputStream);
+                FileUtil.close(fileOutputStream);
             }
         }
         
