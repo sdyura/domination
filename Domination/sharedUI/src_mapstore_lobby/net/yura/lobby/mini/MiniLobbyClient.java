@@ -15,7 +15,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.microedition.lcdui.Display;
-import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.LobbyClient;
 import net.yura.lobby.client.LobbyCom;
@@ -340,7 +339,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         else if ("flagGame".equals(actionCommand)) {
             final Game game = (Game) gameList.getSelectedValue();
             if (game != null) { // can only be null if there are no games in the list
-                final List players = new List(JavaCompatUtil.asVector(game.getPlayers()));
+                final List players = new List(new java.util.Vector(game.getPlayers()));
                 if (playerType >= Player.PLAYER_ADMIN) {
                     players.setCellRenderer(new DefaultListCellRenderer() {
                         @Override
@@ -609,7 +608,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             }
         }
 
-        toast(JavaCompatUtil.replaceAll(resBundle.getString("lobby.logged-in-as"), "{0}", name)); // "You are logged in as: "+name
+        toast(resBundle.getString("lobby.logged-in-as").replaceAll("\\{0\\}", name)); // "You are logged in as: "+name
         game.connected(name);
     }
     public String whoAmI() {
@@ -709,13 +708,13 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
 
     void filter(boolean update) {
         ViewChooser box = (ViewChooser)loader.find("listView");
-        java.util.List newGameList = filter(games, ((Option)box.getSelectedItem()).getKey() );
+        java.util.Vector newGameList = filter(games, ((Option)box.getSelectedItem()).getKey() );
 
         Object selected = gameList.getSelectedValue();
         int visIndex = gameList.getFirstVisibleIndex();
         Object visItem = (visIndex>=0&&visIndex<gameList.getSize())?gameList.getElementAt(visIndex):null;
 
-        gameList.setListData(JavaCompatUtil.asVector( newGameList ) );
+        gameList.setListData(newGameList);
 
         if (update) {
             if (selected!=null) {
@@ -745,7 +744,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
         getRoot().revalidate();
         getRoot().repaint();
     }
-    java.util.List filter(java.util.List list,String filter) {
+    java.util.Vector filter(java.util.List list,String filter) {
         // all
         // my
         // open
@@ -754,7 +753,7 @@ public class MiniLobbyClient implements LobbyClient,ActionListener {
             if ("all".equals(filter)) {
                 return new java.util.Vector(list);
             }
-            java.util.List result = new java.util.Vector();
+            java.util.Vector result = new java.util.Vector();
             for (int c=0;c<list.size();c++) {
                 Game game = (Game)list.get(c);
                 if ("my".equals(filter)) {
