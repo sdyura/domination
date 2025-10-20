@@ -32,10 +32,10 @@ public class TranslationToolPanel extends MessageTool implements SwingGUITab {
 
                     FileFilter ff = new FileFilter() {
                         public boolean accept(File f) {
-                                return (f.isDirectory() || ( f.getName().equals("Risk.properties") || f.getName().equals("DefaultMaps.properties") || f.getName().equals("DefaultCards.properties") ) );
+                                return (f.isDirectory() || ( f.getName().equals("Risk.properties") || f.getName().equals("DefaultMaps.properties") || f.getName().equals("DefaultCards.properties") || f.getName().equals("MiniLobby.properties") ) );
                         }
                         public String getDescription() {
-                                return "Game Translation Files (Risk.properties,DefaultMaps...,DefaultCards...)";
+                                return "Game Translation Files (Risk.properties,DefaultMaps...,DefaultCards...,MiniLobby...)";
                         }
                     };
 

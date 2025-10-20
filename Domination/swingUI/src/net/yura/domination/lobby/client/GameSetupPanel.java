@@ -513,7 +513,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
 		bottompanel.add(gamename, c);
 
                 
-                passwordField = new HintTextField(resb.getString("lobby.password"));
+                passwordField = new HintTextField(resb.getString("newgame.password"));
                 passwordField.setVisible(false);
                 c.gridx = 1; // col
                 c.gridy = 1; // row

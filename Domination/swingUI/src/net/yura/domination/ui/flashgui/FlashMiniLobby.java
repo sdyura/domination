@@ -71,7 +71,7 @@ public class FlashMiniLobby {
     }
 
     Action getOnlineAction() {
-        return new AbstractAction(TranslationBundle.getBundle().getString("lobby.resign")) {
+        return new AbstractAction(mlc.getLobbyString("lobby.resign")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mlc.resign();

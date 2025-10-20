@@ -26,7 +26,7 @@ public class CoreUtil {
                 }
                 catch (Exception ex) {
                     // sometimes this method is used by the XULLoader, but sometimes it is used directly
-                    // from code, thats why for those cases we should not ever return null, as a sring is expected
+                    // from code, thats why for those cases we should not ever return null, as a string is expected
                     Logger.warn("String not found " + key, ex);
                     return "???"+key+"???";
                 }

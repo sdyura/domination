@@ -48,7 +48,7 @@
                 <choice i18n="true" name="43200" text="newgame.timeout.12hours"/>
                 <choice i18n="true" name="86400" text="newgame.timeout.24hours"/>
             </combobox>
-            <label i18n="true" name="passwordLabel" text="lobby.password" visible="false"/>
+            <label i18n="true" name="passwordLabel" text="newgame.password" visible="false"/>
             <textfield colspan="2" name="password" visible="false"/>
         </panel>
     </panel>
