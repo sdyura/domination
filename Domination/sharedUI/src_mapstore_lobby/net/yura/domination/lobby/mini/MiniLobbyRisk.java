@@ -22,6 +22,7 @@ import net.yura.lobby.model.Game;
 import net.yura.lobby.model.GameType;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.Application;
+import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.util.Properties;
 import net.yura.swingme.core.CoreUtil;
 
@@ -44,10 +45,9 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
 
     public void addLobbyGameMoveListener(MiniLobbyClient lgl) {
         lobby = lgl;
-    }
-
-    public Properties getProperties() {
-        return CoreUtil.wrap( TranslationBundle.getBundle() );
+        Button chatButton = lobby.getChatButton();
+        chatButton.setText("");
+        chatButton.setIcon(new Icon("/discord.png"));
     }
     
     public void openChat() {
