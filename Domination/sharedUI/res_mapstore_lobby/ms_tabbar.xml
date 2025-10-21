@@ -17,46 +17,6 @@
     </style>
     <bind style="badge" key="Badge"/>
 
-
-    <style id="segmentedControlLeft">
-	<opaque value="false"/>
-	<state>
-	    <imagePainter path="/ms_segmented_control_left.9.png"/>
-            <color type="FOREGROUND"/>
-	</state>
-	<state value="SELECTED">
-	    <imagePainter path="/ms_segmented_control_selected_left.9.png"/>
-            <color type="FOREGROUND" value="#FFFFFF"/>
-	</state>
-    </style>
-    <bind style="segmentedControlLeft" key="SegmentedControlLeft"/>
-
-    <style id="segmentedControlMiddle">
-	<opaque value="false"/>
-	<state>
-	    <imagePainter path="/ms_segmented_control_middle.9.png"/>
-            <color type="FOREGROUND"/>
-	</state>
-	<state value="SELECTED">
-	    <imagePainter path="/ms_segmented_control_selected_middle.9.png"/>
-            <color type="FOREGROUND" value="#FFFFFF"/>
-	</state>
-    </style>
-    <bind style="segmentedControlMiddle" key="SegmentedControlMiddle"/>
-
-    <style id="segmentedControlRight">
-	<opaque value="false"/>
-	<state>
-	    <imagePainter path="/ms_segmented_control_right.9.png"/>
-            <color type="FOREGROUND"/>
-	</state>
-	<state value="SELECTED">
-	    <imagePainter path="/ms_segmented_control_selected_right.9.png"/>
-            <color type="FOREGROUND" value="#FFFFFF"/>
-	</state>
-    </style>
-    <bind style="segmentedControlRight" key="SegmentedControlRight"/>
-
 	<style id="indeterminateSpinner">
 		<imageIcon id="spinner_strip" path="/ms_strip.png" frameWidth="20" frameHeight="20"/>
 		<state>

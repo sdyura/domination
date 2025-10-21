@@ -49,7 +49,12 @@ public class MapChooser implements ActionListener,MapServerListener {
     private List list;
 
     public static void loadThemeExtension() {
-        InputStream themeData = Application.getResourceAsStream("/ms_tabbar.xml");
+        loadThemeExtension("/ms_tabbar.xml");
+        loadThemeExtension("/segmented_control.xml");
+    }
+
+    public static void loadThemeExtension(String name) {
+        InputStream themeData = Application.getResourceAsStream(name);
         try {
             LookAndFeel laf = DesktopPane.getDesktopPane().getLookAndFeel();
             if (laf instanceof SynthLookAndFeel) {
