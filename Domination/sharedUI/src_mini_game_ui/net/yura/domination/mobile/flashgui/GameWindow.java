@@ -200,7 +200,8 @@ public class GameWindow extends Frame implements ActionListener {
         missionbutton.addActionListener(this);
 
         Panel gamecontrol = new Panel( new BorderLayout() );
-        gamecontrol.setName("TransPanel");
+        //gamecontrol.setName("TransPanel");
+        gamecontrol.setBorder(new EdgeToEdgeTintBorder(0xAA000000));
 
         closebutton = new Button();
         closebutton.setIcon( new Icon("/back.png") );
@@ -294,7 +295,9 @@ public class GameWindow extends Frame implements ActionListener {
 
         int g = XULLoader.adjustSizeToDensity(2);
         Panel gamepanel2 = new Panel( new GridBagLayout(3, g, g, g, g, g) );
-        gamepanel2.setName("TransPanel");
+
+        //gamepanel2.setName("TransPanel");
+        gamepanel2.setBorder(new EdgeToEdgeTintBorder(0xAA000000));
 
         GridBagConstraints gc = new GridBagConstraints();
         gc.rowSpan = 2;
