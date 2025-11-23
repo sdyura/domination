@@ -37,6 +37,7 @@ import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.KeyEvent;
 import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.Font;
+import net.yura.mobile.gui.border.EdgeToEdgeBorder;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.CheckBox;
 import net.yura.mobile.gui.components.Component;
