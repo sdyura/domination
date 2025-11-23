@@ -61,7 +61,6 @@ import net.yura.mobile.util.Option;
 import net.yura.mobile.util.Properties;
 import net.yura.mobile.util.Url;
 import net.yura.swingme.core.CoreUtil;
-import net.yura.swingme.core.LoadingScreen;
 import net.yura.swingme.core.ViewChooser;
 
 /**
@@ -201,7 +200,7 @@ public class GameWindow extends Frame implements ActionListener {
 
         Panel gamecontrol = new Panel( new BorderLayout() );
         //gamecontrol.setName("TransPanel");
-        gamecontrol.setBorder(new EdgeToEdgeTintBorder(0xAA000000));
+        gamecontrol.setBorder(new EdgeToEdgeBorder(0xAA000000));
 
         closebutton = new Button();
         closebutton.setIcon( new Icon("/back.png") );
@@ -297,7 +296,7 @@ public class GameWindow extends Frame implements ActionListener {
         Panel gamepanel2 = new Panel( new GridBagLayout(3, g, g, g, g, g) );
 
         //gamepanel2.setName("TransPanel");
-        gamepanel2.setBorder(new EdgeToEdgeTintBorder(0xAA000000));
+        gamepanel2.setBorder(new EdgeToEdgeBorder(0xAA000000));
 
         GridBagConstraints gc = new GridBagConstraints();
         gc.rowSpan = 2;

@@ -4,14 +4,21 @@ import net.yura.domination.engine.ColorUtil;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Graphics2D;
 import net.yura.mobile.gui.border.Border;
+import net.yura.mobile.gui.border.MatteBorder;
 import net.yura.mobile.gui.components.Component;
 
-public class EdgeToEdgeTintBorder implements Border {
+public class EdgeToEdgeBorder implements Border {
 
-    private final int color;
+    private final Border border;
 
-    public EdgeToEdgeTintBorder(int color) {
-        this.color = color;
+    public EdgeToEdgeBorder(Border border) {
+        this.border = border;
+    }
+
+    public EdgeToEdgeBorder(int color) {
+        MatteBorder tint = new MatteBorder(0, 0, 0, 0, color);
+        tint.paintCenter = true;
+        border = tint;
     }
 
     public void paintBorder(Component cmpnt, Graphics2D g, int w, int h) {
@@ -19,8 +26,8 @@ public class EdgeToEdgeTintBorder implements Border {
         DesktopPane dp = cmpnt.getDesktopPane();
         int xOnScreen = cmpnt.getXOnScreen();
         int yOnScreen = cmpnt.getYOnScreen();
-        int rOnScreen = xOnScreen + cmpnt.getWidth();
-        int bOnScreen = yOnScreen + cmpnt.getHeight();
+        int rOnScreen = xOnScreen + w;
+        int bOnScreen = yOnScreen + h;
 
         boolean fillLeft = xOnScreen == 0;
         boolean fillTop = yOnScreen == 0;
@@ -37,8 +44,9 @@ public class EdgeToEdgeTintBorder implements Border {
         int width = ((fillRight && clipROnScreen > rOnScreen) ? clipROnScreen - xOnScreen : w) - startX;
         int height = ((fillBottom && clipBOnScreen > bOnScreen) ? clipBOnScreen - yOnScreen : h) - startY;
 
-        g.setColor(color);
-        g.fillRect(startX, startY, width, height);
+        g.translate(startX, startY);
+        border.paintBorder(cmpnt, g, width, height);
+        g.translate(-startX, -startY);
 
         // for debugging:
         //g.setColor(0xFFFF0000);
@@ -62,6 +70,6 @@ public class EdgeToEdgeTintBorder implements Border {
     }
 
     public boolean isBorderOpaque() {
-        return ColorUtil.getAlpha(color) == 255;
+        return border.isBorderOpaque();
     }
 }

@@ -46,7 +46,7 @@ public class MainMenu extends Frame implements ActionListener {
     public static final Border background;
     static {
         Image bkg = Application.createImage("/war_blood.png");
-        background = bkg == null ? null : new BackgroundBorder(bkg);
+        background = bkg == null ? null : new EdgeToEdgeBorder(new BackgroundBorder(bkg));
     }
 
     public MainMenu(Risk risk,MiniFlashRiskAdapter controller) {
