@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
+import android.widget.FrameLayout;
 import net.yura.domination.engine.core.StatType;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.mobile.gui.layout.XULLoader;
@@ -133,7 +134,14 @@ public class StatsActivity extends Activity {
         };
         GraphicalView gview = new GraphicalView(this, chart);
 
-        setContentView(gview);
+        // hack: this extra parentLayout is needed to fix edge-to-edge mode
+        FrameLayout parentLayout = new FrameLayout(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            // needed for edge-to-edge mode (api-35+)
+            parentLayout.setFitsSystemWindows(true);
+        }
+        parentLayout.addView(gview);
+        setContentView(parentLayout);
     }
 
     private XYMultipleSeriesRenderer getRenderer() {
