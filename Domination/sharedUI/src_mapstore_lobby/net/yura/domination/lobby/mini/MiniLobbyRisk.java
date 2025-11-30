@@ -1,5 +1,8 @@
 package net.yura.domination.lobby.mini;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.WeakHashMap;
@@ -12,7 +15,6 @@ import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mapstore.Map;
 import net.yura.domination.mapstore.MapPreview;
 import net.yura.domination.mapstore.MapUpdateService;
@@ -23,8 +25,6 @@ import net.yura.lobby.model.GameType;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.components.Button;
-import net.yura.mobile.util.Properties;
-import net.yura.swingme.core.CoreUtil;
 
 /**
  * @author Yura Mamyrin
@@ -91,19 +91,28 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     /**
      * @see net.yura.domination.lobby.client.ClientGameRisk#gameObject(java.lang.Object)
      */
-    public void objectForGame(Object object) {
+    public void objectForGame(Object message) throws IOException, ClassNotFoundException {
         try {
-            if (object instanceof RiskGame) {
-                RiskGame thegame = (RiskGame) object;
-                Player player = thegame.getPlayer(lobby.whoAmI());
-                String address = player == null ? "_watch_" : player.getAddress();
-                myrisk.setOnlinePlay(this);
-                myrisk.setAddress(address);
-                myrisk.setGame(thegame);
-                openGame = true;
+            if (message instanceof byte[]) {
+                ByteArrayInputStream in = new ByteArrayInputStream( (byte[])message );
+                ObjectInputStream oin = new ObjectInputStream(in);
+                Object object = oin.readObject();
+
+                if (object instanceof RiskGame) {
+                    RiskGame thegame = (RiskGame) object;
+                    Player player = thegame.getPlayer(lobby.whoAmI());
+                    String address = player == null ? "_watch_" : player.getAddress();
+                    myrisk.setOnlinePlay(this);
+                    myrisk.setAddress(address);
+                    myrisk.setGame(thegame);
+                    openGame = true;
+                }
+                else {
+                    logger.info("unknown object " + object);
+                }
             }
             else {
-                System.out.println("MiniLobbyRisk unknown object " + object);
+                throw new RuntimeException("unknown object "+message);
             }
         }
         finally {
@@ -134,6 +143,22 @@ public abstract class MiniLobbyRisk implements MiniLobbyGame,OnlineRisk {
     public void loginGoogle() {
     }
     public void gameStarted(int id) {
+        logger.info("gameStarted: " + id);
+    }
+
+    @Override
+    public void playerRenamed(String oldName, String newName) {
+        logger.info("player renamed: " + oldName + " -> " + newName);
+    }
+
+    @Override
+    public void playerAdded(String name) {
+        logger.info("player added: " + name);
+    }
+
+    @Override
+    public void playerRemoved(String name) {
+        logger.info("player removed: " + name);
     }
 
     public void gameActionPerformed(int action) {
