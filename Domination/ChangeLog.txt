@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		22
-	Android:	100
+	Android:	101
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -21,6 +21,11 @@ CURRENT VERSION:
 	better fallbacks for audio not loading from url
 	fix for small screen Domination not loading when space in path
 	installer updated to 5.2.4 to fix issue with Ubuntu jdk21 https://sf.net/p/domination/bugs/50/
+
+	iOS 22 fix webviews wrong width when running in not full screen mode
+	       Edge-to-Edge support
+
+	Android 101 Android Edge-to-edge support
 
 1.3.3 (11.01.2025) (svn rev 2616)
 
@@ -36,8 +41,6 @@ CURRENT VERSION:
 	SwingGUI: little memory graph on debug screen
 	SwingGUI: fix - allow opening TEG xml maps in MapEditor on macOS again
 
-	iOS 22 fix webviews wrong width when running in not full screen mode
-
 	iOS 21 fix crash in setNavigationBarHidden maybe
 
 	iOS 20 fix crash in text entry
@@ -48,8 +51,6 @@ CURRENT VERSION:
 
 	iOS 17 upgraded to MOE 1.10.1
 	       fix to not play sound when iPhone is already playing music
-
-	Android 101 Android Edge-to-edge support
 
 	Android 100 fix loading screen getting stuck when starting game
 
