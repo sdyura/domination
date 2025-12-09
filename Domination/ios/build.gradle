@@ -93,6 +93,28 @@ task noOp {
     }
 }
 
+import org.moe.generator.project.writer.XcodeEditor
+// by default "./gradlew moeUpdateXcodeSettings" ONLY updates the main 2 targets
+// but we have a 3rd target also, so we want to make sure we also update that
+moeUpdateXcodeSettings {
+    doLast {
+        def mainTargets = ["Simple"]
+        def xcodeProj = file(moe.xcode.project)
+        mainTargets.forEach {
+            def settings = new XcodeEditor.Settings()
+            settings.mainTarget = it
+            //settings.testTarget = moe.xcode.testTarget
+            settings.moeProject = getProjectDir()
+            settings.xcodeProject = xcodeProj
+            //settings.useLLVM = moe.nativeImage.useLLVM
+
+            XcodeEditor xcodeEditor = new XcodeEditor(xcodeProj)
+            xcodeEditor.update(settings)
+            xcodeEditor.getProjectFile().save()
+        }
+    }
+}
+
 // Set dependencies
 dependencies {
     implementation rootProject
