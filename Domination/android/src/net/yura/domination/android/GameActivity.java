@@ -37,7 +37,6 @@ import net.yura.android.AndroidMeActivity;
 import net.yura.android.AndroidMeApp;
 import net.yura.android.AndroidPreferences;
 import net.yura.domination.BuildConfig;
-import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
@@ -157,14 +156,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
         }
         catch (Throwable th) {
             logger.log(Level.INFO, "can not check for updates", th);
-        }
-
-        // make the navigation bar BLACK (the default seems to be white on some phones, e.g Samsung Galaxy S9)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // it seems this flag is ALSO needed for when we swap from normal to fullscreen mode
-            // otherwise the very first time we go into fullscreen we will get a black bar at the bottom
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setNavigationBarColor(ColorUtil.BLACK);
         }
 
         // enable full screen if needed
