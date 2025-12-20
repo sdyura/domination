@@ -69,7 +69,34 @@ public class StatsDialog extends JDialog implements ActionListener {
 
 		setTitle( resb.getString("swing.tab.statistics") );
 
-		JPanel thisgraph = new JPanel();
+		JPanel thisgraph = new JPanel() {
+                    
+                    @Override
+                    public void doLayout() {
+
+                        int sides = GraphicsUtil.scale(50);
+                        int bottom = GraphicsUtil.scale(150);
+                        graph.setBounds(sides, sides, getWidth() - sides * 2, getHeight() - sides - bottom);
+
+                        int leftStart = (getWidth() - GraphicsUtil.scale(642)) / 2;
+                        int x=leftStart;
+                        int y=getHeight() - sides - GraphicsUtil.scale(67);
+                        int w=GraphicsUtil.scale(107);
+                        int h=GraphicsUtil.scale(33);
+
+                        for (int c = 0; c < STAT_TYPES.length; c++) {
+                                AbstractButton button = ((AbstractButton)getComponent(c));
+                                button.setBounds(x, y, w, h);
+                                x = x + w;
+
+                                // when we have done half, move on to 2nd row
+                                if (c == (STAT_TYPES.length / 2) - 1) {
+                                        x = leftStart;
+                                        y = y + h;
+                                }
+                        }
+                    }
+                };
                 thisgraph.setBorder( new FlashBorder(
                         GraphicsUtil.getSubimage(Back, 100, 0, 740, 50),
                         GraphicsUtil.getSubimage(Back, 0, 0, 50, 400),
@@ -106,7 +133,7 @@ public class StatsDialog extends JDialog implements ActionListener {
                 ((AbstractButton)thisgraph.getComponent(0)).setSelected(true);
 
 		graph = new StatsPanel(myrisk);
-		GraphicsUtil.setBounds(graph, 50, 50, 640, 400);
+		
 
 		thisgraph.add(graph);
 
@@ -151,7 +178,6 @@ public class StatsDialog extends JDialog implements ActionListener {
                 AbstractButton statbutton = new JToggleButton(resb.getString("swing.toolbar."+a));
                 statbutton.setActionCommand(s+"");
                 statbutton.addActionListener( this );
-                GraphicsUtil.setBounds(statbutton, x, y, w, h);
                 group.add(statbutton);
 
                 NewGameFrame.sortOutButton( statbutton, GraphicsUtil.getSubimage(Back, x+100,y-433+165,w,h), GraphicsUtil.getSubimage(Back, x+100,y-433,w,h), GraphicsUtil.getSubimage(Back, x+100,y-433+66,w,h) );
