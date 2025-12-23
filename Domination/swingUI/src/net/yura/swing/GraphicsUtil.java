@@ -300,6 +300,10 @@ public class GraphicsUtil {
         catch(InterruptedException e) {
             System.out.println("Loading of the image was interrupted" );
         }
+        int status = mediaTracker.statusID(1, true);
+        if (status != MediaTracker.COMPLETE) {
+            System.out.println("Image status NOT COMPLETE " + status + " " +img);
+        }
         mediaTracker.removeImage(img);
     }
 }

@@ -3,6 +3,7 @@ package net.yura.swing;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.MediaTracker;
 import javax.swing.Icon;
 import javax.swing.ScrollPaneConstants;
 import java.awt.geom.RoundRectangle2D;
@@ -47,6 +48,17 @@ public class ArcCornerIcon implements Icon {
 
         if (grphcs instanceof Graphics2D) {
             ((Graphics2D)grphcs).clip(new RoundRectangle2D.Double(x + xOffset, y + yOffset, w + r, h + r, r * 2, r * 2));
+        }
+
+        // fix for java 1.5/1.6/1.7, if image is in ABORTED state, if we try and paint it
+        // it will call back to the ImageObserver/component, and if that component does not recognise it
+        // the component will just return false and say it does not care about this image,
+        // so it will never get loaded and so never get painted
+        if (base instanceof javax.swing.ImageIcon) {
+            if (((javax.swing.ImageIcon)base).getImageLoadStatus() == MediaTracker.ABORTED) {
+                // setting this to null forces it to try and paint it right away
+                cmpnt = null;
+            }
         }
 
         base.paintIcon(cmpnt, grphcs, x, y);
