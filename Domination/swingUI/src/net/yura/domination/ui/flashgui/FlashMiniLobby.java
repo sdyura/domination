@@ -60,7 +60,7 @@ public class FlashMiniLobby {
         panel.setBorder( new FlashBorder(
                     GraphicsUtil.getSubimage(img, 100, 0, 740, 50),
                     GraphicsUtil.getSubimage(img, 0, 0, 50, 400),
-                    GraphicsUtil.getSubimage(img, 100, 350, 740, 50), //img.getSubimage(100, 332, 740, 68),
+                    GraphicsUtil.getSubimage(img, 100, 400, 740, 50), //img.getSubimage(100, 332, 740, 68),
                     GraphicsUtil.getSubimage(img, 50, 0, 50, 400)
                 ) );
 

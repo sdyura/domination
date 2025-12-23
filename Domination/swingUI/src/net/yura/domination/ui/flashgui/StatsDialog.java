@@ -9,9 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.ScrollPaneConstants;
 import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -19,6 +21,8 @@ import net.yura.domination.engine.core.StatType;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.guishared.StatsPanel;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.swing.ArcCornerIcon;
+import net.yura.swing.ImageIcon;
 
 /**
  * <p> Statistics Dialog for FlashGUI </p>
@@ -54,7 +58,7 @@ public class StatsDialog extends JDialog implements ActionListener {
 		myrisk = r;
 		Back = RiskUIUtil.getUIImage(this.getClass(),"graph.jpg");
 		initGUI();
-		setResizable(false);
+		RiskUIUtil.setMinimumSize(this, getPreferredSize());
 		pack();
 	}
 
@@ -70,7 +74,7 @@ public class StatsDialog extends JDialog implements ActionListener {
 		setTitle( resb.getString("swing.tab.statistics") );
 
 		JPanel thisgraph = new JPanel() {
-                    
+
                     @Override
                     public void doLayout() {
 
@@ -113,8 +117,8 @@ public class StatsDialog extends JDialog implements ActionListener {
 
                 group = new ButtonGroup();
 
-		int x=49;
-		int y=483;
+		int x=149;
+		int y=50;
 		int w=107;
 		int h=33;
 
@@ -125,7 +129,7 @@ public class StatsDialog extends JDialog implements ActionListener {
 
                         // when we have done half, move on to 2nd row
                         if (c == (STAT_TYPES.length/2)-1) {
-                                x=49;
+                                x=149;
                                 y=y+h;
                         }
                 }
@@ -180,7 +184,36 @@ public class StatsDialog extends JDialog implements ActionListener {
                 statbutton.addActionListener( this );
                 group.add(statbutton);
 
-                NewGameFrame.sortOutButton( statbutton, GraphicsUtil.getSubimage(Back, x+100,y-433+165,w,h), GraphicsUtil.getSubimage(Back, x+100,y-433,w,h), GraphicsUtil.getSubimage(Back, x+100,y-433+66,w,h) );
+                Icon nornal = new ImageIcon(GraphicsUtil.getSubimage(Back, x, y + 283, w, h));
+                Icon hover = new ImageIcon(GraphicsUtil.getSubimage(Back, x, y, w, h));
+                Icon pressed = new ImageIcon(GraphicsUtil.getSubimage(Back, x, y + 66, w, h));
+
+                switch (s) {
+                    case 0:
+                        nornal = new ArcCornerIcon(nornal, ScrollPaneConstants.UPPER_LEFT_CORNER);
+                        hover = new ArcCornerIcon(hover, ScrollPaneConstants.UPPER_LEFT_CORNER);
+                        pressed = new ArcCornerIcon(pressed, ScrollPaneConstants.UPPER_LEFT_CORNER);
+                        break;
+                    case 5:
+                        nornal = new ArcCornerIcon(nornal, ScrollPaneConstants.UPPER_RIGHT_CORNER);
+                        hover = new ArcCornerIcon(hover, ScrollPaneConstants.UPPER_RIGHT_CORNER);
+                        pressed = new ArcCornerIcon(pressed, ScrollPaneConstants.UPPER_RIGHT_CORNER);
+                        break;
+                    case 6:
+                        nornal = new ArcCornerIcon(nornal, ScrollPaneConstants.LOWER_LEFT_CORNER);
+                        hover = new ArcCornerIcon(hover, ScrollPaneConstants.LOWER_LEFT_CORNER);
+                        pressed = new ArcCornerIcon(pressed, ScrollPaneConstants.LOWER_LEFT_CORNER);
+                        break;
+                    case 13:
+                        nornal = new ArcCornerIcon(nornal, ScrollPaneConstants.LOWER_RIGHT_CORNER);
+                        hover = new ArcCornerIcon(hover, ScrollPaneConstants.LOWER_RIGHT_CORNER);
+                        pressed = new ArcCornerIcon(pressed, ScrollPaneConstants.LOWER_RIGHT_CORNER);
+                        break;
+                    default:
+                        break;
+                }
+
+                NewGameFrame.sortOutButton(statbutton, nornal, hover, pressed);
 
                 return statbutton;
         }
