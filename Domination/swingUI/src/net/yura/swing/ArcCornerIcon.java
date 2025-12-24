@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MediaTracker;
+import java.awt.Shape;
 import javax.swing.Icon;
 import javax.swing.ScrollPaneConstants;
 import java.awt.geom.RoundRectangle2D;
@@ -46,6 +47,7 @@ public class ArcCornerIcon implements Icon {
             yOffset = -r;
         }
 
+        Shape oldClip = grphcs.getClip();
         if (grphcs instanceof Graphics2D) {
             ((Graphics2D)grphcs).clip(new RoundRectangle2D.Double(x + xOffset, y + yOffset, w + r, h + r, r * 2, r * 2));
         }
@@ -62,6 +64,8 @@ public class ArcCornerIcon implements Icon {
         }
 
         base.paintIcon(cmpnt, grphcs, x, y);
+
+        grphcs.setClip(oldClip);
     }
 
     @Override
