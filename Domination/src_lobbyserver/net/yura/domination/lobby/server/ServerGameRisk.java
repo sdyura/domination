@@ -394,7 +394,7 @@ public class ServerGameRisk extends TurnBasedGame {
 	}
 
         @Override
-	public boolean playerResigns(String username) {
+	public boolean playerResigns(String username, boolean gameTriggered) {
 		boolean gameRemoved = false;
 
 		String playerid = getPlayerId(username);
@@ -405,7 +405,7 @@ public class ServerGameRisk extends TurnBasedGame {
                         List<Player> players = (List<Player>)myrisk.getGame().getPlayers();
 			//myrisk.renamePlayer(username,newName,myrisk.getAddress(),Player.PLAYER_AI_CRAP);
 
-                        String newName = username+"-Resigned";
+                        String newName = username + (gameTriggered ? "-AutoResigned" : "-Resigned");
                         Player thePlayer=null,oldPlayer=null;
                         int aliveHumans=0,aliveAIs=0;
                         for (Player player:players) {
