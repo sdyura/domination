@@ -282,7 +282,7 @@ public class ServerGameRisk extends TurnBasedGame {
 	}
 
         @Override
-	public void loadGame(byte[] gameData) {
+	public void loadGame(String[] lobbyPlayers, byte[] gameData) {
             createGame();
             try {
                 ByteArrayInputStream in = new ByteArrayInputStream(gameData);
