@@ -3,6 +3,7 @@ package net.yura.domination.android.push;
 import java.util.HashMap;
 import java.util.Map;
 import javax.microedition.midlet.MIDlet;
+import net.yura.android.push.PushRegistrar;
 import net.yura.domination.R;
 import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;

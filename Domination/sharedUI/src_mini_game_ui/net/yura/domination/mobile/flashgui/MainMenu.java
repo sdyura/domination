@@ -13,6 +13,7 @@ import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Application;
+import net.yura.mobile.gui.border.BackgroundBorder;
 import net.yura.mobile.gui.border.Border;
 import net.yura.mobile.gui.border.EdgeToEdgeBorder;
 import net.yura.mobile.gui.components.Button;

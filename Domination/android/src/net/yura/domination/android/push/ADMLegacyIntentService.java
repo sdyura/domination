@@ -3,6 +3,7 @@ package net.yura.domination.android.push;
 import android.content.Intent;
 import android.os.Bundle;
 import com.amazon.device.messaging.ADMMessageHandlerBase;
+import net.yura.android.push.PushRegistrar;
 import net.yura.domination.R;
 import net.yura.lobby.client.PushLobbyClient;
 import java.util.HashMap;

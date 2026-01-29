@@ -586,24 +586,48 @@ public class DominationMain extends Application {
         }
     }
 
-    public void pushNotificationsToken(String token) {
+    public void pushNotificationsToken(String system, String token) {
+        logger.info("Push Token " + system + " " + token);
 
-        if (Application.getPlatform() == Application.PLATFORM_IOS) {
+        // we only request the token once we have connected
+        MiniLobbyClient lobby = adapter.lobby;
 
-            String apsEnvironment = System.getProperty("aps-environment");
+        // if the user has closed the lobby by the time we get the token we have nothing we can do
+        if (lobby != null) {
+            if (Application.getPlatform() == Application.PLATFORM_IOS) {
 
-            logger.info("Apple Push Token " + apsEnvironment + " " + token);
+                // if this is a dev build, this token will ONLY work on apples sandbox push server
+                if ("APN_DEV".equals(system)) {
+                    token = "sandbox-" + token;
+                }
 
-            // if this is a dev build, this token will ONLY work on apples sandbox push server
-            if ("development".equals(apsEnvironment)) {
-                token = "sandbox-" + token;
-            }
+                // TODO do we care? do we need to save this? what will we do with this next?
+                lobby.mycom.addPushEventListener(new PushLobbyClient() {
+                    @Override
+                    public void registerDone() {
+                        logger.info("ios getToken registerDone");
+                        //Preferences prefs = LobbySettings.getLobbyPreferences();
+                        //prefs.putBoolean("APNTokenSent", true);
+                        //LobbySettings.saveSettings(prefs);
+                    }
+                });
 
-            // we only request the token once we have connected
-            MiniLobbyClient lobby = adapter.lobby;
-            // if the user has closed the lobby by the time we get the token we have nothing we can do
-            if (lobby != null) {
                 lobby.mycom.setPushToken(PushLobbyClient.PUSH_SYSTEM_APN, token);
+            }
+            else if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+
+                String myToken = token;
+                lobby.mycom.addPushEventListener(new PushLobbyClient() {
+                    @Override
+                    public void registerDone() {
+                        try {
+                            Application.getInstance().platformRequest("notify://setRegisteredOnServer/" + myToken);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                lobby.mycom.setPushToken(system, token);
             }
         }
     }

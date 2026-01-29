@@ -10,6 +10,7 @@ import net.yura.domination.lobby.mini.MiniLobbyRisk;
 import net.yura.domination.mobile.flashgui.DominationMain.GooglePlayGameServices;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.Application;
+import net.yura.mobile.gui.DesktopPane;
 import net.yura.mobile.gui.Icon;
 import net.yura.mobile.gui.components.Button;
 import net.yura.mobile.gui.components.Frame;
@@ -104,7 +105,25 @@ public class MiniFlashRiskAdapter implements RiskListener {
             public void removeSpectator(String player) { }
             @Override
             public void renameSpectator(String oldname, String newname, int newtype) { }
-        } );
+        } ) {
+
+            @Override
+            protected void requestPushToken() {
+                if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
+                    // as we use android activity API, we want to ONLY launch a new activity if we are showing
+                    // if we are in the background, we may not have an activity, and
+                    if (DesktopPane.getDesktopPane().isShown()) {
+                        // TODO fix me, seems to be hard coded to Domination class!!!
+                        Application.openURL("nativeNoResult://net.yura.domination.android.push.PushActivity");
+                    } else {
+                        Logger.info("DesktopPane NOT shown! NOT calling PushActivity!");
+                    }
+                }
+                else {
+                    super.requestPushToken();
+                }
+            }
+        };
 
         updatePlayGamesInfo();
         lobby.connect(net.yura.lobby.mini.MiniLobbyClient.LOBBY_SERVER);

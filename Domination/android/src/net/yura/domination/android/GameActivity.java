@@ -1,9 +1,7 @@
 package net.yura.domination.android;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +39,6 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.domination.mobile.flashgui.MiniFlashRiskAdapter;
-import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.model.Game;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -194,8 +191,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                 }
             }
         }.start();
-
-        handleIntent(getIntent());
     }
 
     private void checkIfFullScreenNeeded() {
@@ -219,38 +214,6 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                 window.getDecorView().setSystemUiVisibility(0);
             }
         }
-    }
-
-    private void handleIntent(Intent intent) {
-        String packageName = AndroidMeApp.getContext().getPackageName();
-
-        String gameId = intent.getStringExtra(packageName + "." + PushLobbyClient.GAME_ID);
-        String options = intent.getStringExtra(packageName + "." + PushLobbyClient.OPTIONS);
-
-        DominationMain dmain = (DominationMain)AndroidMeApp.getMIDlet();
-
-        if (gameId != null && dmain != null) {
-
-            Map params = new HashMap();
-            params.put(PushLobbyClient.GAME_ID, gameId);
-            params.put(PushLobbyClient.OPTIONS, options);
-
-            // use cross-platform method for opening a notification
-            dmain.openNotification(params);
-
-            // as we have handled this open game request, clear it
-            intent.removeExtra(packageName + "." + PushLobbyClient.GAME_ID);
-            intent.removeExtra(packageName + "." + PushLobbyClient.OPTIONS);
-        }
-    }
-
-    /**
-     * This is called if we are already open, but user has clicked on a game notification
-     */
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
     }
 
     public static boolean getDefaultFullScreen(Context context) {

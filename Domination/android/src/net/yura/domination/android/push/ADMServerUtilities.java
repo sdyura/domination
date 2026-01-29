@@ -3,6 +3,7 @@ package net.yura.domination.android.push;
 import java.util.logging.Logger;
 import android.content.Context;
 import com.amazon.device.messaging.ADM;
+import net.yura.android.push.PushRegistrar;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.PushLobbyClient;
 
