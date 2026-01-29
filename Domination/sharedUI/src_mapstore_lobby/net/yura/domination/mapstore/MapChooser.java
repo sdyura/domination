@@ -12,6 +12,7 @@ import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.mobile.gui.ActionListener;
 import net.yura.mobile.gui.Application;
 import net.yura.mobile.gui.ButtonGroup;
@@ -49,28 +50,8 @@ public class MapChooser implements ActionListener,MapServerListener {
     private List list;
 
     public static void loadThemeExtension() {
-        loadThemeExtension("/ms_tabbar.xml");
-        loadThemeExtension("/segmented_control.xml");
-    }
-
-    public static void loadThemeExtension(String name) {
-        InputStream themeData = Application.getResourceAsStream(name);
-        try {
-            LookAndFeel laf = DesktopPane.getDesktopPane().getLookAndFeel();
-            if (laf instanceof SynthLookAndFeel) {
-                ((SynthLookAndFeel)laf).load(themeData);
-            }
-            else {
-                System.err.println("LookAndFeel not SynthLookAndFeel "+laf);
-            }
-        }
-        catch(Exception ex) {
-            // this is a none faital error, we will go on
-            RiskUtil.printStackTrace(ex);
-        }
-        finally {
-            RiskUtil.close(themeData);
-        }
+        MiniLobbyClient.loadThemeExtension("/ms_tabbar.xml");
+        MiniLobbyClient.loadThemeExtension();
     }
 
     public MapChooser(ActionListener al, java.util.List<String> localMaps, Set<String> allowedMaps) {
