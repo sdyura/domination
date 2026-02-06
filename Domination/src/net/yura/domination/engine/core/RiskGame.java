@@ -474,19 +474,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 				workOutEndGoStats( currentPlayer );
 				currentPlayer.nextTurn();
 
-				// add new armies for the Territories Owned
-                                int extraArmies = currentPlayer.getNoTerritoriesOwned() / 3;
-                                if (extraArmies < minimumNewArmies) {
-                                        extraArmies = minimumNewArmies;
-                                }
-                                currentPlayer.addArmies(extraArmies);
-
-				// add new armies for the Continents Owned
-				for (int c=0; c< Continents.length ; c++) {
-					if ( Continents[c].isOwned(currentPlayer) ) {
-						currentPlayer.addArmies( Continents[c].getArmyValue() );
-					}
-				}
+				currentPlayer.addArmies(getExtraArmiesForPlayer(currentPlayer));
 			}
 
 			if (getSetupDone() && gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null) { // capital risk setup not finished
@@ -510,6 +498,22 @@ transient - A keyword in the Java programming language that indicates that a fie
 			//System.out.println("wrong state for endgo " + gameState);
 			return null;
 		}
+	}
+
+	public int getExtraArmiesForPlayer(Player currentPlayer) {
+		// add new armies for the Territories Owned
+		int extraArmies = currentPlayer.getNoTerritoriesOwned() / 3;
+		if (extraArmies < minimumNewArmies) {
+			extraArmies = minimumNewArmies;
+		}
+
+		// add new armies for the Continents Owned
+		for (int c = 0; c < Continents.length; c++) {
+			if (Continents[c].isOwned(currentPlayer)) {
+				extraArmies += Continents[c].getArmyValue();
+			}
+		}
+		return extraArmies;
 	}
 
     /**

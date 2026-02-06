@@ -616,7 +616,7 @@ public class DominationMain extends Application {
             }
             else if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
 
-                String myToken = token;
+                final String myToken = token;
                 lobby.mycom.addPushEventListener(new PushLobbyClient() {
                     @Override
                     public void registerDone() {

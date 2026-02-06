@@ -43,14 +43,14 @@ public class PlayGameTest extends TestCase {
     public void playGame(String mode) throws Exception {
         File file = TestUtil.getScriptFile(mode);
 
-        assertTrue(file + " NOT FOUND!", file.exists());
+        assertTrue(file.getAbsolutePath() + " NOT FOUND!", file.exists());
 
         playGame(file);
     }
     
     public void playGame(File file) throws Exception {
         //InputStream in = ReplayGameTest.class.getResourceAsStream("test.risk");
-        Risk risk = TestUtil.newRisk();
+        final Risk risk = TestUtil.newRisk();
 
         risk.addRiskListener(new RiskAdapter() {
             public void sendMessage(String output, boolean redrawNeeded, boolean repaintNeeded) {
