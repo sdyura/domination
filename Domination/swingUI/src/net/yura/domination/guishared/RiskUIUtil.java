@@ -9,7 +9,9 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Image;
@@ -78,6 +80,7 @@ import net.yura.domination.engine.RiskIO;
 import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
+import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.swing.BrowserLauncher;
 import net.yura.swing.GraphicsUtil;
@@ -1621,6 +1624,53 @@ public class RiskUIUtil {
         public static void setColorBlindMode(Preferences prefs) {
             if (prefs != null) {
                 colorBlind = prefs.getBoolean(RiskSettings.COLOR_BLIND_KEY, false);
+            }
+        }
+        
+        /**
+         * @see net.yura.domination.mobile.flashgui.GameWindow
+         */
+        public static void drawDashboard(Graphics g, RiskGame game) {
+
+            FontMetrics font = g.getFontMetrics();
+            List<Player> players = game.getPlayers();
+            Player current = game.getCurrentPlayer();
+
+            final int lineHeight = font.getHeight();
+            int y = lineHeight;
+
+            int xPadding = font.stringWidth("  ");
+            String[][] data = RiskUtil.getDashboardText(game);
+
+            // Compute max width for each column
+            int[] colWidths = new int[data[0].length];
+            for (String[] row : data) {
+                for (int j = 0; j < row.length; j++) {
+                    colWidths[j] = Math.max(colWidths[j], font.stringWidth(row[j]));
+                }
+            }
+
+            // Draw each row
+            for (int row = 0; row < data.length; row++) {
+                int x = font.getHeight();
+                Player p = players.get(row);
+                if (p == current) {
+                    g.setColor(Color.WHITE);
+                    String arrow = "\u25ba";
+                    g.drawString(arrow, lineHeight - font.stringWidth(arrow), y);
+                }
+                g.setColor(new Color(p.getColor()));
+                for (int col = 0; col < data[row].length; col++) {
+                    g.drawString(data[row][col], x, y);
+                    if (col == 0) {
+                        x += lineHeight + font.stringWidth(" "); // player emoji width + space
+                        y += lineHeight;
+                    }
+                    else {
+                        x += colWidths[col] + xPadding;
+                    }
+                }
+                y += lineHeight + xPadding;
             }
         }
 }

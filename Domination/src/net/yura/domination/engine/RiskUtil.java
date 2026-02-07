@@ -28,6 +28,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.yura.domination.engine.core.Continent;
+import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.MapTranslator;
 
@@ -588,5 +589,26 @@ public class RiskUtil {
         int dotIndex = filename.lastIndexOf('.');
         // if file starts with a dot, this is a hidden file, not an extension
         return dotIndex > 0 ? filename.substring(0, dotIndex) : filename;
+    }
+
+    public static String[][] getDashboardText(RiskGame game) {
+        List<Player> players = game.getPlayers();
+        String[][] dashboard = new String[players.size()][];
+
+        for (int i = 0; i < players.size(); i++) {
+            Player p = players.get(i);
+
+            String card = "\ud83c\udcad";
+            String flag = "\u2691";
+            String army = "\uc6c3"; // happy face: \u263a
+            String extraArmies = "+";
+
+            String emoji = p.isAlive() ? (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") : (p.getType() == Player.PLAYER_HUMAN ? "\ud83d\udc80" : "\ud83d\uddd1");
+
+            int extra = game.getSetupDone() ? game.getExtraArmiesForPlayer(p) : p.getExtraArmies();
+
+            dashboard[i] = new String[] { emoji + " " + p.getName(), card + p.getCards().size(), flag + p.getNoTerritoriesOwned(), army + p.getNoArmies(), extraArmies + extra };
+        }
+        return dashboard;
     }
 }

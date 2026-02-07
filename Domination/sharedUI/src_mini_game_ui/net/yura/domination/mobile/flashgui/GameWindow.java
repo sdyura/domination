@@ -253,18 +253,35 @@ public class GameWindow extends Frame implements ActionListener {
                     List<Player> players = myrisk.getGame().getPlayers();
                     Player current = myrisk.getGame().getCurrentPlayer();
                     g.setFont(font);
-                    final int x = font.getHeight();
-                    int y = font.getHeight();
-                    for (Player p : players) {
-                        g.setColor(p.getColor());
-                        String emoji = p.isAlive() ? (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") : (p.getType() == Player.PLAYER_HUMAN ? "\ud83d\udc80" : "\ud83d\uddd1");
-                        String text = emoji + " " + p.getName() + " - " + p.getCards().size();
-                        g.drawString(text, x, y);
-                        if (p == current) {
-                            int offset = x + font.getWidth(text) + x / 2;
-                            MoveDialog.drawArrow(g, offset + (int)(x * 1.5), offset, y, y + x, ARROW_COLOR);
+                    final int lineHeight = font.getHeight();
+                    int y = lineHeight;
+
+                    int xPadding = font.getWidth("  ");
+                    String[][] data = RiskUtil.getDashboardText(myrisk.getGame());
+
+                    // Compute max width for each column
+                    int[] colWidths = new int[data[0].length];
+                    for (String[] row : data) {
+                        for (int j = 0; j < row.length; j++) {
+                            colWidths[j] = Math.max(colWidths[j], font.getWidth(row[j]));
                         }
-                        y = y + x;
+                    }
+
+                    // Draw each row
+                    for (int row = 0; row < data.length; row++) {
+                        int x = font.getHeight();
+                        Player p = players.get(row);
+                        g.setColor(p.getColor());
+                        for (int col = 0; col < data[row].length; col++) {
+                            g.drawString(data[row][col], x, y);
+                            x += colWidths[col] + xPadding;
+                        }
+                        if (p == current) {
+                            g.setColor(0xFFFFFFFF);
+                            String arrow = "\u25ba";
+                            g.drawString(arrow, lineHeight - font.getWidth(arrow), y);
+                        }
+                        y += lineHeight;
                     }
                 }
             }

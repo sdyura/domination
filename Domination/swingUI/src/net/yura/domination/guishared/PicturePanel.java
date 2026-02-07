@@ -236,10 +236,11 @@ public class PicturePanel extends JPanel implements MapPanel {
 	 * @param g a Graphics object.
 	 */
 	public void paintComponent(Graphics g) {
-
 	    super.paintComponent(g);
 
 	    try {
+                g.setFont(getFont());
+                RiskUIUtil.drawDashboard(g, myrisk.getGame());
 
 		if (img != null) {
 
@@ -304,7 +305,10 @@ public class PicturePanel extends JPanel implements MapPanel {
 		}
 
 	    }
-	    catch(Exception e) { } // an excpetion here really does not matter
+	    catch(Exception e) {
+                // an excpetion here really does not matter
+                Logger.getLogger(PicturePanel.class.getName()).info("error in paintComponent: " + e);
+            }
 	}
 
 	private int getDrawImageX(double ratio) {
