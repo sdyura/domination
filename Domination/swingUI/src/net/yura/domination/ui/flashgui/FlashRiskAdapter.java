@@ -13,7 +13,6 @@ import javax.swing.RootPaneContainer;
 import javax.swing.SwingUtilities;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskListener;
-import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.RiskGame;

@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -414,7 +415,9 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 					break;
 				}
 				case MainMenu.BUTTON_EXIT: {
-					exit();
+                                        // do the same thing as if the user clicked on [X] in the window
+                                        // what that action will be will depend on if this is run directly or from SwingGUI
+                                        window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
 					break;
 				}
 				case MainMenu.BUTTON_DONATE: {
@@ -605,22 +608,6 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 	public void keyPressed( KeyEvent event ) {}
 	public void keyTyped( KeyEvent event ) {}
 
-	private void exit() {
-
-		//Frame frame = RiskUtil.findParentFrame(this);
-		//
-		//if ( frame instanceof JFrame && ((JFrame)frame).getDefaultCloseOperation() == JFrame.EXIT_ON_CLOSE && RiskUtil.checkForNoSandbox()) {
-		//
-		//	// not actually needed as it will auto be done
-		//	System.exit(0);
-		//}
-
-		myrisk.deleteRiskListener(fra);
-
-		//frame.setVisible(false);
-		//frame.dispose();
-	}
-
         public void hide() {
             window.setVisible(false);
         }
@@ -711,7 +698,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 		RiskUIUtil.checkForUpdates(risk);
 	}
 
-	public static MainMenu newMainMenuFrame(Risk risk, int defaultCloseOperation) {
+	public static MainMenu newMainMenuFrame(final Risk risk, int defaultCloseOperation) {
 
 		JFrame gui = new JFrame();
 
@@ -721,8 +708,8 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
                 gui.setDefaultCloseOperation(defaultCloseOperation);
 		gui.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent evt) {                        
-                        mm.exit();
+                    public void windowClosing(java.awt.event.WindowEvent evt) { 
+                        risk.deleteRiskListener(mm.fra);
                     }
 		});
 

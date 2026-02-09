@@ -1630,14 +1630,14 @@ public class RiskUIUtil {
         /**
          * @see net.yura.domination.mobile.flashgui.GameWindow
          */
-        public static void drawDashboard(Graphics g, RiskGame game) {
+        public static void drawDashboard(Graphics g, RiskGame game, boolean wrap) {
 
             FontMetrics font = g.getFontMetrics();
             List<Player> players = game.getPlayers();
             Player current = game.getCurrentPlayer();
 
             final int lineHeight = font.getHeight();
-            int y = lineHeight;
+            int y = (wrap ? lineHeight * 2 : lineHeight);
 
             int xPadding = font.stringWidth("  ");
             String[][] data = RiskUtil.getDashboardText(game);
@@ -1652,17 +1652,17 @@ public class RiskUIUtil {
 
             // Draw each row
             for (int row = 0; row < data.length; row++) {
-                int x = font.getHeight();
+                int x = wrap ? lineHeight : lineHeight * 2;
                 Player p = players.get(row);
                 if (p == current) {
                     g.setColor(Color.WHITE);
                     String arrow = "\u25ba";
-                    g.drawString(arrow, lineHeight - font.stringWidth(arrow), y);
+                    g.drawString(arrow, x - font.stringWidth(arrow), y);
                 }
                 g.setColor(new Color(p.getColor()));
                 for (int col = 0; col < data[row].length; col++) {
                     g.drawString(data[row][col], x, y);
-                    if (col == 0) {
+                    if (wrap && col == 0) {
                         x += lineHeight + font.stringWidth(" "); // player emoji width + space
                         y += lineHeight;
                     }
@@ -1670,7 +1670,7 @@ public class RiskUIUtil {
                         x += colWidths[col] + xPadding;
                     }
                 }
-                y += lineHeight + xPadding;
+                y += lineHeight + (wrap ? xPadding : xPadding / 2);
             }
         }
 }
