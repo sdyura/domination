@@ -245,16 +245,15 @@ public class PicturePanel extends JPanel implements MapPanel {
                         //System.out.println("scale: "+s);
                         int drawImageX = getDrawImageX(s);
 
+                        Graphics2D g2 = (Graphics2D)g;
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        
                         // draw the dashbard
                         g.setFont(getFont());
                         RiskUIUtil.drawDashboard(g, myrisk.getGame(), drawImageX > 0);
 
-			Graphics2D g2 = (Graphics2D)g;
-
 			g2.translate(drawImageX, getDrawImageY(s));
 			g2.scale(s,s);
-
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 			g2.drawImage(img,0,0,this);
 
