@@ -11,7 +11,7 @@ import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Frame;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Image;
@@ -1630,7 +1630,7 @@ public class RiskUIUtil {
         /**
          * @see net.yura.domination.mobile.flashgui.GameWindow
          */
-        public static void drawDashboard(Graphics g, RiskGame game, boolean wrap) {
+        public static void drawDashboard(Graphics2D g, RiskGame game, boolean wrap) {
 
             FontMetrics font = g.getFontMetrics();
             List<Player> players = game.getPlayers();
@@ -1660,8 +1660,16 @@ public class RiskUIUtil {
                     g.drawString(arrow, x - font.stringWidth(arrow), y);
                 }
                 g.setColor(new Color(p.getColor()));
+                boolean isLightText = ColorUtil.isColorLight(p.getColor());
+
                 for (int col = 0; col < data[row].length; col++) {
-                    g.drawString(data[row][col], x, y);
+                    if (isLightText) {
+                        g.drawString(data[row][col], x, y);
+                    }
+                    else {
+                        GraphicsUtil.drawStringWithOutline(g, data[row][col], x, y, Color.WHITE);
+                    }
+                    
                     if (wrap && col == 0) {
                         x += lineHeight + font.stringWidth(" "); // player emoji width + space
                         y += lineHeight;

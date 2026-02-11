@@ -7,6 +7,7 @@ import collisionphysics.BallWorld;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -64,6 +65,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 
 	private String strCountry;
 	private RescaleOp HighLight;
+        private Font circleFont;
 
 	/**
 	 * Creates an Picture Panel
@@ -84,6 +86,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 
                 setPreferredSize(size);
                 setMinimumSize(size);
+                setBackground(Color.BLACK);
 	}
 
         protected void processMouseEvent(MouseEvent e) {
@@ -126,7 +129,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 
 		RiskGame game = myrisk.getGame();
                 BALL_SIZE = game.getCircleSize();
-                setFont( new java.awt.Font("Arial", java.awt.Font.PLAIN, (BALL_SIZE+2)/2 ) );
+                circleFont = new java.awt.Font("Arial", java.awt.Font.PLAIN, (BALL_SIZE+2)/2 );
 		original = O;
 		cc=NO_COUNTRY;
 		c1=NO_COUNTRY;
@@ -247,10 +250,10 @@ public class PicturePanel extends JPanel implements MapPanel {
 
                         Graphics2D g2 = (Graphics2D)g;
                         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        
+
                         // draw the dashbard
                         g.setFont(getFont());
-                        RiskUIUtil.drawDashboard(g, myrisk.getGame(), drawImageX > 0);
+                        RiskUIUtil.drawDashboard(g2, myrisk.getGame(), drawImageX > 0);
 
 			g2.translate(drawImageX, getDrawImageY(s));
 			g2.scale(s,s);
@@ -284,11 +287,13 @@ public class PicturePanel extends JPanel implements MapPanel {
 
 			drawArmies(g2);
 
+                        g2.scale(1.0 / s, 1.0 / s);
+                        
 			if (cc != NO_COUNTRY) {
 
                                 int offset = 5;
 
-				TextLayout tl = new TextLayout( this.strCountry + " "+ myrisk.getCountryName( cc ) , g2.getFont() , g2.getFontRenderContext() );
+				TextLayout tl = new TextLayout(this.strCountry + " " + myrisk.getCountryName(cc), getFont(), g2.getFontRenderContext());
 				int w = (int)tl.getAdvance();
 				int h = (int)tl.getAscent() + (int)tl.getDescent();
 
@@ -308,11 +313,11 @@ public class PicturePanel extends JPanel implements MapPanel {
 	}
 
 	private int getDrawImageX(double ratio) {
-		return (int) (getWidth()-( getMapWidth() *ratio) )/2;
+		return (int) ((getWidth()-( getMapWidth() *ratio) ) / 1.2);
 	}
 
 	private int getDrawImageY(double ratio) {
-		return (int) (getHeight()-( getMapHeight() *ratio) )/2;
+		return (int) ((getHeight()-( getMapHeight() *ratio) ) / 1.2);
 	}
 
 	private double getScale() {
@@ -393,14 +398,13 @@ public class PicturePanel extends JPanel implements MapPanel {
                         }
                     }
                 }
-                
+
+                g2.setFont(circleFont);
+
                 Country t;
                 for (int c=0; c< v.length ; c++) {
-
                         t = v[c];
 
-                        g2.setFont( getFont() );
-                        
                         if ( t.getOwner() != null ) {
 
                                 int x,y;
@@ -444,7 +448,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 
                 g2.setColor(textColor);
                 Color outlineColor = Color.WHITE.equals(textColor) ? Color.BLACK : Color.WHITE;
-                GraphicsUtil.drawStringWithOutline(g2, new TextLayout(noa, g2.getFont(), g2.getFontRenderContext()), textX, textY, outlineColor);
+                GraphicsUtil.drawStringWithOutline(g2, new TextLayout(noa, circleFont, g2.getFontRenderContext()), textX, textY, outlineColor);
             }
 
             if (capital != null) {
