@@ -43,6 +43,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 import net.yura.domination.audio.GameSound;
+import net.yura.domination.engine.JavaCompatUtil;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
@@ -55,7 +56,6 @@ import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
 import net.yura.domination.guishared.RiskFileFilter;
 import net.yura.domination.engine.translation.TranslationBundle;
-import net.yura.domination.guishared.PicturePanel;
 
 /**
  * <p> New Game Frame for FlashGUI </p>
@@ -522,17 +522,20 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 
 	static class LimitedDocument extends PlainDocument {
 
+                static final int MAX = 15;
+            
 		public void insertString(int offs, String str, AttributeSet a) throws javax.swing.text.BadLocationException {
 
 			if (str == null) {
 				return;
 			}
+                        
+                        int currentLength = JavaCompatUtil.graphemeCount(getText(0, getLength()));
+                        int newLength = JavaCompatUtil.graphemeCount(str);
 
-			if ( (getLength() + str.length()) > 15 ) {
-
-				str = str.substring(0, str.length() - ((getLength() + str.length())-15) );
+			if ((currentLength + newLength) > MAX) {
+				str = JavaCompatUtil.subGrapheme(str, 0, newLength - ((currentLength + newLength) - MAX));
 				Toolkit.getDefaultToolkit().beep();
-
 			}
 
                         super.insertString(offs, str, a);
