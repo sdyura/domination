@@ -95,13 +95,14 @@ public class MiniUtil {
         String displayInfo;
 
         if (Application.getPlatform() == Application.PLATFORM_IOS) {
-            DesktopPane dp = DesktopPane.getDesktopPane();
-            displayInfo = "<p>Screen scale: " + System.getProperty("display.scale") + " window: " +dp.getWidth() + "x" + dp.getHeight() + "</p>";
+            displayInfo = "<p>Screen scale: " + System.getProperty("display.scale");
         }
         else {
             // display.size = small/normal/large/...
-            displayInfo = "<p>DPI: " + System.getProperty("display.dpi") + " Density: " + System.getProperty("display.density") + " Size: " + System.getProperty("display.size") + "</p>";
+            displayInfo = "<p>DPI: " + System.getProperty("display.dpi") + " Density: " + System.getProperty("display.density");
         }
+        DesktopPane dp = DesktopPane.getDesktopPane();
+        displayInfo += " Size: " + System.getProperty("display.size") + "<br/>window: " +dp.getWidth() + "x" + dp.getHeight() + "</p>";
 
         return "<html>" +
                 "<div style=\"" +
