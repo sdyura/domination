@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		22
+	iOS:		23
 	Android:	101
 	Game GUI:	2
 	Swing GUI:	2
