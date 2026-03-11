@@ -27,6 +27,8 @@ CURRENT VERSION:
 	fix for small screen Domination not loading when space in path
 	installer updated to 5.2.4 to fix issue with Ubuntu jdk21 https://sf.net/p/domination/bugs/50/
 
+	iOS 23 more info in dashboard
+
 	iOS 22 fix webviews wrong width when running in not full screen mode
 	       Edge-to-Edge support
 

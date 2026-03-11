@@ -38,15 +38,12 @@ public class PushActivity extends Activity {
         finish();
     }
 
-    public static Connection getLobbyConnection() {
+    public static MiniLobbyClient getLobbyConnection() {
         DominationMain main = (DominationMain)AndroidMeApp.getMIDlet();
         if (main != null) {
             MiniFlashRiskAdapter gui = main.adapter;
             if (gui != null) {
-                MiniLobbyClient lobby = gui.lobby;
-                if (lobby != null) {
-                    return lobby.mycom;
-                }
+                return gui.lobby;
             }
         }
         return null;

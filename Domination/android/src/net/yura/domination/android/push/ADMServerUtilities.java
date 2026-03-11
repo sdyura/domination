@@ -6,6 +6,7 @@ import com.amazon.device.messaging.ADM;
 import net.yura.android.push.PushRegistrar;
 import net.yura.lobby.client.Connection;
 import net.yura.lobby.client.PushLobbyClient;
+import net.yura.lobby.mini.MiniLobbyClient;
 
 public class ADMServerUtilities implements PushLobbyClient {
 
@@ -77,18 +78,16 @@ public class ADMServerUtilities implements PushLobbyClient {
     }
 
     public static void registerOnLobbyServer(String registrationId) {
-        Connection con = PushActivity.getLobbyConnection();
+        MiniLobbyClient con = PushActivity.getLobbyConnection();
         if (con != null) {
-            con.addPushEventListener(new ADMServerUtilities(registrationId));
-            con.setPushToken(PUSH_SYSTEM_ADM, registrationId);
+            con.setPushToken(PUSH_SYSTEM_ADM, registrationId, new ADMServerUtilities(registrationId));
         }
     }
 
     public static void unregisterOnLobbyServer() {
-        Connection con = PushActivity.getLobbyConnection();
+        MiniLobbyClient con = PushActivity.getLobbyConnection();
         if (con != null) {
-            con.addPushEventListener(new ADMServerUtilities(null));
-            con.setPushToken(PUSH_SYSTEM_ADM, null);
+            con.setPushToken(PUSH_SYSTEM_ADM, null, new ADMServerUtilities(null));
         }
     }
 

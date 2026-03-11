@@ -111,7 +111,7 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
             }
             @Override
             public void playGame(Game game) {
-                getUi().lobby.playGame(game);
+                getUi().lobby.openGame(game);
             }
             @Override
             public void getUsername() {
@@ -342,6 +342,9 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
 
     @Override
     public void showAchievements() {
+        // call this to sign out
+        //GoogleSignIn.getClient(this, com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+
         if (isSignedIn()) {
             Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this))
                     .getAchievementsIntent().addOnSuccessListener(new OnSuccessListener<Intent>() {

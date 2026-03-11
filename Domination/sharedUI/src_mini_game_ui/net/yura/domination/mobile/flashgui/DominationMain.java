@@ -581,7 +581,7 @@ public class DominationMain extends Application {
 
     public void lobbyConnected() {
         if (pendingOpenGame != null) {
-            adapter.lobby.playGame(pendingOpenGame);
+            adapter.lobby.openGame(pendingOpenGame);
             pendingOpenGame = null;
         }
     }
@@ -595,39 +595,19 @@ public class DominationMain extends Application {
         // if the user has closed the lobby by the time we get the token we have nothing we can do
         if (lobby != null) {
             if (Application.getPlatform() == Application.PLATFORM_IOS) {
-
-                // if this is a dev build, this token will ONLY work on apples sandbox push server
-                if ("APN_DEV".equals(system)) {
-                    token = "sandbox-" + token;
-                }
-
-                // TODO do we care? do we need to save this? what will we do with this next?
-                lobby.mycom.addPushEventListener(new PushLobbyClient() {
-                    @Override
-                    public void registerDone() {
-                        logger.info("ios getToken registerDone");
-                        //Preferences prefs = LobbySettings.getLobbyPreferences();
-                        //prefs.putBoolean("APNTokenSent", true);
-                        //LobbySettings.saveSettings(prefs);
-                    }
-                });
-
-                lobby.mycom.setPushToken(PushLobbyClient.PUSH_SYSTEM_APN, token);
+                lobby.setPushToken(system, token, null);
             }
             else if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
-
-                final String myToken = token;
-                lobby.mycom.addPushEventListener(new PushLobbyClient() {
+                lobby.setPushToken(system, token, new PushLobbyClient() {
                     @Override
                     public void registerDone() {
                         try {
-                            Application.getInstance().platformRequest("notify://setRegisteredOnServer/" + myToken);
+                            Application.getInstance().platformRequest("notify://setRegisteredOnServer/" + token);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 });
-                lobby.mycom.setPushToken(system, token);
             }
         }
     }
@@ -646,7 +626,7 @@ public class DominationMain extends Application {
             if (ui != null) {
                 if (ui.lobby != null) {
                     if (ui.lobby.whoAmI() != null) {
-                        ui.lobby.playGame(game);
+                        ui.lobby.openGame(game);
                     }
                     else {
                         pendingOpenGame = game;

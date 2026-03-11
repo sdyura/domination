@@ -69,7 +69,7 @@ public class MiniFlashRiskAdapter implements RiskListener {
                 return DominationMain.version;
             }
             @Override
-            public void connected(String username) {
+            public void userLogin(String username) {
                 DominationMain dmain = (DominationMain) Application.getInstance();
                 dmain.lobbyConnected(); // open any pending game
 
