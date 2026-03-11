@@ -1,25 +1,25 @@
 package net.yura.domination.ios;
 
+import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.ios.KeychainUtil;
-import net.yura.ios.SwingMEiOSApplication;
 import net.yura.lobby.client.LobbySettings;
 import net.yura.lobby.util.SimplePreferences;
+import net.yura.mobile.gui.DesktopPane;
 import java.io.File;
 import java.util.prefs.Preferences;
 import apple.foundation.c.Foundation;
 import apple.foundation.enums.NSSearchPathDirectory;
 import apple.foundation.enums.NSSearchPathDomainMask;
 
-public class DominationApplication {
+public class iOSDominationApplication extends DominationMain {
 
-    public static void main(String[] args) {
-
+    @Override
+    public void initialize(DesktopPane rootpane) {
 /*
         // alternative to saving in keychain is using a app group preferences
         NSUserDefaults sharedDefaults = NSUserDefaults.alloc().initWithSuiteName("group.net.yura.lobby");
         String lobbyUUID = sharedDefaults.stringForKey("uuid");
 */
-
         try {
             String group = "GP37R5KJ29.net.yura.lobby";
             String service = null;
@@ -50,6 +50,6 @@ public class DominationApplication {
             e.printStackTrace();
         }
 
-        SwingMEiOSApplication.main(args);
+        super.initialize(rootpane);
     }
 }

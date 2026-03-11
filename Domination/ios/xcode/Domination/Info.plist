@@ -31,9 +31,9 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>MOE.Main.Class</key>
-	<string>net.yura.domination.ios.DominationApplication</string>
+	<string>net.yura.ios.SwingMEiOSApplication</string>
 	<key>SwingME.Main.Class</key>
-	<string>net.yura.domination.mobile.flashgui.DominationMain</string>
+	<string>net.yura.domination.ios.iOSDominationApplication</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
