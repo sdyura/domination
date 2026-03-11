@@ -142,7 +142,7 @@ public class JavaCompatUtil {
         while (it.next() != BreakIterator.DONE) count++;
         return count;
     }
-    
+
     public static String subGrapheme(String text, int beginIndex, int endIndex) {
         if (beginIndex == 0 && endIndex == 0) return "";
 
