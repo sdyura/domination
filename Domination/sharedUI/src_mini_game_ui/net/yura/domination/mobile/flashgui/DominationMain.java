@@ -630,7 +630,8 @@ public class DominationMain extends Application {
                     }
                     else {
                         pendingOpenGame = game;
-                        logger.warning("lobby open but we are not logged in yet");
+                        // this happens if the connection is slow and there is time between calling connect and connecting
+                        logger.info("lobby open but we are not logged in yet");
                     }
                 }
                 else {

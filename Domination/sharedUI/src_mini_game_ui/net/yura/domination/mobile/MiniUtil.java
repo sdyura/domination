@@ -227,6 +227,11 @@ public class MiniUtil {
                 return FileUtil.getInputStreamFromFileConnector(mapsdir + name);
             }
             catch (Exception ex2) {
+                // in case its a specific IOException, e.g. FileNotFoundException just throw that
+                if (ex instanceof IOException) {
+                    throw ex;
+                }
+
                 IOException exception = new IOException(ex2.toString());
                 exception.initCause(ex); // in android 1.6
                 throw exception;

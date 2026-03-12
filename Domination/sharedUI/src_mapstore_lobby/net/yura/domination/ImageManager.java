@@ -51,8 +51,8 @@ public class ImageManager {
                 icon.setImage(img);
             }
             else {
-                System.out.println("ERROR: got null responce for key: " + key);
-                images.remove(key); // we got a responce but there was some error and no image
+                System.out.println("ERROR: got null response for key: " + key);
+                images.remove(key); // we got a response but there was some error and no image
             }
         }
         else {
