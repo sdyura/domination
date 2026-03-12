@@ -6,7 +6,7 @@ CURRENT VERSION:
 	 * Network:	14
 	 * Save:	8
 
-	iOS:		23
+	iOS:		24
 	Android:	101
 	Game GUI:	2
 	Swing GUI:	2
@@ -26,6 +26,8 @@ CURRENT VERSION:
 	better fallbacks for audio not loading from url
 	fix for small screen Domination not loading when space in path
 	installer updated to 5.2.4 to fix issue with Ubuntu jdk21 https://sf.net/p/domination/bugs/50/
+
+	iOS 24 hopefully symbols in crash reports
 
 	iOS 23 more info in dashboard
 
