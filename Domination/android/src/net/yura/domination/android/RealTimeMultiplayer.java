@@ -89,7 +89,7 @@ public class RealTimeMultiplayer extends InvitationCallback implements GoogleAcc
 
     interface Lobby {
         void createNewGame(Game game);
-        void playGame(Game gameId);
+        void openGame(Game gameId);
         void getUsername();
     }
 
@@ -389,7 +389,7 @@ public class RealTimeMultiplayer extends InvitationCallback implements GoogleAcc
         }
         else if (ProtoAccess.COMMAND_GAME_STARTED.equals(command)) {
             Object param = message.getParam();
-            lobby.playGame((Game) param);
+            lobby.openGame((Game) param);
         }
         else if (ProtoAccess.REQUEST_HELLO.equals(command)) {
             String creator = (String) message.getParam();

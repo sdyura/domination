@@ -110,7 +110,7 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                 getUi().lobby.createNewGame(game);
             }
             @Override
-            public void playGame(Game game) {
+            public void openGame(Game game) {
                 getUi().lobby.openGame(game);
             }
             @Override

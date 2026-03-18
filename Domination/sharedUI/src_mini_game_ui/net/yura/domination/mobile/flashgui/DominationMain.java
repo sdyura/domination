@@ -586,7 +586,7 @@ public class DominationMain extends Application {
         }
     }
 
-    public void pushNotificationsToken(String system, String token) {
+    public void pushNotificationsToken(String system, final String token) {
         logger.info("Push Token " + system + " " + token);
 
         // we only request the token once we have connected

@@ -229,7 +229,7 @@ public class MiniUtil {
             catch (Exception ex2) {
                 // in case its a specific IOException, e.g. FileNotFoundException just throw that
                 if (ex instanceof IOException) {
-                    throw ex;
+                    throw (IOException) ex;
                 }
 
                 IOException exception = new IOException(ex2.toString());

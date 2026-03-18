@@ -88,7 +88,7 @@ public class LobbyTab extends ME4SEPanel implements SwingGUITab,ActionListener {
                     int id = Integer.parseInt(input);
                     Game game = mlc.findGame(id);
                     if (game != null) {
-                        mlc.playGame(game);
+                        mlc.openGame(game);
                     }
                     else {
                         JOptionPane.showMessageDialog(this, "game " + id + " not found");
