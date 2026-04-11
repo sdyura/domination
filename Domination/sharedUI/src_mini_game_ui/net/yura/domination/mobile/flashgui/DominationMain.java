@@ -617,7 +617,7 @@ public class DominationMain extends Application {
         String gameId = (String)params.get(PushLobbyClient.GAME_ID);
         String options = (String)params.get(PushLobbyClient.OPTIONS);
 
-        if (gameId != null) {
+        if (gameId != null && options != null) {
             Game game = new Game();
             game.setId(Integer.parseInt(gameId));
             game.setOptions(options);
