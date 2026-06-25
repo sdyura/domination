@@ -273,7 +273,7 @@ public class GameSettings implements GameSettingsMXBean {
                 }
             }
         }
-        throw new IllegalArgumentException("game "+id+" not found");
+        throw new IllegalArgumentException("game thread with id " + id + " not found");
     }
 
     @Override

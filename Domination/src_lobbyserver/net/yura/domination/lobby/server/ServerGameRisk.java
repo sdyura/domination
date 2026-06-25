@@ -208,7 +208,7 @@ public class ServerGameRisk extends TurnBasedGame {
 		int aihard = Integer.parseInt(options[2]);
 
 		if ((players.length + aieasy + aiaverage + aihard) > RiskGame.MAX_PLAYERS) {
-                    throw new RuntimeException("player number missmatch for startgame: humans:" + Arrays.asList(players) + " AI:"+aieasy + "," + aiaverage + "," + aihard);
+                    throw new IllegalArgumentException("player number missmatch for startgame: humans:" + Arrays.asList(players) + " AI:"+aieasy + "," + aiaverage + "," + aihard);
                 }
 
 		myrisk.addSetupCommandToInbox(options[3]); // set the map file to use
