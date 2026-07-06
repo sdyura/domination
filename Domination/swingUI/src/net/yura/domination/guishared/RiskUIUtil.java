@@ -303,15 +303,19 @@ public class RiskUIUtil {
 			}
 			BufferedImage img;
                         
+                        URL imgUrl = c.getResource(name);
+                        if (imgUrl == null) {
+                            throw new IllegalArgumentException("no Resource found for class: " + c + " name: " + name);
+                        }
                         try {
-                            img = ImageIO.read( c.getResource(name) );
+                            img = ImageIO.read(imgUrl);
                         }
                         catch (IIOException ex) {
                             // can get a javax.imageio.IIOException: Can't create cache file!
                             if (ImageIO.getUseCache()) {
                                 Logger.getLogger(RiskUIUtil.class.getName()).log(Level.INFO, "could not load UI image " + c + " " + name, ex);
                                 ImageIO.setUseCache(false);
-                                img = ImageIO.read( c.getResource(name) );
+                                img = ImageIO.read(imgUrl);
                             }
                             else {
                                 throw ex;
@@ -1606,12 +1610,21 @@ public class RiskUIUtil {
 
         static Map<Integer,Image> icons = new HashMap();
         static {
-            icons.put(ColorUtil.RED, RiskUIUtil.getUIImage(PicturePanel.class, "/color_red.png"));
-            icons.put(ColorUtil.BLUE, RiskUIUtil.getUIImage(PicturePanel.class, "/color_blue.png"));
-            icons.put(ColorUtil.YELLOW, RiskUIUtil.getUIImage(PicturePanel.class, "/color_yellow.png"));
-            icons.put(ColorUtil.CYAN, RiskUIUtil.getUIImage(PicturePanel.class, "/color_cyan.png"));
-            icons.put(ColorUtil.GREEN, RiskUIUtil.getUIImage(PicturePanel.class, "/color_green.png"));
-            icons.put(ColorUtil.MAGENTA, RiskUIUtil.getUIImage(PicturePanel.class, "/color_magenta.png"));
+            loadColorIcon(ColorUtil.RED, "/color_red.png");
+            loadColorIcon(ColorUtil.BLUE, "/color_blue.png");
+            loadColorIcon(ColorUtil.YELLOW, "/color_yellow.png");
+            loadColorIcon(ColorUtil.CYAN, "/color_cyan.png");
+            loadColorIcon(ColorUtil.GREEN, "/color_green.png");
+            loadColorIcon(ColorUtil.MAGENTA, "/color_magenta.png");
+        }
+
+        private static void loadColorIcon(int color, String name) {
+            try {
+                icons.put(color, RiskUIUtil.getUIImage(PicturePanel.class, name));
+            }
+            catch(Throwable ex) {
+                Logger.getLogger(RiskUIUtil.class.getName()).log(Level.WARNING, "can not load color icon for  " + name, ex);
+            }
         }
 
         /**
