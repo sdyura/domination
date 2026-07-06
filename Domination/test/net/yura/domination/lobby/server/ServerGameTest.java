@@ -2,6 +2,7 @@ package net.yura.domination.lobby.server;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Map;
 import junit.framework.TestCase;
 import net.yura.domination.engine.OnlineUtil;
 import net.yura.domination.engine.Risk;
@@ -11,6 +12,8 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.lobby.server.LobbySession;
 import net.yura.lobby.server.ServerGame;
 import net.yura.lobby.server.ServerGameListener;
+import net.yura.lobby.model.Game;
+
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -58,7 +61,7 @@ public class ServerGameTest extends TestCase {
                 }
             }
         };
-        serverGame.setTimeout(5);
+
         serverGame.addServerGameListener(new ServerGameListener() {
             @Override
             public void messageFromGame(Object message, Collection<LobbySession> towho) {
@@ -86,7 +89,7 @@ public class ServerGameTest extends TestCase {
             }
 
             @Override
-            public boolean gameFinished(String winner) {
+            public boolean gameFinished(Map<String,Integer> winner) {
                 System.out.println("gameFinished " + winner);
                 return false;
             }
@@ -97,19 +100,21 @@ public class ServerGameTest extends TestCase {
             }
         });
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         serverGame.destroyServerGame();
     }
-    
+
     public void testPlayGame() throws Exception {
         String startGameOptions = OnlineUtil.createGameString(1, 1, 1, RiskGame.MODE_DOMINATION, RiskGame.CARD_INCREASING_SET, false, true, "luca.map");
 
         String[] players = new String[] {"bob1", "fred2"};
 
-        serverGame.setOptions(startGameOptions);
+        Game game = new Game();
+        game.setOptions(startGameOptions);
+        serverGame.setGameDetails(game);
         serverGame.startGame(players);
 
         Risk myrisk = ((ServerGameRisk)serverGame).myrisk;
