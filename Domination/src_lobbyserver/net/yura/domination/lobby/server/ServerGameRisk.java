@@ -30,6 +30,7 @@ import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
+import net.yura.lobby.model.Game;
 import net.yura.lobby.server.LobbySession;
 import net.yura.lobby.server.TurnBasedGame;
 import net.yura.mobile.util.Url;
@@ -188,6 +189,20 @@ public class ServerGameRisk extends TurnBasedGame {
                 //Increment1Frame gui = new Increment1Frame( myrisk );
                 //RiskGUI gui = new RiskGUI( myrisk );
                 //gui.setVisible(true);
+            }
+        }
+
+        @Override
+        public void setGameDetails(Game game) {
+            super.setGameDetails(game);
+
+            // check game is valid at earliest possible time, and throw error if not
+            String[] options = startGameOptions.split("\\n");
+            int aieasy = Integer.parseInt(options[1]);
+            int aiaverage = Integer.parseInt(options[0]);
+            int aihard = Integer.parseInt(options[2]);
+            if ((game.getMaxPlayers() + aieasy + aiaverage + aihard) > RiskGame.MAX_PLAYERS) {
+                throw new IllegalArgumentException("invalid number of players. humans:" + game.getMaxPlayers() + " + AI:"+aieasy + "," + aiaverage + "," + aihard + " > MAX_PLAYERS:" + RiskGame.MAX_PLAYERS);
             }
         }
 
