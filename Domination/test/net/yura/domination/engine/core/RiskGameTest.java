@@ -1,5 +1,6 @@
 package net.yura.domination.engine.core;
 
+import java.util.Arrays;
 import junit.framework.TestCase;
 import net.yura.domination.engine.ColorUtil;
 import net.yura.domination.test.TestUtil;
@@ -68,9 +69,8 @@ public class RiskGameTest extends TestCase {
         //[A] [B] [A] [B] [A] [B]
         // 9   6   1   1   1   1
 
-        while (instance.getCountries()[1].getArmies() > 0) {
-            attack(instance, countries[0], countries[1]);
-        }
+        wipeOut(instance, countries[0], countries[1], true);
+
         assertEquals(1, instance.moveArmies(countries[0].getArmies() - 1));
         assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
 
@@ -120,9 +120,8 @@ public class RiskGameTest extends TestCase {
         // 1   1   11  3   1   1
 
         assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
-        while (instance.getCountries()[3].getArmies() > 0) {
-            attack(instance, countries[2], countries[3]);
-        }
+        wipeOut(instance, countries[2], countries[3], true);
+
         assertEquals(1, instance.moveArmies(countries[2].getArmies() - 1));
 
         //[A] [A] [A] [A] [B] [B]
@@ -207,9 +206,8 @@ public class RiskGameTest extends TestCase {
         // 7   6   1   1   1   1
 
         // in italian, attack twice to kill all armies
-        while (instance.getCountries()[1].getArmies() > 0) {
-            attack(instance, countries[0], countries[1]);
-        }
+        wipeOut(instance, countries[0], countries[1], true);
+
         assertEquals(1, instance.moveArmies(countries[0].getArmies() - 1));
         assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
 
@@ -261,6 +259,105 @@ public class RiskGameTest extends TestCase {
         System.out.println("map " + toString(instance.getCountries()));
     }
 
+    
+
+    public void testBadItalianGame() throws Exception {
+
+        int noPlayers = 3;
+        int noCountries = 6;
+
+        // for 2 players, minimum need 6 countries
+        RiskGame instance = createBasicMap(noCountries);
+
+        addPlayers(instance, noPlayers);
+
+        instance.startGame(RiskGame.MODE_DOMINATION, RiskGame.CARD_ITALIANLIKE_SET, true, false, 3, false);
+        assertEquals(3, instance.getMaxDefendDice());
+        instance.setCurrentPlayer(0);
+
+        assertEquals(RiskGame.STATE_PLACE_ARMIES, instance.getState());
+
+        // fill up all empty countries
+        for (int i = 0; i < noCountries; i++) {
+            assertFalse(instance.NoEmptyCountries());
+            assertEquals(1, instance.placeArmy(instance.getCountryInt(i + 1), 1));
+            assertNotNull(instance.endGo());
+        }
+
+        assertTrue(instance.NoEmptyCountries());
+
+        //[A] [B] [C] [A] [B] [C]
+        // 1   1   1   1   1   1
+
+        // each player now has 5 armies
+        int armiesLeft = 0;
+        for (int p = 0; p < noPlayers; p++) {
+            armiesLeft = armiesLeft + ((Player)instance.getPlayers().get(p)).getExtraArmies();
+        }
+        // place all other armies
+        for (int c = 0; c < armiesLeft; c++) {
+            Player player = instance.getCurrentPlayer();
+            assertEquals(1, instance.placeArmy((Country)player.getTerritoriesOwned().get(0), 1));
+            assertNotNull(instance.endGo());
+        }
+
+        //[A] [B] [C] [A] [B] [C]
+        // 6   6   6   1   1   1
+        
+        // we get NO extra armies at the start of our turn
+        
+        for (int c = 0; c < noPlayers; c++) {
+
+            Player player = instance.getCurrentPlayer();
+            assertEquals(instance.getPlayers().get(c), player);
+
+            assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
+
+            //[A] [B] [C] [A] [B] [C]
+            // 6   6   6   1   1   1
+
+            Country[] countries = instance.getCountries();
+
+            Country attacker = (Country)player.getTerritoriesOwned().get(0);
+            Country defender = countries[Arrays.asList(countries).indexOf(attacker) + 1];
+            
+            // in italian, attack twice to kill all armies
+            wipeOut(instance, attacker, defender, false);
+
+            //assertEquals(1, instance.moveArmies(countries[0].getArmies() - 1));
+            assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
+
+            //[A] [B] [C] [A] [B] [C]
+            // 1   6   6   1   1   1
+
+            assertTrue(instance.endAttack());
+            assertEquals(RiskGame.STATE_FORTIFYING, instance.getState());
+            assertTrue(instance.noMove());
+
+            //[A] [B] [C] [A] [B] [C]
+            // 1   6   6   1   1   1
+
+            assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+            Player nextPlayer = instance.endGo();
+            assertNotNull(nextPlayer);
+            assertNotSame(player, nextPlayer);
+        }
+
+        // TODO this is NOT ok!!!
+        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+        assertNotNull(instance.endGo());
+        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+        assertNotNull(instance.endGo());
+        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+        assertNotNull(instance.endGo());
+        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+        assertNotNull(instance.endGo());
+        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+
+        System.out.println("map " + toString(instance.getCountries()));
+    }
+    
+    
     public static void addPlayers(RiskGame instance, int noPlayers) {
         for (int p = 0; p < noPlayers; p++) {
             int color = ColorUtil.BLACK;
@@ -278,7 +375,18 @@ public class RiskGameTest extends TestCase {
     }
 
     private void attack(RiskGame instance, Country attacker, Country defender) {
-        instance.attack(attacker, defender);
+        assertTrue(instance.attack(attacker, defender));
+        rollDice(instance, attacker, defender, true);
+    }
+
+    private void wipeOut(RiskGame instance, Country attacker, Country defender, boolean win) {
+        assertTrue(instance.attack(attacker, defender));
+        while (win ? defender.getArmies() > 0 : attacker.getArmies() > 1) {
+            rollDice(instance, attacker, defender, win);
+        }
+    }
+
+    private void rollDice(RiskGame instance, Country attacker, Country defender, boolean win) {
 
         assertEquals(attacker, instance.getAttacker());
         assertEquals(defender, instance.getDefender());
@@ -296,16 +404,21 @@ public class RiskGameTest extends TestCase {
         assertTrue(instance.rollD(defenderDice)); // sets the current player back to the attacker
 
         // can cheat, can always roll perfect 6s
-        int[] result = instance.battle(getDice(attackerDice, 5), getDice(defenderDice, 0));
+        int[] result = instance.battle(getDice(attackerDice, win ? 5 : 0), getDice(defenderDice, win ? 0 : 5));
         assertEquals(1, result[0]); // rolling dice worked or not
-        assertEquals(0, result[1]); // no of armies attacker lost
-        assertEquals(defenderDice, result[2]); // no of armies defender lost
+        assertEquals(win ? 0 : Math.min(attackerDice, defenderDice), result[1]); // no of armies attacker lost
+        assertEquals(win ? Math.min(attackerDice, defenderDice) : 0, result[2]); // no of armies defender lost
 
         //assertEquals(0, result[3]); // did you win
         if (result[3] == 0) {
             assertEquals(0, result[4]); // min move
             assertEquals(0, result[5]); // max move
-            assertEquals(RiskGame.STATE_ROLLING, instance.getState());
+            if (attacker.getArmies() > 1) {
+                assertEquals(RiskGame.STATE_ROLLING, instance.getState());
+            }
+            else {
+                assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
+            }
         }
         else if (result[3] == 1 || result[3] == 2) { // we won battle OR we wiped out player
             assertEquals(attackerDice, result[4]); // min move
@@ -313,7 +426,7 @@ public class RiskGameTest extends TestCase {
             assertEquals(RiskGame.STATE_BATTLE_WON, instance.getState());
         }
         else {
-               fail("unexpected result " + result[3]); 
+            fail("unexpected result " + result[3]); 
         }
     }
 
@@ -325,7 +438,7 @@ public class RiskGameTest extends TestCase {
         return results;
     }
 
-    private RiskGame createBasicMap(int noCountries) throws Exception {
+    public static RiskGame createBasicMap(int noCountries) throws Exception {
 
         RiskGame map = TestUtil.newRiskGame();
         map.setupNewMap();
