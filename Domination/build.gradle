@@ -13,6 +13,12 @@ compileJava {
     targetCompatibility = JavaVersion.VERSION_1_8
     options.encoding = "cp1252"
 }
+// this is needed for tests to run and not complain
+compileTestJava {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    options.encoding = "cp1252"
+}
 
 sourceSets {
     main {
@@ -23,6 +29,16 @@ sourceSets {
             srcDirs = ['src', 'sharedUI/res_mapstore_lobby', 'sharedUI/res_mini_game_ui']
         }
     }
+    test {
+        java {
+            srcDirs = ['test', 'src_lobbyserver']
+        }
+    }
+}
+
+test {
+    // for now we hard code it to run in the same location as when ant runs the same tests
+    workingDir = file('swingUI')
 }
 
 dependencies {
@@ -34,4 +50,7 @@ dependencies {
 
     // these are needed for compile only, the actual versions used are specific to android/ios
     compileOnly fileTree(dir: 'swingUI/lib', include: ['Grasshopper.jar','midletrunner.jar'])
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation fileTree(dir: 'swingUI/lib', include: ['LobbyServer.jar'])
 }

@@ -1,6 +1,7 @@
 package net.yura.domination.lobby.server;
 
 import junit.framework.TestCase;
+import net.yura.domination.test.TestUtil;
 
 /**
  * WARNING! this test is NOT compatible to being run with other tests in the same VM!
@@ -14,6 +15,8 @@ public class ServerGameRiskTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        TestUtil.setupMapsForTest();
     }
     
     @Override

@@ -6,6 +6,9 @@ import junit.framework.TestCase;
 import net.yura.domination.test.TestUtil;
 
 /**
+ * WARNING!!! this is not technically a UI test, but its grouped with the UI tests
+ * as it seems to require me4se UI libs to run
+ *
  * @author yura mamyrin
  */
 public class MapUpdateServiceTest extends TestCase {

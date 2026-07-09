@@ -9,6 +9,7 @@ import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
+import net.yura.domination.test.TestUtil;
 import net.yura.lobby.server.LobbySession;
 import net.yura.lobby.server.ServerGame;
 import net.yura.lobby.server.ServerGameListener;
@@ -27,12 +28,7 @@ public class ServerGameTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        if ("/".equals(System.getProperty("user.dir"))) {
-            throw new RuntimeException("current dir set incorrectly! /");
-        }
-        
-        // we must change the current folder for map loading to work
-        System.setProperty("user.dir", System.getProperty("user.dir") + File.separator +"game" );
+        TestUtil.setupMapsForTest();
 
         AIManager.setWait(0);
         Risk.setShowDice(false);

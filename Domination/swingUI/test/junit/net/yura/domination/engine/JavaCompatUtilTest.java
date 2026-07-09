@@ -3,6 +3,10 @@ package net.yura.domination.engine;
 import junit.framework.TestCase;
 
 /**
+ * WARNING!! this is not technically a UI test, but its grouped with other UI tests as
+ * its very strange and does not work on a lot of setups (e.g. running in java 1.8)
+ *
+ *
  * WARNING!! this class only work in new version of java, in java 1.8 this test will fail
  * @author yura
  */
