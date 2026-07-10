@@ -16,8 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -623,9 +625,22 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		}
 		else if (a.getActionCommand().equals("play")) {
 			if ( checkMap() ) {
-				try {
-					myrisk.newMemoryGame(myMap, MapSave.buildMapFile(myMap, "mem.map", "mem.cards", "mem_map", "mem_pic"));
-                                        panel.showMapImage( new ImageIcon( editPanel.getImagePic().getScaledInstance(203,127, java.awt.Image.SCALE_SMOOTH ) ) );
+                                try {
+                                        String mapString = MapSave.buildMapFile(myMap, "mem.map", "mem.cards", "mem_map", "mem_pic");
+
+                                        // make a copy
+                                        javax.crypto.NullCipher nullCipher = new javax.crypto.NullCipher();
+
+                                        // @TODO, this will crash on macs
+                                        RiskGame game = (RiskGame) (new javax.crypto.SealedObject(myMap, nullCipher).getObject(nullCipher));
+                                        game.loadMap(false, new BufferedReader(new StringReader(mapString)));
+
+                                        for (int c = 1; c <= RiskGame.MAX_PLAYERS; c++) {
+                                                game.delPlayer("PLAYER" + c);
+                                        }
+
+					myrisk.newMemoryGame(game);
+                                        panel.showMapImage(new ImageIcon(editPanel.getImagePic().getScaledInstance(203, 127, java.awt.Image.SCALE_SMOOTH)));
                                         panel.setSelectedTab(GameTab.class);
 				}
                                 catch (Exception e) {

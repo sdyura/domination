@@ -2,6 +2,7 @@ package net.yura.domination.tools.mapeditor;
 
 import java.io.File;
 import junit.framework.TestCase;
+
 import static junit.framework.TestCase.assertEquals;
 
 /**

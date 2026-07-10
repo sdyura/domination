@@ -2743,31 +2743,10 @@ RiskUtil.printStackTrace(e);
             }
         }
 
-	public void newMemoryGame(RiskGame g, String map) {
-
+	public void newMemoryGame(RiskGame g) {
                 closeGame();
-
-                try {
-                        // make a copy
-
-                        javax.crypto.NullCipher nullCipher = new javax.crypto.NullCipher();
-
-                        // @TODO, this will crash on macs
-                        game = (RiskGame) (new javax.crypto.SealedObject( g, nullCipher ).getObject( nullCipher ));
-                        game.loadMap(false, new BufferedReader(new StringReader(map)));
-
-                        for (int c=1;c<=RiskGame.MAX_PLAYERS;c++) {
-                                game.delPlayer("PLAYER"+c);
-                        }
-                }
-                catch (Exception e) {
-                        // should never happen
-                        //RiskUtil.printStackTrace(e);
-                        throw new RuntimeException(e);
-                }
-
+                game = g;
                 controller.newGame(true);
-
                 controller.showCardsFile( "loaded from memory" , (game.getNoMissions()!=0) );
 
                 // we dont do this here as it wont work
