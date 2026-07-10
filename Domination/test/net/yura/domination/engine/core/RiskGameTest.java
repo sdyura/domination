@@ -16,7 +16,7 @@ public class RiskGameTest extends TestCase {
         int noCountries = 6;
 
         // for 2 players, minimum need 6 countries
-        RiskGame instance = createBasicMap(noCountries);
+        RiskGame instance = TestUtil.createBasicMap(noCountries);
 
         addPlayers(instance, noPlayers);
 
@@ -152,7 +152,7 @@ public class RiskGameTest extends TestCase {
         int noCountries = 6;
 
         // for 2 players, minimum need 6 countries
-        RiskGame instance = createBasicMap(noCountries);
+        RiskGame instance = TestUtil.createBasicMap(noCountries);
 
         addPlayers(instance, noPlayers);
 
@@ -259,15 +259,13 @@ public class RiskGameTest extends TestCase {
         System.out.println("map " + toString(instance.getCountries()));
     }
 
-    
-
     public void testBadItalianGame() throws Exception {
 
         int noPlayers = 3;
         int noCountries = 6;
 
         // for 2 players, minimum need 6 countries
-        RiskGame instance = createBasicMap(noCountries);
+        RiskGame instance = TestUtil.createBasicMap(noCountries);
 
         addPlayers(instance, noPlayers);
 
@@ -432,35 +430,8 @@ public class RiskGameTest extends TestCase {
 
     private static int[] getDice(int count, int result) {
         int[] results = new int[count];
-        for (int c = 0; c < count; c++) {
-            results[c] = result;
-        }
+        Arrays.fill(results, result);
         return results;
-    }
-
-    public static RiskGame createBasicMap(int noCountries) throws Exception {
-
-        RiskGame map = TestUtil.newRiskGame();
-        map.setupNewMap();
-
-        Continent continent = new Continent("meow", "Meow", 5, 0);
-        map.setContinents(new Continent[] { continent });
-
-        Country[] countries = new Country[noCountries];
-        for (int c = 0; c < noCountries; c++) {
-            countries[c] = new Country(c + 1, "meow" + c, "Meow " + c, continent, 50 + 50 * c, 50);
-            continent.addTerritoriesContained(countries[c]);
-            if (c != 0) {
-                countries[c].addNeighbour(countries[c - 1]);
-                countries[c - 1].addNeighbour(countries[c]);
-            }
-            map.getCards().add(new Card(((c%3)==0) ? Card.CAVALRY : (  ((c%3)==1) ? Card.INFANTRY : Card.CANNON  ), countries[c]));
-        }
-        map.setCountries(countries);
-        map.getCards().add(new Card(Card.WILDCARD, null));
-        map.getCards().add(new Card(Card.WILDCARD, null));
-
-        return map;
     }
 
     private String toString(Country[] countries) {

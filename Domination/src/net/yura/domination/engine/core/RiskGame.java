@@ -1068,7 +1068,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 		result[0]=0; // worked or not
 		result[1]=0; // no of armies attacker lost
 		result[2]=0; // no of armies defender lost
-		result[3]=0; // did you win
+		result[3]=0; // did you win (0: still armies left, 1: all armies killed, 2: player eliminated)
 		result[4]=0; // min move
 		result[5]=0; // max move
 
