@@ -15,7 +15,7 @@ apply plugin: 'com.android.application'
 //apply plugin: 'com.google.gms.google-services'
 
 dependencies {
-    implementation rootProject
+    implementation project(':sharedUI')
     implementation project(':AndroidME')
     // implementation fileTree(include: '*.jar', dir: 'libs')
     implementation files('libs/achartengine-1.2.0.jar')

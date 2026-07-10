@@ -117,7 +117,7 @@ moeUpdateXcodeSettings {
 
 // Set dependencies
 dependencies {
-    implementation rootProject
+    implementation project(':sharedUI')
     implementation project(":iOSME")
     // Compile with 'jar' files in the project's 'lib' directory
     implementation fileTree(dir: 'lib', include: '*.jar')

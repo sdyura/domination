@@ -34,8 +34,7 @@ public class SwingGUIFrame {
 
                 // before we create any UI, we want to load up all settings
                 Preferences prefs = SwingGUIPanel.getUIPreferences();
-                RiskSettings.loadSettingsFromPrefs(prefs);
-                RiskUIUtil.setColorBlindMode(prefs);
+                RiskUIUtil.loadSettingsFromPrefs(prefs);
 
                 RiskUIUtil.initAudio(r);
 

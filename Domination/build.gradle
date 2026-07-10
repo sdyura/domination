@@ -23,10 +23,10 @@ compileTestJava {
 sourceSets {
     main {
         java {
-            srcDirs = ['src', 'sharedUI/src_mapstore_lobby', 'sharedUI/src_mini_game_ui']
+            srcDirs = ['src']
         }
         resources {
-            srcDirs = ['src', 'sharedUI/res_mapstore_lobby', 'sharedUI/res_mini_game_ui']
+            srcDirs = ['src']
         }
     }
     test {
@@ -45,11 +45,6 @@ dependencies {
     // some things are broken when moving to org.apache.httpcomponents:http 4.2+
     implementation 'org.apache.httpcomponents:httpcore:4.1.2'
     implementation 'org.apache.httpcomponents:httpmime:4.1.2'
-    api fileTree(dir: 'sharedUI/lib', include: ['LobbyCore.jar', 'MiniLobbyClient.jar'])
-    api project(":SwingME")
-
-    // these are needed for compile only, the actual versions used are specific to android/ios
-    compileOnly fileTree(dir: 'swingUI/lib', include: ['Grasshopper.jar','midletrunner.jar'])
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation fileTree(dir: 'swingUI/lib', include: ['LobbyServer.jar'])

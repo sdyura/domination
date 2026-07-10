@@ -1587,7 +1587,11 @@ public class RiskUIUtil {
                         GameSound.INSTANCE.setMusicEnabled(musicEnabled.isSelected());
                         RiskUIUtil.colorBlind = colorBlindEnabled.isSelected();
                         preferences.putBoolean(RiskSettings.COLOR_BLIND_KEY, RiskUIUtil.colorBlind);
-                        RiskSettings.saveSettingsToPrefs(preferences);
+                        
+                        preferences.putBoolean(RiskSettings.SOUND_KEY, GameSound.INSTANCE.isSoundEnabled());
+                        preferences.putBoolean(RiskSettings.MUSIC_KEY, GameSound.INSTANCE.isMusicEnabled());
+            
+                        RiskSettings.saveGameSettingsToPrefs(preferences);
 
                         if (autoEndGo.isEnabled()) {
                             boolean autoendgo = autoEndGo.isSelected();
@@ -1634,8 +1638,14 @@ public class RiskUIUtil {
             return colorBlind ? icons.get(color) : null;
         }
 
-        public static void setColorBlindMode(Preferences prefs) {
+        public static void loadSettingsFromPrefs(Preferences prefs) {
+            RiskSettings.loadGameSettingsFromPrefs(prefs);
+            
             if (prefs != null) {
+
+                GameSound.INSTANCE.setSoundEnabled(prefs.getBoolean(RiskSettings.SOUND_KEY, GameSound.INSTANCE.isSoundEnabled()));
+                GameSound.INSTANCE.setMusicEnabled(prefs.getBoolean(RiskSettings.MUSIC_KEY, GameSound.INSTANCE.isMusicEnabled()));
+
                 colorBlind = prefs.getBoolean(RiskSettings.COLOR_BLIND_KEY, false);
             }
         }

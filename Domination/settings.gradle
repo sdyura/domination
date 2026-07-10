@@ -5,7 +5,7 @@
 
 rootProject.name = "Domination"
 
-include ':android', ':ios'
+include ':sharedUI', ':android', ':ios'
 
 include ':SwingME'
 project(':SwingME').projectDir = new File(rootDir.getParentFile(), 'SwingME')

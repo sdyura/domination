@@ -5,7 +5,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
-import net.yura.domination.audio.GameSound;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
@@ -157,25 +156,18 @@ public class RiskSettings {
      *  - Risk class loads game.ini
      *  - loaded from Preferences
      */
-    public static void loadSettingsFromPrefs(Preferences appPreferences) {
+    public static void loadGameSettingsFromPrefs(Preferences appPreferences) {
         if (appPreferences != null) {
-
             AIManager.setWait( appPreferences.getInt(AI_WAIT_KEY, AIManager.getWait()) );
             Risk.setShowDice(appPreferences.getBoolean(SHOW_DICE_KEY, Risk.isShowDice()));
-
-            GameSound.INSTANCE.setSoundEnabled(appPreferences.getBoolean(SOUND_KEY, GameSound.INSTANCE.isSoundEnabled()));
-            GameSound.INSTANCE.setMusicEnabled(appPreferences.getBoolean(MUSIC_KEY, GameSound.INSTANCE.isMusicEnabled()));
         }
     }
 
-    public static void saveSettingsToPrefs(Preferences preferences) {
+    public static void saveGameSettingsToPrefs(Preferences preferences) {
         if (preferences != null) {
 
             preferences.putBoolean(SHOW_DICE_KEY, Risk.isShowDice());
             preferences.putInt(AI_WAIT_KEY, AIManager.getWait());
-
-            preferences.putBoolean(SOUND_KEY, GameSound.INSTANCE.isSoundEnabled());
-            preferences.putBoolean(MUSIC_KEY, GameSound.INSTANCE.isMusicEnabled());
 
             flushPreferences(preferences);
         }

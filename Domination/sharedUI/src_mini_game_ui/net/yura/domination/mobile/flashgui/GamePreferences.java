@@ -43,7 +43,10 @@ public class GamePreferences implements ActionListener {
             GameSound.INSTANCE.setSoundEnabled(Boolean.parseBoolean(results.get(RiskSettings.SOUND_KEY)));
             GameSound.INSTANCE.setMusicEnabled(Boolean.parseBoolean(results.get(RiskSettings.MUSIC_KEY)));
 
-            RiskSettings.saveSettingsToPrefs(DominationMain.appPreferences);
+            DominationMain.appPreferences.putBoolean(RiskSettings.SOUND_KEY, GameSound.INSTANCE.isSoundEnabled());
+            DominationMain.appPreferences.putBoolean(RiskSettings.MUSIC_KEY, GameSound.INSTANCE.isMusicEnabled());
+
+            RiskSettings.saveGameSettingsToPrefs(DominationMain.appPreferences);
         }
     }
 

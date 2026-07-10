@@ -645,8 +645,7 @@ public class MainMenu extends JPanel implements MouseInputListener, KeyListener 
 
                 // before we create any UI, we want to load up all settings
                 Preferences prefs = RiskSettings.getPreferences(MainMenu.class);
-                RiskSettings.loadSettingsFromPrefs(prefs);
-                RiskUIUtil.setColorBlindMode(prefs);
+                RiskUIUtil.loadSettingsFromPrefs(prefs);
 
                 RiskUIUtil.initAudio(risk);
 

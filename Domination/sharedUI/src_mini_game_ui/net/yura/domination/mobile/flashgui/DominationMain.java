@@ -374,8 +374,13 @@ public class DominationMain extends Application {
 
         risk = new Risk();
 
-        RiskSettings.loadSettingsFromPrefs(appPreferences);
+        RiskSettings.loadGameSettingsFromPrefs(appPreferences);
 
+        // setup audio
+        if (appPreferences != null) {
+            GameSound.INSTANCE.setSoundEnabled(appPreferences.getBoolean(RiskSettings.SOUND_KEY, GameSound.INSTANCE.isSoundEnabled()));
+            GameSound.INSTANCE.setMusicEnabled(appPreferences.getBoolean(RiskSettings.MUSIC_KEY, GameSound.INSTANCE.isMusicEnabled()));
+        }
         GameSound.INSTANCE.setAudioSystem(risk, new SimpleAudio());
         GameSound.INSTANCE.load("medieval");
 

@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.StringReader;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -35,7 +34,6 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.p2pclient.ChatClient;
 import net.yura.domination.engine.p2pserver.ChatArea;
 import net.yura.domination.engine.translation.TranslationBundle;
-import net.yura.mobile.util.Url;
 
 /**
  * <p> Main Risk Class </p>
@@ -1045,12 +1043,12 @@ RiskUtil.printStackTrace(e);
 			needInput=false;
 		}
                 else if (Addr.equals("RENAME")) {
-                    Map map = Url.toHashtable( message.substring( Addr.length()+1 ) );
+                    Map<String, String> map = RiskUtil.queryAsMap(message.substring(Addr.length() + 1));
 
-                    String oldName = (String)map.get("oldName");
-                    String newName = (String)map.get("newName");
-                    String newAddress = (String)map.get("newAddress");
-                    int newType = Integer.parseInt((String)map.get("newType"));
+                    String oldName = map.get("oldName");
+                    String newName = map.get("newName");
+                    String newAddress = map.get("newAddress");
+                    int newType = Integer.parseInt(map.get("newType"));
 
                     try {
                         renamePlayer(oldName,newName,newAddress,newType);

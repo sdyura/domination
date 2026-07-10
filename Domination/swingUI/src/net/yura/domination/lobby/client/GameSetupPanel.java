@@ -689,7 +689,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
             String[] split = newGameOptions.split(",");
             RiskMap[] maps = new RiskMap[split.length];
             for (int c = 0; c < maps.length; c++) {
-                maps[c] = RiskMap.getRiskMap(decode(split[c]));
+                maps[c] = RiskMap.getRiskMap(RiskUtil.urlDecode(split[c]));
             }
             return maps;
         }
@@ -700,15 +700,6 @@ public class GameSetupPanel extends JPanel implements ActionListener {
                 return new JDialog((Frame) parent, title, modal);
             }
             return new JDialog((Dialog) parent, title, modal);
-        }
-
-        private static String decode(String text) {
-            try {
-                return URLDecoder.decode(text, "UTF-8");
-            }
-            catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
         }
 
 	public JList getList() {

@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.io.PushbackInputStream;
 import java.net.InetAddress;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -610,5 +611,26 @@ public class RiskUtil {
             dashboard[i] = new String[] { emoji + " " + p.getName(), card + p.getCards().size(), flag + p.getNoTerritoriesOwned(), army + p.getNoArmies(), extraArmies + extra };
         }
         return dashboard;
+    }
+
+    /**
+     * @see net.yura.mobile.util.Url#toHashtable(String)
+     */
+    public static Map<String, String> queryAsMap(String query) {
+        Map<String,String> map = new HashMap();
+        for (String p : query.split("&")) {
+            String[] kv = p.split("=", 2);
+            map.put(urlDecode(kv[0]), urlDecode(kv[1]));
+        }
+        return map;
+    }
+
+    public static String urlDecode(String text) {
+        try {
+            return URLDecoder.decode(text, "UTF-8");
+        }
+        catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
