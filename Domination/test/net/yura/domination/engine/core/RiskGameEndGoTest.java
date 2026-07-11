@@ -12,21 +12,24 @@ public class RiskGameEndGoTest extends TestCase {
         field.set(target, value);
     }
 
-    private Object getPrivateField(Object target, String fieldName) throws Exception {
-        Field field = target.getClass().getDeclaredField(fieldName);
-        field.setAccessible(true);
-        return field.get(target);
-    }
-
-    private RiskGame createAndStartGame(int noPlayers, int noCountries, int gameMode) throws Exception {
+    private RiskGame createAndStartGame(int noPlayers, int noCountries, int gameMode, boolean minimumThreeReinforcements) throws Exception {
         RiskGame instance = TestUtil.createBasicMap(noCountries);
         RiskGameTest.addPlayers(instance, noPlayers);
-        instance.startGame(gameMode, RiskGame.CARD_FIXED_SET, true, true, 2, true);
+        instance.startGame(gameMode, RiskGame.CARD_FIXED_SET, true, true, 2, minimumThreeReinforcements);
         return instance;
     }
 
+    private void setPlayerExtraArmies(Player player, int armies) {
+        int current = player.getExtraArmies();
+        if (current < armies) {
+            player.addArmies(armies - current);
+        } else if (current > armies) {
+            player.loseExtraArmy(current - armies);
+        }
+    }
+
     public void testEndGo_WrongState() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION);
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION, true);
         // Initially in STATE_PLACE_ARMIES
         assertEquals(RiskGame.STATE_PLACE_ARMIES, instance.getState());
 
@@ -39,7 +42,7 @@ public class RiskGameEndGoTest extends TestCase {
     }
 
     public void testEndGo_SetupNotDone() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION);
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION, true);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 0); // Setup not done (setup < players.size())
 
@@ -63,12 +66,12 @@ public class RiskGameEndGoTest extends TestCase {
         assertEquals(RiskGame.STATE_PLACE_ARMIES, instance.getState());
 
         // Assert reset flags
-        assertFalse((Boolean) getPrivateField(instance, "capturedCountry"));
-        assertFalse((Boolean) getPrivateField(instance, "tradeCap"));
+        assertFalse(instance.isCapturedCountry());
+        assertFalse(instance.getTradeCap());
     }
 
     public void testEndGo_SetupDone_NextPlayerHasTerritories() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION);
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION, true);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 2); // Setup is done
 
@@ -96,7 +99,7 @@ public class RiskGameEndGoTest extends TestCase {
 
     public void testEndGo_SetupDone_NextPlayerHasNoTerritories() throws Exception {
         // 3 players
-        RiskGame instance = createAndStartGame(3, 6, RiskGame.MODE_DOMINATION);
+        RiskGame instance = createAndStartGame(3, 6, RiskGame.MODE_DOMINATION, true);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 3); // Setup is done
 
@@ -125,7 +128,7 @@ public class RiskGameEndGoTest extends TestCase {
     }
 
     public void testEndGo_CapitalMode_SetupNotFinished() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_CAPITAL);
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_CAPITAL, true);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 2); // Setup is done
 
@@ -151,7 +154,7 @@ public class RiskGameEndGoTest extends TestCase {
     }
 
     public void testEndGo_CanTrade() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION);
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION, true);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 2); // Setup is done
 
@@ -181,7 +184,7 @@ public class RiskGameEndGoTest extends TestCase {
     }
 
     public void testEndGo_CannotTrade_ExtraArmies() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION);
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION, true);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 2);
 
@@ -207,20 +210,19 @@ public class RiskGameEndGoTest extends TestCase {
     }
 
     public void testEndGo_ItalianMode_CanAttack() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION);
+        // Set minimumThreeReinforcements to false so next player gets 0 extra armies
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION, false);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 2);
 
         Player p1 = (Player) instance.getPlayers().get(0);
         Player p2 = (Player) instance.getPlayers().get(1);
 
-        // Empty out extra armies and set minimumNewArmies to 0 so next player gets 0 extra armies
-        setPrivateField(instance, "minimumNewArmies", 0);
         p2.getTerritoriesOwned().clear();
         p1.getTerritoriesOwned().clear();
 
-        // Set up next player p2 with 0 extra armies
-        setPrivateField(p2, "extraArmies", 0);
+        // Set up next player p2 with 0 extra armies using helper method
+        setPlayerExtraArmies(p2, 0);
 
         // p2 owns c1, has 2 armies (can attack)
         Country c1 = instance.getCountries()[0];
@@ -250,17 +252,16 @@ public class RiskGameEndGoTest extends TestCase {
     }
 
     public void testEndGo_ItalianMode_CanMove() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION);
+        // Set minimumThreeReinforcements to false so next player gets 0 extra armies
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION, false);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 2);
 
         Player p1 = (Player) instance.getPlayers().get(0);
         Player p2 = (Player) instance.getPlayers().get(1);
 
-        setPrivateField(instance, "minimumNewArmies", 0);
         p2.getTerritoriesOwned().clear();
-
-        setPrivateField(p2, "extraArmies", 0);
+        setPlayerExtraArmies(p2, 0);
 
         // p2 owns both connected countries c1 and c2
         Country c1 = instance.getCountries()[0];
@@ -290,17 +291,16 @@ public class RiskGameEndGoTest extends TestCase {
     }
 
     public void testEndGo_ItalianMode_NoMove() throws Exception {
-        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION);
+        // Set minimumThreeReinforcements to false so next player gets 0 extra armies
+        RiskGame instance = createAndStartGame(2, 6, RiskGame.MODE_DOMINATION, false);
         setPrivateField(instance, "gameState", RiskGame.STATE_END_TURN);
         setPrivateField(instance, "setup", 2);
 
         Player p1 = (Player) instance.getPlayers().get(0);
         Player p2 = (Player) instance.getPlayers().get(1);
 
-        setPrivateField(instance, "minimumNewArmies", 0);
         p2.getTerritoriesOwned().clear();
-
-        setPrivateField(p2, "extraArmies", 0);
+        setPlayerExtraArmies(p2, 0);
 
         // p2 owns c1, but it only has 1 army (cannot attack/move)
         Country c1 = instance.getCountries()[0];
