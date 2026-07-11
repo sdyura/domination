@@ -223,15 +223,16 @@ public class RiskGameTest extends TestCase {
 
         assertEquals(RiskGame.STATE_END_TURN, instance.getState());
         player = instance.endGo();
-        assertEquals(instance.getPlayers().get(1), player);
+        //assertEquals(instance.getPlayers().get(1), player);
 
         // as we dont have a min of 3 armies, and we only own 2 countries, we get no new armies!!!
         //assertEquals(RiskGame.STATE_ATTACKING, instance.getState());
         //assertTrue(instance.endAttack());
         //assertEquals(RiskGame.STATE_FORTIFYING, instance.getState());
         //assertTrue(instance.noMove());
-        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
-        player = instance.endGo();
+
+        //assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+        //player = instance.endGo();
         assertEquals(instance.getPlayers().get(0), player);
         assertEquals(RiskGame.STATE_PLACE_ARMIES, instance.getState());
         assertEquals(player.getNoTerritoriesOwned() / 3, player.getExtraArmies()); // 4 / 3 = 1
@@ -338,24 +339,18 @@ public class RiskGameTest extends TestCase {
             assertEquals(RiskGame.STATE_END_TURN, instance.getState());
             Player nextPlayer = instance.endGo();
             assertNotNull(nextPlayer);
-            assertNotSame(player, nextPlayer);
+
+            if (player == nextPlayer) {
+                // we are on the last player
+                assertEquals(noPlayers - 1, c);
+            }
         }
 
-        // TODO this is NOT ok!!!
-        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
-        assertNotNull(instance.endGo());
-        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
-        assertNotNull(instance.endGo());
-        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
-        assertNotNull(instance.endGo());
-        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
-        assertNotNull(instance.endGo());
-        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+        assertEquals(RiskGame.STATE_GAME_OVER, instance.getState());
 
         System.out.println("map " + toString(instance.getCountries()));
     }
-    
-    
+
     public static void addPlayers(RiskGame instance, int noPlayers) {
         for (int p = 0; p < noPlayers; p++) {
             int color = ColorUtil.BLACK;

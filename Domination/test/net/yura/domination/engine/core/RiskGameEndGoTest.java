@@ -372,12 +372,12 @@ public class RiskGameEndGoTest extends TestCase {
         while (c1.getArmies() < 1) {
             c1.addArmy();
         }
-        
+
         Player nextPlayer = instance.endGo();
-        
-        assertEquals(p2, nextPlayer);
+
+        assertEquals(p1, nextPlayer);
         assertEquals(0, p2.getExtraArmies());
         // Cannot attack, cannot move.
-        assertEquals(RiskGame.STATE_END_TURN, instance.getState());
+        assertEquals(RiskGame.STATE_GAME_OVER, instance.getState());
     }
 }

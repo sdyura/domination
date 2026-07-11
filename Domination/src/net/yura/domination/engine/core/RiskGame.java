@@ -39,7 +39,7 @@ public class RiskGame implements Serializable {
          * the "engine" describes how mutations happen to the model based on the commands
          * if we change the action of a command we must increment this number
          */
-	public final static String NETWORK_VERSION = "14";
+	public final static String NETWORK_VERSION = "15";
 
 	public static int MAX_PLAYERS = 6; // can be changed in game.ini config
 	public final static Continent ANY_CONTINENT = new Continent("any","any", 0, 0);
@@ -446,25 +446,28 @@ transient - A keyword in the Java programming language that indicates that a fie
 		if (gameState == STATE_END_TURN) {
 			//System.out.print("go ended\n"); // testing
 
+                        Player oldPlayer = currentPlayer;
 			// work out who is the next player
 			while (true) {
+                                currentPlayer = (Player) Players.get((Players.indexOf(currentPlayer) + 1) % Players.size());
 
-				for (int c=0; c< Players.size() ; c++) {
-					if ( currentPlayer==((Player)Players.elementAt(c)) && Players.size()==(c+1) ) {
-						currentPlayer=(Player)Players.elementAt(0);
-						c=Players.size();
-					}
-					else if ( currentPlayer==((Player)Players.elementAt(c)) && Players.size() !=(c+1) ) {
-						currentPlayer=(Player)Players.elementAt(c+1);
-						c=Players.size();
-					}
-				}
+                                // if we have failed to find a new player
+                                if (currentPlayer == oldPlayer) {
+                                    break;
+                                }
 
-				if (!getSetupDone()) { break; }
-
+				if (!getSetupDone()) {
+                                    break;
+                                }
 											// && (currentPlayer.getType() != 3)
-
-				else if ( currentPlayer.getNoTerritoriesOwned() > 0       ) {break; }
+				else if (currentPlayer.getNoTerritoriesOwned() > 0 && (
+					    // only select this player if they have valid moves they can make
+                                            getExtraArmiesForPlayer(currentPlayer) > 0 ||
+                                            canTrade() ||
+                                            canAttackOrMove(currentPlayer, true) ||
+                                            canAttackOrMove(currentPlayer, false))) {
+                                    break;
+                                }
 			}
 
 			//System.out.print("Curent Player: " + currentPlayer.getName() + "\n"); // testing
@@ -521,7 +524,7 @@ transient - A keyword in the Java programming language that indicates that a fie
      */
     private void goIntoPlaceArmiesState() {
 
-        if (currentPlayer.getExtraArmies() > 0) { // ie the initial setup has not been compleated or there are no cards that can be traded
+        if (currentPlayer.getExtraArmies() > 0) { // ie the initial setup has not been completed or there are no cards that can be traded
                 gameState = STATE_PLACE_ARMIES;
         }
         // last 3 states can ONLY happen in italian mode with no minimum armies enabled
@@ -532,7 +535,8 @@ transient - A keyword in the Java programming language that indicates that a fie
                 gameState = STATE_FORTIFYING;
         }
         else {
-                gameState = STATE_END_TURN;
+		// we have failed to find a valid move, game must be a stalemate, end the game
+                gameState = STATE_GAME_OVER;
         }
     }
 

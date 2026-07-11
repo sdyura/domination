@@ -3,11 +3,11 @@ Risk - Yura Mamyrin (yura@yura.net)
 CURRENT VERSION:
 
 	Risk Game:	1.3.5
-	 * Network:	14
+	 * Network:	15
 	 * Save:	8
 
 	iOS:		24
-	Android:	101
+	Android:	102
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -18,6 +18,12 @@ CURRENT VERSION:
 
 	Dashboard added when game screen stretched wider
 	Stats screen can be resized
+	Fixed: crash in game when no player has a valid move in Italian mode
+	Because of Italian rules fix: game engine/network play version now 15
+
+	iOS 24 hopefully symbols in crash reports
+
+	Android 102
 
 1.3.4 (13.03.2025) (svn rev 2664)
 
@@ -26,8 +32,6 @@ CURRENT VERSION:
 	better fallbacks for audio not loading from url
 	fix for small screen Domination not loading when space in path
 	installer updated to 5.2.4 to fix issue with Ubuntu jdk21 https://sf.net/p/domination/bugs/50/
-
-	iOS 24 hopefully symbols in crash reports
 
 	iOS 23 more info in dashboard
 
