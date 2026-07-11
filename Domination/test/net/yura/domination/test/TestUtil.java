@@ -1,13 +1,21 @@
 package net.yura.domination.test;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Locale;
+import java.util.Observer;
+import java.util.ResourceBundle;
 import net.yura.domination.engine.Risk;
+import net.yura.domination.engine.RiskIO;
+import net.yura.domination.engine.RiskUtil;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Continent;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.lobby.server.ServerGameRisk;
 
 public class TestUtil {
 
@@ -15,22 +23,44 @@ public class TestUtil {
         // we must set the maps folder for map loading to work
         //RiskUIUtil.mapsdir = new File("game/Domination/maps").toURI().toURL();
 
-        File test = new File(".");
-        System.out.println("running tests in " + test.getCanonicalFile());
+        final File gameDir = new File(new File(System.getProperty("user.dir"), "game"), RiskUtil.GAME_NAME);
+        final File mapsDir = new File(gameDir, "maps");
 
-        // we must change the current folder for map loading to work
-        String testRoot = System.getProperty("user.dir");
-        if ("/".equals(testRoot)) {
-            throw new RuntimeException("current dir set incorrectly! /");
-        }
-        System.setProperty("user.dir", testRoot + File.separator + "game");
-
-        // force static init to run that setups map access
-        Class.forName(ServerGameRisk.class.getName());
-
-        // after we have done the ServerGameRisk init, we can revert to the standard value
-        // this will allow this method to run multiple tiles without messing anything up
-        System.setProperty("user.dir", testRoot);
+        RiskUtil.streamOpener = new RiskIO() {
+            public InputStream openStream(String name) throws IOException {
+                return new FileInputStream(new File(gameDir, name));
+            }
+            public InputStream openMapStream(String name) throws IOException {
+                return new FileInputStream(new File(mapsDir, name));
+            }
+            public ResourceBundle getResourceBundle(Class c, String n, Locale l) {
+                return ResourceBundle.getBundle(c.getPackage().getName() + "." + n, l);
+            }
+            public void openURL(URL url) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+            public void openDocs(String doc) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+            public void saveGameFile(String name, RiskGame obj) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+            public InputStream loadGameFile(String file) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+            public void getMap(String filename, Observer observer) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+            public java.io.OutputStream saveMapFile(String fileName) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+            public void renameMapFile(String oldName, String newName) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+            public boolean deleteMapFile(String mapName) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
     }
 
     public static Risk newRisk() throws Exception {

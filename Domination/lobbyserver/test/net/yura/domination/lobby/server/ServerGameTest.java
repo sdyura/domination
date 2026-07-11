@@ -24,11 +24,31 @@ public class ServerGameTest extends TestCase {
 
     ServerGame serverGame;
 
+    public static void setupMapsForTest() {
+
+        File test = new File(".");
+        System.out.println("running tests in " + test.getCanonicalFile());
+
+        // we must change the current folder for map loading to work
+        String testRoot = System.getProperty("user.dir");
+        if ("/".equals(testRoot)) {
+            throw new RuntimeException("current dir set incorrectly! /");
+        }
+        System.setProperty("user.dir", testRoot + File.separator + "game");
+
+        // force static init to run that setups map access
+        Class.forName(ServerGameRisk.class.getName());
+
+        // after we have done the ServerGameRisk init, we can revert to the standard value
+        // this will allow this method to run multiple tiles without messing anything up
+        System.setProperty("user.dir", testRoot);
+    }
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
-        TestUtil.setupMapsForTest();
+        setupMapsForTest();
 
         AIManager.setWait(0);
         Risk.setShowDice(false);

@@ -77,7 +77,7 @@
 
 	<condition property="lobby.available">
 	  <and>
-	    <available file="lib/LobbyServer.jar" property="lobby.server.available"/>
+	    <available file="../lobbyserver/lib/LobbyServer.jar" property="lobby.server.available"/>
 	    <available file="lib/LobbyClient.jar" property="lobby.client.available"/>
 	  </and>
 	</condition>
@@ -500,8 +500,8 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 
 		<mkdir dir="${dir.build.lobby.server.classes}"/>
 
-		<javac debug="on" srcdir="../src:../src_lobbyserver:../sharedUI/src_mapstore_lobby" destdir="${dir.build.lobby.server.classes}" includes="net/yura/domination/lobby/server/**,net/yura/domination/engine/ai/**"
-		source="1.8" target="1.8" classpath="lib/LobbyServer.jar:lib/SwingME.jar:lib/midletrunner.jar" encoding="Cp1252"/>
+		<javac debug="on" srcdir="../src:../lobbyserver/src:../sharedUI/src_mapstore_lobby" destdir="${dir.build.lobby.server.classes}" includes="net/yura/domination/lobby/server/**,net/yura/domination/engine/ai/**"
+		source="1.8" target="1.8" classpath="../lobbyserver/lib/LobbyServer.jar:lib/SwingME.jar:lib/midletrunner.jar" encoding="Cp1252"/>
 
                 <!-- copy translation files and other shared files -->
 		<copy todir="${dir.build.lobby.server.classes}" filtering="true">

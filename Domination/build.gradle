@@ -31,7 +31,11 @@ sourceSets {
     }
     test {
         java {
-            srcDirs = ['test', 'src_lobbyserver']
+            srcDirs = ['test']
+        }
+        resources {
+            srcDirs = ['sharedUI/res_mini_game_ui']
+            include 'net/yura/domination/engine/settings.ini'
         }
     }
 }
@@ -47,5 +51,4 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpmime:4.1.2'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation fileTree(dir: 'swingUI/lib', include: ['LobbyServer.jar'])
 }
