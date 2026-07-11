@@ -59,6 +59,9 @@ public class RiskGameEndGoTest extends TestCase {
         // Setup not done, so nextTurn() should NOT be called on p2, nor should getExtraArmiesForPlayer be added.
         assertEquals(p2ArmiesBefore, p2.getExtraArmies());
 
+        // Assert the correct gameState is transition to
+        assertEquals(RiskGame.STATE_PLACE_ARMIES, instance.getState());
+
         // Assert reset flags
         assertFalse((Boolean) getPrivateField(instance, "capturedCountry"));
         assertFalse((Boolean) getPrivateField(instance, "tradeCap"));
@@ -116,6 +119,9 @@ public class RiskGameEndGoTest extends TestCase {
         // Since p2 owns 0 territories, endGo() should skip p2 and select p3
         assertEquals(p3, nextPlayer);
         assertEquals(p3, instance.getCurrentPlayer());
+
+        // Assert the correct gameState is transition to
+        assertEquals(RiskGame.STATE_PLACE_ARMIES, instance.getState());
     }
 
     public void testEndGo_CapitalMode_SetupNotFinished() throws Exception {
