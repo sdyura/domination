@@ -5,16 +5,16 @@
 
 rootProject.name = "Domination"
 
-include ':sharedUI', ':android', ':ios'
+//include ':sharedUI', ':android', ':ios'
 
-include ':SwingME'
-project(':SwingME').projectDir = new File(rootDir.getParentFile(), 'SwingME')
+//include ':SwingME'
+//project(':SwingME').projectDir = new File(rootDir.getParentFile(), 'SwingME')
 
-include ':AndroidME'
-project(':AndroidME').projectDir = new File(rootDir.getParentFile(), 'AndroidME')
+//include ':AndroidME'
+//project(':AndroidME').projectDir = new File(rootDir.getParentFile(), 'AndroidME')
 
-include ':iOSME'
-project(':iOSME').projectDir = new File(rootDir.getParentFile(), 'iOSME')
+//include ':iOSME'
+//project(':iOSME').projectDir = new File(rootDir.getParentFile(), 'iOSME')
 
 
 
