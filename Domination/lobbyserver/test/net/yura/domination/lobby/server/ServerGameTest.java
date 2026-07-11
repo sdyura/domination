@@ -9,7 +9,6 @@ import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.ai.AIManager;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
-import net.yura.domination.test.TestUtil;
 import net.yura.lobby.server.LobbySession;
 import net.yura.lobby.server.ServerGame;
 import net.yura.lobby.server.ServerGameListener;
@@ -24,7 +23,7 @@ public class ServerGameTest extends TestCase {
 
     ServerGame serverGame;
 
-    public static void setupMapsForTest() {
+    public static void setupMapsForTest() throws Exception {
 
         File test = new File(".");
         System.out.println("running tests in " + test.getCanonicalFile());
