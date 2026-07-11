@@ -40,40 +40,10 @@ import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mobile.flashgui.DominationMain;
 import net.yura.domination.mobile.flashgui.MiniFlashRiskAdapter;
 import net.yura.lobby.model.Game;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 public class GameActivity extends AndroidMeActivity implements GoogleAccount.SignInListener,DominationMain.GooglePlayGameServices {
 
     private static final Logger logger = Logger.getLogger(GameActivity.class.getName());
-
-    static {
-        try {
-            // on old versions of android its not possible to connect to https any more
-            // more info: https://letsencrypt.org/2023/07/10/cross-sign-expiration.html
-            // so we just tell android to ignore https checks and just connect anyway
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-                TrustManager[] trustAllCerts = new TrustManager[] {
-                    new X509TrustManager() {
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return new java.security.cert.X509Certificate[]{};
-                        }
-                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) { }
-                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) { }
-                    }
-                };
-                SSLContext sc = SSLContext.getInstance("TLS");
-                sc.init(null, trustAllCerts, new java.security.SecureRandom());
-                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-                HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
-            }
-        }
-        catch (Throwable th) {
-            // ignore
-        }
-    }
 
     /**
      * this code needs to not clash with other codes such as the ones in

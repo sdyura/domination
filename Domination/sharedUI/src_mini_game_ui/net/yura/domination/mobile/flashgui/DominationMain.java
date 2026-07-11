@@ -28,7 +28,6 @@ import net.yura.grasshopper.info.ApplicationInfoProvider;
 import net.yura.grasshopper.submitter.BugSubmitter;
 import net.yura.grasshopper.info.LogList;
 import net.yura.grasshopper.SimpleBug;
-import net.yura.grasshopper.util.StdOutErrLevel;
 import net.yura.lobby.client.PushLobbyClient;
 import net.yura.lobby.mini.MiniLobbyClient;
 import net.yura.lobby.model.Game;
@@ -143,99 +142,6 @@ public class DominationMain extends Application {
                     }
                     // if we have already quit the game, any events arriving after may cause errors
                     if (risk != null && DesktopPane.getDesktopPane() == null) {
-                        return true;
-                    }
-                    String loggerName = record.getLoggerName();
-                    if ("DataScheduler".equals(loggerName)) { // "libcore.io.IoBridge".equals(className) && "isDataSchedulerEnabled".equals(methodName)
-                        // isDataSchedulerEnabled(): DataScheduler is disabled, exeption=java.io.FileNotFoundException: /system/etc/datascheduling_policy_conf.xml: open failed: ENOENT (No such file or directory)
-                        return true;
-                    }
-
-                    String className = record.getSourceClassName();
-                    String methodName = record.getSourceMethodName();
-                    if ("java.net.InetAddress".equals(className) && "lookupHostByName".equals(methodName)) {
-                        return true;
-                    }
-                    if ("java.net.InetAddress".equals(className) && "getByName".equals(methodName)) {
-                        return true;
-                    }
-                    if ("java.net.AddressCache".equals(className) && "customTtl".equals(methodName)) {
-                        return true;
-                    }
-                    if ("java.util.prefs.FileSystemPreferences".equals(className) && "loadCache".equals(methodName)) {
-                        // Exception while reading cache: Attempt to invoke interface method 'java.lang.String org.w3c.dom.Element.getAttribute(java.lang.String)' on a null object reference
-                        return true;
-                    }
-
-                    if (record.getLevel() == StdOutErrLevel.STDERR) {
-                        if ("android.util.MiuiMultiWindowUtils".equals(className)) {
-                            // there is a printStackTrace() call in MiuiMultiWindowUtils that spits out lots and lots of errors
-                            // "initFreeFormResolutionArgsOfDevice".equals(methodName) "org.json.JSONException: No value for galahad"
-                            // "org.json.JSONException: No value for veux" "org.json.JSONException: No value for joyeuse" "org.json.JSONException: No value for spes"
-                            // "org.json.JSONException: No value for surya" "org.json.JSONException: No value for spesn" "org.json.JSONException: No value for fleur"
-                            // "getRamFromProcMv".equals(methodName) "java.io.FileNotFoundException: proc/mv: open failed: EACCES (Permission denied)"
-                            return true;
-                        }
-                        if ("android.view.ViewRootImpl".equals(className) && "getHostVisibility".equals(methodName)) {
-                            // for unknown crazy reasons some version of android 9 api-28 (samsung SM-A530W) dumps the stack in this method
-                            return true;
-                        }
-                        if ("android.widget.directwriting.DirectWritingServiceBinder".equals(className) && "isBindableEditText".equals(methodName)) {
-                            // java.lang.NullPointerException: Attempt to invoke interface method 'boolean android.widget.directwriting.IDirectWritingService.onBoundedEditTextChanged(android.os.Bundle)' on a null object reference
-                            return true;
-                        }
-                        if ("android.widget.directwriting.DirectWritingServiceBinder".equals(className) && "unregisterCallback".equals(methodName)) {
-                            // android.os.DeadObjectException
-                            return true;
-                        }
-                        if ("android.widget.directwriting.DirectWritingServiceBinder".equals(className) && "onStartRecognition".equals(methodName)) {
-                            // ERR: java.lang.NullPointerException: null cannot be cast to non-null type com.samsung.android.directwriting.service.DirectWritingServiceCallbackImpl
-                            return true;
-                        }
-                        if ("com.samsung.android.content.clipboard.SemClipboardManager".equals(className) && "isEnabled".equals(methodName)) {
-                            // java.lang.SecurityException: Permission Denial: getCurrentUser() from pid=31156, uid=10245 requires android.permission.INTERACT_ACROSS_USERS
-                            return true;
-                        }
-                        if ("com.android.webview.chromium.WebViewExtAmazon".equals(className) && "destroy".equals(methodName)) {
-                            // java.lang.IllegalArgumentException: Service not registered: com.amazon.webview.awvdeploymentservice.client.AWVDeploymentClient$1@7992672
-                            return true;
-                        }
-                        if ("android.app.Dialog".equals(className) && "show".equals(methodName)) {
-                            // ERR: java.lang.SecurityException: net.yura.domination was not granted  this permission: android.permission.WRITE_SETTINGS.
-                            return true;
-                        }
-                        if ("android.app.Dialog".equals(className) && "dismissDialog".equals(methodName)) {
-                            // ERR: java.lang.SecurityException: net.yura.domination was not granted  this permission: android.permission.WRITE_SETTINGS.
-                            return true;
-                        }
-                        if ("android.app.AlertDialog".equals(className) && "show".equals(methodName)) {
-                            // ERR: java.lang.Exception: show AlertDialog! title=
-                            return true;
-                        }
-                    }
-
-                    String message = record.getMessage();
-                    if ("rto value is too small:0".equals(message) ||
-                        "/data/system/carrierinfo.prop: open failed: ENOENT (No such file or directory)".equals(message) ||
-                        "isDataSchedulerEnabled():false".equals(message) ||
-                        "remove failed: ENOENT (No such file or directory) : /data/data/net.yura.domination/shared_prefs/net.yura.domination_preferences.xml.bak".equals(message) ||
-                        "remove failed: ENOENT (No such file or directory) : /data/data/net.yura.domination/shared_prefs/com.google.android.gcm.xml.bak".equals(message) ||
-                        "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/net.yura.domination_preferences.xml.bak".equals(message) ||
-                        "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/com.google.android.gcm.xml.bak".equals(message) ||
-                        "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/com.google.android.gms.signin.xml.bak".equals(message) ||
-                        "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/com.google.android.gms.appid.xml.bak".equals(message) ||
-                        "remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/shared_prefs/FirebaseAppHeartBeat.xml.bak".equals(message) ||
-                        "mkdir failed: EEXIST (File exists) : /data/user/0/net.yura.domination/cache/WebView/Crash Reports".equals(message) ||
-                        "mkdir failed: EEXIST (File exists) : /data/data/net.yura.domination/cache/WebView/Crash Reports".equals(message) ||
-                        "stat failed: ENOENT (No such file or directory) : /data/data/net.yura.domination/files/assetpacks".equals(message) ||
-                        "stat failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/files/assetpacks".equals(message)
-                    ) {
-                        return true;
-                    }
-
-                    if (message != null && (
-                            message.startsWith("remove failed: ENOENT (No such file or directory) : /data/data/net.yura.domination/files/.java/.userPrefs/net/yura/domination/mobile/flashgui/prefs-") || // then some random GUID
-                            message.startsWith("remove failed: ENOENT (No such file or directory) : /data/user/0/net.yura.domination/files/.java/.userPrefs/net/yura/domination/mobile/flashgui/prefs-"))) { // then some random GUID
                         return true;
                     }
 
