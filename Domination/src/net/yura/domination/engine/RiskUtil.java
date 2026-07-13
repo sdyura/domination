@@ -599,7 +599,7 @@ public class RiskUtil {
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
 
-            String card = "\ud83c\udcad";
+            String card = "\ud83c\udca0"; // old card: "\ud83c\udcad" does not work in java 1.5
             String flag = "\u2691";
             String army = "\uc6c3"; // happy face: \u263a
             String extraArmies = "+";

@@ -118,7 +118,7 @@
                 <!-- copy translation files and other shared files -->
 		<copy todir="${dir.build.classes}" filtering="true">
 			<fileset dir="${dir.properties}" includes="**/*.properties"/>
-                        <fileset dir="src" includes="**/*.ini"/>
+                        <fileset dir="src" includes="**/*.ini,**/*.ttf"/>
                         <fileset dir="../src" includes="META-INF/**"/>
 		</copy>
 

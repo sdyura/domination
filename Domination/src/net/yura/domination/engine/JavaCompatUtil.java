@@ -130,40 +130,4 @@ public class JavaCompatUtil {
 
         return sb.toString();
     }
-
-    /**
-     * this is not perfect as many fonts do not obey the unicode grapheme rules, but its the best option.
-     * counting Glyphs {@link java.awt.font.GlyphVector#getNumGlyphs()} gives very large counts for emoji
-     */
-    public static int graphemeCount(String text) {
-        BreakIterator it = BreakIterator.getCharacterInstance();
-        it.setText(text);
-        int count = 0;
-        while (it.next() != BreakIterator.DONE) count++;
-        return count;
-    }
-
-    public static String subGrapheme(String text, int beginIndex, int endIndex) {
-        if (beginIndex == 0 && endIndex == 0) return "";
-
-        BreakIterator it = BreakIterator.getCharacterInstance();
-        it.setText(text);
-
-        int grapheme = 0;
-        int startOffset = beginIndex == 0 ? 0 : -1;
-
-        while (true) {
-            int position = it.next();
-            if (position == BreakIterator.DONE) {
-                throw new IllegalArgumentException("bad index for string \"" + text +"\" beginIndex=" + beginIndex + " endIndex=" + endIndex + " length=" + graphemeCount(text));
-            }
-            grapheme++;
-            if (grapheme == beginIndex) {
-                startOffset = position;
-            }
-            if (grapheme == endIndex) {
-                return text.substring(startOffset, position);
-            }
-        }
-    }
 }
