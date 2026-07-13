@@ -16,7 +16,7 @@
         
         <property file="local.properties" />
 
-	<property name="game.version" value="1.3.5"/>
+	<property name="game.version" value="1.3.5beta5"/>
 
         <!--
             For releasing we want to be compatible wth as many versions of java as possible
@@ -118,13 +118,14 @@
                 <!-- copy translation files and other shared files -->
 		<copy todir="${dir.build.classes}" filtering="true">
 			<fileset dir="${dir.properties}" includes="**/*.properties"/>
-                        <fileset dir="src" includes="**/*.ini,**/*.ttf"/>
+                        <fileset dir="src" includes="**/*.ini"/>
                         <fileset dir="../src" includes="META-INF/**"/>
 		</copy>
 
 		<!-- copy images -->
 		<copy todir="${dir.build.classes}">
 			<fileset dir="game/${game.name}/jar" includes="**/*.*"/>
+			<fileset dir="src" includes="**/*.ttf"/>
 		</copy>
 
 <!-- this is how it used to work, but really this is not a very good idea
