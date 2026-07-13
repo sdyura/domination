@@ -50,8 +50,9 @@ public class TextUtil {
             if (font.canDisplayUpTo(cluster) != -1 && backupFont != null) { // cant display char
                 // flush text buffer
                 if (buffer.length() > 0) {
-                    g2.drawString(cluster, penX, y);
-                    penX += fm.stringWidth(cluster);
+                    String txt = buffer.toString();
+                    g2.drawString(txt, penX, y);
+                    penX += fm.stringWidth(txt);
                     buffer.setLength(0);
                 }
 
