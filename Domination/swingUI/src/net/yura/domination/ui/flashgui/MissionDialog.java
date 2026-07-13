@@ -16,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.swing.GraphicsUtil;
+import net.yura.swing.TextUtil;
 
 /**
  * Mission Dialog for FlashGUI
@@ -117,7 +118,7 @@ public class MissionDialog extends JDialog implements MouseListener {
             g.setFont(font);
             g2.setColor( GameFrame.UI_COLOR );
 
-            GraphicsUtil.drawStringCenteredAt(g, text, RiskUIUtil.unscale(getWidth() / 2), 70, RiskUIUtil.unscale(getWidth()) - 50, Color.WHITE);
+            TextUtil.drawStringCenteredAt(g, text, getWidth() / 2, GraphicsUtil.scale(70), getWidth() - GraphicsUtil.scale(50), Color.WHITE);
 	}
     }
 

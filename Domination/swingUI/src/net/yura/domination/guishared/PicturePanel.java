@@ -36,6 +36,7 @@ import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
 import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.swing.TextUtil;
 
 /**
  * <p> Picture Panel </p>
@@ -448,7 +449,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 
                 g2.setColor(textColor);
                 Color outlineColor = Color.WHITE.equals(textColor) ? Color.BLACK : Color.WHITE;
-                GraphicsUtil.drawStringWithOutline(g2, new TextLayout(noa, circleFont, g2.getFontRenderContext()), textX, textY, outlineColor);
+                TextUtil.drawStringWithOutline(g2, new TextLayout(noa, circleFont, g2.getFontRenderContext()), textX, textY, outlineColor);
             }
 
             if (capital != null) {

@@ -36,6 +36,7 @@ import net.yura.domination.engine.core.RiskGame;
 import net.yura.swing.GraphicsUtil;
 import net.yura.domination.guishared.PicturePanel;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.swing.TextUtil;
 
 /**
  * Cards Dialog for FlashGUI
@@ -340,7 +341,7 @@ public class CardsDialog extends JDialog {
 
                                 g2.setColor( GameFrame.UI_COLOR );
 
-                                GraphicsUtil.drawStringCenteredAt(g2, text, cardWidth / 2, 5, cardWidth - 10, null);
+                                TextUtil.drawStringCenteredAt(g2, text, GraphicsUtil.scale(cardWidth / 2), GraphicsUtil.scale(5), GraphicsUtil.scale(cardWidth - 10), null);
 
 				Image i = getCountryImage( ((Country)card.getCountry()).getColor() );
 

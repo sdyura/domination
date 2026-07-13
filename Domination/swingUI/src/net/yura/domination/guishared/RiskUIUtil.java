@@ -87,6 +87,7 @@ import net.yura.swing.GraphicsUtil;
 import net.yura.domination.engine.translation.TranslationBundle;
 import net.yura.domination.mapstore.MapServerClient;
 import net.yura.domination.mapstore.MapUpdateService;
+import net.yura.swing.TextUtil;
 
 /**
  * @author Yura Mamyrin
@@ -1687,12 +1688,12 @@ public class RiskUIUtil {
 
                 for (int col = 0; col < data[row].length; col++) {
                     if (isLightText) {
-                        g.drawString(data[row][col], x, y);
+                        TextUtil.drawString(g, data[row][col], x, y);
                     }
                     else {
-                        GraphicsUtil.drawStringWithOutline(g, data[row][col], x, y, Color.WHITE);
+                        TextUtil.drawStringWithOutline(g, data[row][col], x, y, Color.WHITE);
                     }
-                    
+
                     if (wrap && col == 0) {
                         x += lineHeight + font.stringWidth(" "); // player emoji width + space
                         y += lineHeight;

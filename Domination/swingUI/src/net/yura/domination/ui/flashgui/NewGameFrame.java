@@ -56,6 +56,7 @@ import net.yura.swing.GraphicsUtil;
 import net.yura.swing.ImageIcon;
 import net.yura.domination.guishared.RiskFileFilter;
 import net.yura.domination.engine.translation.TranslationBundle;
+import net.yura.swing.TextUtil;
 
 /**
  * <p> New Game Frame for FlashGUI </p>
@@ -530,11 +531,11 @@ public class NewGameFrame extends JFrame implements ActionListener,MouseListener
 				return;
 			}
                         
-                        int currentLength = JavaCompatUtil.graphemeCount(getText(0, getLength()));
-                        int newLength = JavaCompatUtil.graphemeCount(str);
+                        int currentLength = TextUtil.graphemeCount(getText(0, getLength()));
+                        int newLength = TextUtil.graphemeCount(str);
 
 			if ((currentLength + newLength) > MAX) {
-				str = JavaCompatUtil.subGrapheme(str, 0, newLength - ((currentLength + newLength) - MAX));
+				str = TextUtil.subGrapheme(str, 0, newLength - ((currentLength + newLength) - MAX));
 				Toolkit.getDefaultToolkit().beep();
 			}
 
