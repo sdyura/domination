@@ -12,6 +12,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.plaf.UIResource;
@@ -219,7 +220,8 @@ public class StatsPanel extends JPanel {
                 }
                 g.drawLine(x1,y1,x2,y2);
                 if (!Double.isNaN(oldPoint) && icon != null) {
-                    GraphicsUtil.drawImageInRect(g, icon, x1 - iconSize/2, y1 - iconSize/2, iconSize, iconSize, this);
+                    // we dont need to re-scale, so do NOT use GraphicsUtil.drawImageInRect here
+                    drawImageInRect(g, icon, x1 - iconSize/2, y1 - iconSize/2, iconSize, iconSize, this);
                 }
             }
 
@@ -243,5 +245,21 @@ public class StatsPanel extends JPanel {
         String playerName = p.getName();
         int textWidth = g.getFontMetrics().stringWidth(playerName);
 	g.drawString(playerName, Math.min(x, (int)(getWidth() * GraphicsUtil.scale) - textWidth), y);
+    }
+
+    public static void drawImageInRect(Graphics g, Image img, int xPos, int yPos, int maxW, int maxH, ImageObserver observer) {
+
+        int centreX = xPos + (maxW / 2);
+        int centreY = yPos + (maxH / 2);
+        int w = img.getWidth(observer);
+        int h = img.getHeight(observer);
+
+        if (w > maxW || h > maxH) {
+            double scale = Math.min(maxW/(double)w,maxH/(double)h);
+            w = (int)( scale * w );
+            h = (int)( scale * h );
+        }
+
+        g.drawImage(img, centreX - w/2, centreY - h/2, w, h, observer);
     }
 }
