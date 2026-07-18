@@ -266,6 +266,9 @@ public class GameWindow extends Frame implements ActionListener {
                             colWidths[j] = Math.max(colWidths[j], font.getWidth(row[j]));
                         }
                     }
+                    int sum = 0;
+                    for (int i = 1; i < colWidths.length; sum += colWidths[i++]);
+                    colWidths[0] = Math.min(colWidths[0], getWidth() - sum - font.getHeight() - (xPadding * colWidths.length));
 
                     // Draw each row
                     for (int row = 0; row < data.length; row++) {
@@ -273,7 +276,13 @@ public class GameWindow extends Frame implements ActionListener {
                         Player p = players.get(row);
                         g.setColor(p.getColor());
                         for (int col = 0; col < data[row].length; col++) {
-                            g.drawString(data[row][col], x, y);
+                            if (col == 0) {
+                                String textString = data[row][col];
+                                g.drawString(font.getWidth(textString) > colWidths[0] ? textString.substring(0, TextArea.searchStringCharOffset(textString, font, colWidths[0])) + "..." : textString, x, y);
+                            }
+                            else {
+                                g.drawString(data[row][col], x, y);
+                            }
                             x += colWidths[col] + xPadding;
                         }
                         if (p == current) {
