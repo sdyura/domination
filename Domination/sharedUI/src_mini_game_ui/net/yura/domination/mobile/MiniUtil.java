@@ -88,7 +88,7 @@ public class MiniUtil {
 
         String version = DominationMain.version;
         String versionName = System.getProperty("versionName");
-        if (version != null && !version.equals(versionName)) {
+        if (version != null && versionName != null && !version.equals(versionName)) {
             version = versionName + " (" + version + ")";
         }
 
