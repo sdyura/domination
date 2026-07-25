@@ -500,6 +500,12 @@ public class DominationMain extends Application {
     public void pushNotificationsToken(String system, final String token) {
         logger.info("Push Token " + system + " " + token);
 
+        // android can give us new token at ANY point, even when we didnt request them
+        // so if the app is not ready, we can just ignore this token
+        if (adapter == null) {
+            return;
+        }
+
         // we only request the token once we have connected
         MiniLobbyClient lobby = adapter.lobby;
 
