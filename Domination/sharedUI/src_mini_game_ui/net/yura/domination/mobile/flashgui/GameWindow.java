@@ -604,13 +604,17 @@ public class GameWindow extends Frame implements ActionListener {
         }
         else if ("mission".equals(actionCommand)) {
 
+            // if we have a single local human player,
+            // then it is always safe to show them the mission, as we will always show that mission
+            Player human = myrisk.getSingleLocalHumanPlayer();
+
             String missionTitle = resb.getProperty("core.showmission.mission");
             //String html = "<html><p>" + status + "</p><p><b>" +missionTitle + "</b><br/>"+ mission + "</p></html>";
             Element html = new Element("html",
                     new Element("p",
                             status
                     ),
-                    myrisk.showHumanCurrentPlayerInfo()?
+                    human != null || myrisk.showHumanCurrentPlayerInfo() ?
                         new Element("p",
                                 new Element("b",
                                         missionTitle
