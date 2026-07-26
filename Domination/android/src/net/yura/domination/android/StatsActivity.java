@@ -220,9 +220,24 @@ public class StatsActivity extends Activity {
                 series.add( newPoint + playerOffset );
             }
 
-            dataset.addSeries(series.toXYSeries());
+            dataset.addSeries(toXYSeries(series));
         }
 
         return dataset;
+    }
+
+    /**
+     * this fixes the default implementation to handle NaN correctly, as otherwise nothing gets drawn
+     * @see CategorySeries#toXYSeries()
+     */
+    public XYSeries toXYSeries(CategorySeries series) {
+        XYSeries xySeries = new XYSeries(series.getTitle());
+        for (int i = 0; i < series.getItemCount(); i++) {
+            double value = series.getValue(i);
+            if (Double.isFinite(value)) {
+                xySeries.add(i + 1, value);
+            }
+        }
+        return xySeries;
     }
 }
