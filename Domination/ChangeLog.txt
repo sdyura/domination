@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		24
-	Android:	102
+	Android:	104
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -22,6 +22,9 @@ CURRENT VERSION:
 	Because of Italian rules fix: game engine/network play version now 15
 
 	iOS 24 hopefully symbols in crash reports
+	       fix memory + file open leak when having sounds enabled
+
+	Android 104 fix dice stats not showing, thx Jerome
 
 	Android 103 show your mission even when it is not your turn
 
