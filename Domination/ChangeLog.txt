@@ -20,6 +20,7 @@ CURRENT VERSION:
 	Stats screen can be resized
 	Fixed: crash in game when no player has a valid move in Italian mode
 	Because of Italian rules fix: game engine/network play version now 15
+	Remember last used game name for online games (by Michiel Pater)
 
 	iOS 24 hopefully symbols in crash reports
 	       fix memory + file open leak when having sounds enabled
