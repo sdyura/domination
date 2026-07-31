@@ -644,9 +644,11 @@ public class GameSetupPanel extends JPanel implements ActionListener {
         private String newGameOptions;
         
         public Game showDialog(Window parent,String serveroptions, String defaultGameName) {
-            
-                gamename.setText(defaultGameName);
-            
+
+                if (gamename.getText().isEmpty()) {
+                    gamename.setText(defaultGameName);
+                }
+
                 if (dialog == null) {
 
                         // TODO parent is passed in each time but is only used the first time
