@@ -14,7 +14,7 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.3.5
+1.3.5 (08.08.2026) (svn rev 2778)
 
 	Dashboard added when game screen stretched wider
 	Stats screen can be resized
