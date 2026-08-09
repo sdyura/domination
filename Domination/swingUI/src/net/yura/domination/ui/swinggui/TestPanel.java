@@ -427,6 +427,18 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                     public Object getObject() {
                         return myrisk.getGame();
                     }
+                    public String valueToString(String name, Object value) {
+                        if ("gameMode".equals(name)) {
+                            return getNameForValue("MODE", value);
+                        }
+                        if ("cardMode".equals(name)) {
+                            return getNameForValue("CARD", value);
+                        }
+                        if ("gameState".equals(name)) {
+                            return getNameForValue("STATE", value);
+                        }
+                        return super.valueToString(name, value);
+                    }
 		};
 
                 commands = new AbstractTableModel() {
@@ -518,7 +530,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
 	}
 
-        abstract class ObjectTableModel extends AbstractTableModel {
+        abstract static class ObjectTableModel extends AbstractTableModel {
 
                 private final String[] columnNames = { "Name", "Type", "Value" };
                 private Field[] fields;
@@ -562,11 +574,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                                 case 1: return fields[row].getType().getName();
                                 case 2: {
                                     try {
-                                        Object value = fields[row].get(game);
-                                        if (value instanceof Object[]) {
-                                            return String.valueOf(Arrays.asList((Object[]) value));
-                                        }
-                                        return String.valueOf(value);
+                                        return valueToString(fields[row].getName(), fields[row].get(game));
                                     }
                                     catch (Exception ex){
                                         return ex.toString();
@@ -574,6 +582,30 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                                 }
                                 default: throw new IllegalArgumentException("bad col " + col);
                         }
+                }
+                
+                public String valueToString(String name, Object value) { 
+                    if (value instanceof Object[]) {
+                        return String.valueOf(Arrays.asList((Object[]) value));
+                    }
+                    return String.valueOf(value);
+                }
+                
+                public String getNameForValue(String mode, Object value) {
+                    Object game = getObject();
+                    if (game != null) {
+                        Field[] fs = game.getClass().getDeclaredFields();
+                        try {
+                            for (int c = 0; c < fs.length; c++) {
+                                if (java.lang.reflect.Modifier.isStatic(fs[c].getModifiers()) && fs[c].getName().startsWith(mode+"_") && value.equals(fs[c].get(null))) {
+                                    return fs[c].getName();
+                                }
+                            }
+                        } catch (Exception ex) {
+                            return ex.toString();
+                        }
+                    }
+                    return String.valueOf(value);
                 }
 
                 public abstract Object getObject();
