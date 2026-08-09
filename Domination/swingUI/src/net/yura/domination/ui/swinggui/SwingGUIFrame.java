@@ -3,11 +3,16 @@
 package net.yura.domination.ui.swinggui;
 
 import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDropEvent;
+import java.io.File;
+import java.util.List;
 import java.util.prefs.Preferences;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import net.yura.domination.engine.Risk;
-import net.yura.domination.engine.RiskSettings;
 import net.yura.domination.guishared.RiskUIUtil;
 import net.yura.domination.guishared.AboutDialog;
 
@@ -38,8 +43,46 @@ public class SwingGUIFrame {
 
                 RiskUIUtil.initAudio(r);
 
-		SwingGUIPanel sg = new SwingGUIPanel( r );
+		final SwingGUIPanel sg = new SwingGUIPanel( r );
 
+                // allow drop of game save file
+                sg.setDropTarget(new DropTarget() {
+                    @Override
+                    public synchronized void drop(DropTargetDropEvent event) {
+                        try {
+                            if (!event.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                                event.rejectDrop();
+                                return;
+                            }
+
+                            event.acceptDrop(DnDConstants.ACTION_COPY);
+                            
+                            List<File> files = (List<File>) event.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+
+                            if (files.size() != 1) {
+                                event.rejectDrop();
+                                return;
+                            }
+
+                            File file = files.get(0);
+                            if (file.getName().endsWith(".save")) {
+                                sg.go("loadgame " + file.getAbsolutePath());
+                            }
+                            else {
+                                event.rejectDrop();
+                                return;
+                            }
+
+                            event.dropComplete(true);
+
+                        } catch (Exception e) {
+                            event.dropComplete(false);
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                
+                
 		final JFrame gui = new JFrame();
                 // old docs: https://developer.apple.com/library/archive/technotes/tn2007/tn2196.html
                 //gui.getRootPane().putClientProperty("apple.awt.brushMetalLook", true);
