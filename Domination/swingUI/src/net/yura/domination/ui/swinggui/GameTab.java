@@ -775,34 +775,31 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                 repaint(); // needed for windows/java17 or screen does not repaint
 	}
 
+        /**
+         * MUST be called on UI Thread!
+         */
 	public void startGame() {
 
-            // if we do not use this here we get ClassCastException in java 1.7 when we load a saved game
-            SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
+                gNewGame.setEnabled(false);
+                gLoadGame.setEnabled(false);
+                //gSaveGame.setEnabled(true);
+                gCloseGame.setEnabled(true);
 
-			gNewGame.setEnabled(false);
-			gLoadGame.setEnabled(false);
-			//gSaveGame.setEnabled(true);
-			gCloseGame.setEnabled(true);
+                gmNewGame.setEnabled(false);
+                gmLoadGame.setEnabled(false);
+                gmStartServer.setEnabled(false);
+                gmJoinGame.setEnabled(false);
 
-			gmNewGame.setEnabled(false);
-			gmLoadGame.setEnabled(false);
-			gmStartServer.setEnabled(false);
-			gmJoinGame.setEnabled(false);
+                gStartServer.setEnabled(false);
+                gJoinGame.setEnabled(false);
 
-			gStartServer.setEnabled(false);
-			gJoinGame.setEnabled(false);
+                //gmSaveGame.setEnabled(true);
+                gmCloseGame.setEnabled(true);
 
-			//gmSaveGame.setEnabled(true);
-			gmCloseGame.setEnabled(true);
+                remove(Pix);
+                remove(guiSetup);
 
-			remove(Pix);
-			remove(guiSetup);
-
-			add(guiGame, java.awt.BorderLayout.CENTER );
-                }
-            } );
+                add(guiGame, java.awt.BorderLayout.CENTER );
 	}
 
 	public void serverState(boolean s) {

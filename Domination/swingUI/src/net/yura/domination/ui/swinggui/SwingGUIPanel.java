@@ -612,22 +612,24 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 
                         blockInput();
 
-			// YURA: not sure why this needs to be here, used to work without it
+			// YURA:TODO not sure why this needs to be here, used to work without it
 			pprepaintCountries();
-			gameTab.startGame();
-			statisticsTab.startGame();
 
-			SwingGUIPanel.this.setCursor(null); // Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
 
-                        if (!localGame && tabbedpane.getSelectedComponent() instanceof LobbyTab) {
-                            // SortingFocusTraversalPolicy can throw a null pointer if set tab called from non UI thread
-                            SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
+                                gameTab.startGame(); // if we do not use this here we get ClassCastException in java 1.7 when we load a saved game
+                                statisticsTab.startGame(); // needs to be on UI thread as statisticsTab.closeGame also is
+
+                                SwingGUIPanel.this.setCursor(null); // Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)
+
+                                if (!localGame && tabbedpane.getSelectedComponent() instanceof LobbyTab) {
+                                    // SortingFocusTraversalPolicy can throw a null pointer if set tab called from non UI thread
                                     setSelectedTab(GameTab.class);
                                 }
-                            });
-                        }
+                            }
+                        });	
 		}
 
 		/**
