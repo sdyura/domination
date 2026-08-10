@@ -590,7 +590,7 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 			gameTab.newGame();
 		}
 
-		public void startGame(boolean localGame) {
+		public void startGame(final boolean localGame) {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 			gameTab.setLocalGame(localGame);
