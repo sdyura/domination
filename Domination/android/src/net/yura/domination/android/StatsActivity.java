@@ -234,7 +234,7 @@ public class StatsActivity extends Activity {
         XYSeries xySeries = new XYSeries(series.getTitle());
         for (int i = 0; i < series.getItemCount(); i++) {
             double value = series.getValue(i);
-            if (Double.isFinite(value)) {
+            if (!Double.isNaN(value)) { // Double.isFinite was added in android-24
                 xySeries.add(i + 1, value);
             }
         }
