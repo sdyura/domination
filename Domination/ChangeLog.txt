@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.3.6
 
 	Drag and drop save file into MapEditor
+	Fixed: MapChooser and Lobby work on java 26
 
 1.3.5 (08.08.2026) (svn rev 2778)
 
@@ -28,6 +29,8 @@ CURRENT VERSION:
 
 	iOS 24 hopefully symbols in crash reports
 	       fix memory + file open leak when having sounds enabled
+
+	Android 105 fix all graphs broken on older android versions
 
 	Android 104 fix dice stats not showing, thx Jerome
 

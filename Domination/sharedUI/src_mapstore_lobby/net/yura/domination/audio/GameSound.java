@@ -67,6 +67,11 @@ public class GameSound extends RiskAdapter {
     public static final String LOBBY_WATCH = "lobby_watch";
     public static final String LOBBY_SET_NICK = "lobby_set_nick";
 
+//    public static final String[] ALL_SOUNDS = new String[]{
+//            MENU_BUTTON, BUTTON, BACK_BUTTON, BUTTON_START_GAME, CARDS_RECEIVE, CARDS_TRADE, PLACE_ARMY, PLACE_ARMIES,
+//            ATTACK, BATTLE_RETREAT, DICE_ROLL, DICE_WIN, DICE_LOSE, DICE_DRAW, BATTLE_WIN, BATTLE_DEFEAT, BATTLE_DEFENSE_WIN,
+//            MOVE_ARMIES, MOVE_TACTICAL, LOBBY_START, LOBBY_JOIN, LOBBY_LEAVE, LOBBY_PLAY, LOBBY_WATCH, LOBBY_SET_NICK };
+
     private boolean soundEnabled = true;
     private boolean musicEnabled = true;
 
