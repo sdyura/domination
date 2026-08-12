@@ -515,16 +515,21 @@ public class DominationMain extends Application {
                 lobby.setPushToken(system, token, null);
             }
             else if (Application.getPlatform() == Application.PLATFORM_ANDROID) {
-                lobby.setPushToken(system, token, new PushLobbyClient() {
-                    @Override
-                    public void registerDone() {
-                        try {
-                            Application.getInstance().platformRequest("notify://setRegisteredOnServer/" + token);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                try {
+                    lobby.setPushToken(system, token, new PushLobbyClient() {
+                        @Override
+                        public void registerDone() {
+                            try {
+                                Application.getInstance().platformRequest("notify://setRegisteredOnServer/" + token);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                catch (IllegalStateException ise) {
+                    logger.log(Level.INFO, "error in setPushToken, prob called too early on android", ise);
+                }
             }
         }
     }
