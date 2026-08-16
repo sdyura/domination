@@ -553,9 +553,9 @@ RiskUtil.printStackTrace(e);
                                                 game = null;
                                                 output=resb.getString("core.join.error.002") + " " + e;
                                         }
-                                        catch (java.security.AccessControlException e) {
+                                        catch (SecurityException e) { // java.security.AccessControlException is deprecated and marked for removal
                                                 game = null;
-                                                output="AccessControlException:\n"+resb.getString( "core.error.applet");
+                                                output = e + ":\n" + resb.getString("core.error.applet");
                                         }
                                         catch (Exception e) { // catch not being able to make a new game, so game is null
                                                 game=null; // just in case ;-)
