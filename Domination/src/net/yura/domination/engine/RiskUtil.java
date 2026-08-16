@@ -592,6 +592,16 @@ public class RiskUtil {
         return dotIndex > 0 ? filename.substring(0, dotIndex) : filename;
     }
 
+    public static String EMOJI_HUMAN_ALIVE = "\ud83e\uddd1"; // living human: \ud83d\udc64
+    public static String EMOJI_HUMAN_DEAD = "\ud83d\udc80";
+    public static String EMOJI_AI_ALIVE = "\ud83e\udd16"; // living computer: \ud83d\udcbb
+    public static String EMOJI_AI_DEAD = "\ud83d\uddd1";
+    // for a card old android devices only support color emoji \ud83c\udfb4 and \ud83c\udccf
+    public static String SYMBOL_CARD = "\ud83c\udca0"; // old card: "\ud83c\udcad" does not work in java 1.5
+    public static String SYMBOL_FLAG = "\u2691"; // red emoji flag \ud83d\udea9
+    public static String SYMBOL_ARMY = "\uc6c3"; // happy face: \u263a
+    public static String SYMBOL_EXTRA_ARMIES = "+";
+
     public static String[][] getDashboardText(RiskGame game) {
         List<Player> players = game.getPlayers();
         String[][] dashboard = new String[players.size()][];
@@ -599,16 +609,11 @@ public class RiskUtil {
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
 
-            String card = "\ud83c\udca0"; // old card: "\ud83c\udcad" does not work in java 1.5
-            String flag = "\u2691";
-            String army = "\uc6c3"; // happy face: \u263a
-            String extraArmies = "+";
-
-            String emoji = p.isAlive() ? (p.getType() == Player.PLAYER_HUMAN ? "\ud83e\uddd1" : "\ud83e\udd16") : (p.getType() == Player.PLAYER_HUMAN ? "\ud83d\udc80" : "\ud83d\uddd1");
+            String emoji = p.isAlive() ? (p.getType() == Player.PLAYER_HUMAN ? EMOJI_HUMAN_ALIVE : EMOJI_AI_ALIVE) : (p.getType() == Player.PLAYER_HUMAN ? EMOJI_HUMAN_DEAD : EMOJI_AI_DEAD);
 
             int extra = game.getSetupDone() ? game.getExtraArmiesForPlayer(p) : p.getExtraArmies();
 
-            dashboard[i] = new String[] { emoji + " " + p.getName(), card + p.getCards().size(), flag + p.getNoTerritoriesOwned(), army + p.getNoArmies(), extraArmies + extra };
+            dashboard[i] = new String[] { emoji + " " + p.getName(), SYMBOL_CARD + p.getCards().size(), SYMBOL_FLAG + p.getNoTerritoriesOwned(), SYMBOL_ARMY + p.getNoArmies(), SYMBOL_EXTRA_ARMIES + extra };
         }
         return dashboard;
     }

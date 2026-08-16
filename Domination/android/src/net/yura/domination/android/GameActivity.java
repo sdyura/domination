@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Paint;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -161,6 +162,24 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
                 }
             }
         }.start();
+
+        Paint paint = new Paint();
+        // on some Android devices it does not support gender neutral person
+        // so we replace it with person bust in silhouette
+        if (!canRender(paint, RiskUtil.EMOJI_HUMAN_ALIVE)) {
+            RiskUtil.EMOJI_HUMAN_ALIVE = "\ud83d\udc64";
+        }
+        // replace robot with computer
+        if (!canRender(paint, RiskUtil.EMOJI_AI_ALIVE)) {
+            RiskUtil.EMOJI_AI_ALIVE = "\ud83d\udcbb";
+        }
+    }
+
+    public static boolean canRender(Paint paint, String text) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return paint.hasGlyph(text);
+        }
+        return false;
     }
 
     private void checkIfFullScreenNeeded() {
