@@ -1,5 +1,6 @@
 package net.yura.domination.audio;
 
+import net.yura.mobile.gui.Application;
 import java.io.IOException;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -70,7 +71,12 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
             player.close();
         }
         else if (PlayerListener.ERROR.equals(s)) {
-            LOGGER.log(Level.WARNING, "player error " + player + " " + o);
+            Level level = Level.WARNING;
+            // on android we get a loads of "100 0" (MediaPlayer.MEDIA_ERROR_SERVER_DIED) errors, we want to just ignore them all
+            if (Application.getPlatform() == Application.PLATFORM_ANDROID && o instanceof String && ((String)o).matches("^100 -?\\d+$")) {
+                level = Level.INFO;
+            }
+            LOGGER.log(level, "player error " + player + " " + o);
         }
     }
 
@@ -151,6 +157,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
         }
         // sometimes we try everything and we just cant play a sound
         // java.lang.IllegalArgumentException: Mixer not supported: null
+        // on android: java.io.IOException: Prepare failed.: status=0x64 (MediaPlayer.MEDIA_ERROR_SERVER_DIED)
         LOGGER.log(Level.INFO, "unable to play " + fileName, ex);
         try {
             currentMusicPlayers.remove(fileName);
