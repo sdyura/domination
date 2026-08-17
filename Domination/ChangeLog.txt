@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		24
-	Android:	104
+	Android:	106
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -30,7 +30,7 @@ CURRENT VERSION:
 	iOS 24 hopefully symbols in crash reports
 	       fix memory + file open leak when having sounds enabled
 
-	Android 105 fix all graphs broken on older android versions
+	Android 106 fix all graphs broken on older android versions
 
 	Android 104 fix dice stats not showing, thx Jerome
 
