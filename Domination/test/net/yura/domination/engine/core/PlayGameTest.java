@@ -98,7 +98,11 @@ public class PlayGameTest {
         }
             
         assertEquals(RiskGame.STATE_GAME_OVER, risk.getGame().getState());
-                    
+
+        if (risk.getGame().getGameMode() == RiskGame.MODE_DOMINATION) {
+            assertEquals(risk.getGame().getNoCountries(), risk.getGame().getCurrentPlayer().getNoTerritoriesOwned());
+        }
+
         System.out.println("winner " + risk.getGame().getCurrentPlayer());
         risk.parserAndWait("closegame");
         risk.kill();
