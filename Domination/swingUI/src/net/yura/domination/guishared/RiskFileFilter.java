@@ -19,7 +19,15 @@ public class RiskFileFilter extends FileFilter implements FilenameFilter {
 	public final static String RISK_MAP_FILES		="map";
 	public final static String RISK_CARDS_FILES		="cards";
 	public final static String RISK_SAVE_FILES		="save";
+
+        /**
+         * a user created list of commands for the parser
+         */
 	public final static String RISK_SCRIPT_FILES		="risk";
+
+        /**
+         * list of engine mutation commands
+         */
 	public final static String RISK_LOG_FILES		="log";
 	//public final static String RISK_PROPERTIES_FILES	="properties";
 

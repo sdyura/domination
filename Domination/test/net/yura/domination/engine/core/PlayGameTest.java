@@ -1,41 +1,61 @@
 package net.yura.domination.engine.core;
 
 import java.io.File;
-import junit.framework.TestCase;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.RiskAdapter;
+import net.yura.domination.test.FailOnWarningsRule;
 import net.yura.domination.test.TestUtil;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestRule;
 
-public class PlayGameTest extends TestCase {
-    
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class PlayGameTest {
+
+    @Rule
+    public TestRule failOnWarnings = new FailOnWarningsRule();
+
+    @Test
     public void testDominationFixedGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_DOMINATION + " fixed recycle");
     }
+    @Test
     public void testDominationIncreasingGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_DOMINATION + " increasing recycle");
     }
+    @Test
     public void testDominationItalianGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_DOMINATION + " italianlike recycle");
     }
+    @Test
+    public void testDominationItalianAutoplaceallGames() throws Exception {
+        playGame(Risk.STARTGAME_OPTION_MODE_DOMINATION + " italianlike autoplaceall recycle");
+    }
 
-
+    @Test
     public void testCapitalFixedGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_CAPITAL + " fixed recycle");
     }
+    @Test
     public void testCapitalIncreasingGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_CAPITAL + " increasing recycle");
     }
+    @Test
     public void testCapitalItalianGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_CAPITAL + " italianlike recycle");
     }
 
-
+    @Test
     public void testMissionFixedGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_SECRET_MISSION + " fixed recycle");
     }
+    @Test
     public void testMissionIncreasingGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_SECRET_MISSION + " increasing recycle");
     }
+    @Test
     public void testMissionItalianGames() throws Exception {
         playGame(Risk.STARTGAME_OPTION_MODE_SECRET_MISSION + " italianlike recycle");
     }

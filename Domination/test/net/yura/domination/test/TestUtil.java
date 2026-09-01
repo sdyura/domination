@@ -109,6 +109,6 @@ public class TestUtil {
 
     public static File getScriptFile(String mode) {
         File resFolder = new File("../res/test_scripts");
-        return new File(resFolder, mode.replace(' ', '-') + ".risk"); // RiskFileFilter.RISK_SCRIPT_FILES
+        return new File(resFolder, mode.replace(' ', '-') + ".log"); // RiskFileFilter.RISK_LOG_FILES
     }
 }
