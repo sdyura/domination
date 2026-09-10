@@ -443,45 +443,28 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * @return Player Returns the next player
 	 */
 	public Player endGo() {
-		if (gameState == STATE_END_TURN) {
-			//System.out.print("go ended\n"); // testing
+		if (gameState != STATE_END_TURN) {
+			//System.out.println("wrong state for endgo " + gameState);
+			return null;
+		}
 
-                        Player oldPlayer = currentPlayer;
-			// work out who is the next player
-			while (true) {
-                                currentPlayer = (Player) Players.get((Players.indexOf(currentPlayer) + 1) % Players.size());
+		// find the next player (in turn order) with a legal move, or during setup just
+		// the next player, whoever that is. If we get all the way round without anyone
+		// (not even the player whose go it just was) having a legal move, it's a stalemate.
+		int base = Players.indexOf(currentPlayer);
+		boolean stuck = true;
+		for (int i = 1; i <= Players.size() && stuck; i++) {
+			currentPlayer = (Player) Players.get((base + i) % Players.size());
+			stuck = getSetupDone() && !hasValidMove(currentPlayer);
+		}
 
-                                // if we have failed to find a new player
-                                if (currentPlayer == oldPlayer) {
-                                    break;
-                                }
-
-				if (!getSetupDone()) {
-                                    break;
-                                }
-											// && (currentPlayer.getType() != 3)
-				else if (hasValidMove(currentPlayer)) {
-					    // only select this player if they have valid moves they can make
-                                    break;
-                                }
-			}
-
-			//System.out.print("Curent Player: " + currentPlayer.getName() + "\n"); // testing
-
-			// if we searched every other player and came back to where we started, and even
-			// they have no valid move left, then nobody can do anything: the game is a stalemate
-			if (currentPlayer == oldPlayer && getSetupDone() && !hasValidMove(currentPlayer)) {
-				gameState = STATE_GAME_OVER;
-				capturedCountry=false;
-				tradeCap=false;
-				return currentPlayer;
-			}
-
+		if (stuck) {
+			gameState = STATE_GAME_OVER;
+		}
+		else {
 			if (getSetupDone() && !(gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null)) { // ie the initial setup has been compleated
-
 				workOutEndGoStats( currentPlayer );
 				currentPlayer.nextTurn();
-
 				currentPlayer.addArmies(getExtraArmiesForPlayer(currentPlayer));
 			}
 
@@ -489,23 +472,17 @@ transient - A keyword in the Java programming language that indicates that a fie
 				gameState = STATE_SELECT_CAPITAL;
 			}
 			else if (canTrade()) { // there are cards that can be traded
-                                gameState = STATE_TRADE_CARDS;
+				gameState = STATE_TRADE_CARDS;
 			}
-                        else {
-                                goIntoPlaceArmiesState();
-                        }
-                        
-                        //System.out.println("new game state " + gameState);
-
-			capturedCountry=false;
-			tradeCap=false;
-
-			return currentPlayer;
+			else {
+				goIntoPlaceArmiesState();
+			}
 		}
-		else {
-			//System.out.println("wrong state for endgo " + gameState);
-			return null;
-		}
+
+		capturedCountry=false;
+		tradeCap=false;
+
+		return currentPlayer;
 	}
 
 	public int getExtraArmiesForPlayer(Player currentPlayer) {
