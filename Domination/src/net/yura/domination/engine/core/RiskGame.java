@@ -448,14 +448,19 @@ transient - A keyword in the Java programming language that indicates that a fie
 			return null;
 		}
 
-		// find the next player (in turn order) with a legal move, or during setup just
-		// the next player, whoever that is. If we get all the way round without anyone
+		// find the next player (in turn order) with a legal move: armies to place, a
+		// trade to make, or a territory to attack or move from. During setup we just
+		// take the next player regardless. If we get all the way round without anyone
 		// (not even the player whose go it just was) having a legal move, it's a stalemate.
 		int base = Players.indexOf(currentPlayer);
 		boolean stuck = true;
 		for (int i = 1; i <= Players.size() && stuck; i++) {
 			currentPlayer = (Player) Players.get((base + i) % Players.size());
-			stuck = getSetupDone() && !hasValidMove(currentPlayer);
+			stuck = getSetupDone() && !(currentPlayer.getNoTerritoriesOwned() > 0 && (
+					getExtraArmiesForPlayer(currentPlayer) > 0 ||
+					canTrade() ||
+					canAttackOrMove(currentPlayer, true) ||
+					canAttackOrMove(currentPlayer, false)));
 		}
 
 		if (stuck) {
@@ -499,20 +504,6 @@ transient - A keyword in the Java programming language that indicates that a fie
 			}
 		}
 		return extraArmies;
-	}
-
-	/**
-	 * Checks if the given player has any legal action available to them right now:
-	 * armies still to place, cards they can trade in, or a territory they can attack or move from.
-	 * A player with no territories left is out of the game and so has no valid move.
-	 * @param player the player to check, must be {@link #currentPlayer} as {@link #canTrade()} looks at the current player's cards
-	 */
-	private boolean hasValidMove(Player player) {
-		return player.getNoTerritoriesOwned() > 0 && (
-				getExtraArmiesForPlayer(player) > 0 ||
-				canTrade() ||
-				canAttackOrMove(player, true) ||
-				canAttackOrMove(player, false));
 	}
 
     /**
