@@ -460,17 +460,22 @@ transient - A keyword in the Java programming language that indicates that a fie
                                     break;
                                 }
 											// && (currentPlayer.getType() != 3)
-				else if (currentPlayer.getNoTerritoriesOwned() > 0 && (
+				else if (hasValidMove(currentPlayer)) {
 					    // only select this player if they have valid moves they can make
-                                            getExtraArmiesForPlayer(currentPlayer) > 0 ||
-                                            canTrade() ||
-                                            canAttackOrMove(currentPlayer, true) ||
-                                            canAttackOrMove(currentPlayer, false))) {
                                     break;
                                 }
 			}
 
 			//System.out.print("Curent Player: " + currentPlayer.getName() + "\n"); // testing
+
+			// if we searched every other player and came back to where we started, and even
+			// they have no valid move left, then nobody can do anything: the game is a stalemate
+			if (currentPlayer == oldPlayer && getSetupDone() && !hasValidMove(currentPlayer)) {
+				gameState = STATE_GAME_OVER;
+				capturedCountry=false;
+				tradeCap=false;
+				return currentPlayer;
+			}
 
 			if (getSetupDone() && !(gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null)) { // ie the initial setup has been compleated
 
@@ -519,6 +524,20 @@ transient - A keyword in the Java programming language that indicates that a fie
 		return extraArmies;
 	}
 
+	/**
+	 * Checks if the given player has any legal action available to them right now:
+	 * armies still to place, cards they can trade in, or a territory they can attack or move from.
+	 * A player with no territories left is out of the game and so has no valid move.
+	 * @param player the player to check, must be {@link #currentPlayer} as {@link #canTrade()} looks at the current player's cards
+	 */
+	private boolean hasValidMove(Player player) {
+		return player.getNoTerritoriesOwned() > 0 && (
+				getExtraArmiesForPlayer(player) > 0 ||
+				canTrade() ||
+				canAttackOrMove(player, true) ||
+				canAttackOrMove(player, false));
+	}
+
     /**
      * in Italian mode, we may have no armies, so we need to handle going into other states too
      */
@@ -535,8 +554,11 @@ transient - A keyword in the Java programming language that indicates that a fie
                 gameState = STATE_FORTIFYING;
         }
         else {
-		// we have failed to find a valid move, game must be a stalemate, end the game
-                gameState = STATE_GAME_OVER;
+                // this player has nothing left to do this turn, but that does not mean the
+                // whole game is a stalemate: end their go so endGo() can hand over to the
+                // next player who may still have a valid move (endGo() is the one place
+                // that can tell the whole game is stuck, once it has checked every player)
+                gameState = STATE_END_TURN;
         }
     }
 

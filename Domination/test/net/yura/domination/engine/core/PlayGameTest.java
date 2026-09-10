@@ -90,13 +90,13 @@ public class PlayGameTest {
 
         risk.parserAndWait("play " + file.getPath()); // maybe getAbsolutePath() for full path
 
-        // keep waiting untill we have a running game
-        while (risk.getGame() == null || risk.getGame().getState() == RiskGame.STATE_NEW_GAME) {
-            synchronized (risk) {
+        // keep waiting until the whole game has been replayed and reaches game over
+        synchronized (risk) {
+            while (risk.getGame() == null || risk.getGame().getState() != RiskGame.STATE_GAME_OVER) {
                 risk.wait();
             }
         }
-            
+
         assertEquals(RiskGame.STATE_GAME_OVER, risk.getGame().getState());
 
         if (risk.getGame().getGameMode() == RiskGame.MODE_DOMINATION) {
