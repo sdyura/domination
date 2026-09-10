@@ -486,6 +486,7 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 		<copy todir="${dir.build.lobby.client.classes}">
 			<fileset dir="game/${game.name}/jar" includes="**/lobby/client/*.*,**/guishared/*.*,**/flashgui/*.*" excludes="**/flashgui/joingame.jpg,**/flashgui/menu.jpg,**/flashgui/earth.gif"/>
 			<fileset dir="../sharedUI/img_mapstore_lobby/drawable-mdpi" includes="ms_download.png,ms_strip.png,color_*.png"/>
+                        <fileset dir="src" includes="**/*.ttf"/>
 		</copy>
 
 		<!-- used for getting the map preview icon -->
