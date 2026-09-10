@@ -90,10 +90,15 @@ public class PlayGameTest {
 
         risk.parserAndWait("play " + file.getPath()); // maybe getAbsolutePath() for full path
 
-        // keep waiting until the whole game has been replayed and reaches game over
+        // keep waiting until the whole game has been replayed and reaches game over, but
+        // never hang forever: if it's not over within the deadline, fall through and let
+        // the assertion below fail with whatever state we got stuck in
         synchronized (risk) {
+            long deadline = System.currentTimeMillis() + 20_000;
             while (risk.getGame() == null || risk.getGame().getState() != RiskGame.STATE_GAME_OVER) {
-                risk.wait();
+                long timeLeft = deadline - System.currentTimeMillis();
+                if (timeLeft <= 0) break;
+                risk.wait(timeLeft);
             }
         }
 
