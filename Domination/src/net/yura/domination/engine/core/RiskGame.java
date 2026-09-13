@@ -452,11 +452,12 @@ transient - A keyword in the Java programming language that indicates that a fie
 		// a trade to make, or a territory to attack or move from. During setup any player
 		// counts as found, we just take the next one. If we get all the way round without
 		// finding anyone (not even the player whose go it just was), it's a stalemate.
+		boolean setupDone = getSetupDone(); // can't change mid-go, so read it once
 		int base = Players.indexOf(currentPlayer);
 		boolean found = false;
 		for (int i = 1; i <= Players.size() && !found; i++) {
 			currentPlayer = (Player) Players.get((base + i) % Players.size());
-			found = !getSetupDone() || (currentPlayer.getNoTerritoriesOwned() > 0 && (
+			found = !setupDone || (currentPlayer.getNoTerritoriesOwned() > 0 && (
 					getExtraArmiesForPlayer(currentPlayer) > 0 ||
 					canTrade() ||
 					canAttackOrMove(currentPlayer, true) ||
@@ -467,13 +468,15 @@ transient - A keyword in the Java programming language that indicates that a fie
 			gameState = STATE_GAME_OVER;
 		}
 		else {
-			if (getSetupDone() && !(gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null)) { // ie the initial setup has been compleated
+			boolean pickingCapital = gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null;
+
+			if (setupDone && !pickingCapital) { // ie the initial setup has been completed
 				workOutEndGoStats( currentPlayer );
 				currentPlayer.nextTurn();
 				currentPlayer.addArmies(getExtraArmiesForPlayer(currentPlayer));
 			}
 
-			if (getSetupDone() && gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null) { // capital risk setup not finished
+			if (setupDone && pickingCapital) { // capital risk setup not finished
 				gameState = STATE_SELECT_CAPITAL;
 			}
 			else if (canTrade()) { // there are cards that can be traded
