@@ -99,23 +99,23 @@ public class ServerGameRisk extends TurnBasedGame {
         // officially released supported clients
 
         /**
-         * pre Italian rule change version 23
-         * new Italian rules version 24
+         * pre Italian rule change version 24
+         * new Italian rules version 25
          */
         private final String APP_IOS = "iOSDomination";
         /**
-         * pre Italian rule change version 101
-         * new Italian rules version 102
+         * pre Italian rule change version 106
+         * new Italian rules version 107
          */
         private final String APP_ANDROID = "AndroidDomination";
         /**
-         * pre Italian rule change version 1.3.4
-         * new Italian rules version 1.3.5
+         * pre Italian rule change version 1.3.5
+         * new Italian rules version 1.3.6
          */
         private final String APP_FLASH = "FlashDomination";
         /**
-         * pre Italian rule change version 1.3.4
-         * new Italian rules version 1.3.5
+         * pre Italian rule change version 1.3.5
+         * new Italian rules version 1.3.6
          */
         private final String APP_SWING = "SwingDomination";
 
@@ -140,19 +140,19 @@ public class ServerGameRisk extends TurnBasedGame {
                 if (startGameCommand.contains(Risk.STARTGAME_OPTION_CARD_ITALIAN_LIKE_SET)) {
                     if (APP_IOS.equals(appName)) {
                         int iosVersion = Integer.parseInt(appVersion);
-                        if (iosVersion < 24) {
+                        if (iosVersion < 25) {
                             return false;
                         }
                     }
                     else if (APP_ANDROID.equals(appName)) {
                         int iosVersion = Integer.parseInt(appVersion);
-                        if (iosVersion < 102) {
+                        if (iosVersion < 107) {
                             return false;
                         }
                     }
                     else if (APP_FLASH.equals(appName) || APP_SWING.equals(appName)) {
                         int[] versions  = Arrays.stream(appVersion.split(Pattern.quote("."))).mapToInt(Integer::parseInt).toArray();
-                        if (compare(versions, new int[] {1,3,5}) < 0) {
+                        if (compare(versions, new int[] {1,3,6}) < 0) {
                             return false;
                         }
                     }

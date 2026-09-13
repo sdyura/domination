@@ -39,7 +39,7 @@ public class RiskGame implements Serializable {
          * the "engine" describes how mutations happen to the model based on the commands
          * if we change the action of a command we must increment this number
          */
-	public final static String NETWORK_VERSION = "15";
+	public final static String NETWORK_VERSION = "16";
 
 	public static int MAX_PLAYERS = 6; // can be changed in game.ini config
 	public final static Continent ANY_CONTINENT = new Continent("any","any", 0, 0);
@@ -443,44 +443,42 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * @return Player Returns the next player
 	 */
 	public Player endGo() {
-		if (gameState == STATE_END_TURN) {
+		if (gameState != STATE_END_TURN) {
+			//System.out.println("wrong state for endgo " + gameState);
+			return null;
+		}
 			//System.out.print("go ended\n"); // testing
 
-                        Player oldPlayer = currentPlayer;
-			// work out who is the next player
-			while (true) {
-                                currentPlayer = (Player) Players.get((Players.indexOf(currentPlayer) + 1) % Players.size());
-
-                                // if we have failed to find a new player
-                                if (currentPlayer == oldPlayer) {
-                                    break;
-                                }
-
-				if (!getSetupDone()) {
-                                    break;
-                                }
-											// && (currentPlayer.getType() != 3)
-				else if (currentPlayer.getNoTerritoriesOwned() > 0 && (
+		// search for the next player (in turn order) If we get all the way round without
+		// finding anyone (not even the player whose go it just was), it's a stalemate.
+		boolean setupDone = getSetupDone();
+		int base = Players.indexOf(currentPlayer);
+		boolean found = false;
+		for (int i = 1; i <= Players.size() && !found; i++) {
+			currentPlayer = (Player) Players.get((base + i) % Players.size());
+			found = !setupDone || (currentPlayer.getNoTerritoriesOwned() > 0 && (
 					    // only select this player if they have valid moves they can make
                                             getExtraArmiesForPlayer(currentPlayer) > 0 ||
                                             canTrade() ||
                                             canAttackOrMove(currentPlayer, true) ||
-                                            canAttackOrMove(currentPlayer, false))) {
-                                    break;
-                                }
-			}
+                                            canAttackOrMove(currentPlayer, false)));
+		}
 
 			//System.out.print("Curent Player: " + currentPlayer.getName() + "\n"); // testing
 
-			if (getSetupDone() && !(gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null)) { // ie the initial setup has been compleated
+		if (!found) { // nobody, including the player whose go it just was, has a move left
+			gameState = STATE_GAME_OVER;
+		}
+		else {
+			boolean pickingCapital = gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null;
 
+			if (setupDone && !pickingCapital) { // ie the initial setup has been completed
 				workOutEndGoStats( currentPlayer );
 				currentPlayer.nextTurn();
-
 				currentPlayer.addArmies(getExtraArmiesForPlayer(currentPlayer));
 			}
 
-			if (getSetupDone() && gameMode == MODE_CAPITAL && currentPlayer.getCapital() == null) { // capital risk setup not finished
+			if (setupDone && pickingCapital) { // capital risk setup not finished
 				gameState = STATE_SELECT_CAPITAL;
 			}
 			else if (canTrade()) { // there are cards that can be traded
@@ -491,16 +489,12 @@ transient - A keyword in the Java programming language that indicates that a fie
                         }
                         
                         //System.out.println("new game state " + gameState);
-
-			capturedCountry=false;
-			tradeCap=false;
-
-			return currentPlayer;
 		}
-		else {
-			//System.out.println("wrong state for endgo " + gameState);
-			return null;
-		}
+
+		capturedCountry = false;
+		tradeCap = false;
+
+		return currentPlayer;
 	}
 
 	public int getExtraArmiesForPlayer(Player currentPlayer) {
@@ -535,8 +529,11 @@ transient - A keyword in the Java programming language that indicates that a fie
                 gameState = STATE_FORTIFYING;
         }
         else {
-		// we have failed to find a valid move, game must be a stalemate, end the game
-                gameState = STATE_GAME_OVER;
+                // this player has nothing left to do this turn, but that does not mean the
+                // whole game is a stalemate: end their go so endGo() can hand over to the
+                // next player who may still have a valid move (endGo() is the one place
+                // that can tell the whole game is stuck, once it has checked every player)
+                gameState = STATE_END_TURN;
         }
     }
 
