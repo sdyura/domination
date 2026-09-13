@@ -448,22 +448,22 @@ transient - A keyword in the Java programming language that indicates that a fie
 			return null;
 		}
 
-		// find the next player (in turn order) with a legal move: armies to place, a
-		// trade to make, or a territory to attack or move from. During setup we just
-		// take the next player regardless. If we get all the way round without anyone
-		// (not even the player whose go it just was) having a legal move, it's a stalemate.
+		// search for the next player (in turn order) with a legal move: armies to place,
+		// a trade to make, or a territory to attack or move from. During setup any player
+		// counts as found, we just take the next one. If we get all the way round without
+		// finding anyone (not even the player whose go it just was), it's a stalemate.
 		int base = Players.indexOf(currentPlayer);
-		boolean stuck = true;
-		for (int i = 1; i <= Players.size() && stuck; i++) {
+		boolean found = false;
+		for (int i = 1; i <= Players.size() && !found; i++) {
 			currentPlayer = (Player) Players.get((base + i) % Players.size());
-			stuck = getSetupDone() && !(currentPlayer.getNoTerritoriesOwned() > 0 && (
+			found = !getSetupDone() || (currentPlayer.getNoTerritoriesOwned() > 0 && (
 					getExtraArmiesForPlayer(currentPlayer) > 0 ||
 					canTrade() ||
 					canAttackOrMove(currentPlayer, true) ||
 					canAttackOrMove(currentPlayer, false)));
 		}
 
-		if (stuck) {
+		if (!found) { // nobody, including the player whose go it just was, has a move left
 			gameState = STATE_GAME_OVER;
 		}
 		else {
