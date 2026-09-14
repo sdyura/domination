@@ -105,10 +105,7 @@ public class StatsPanel extends JPanel {
                     else {
                         hiddenPlayers.add(p);
                     }
-                    if (lastStatType != null) {
-                        repaintStats(lastStatType);
-                    }
-                    repaint();
+                    repaintStats();
                 }
             });
             menu.add(item);
@@ -127,6 +124,13 @@ public class StatsPanel extends JPanel {
 	}
     }
 
+    public void repaintStats() {
+        if (lastStatType != null) {
+            repaintStats(lastStatType);
+        }
+        repaint();
+    }
+    
     public void repaintStats(StatType a) {
         lastStatType = a;
 

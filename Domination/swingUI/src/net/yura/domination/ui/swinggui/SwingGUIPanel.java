@@ -33,6 +33,7 @@ import java.util.Scanner;
 import java.util.prefs.Preferences;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -47,6 +48,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
@@ -1352,6 +1354,8 @@ class StatisticsTab extends JPanel implements SwingGUITab,ActionListener {
 	private AbstractButton[] statbuttons;
 
 	public JToolBar getToolBar() {
+                graph.repaintStats();
+            
 		return toolbarStat;
 	}
 
@@ -1385,15 +1389,18 @@ class StatisticsTab extends JPanel implements SwingGUITab,ActionListener {
                 StatType[] stats = StatType.values();
 
 		statbuttons = new AbstractButton[stats.length*2];
+                
+                ButtonGroup group = new ButtonGroup();
 		for (int a=0; a<stats.length; a++) {
                         StatType stat = stats[a];
                         String text = resbundle.getString("swing.toolbar."+stat.getName() );
 
-                        JButton button = new JButton(text);
+                        JToggleButton button = new JToggleButton(text);
 			button.setActionCommand( String.valueOf(stat.ordinal()) );
 			button.addActionListener(this);
 			button.setEnabled(false);
                         toolbarStat.add(button);
+                        group.add(button);
 
                         JMenuItem menuItem = new JMenuItem(text);
 			menuItem.setActionCommand( String.valueOf(stat.ordinal()) );
