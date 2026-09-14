@@ -83,7 +83,6 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 	private JTabbedPane tabbedpane;
 	private JToolBar currentToolbar;
 	private JMenuBar gMenuBar;
-	private boolean statisticsTabSelected;
 
 	private GameTab gameTab;
 	private ConsoleTab consoleTab;
@@ -179,11 +178,6 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 			public void stateChanged(ChangeEvent e) {
 
 				SwingGUITab sgt = (SwingGUITab)tabbedpane.getSelectedComponent();
-
-				if (statisticsTabSelected && sgt != statisticsTab) {
-					statisticsTab.clearHiddenPlayers();
-				}
-				statisticsTabSelected = (sgt == statisticsTab);
 
 				if (currentToolbar!=null) { remove(currentToolbar); }
 				currentToolbar = sgt.getToolBar();
@@ -1363,10 +1357,6 @@ class StatisticsTab extends JPanel implements SwingGUITab,ActionListener {
 
 	public JMenu getMenu() {
 		return sStatistics;
-	}
-
-	public void clearHiddenPlayers() {
-		graph.clearHiddenPlayers();
 	}
 
 	public void actionPerformed(ActionEvent a) {

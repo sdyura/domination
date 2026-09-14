@@ -163,9 +163,6 @@ public class StatsDialog extends JDialog implements ActionListener {
             if (b) {
                 showGraph(StatType.fromOrdinal(Integer.parseInt(group.getSelection().getActionCommand())));
             }
-            else {
-                graph.clearHiddenPlayers();
-            }
         }
 
         public void showGraph(StatType statType) {

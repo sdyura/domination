@@ -13,6 +13,8 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -69,16 +71,22 @@ public class StatsPanel extends JPanel {
                 maybeShowPopup(e);
             }
         });
+
+        // whenever this panel stops being shown (dialog closed, tab switched away from, etc.)
+        // reset which players are hidden, so it always starts fresh next time it is shown
+        addHierarchyListener(new HierarchyListener() {
+            public void hierarchyChanged(HierarchyEvent e) {
+                if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && !isShowing()) {
+                    hiddenPlayers.clear();
+                }
+            }
+        });
     }
 
     private void maybeShowPopup(MouseEvent e) {
         if (e.isPopupTrigger()) {
             showHidePlayersMenu(e);
         }
-    }
-
-    public void clearHiddenPlayers() {
-        hiddenPlayers.clear();
     }
 
     private void showHidePlayersMenu(MouseEvent e) {
