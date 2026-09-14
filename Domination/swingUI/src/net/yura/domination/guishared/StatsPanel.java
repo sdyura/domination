@@ -77,6 +77,10 @@ public class StatsPanel extends JPanel {
         }
     }
 
+    public void clearHiddenPlayers() {
+        hiddenPlayers.clear();
+    }
+
     private void showHidePlayersMenu(MouseEvent e) {
 
         List players = risk.getGame().getPlayersStats();
