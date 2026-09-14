@@ -11,10 +11,20 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.plaf.UIResource;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.Player;
@@ -30,6 +40,8 @@ public class StatsPanel extends JPanel {
     //private int spY;
     private Risk risk;
     private BufferedImage graph;
+    private StatType lastStatType;
+    private final Set<Player> hiddenPlayers = new HashSet<Player>();
 
     public StatsPanel(Risk r) {
 	//spX=x;
@@ -48,8 +60,61 @@ public class StatsPanel extends JPanel {
             System.out.println("ERROR: deriveFont returned a UIResource " + newFont);
             newFont = new Font(font.getName(), font.getStyle(), (int)(font.getSize2D() * GraphicsUtil.scale));
         }
-        
+
         setFont(newFont);
+
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                maybeShowPopup(e);
+            }
+            public void mouseReleased(MouseEvent e) {
+                maybeShowPopup(e);
+            }
+        });
+
+        // whenever this panel stops being shown (dialog closed, tab switched away from, etc.)
+        // reset which players are hidden, so it always starts fresh next time it is shown
+        addHierarchyListener(new HierarchyListener() {
+            public void hierarchyChanged(HierarchyEvent e) {
+                if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && !isShowing()) {
+                    hiddenPlayers.clear();
+                }
+            }
+        });
+    }
+
+    private void maybeShowPopup(MouseEvent e) {
+        if (e.isPopupTrigger()) {
+            showHidePlayersMenu(e);
+        }
+    }
+
+    private void showHidePlayersMenu(MouseEvent e) {
+
+        List players = risk.getGame().getPlayersStats();
+
+        JPopupMenu menu = new JPopupMenu();
+        for (int i = 0; i < players.size(); i++) {
+            final Player p = (Player) players.get(i);
+            final JCheckBoxMenuItem item = new JCheckBoxMenuItem(p.getName(), !hiddenPlayers.contains(p));
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    if (item.isSelected()) {
+                        hiddenPlayers.remove(p);
+                    }
+                    else {
+                        hiddenPlayers.add(p);
+                    }
+                    if (lastStatType != null) {
+                        repaintStats(lastStatType);
+                    }
+                    repaint();
+                }
+            });
+            menu.add(item);
+        }
+
+        menu.show(e.getComponent(), e.getX(), e.getY());
     }
 
     public void paintComponent(Graphics g) {
@@ -63,6 +128,7 @@ public class StatsPanel extends JPanel {
     }
 
     public void repaintStats(StatType a) {
+        lastStatType = a;
 
         double scale = GraphicsUtil.scale;
 
@@ -158,7 +224,10 @@ public class StatsPanel extends JPanel {
 
 	//draw each player graph.
 	for (int i = 0; i < players.size(); i++) {
-	    drawPlayerGraph(a, (Player)players.get(i) , g2);
+	    Player p = (Player)players.get(i);
+            if (!hiddenPlayers.contains(p)) {
+                drawPlayerGraph(a, p, g2);
+            }
 	}
 
 	g2.dispose();

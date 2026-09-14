@@ -17,6 +17,7 @@ CURRENT VERSION:
 1.3.6
 
 	Drag and drop save file into MapEditor
+	Stats Screen: right click to hide and show players
 	Fixed: MapChooser and Lobby work on java 26
 	Fixed: in Italian mode if a player with no valid moves but valid cards trades makes no trade, the game ends
 	Because of Italian rules fix: game engine/network play version now 16
