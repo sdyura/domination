@@ -599,11 +599,11 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                         try {
                             for (int c = 0; c < fs.length; c++) {
                                 if (java.lang.reflect.Modifier.isStatic(fs[c].getModifiers()) && fs[c].getName().startsWith(mode+"_") && value.equals(fs[c].get(null))) {
-                                    return fs[c].getName();
+                                    return value + " (" + fs[c].getName() + ")";
                                 }
                             }
                         } catch (Exception ex) {
-                            return ex.toString();
+                            return value + " " + ex.toString();
                         }
                     }
                     return String.valueOf(value);
