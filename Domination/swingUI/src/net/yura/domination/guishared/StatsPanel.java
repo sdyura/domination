@@ -28,6 +28,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.plaf.UIResource;
 import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.Player;
+import net.yura.domination.engine.core.RiskGame;
 import net.yura.domination.engine.core.StatType;
 
 /**
@@ -90,8 +91,12 @@ public class StatsPanel extends JPanel {
     }
 
     private void showHidePlayersMenu(MouseEvent e) {
+        RiskGame game = risk.getGame();
+        if (game == null || game.getState() == RiskGame.STATE_NEW_GAME) {
+            return;
+        }
 
-        List players = risk.getGame().getPlayersStats();
+        List players = game.getPlayersStats();
 
         JPopupMenu menu = new JPopupMenu();
         for (int i = 0; i < players.size(); i++) {
@@ -125,6 +130,10 @@ public class StatsPanel extends JPanel {
     }
 
     public void repaintStats() {
+        if (risk.getGame() == null || risk.getGame().getState() == RiskGame.STATE_NEW_GAME) {
+            return;
+        }
+
         if (lastStatType != null) {
             repaintStats(lastStatType);
         }
