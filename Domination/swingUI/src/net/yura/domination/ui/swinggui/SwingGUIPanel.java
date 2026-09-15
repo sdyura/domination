@@ -1406,6 +1406,7 @@ class StatisticsTab extends JPanel implements SwingGUITab,ActionListener {
 			menuItem.setActionCommand( String.valueOf(stat.ordinal()) );
 			menuItem.addActionListener(this);
 			menuItem.setEnabled(false);
+                        menuItem.setModel(button.getModel()); // share selected state
 			sStatistics.add(menuItem);
 
                         statbuttons[a] = button;
