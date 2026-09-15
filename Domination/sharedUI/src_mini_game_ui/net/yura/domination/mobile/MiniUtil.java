@@ -126,7 +126,7 @@ public class MiniUtil {
                // "<p>"+ resb.getString("about.comments") +"</p>"+
                 displayInfo +
                 "<p>Locale: "+Locale.getDefault()+" use: "+resb.getLocale()+"</p>"+
-                "<p>Device: " + System.getProperty("microedition.platform") + "</p>"+
+                "<p>Device: " + System.getProperty("microedition.platform") + (Application.getPlatform() == Application.PLATFORM_ME4SE ? " (java " + System.getProperty("java.vm.version") + ")" : "") + "</p>"+
                 (externalMapDirUrl == null ? "" : "<p>ExternalMapDir=<a href=\"" + externalMapDirUrl + "\">" + getLabelForUrl(externalMapDirUrl) + "</a></p>") +
                 // e.g. file:///storage/emulated/0/Domination%20Maps/
                 "</html>";
