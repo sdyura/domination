@@ -223,8 +223,8 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
     /**
      * @see Executors.FinalizableDelegatedExecutorService#finalize()
      */
-    @Override
     protected void finalize() {
+        // TODO this will be removed from newer java
         musicThread.shutdown();
         soundThread.shutdown();
     }
