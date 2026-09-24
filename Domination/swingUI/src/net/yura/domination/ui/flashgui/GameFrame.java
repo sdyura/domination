@@ -1064,8 +1064,11 @@ public class GameFrame extends JFrame implements KeyListener {
 	 * displays the mission window
 	 */
 	private void displayMission() {
+            String mission = myrisk.getHumanPlayerMission();
+
+            try {
 		MissionDialog missiondialog = new MissionDialog(GameFrame.this, true);
-		missiondialog.setMission(myrisk.getHumanPlayerMission());
+		missiondialog.setMission(mission);
                 
 		Dimension frameSize = getSize();
 		Dimension aboutSize = missiondialog.getSize();
@@ -1076,26 +1079,24 @@ public class GameFrame extends JFrame implements KeyListener {
 		missiondialog.setLocation(x, y);
 
 		missiondialog.setVisible(true);
-	}//private void displayMission()
+            }
+            catch (Throwable th) {
+                // for totally unknown reasons we can sometimes get:
+                // java.lang.NoClassDefFoundError: net/yura/domination/ui/flashgui/MissionDialog
+                // as we can have a fallback here, just use that
+                th.printStackTrace(System.out);
+                JOptionPane.showMessageDialog(GameFrame.this, mission);
+            }
+	}
 
-
-
-	/**
-	 * does an "undo"
-	 */
 	private void doUndo() {
 
                 pp.setC1(PicturePanel.NO_COUNTRY);
                 pp.setC2(PicturePanel.NO_COUNTRY);
 
 		go("undo");
-	}//private void doUndo()
+	}
 
-
-
-	/**
-	 * displays the menu
-	 */
 	private void displayMenu() {
 
 	    if(menuOn) {
