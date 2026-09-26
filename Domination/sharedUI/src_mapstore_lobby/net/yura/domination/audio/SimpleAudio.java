@@ -6,6 +6,7 @@ import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -23,7 +24,8 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
 
     private static final Logger LOGGER = Logger.getLogger(SimpleAudio.class.getName());
 
-    Map<String, Player> currentMusicPlayers = new HashMap(); // filename -> player
+    private Map<String, Player> currentMusicPlayers = new HashMap(); // filename -> player (ONLY for music)
+    private Map<Player, String> playerToFilename = new WeakHashMap(); // player -> filename (ALL sounds)
 
     private int consecutiveStartErrors;
     private boolean fatalAudioSystemError;
@@ -59,6 +61,11 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
 
         //Player player = Manager.createPlayer(RiskUtil.openStream(fileName), "audio/basic");
         Player player = Manager.createPlayer("file:///android_asset/" + fileName);
+
+        // we sometimes get very strange errors on android
+        // we want to track if this is for specific files so we keep the names here
+        playerToFilename.put(player, fileName);
+
         return player;
     }
 
@@ -76,7 +83,7 @@ public class SimpleAudio implements AudioSystem, ThreadFactory, PlayerListener {
             if (Application.getPlatform() == Application.PLATFORM_ANDROID && o instanceof String && ((String)o).matches("^100 -?\\d+$")) {
                 level = Level.INFO;
             }
-            LOGGER.log(level, "player error " + player + " " + o);
+            LOGGER.log(level, "player error " + playerToFilename.get(player) + " " + player + " " + o);
         }
     }
 
