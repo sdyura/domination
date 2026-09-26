@@ -67,7 +67,7 @@ public class RiskController implements RiskListener {
             for (int i = arrLocal.length-1; i>=0; i--)
                 ((RiskListener)arrLocal[i]).sendMessage(output,redrawNeeded,repaintNeeded);
 	}
-	catch(Exception ex) {
+	catch(Throwable ex) {
 	    printStackTrace(ex);
 	}
     }
