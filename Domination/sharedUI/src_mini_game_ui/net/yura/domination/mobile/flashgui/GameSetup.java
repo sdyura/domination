@@ -394,7 +394,7 @@ public class GameSetup extends Frame implements ChangeListener,ActionListener {
             if (comp!=null) {
                 // we want to remove the listener first as this update is not user generated
                 removeChangeListener(compsNames[c]);
-                comp.setValue( new Integer(count[c]) );
+                comp.setValue(Integer.valueOf(count[c]));
                 addChangeListener(compsNames[c]);
             }
         }

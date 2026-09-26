@@ -43,13 +43,13 @@ public class ColorUtil {
 	}
 
 	static void add(int color,String name) {
-	    Integer c = new Integer(color);
+	    Integer c = Integer.valueOf(color);
 	    intToString.put(c, name);
 	    stringToInt.put(name, c);
 	}
 
 	public static String getStringForColor(int c) {
-	    String result = (String)intToString.get(new Integer(c));
+	    String result = (String)intToString.get(Integer.valueOf(c));
 	    if (result != null) {
 	        return result;
             }

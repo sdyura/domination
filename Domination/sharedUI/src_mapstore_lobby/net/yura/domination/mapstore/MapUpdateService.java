@@ -42,12 +42,12 @@ public class MapUpdateService extends Observable {
 
     void notifyListeners() {
         setChanged();
-        notifyObservers(new Integer(mapsToUpdate.size()));
+        notifyObservers(Integer.valueOf(mapsToUpdate.size()));
     }
 
     public synchronized void addObserver(Observer o) {
         super.addObserver(o);
-        o.update(this, new Integer(mapsToUpdate.size()));
+        o.update(this, Integer.valueOf(mapsToUpdate.size()));
     }
 
     public void init(List mapsUIDs,String url) {
