@@ -29,6 +29,9 @@ public class AITradeCardsTest extends TestCase {
     private static final int NO_COUNTRIES = 3 * (2 * MAX_HAND_SIZE); // enough owned AND not owned cards of each type
     private static final int NO_WILDCARDS = MAX_HAND_SIZE;
 
+    /** each hand is tried in the order it was dealt (grouped by type) plus this many shuffled orders */
+    private static final int NO_SHUFFLES = 3;
+
     /** how the cards in the hand relate to the countries the AI owns */
     private static final int OWN_ALL = 0, OWN_NONE = 1, OWN_RANDOM = 2;
 
@@ -42,6 +45,30 @@ public class AITradeCardsTest extends TestCase {
 
     public void testItalianCards() throws Exception {
         testCardMode(RiskGame.CARD_ITALIANLIKE_SET);
+    }
+
+    /**
+     * a specific mixed up hand, in this exact order, for the hard AI in italian mode
+     */
+    public void testItalianHardAIMixedHand() throws Exception {
+        String[] hand = { Card.INFANTRY, Card.CANNON, Card.WILDCARD, Card.WILDCARD, Card.WILDCARD, Card.CANNON, Card.CAVALRY };
+        List<String> failures = new ArrayList<String>();
+
+        for (boolean maxFiveCards : new boolean[] {true, false}) {
+            RiskGame game = newGame(RiskGame.CARD_ITALIANLIKE_SET, maxFiveCards);
+            EngineParser engine = new EngineParser(game);
+            Player player = game.getCurrentPlayer();
+            AI ai = new AIHard();
+            Random random = new Random(7);
+
+            for (int ownership : new int[] {OWN_ALL, OWN_NONE, OWN_RANDOM, OWN_RANDOM, OWN_RANDOM}) {
+                resetHand(game, player);
+                dealHand(game, player, hand, ownership, random);
+                assertTrue(runScenario(ai, engine, game, player, maxFiveCards, failures));
+            }
+        }
+
+        assertTrue(failures.toString(), failures.isEmpty());
     }
 
     /**
@@ -72,26 +99,18 @@ public class AITradeCardsTest extends TestCase {
 
                 for (int[] hand : allHands()) {
                     for (int ownership : new int[] {OWN_ALL, OWN_NONE, OWN_RANDOM}) {
+                        for (int order = 0; order <= NO_SHUFFLES; order++) {
 
-                        resetHand(game, player);
-                        dealHand(game, player, hand, ownership, random);
+                            resetHand(game, player);
+                            dealHand(game, player, typesInHand(hand), ownership, random);
+                            if (order > 0) {
+                                // mix up the order of the cards in the hand
+                                Collections.shuffle(player.getCards(), random);
+                            }
 
-                        // the engine only ever puts a player into the trade state when he can trade
-                        if (!game.canTrade()) {
-                            continue;
-                        }
-
-                        String description = describe(ai, game, maxFiveCards, player);
-
-                        // after eliminating a player and taking his cards, the player is forced to trade
-                        boolean tradeCap = player.getCards().size() > game.getMaxCardsPerPlayer();
-                        setField(game, "gameState", RiskGame.STATE_TRADE_CARDS);
-                        setField(game, "tradeCap", tradeCap);
-
-                        scenarios++;
-                        String failure = runTradePhase(ai, engine, game, player);
-                        if (failure != null) {
-                            failures.add(description + (tradeCap ? " tradeCap" : "") + " -> " + failure);
+                            if (runScenario(ai, engine, game, player, maxFiveCards, failures)) {
+                                scenarios++;
+                            }
                         }
                     }
                 }
@@ -108,6 +127,31 @@ public class AITradeCardsTest extends TestCase {
             }
             fail(message.toString());
         }
+    }
+
+    /**
+     * sets the game up as if it is the start of the players turn with the cards he has in his hand
+     * and runs the trade phase
+     * @return false if the scenario was skipped as the engine would never ask the player to trade
+     */
+    private static boolean runScenario(AI ai, EngineParser engine, RiskGame game, Player player, boolean maxFiveCards, List<String> failures) throws Exception {
+        // the engine only ever puts a player into the trade state when he can trade
+        if (!game.canTrade()) {
+            return false;
+        }
+
+        String description = describe(ai, game, maxFiveCards, player);
+
+        // after eliminating a player and taking his cards, the player is forced to trade
+        boolean tradeCap = player.getCards().size() > game.getMaxCardsPerPlayer();
+        setField(game, "gameState", RiskGame.STATE_TRADE_CARDS);
+        setField(game, "tradeCap", tradeCap);
+
+        String failure = runTradePhase(ai, engine, game, player);
+        if (failure != null) {
+            failures.add(description + (tradeCap ? " tradeCap" : "") + " -> " + failure);
+        }
+        return true;
     }
 
     /**
@@ -223,22 +267,33 @@ public class AITradeCardsTest extends TestCase {
         game.getUsedCards().clear();
     }
 
-    private static void dealHand(RiskGame game, Player player, int[] hand, int ownership, Random random) {
+    private static String[] typesInHand(int[] hand) {
+        List<String> types = new ArrayList<String>();
+        for (int t = 0; t < CARD_TYPES.length; t++) {
+            for (int n = 0; n < hand[t]; n++) {
+                types.add(CARD_TYPES[t]);
+            }
+        }
+        return types.toArray(new String[types.size()]);
+    }
+
+    /**
+     * gives the player cards of the given types, in that order
+     */
+    private static void dealHand(RiskGame game, Player player, String[] types, int ownership, Random random) {
         List<Card> deck = new ArrayList<Card>(game.getCards());
         Collections.shuffle(deck, random);
 
-        for (int t = 0; t < CARD_TYPES.length; t++) {
-            for (int n = 0; n < hand[t]; n++) {
-                boolean wantOwned = ownership == OWN_ALL || (ownership == OWN_RANDOM && random.nextBoolean());
-                Card card = findCard(deck, CARD_TYPES[t], player, wantOwned);
-                if (card == null) {
-                    card = findCard(deck, CARD_TYPES[t], player, !wantOwned);
-                }
-                assertNotNull("not enough " + CARD_TYPES[t] + " cards in the deck", card);
-                deck.remove(card);
-                game.getCards().remove(card);
-                player.giveCard(card);
+        for (String type : types) {
+            boolean wantOwned = ownership == OWN_ALL || (ownership == OWN_RANDOM && random.nextBoolean());
+            Card card = findCard(deck, type, player, wantOwned);
+            if (card == null) {
+                card = findCard(deck, type, player, !wantOwned);
             }
+            assertNotNull("not enough " + type + " cards in the deck", card);
+            deck.remove(card);
+            game.getCards().remove(card);
+            player.giveCard(card);
         }
     }
 
