@@ -321,7 +321,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
 		playersModel = new AbstractTableModel() {
 
-			private final String[] columnNames = { "Name", "Color", "Type", "Extra Armies", "Armies", "No. Cards", "No. Countries", "No. Player Eliminated", "Capital", "Mission", "Address", "autodefend","autoendgo", "turn"};
+			private final String[] columnNames = { "Name", "Color", "Type", "Extra Armies", "Armies", "Cards", "No. Countries", "Player Eliminated", "Capital", "Mission", "Address", "autodefend","autoendgo", "turn"};
 
 			public int getColumnCount() {
 				return columnNames.length;
@@ -354,9 +354,9 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 					case 2: return myrisk.getType(player.getType());
 					case 3: return Integer.valueOf(player.getExtraArmies());
 					case 4: return Integer.valueOf(player.getNoArmies());
-					case 5: return Integer.valueOf(player.getCards().size());
+					case 5: return player.getCards().size() + (player.getCards().isEmpty() ? "" : " " + player.getCards());
 					case 6: return Integer.valueOf(player.getNoTerritoriesOwned());
-					case 7: return Integer.valueOf(player.getPlayersEliminated().size());
+					case 7: return player.getPlayersEliminated().size() + (player.getPlayersEliminated().isEmpty() ? "" : " " + player.getPlayersEliminated());
 					case 8: return player.getCapital();
 					case 9: return player.getMission();
 					case 10: return player.getAddress();
