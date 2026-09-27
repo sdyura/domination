@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.StringTokenizer;
 import junit.framework.TestCase;
+import net.yura.domination.engine.Risk;
 import net.yura.domination.engine.core.Card;
 import net.yura.domination.engine.core.Country;
 import net.yura.domination.engine.core.Player;
@@ -66,6 +66,7 @@ public class AITradeCardsTest extends TestCase {
         for (boolean maxFiveCards : new boolean[] {true, false}) {
             for (AI ai : newAIs()) {
                 RiskGame game = newGame(cardMode, maxFiveCards);
+                EngineParser engine = new EngineParser(game);
                 Player player = game.getCurrentPlayer();
                 Random random = new Random(cardMode * 1000 + (maxFiveCards ? 1 : 0) * 100 + ai.getType());
 
@@ -88,7 +89,7 @@ public class AITradeCardsTest extends TestCase {
                         setField(game, "tradeCap", tradeCap);
 
                         scenarios++;
-                        String failure = runTradePhase(ai, game, player);
+                        String failure = runTradePhase(ai, engine, game, player);
                         if (failure != null) {
                             failures.add(description + (tradeCap ? " tradeCap" : "") + " -> " + failure);
                         }
@@ -110,10 +111,11 @@ public class AITradeCardsTest extends TestCase {
     }
 
     /**
-     * lets the AI trade until it ends the trade phase or the game moves on
+     * lets the AI trade until it ends the trade phase or the game moves on,
+     * every command the AI gives is run through the real game command parser
      * @return null if everything the AI did was legal, otherwise a description of what went wrong
      */
-    private static String runTradePhase(AI ai, RiskGame game, Player player) {
+    private static String runTradePhase(AI ai, EngineParser engine, RiskGame game, Player player) {
         List<String> commands = new ArrayList<String>();
         // every trade removes 3 cards, so the loop can never need more then this
         int maxSteps = MAX_HAND_SIZE / 3 + 2;
@@ -121,6 +123,7 @@ public class AITradeCardsTest extends TestCase {
         for (int step = 0; step < maxSteps && game.getState() == RiskGame.STATE_TRADE_CARDS; step++) {
 
             ai.setGame(game);
+            String hand = String.valueOf(player.getCards());
             String command;
             try {
                 command = ai.getTrade();
@@ -130,52 +133,11 @@ public class AITradeCardsTest extends TestCase {
             }
             commands.add(command);
 
-            if (command == null) {
-                return commands + " AI returned null";
+            try {
+                engine.parse(player.getAddress() + " " + command);
             }
-
-            StringTokenizer tokens = new StringTokenizer(command);
-            String input = tokens.nextToken();
-
-            if ("endtrade".equals(input)) {
-                if (tokens.hasMoreTokens()) {
-                    return commands + " endtrade takes no arguments";
-                }
-                if (!game.canEndTrade()) {
-                    return commands + " AI tried to end trade with " + player.getCards().size() + " cards " + player.getCards();
-                }
-                try {
-                    if (!game.endTrade()) {
-                        return commands + " engine rejected endtrade";
-                    }
-                }
-                catch (RuntimeException ex) {
-                    return commands + " engine threw on endtrade " + ex;
-                }
-            }
-            else if ("trade".equals(input)) {
-                if (tokens.countTokens() != 3) {
-                    return commands + " trade needs exactly 3 cards";
-                }
-                // same lookup that Risk does when it parses a "trade" command
-                Card[] cards = game.getCards(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                if (cards[0] == null || cards[1] == null || cards[2] == null) {
-                    return commands + " AI does not have (distinct) cards " + Arrays.asList(cards) + " hand was " + player.getCards();
-                }
-                if (!game.checkTrade(cards[0], cards[1], cards[2])) {
-                    return commands + " not a valid set " + Arrays.asList(cards);
-                }
-                try {
-                    if (game.trade(cards[0], cards[1], cards[2]) <= 0) {
-                        return commands + " engine rejected trade " + Arrays.asList(cards);
-                    }
-                }
-                catch (RuntimeException ex) {
-                    return commands + " engine threw on trade " + ex;
-                }
-            }
-            else {
-                return commands + " unknown command";
+            catch (RuntimeException ex) {
+                return commands + " engine rejected command: " + ex.getMessage() + " hand was " + hand;
             }
         }
 
@@ -186,6 +148,21 @@ public class AITradeCardsTest extends TestCase {
             return commands + " game ended up in unexpected state " + game.getState();
         }
         return null;
+    }
+
+    /**
+     * gives access to the game engine command parser.
+     * in replay mode the parser throws an exception for any command it rejects,
+     * and does not ask anyone for the next command
+     */
+    private static class EngineParser extends Risk {
+        EngineParser(RiskGame game) {
+            setReplay(true);
+            setGame(game);
+        }
+        void parse(String message) {
+            inGameParser(message);
+        }
     }
 
     private static List<AI> newAIs() {
