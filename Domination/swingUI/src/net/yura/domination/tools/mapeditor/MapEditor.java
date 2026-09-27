@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -1307,6 +1308,23 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                         Card c = (Card)cards.get(i);
                         if (c.getCountry() != null && c.getCountry().getColor() != (i + 1)) {
                             errors = errors + "\n* Strict cards missmatch with pos/id/color: " + c;
+                        }
+                    }
+                }
+                else {
+                    // we want to make sure we dont have any cards that have different types for the same country
+                    // this is because when we pass the card to the game engine it is passed as a string of the country id
+                    // and if we have 2 cards with different types, the engine will not know what one to use
+                    // one may trade correctly, but the other may not allow trading
+                    // this can cause the AI to get stuck in a infinate loop
+                    Map<Country, String> countryToType = new HashMap();
+                    for (int i = 0; i < cards.size(); i++) {
+                        Card c = (Card)cards.get(i);
+                        if (c.getCountry() != null) {
+                            if (countryToType.containsKey(c.getCountry()) && !c.getName().equals(countryToType.get(c.getCountry()))) {
+                                errors = errors + "\n* Card for country \"" + c.getCountry() + "\" has 2 types: " + countryToType.get(c.getCountry()) + " and " + c.getName();
+                            }
+                            countryToType.put(c.getCountry(), c.getName());
                         }
                     }
                 }
