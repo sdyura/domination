@@ -1185,7 +1185,7 @@ public class GameFrame extends JFrame implements KeyListener {
                     
                         int quickPlaceCountry = pp.getC1();
                         if (quickPlaceCountry != PicturePanel.NO_COUNTRY) {
-                            quickPlace.put(myrisk.getGame().getCurrentPlayer(), new Integer(quickPlaceCountry));
+                            quickPlace.put(myrisk.getGame().getCurrentPlayer(), Integer.valueOf(quickPlaceCountry));
                             pp.setC1(PicturePanel.NO_COUNTRY);
                             go("placearmies " + quickPlaceCountry + " 1");
                         }

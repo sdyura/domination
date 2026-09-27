@@ -1110,7 +1110,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
                                 }
                                 else if (swingGUIPanel.myrisk.getGame().NoEmptyCountries()) {
                                     Player me = swingGUIPanel.myrisk.getGame().getCurrentPlayer();
-                                    quickPlace.put(me, new Integer(countries[0]));
+                                    quickPlace.put(me, Integer.valueOf(countries[0]));
                                     swingGUIPanel.go( "placearmies " + countries[0] + " 1" );
                                 }
                             }
@@ -2163,7 +2163,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			moveNumber.setPaintLabels( true );
 			moveNumber.setSnapToTicks( true );
 
-			moveNumber.getLabelTable().put(new Integer(11), new JLabel(new Integer(11).toString(), JLabel.CENTER));
+			moveNumber.getLabelTable().put(Integer.valueOf(11), new JLabel(String.valueOf(11), JLabel.CENTER));
 			moveNumber.setLabelTable( slider.getLabelTable() );
 
 			moveNumber.getAccessibleContext().setAccessibleName("slider");
@@ -2332,7 +2332,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			slider.setPaintLabels( true );
 			slider.setSnapToTicks( true );
 
-			slider.getLabelTable().put(new Integer(11), new JLabel(new Integer(11).toString(), JLabel.CENTER));
+			slider.getLabelTable().put(Integer.valueOf(11), new JLabel(String.valueOf(11), JLabel.CENTER));
 			slider.setLabelTable( slider.getLabelTable() );
 
 			slider.getAccessibleContext().setAccessibleName("slider");

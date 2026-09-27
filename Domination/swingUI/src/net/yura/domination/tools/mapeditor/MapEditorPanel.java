@@ -241,10 +241,10 @@ public class MapEditorPanel extends JPanel implements MouseInputListener,MouseWh
 
 			oldcolor = pixels[c] & 0xff;
 
-//if (a.get( new Integer(oldcolor) ) == null) {
-//System.out.println(oldcolor+" goes to "+ a.get( new Integer(oldcolor) ) );
+//if (a.get(Integer.valueOf(oldcolor)) == null) {
+//System.out.println(oldcolor + " goes to " + a.get(Integer.valueOf(oldcolor)));
 //}
-			Object obj = a.get( new Integer(oldcolor) );
+			Object obj = a.get(Integer.valueOf(oldcolor));
 
 			if (obj != null) {
 				newcolor = ((Integer)obj).intValue();

@@ -149,28 +149,28 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 				Country country = myrisk.getGame().getCountries()[row];
 
 				switch(col) {
-					case 0: return new Integer( country.getColor() );
+					case 0: return Integer.valueOf(country.getColor());
 					case 1: return country.getIdString();
 					case 2: return country.getName();
-					case 3: return new Integer( country.getX() );
-					case 4: return new Integer( country.getY() );
+					case 3: return Integer.valueOf(country.getX());
+					case 4: return Integer.valueOf(country.getY());
 					case 5: return country.getContinent();
 					case 6: return country.getOwner();
-					case 7: return new Integer( country.getArmies() );
+					case 7: return Integer.valueOf(country.getArmies());
 					case 8: {
                                             List neighbours = country.getNeighbours();
                                             if (neighbours==null) return null;
-                                            return new Integer( neighbours.size() );
+                                            return Integer.valueOf(neighbours.size());
                                         }
                                         case 9: {
                                             List neighbours = country.getIncomingNeighbours();
                                             if (neighbours==null) return null;
-                                            return new Integer( neighbours.size() );
+                                            return Integer.valueOf(neighbours.size());
                                         }
                                         case 10: {
                                             List neighbours = country.getCrossContinentNeighbours();
                                             if (neighbours==null) return null;
-                                            return new Integer( neighbours.size() );
+                                            return Integer.valueOf(neighbours.size());
                                         }
 					default: throw new RuntimeException();
 				}
@@ -252,11 +252,11 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 
 				switch(col) {
 
-					case 0: return new Integer( row+1 );
+					case 0: return Integer.valueOf(row + 1);
 					case 1: return continent.getIdString();
 					case 2: return continent.getName();
-					case 3: return new Integer( continent.getArmyValue() );
-					case 4: return new Integer( continent.getTerritoriesContained().size() );
+					case 3: return Integer.valueOf(continent.getArmyValue());
+					case 4: return Integer.valueOf(continent.getTerritoriesContained().size());
 					case 5: return ColorUtil.getStringForColor( continent.getColor() );
 					default: throw new RuntimeException();
 				}
@@ -352,16 +352,16 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 					case 0: return player.getName();
 					case 1: return ColorUtil.getStringForColor( player.getColor() );
 					case 2: return myrisk.getType(player.getType());
-					case 3: return new Integer( player.getExtraArmies() );
-					case 4: return new Integer( player.getNoArmies() );
-					case 5: return new Integer( player.getCards().size() );
-					case 6: return new Integer( player.getNoTerritoriesOwned() );
-					case 7: return new Integer( player.getPlayersEliminated().size() );
+					case 3: return Integer.valueOf(player.getExtraArmies());
+					case 4: return Integer.valueOf(player.getNoArmies());
+					case 5: return Integer.valueOf(player.getCards().size());
+					case 6: return Integer.valueOf(player.getNoTerritoriesOwned());
+					case 7: return Integer.valueOf(player.getPlayersEliminated().size());
 					case 8: return player.getCapital();
 					case 9: return player.getMission();
 					case 10: return player.getAddress();
-					case 11: return new Boolean( player.getAutoDefend() );
-					case 12: return new Boolean( player.getAutoEndGo() );
+					case 11: return player.getAutoDefend() ? Boolean.TRUE : Boolean.FALSE;
+					case 12: return player.getAutoEndGo() ? Boolean.TRUE : Boolean.FALSE;
                                         case 13: return player.getStatistics().size();
 					default: throw new RuntimeException();
 				}
@@ -634,7 +634,7 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
                 public Object getValueAt(int row, int col) {
                         Card card = (Card)getCards().get(row);
                         switch(col) {
-                                case 0: return new Integer( row+1 );
+                                case 0: return Integer.valueOf(row + 1);
                                 case 1: return card.getName();
                                 case 2: return card.getCountry();
                                 default: throw new RuntimeException();

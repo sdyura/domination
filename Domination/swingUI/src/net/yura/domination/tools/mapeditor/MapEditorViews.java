@@ -301,14 +301,14 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 				Country[] newCountries = (Country[])countries.toArray( new Country[countries.size()] );
 
 				Map updateMap = new HashMap();
-				updateMap.put(new Integer(255),new Integer(255));
+				updateMap.put(Integer.valueOf(255), Integer.valueOf(255));
 
 				for (int c=0;c<a.length;c++) {
-					updateMap.put( new Integer(((Country)a[c]).getColor()), new Integer(255) );
+					updateMap.put(Integer.valueOf(((Country)a[c]).getColor()), Integer.valueOf(255));
 				}
 
 				for (int c=0;c<newCountries.length;c++) {
-					updateMap.put( new Integer(newCountries[c].getColor()), new Integer(c+1) );
+					updateMap.put(Integer.valueOf(newCountries[c].getColor()), Integer.valueOf(c + 1));
 					newCountries[c].setColor(c+1);
 					newCountries[c].getNeighbours().removeAll( removeList );
 				}
@@ -463,7 +463,6 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
 
 					JOptionPane.showMessageDialog(MapEditorViews.this,"Too many countries. 254 is the max number.");
 					return;
-
 				}
 
 				List newCountries = new ArrayList( Arrays.asList(oldCountries) );
@@ -538,7 +537,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
             if ("delFromImgMap".equals(actionCommand)) {
                 java.util.Map updateMap = new HashMap();
                 for (Country country : selectedCountries) {
-                        updateMap.put(new Integer(country.getColor()),new Integer(255));
+                        updateMap.put(Integer.valueOf(country.getColor()), Integer.valueOf(255));
                 }
                 editPanel.update(updateMap);
                 editPanel.repaintSelected();
@@ -546,7 +545,7 @@ public class MapEditorViews extends JDialog implements ActionListener,ListSelect
             else if ("growInImgMap".equals(actionCommand)) {
                 java.util.Set updateSet = new HashSet();
                 for (Country country : selectedCountries) {
-                        updateSet.add(new Integer(country.getColor()));
+                        updateSet.add(Integer.valueOf(country.getColor()));
                 }
                 editPanel.growEdges(updateSet);
             }

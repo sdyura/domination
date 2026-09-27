@@ -21,6 +21,7 @@ CURRENT VERSION:
 	Fixed: MapChooser and Lobby work on java 26
 	Fixed: in Italian mode if a player with no valid moves but valid cards trades makes no trade, the game ends
 	Because of Italian rules fix: game engine/network play version now 16
+	Fixed: correctly show login message when username starts with $
 
 	iOS 25
 	Android 107

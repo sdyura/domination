@@ -442,7 +442,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
                 imgFile = img;
                 usesDefaultCards = MapsTools.DEFAULT_RISK_CARD_SET.equals(cardsFile);
                 
-                circle.setValue( new Integer(m.getCircleSize()) );
+                circle.setValue(Integer.valueOf(m.getCircleSize()));
                 
 		revalidate();
 		repaint();
@@ -1068,10 +1068,10 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 		// go though ALL the colors that can be in the image map
 		for (int c=0;c<256;c++) {
 			if (myMap.getCountryInt(c)!=null) {
-				updateMap.put(new Integer(c),new Integer(c));
+				updateMap.put(Integer.valueOf(c), Integer.valueOf(c));
 			}
 			else {
-				updateMap.put(new Integer(c),new Integer(255));
+				updateMap.put(Integer.valueOf(c), Integer.valueOf(255));
 			}
 		}
 		editPanel.update(updateMap);
@@ -1253,7 +1253,7 @@ public class MapEditor extends JPanel implements ActionListener, ChangeListener,
 				// ignore
 			}
 			else if (color == 0 || color > noc) {
-				bad.add( new Integer(color) );
+				bad.add(Integer.valueOf(color));
 			}
 			else {
 				good.remove( myMap.getCountryInt(color) );
