@@ -1186,18 +1186,14 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		}
 
                 class NamedColor extends Color {
-                    private String name;
-                    private String realname;
-                    public NamedColor(Color color, String rn, String n) {
+                    private String displayName;
+                    public NamedColor(Color color) {
                         super(color.getRGB());
-                        realname = rn;
-                        name = n;
-                    }
-                    public String getRealName() {
-                        return realname;
+                        String id = ColorUtil.getStringForColor(color.getRGB());
+                        this.displayName = resbundle.getString("color." + id);
                     }
                     public String toString() {
-                        return name;
+                        return displayName;
                     }
                 }
 
@@ -1214,18 +1210,18 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			playerOptions.setBorder(javax.swing.BorderFactory.createTitledBorder( resbundle.getString("newgame.label.players") ));
 
 			namedColors = new NamedColor[] {
-				new NamedColor(Color.PINK,       "pink",      resbundle.getString("color.pink")),
-				new NamedColor(Color.RED,        "red",       resbundle.getString("color.red")),
-				new NamedColor(Color.ORANGE,     "orange",    resbundle.getString("color.orange")),
-				new NamedColor(Color.YELLOW,     "yellow",    resbundle.getString("color.yellow")),
-				new NamedColor(Color.GREEN,      "green",     resbundle.getString("color.green")),
-				new NamedColor(Color.CYAN,       "cyan",      resbundle.getString("color.cyan")),
-				new NamedColor(Color.BLUE,       "blue",      resbundle.getString("color.blue")),
-				new NamedColor(Color.MAGENTA,    "magenta",   resbundle.getString("color.magenta")),
-				new NamedColor(Color.WHITE,      "white",     resbundle.getString("color.white")),
-				new NamedColor(Color.LIGHT_GRAY, "lightgray", resbundle.getString("color.lightgray")),
-				new NamedColor(Color.DARK_GRAY,  "darkgray",  resbundle.getString("color.darkgray")),
-				new NamedColor(Color.BLACK,      "black",     resbundle.getString("color.black"))
+				new NamedColor(Color.PINK),
+				new NamedColor(Color.RED),
+				new NamedColor(Color.ORANGE),
+				new NamedColor(Color.YELLOW),
+				new NamedColor(Color.GREEN),
+				new NamedColor(Color.CYAN),
+				new NamedColor(Color.BLUE),
+				new NamedColor(Color.MAGENTA),
+				new NamedColor(Color.WHITE),
+				new NamedColor(Color.LIGHT_GRAY),
+				new NamedColor(Color.DARK_GRAY),
+				new NamedColor(Color.BLACK)
 			};
 
                         final String[] ais = swingGUIPanel.myrisk.getAICommands();
@@ -1383,7 +1379,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
 							if (result==0) {
 								String type=((PlayerType)typeComboBox.getSelectedItem()).getType();
-								swingGUIPanel.go("newplayer "+type+" "+((NamedColor)colorComboBox.getSelectedItem()).getRealName()+" "+((JTextField)message[1]).getText());
+								swingGUIPanel.go("newplayer " + type + " " + ColorUtil.getStringForColor(((Color)colorComboBox.getSelectedItem()).getRGB()) + " " + ((JTextField)message[1]).getText());
 							}
 						}
 					}
@@ -1707,7 +1703,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 								    for (int c=0; c < players.getRowCount(); c++) {
 
                                                                         String name = (String)players.getValueAt(c, 0);
-                                                                        String color = ((NamedColor)players.getValueAt(c, 1)).getRealName();
+                                                                        String color = ColorUtil.getStringForColor(((Color)players.getValueAt(c, 1)).getRGB());
 									String type = ((PlayerType)players.getValueAt(c, 2)).getType();
 
                                                                         playerStrings.add( new String[] {name,color,type} );
@@ -1796,11 +1792,17 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 		}
                 
                 public void setNamedColorValue(JLabel label, Object value) {
-                    if (value instanceof NamedColor) {
-                        NamedColor c = (NamedColor) value;
+                    if (value instanceof Color) {
+                        Color c = (Color) value;
                         label.setBackground(c);
                         label.setForeground( RiskUIUtil.getTextColorFor( c ) );
-                        label.setText(c.toString());
+                        
+                        if (value instanceof NamedColor) {
+                            label.setText(c.toString()); // use display name
+                        }
+                        else {
+                            label.setText(ColorUtil.getStringForColor(((Color)value).getRGB()));
+                        }
 
                         final Image img = RiskUIUtil.getIconForColor(c.getRGB());
                         label.setIcon(img == null ? null : new Icon() {
@@ -1906,7 +1908,7 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 
 			if (!localGame) {
 
-				NamedColor c=findColor(color);
+				Color c = findColor(color);
 
 				Object type=findType(t);
 
@@ -1914,12 +1916,12 @@ public class GameTab extends JPanel implements SwingGUITab, ActionListener {
 			}
 		}
 
-		public NamedColor findColor(int color) {
+		public Color findColor(int color) {
 				// go though array of colors and find correct NamedColor
 				for (int a=0; a < namedColors.length; a++) {
 					if (namedColors[a].getRGB()==color) { return namedColors[a]; }
 				}
-				return null;
+				return new Color(color);
 		}
                 
                 /**
