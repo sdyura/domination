@@ -660,7 +660,8 @@ public class TestPanel extends JPanel implements ActionListener, SwingGUITab {
 		}
 		else if ("allcards".equals(command)) {
 
-			if (myrisk.getGame() != null && myrisk.getGame().getCards() != null) {
+                        // in STATE_NEW_GAME we have not loaded the map, so seeing cards will not work
+			if (myrisk.getGame() != null && myrisk.getGame().getState() != RiskGame.STATE_NEW_GAME && myrisk.getGame().getCards() != null) {
 
 				Frame frame = RiskUIUtil.findParentFrame(this);
 
