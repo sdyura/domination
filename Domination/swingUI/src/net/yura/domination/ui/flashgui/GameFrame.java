@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -551,6 +553,8 @@ public class GameFrame extends JFrame implements KeyListener {
 			throw new RuntimeException(e);
 		}
                 catch (OutOfMemoryError oom) {
+                    Logger.getLogger(GameFrame.class.getName()).log(Level.INFO, "oom error in pp.load", oom);
+
                     JOptionPane.showMessageDialog(this, "unable to load images " + oom);
                 }
 
