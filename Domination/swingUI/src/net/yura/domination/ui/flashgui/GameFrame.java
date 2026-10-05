@@ -360,6 +360,7 @@ public class GameFrame extends JFrame implements KeyListener {
 		GraphicsUtil.setBounds(graphbutton, x - 63, y - 54, w, h);
 		graphbutton.addActionListener( buttonActionListener );
 		graphbutton.setToolTipText( resb.getString("game.button.statistics") );
+                graphbutton.getAccessibleContext().setAccessibleName(resb.getString("game.button.statistics"));
 
 		x=x+w;
 
@@ -367,6 +368,7 @@ public class GameFrame extends JFrame implements KeyListener {
 		GraphicsUtil.setBounds(cardsbutton, x - 63, y - 54, w, h);
 		cardsbutton.addActionListener( buttonActionListener );
 		cardsbutton.setToolTipText(resb.getString("game.button.cards"));
+                cardsbutton.getAccessibleContext().setAccessibleName(resb.getString("game.button.cards"));
 
 		x=x+w;
 
@@ -374,6 +376,7 @@ public class GameFrame extends JFrame implements KeyListener {
 		GraphicsUtil.setBounds(missionbutton, x - 63, y - 54, w, h);
 		missionbutton.addActionListener( buttonActionListener );
 		missionbutton.setToolTipText(resb.getString("game.button.mission"));
+                missionbutton.getAccessibleContext().setAccessibleName(resb.getString("game.button.mission"));
 
 		x=x+w;
 
@@ -381,6 +384,7 @@ public class GameFrame extends JFrame implements KeyListener {
 		GraphicsUtil.setBounds(undobutton, x - 63, y - 54, w, h);
 		undobutton.addActionListener( buttonActionListener );
 		undobutton.setToolTipText(resb.getString("game.button.undo"));
+                undobutton.getAccessibleContext().setAccessibleName(resb.getString("game.button.undo"));
 
 		x=x+w;
 
@@ -389,6 +393,7 @@ public class GameFrame extends JFrame implements KeyListener {
 		GraphicsUtil.setBounds(menubutton, x - 63, y - 54, w, h);
 		menubutton.addActionListener( buttonActionListener );
 		menubutton.setToolTipText( resb.getString("game.button.menu") );
+                menubutton.getAccessibleContext().setAccessibleName(resb.getString("game.button.menu"));
 
 
 
