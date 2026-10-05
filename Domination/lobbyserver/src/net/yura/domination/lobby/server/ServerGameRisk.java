@@ -338,7 +338,7 @@ public class ServerGameRisk extends TurnBasedGame {
 
         @Override
 	public void clientHasJoined(String username) {
-		sendObjectToClient(myrisk.getGame(), username);
+                sendObjectToClient(saveGameState(), username);
 	}
 
         /**
