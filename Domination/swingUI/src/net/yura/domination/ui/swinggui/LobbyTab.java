@@ -112,6 +112,8 @@ public class LobbyTab extends ME4SEPanel implements SwingGUITab,ActionListener {
     }
 
     public JToolBar getToolBar() {
+        getDesktopPane().repaint();
+
         return toolbar;
     }
     public JMenu getMenu() {

@@ -74,7 +74,7 @@ public class GameFrame extends JFrame implements KeyListener {
 	private Risk myrisk;
 	private PicturePanel pp;
 	private GameMenuPanel gm;
-	private int mapView;
+	private int mapView = PicturePanel.VIEW_CONTINENTS;
 	private String gameStatus;
 	private boolean localGame;
 	private int gameState;
@@ -548,6 +548,8 @@ public class GameFrame extends JFrame implements KeyListener {
 	public void setup(boolean localgame) {
             	try {
 			pp.load();
+                        
+                        repaintCountries();
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
@@ -559,7 +561,6 @@ public class GameFrame extends JFrame implements KeyListener {
                 }
 
 		gameState=0; // -1 or 0 means no input needed
-		mapView=PicturePanel.VIEW_CONTINENTS;
 
 		//gameStatus="";
 		setGameStatus(null);
@@ -570,8 +571,6 @@ public class GameFrame extends JFrame implements KeyListener {
 		this.localGame = localgame;
 
 		closeAction.putValue(Action.NAME, resb.getString(localGame ? "game.menu.close" : "game.menu.leave"));
-
-		repaintCountries();
 
                 // disable all buttons at the start of the game
                 AbstractButton[] buttons = new AbstractButton[] {savebutton,AutoEndGo,AutoDefend,cardsbutton,missionbutton,undobutton,gobutton};

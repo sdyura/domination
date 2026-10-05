@@ -603,6 +603,9 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 			else {
 				try {
 					pp.load();
+                                        
+                                        // YURA:TODO not sure why this needs to be here, used to work without it
+                                        pprepaintCountries();
 				}
 				catch(IOException e) {
                                         RiskUtil.printStackTrace(e);
@@ -613,9 +616,6 @@ public class SwingGUIPanel extends JPanel implements ActionListener{
 			}
 
                         blockInput();
-
-			// YURA:TODO not sure why this needs to be here, used to work without it
-			pprepaintCountries();
 
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override

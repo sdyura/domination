@@ -177,7 +177,7 @@ public class RiskGUI extends JFrame implements MouseInputListener {
 					pp.load();
 				}
 				catch (IOException e) {
-
+                                        RiskUtil.printStackTrace(e);
 				}
 
 				mapViewComboBox.setSelectedIndex(0);
