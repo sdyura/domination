@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from settings import MEDIA_URL
-import operator
+import re
 
 def map_count(request):
     map_url = request.REQUEST['url']
@@ -76,8 +76,10 @@ def list_all_maps(request):
         map_files = request.POST.getlist('mapfile')
 
     if len(map_files) > 0:
-        query_chain = [Q(mapFile__contains = '/' + map_file) for map_file in map_files]
-        query = query.filter(reduce(operator.or_, query_chain))
+        # use a single regex rather than OR-ing a LIKE per file, as clients can send
+        # over 1000 files, and that exceeds the database expression depth/variable limits
+        pattern = '/(' + '|'.join([re.escape(map_file) for map_file in map_files]) + ')'
+        query = query.filter(mapFile__regex = pattern)
 
 
     # Filter Published State
