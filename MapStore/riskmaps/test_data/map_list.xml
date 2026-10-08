@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Task method="maps">
+  <object>
+    <Hashtable category="" search="None" author="">
+      <entry>
+        <String value="total"/>
+        <Integer value="2"/>
+      </entry>
+
+      <!-- TODO: Offsets
+      <entry>
+        <String value="offset"/>
+        <Integer value="0"/>
+      </entry>
+      -->
+
+      <entry>
+        <String value="maps"/>
+        <Vector>
+            <Map
+            id="102"
+            name="No Image"
+            authorId="8"
+            authorName=""
+            numberOfDownloads="0"
+            rating="0"
+            numberOfRatings="0"
+	   
+            mapUrl="/storage/2012-01-01-00-00-00/noimage.map"
+            description=""
+            version="1"
+            dateAdded="1325397600"
+           
+	    />
+        
+            <Map
+            id="101"
+            name="Solar&#39;s &quot;Map&quot; &amp; &lt;more&gt;"
+            authorId="7"
+            authorName="Some One"
+            numberOfDownloads="1234567"
+            rating="0"
+            numberOfRatings="0"
+	   
+	    
+            previewUrl="/storage/test-map-list/solar_pic.png.150x94_q85_crop.jpg"
+	   
+            mapUrl="/storage/2011-11-13-12-07-50/solar.map"
+            description="line one&#10;line &quot;two&quot; &amp; &lt;three&gt;"
+            version="3"
+            dateAdded="1321207670"
+           
+	    mapWidth="677"
+            mapHeight="425"
+	   
+	    />
+        </Vector>
+      </entry>
+        
+    </Hashtable>
+  </object>
+</Task>
