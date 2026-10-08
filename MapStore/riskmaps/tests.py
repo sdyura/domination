@@ -1,4 +1,6 @@
 from django.test import TestCase
+from django.conf import settings
+from django.db import connection
 from django.contrib.auth.models import User
 from riskmaps.models import GameMap
 
@@ -70,3 +72,47 @@ class MapListTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(self.get_map_urls(response)), 15)
+
+    def count_queries(self, url):
+        # connection.queries is only recorded when DEBUG is on, and the test runner turns it off
+        old_debug = settings.DEBUG
+        settings.DEBUG = True
+        connection.queries = []
+        try:
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            return len(connection.queries)
+        finally:
+            settings.DEBUG = old_debug
+
+    def add_maps_with_new_authors(self, count):
+        for i in range(count):
+            self.author = User.objects.create(username='author %d' % User.objects.count())
+            self.add_map('map %d.map' % GameMap.objects.count())
+
+    def assert_query_count_does_not_grow(self, url):
+        self.add_maps_with_new_authors(5)
+        queries = self.count_queries(url)
+        self.add_maps_with_new_authors(10)
+        self.assertEqual(self.count_queries(url), queries)
+
+    def test_list_xml_query_count_does_not_grow_with_maps(self):
+        self.assert_query_count_does_not_grow('/?format=xml&sort=TOP_NEW')
+
+    def test_list_html_query_count_does_not_grow_with_maps(self):
+        self.assert_query_count_does_not_grow('/?sort=TOP_NEW')
+
+    def test_list_xml_numbers(self):
+        self.author = User.objects.create(username='someone', first_name='Some', last_name='One')
+        game_map = self.add_map('risk.map')
+        GameMap.objects.filter(id=game_map.id).update(numberOfDownloads=1234567, version=12)
+
+        response = self.client.get('/?format=xml')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('<Integer value="1"/>' in response.content)
+        self.assertTrue('id="%d"' % game_map.id in response.content)
+        self.assertTrue('authorId="%d"' % self.author.id in response.content)
+        self.assertTrue('authorName="Some One"' in response.content)
+        self.assertTrue('numberOfDownloads="1234567"' in response.content)
+        self.assertTrue('version="12"' in response.content)

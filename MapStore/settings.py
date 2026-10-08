@@ -30,7 +30,9 @@ LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 
 USE_I18N = True
-USE_L10N = True
+# with USE_L10N every number in a template goes through a slow locale lookup (1000s per map list),
+# the output is the same without it as we only use 'en-us'
+USE_L10N = False
 
 MEDIA_ROOT = join(ROOT_PATH, 'storage')
 MEDIA_URL = '/storage/'

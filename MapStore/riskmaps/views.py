@@ -117,7 +117,8 @@ def list_all_maps(request):
     return render_to_response(
         template_name,
         {
-            'map_list': query.all(),
+            # select_related fetches each map's author in the same query, instead of one query per map
+            'map_list': query.select_related('author'),
             'search_category': category,
             'search_author' : author,
             'search_text' : search
