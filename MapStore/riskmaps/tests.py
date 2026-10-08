@@ -116,3 +116,64 @@ class MapListTest(TestCase):
         self.assertTrue('authorName="Some One"' in response.content)
         self.assertTrue('numberOfDownloads="1234567"' in response.content)
         self.assertTrue('version="12"' in response.content)
+
+
+class MapThumbnailTest(TestCase):
+
+    def setUp(self):
+        import os, StringIO
+        from PIL import Image
+        from django.core.files.base import ContentFile
+        from django.core.files.storage import default_storage
+        self.dir = 'test-thumbnails-%d' % os.getpid()
+        image = StringIO.StringIO()
+        Image.new('RGB', (677, 425), (10, 120, 200)).save(image, 'JPEG')
+        self.image_name = default_storage.save(self.dir + '/risk.jpg', ContentFile(image.getvalue()))
+        self.image_path = default_storage.path(self.image_name)
+        GameMap.objects.create(name='risk', description='a map', author=User.objects.create(username='author'),
+            mapFile='2012-01-01-00-00-00/risk.map', imageFile=self.image_name, visible=True)
+
+    def tearDown(self):
+        import shutil
+        shutil.rmtree(settings.MEDIA_ROOT + '/' + self.dir)
+
+    def get_preview_url(self):
+        import re
+        response = self.client.get('/maps?format=xml&sort=TOP_NEW')
+        self.assertEqual(response.status_code, 200)
+        return re.findall(r'previewUrl="([^"]*)"', response.content)[0]
+
+    def thumbnail_path(self, preview_url):
+        self.assertTrue(preview_url.startswith(settings.MEDIA_URL + self.dir + '/'), preview_url)
+        return settings.MEDIA_ROOT + '/' + preview_url[len(settings.MEDIA_URL):]
+
+    def test_thumbnail_generated_when_missing(self):
+        import os
+        thumbnail = self.thumbnail_path(self.get_preview_url())
+        self.assertTrue(os.path.exists(thumbnail))
+
+        os.remove(thumbnail)
+        self.assertEqual(self.thumbnail_path(self.get_preview_url()), thumbnail)
+        self.assertTrue(os.path.exists(thumbnail))
+
+    def test_existing_thumbnail_used_without_checking_source(self):
+        import os, time
+        thumbnail = self.thumbnail_path(self.get_preview_url())
+        old_time = int(time.time()) - 1000
+        os.utime(thumbnail, (old_time, old_time))
+
+        # a source newer than its thumbnail would make easy-thumbnails regenerate it, but uploaded images never change
+        stats = []
+        real_stat = os.stat
+        def counting_stat(path):
+            stats.append(path)
+            return real_stat(path)
+        os.stat = counting_stat
+        try:
+            self.assertEqual(self.thumbnail_path(self.get_preview_url()), thumbnail)
+        finally:
+            os.stat = real_stat
+
+        self.assertEqual(int(os.path.getmtime(thumbnail)), old_time)
+        self.assertEqual(stats.count(self.image_path), 0)
+        self.assertEqual(stats.count(thumbnail), 1)
