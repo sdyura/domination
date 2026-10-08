@@ -1,0 +1,23 @@
+{% load thumbnail %}{% load riskmaps_extras %}
+            <Map
+            id="{{ map.id }}"
+            name="{{ map.name }}"
+            authorId="{{ map.author.id }}"
+            authorName="{{ map.author.get_full_name }}"
+            numberOfDownloads="{{ map.numberOfDownloads }}"
+            rating="0"
+            numberOfRatings="0"
+	   {% if map.imageFile %}
+	    {% thumbnail map.imageFile 150x94 crop as im %}
+            previewUrl="{{ im.url }}"
+	   {% endif %}
+            mapUrl="/storage/{{ map.mapFile }}"
+            description="{{ map.description|xmlattr }}"
+            version="{{ map.version }}"
+            dateAdded="{{ map.dateAdded|date:"U" }}"
+           {% if map.imageFile %}
+	    mapWidth="{{ map.imageFile.width }}"
+            mapHeight="{{ map.imageFile.height }}"
+	   {% endif %}
+	    />
+        

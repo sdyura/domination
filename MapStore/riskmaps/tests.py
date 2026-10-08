@@ -1,3 +1,6 @@
+import os
+import re
+import shutil
 from django.test import TestCase
 from django.conf import settings
 from django.db import connection
@@ -19,7 +22,6 @@ class MapListTest(TestCase):
             visible=visible)
 
     def get_map_urls(self, response):
-        import re
         return re.findall(r'mapUrl="([^"]*)"', response.content)
 
     def test_search_by_mapfile(self):
@@ -102,17 +104,88 @@ class MapListTest(TestCase):
     def test_list_html_query_count_does_not_grow_with_maps(self):
         self.assert_query_count_does_not_grow('/?sort=TOP_NEW')
 
-    def test_list_xml_numbers(self):
-        self.author = User.objects.create(username='someone', first_name='Some', last_name='One')
-        game_map = self.add_map('risk.map')
-        GameMap.objects.filter(id=game_map.id).update(numberOfDownloads=1234567, version=12)
+    def test_list_sends_each_map_before_rendering_the_next(self):
+        rendered = []
+        get_full_name = User.get_full_name
+        def record_rendered(user):
+            rendered.append(user.username)
+            return get_full_name(user)
 
-        response = self.client.get('/?format=xml')
+        self.author = User.objects.create(username='old author')
+        self.add_map('old.map')
+        GameMap.objects.filter(name='old.map').update(dateAdded='2011-01-01 00:00:00')
+        self.author = User.objects.create(username='new author')
+        self.add_map('new.map')
+
+        User.get_full_name = record_rendered # the xml calls this once for each map it renders
+        try:
+            response = self.client.get('/?format=xml&sort=TOP_NEW')
+            # for each piece sent, which maps it contains, and which maps had been rendered when it was sent
+            sent = [(re.findall(r'mapUrl="([^"]*)"', piece), list(rendered)) for piece in response]
+        finally:
+            User.get_full_name = get_full_name
+
+        self.assertEqual(sent, [
+            ([], []),
+            (['/storage/2012-01-01-00-00-00/new.map'], ['new author']),
+            (['/storage/2012-01-01-00-00-00/old.map'], ['new author', 'old author']),
+            ([], ['new author', 'old author']),
+        ])
+
+    def test_list_html_is_streamed(self):
+        self.add_map('one.map')
+        self.add_map('two.map')
+
+        response = self.client.get('/?sort=TOP_NEW')
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue('<Integer value="1"/>' in response.content)
-        self.assertTrue('id="%d"' % game_map.id in response.content)
-        self.assertTrue('authorId="%d"' % self.author.id in response.content)
-        self.assertTrue('authorName="Some One"' in response.content)
-        self.assertTrue('numberOfDownloads="1234567"' in response.content)
-        self.assertTrue('version="12"' in response.content)
+        # page before the list, one piece per map, page after the list
+        self.assertEqual(len(list(response)), 4)
+
+    def test_list_html_with_no_maps(self):
+        response = self.client.get('/?sort=TOP_NEW')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('No maps are available.' in response.content)
+
+
+class MapListXmlTest(TestCase):
+    """
+    The game client parses this xml, so check the whole response against a saved copy
+    """
+    image_dir = 'test-map-list'
+
+    def setUp(self):
+        self.image_path = os.path.join(settings.MEDIA_ROOT, self.image_dir)
+        os.makedirs(self.image_path)
+        from PIL import Image
+        Image.new('RGB', (677, 425), (10, 120, 200)).save(os.path.join(self.image_path, 'solar_pic.png'))
+
+    def tearDown(self):
+        shutil.rmtree(self.image_path)
+
+    def add_map(self, **kwargs):
+        date_added = kwargs.pop('dateAdded')
+        game_map = GameMap.objects.create(**kwargs)
+        GameMap.objects.filter(id=game_map.id).update(dateAdded=date_added)
+
+    def test_list_xml(self):
+        author = User.objects.create(id=7, username='someone', first_name='Some', last_name='One')
+        no_name_author = User.objects.create(id=8, username='noname')
+        self.add_map(id=101, name="Solar's \"Map\" & <more>", description='line one\nline "two" & <three>',
+                     author=author, version=3, numberOfDownloads=1234567, visible=True,
+                     mapFile='2011-11-13-12-07-50/solar.map', imageFile=self.image_dir + '/solar_pic.png',
+                     dateAdded='2011-11-13 12:07:50')
+        self.add_map(id=102, name='No Image', description='', author=no_name_author, visible=True,
+                     mapFile='2012-01-01-00-00-00/noimage.map', dateAdded='2012-01-01 00:00:00')
+        self.add_map(id=103, name='Hidden', description='not published', author=author, visible=False,
+                     mapFile='2013-01-01-00-00-00/hidden.map', dateAdded='2013-01-01 00:00:00')
+
+        response = self.client.get('/maps?format=xml&sort=TOP_NEW')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'application/xml')
+        expected_path = os.path.join(os.path.dirname(__file__), 'test_data', 'map_list.xml')
+        if os.environ.get('WRITE_EXPECTED'):
+            open(expected_path, 'w').write(response.content)
+        self.assertEqual(response.content, open(expected_path).read())
