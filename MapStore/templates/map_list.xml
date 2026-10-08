@@ -1,10 +1,10 @@
-{% load thumbnail %}{% load riskmaps_extras %}{# numbers use stringformat:"d" as it skips the slow number localization, output is the same #}<?xml version="1.0" encoding="UTF-8" ?>
+{% load thumbnail %}{% load riskmaps_extras %}<?xml version="1.0" encoding="UTF-8" ?>
 <Task method="maps">
   <object>
     <Hashtable category="{{ search_category.id }}" search="{{ search_text }}" author="{{ search_author.id }}">
       <entry>
         <String value="total"/>
-        <Integer value="{{ map_list.count|stringformat:"d" }}"/>
+        <Integer value="{{ map_list.count }}"/>
       </entry>
 
       <!-- TODO: Offsets
@@ -18,11 +18,11 @@
         <String value="maps"/>
         <Vector>{% for map in map_list %}
             <Map
-            id="{{ map.id|stringformat:"d" }}"
+            id="{{ map.id }}"
             name="{{ map.name }}"
-            authorId="{{ map.author.id|stringformat:"d" }}"
+            authorId="{{ map.author.id }}"
             authorName="{{ map.author.get_full_name }}"
-            numberOfDownloads="{{ map.numberOfDownloads|stringformat:"d" }}"
+            numberOfDownloads="{{ map.numberOfDownloads }}"
             rating="0"
             numberOfRatings="0"
 	   {% if map.imageFile %}
@@ -31,11 +31,11 @@
 	   {% endif %}
             mapUrl="/storage/{{ map.mapFile }}"
             description="{{ map.description|xmlattr }}"
-            version="{{ map.version|stringformat:"d" }}"
+            version="{{ map.version }}"
             dateAdded="{{ map.dateAdded|date:"U" }}"
            {% if map.imageFile %}
-	    mapWidth="{{ map.imageFile.width|stringformat:"d" }}"
-            mapHeight="{{ map.imageFile.height|stringformat:"d" }}"
+	    mapWidth="{{ map.imageFile.width }}"
+            mapHeight="{{ map.imageFile.height }}"
 	   {% endif %}
 	    />
         {% endfor %}</Vector>
