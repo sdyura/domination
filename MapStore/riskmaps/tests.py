@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 from django.test import TestCase
 from django.conf import settings
@@ -21,7 +22,6 @@ class MapListTest(TestCase):
             visible=visible)
 
     def get_map_urls(self, response):
-        import re
         return re.findall(r'mapUrl="([^"]*)"', response.content)
 
     def test_search_by_mapfile(self):
@@ -104,40 +104,43 @@ class MapListTest(TestCase):
     def test_list_html_query_count_does_not_grow_with_maps(self):
         self.assert_query_count_does_not_grow('/?sort=TOP_NEW')
 
-    def test_list_xml_numbers(self):
-        self.author = User.objects.create(username='someone', first_name='Some', last_name='One')
-        game_map = self.add_map('risk.map')
-        GameMap.objects.filter(id=game_map.id).update(numberOfDownloads=1234567, version=12)
+    def test_list_sends_each_map_before_rendering_the_next(self):
+        rendered = []
+        get_full_name = User.get_full_name
+        def record_rendered(user):
+            rendered.append(user.username)
+            return get_full_name(user)
 
-        response = self.client.get('/?format=xml')
-
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue('<Integer value="1"/>' in response.content)
-        self.assertTrue('id="%d"' % game_map.id in response.content)
-        self.assertTrue('authorId="%d"' % self.author.id in response.content)
-        self.assertTrue('authorName="Some One"' in response.content)
-        self.assertTrue('numberOfDownloads="1234567"' in response.content)
-        self.assertTrue('version="12"' in response.content)
-
-    def test_list_is_streamed_one_map_at_a_time(self):
+        self.author = User.objects.create(username='old author')
         self.add_map('old.map')
         GameMap.objects.filter(name='old.map').update(dateAdded='2011-01-01 00:00:00')
+        self.author = User.objects.create(username='new author')
         self.add_map('new.map')
 
-        for url in ['/?format=xml&sort=TOP_NEW', '/?sort=TOP_NEW']:
-            response = self.client.get(url)
+        User.get_full_name = record_rendered # the xml calls this once for each map it renders
+        try:
+            response = self.client.get('/?format=xml&sort=TOP_NEW')
+            # for each piece sent, which maps it contains, and which maps had been rendered when it was sent
+            sent = [(re.findall(r'mapUrl="([^"]*)"', piece), list(rendered)) for piece in response]
+        finally:
+            User.get_full_name = get_full_name
 
-            self.assertEqual(response.status_code, 200)
-            # page before the list, one piece per map, page after the list
-            self.assertEqual(len(list(response)), 4)
-
-        response = self.client.get('/?format=xml&sort=TOP_NEW')
-        self.assertTrue('<Integer value="2"/>' in response.content)
-        self.assertEqual(self.get_map_urls(response), [
-            '/storage/2012-01-01-00-00-00/new.map',
-            '/storage/2012-01-01-00-00-00/old.map',
+        self.assertEqual(sent, [
+            ([], []),
+            (['/storage/2012-01-01-00-00-00/new.map'], ['new author']),
+            (['/storage/2012-01-01-00-00-00/old.map'], ['new author', 'old author']),
+            ([], ['new author', 'old author']),
         ])
-        self.assertTrue(response.content.endswith('</Task>\n'))
+
+    def test_list_html_is_streamed(self):
+        self.add_map('one.map')
+        self.add_map('two.map')
+
+        response = self.client.get('/?sort=TOP_NEW')
+
+        self.assertEqual(response.status_code, 200)
+        # page before the list, one piece per map, page after the list
+        self.assertEqual(len(list(response)), 4)
 
     def test_list_html_with_no_maps(self):
         response = self.client.get('/?sort=TOP_NEW')

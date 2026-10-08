@@ -104,22 +104,10 @@ def list_all_maps(request):
     except KeyError:
         pass
     
-    template_name = {
-        "xml"  : "map_list.xml",
-        "html" : "list.html",
-        "shtml": "getmaps.shtml",
-        }[format]
-
-    mime_type = {
-        "xml"  : "application/xml",
-        "html" : "text/html",
-        "shtml": "text/html",
-        }[format]
-
-    item_template_name = {
-        "xml"  : "map_list_item.xml",
-        "html" : "list_item.html",
-        "shtml": None,
+    template_name, item_template_name, mime_type = {
+        "xml"  : ("map_list.xml",  "map_list_item.xml", "application/xml"),
+        "html" : ("list.html",     "list_item.html",    "text/html"),
+        "shtml": ("getmaps.shtml", None,                "text/html"),
         }[format]
 
     # select_related fetches each map's author in the same query, instead of one query per map
