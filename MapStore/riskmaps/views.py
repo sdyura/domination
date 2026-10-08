@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
+from django.template import loader, Context
+from django.utils.safestring import mark_safe
 from settings import MEDIA_URL
 import re
 
@@ -114,16 +116,54 @@ def list_all_maps(request):
         "shtml": "text/html",
         }[format]
 
-    return render_to_response(
-        template_name,
-        {
-            # select_related fetches each map's author in the same query, instead of one query per map
-            'map_list': query.select_related('author'),
-            'search_category': category,
-            'search_author' : author,
-            'search_text' : search
-        },
-        mimetype=mime_type )
+    item_template_name = {
+        "xml"  : "map_list_item.xml",
+        "html" : "list_item.html",
+        "shtml": None,
+        }[format]
+
+    # select_related fetches each map's author in the same query, instead of one query per map
+    map_list = query.select_related('author')
+    len(map_list) # run the query now, the template and stream use the loaded results
+    context = {
+        'map_list': map_list,
+        'search_category': category,
+        'search_author' : author,
+        'search_text' : search
+    }
+
+    if item_template_name is None:
+        return render_to_response(template_name, context, mimetype=mime_type)
+
+    return HttpResponse(StreamedMapList(template_name, item_template_name, context, map_list), mimetype=mime_type)
+
+
+class StreamedMapList(object):
+    """
+    Sends the page in pieces, the page around the list first, then each map as soon as it is
+    rendered, so the browser can start showing maps before the whole list is ready.
+    This is an iterable and not a generator, so the response can be read more than once.
+    """
+    MARKER = u'<!-- map items -->'
+
+    def __init__(self, template_name, item_template_name, context, map_list):
+        self.template_name = template_name
+        self.item_template_name = item_template_name
+        self.context = context
+        self.map_list = map_list
+
+    def __iter__(self):
+        page = loader.render_to_string(self.template_name, dict(self.context, map_items=mark_safe(self.MARKER)))
+        if self.MARKER not in page:
+            # the template did not show the list, e.g. "No maps are available."
+            yield page
+            return
+        before, after = page.split(self.MARKER, 1)
+        item_template = loader.get_template(self.item_template_name)
+        yield before
+        for map in self.map_list:
+            yield item_template.render(Context({'map': map}))
+        yield after
 
 
 def list_all_categories(request):

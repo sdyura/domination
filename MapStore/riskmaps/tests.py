@@ -116,3 +116,29 @@ class MapListTest(TestCase):
         self.assertTrue('authorName="Some One"' in response.content)
         self.assertTrue('numberOfDownloads="1234567"' in response.content)
         self.assertTrue('version="12"' in response.content)
+
+    def test_list_is_streamed_one_map_at_a_time(self):
+        self.add_map('old.map')
+        GameMap.objects.filter(name='old.map').update(dateAdded='2011-01-01 00:00:00')
+        self.add_map('new.map')
+
+        for url in ['/?format=xml&sort=TOP_NEW', '/?sort=TOP_NEW']:
+            response = self.client.get(url)
+
+            self.assertEqual(response.status_code, 200)
+            # page before the list, one piece per map, page after the list
+            self.assertEqual(len(list(response)), 4)
+
+        response = self.client.get('/?format=xml&sort=TOP_NEW')
+        self.assertTrue('<Integer value="2"/>' in response.content)
+        self.assertEqual(self.get_map_urls(response), [
+            '/storage/2012-01-01-00-00-00/new.map',
+            '/storage/2012-01-01-00-00-00/old.map',
+        ])
+        self.assertTrue(response.content.endswith('</Task>\n'))
+
+    def test_list_html_with_no_maps(self):
+        response = self.client.get('/?sort=TOP_NEW')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('No maps are available.' in response.content)

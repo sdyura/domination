@@ -1,0 +1,18 @@
+{% load thumbnail %}
+        <li>
+		<a class="noeffect" href="/maps/{{ map.id }}">
+                    
+                {% if map.imageFile %}
+                  {% thumbnail map.imageFile 150x94 crop as im %}
+                    <span class="image" style="background-image:url('{{ im.url|addslashes }}')">
+                {% endif %}
+
+        </span><span class="comment">{{ map.author.first_name }} {{ map.author.last_name }}</span>
+
+        <span class="name">{{ map.name }}</span>
+
+        <span class="stars{{ map.rating_score }}"></span>
+        <span class="starcomment">Added: {{ map.dateAdded.date }}<!-- TODO: [DOWNLOADS] , {{ map.numberOfDownloads }} Downloads--></span><span class="arrow"></span><span class="price">FREE</span></a></li>
+
+
+    
