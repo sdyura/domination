@@ -43,3 +43,9 @@ $ sudo service apache2 restart
 
 
 
+
+
+Running tests
+
+$ python manage.py test riskmaps
+
