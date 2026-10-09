@@ -2,6 +2,9 @@ from django.db import models
 from djangoratings.fields import RatingField
 from django.contrib.auth.models import User
 from datetime import datetime
+from riskmaps.images import restrict_pillow_formats
+
+restrict_pillow_formats()
 
 
 def map_file_path(instance):

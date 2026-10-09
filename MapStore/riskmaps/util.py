@@ -2,6 +2,7 @@ import os
 from os.path import basename
 import re
 from django.template.defaultfilters import slugify
+from riskmaps.images import is_allowed_image
 
 class MapDirHelper:
 
@@ -76,6 +77,8 @@ def update_map_model_from_zip(mapModel, zipPath):
     try:
         map = File(open(helper.mapPath))
         outlines = File(open(helper.outlinesPath))
+        if not is_allowed_image(helper.picturePath):
+            raise IOError("not a PNG, JPEG or GIF: " + helper.picturePath)
         image = File(open(helper.picturePath))
     except IOError:
         print "Error: Cannot unpack map, skipping: " + helper.mapPath
@@ -91,6 +94,8 @@ def update_map_model_from_zip(mapModel, zipPath):
         pass # Cards is optional
 
     try:
+        if not is_allowed_image(helper.previewPath):
+            raise IOError("not a PNG, JPEG or GIF: " + helper.previewPath)
         prev = File(open(helper.previewPath))
         mapModel.prevFile.save(basename(helper.previewPath), prev)
     except IOError:
