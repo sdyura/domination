@@ -52,14 +52,14 @@ public class Player implements Serializable {
     
     private int color;
     private int extraArmies;
-    private Vector cardsOwned;
-    private Vector territoriesOwned;
-    private Vector playersEliminated;
+    private final Vector cardsOwned;
+    private final Vector territoriesOwned;
+    private final Vector playersEliminated;
     private Country capital;
     private Mission mission;
     private String address;
 
-    private Vector Statistics;
+    private final Vector Statistics;
     protected Statistic currentStatistic;
 
     private boolean autoendgo;
@@ -127,11 +127,15 @@ public class Player implements Serializable {
 
     public int getNoArmies() {
 	int n = 0;
-	// count down to avoid concurrent issues if item is removed
-	for (int c = territoriesOwned.size() - 1; c >= 0; c--) {
-            // add new armies for the Continents Owned
-	    n = n + ((Country)territoriesOwned.elementAt(c)).getArmies();
-	}
+
+        // this can get changed from the game thread and read from the UI thread at the same time
+        synchronized(territoriesOwned) {
+            for (int c = territoriesOwned.size() - 1; c >= 0; c--) {
+                // add new armies for the Continents Owned
+                n = n + ((Country)territoriesOwned.get(c)).getArmies();
+            }
+        }
+
 	return n;
     }
 
