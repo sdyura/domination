@@ -496,7 +496,38 @@ svn co https://lobby.svn.sourceforge.net/svnroot/lobby/trunk
 
 	</target>
 
-	<target name="lobby.server.classes">
+	<target name="lobby.server.check.key">
+		<condition property="lobby.server.has.key">
+		  <and>
+		    <available file="../lobbyserver/lib/LobbyServer.jar"/>
+		    <resourcecount when="greater" count="0">
+		      <zipfileset src="../lobbyserver/lib/LobbyServer.jar" includes="net/yura/lobby/service/serviceAccountKey.json"/>
+		    </resourcecount>
+		  </and>
+		</condition>
+		<antcall target="lobby.server.key.warning"/>
+	</target>
+
+	<target name="lobby.server.key.warning" if="lobby.server.has.key">
+		<echo level="warning">
+############################################################
+############################################################
+####                                                    ####
+####   !!!!!!!!!!!!!!!!  WARNING  !!!!!!!!!!!!!!!!!!!   ####
+####                                                    ####
+####   LobbyServer.jar CONTAINS A SECRET KEY FILE:      ####
+####                                                    ####
+####   net/yura/lobby/service/serviceAccountKey.json    ####
+####                                                    ####
+####   DO NOT DISTRIBUTE OR COMMIT THIS JAR!!!          ####
+####   Remove the key from the jar before releasing.    ####
+####                                                    ####
+############################################################
+############################################################
+		</echo>
+	</target>
+
+	<target name="lobby.server.classes" depends="lobby.server.check.key">
 
 		<!-- compile SERVER -->
 
