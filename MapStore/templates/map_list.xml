@@ -33,10 +33,10 @@
             description="{{ map.description|xmlattr }}"
             version="{{ map.version }}"
             dateAdded="{{ map.dateAdded|date:"U" }}"
-           {% if map.imageFile %}
-	    mapWidth="{{ map.imageFile.width }}"
-            mapHeight="{{ map.imageFile.height }}"
-	   {% endif %}
+           {% if map.imageFile %}{% with map.image_size as size %}
+	    mapWidth="{{ size.0 }}"
+            mapHeight="{{ size.1 }}"
+	   {% endwith %}{% endif %}
 	    />
         {% endfor %}</Vector>
       </entry>

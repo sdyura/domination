@@ -118,14 +118,14 @@ class MapListTest(TestCase):
         self.assertTrue('version="12"' in response.content)
 
 
-class MapThumbnailTest(TestCase):
+class MapImageTest(TestCase):
 
     def setUp(self):
         import os, StringIO
         from PIL import Image
         from django.core.files.base import ContentFile
         from django.core.files.storage import default_storage
-        self.dir = 'test-thumbnails-%d' % os.getpid()
+        self.dir = 'test-images-%d' % os.getpid()
         image = StringIO.StringIO()
         Image.new('RGB', (677, 425), (10, 120, 200)).save(image, 'JPEG')
         self.image_name = default_storage.save(self.dir + '/risk.jpg', ContentFile(image.getvalue()))
@@ -177,3 +177,36 @@ class MapThumbnailTest(TestCase):
         self.assertEqual(int(os.path.getmtime(thumbnail)), old_time)
         self.assertEqual(stats.count(self.image_path), 0)
         self.assertEqual(stats.count(thumbnail), 1)
+
+    def get_size(self):
+        import re
+        response = self.client.get('/maps?format=xml&sort=TOP_NEW')
+        self.assertEqual(response.status_code, 200)
+        return re.findall(r'mapWidth="([^"]*)"\s+mapHeight="([^"]*)"', response.content)[0]
+
+    def test_image_size_read_and_stored_when_missing(self):
+        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (None, None))
+        self.assertEqual(self.get_size(), ('677', '425'))
+        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (677, 425))
+
+    def test_stored_image_size_used_without_reading_image(self):
+        import __builtin__
+        self.get_preview_url()  # generate the thumbnail, which needs to read the image
+        GameMap.objects.update(mapWidth=1000, mapHeight=500)
+
+        opened = []
+        real_open = __builtin__.open
+        def counting_open(path, *args, **kwargs):
+            opened.append(path)
+            return real_open(path, *args, **kwargs)
+        __builtin__.open = counting_open
+        try:
+            self.assertEqual(self.get_size(), ('1000', '500'))
+        finally:
+            __builtin__.open = real_open
+        self.assertEqual(opened.count(self.image_path), 0)
+
+        # clearing the stored size makes it read from the image again
+        GameMap.objects.update(mapWidth=None, mapHeight=None)
+        self.assertEqual(self.get_size(), ('677', '425'))
+        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (677, 425))

@@ -70,8 +70,9 @@ class GameMap(models.Model):
 
     #previewUrl = models.URLField()
     #mapUrl = models.URLField()
-    #mapWidth = models.PositiveIntegerField()
-    #mapHeight = models.PositiveIntegerField()
+    # size of imageFile, read from the image the first time it is needed, clear these to read it again
+    mapWidth = models.PositiveIntegerField(null=True, blank=True)
+    mapHeight = models.PositiveIntegerField(null=True, blank=True)
 
     visible = models.BooleanField(default=False)
 
@@ -91,6 +92,13 @@ class GameMap(models.Model):
 
     def save(self, *args, **kwargs):
         super(GameMap, self).save(*args, **kwargs)
+
+    def image_size(self):
+        if self.mapWidth is None or self.mapHeight is None:
+            # reading the size opens and parses the image file, so only do it once and store the result
+            self.mapWidth, self.mapHeight = self.imageFile.width, self.imageFile.height
+            GameMap.objects.filter(id=self.id).update(mapWidth=self.mapWidth, mapHeight=self.mapHeight)
+        return self.mapWidth, self.mapHeight
 
 
 from easy_thumbnails.files import Thumbnailer

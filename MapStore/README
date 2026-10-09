@@ -49,3 +49,12 @@ Running tests
 
 $ python manage.py test riskmaps
 
+
+
+
+Upgrading an existing database
+
+# map image sizes are stored in the database (filled in from the image the first time each map is listed)
+$ sqlite3 database/riskmaps.db
+ALTER TABLE "riskmaps_gamemap" ADD COLUMN "mapWidth" integer unsigned;
+ALTER TABLE "riskmaps_gamemap" ADD COLUMN "mapHeight" integer unsigned;
