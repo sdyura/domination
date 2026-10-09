@@ -241,9 +241,15 @@ def upload_unauthorised_map(request):
 
             import logging
             try:
-                import mechanize
-                br = mechanize.Browser()
-                r = br.open('https://msg.yura.net/cgi-sys/FormMail.cgi', 'recipient=yura@yura.net&subject=NewMap&email=newmap@maps.yura.net&mapId=' + str(newMap.id) + '&mapName=' + newMap.name)
+                import urllib, urllib2
+                # urlencode so a map name can not add or override form fields
+                urllib2.urlopen('https://msg.yura.net/cgi-sys/FormMail.cgi', urllib.urlencode({
+                    'recipient': 'yura@yura.net',
+                    'subject': 'NewMap',
+                    'email': 'newmap@maps.yura.net',
+                    'mapId': str(newMap.id),
+                    'mapName': newMap.name.encode('utf-8'),
+                }), 10)
             except:
                 logging.exception("formmail error")
                 pass # Failed email is not a priority
