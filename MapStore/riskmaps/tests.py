@@ -210,3 +210,39 @@ class MapImageTest(TestCase):
         GameMap.objects.update(mapWidth=None, mapHeight=None)
         self.assertEqual(self.get_size(), ('677', '425'))
         self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (677, 425))
+
+
+class AddMissingColumnsTest(TestCase):
+
+    def test_missing_columns_added_on_connect(self):
+        import os, tempfile
+        from django.core.management.color import no_style
+        from django.db.backends.signals import connection_created
+        from django.db.backends.sqlite3.base import DatabaseWrapper
+        from riskmaps.models import add_missing_columns
+
+        handle, path = tempfile.mkstemp(suffix='.db')
+        os.close(handle)
+        settings_dict = dict(connection.settings_dict, NAME=path)
+        try:
+            # a database made before mapWidth and mapHeight were added
+            old_database = DatabaseWrapper(settings_dict)
+            create_table = connection.creation.sql_create_model(GameMap, no_style(), set())[0][0]
+            create_table = '\n'.join(line for line in create_table.split('\n') if '"mapWidth"' not in line and '"mapHeight"' not in line)
+            cursor = old_database.cursor()
+            cursor.execute(create_table)
+            self.assertFalse('mapWidth' in self.columns(old_database))
+            old_database.close()
+
+            connection_created.connect(add_missing_columns)
+            new_connection = DatabaseWrapper(settings_dict)
+            new_connection.cursor()
+            columns = self.columns(new_connection)
+            self.assertTrue('mapWidth' in columns)
+            self.assertTrue('mapHeight' in columns)
+            new_connection.close()
+        finally:
+            os.remove(path)
+
+    def columns(self, database):
+        return [column[0] for column in database.introspection.get_table_description(database.cursor(), GameMap._meta.db_table)]

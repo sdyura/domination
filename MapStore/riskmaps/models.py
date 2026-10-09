@@ -101,6 +101,29 @@ class GameMap(models.Model):
         return self.mapWidth, self.mapHeight
 
 
+from django.db import DatabaseError
+from django.db.backends.signals import connection_created
+
+def add_missing_columns(sender, connection, **kwargs):
+    # Django 1.2 has no migrations and syncdb only creates missing tables, so when a nullable field
+    # is added to GameMap, add its column to an existing database the first time this process connects
+    cursor = connection.cursor()
+    table = GameMap._meta.db_table
+    if table not in connection.introspection.get_table_list(cursor):
+        return # syncdb has not created the table yet, and will create it with every column
+    columns = [column[0] for column in connection.introspection.get_table_description(cursor, table)]
+    quote = connection.ops.quote_name
+    for field in GameMap._meta.local_fields:
+        if field.null and field.column not in columns:
+            try:
+                cursor.execute('ALTER TABLE %s ADD COLUMN %s %s' % (quote(table), quote(field.column), field.db_type(connection=connection)))
+            except DatabaseError:
+                pass # another process added it at the same time
+    connection_created.disconnect(add_missing_columns)
+
+connection_created.connect(add_missing_columns)
+
+
 from easy_thumbnails.files import Thumbnailer
 
 def thumbnail_exists(self, thumbnail_name):
