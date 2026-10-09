@@ -93,12 +93,19 @@ class GameMap(models.Model):
     def save(self, *args, **kwargs):
         super(GameMap, self).save(*args, **kwargs)
 
-    def image_size(self):
+    def image_width(self):
+        self.load_image_size()
+        return self.mapWidth
+
+    def image_height(self):
+        self.load_image_size()
+        return self.mapHeight
+
+    def load_image_size(self):
         if self.mapWidth is None or self.mapHeight is None:
             # reading the size opens and parses the image file, so only do it once and store the result
             self.mapWidth, self.mapHeight = self.imageFile.width, self.imageFile.height
             GameMap.objects.filter(id=self.id).update(mapWidth=self.mapWidth, mapHeight=self.mapHeight)
-        return self.mapWidth, self.mapHeight
 
 
 from django.db import DatabaseError
