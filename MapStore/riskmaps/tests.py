@@ -121,21 +121,29 @@ class MapListTest(TestCase):
 class MapImageTest(TestCase):
 
     def setUp(self):
-        import os, StringIO
+        import StringIO, tempfile
         from PIL import Image
         from django.core.files.base import ContentFile
         from django.core.files.storage import default_storage
-        self.dir = 'test-images-%d' % os.getpid()
+        from easy_thumbnails.files import DEFAULT_THUMBNAIL_STORAGE
+        # keep the test images and their thumbnails out of the real storage folder
+        self.storages = [default_storage, DEFAULT_THUMBNAIL_STORAGE]
+        self.locations = [storage.location for storage in self.storages]
+        self.dir = tempfile.mkdtemp()
+        for storage in self.storages:
+            storage.location = self.dir
         image = StringIO.StringIO()
         Image.new('RGB', (677, 425), (10, 120, 200)).save(image, 'JPEG')
-        self.image_name = default_storage.save(self.dir + '/risk.jpg', ContentFile(image.getvalue()))
+        self.image_name = default_storage.save('2012-01-01-00-00-00/risk.jpg', ContentFile(image.getvalue()))
         self.image_path = default_storage.path(self.image_name)
         GameMap.objects.create(name='risk', description='a map', author=User.objects.create(username='author'),
             mapFile='2012-01-01-00-00-00/risk.map', imageFile=self.image_name, visible=True)
 
     def tearDown(self):
         import shutil
-        shutil.rmtree(settings.MEDIA_ROOT + '/' + self.dir)
+        for storage, location in zip(self.storages, self.locations):
+            storage.location = location
+        shutil.rmtree(self.dir)
 
     def get_size(self):
         import re
