@@ -150,8 +150,7 @@ public class DominationMain extends Application {
             } );
         }
         catch (Throwable th) {
-            System.out.println("Grasshopper not loaded");
-            RiskUtil.printStackTrace(th);
+            logger.log(Level.WARNING, "Grasshopper not loaded", th);
         }
 
         J2SELogger.setupLogging();
@@ -224,7 +223,7 @@ public class DominationMain extends Application {
                                 OptionPane.showMessageDialog(null, record.getMessage()+" "+record.getThrown(), "WARN", OptionPane.WARNING_MESSAGE);
                             }
                             catch(Exception ex) {
-                                RiskUtil.printStackTrace(ex);
+                                logger.log(Level.WARNING, "failed to show error", ex);
                             }
                         }
                     }
@@ -282,13 +281,18 @@ public class DominationMain extends Application {
 
         RiskSettings.loadGameSettingsFromPrefs(appPreferences);
 
-        // setup audio
-        if (appPreferences != null) {
-            GameSound.INSTANCE.setSoundEnabled(appPreferences.getBoolean(RiskSettings.SOUND_KEY, GameSound.INSTANCE.isSoundEnabled()));
-            GameSound.INSTANCE.setMusicEnabled(appPreferences.getBoolean(RiskSettings.MUSIC_KEY, GameSound.INSTANCE.isMusicEnabled()));
+        try {
+            // setup audio
+            if (appPreferences != null) {
+                GameSound.INSTANCE.setSoundEnabled(appPreferences.getBoolean(RiskSettings.SOUND_KEY, GameSound.INSTANCE.isSoundEnabled()));
+                GameSound.INSTANCE.setMusicEnabled(appPreferences.getBoolean(RiskSettings.MUSIC_KEY, GameSound.INSTANCE.isMusicEnabled()));
+            }
+            GameSound.INSTANCE.setAudioSystem(risk, new SimpleAudio());
+            GameSound.INSTANCE.load("medieval");
         }
-        GameSound.INSTANCE.setAudioSystem(risk, new SimpleAudio());
-        GameSound.INSTANCE.load("medieval");
+        catch (Exception ex) {
+            logger.log(Level.WARNING, "unable to load medieval audio theme", ex);
+        }
 
         adapter = new MiniFlashRiskAdapter(risk);
 

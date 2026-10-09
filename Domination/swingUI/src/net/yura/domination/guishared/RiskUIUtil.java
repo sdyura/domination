@@ -94,6 +94,8 @@ import net.yura.swing.TextUtil;
  */
 public class RiskUIUtil {
 
+    private static final Logger logger = Logger.getLogger(RiskUIUtil.class.getName());
+    
     // TODO missing:
     //PicturePanel.getImage(
     // setupMapsDir(null) should be called b4 the Risk() object is created
@@ -123,7 +125,6 @@ public class RiskUIUtil {
                     }
                     catch (FileNotFoundException fnfe) {
                         try {
-                            Logger logger = Logger.getLogger(RiskUIUtil.class.getName());
                             logger.info("can not openStream for: " + name);
                             File file = new File(name).getCanonicalFile();
                             logger.info("file exists: " + file.exists() + " " + file);
@@ -314,7 +315,7 @@ public class RiskUIUtil {
                         catch (IIOException ex) {
                             // can get a javax.imageio.IIOException: Can't create cache file!
                             if (ImageIO.getUseCache()) {
-                                Logger.getLogger(RiskUIUtil.class.getName()).log(Level.INFO, "could not load UI image " + c + " " + name, ex);
+                                logger.log(Level.INFO, "could not load UI image " + c + " " + name, ex);
                                 ImageIO.setUseCache(false);
                                 img = ImageIO.read(imgUrl);
                             }
@@ -458,7 +459,7 @@ public class RiskUIUtil {
                                         mapsdir1.set(new File(jarFile.getParentFile(), "maps"));
                                     }
                                     catch (Throwable th) {
-                                        Logger.getLogger(RiskUIUtil.class.getName()).info("failed to get maps dir from jar " + th);
+                                        logger.info("failed to get maps dir from jar " + th);
                                     }
 
                                     // if we still can not find the map, try and ask the user
@@ -598,7 +599,7 @@ public class RiskUIUtil {
                 }
             }
             catch (Throwable th) {
-                RiskUtil.printStackTrace(th);
+                logger.log(Level.WARNING, "unable to show MapChooser", th);
             }
 
             // can not have the map store, fall back to normal map chooser
@@ -1025,7 +1026,7 @@ public class RiskUIUtil {
                                         RiskUtil.streamOpener.openURL( new URL(link) );
                                     }
                                     catch (Throwable th) {
-                                        RiskUtil.printStackTrace(th);
+                                        logger.log(Level.WARNING, "unable to open url: " + link, th);
                                     }
                                 }
                             }
@@ -1040,7 +1041,7 @@ public class RiskUIUtil {
                             MapUpdateService.getInstance().init( getFileList("map"), MapServerClient.MAP_PAGE );
                         }
                         catch (Throwable th) {
-                            RiskUtil.printStackTrace("unable to check for map updates", th);
+                            logger.log(Level.WARNING, "unable to check for map updates", th);
                         }
                 }
         }
@@ -1176,7 +1177,7 @@ public class RiskUIUtil {
                     }
 		}
 		catch (Exception e) {
-                        RiskUtil.printStackTrace(e);
+                        logger.log(Level.WARNING, "plaf failed to load", e);
 		}
 
 		// only do this check if there is NO sandbox
@@ -1190,12 +1191,12 @@ public class RiskUIUtil {
 				new JFileChooser();
 			}
 			catch (Throwable th) {
-				Logger.getLogger(RiskUIUtil.class.getName()).log(Level.INFO, "PLAF JFileChooser FAIL, falling back to metal", th);
+				logger.log(Level.INFO, "PLAF JFileChooser FAIL, falling back to metal", th);
 				try {
 					UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 				}
 				catch (Exception e) {
-					RiskUtil.printStackTrace(e);
+					logger.log(Level.WARNING, "metal plaf failed to load", e);
 				}
 			}
 		}
@@ -1481,8 +1482,11 @@ public class RiskUIUtil {
             GameSound.INSTANCE.setAudioSystem(risk, new SimpleAudio());
             GameSound.INSTANCE.load("medieval");
         }
+        catch (FileNotFoundException ex) {
+            logger.log(Level.INFO, "unable to load medieval theme", ex);
+        }
         catch (Throwable th) {
-            RiskUtil.printStackTrace("SimpleAudio not loaded", th);
+            logger.log(Level.WARNING, "SimpleAudio unable to load", th);
         }
 
         Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
@@ -1630,7 +1634,7 @@ public class RiskUIUtil {
                 icons.put(color, RiskUIUtil.getUIImage(PicturePanel.class, name));
             }
             catch(Throwable ex) {
-                Logger.getLogger(RiskUIUtil.class.getName()).log(Level.WARNING, "can not load color icon for  " + name, ex);
+                logger.log(Level.WARNING, "can not load color icon for  " + name, ex);
             }
         }
 

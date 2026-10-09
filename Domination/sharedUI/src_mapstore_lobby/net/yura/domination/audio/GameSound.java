@@ -85,7 +85,7 @@ public class GameSound extends RiskAdapter {
         currentMusicId = MUSIC_MENU;
     }
 
-    public void load(String theme) {
+    public void load(String theme) throws Exception {
 
         try {
             if (currentMusicId != null) {
@@ -115,9 +115,6 @@ public class GameSound extends RiskAdapter {
                     }
                 }
             });
-        }
-        catch (Exception ex) {
-            LOGGER.log(Level.WARNING, "unable to load theme: " + theme, ex);
         }
         finally {
             if (currentMusicId != null) {
