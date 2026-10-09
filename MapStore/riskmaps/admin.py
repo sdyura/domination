@@ -11,12 +11,6 @@ class GameMapAdmin(admin.ModelAdmin):
     ordering = ['-dateAdded']
     actions = [approve]
 
-    def save_model(self, request, obj, form, change):
-        if 'imageFile' in form.changed_data:
-            # the stored size is of the old image, it is read from the new one the next time the map is listed
-            obj.mapWidth = obj.mapHeight = None
-        obj.save()
-
 class DailyStatsAdmin(admin.ModelAdmin):
     list_display = ['date', 'numberOfDownloads']
     ordering = ['-date']

@@ -194,23 +194,6 @@ class MapImageTest(TestCase):
         self.assertEqual(self.get_size(), ('677', '425'))
         self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (677, 425))
 
-    def test_image_size_cleared_when_admin_changes_image(self):
-        from django.contrib import admin
-        from riskmaps.admin import GameMapAdmin
-        class Form(object):
-            def __init__(self, changed_data):
-                self.changed_data = changed_data
-        map_admin = GameMapAdmin(GameMap, admin.site)
-        GameMap.objects.update(mapWidth=1000, mapHeight=500)
-
-        game_map = GameMap.objects.get()
-        map_admin.save_model(None, game_map, Form(['name']), True)
-        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (1000, 500))
-
-        game_map = GameMap.objects.get()
-        map_admin.save_model(None, game_map, Form(['imageFile']), True)
-        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (None, None))
-
 
 class AddMissingColumnsTest(TestCase):
 
