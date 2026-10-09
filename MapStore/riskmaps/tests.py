@@ -170,38 +170,98 @@ class MapImageTest(TestCase):
         self.assertEqual(self.get_size(), ('677', '425'))
         self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (677, 425))
 
+    def test_image_size_shown_when_storing_it_fails(self):
+        from django.db import DatabaseError
+        from django.db.models.query import QuerySet
+        def locked_update(self, **kwargs):
+            raise DatabaseError('database is locked')
+        real_update = QuerySet.update
+        QuerySet.update = locked_update
+        try:
+            self.assertEqual(self.get_size(), ('677', '425'))
+        finally:
+            QuerySet.update = real_update
+        # not stored, so the next listing tries again
+        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (None, None))
+        self.assertEqual(self.get_size(), ('677', '425'))
+        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (677, 425))
+
+    def test_image_size_cleared_when_admin_changes_image(self):
+        from django.contrib import admin
+        from riskmaps.admin import GameMapAdmin
+        class Form(object):
+            def __init__(self, changed_data):
+                self.changed_data = changed_data
+        map_admin = GameMapAdmin(GameMap, admin.site)
+        GameMap.objects.update(mapWidth=1000, mapHeight=500)
+
+        game_map = GameMap.objects.get()
+        map_admin.save_model(None, game_map, Form(['name']), True)
+        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (1000, 500))
+
+        game_map = GameMap.objects.get()
+        map_admin.save_model(None, game_map, Form(['imageFile']), True)
+        self.assertEqual(GameMap.objects.values_list('mapWidth', 'mapHeight')[0], (None, None))
+
 
 class AddMissingColumnsTest(TestCase):
 
-    def test_missing_columns_added_on_connect(self):
+    def setUp(self):
         import os, tempfile
         from django.core.management.color import no_style
         from django.db.backends.signals import connection_created
         from django.db.backends.sqlite3.base import DatabaseWrapper
         from riskmaps.models import add_missing_columns
 
-        handle, path = tempfile.mkstemp(suffix='.db')
+        handle, self.path = tempfile.mkstemp(suffix='.db')
         os.close(handle)
-        settings_dict = dict(connection.settings_dict, NAME=path)
-        try:
-            # a database made before mapWidth and mapHeight were added
-            old_database = DatabaseWrapper(settings_dict)
-            create_table = connection.creation.sql_create_model(GameMap, no_style(), set())[0][0]
-            create_table = '\n'.join(line for line in create_table.split('\n') if '"mapWidth"' not in line and '"mapHeight"' not in line)
-            cursor = old_database.cursor()
-            cursor.execute(create_table)
-            self.assertFalse('mapWidth' in self.columns(old_database))
-            old_database.close()
+        # a short lock timeout, so a locked database fails fast instead of waiting 5 seconds
+        self.settings_dict = dict(connection.settings_dict, NAME=self.path, OPTIONS={'timeout': 0.1})
 
-            connection_created.connect(add_missing_columns)
-            new_connection = DatabaseWrapper(settings_dict)
-            new_connection.cursor()
-            columns = self.columns(new_connection)
-            self.assertTrue('mapWidth' in columns)
-            self.assertTrue('mapHeight' in columns)
-            new_connection.close()
-        finally:
-            os.remove(path)
+        # a database made before mapWidth and mapHeight were added
+        old_database = DatabaseWrapper(self.settings_dict)
+        create_table = connection.creation.sql_create_model(GameMap, no_style(), set())[0][0]
+        create_table = '\n'.join(line for line in create_table.split('\n') if '"mapWidth"' not in line and '"mapHeight"' not in line)
+        old_database.cursor().execute(create_table)
+        self.assertFalse('mapWidth' in self.columns(old_database))
+        old_database.close()
+
+        connection_created.connect(add_missing_columns)
+
+    def tearDown(self):
+        import os
+        os.remove(self.path)
+
+    def connect(self):
+        from django.db.backends.sqlite3.base import DatabaseWrapper
+        database = DatabaseWrapper(self.settings_dict)
+        database.cursor()
+        return database
 
     def columns(self, database):
         return [column[0] for column in database.introspection.get_table_description(database.cursor(), GameMap._meta.db_table)]
+
+    def test_missing_columns_added_on_connect(self):
+        database = self.connect()
+        columns = self.columns(database)
+        self.assertTrue('mapWidth' in columns)
+        self.assertTrue('mapHeight' in columns)
+        database.close()
+
+    def test_columns_added_on_next_connect_if_database_was_locked(self):
+        import sqlite3
+        from django.db import DatabaseError
+        # another process in the middle of a write, which still lets this process read
+        writer = sqlite3.connect(self.path, isolation_level=None)
+        writer.execute('BEGIN IMMEDIATE')
+        try:
+            self.assertRaises(DatabaseError, self.connect)
+        finally:
+            writer.execute('COMMIT')
+            writer.close()
+
+        database = self.connect()
+        columns = self.columns(database)
+        self.assertTrue('mapWidth' in columns)
+        self.assertTrue('mapHeight' in columns)
+        database.close()

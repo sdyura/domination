@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, DatabaseError
 from djangoratings.fields import RatingField
 from django.contrib.auth.models import User
 from datetime import datetime
@@ -105,10 +105,12 @@ class GameMap(models.Model):
         if self.mapWidth is None or self.mapHeight is None:
             # reading the size opens and parses the image file, so only do it once and store the result
             self.mapWidth, self.mapHeight = self.imageFile.width, self.imageFile.height
-            GameMap.objects.filter(id=self.id).update(mapWidth=self.mapWidth, mapHeight=self.mapHeight)
+            try:
+                GameMap.objects.filter(id=self.id).update(mapWidth=self.mapWidth, mapHeight=self.mapHeight)
+            except DatabaseError:
+                pass # e.g. database locked by another write, the size is still shown and stored next time
 
 
-from django.db import DatabaseError
 from django.db.backends.signals import connection_created
 
 def add_missing_columns(sender, connection, **kwargs):
@@ -120,13 +122,15 @@ def add_missing_columns(sender, connection, **kwargs):
         return # syncdb has not created the table yet, and will create it with every column
     columns = [column[0] for column in connection.introspection.get_table_description(cursor, table)]
     quote = connection.ops.quote_name
-    for field in GameMap._meta.local_fields:
-        if field.null and field.column not in columns:
-            try:
-                cursor.execute('ALTER TABLE %s ADD COLUMN %s %s' % (quote(table), quote(field.column), field.db_type(connection=connection)))
-            except DatabaseError:
-                pass # another process added it at the same time
+    missing = [field for field in GameMap._meta.local_fields if field.null and field.column not in columns]
+    for field in missing:
+        try:
+            cursor.execute('ALTER TABLE %s ADD COLUMN %s %s' % (quote(table), quote(field.column), field.db_type(connection=connection)))
+        except DatabaseError:
+            # another process may have added it at the same time, if not (e.g. the database was locked)
+            # raise, so this request fails and the next connection tries again
+            if field.column not in [column[0] for column in connection.introspection.get_table_description(cursor, table)]:
+                raise
     connection_created.disconnect(add_missing_columns)
 
 connection_created.connect(add_missing_columns)
-
