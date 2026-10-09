@@ -618,7 +618,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 			allConnectedEmpires = new ArrayList();
 
 			for (int c=0; c<players.size(); c++) {
-				allConnectedEmpires.addAll( game.getConnectedEmpire( (Player)players.get(c) ) );
+				allConnectedEmpires.addAll( RiskGame.getConnectedEmpire( (Player)players.get(c) ) );
 			}
 		}
                 else if (view == VIEW_CARD_OWNERSHIP) {

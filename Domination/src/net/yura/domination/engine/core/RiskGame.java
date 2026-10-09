@@ -1283,14 +1283,12 @@ transient - A keyword in the Java programming language that indicates that a fie
 		p.currentStatistic.endGoStatistics(countries, armies, continents, conectedEmpire, cards);
 	}
 
-	public List getConnectedEmpire(Player p) {
+	public static List getConnectedEmpire(Player p) {
+		List t = new ArrayList(p.getTerritoriesOwned());
+		List a = new ArrayList();
+		List b = new ArrayList();
 
-		Vector t = (Vector)p.getTerritoriesOwned().clone();
-
-		Vector a = new Vector();
-		Vector b = new Vector();
-
-		while ( t.isEmpty() == false ) {
+		while (!t.isEmpty()) {
 
 			Country country = ((Country)t.remove(0));
 
@@ -1302,10 +1300,8 @@ transient - A keyword in the Java programming language that indicates that a fie
 				b = a;
 			}
 
-			a = new Vector();
-
+			a = new ArrayList();
 		}
-
 		return b;
 	}
 
@@ -1316,7 +1312,7 @@ transient - A keyword in the Java programming language that indicates that a fie
 	 * @param n Vector of territories owned by a single player (non-volatile)
 	 * @param p The current player
 	 */
-	public void getConnectedEmpire(List t, List a, List n, Player p) {
+	public static void getConnectedEmpire(List t, List a, List n, Player p) {
 
 		for (int i = 0; i < n.size() ; i++) {
 

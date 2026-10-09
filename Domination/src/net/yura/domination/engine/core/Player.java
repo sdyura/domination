@@ -195,7 +195,7 @@ public class Player implements Serializable {
      * Gets the cards that the player owns
      * @return Vector Returns the vector of all the cards the player owns
      */
-    public Vector getCards() {
+    public List getCards() {
         return cardsOwned;
     }
 
@@ -282,7 +282,7 @@ public class Player implements Serializable {
      * Gets the countries that the player owns
      * @return Vector Returns a vector of all the countries the player owns
      */
-    public Vector getTerritoriesOwned() {
+    public List getTerritoriesOwned() {
         return territoriesOwned;
     }
 
@@ -319,7 +319,7 @@ public class Player implements Serializable {
      * Gets all the players that are eliminated
      * @return Vector Returns all the eliminated players
      */
-    public Vector getPlayersEliminated() {
+    public List getPlayersEliminated() {
 	return playersEliminated;
     }
 
