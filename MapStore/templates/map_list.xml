@@ -34,8 +34,8 @@
             version="{{ map.version }}"
             dateAdded="{{ map.dateAdded|date:"U" }}"
            {% if map.imageFile %}
-	    mapWidth="{{ map.imageFile.width }}"
-            mapHeight="{{ map.imageFile.height }}"
+	    mapWidth="{{ map.image_width }}"
+            mapHeight="{{ map.image_height }}"
 	   {% endif %}
 	    />
         {% endfor %}</Vector>
