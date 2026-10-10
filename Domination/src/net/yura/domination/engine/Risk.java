@@ -294,7 +294,8 @@ public class Risk extends Thread {
                         message.run();
                 }
                 catch (Exception ex) {
-			logger.log(Level.WARNING, "ERROR processing " + message, ex);
+                        RiskGame game = this.game;
+			logger.log(Level.WARNING, "ERROR processing: " + message + (game == null ? "" : " (gameState=" + game.getState() + ")"), ex);
                 }
             }
         }
@@ -398,7 +399,7 @@ public class Risk extends Thread {
 					}
 					catch (Exception e) {
 						output="error with replay "+e;
-						RiskUtil.printStackTrace(e);
+                                                logger.log(Level.WARNING, "error with replay ", e);
 					}
                                         finally {
 						replay = false;
@@ -459,8 +460,8 @@ public class Risk extends Thread {
                                                 output=resb.getString( "core.newgame.created");
                                         }
                                         catch (Exception e) {
-RiskUtil.printStackTrace(e);
-                                                output=resb.getString( "core.newgame.error") + " " + e.toString();
+                                                logger.log(Level.WARNING, "newgame error", e);
+                                                output = resb.getString("core.newgame.error") + " " + e;
                                         }
                                 //}
                                 //else {
@@ -1054,7 +1055,7 @@ RiskUtil.printStackTrace(e);
                         renamePlayer(oldName,newName,newAddress,newType);
                     }
                     catch (Exception ex) {
-                        RiskUtil.printStackTrace(ex);
+                        logger.log(Level.WARNING, "rename error", ex);
                     }
                 }
 		else { // parse this normal cammand
@@ -1310,7 +1311,7 @@ RiskUtil.printStackTrace(e);
                                                                     game.startGame(newgame_type, newgame_cardType, newgame_recycle, maxFiveCards, defenderDice, minimumThreeArmies);
                                                             }
                                                             catch (Exception e) {
-                                                                    RiskUtil.printStackTrace(e);
+                                                                    logger.log(Level.WARNING, "startgame error", e);
                                                             }
                                                     }
 
