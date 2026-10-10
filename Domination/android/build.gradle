@@ -22,9 +22,9 @@ dependencies {
     implementation files('libs/GoogleAdMobAdsSdk-6.4.1.jar')
     implementation files('libs/GrasshopperAndroid.jar')
     compileOnly files('libs/amazon-device-messaging-1.2.0.jar')
-    implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'androidx.core:core:1.3.2' // for FileProvider
-    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'androidx.annotation:annotation:1.10.0'
+    implementation 'androidx.core:core:1.13.1' // for FileProvider
+    implementation 'com.google.android.gms:play-services-auth:21.4.0'
     implementation 'com.google.android.gms:play-services-games:20.0.0'
     implementation 'com.google.android.play:app-update:2.1.0'
     // for classes used in AboutActivity
@@ -45,6 +45,8 @@ android {
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/androidx/annotation/annotation/LICENSE.txt'
+        exclude 'META-INF/com.android.tools/proguard/coroutines.pro'
     }
     sourceSets {
         main {

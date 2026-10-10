@@ -7,7 +7,7 @@ CURRENT VERSION:
 	 * Save:	8
 
 	iOS:		25
-	Android:	107
+	Android:	108
 	Game GUI:	2
 	Swing GUI:	2
 	Simple GUI:	2
@@ -25,7 +25,10 @@ CURRENT VERSION:
 	SwingGUI: allow any color in the game.ini
 
 	iOS 25
-	Android 107
+
+	Android 108 fix for show achievements to work when user is both signed in and not with google
+
+	Android 107 italian rules fix
 
 1.3.5 (08.08.2026) (svn rev 2778)
 

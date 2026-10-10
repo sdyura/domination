@@ -11,7 +11,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import net.yura.domination.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ public class GoogleAccount {
 
     private Activity activity;
     private final GoogleSignInOptions GOOGLE_SIGN_IN_OPTIONS;
+
+    private boolean signInWorking = true;
 
     interface SignInListener {
         void onSignInSucceeded();
@@ -56,12 +60,12 @@ public class GoogleAccount {
     }
 
     public boolean isSignedIn() {
-        return GoogleSignIn.getLastSignedInAccount(activity) != null;
+        return signInWorking && GoogleSignIn.getLastSignedInAccount(activity) != null;
     }
 
     public void signInSilently() {
-        GoogleSignInClient signInClient = GoogleSignIn.getClient(activity, GOOGLE_SIGN_IN_OPTIONS);
-        signInClient.silentSignIn().addOnSuccessListener(activity,
+        Task<GoogleSignInAccount> signInClient = GoogleSignIn.getClient(activity, GOOGLE_SIGN_IN_OPTIONS).silentSignIn();
+        signInClient.addOnSuccessListener(activity,
                 new SafeOnSuccessListener<GoogleSignInAccount>() {
                     @Override
                     public void onSuccessSafe(GoogleSignInAccount signedInAccount) {
@@ -69,6 +73,13 @@ public class GoogleAccount {
                         signInSuccessful(signedInAccount);
                     }
                 });
+        signInClient.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Logger.getLogger(GoogleAccount.class.getName()).log(Level.INFO, "silentSignIn error", e);
+                signInFailed();
+            }
+        });
     }
 
     public void startSignInIntent() {
@@ -115,12 +126,14 @@ public class GoogleAccount {
     }
 
     private void signInSuccessful(GoogleSignInAccount signedInAccount) {
+        signInWorking = true;
         for (SignInListener listener : listeners) {
             listener.onSignInSucceeded();
         }
     }
 
     private void signInFailed() {
+        signInWorking  = false;
         for (SignInListener listener : listeners) {
             listener.onSignInFailed();
         }
