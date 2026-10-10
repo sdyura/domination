@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_id" translatable="false">783159960229</string>
+    <!-- this same id can be found in: net.yura.lobby.service.GoogleLogin#CLIENT_ID -->
     <string name="server_client_id" translatable="false">783159960229-3ssrlemm017ak0qrlpv83rvjjud1mn2b.apps.googleusercontent.com</string>
 
     <!-- FCM stuff from build/generated/res/google-services/debug/values/values.xml
