@@ -11,6 +11,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
@@ -335,11 +336,17 @@ public class GameActivity extends AndroidMeActivity implements GoogleAccount.Sig
         //GoogleSignIn.getClient(this, com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
 
         if (isSignedIn()) {
-            Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                    .getAchievementsIntent().addOnSuccessListener(new OnSuccessListener<Intent>() {
+            Task<Intent> getAchievementsIntent = Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)).getAchievementsIntent();
+            getAchievementsIntent.addOnSuccessListener(new OnSuccessListener<Intent>() {
                 @Override
                 public void onSuccess(Intent intent) {
                     startActivityForResult(intent, RC_REQUEST_ACHIEVEMENTS);
+                }
+            });
+            getAchievementsIntent.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(Exception e) {
+                    logger.log(Level.INFO, "error in getAchievementsIntent", e);
                 }
             });
         }
