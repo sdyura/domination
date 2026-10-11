@@ -645,7 +645,7 @@ public class GameSetupPanel extends JPanel implements ActionListener {
         
         public Game showDialog(Window parent,String serveroptions, String defaultGameName) {
 
-                if (gamename.getText().isEmpty()) {
+                if ("".equals(gamename.getText())) { // .isEmpty() is only in java 1.6
                     gamename.setText(defaultGameName);
                 }
 
