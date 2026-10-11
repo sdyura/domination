@@ -449,7 +449,7 @@ public class PicturePanel extends JPanel implements MapPanel {
 
                 g2.setColor(textColor);
                 Color outlineColor = Color.WHITE.equals(textColor) ? Color.BLACK : Color.WHITE;
-                TextUtil.drawStringWithOutline(g2, new TextLayout(noa, circleFont, g2.getFontRenderContext()), textX, textY, outlineColor);
+                TextUtil.drawStringWithOutline(g2, new TextLayout(noa, g2.getFont(), g2.getFontRenderContext()), textX, textY, outlineColor);
             }
 
             if (capital != null) {
