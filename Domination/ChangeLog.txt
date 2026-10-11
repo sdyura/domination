@@ -14,7 +14,7 @@ CURRENT VERSION:
 	Increment1GUI:	2
 	CommandLine:	2
 
-1.3.6
+1.3.6 (11.10.2026) (svn rev 2844)
 
 	Drag and drop save file into MapEditor
 	Stats Screen: right click to hide and show players
@@ -24,7 +24,7 @@ CURRENT VERSION:
 	Fixed: correctly show login message when username starts with $
 	SwingGUI: allow any color in the game.ini
 
-	iOS 25
+	iOS 25 italian rules fix
 
 	Android 108 fix for show achievements to work when user is both signed in and not with google
 
